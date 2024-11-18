@@ -3,5 +3,5 @@
 > [!NOTE]  
 > Documentation for platform developers.
 
-
+![WebFlow.drawio.png](img/development/WebFlow.drawio.png)
 
