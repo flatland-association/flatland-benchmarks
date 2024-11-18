@@ -125,3 +125,5 @@ playground/
 *.pkl
 
 images
+
+*.drawio
