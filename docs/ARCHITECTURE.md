@@ -442,6 +442,9 @@ following white box template. It contains
 
 ***\<Overview Diagram>***
 
+The following [UML information flow diagram](https://www.uml-diagrams.org/information-flow-diagrams.html) shows the exchange of information between system
+components at high level:
+
 > [!IMPORTANT]  
 > Arrows indicate the direction of information flow and not direction of calls!
 
