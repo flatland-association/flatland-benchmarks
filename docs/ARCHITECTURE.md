@@ -442,6 +442,9 @@ following white box template. It contains
 
 ***\<Overview Diagram>***
 
+> [!IMPORTANT]  
+> Arrows indicate the direction of information flow and not direction of calls!
+
 ![InformationFlow.drawio.png](./img/architecture/InformationFlow.drawio.png)
 
 Motivation  
