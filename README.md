@@ -17,6 +17,7 @@ e.g. this one). If you wish to configure your own instance of the platform, here
 ----------------
 
 * [User's Guide](docs/USER_GUIDE.md) User documentation for benchmark participants and benchmark administrators.
+* [Contributing](docs/CONTRIBUTING.md) Contributions are welcome! See how.
 * [Architecture](docs/ARCHITECTURE.md) Get a technical overview of the platform and the design decisions.
 * [Administrator's Guide](docs/ADMINISTRATION.md) Documentation for technical platform admins.
 * [Developer's Guide](docs/DEVELOPMENT.md) Documentation for platform developers.
