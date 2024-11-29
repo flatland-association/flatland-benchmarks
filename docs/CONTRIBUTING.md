@@ -35,6 +35,12 @@ If you are proposing a feature:
 - Keep the scope as narrow as possible, to make it easier to implement.
 - Remember that this is a volunteer-driven project, and that contributions are welcome :)
 
+### Review Pull Requests
+
+Feel free to comment on open prs. Please contact us if you want to become a core team member.
+Core team members are assigned as reviewers to all prs by default.
+The review of a core team member is required for prs from non-members of the core team.
+
 ## Technical Guidelines
 
 ### Clean Code
@@ -42,7 +48,7 @@ If you are proposing a feature:
 Please adhere to the general [Clean Code](https://www.planetgeek.ch/wp-content/uploads/2014/11/Clean-Code-V2.4.pdf)
 principles. For instance, we write short and concise functions and use appropriate naming to ensure readability.
 
-## Pull requests
+## Pull Requests
 
 1. Open a pull request on GitHub targeting the `main` branch.
    Make sure to fill out the template.
