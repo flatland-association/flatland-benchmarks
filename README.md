@@ -1,8 +1,8 @@
-Flatland Association Benchmarking
-=================================
+Flatland Benchmark
+==================
 [![Main](https://github.com/flatland-association/benchmarking/actions/workflows/main.yml/badge.svg)](https://github.com/flatland-association/benchmarking/actions/workflows/main.yml)
 
-Flatland Association Benchmarking (FAB) is an open-source web-based platform for running Benchmarks to foster Open Research aiming at:
+Flatland Benchmark (FAB) is an open-source web-based platform for running Benchmarks to foster Open Research aiming at:
 
 | Goal                                               | Description                                                                                                                                                                                                  | How does FAB contribute?                                                                                                                                               |
 |----------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
