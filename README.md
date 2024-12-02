@@ -1,8 +1,14 @@
-Flatland Association Benchmarking
-=================================
+Flatland Benchmark
+==================
 [![Main](https://github.com/flatland-association/benchmarking/actions/workflows/main.yml/badge.svg)](https://github.com/flatland-association/benchmarking/actions/workflows/main.yml)
 
-Flatland Association Benchmarking allow
+Flatland Benchmark (FAB) is an open-source web-based platform for running Benchmarks to foster Open Research aiming at:
+
+| Goal                                               | Description                                                                                                                                                                                                  | How does FAB contribute?                                                                                                                                               |
+|----------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Open access** and **open data**                  | research results and gained knowledge are accessible and can be used by anyone for applications or as the basis further research                                                                             | the web-based platform is open to researchers, developers, data scientists and domain experts, enabling to access and interpret data, problem formulations and results |
+| **Open source software**  and **open peer review** | allow for the replication and reproducibility of research as well as for the reuse of data and software in other research projects, empowering anyone to contribute to and accelerating the pace of research | participants disclose their code and the leaderboard links to papers, code and discussion                                                                              |
+| **Open community**                                 | enables collaborative formulation of problems and research questions, bringing in the expertise of various domains and fostering interdisciplinary approaches                                                | platform and problem formulations are made open and the community can contribute                                                                                       |
 
 📦 TL; DR;
 ----------

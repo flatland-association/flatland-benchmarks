@@ -24,15 +24,15 @@ concepts. For documentation of your own system you use better the
 Describes the relevant requirements and the driving forces that software
 architects and development team must consider. These include
 
--   underlying business goals,
+- underlying business goals,
 
--   essential features,
+- essential features,
 
--   essential functional requirements,
+- essential functional requirements,
 
--   quality goals for the architecture and
+- quality goals for the architecture and
 
--   relevant stakeholders and their expectations
+- relevant stakeholders and their expectations
 
 ## Requirements Overview
 
@@ -121,15 +121,15 @@ A table with quality goals and concrete scenarios, ordered by priorities
 Explicit overview of stakeholders of the system, i.e. all person, roles
 or organizations that
 
--   should know the architecture
+- should know the architecture
 
--   have to be convinced of the architecture
+- have to be convinced of the architecture
 
--   have to work with the architecture or with code
+- have to work with the architecture or with code
 
--   need the documentation of the architecture for their work
+- need the documentation of the architecture for their work
 
--   have to come up with decisions about the system or its development
+- have to come up with decisions about the system or its development
 
 <div class="formalpara-title">
 
@@ -227,9 +227,9 @@ completely understand them.
 
 Various options:
 
--   Context diagrams
+- Context diagrams
 
--   Lists of communication partners and their interfaces.
+- Lists of communication partners and their interfaces.
 
 See [Context and Scope](https://docs.arc42.org/section-3/) in the arc42
 documentation.
@@ -323,15 +323,15 @@ and input/output.
 A short summary and explanation of the fundamental decisions and
 solution strategies, that shape system architecture. It includes
 
--   technology decisions
+- technology decisions
 
--   decisions about the top-level decomposition of the system, e.g.
-    usage of an architectural pattern or design pattern
+- decisions about the top-level decomposition of the system, e.g.
+  usage of an architectural pattern or design pattern
 
--   decisions on how to achieve key quality goals
+- decisions on how to achieve key quality goals
 
--   relevant organizational decisions, e.g. selecting a development
-    process or delegating certain tasks to third parties.
+- relevant organizational decisions, e.g. selecting a development
+  process or delegating certain tasks to third parties.
 
 <div class="formalpara-title">
 
@@ -415,32 +415,40 @@ arc42 documentation.
 Here you describe the decomposition of the overall system using the
 following white box template. It contains
 
--   an overview diagram
+- an overview diagram
 
--   a motivation for the decomposition
+- a motivation for the decomposition
 
--   black box descriptions of the contained building blocks. For these
-    we offer you alternatives:
+- black box descriptions of the contained building blocks. For these
+  we offer you alternatives:
 
-    -   use *one* table for a short and pragmatic overview of all
-        contained building blocks and their interfaces
+    - use *one* table for a short and pragmatic overview of all
+      contained building blocks and their interfaces
 
-    -   use a list of black box descriptions of the building blocks
-        according to the black box template (see below). Depending on
-        your choice of tool this list could be sub-chapters (in text
-        files), sub-pages (in a Wiki) or nested elements (in a modeling
-        tool).
+    - use a list of black box descriptions of the building blocks
+      according to the black box template (see below). Depending on
+      your choice of tool this list could be sub-chapters (in text
+      files), sub-pages (in a Wiki) or nested elements (in a modeling
+      tool).
 
--   (optional:) important interfaces, that are not explained in the
-    black box templates of a building block, but are very important for
-    understanding the white box. Since there are so many ways to specify
-    interfaces why do not provide a specific template for them. In the
-    worst case you have to specify and describe syntax, semantics,
-    protocols, error handling, restrictions, versions, qualities,
-    necessary compatibilities and many things more. In the best case you
-    will get away with examples or simple signatures.
+- (optional:) important interfaces, that are not explained in the
+  black box templates of a building block, but are very important for
+  understanding the white box. Since there are so many ways to specify
+  interfaces why do not provide a specific template for them. In the
+  worst case you have to specify and describe syntax, semantics,
+  protocols, error handling, restrictions, versions, qualities,
+  necessary compatibilities and many things more. In the best case you
+  will get away with examples or simple signatures.
 
 ***\<Overview Diagram>***
+
+The following [UML information flow diagram](https://www.uml-diagrams.org/information-flow-diagrams.html) shows the exchange of information between system
+components at high level:
+
+> [!IMPORTANT]  
+> Arrows indicate the direction of information flow and not direction of calls!
+
+![InformationFlow.drawio.png](./img/architecture/InformationFlow.drawio.png)
 
 Motivation  
 *\<text explanation>*
@@ -470,21 +478,21 @@ the name of the black box.
 Here you describe \<black box 1> according the the following black box
 template:
 
--   Purpose/Responsibility
+- Purpose/Responsibility
 
--   Interface(s), when they are not extracted as separate paragraphs.
-    This interfaces may include qualities and performance
-    characteristics.
+- Interface(s), when they are not extracted as separate paragraphs.
+  This interfaces may include qualities and performance
+  characteristics.
 
--   (Optional) Quality-/Performance characteristics of the black box,
-    e.g.availability, run time behavior, ….
+- (Optional) Quality-/Performance characteristics of the black box,
+  e.g.availability, run time behavior, ….
 
--   (Optional) directory/file location
+- (Optional) directory/file location
 
--   (Optional) Fulfilled requirements (if you need traceability to
-    requirements).
+- (Optional) Fulfilled requirements (if you need traceability to
+  requirements).
 
--   (Optional) Open issues/problems/risks
+- (Optional) Open issues/problems/risks
 
 *\<Purpose/Responsibility>*
 
@@ -572,15 +580,15 @@ Specifies the internal structure of *building block x.1*.
 The runtime view describes concrete behavior and interactions of the
 system’s building blocks in form of scenarios from the following areas:
 
--   important use cases or features: how do building blocks execute
-    them?
+- important use cases or features: how do building blocks execute
+  them?
 
--   interactions at critical external interfaces: how do building blocks
-    cooperate with users and neighboring systems?
+- interactions at critical external interfaces: how do building blocks
+  cooperate with users and neighboring systems?
 
--   operation and administration: launch, start-up, stop
+- operation and administration: launch, start-up, stop
 
--   error and exception scenarios
+- error and exception scenarios
 
 Remark: The main criterion for the choice of possible scenarios
 (sequences, workflows) is their **architectural relevance**. It is
@@ -607,27 +615,27 @@ static models (building block view, deployment view).
 
 There are many notations for describing scenarios, e.g.
 
--   numbered list of steps (in natural language)
+- numbered list of steps (in natural language)
 
--   activity diagrams or flow charts
+- activity diagrams or flow charts
 
--   sequence diagrams
+- sequence diagrams
 
--   BPMN or EPCs (event process chains)
+- BPMN or EPCs (event process chains)
 
--   state machines
+- state machines
 
--   …
+- …
 
 See [Runtime View](https://docs.arc42.org/section-6/) in the arc42
 documentation.
 
 ## \<Runtime Scenario 1>
 
--   *\<insert runtime diagram or textual description of the scenario>*
+- *\<insert runtime diagram or textual description of the scenario>*
 
--   *\<insert description of the notable aspects of the interactions
-    between the building block instances depicted in this diagram.>*
+- *\<insert description of the notable aspects of the interactions
+  between the building block instances depicted in this diagram.>*
 
 ## \<Runtime Scenario 2>
 
@@ -645,13 +653,13 @@ documentation.
 
 The deployment view describes:
 
-1.  technical infrastructure used to execute your system, with
-    infrastructure elements like geographical locations, environments,
-    computers, processors, channels and net topologies as well as other
-    infrastructure elements and
+1. technical infrastructure used to execute your system, with
+   infrastructure elements like geographical locations, environments,
+   computers, processors, channels and net topologies as well as other
+   infrastructure elements and
 
-2.  mapping of (software) building blocks to that infrastructure
-    elements.
+2. mapping of (software) building blocks to that infrastructure
+   elements.
 
 Often systems are executed in different environments, e.g. development
 environment, test environment, production environment. In such cases you
@@ -682,13 +690,13 @@ Maybe a highest level deployment diagram is already contained in section
 In this section one can zoom into this black box using additional
 deployment diagrams:
 
--   UML offers deployment diagrams to express that view. Use it,
-    probably with nested diagrams, when your infrastructure is more
-    complex.
+- UML offers deployment diagrams to express that view. Use it,
+  probably with nested diagrams, when your infrastructure is more
+  complex.
 
--   When your (hardware) stakeholders prefer other kinds of diagrams
-    rather than a deployment diagram, let them use any kind that is able
-    to show nodes and channels of the infrastructure.
+- When your (hardware) stakeholders prefer other kinds of diagrams
+  rather than a deployment diagram, let them use any kind that is able
+  to show nodes and channels of the infrastructure.
 
 See [Deployment View](https://docs.arc42.org/section-7/) in the arc42
 documentation.
@@ -697,16 +705,16 @@ documentation.
 
 Describe (usually in a combination of diagrams, tables, and text):
 
--   distribution of a system to multiple locations, environments,
-    computers, processors, .., as well as physical connections between
-    them
+- distribution of a system to multiple locations, environments,
+  computers, processors, .., as well as physical connections between
+  them
 
--   important justifications or motivations for this deployment
-    structure
+- important justifications or motivations for this deployment
+  structure
 
--   quality and/or performance features of this infrastructure
+- quality and/or performance features of this infrastructure
 
--   mapping of software artifacts to elements of this infrastructure
+- mapping of software artifacts to elements of this infrastructure
 
 For multiple environments or alternative deployments please copy and
 adapt this section of arc42 for all relevant environments.
@@ -756,16 +764,16 @@ that are relevant in multiple parts (= cross-cutting) of your system.
 Such concepts are often related to multiple building blocks. They can
 include many different topics, such as
 
--   models, especially domain models
+- models, especially domain models
 
--   architecture or design patterns
+- architecture or design patterns
 
--   rules for using specific technology
+- rules for using specific technology
 
--   principal, often technical decisions of an overarching (=
-    cross-cutting) nature
+- principal, often technical decisions of an overarching (=
+  cross-cutting) nature
 
--   implementation rules
+- implementation rules
 
 <div class="formalpara-title">
 
@@ -788,15 +796,15 @@ e.g. security or safety.
 
 The form can be varied:
 
--   concept papers with any kind of structure
+- concept papers with any kind of structure
 
--   cross-cutting model excerpts or scenarios using notations of the
-    architecture views
+- cross-cutting model excerpts or scenarios using notations of the
+  architecture views
 
--   sample implementations, especially for technical concepts
+- sample implementations, especially for technical concepts
 
--   reference to typical usage of standard frameworks (e.g. using
-    Hibernate for object/relational mapping)
+- reference to typical usage of standard frameworks (e.g. using
+  Hibernate for object/relational mapping)
 
 <div class="formalpara-title">
 
@@ -806,19 +814,19 @@ The form can be varied:
 
 A potential (but not mandatory) structure for this section could be:
 
--   Domain concepts
+- Domain concepts
 
--   User Experience concepts (UX)
+- User Experience concepts (UX)
 
--   Safety and security concepts
+- Safety and security concepts
 
--   Architecture and design patterns
+- Architecture and design patterns
 
--   "Under-the-hood"
+- "Under-the-hood"
 
--   development concepts
+- development concepts
 
--   operational concepts
+- operational concepts
 
 Note: it might be difficult to assign individual concepts to one
 specific topic on this list.
@@ -880,13 +888,13 @@ your decisions.
 
 Various options:
 
--   ADR ([Documenting Architecture
-    Decisions](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions))
-    for every important decision
+- ADR ([Documenting Architecture
+  Decisions](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions))
+  for every important decision
 
--   List or table, ordered by importance and consequences or:
+- List or table, ordered by importance and consequences or:
 
--   more detailed in form of separate sections per decision
+- more detailed in form of separate sections per decision
 
 See [Architecture Decisions](https://docs.arc42.org/section-9/) in the
 arc42 documentation. There you will find links and examples about ADR.
@@ -948,10 +956,10 @@ large number of quality requirements.
 The quality tree is a high-level overview of the quality goals and
 requirements:
 
--   tree-like refinement of the term "quality". Use "quality" or
-    "usefulness" as a root
+- tree-like refinement of the term "quality". Use "quality" or
+  "usefulness" as a root
 
--   a mind map with quality categories as main branches
+- a mind map with quality categories as main branches
 
 In any case the tree should include links to the scenarios of the
 following section.
@@ -972,15 +980,15 @@ the system.
 
 For architects, two kinds of scenarios are important:
 
--   Usage scenarios (also called application scenarios or use case
-    scenarios) describe the system’s runtime reaction to a certain
-    stimulus. This also includes scenarios that describe the system’s
-    efficiency or performance. Example: The system reacts to a user’s
-    request within one second.
+- Usage scenarios (also called application scenarios or use case
+  scenarios) describe the system’s runtime reaction to a certain
+  stimulus. This also includes scenarios that describe the system’s
+  efficiency or performance. Example: The system reacts to a user’s
+  request within one second.
 
--   Change scenarios describe a modification of the system or of its
-    immediate environment. Example: Additional functionality is
-    implemented or requirements for a quality attribute change.
+- Change scenarios describe a modification of the system or of its
+  immediate environment. Example: Additional functionality is
+  implemented or requirements for a quality attribute change.
 
 <div class="formalpara-title">
 
@@ -1063,9 +1071,9 @@ multi-language teams.
 
 You should clearly define your terms, so that all stakeholders
 
--   have an identical understanding of these terms
+- have an identical understanding of these terms
 
--   do not use synonyms and homonyms
+- do not use synonyms and homonyms
 
 A table with columns \<Term> and \<Definition>.
 
