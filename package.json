@@ -17,5 +17,12 @@
   "author": "Flatland Association",
   "directories": {
     "doc": "docs"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10"
+  },
+  "scripts": {
+    "prepare": "husky"
   }
 }
