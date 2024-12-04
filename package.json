@@ -1,0 +1,21 @@
+{
+  "name": "benchmarking",
+  "version": "0.0.0",
+  "description": "Flatland Benchmark",
+  "keywords": [
+    "flatland",
+    "benchmark"
+  ],
+  "bugs": {
+    "url": "https://github.com/flatland-association/benchmarking/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/flatland-association/benchmarking.git"
+  },
+  "license": "MIT",
+  "author": "Flatland Association",
+  "directories": {
+    "doc": "docs"
+  }
+}
