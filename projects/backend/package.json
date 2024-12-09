@@ -1,0 +1,10 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "description": "FAB backend",
+  "scripts": {
+    "serve": "tsc --project tsconfig.development.json && cd ../../out-tsc/backend/app && node main.js",
+    "build": "tsc",
+    "docker:rabbitmq": "docker run -d --name amqp.test -p 5672:5672 rabbitmq"
+  }
+}

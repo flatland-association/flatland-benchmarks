@@ -1,5 +1,4 @@
-### TODOS
-- Reduce folder tree depth. E.g. move Angular workspace one up (from `ts/` to root), rename `projects`. Cross-check compatibility with python workspace.
+### TODO
 - Update placeholder content below
 
 
