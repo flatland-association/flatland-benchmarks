@@ -17,7 +17,7 @@ To complete your local setup, run
 ```bash
 npm ci
 ```
-in the project root folder. This will install all required node modules as listed in `package-lock`.
+in the project root folder. This will install all required node modules as listed in `package-lock.json`.
 
 The project is configured to lint and format your source code before committing and also on explicit save (when using VSCode as described above). However, if you're not using VSCode or for some reason not using the extensions, your code will still be linted and formatted before a commit. Be aware that in this case lint warnings and errors will abort your commit!
 
