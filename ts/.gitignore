@@ -3,7 +3,7 @@
 # Compiled output
 /dist
 /tmp
-/out-tsc
+**/out-tsc
 /bazel-out
 
 # Node
