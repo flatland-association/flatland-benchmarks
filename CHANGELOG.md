@@ -7,5 +7,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-* Added Angular project `frontend`
-* Added Node.js project `backend`
+* Added Angular project `ts/frontend`
+* Added Node.js project `ts/backend`
