@@ -19,30 +19,29 @@ def the_task(docker_image: str):
   future1 = loop.create_future()
   future2 = loop.create_future()
   gathered_tasks = asyncio.gather(
-    run_hello_world(future1, exec_args=["docker", "run",
+    run_async_and_catch_output(future1, exec_args=["docker", "run",
                                         "--rm",
                                         "-e", "redis_ip=redis",
-                                        # TODO workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....)
-                                        "-v", f"{HOST_DIRECTORY}/evaluator/evaluator.py:/tmp/evaluator.py",
+                                                   # TODO workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....), establish convention for custom compute_workers...
                                         "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/debug-environments/",
                                         # TODO hacky: inject network name instead
                                         "--network", "evaluation_default",
-                                        # TODO hacky: image might not be built yet
                                         docker_image,
-                                        # TODO bad coupling/design smell evaluator.py defined in flatland-starter-kit module, where should the information
-                                        "bash", "-c", "python /tmp/evaluator.py"
+                                                   # TODO document as entry point
+                                                   "bash", "run.sh"
                                         ]),
-    run_hello_world(future2, exec_args=["docker", "run",
+    run_async_and_catch_output(future2, exec_args=["docker", "run",
                                         "--rm",
                                         "-e", "redis_ip=redis",
+                                                   # TODO should data be mounted or...?
                                         "-e", "AICROWD_TESTS_FOLDER=/tmp/debug-environments/",
                                         # TODO workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....)
-                                        "-v", f"{HOST_DIRECTORY}/evaluator-kit/evaluator.py:/tmp/evaluator.py",
                                         "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/debug-environments/",
                                         # TODO hacky: inject network name instead
                                         "--network", "evaluation_default",
                                         # TODO hacky: extract image creation to submission submodule, extract from message?
                                         "evaluation-submission:latest",
+                                                   # TODO document as entry point
                                         "bash", "run.sh"
                                         ]),
     loop=loop
@@ -51,7 +50,7 @@ def the_task(docker_image: str):
   return (future1.result(), future2.result())
 
 
-async def run_hello_world(future, exec_args):
+async def run_async_and_catch_output(future, exec_args):
   print(exec_args)
   proc = await  asyncio.create_subprocess_exec(
     *exec_args,

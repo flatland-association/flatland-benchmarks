@@ -23,3 +23,7 @@ RUN conda --version  && \
 RUN python --version  && \
     python -m pip install --upgrade pip && \
     python -m pip install pyarrow flatland-rl
+
+COPY evaluator.py  ./
+COPY run.sh ./
+
