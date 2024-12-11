@@ -1,0 +1,91 @@
+services:
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+
+
+  rabbit:
+    build:
+      context: codabench/rabbitmq
+      dockerfile: Dockerfile
+      args:
+        - WORKER_CONNECTION_TIMEOUT=${WORKER_CONNECTION_TIMEOUT}
+    # setting hostname here makes data persist properly between
+    # containers being destroyed..!
+    hostname: rabbit
+    env_file: .env
+    environment:
+      - http_proxy=${RABBITMQ_HTTP_PROXY}
+      - https_proxy=${RABBITMQ_HTTPS_PROXY}
+      - no_proxy=${RABBITMQ_NO_PROXY}
+    ports:
+      - ${RABBITMQ_MANAGEMENT_PORT:-15672}:15672
+      - ${RABBITMQ_PORT}:5672
+    #    volumes:
+    #      - ./var/rabbit:/var/lib/rabbitmq
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 1s
+      timeout: 3s
+      retries: 30
+
+  compute_worker:
+    # TODO rapid prototyping with tasks.py - use compute_worker.py with codabench interface instead
+    #    command: bash -c "watchmedo auto-restart -p '*.py' --recursive -- celery -A compute_worker worker -l info -Q compute-worker -n compute-worker@%n"
+    command: celery -A tasks worker --loglevel=INFO
+    working_dir: /app
+    build:
+      context: codabench/compute_worker
+      dockerfile: Dockerfile
+    depends_on:
+      #      - django
+      rabbit:
+        condition: service_healthy
+    volumes:
+      - ./codabench/compute_worker:/app
+      #      - ${HOST_DIRECTORY:-/tmp/codabench}:/codabench
+      # Actual connection back to docker parent to run things
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file: .env
+    environment:
+      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//
+      # TODO: is ${PWD} safe?
+      - HOST_DIRECTORY=${PWD}
+    #      # Make the worker leave behind the submission so we can examine it
+    #      - CODALAB_IGNORE_CLEANUP_STEP=1
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: celery -A tasks inspect ping
+
+
+  submitter:
+    command: bash -c 'python -m pip install -U "celery[redis]" && python /tmp/submitter/submitter.py'
+    working_dir: /app
+    build:
+      context: codabench/compute_worker
+      dockerfile: Dockerfile
+    env_file: .env
+    depends_on:
+      #      - django
+      rabbit:
+        condition: service_healthy
+      compute_worker:
+        condition: service_healthy
+    environment:
+      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//
+    volumes:
+      - ./codabench/submitter/:/tmp/submitter/
