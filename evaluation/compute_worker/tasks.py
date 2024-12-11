@@ -26,7 +26,7 @@ def the_task(docker_image: str):
                                         "-v", f"{HOST_DIRECTORY}/flatland-starter-kit/evaluator.py:/tmp/evaluator.py",
                                         "-v", f"{HOST_DIRECTORY}/flatland-starter-kit/debug-environments/:/tmp/debug-environments/",
                                         # TODO hacky: inject network name instead
-                                        "--network", "flatland-starterkit-docker-compose_default",
+                                        "--network", "evaluation_default",
                                         # TODO hacky: image might not be built yet
                                         docker_image,
                                         "bash", "-c", "python /tmp/evaluator.py"
@@ -39,7 +39,7 @@ def the_task(docker_image: str):
                                         "-v", f"{HOST_DIRECTORY}/flatland-starter-kit/evaluator.py:/tmp/evaluator.py",
                                         "-v", f"{HOST_DIRECTORY}/flatland-starter-kit/debug-environments/:/tmp/debug-environments/",
                                         # TODO hacky: inject network name instead
-                                        "--network", "flatland-starterkit-docker-compose_default",
+                                        "--network", "evaluation_default",
                                         # TODO hacky: image might not be built yet
                                         "flatland-starterkit-docker-compose-evaluator:latest",
                                         "bash", "run.sh"

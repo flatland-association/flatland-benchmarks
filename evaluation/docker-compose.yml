@@ -12,7 +12,7 @@ services:
 
   rabbit:
     build:
-      context: codabench/rabbitmq
+      context: rabbitmq
       dockerfile: Dockerfile
       args:
         - WORKER_CONNECTION_TIMEOUT=${WORKER_CONNECTION_TIMEOUT}
@@ -46,14 +46,14 @@ services:
     command: celery -A tasks worker --loglevel=INFO
     working_dir: /app
     build:
-      context: codabench/compute_worker
+      context: compute_worker
       dockerfile: Dockerfile
     depends_on:
       #      - django
       rabbit:
         condition: service_healthy
     volumes:
-      - ./codabench/compute_worker:/app
+      - ./compute_worker:/app
       #      - ${HOST_DIRECTORY:-/tmp/codabench}:/codabench
       # Actual connection back to docker parent to run things
       - /var/run/docker.sock:/var/run/docker.sock
@@ -76,7 +76,7 @@ services:
     command: bash -c 'python -m pip install -U "celery[redis]" && python /tmp/submitter/submitter.py'
     working_dir: /app
     build:
-      context: codabench/compute_worker
+      context: compute_worker
       dockerfile: Dockerfile
     env_file: .env
     depends_on:
@@ -88,4 +88,4 @@ services:
     environment:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//
     volumes:
-      - ./codabench/submitter/:/tmp/submitter/
+      - ./submitter/:/tmp/submitter/
