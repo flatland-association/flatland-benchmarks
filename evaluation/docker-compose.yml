@@ -71,21 +71,15 @@ services:
     healthcheck:
       test: celery -A tasks inspect ping
 
-
-  submitter:
-    command: bash -c 'python -m pip install -U "celery[redis]" && python /tmp/submitter/submitter.py'
-    working_dir: /app
+  evaluator:
+    # build only, service exits immediately.
     build:
-      context: compute_worker
+      context: evaluator
       dockerfile: Dockerfile
-    env_file: .env
-    depends_on:
-      #      - django
-      rabbit:
-        condition: service_healthy
-      compute_worker:
-        condition: service_healthy
-    environment:
-      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//
-    volumes:
-      - ./submitter/:/tmp/submitter/
+
+
+  submission:
+    # build only, service exits immediately.
+    build:
+      context: submission_template
+      dockerfile: Dockerfile

@@ -10,14 +10,29 @@ It illustrates how to integrate
 
 ## TL;DR
 
-1. Download `flatland-starter-kit/debug-environments` folder from https://www.aicrowd.com/challenges/flatland-3/dataset_files
+1. Download `flatland-starter-kit/debug-environments` folder from
 2. Run
 
 ```shell
+cd evaluation
 docker compose up
-# wait until submitter succeeds:
-# submitter-1 exited with code 0
+```
 
+3. In separate shell, run
+
+```
+cd evaluation/ubmitter
+conda env update -f environment.yml
+conda activate benchmarksubmitter 
+python submitter.py
+/ Start simulate submission from portal.....
+\ End simulate submission from portal: rc=0, stdout=b...........
+```
+
+4. In previous shell, run
+
+```
+# CTRL-C and then
 docker compose down
 ```
 

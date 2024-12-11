@@ -23,12 +23,13 @@ def the_task(docker_image: str):
                                         "--rm",
                                         "-e", "redis_ip=redis",
                                         # TODO workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....)
-                                        "-v", f"{HOST_DIRECTORY}/flatland-starter-kit/evaluator.py:/tmp/evaluator.py",
-                                        "-v", f"{HOST_DIRECTORY}/flatland-starter-kit/debug-environments/:/tmp/debug-environments/",
+                                        "-v", f"{HOST_DIRECTORY}/evaluator/evaluator.py:/tmp/evaluator.py",
+                                        "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/debug-environments/",
                                         # TODO hacky: inject network name instead
                                         "--network", "evaluation_default",
                                         # TODO hacky: image might not be built yet
                                         docker_image,
+                                        # TODO bad coupling/design smell evaluator.py defined in flatland-starter-kit module, where should the information
                                         "bash", "-c", "python /tmp/evaluator.py"
                                         ]),
     run_hello_world(future2, exec_args=["docker", "run",
@@ -36,12 +37,12 @@ def the_task(docker_image: str):
                                         "-e", "redis_ip=redis",
                                         "-e", "AICROWD_TESTS_FOLDER=/tmp/debug-environments/",
                                         # TODO workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....)
-                                        "-v", f"{HOST_DIRECTORY}/flatland-starter-kit/evaluator.py:/tmp/evaluator.py",
-                                        "-v", f"{HOST_DIRECTORY}/flatland-starter-kit/debug-environments/:/tmp/debug-environments/",
+                                        "-v", f"{HOST_DIRECTORY}/evaluator-kit/evaluator.py:/tmp/evaluator.py",
+                                        "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/debug-environments/",
                                         # TODO hacky: inject network name instead
                                         "--network", "evaluation_default",
-                                        # TODO hacky: image might not be built yet
-                                        "flatland-starterkit-docker-compose-evaluator:latest",
+                                        # TODO hacky: extract image creation to submission submodule, extract from message?
+                                        "evaluation-submission:latest",
                                         "bash", "run.sh"
                                         ]),
     loop=loop

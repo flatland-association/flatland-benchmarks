@@ -5,6 +5,7 @@ FROM codalab/codalab-legacy:py37
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 # download environment.yml for flatland-rl conda env
+# TODO hard-code in repo?
 RUN wget "https://gitlab.aicrowd.com/flatland/flatland-starter-kit/-/archive/master/flatland-starter-kit-master.zip" && \
     unzip flatland-starter-kit-master.zip && \
     rm flatland-starter-kit-master.zip
