@@ -1,33 +1,12 @@
 import amqp from 'amqplib'
+import styles from 'ansi-styles'
 import cors from 'cors'
 import type { Request } from 'express'
 import express from 'express'
-import { readFileSync } from 'node:fs'
+import { loadConfig } from './features/config/config.mjs'
 // import http from 'node:http'
 
-// references:
-// https://en.wikipedia.org/wiki/ANSI_escape_code
-// https://stackoverflow.com/a/40560590/10135201
-// TODO: move this to a module (this has to be an existing NPM module, right?)
-const ansiEscapes = {
-  reset: '\x1b[0m',
-  colors: {
-    fg: {
-      black: '\x1b[30m',
-      red: '\x1b[31m',
-      green: '\x1b[32m',
-      yellow: '\x1b[33m',
-      blue: '\x1b[34m',
-      magenta: '\x1b[35m',
-      cyan: '\x1b[36m',
-      white: '\x1b[37m',
-      gray: '\x1b[90m',
-    },
-  },
-}
-
-// manually load config JSON (instead of importing it as a module) for future bundler compatibility
-const config = JSON.parse(readFileSync('../config/config.json', 'utf-8'))
+const config = loadConfig()
 
 const app = express()
 
@@ -112,9 +91,6 @@ app.post('/amqp', async (req, res) => {
 })
 
 // start express server
-app.listen(config.api.port, config.api.hostname, () => {
-  console.log(
-    `${ansiEscapes.colors.fg.green}server is now live on ${config.api.hostname}:${config.api.port}`,
-    ansiEscapes.reset,
-  )
+app.listen(config.api.port, config.api.host, () => {
+  console.log(`${styles.green.open}server is now live on ${config.api.host}:${config.api.port}`, styles.green.close)
 })

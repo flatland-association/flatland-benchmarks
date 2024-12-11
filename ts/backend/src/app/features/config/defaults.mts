@@ -1,0 +1,12 @@
+export const defaults = {
+  /* Public API */
+  api: {
+    host: 'localhost',
+    port: 8000,
+  },
+  /* AMQP endpoint */
+  amqp: {
+    host: 'localhost',
+    port: 5672,
+  },
+}
