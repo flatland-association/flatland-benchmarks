@@ -14,7 +14,8 @@
           "skipTests": true
         },
         "@schematics/angular:directive": {
-          "skipTests": true
+          "skipTests": true,
+          "flat": false
         },
         "@schematics/angular:guard": {
           "skipTests": true
@@ -23,13 +24,15 @@
           "skipTests": true
         },
         "@schematics/angular:pipe": {
-          "skipTests": true
+          "skipTests": true,
+          "flat": false
         },
         "@schematics/angular:resolver": {
           "skipTests": true
         },
         "@schematics/angular:service": {
-          "skipTests": true
+          "skipTests": true,
+          "flat": false
         }
       },
       "root": "ts/frontend",
