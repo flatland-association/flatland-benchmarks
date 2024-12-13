@@ -10,15 +10,14 @@ It illustrates how to integrate
 
 ## TL;DR
 
-1. Download `flatland-starter-kit/debug-environments` folder from
-2. Run
+1. Run
 
 ```shell
 cd evaluation
 docker compose up
 ```
 
-3. In separate shell, run
+2. In separate shell, run
 
 ```
 cd evaluation/ubmitter
@@ -29,7 +28,7 @@ python submitter.py
 \ End simulate submission from portal: rc=0, stdout=b...........
 ```
 
-4. In previous shell, run
+3. In previous shell, run
 
 ```
 # CTRL-C and then
