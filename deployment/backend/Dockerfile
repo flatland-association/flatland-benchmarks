@@ -1,17 +1,20 @@
-FROM node:alpine
-
+FROM node:23.5.0-alpine3.20 as builder
 RUN npm install -g @angular/cli
 
 WORKDIR /usr/src/app
 
-# TODO extract to builder container?
 COPY ./*.json /usr/src/app
 COPY ts /usr/src/app/ts
 
-RUN npm install
+RUN npm install && cd ts/backend && npm run build
 
-WORKDIR /usr/src/app/ts/backend
 
-# TODO production mode?
 
-CMD ["npm", "run", "serve"]
+FROM node:23.5.0-alpine3.20
+
+COPY --from=builder /usr/src/app/dist/backend/app /usr/src/app/dist/backend/app
+COPY --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
+
+WORKDIR /usr/src/app/dist/backend/app
+
+CMD ["node", "main.js"]
