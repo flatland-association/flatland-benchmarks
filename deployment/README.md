@@ -24,8 +24,6 @@ docker tag ghcr.io/flatland-association/fab:latest swr.eu-ch2.sc.otc.t-systems.c
 docker push swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE} --platform  linux/amd64
 ```
 
-TODO mount config.json
-
 ### Local multi-platform build/run
 
 ```shell
@@ -33,12 +31,7 @@ TODO mount config.json
 docker buildx build --platform linux/amd64,linux/arm64 -f deployment/frontend/Dockerfile -t benchmarking-frontend .
 
 # local run
-docker run --rm -p 4200:4200 benchmarking-frontend
-
-# push local build to registry
-IMAGE=benchmarking-frontend:latest
-docker tag docker.io/library/${IMAGE} swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE}
-docker push swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE} --platform  linux/amd64
+docker run --rm -p 80:80 benchmarking-frontend
 ```
 
 ```shell

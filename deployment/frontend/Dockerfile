@@ -1,14 +1,17 @@
-FROM node:alpine
-
+FROM node:23.5.0-alpine3.20 as builder
 RUN npm install -g @angular/cli
 
 WORKDIR /usr/src/app
 
-# TODO extract to builder container?
 COPY ./*.json /usr/src/app
 COPY ts /usr/src/app/ts
 
-RUN cd ts/frontend && npm install && ng build
+RUN npm install && cd ts/frontend && npm run build
 
-# TODO make dist and run behind nginx instead?
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+
+
+FROM nginx:latest
+
+COPY --from=builder /usr/src/app/dist/frontend/browser /usr/share/nginx/html
+
+EXPOSE 80
