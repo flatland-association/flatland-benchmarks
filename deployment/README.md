@@ -1,11 +1,9 @@
 ### frontend
 
 ```shell
-# push ci build to registry
+# push ci build to internal registry
 IMAGE=fab-frontend:latest
-docker pull ghcr.io/flatland-association/${IMAGE}
-docker tag ghcr.io/flatland-association/${IMAGE} swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE}
-docker push swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE}
+docker pull ghcr.io/flatland-association/${IMAGE} --platform  linux/amd64
 
 docker tag ghcr.io/flatland-association/fab:latest swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE}
 docker push swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE} --platform  linux/amd64
@@ -14,13 +12,10 @@ docker push swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE} --plat
 ### backend
 
 ```shell
-# push ci build to registry
+# push ci build to internal registry
 IMAGE=fab-backend:latest
-docker pull ghcr.io/flatland-association/${IMAGE}
+docker pull ghcr.io/flatland-association/${IMAGE} --platform  linux/amd64
 docker tag ghcr.io/flatland-association/${IMAGE} swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE}
-docker push swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE}
-
-docker tag ghcr.io/flatland-association/fab:latest swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE}
 docker push swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE} --platform  linux/amd64
 ```
 
