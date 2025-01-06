@@ -1,4 +1,4 @@
-FROM node:23.5.0-alpine3.20 as builder
+FROM node:23.5.0-alpine3.20 AS builder
 RUN npm install -g @angular/cli
 
 WORKDIR /usr/src/app
