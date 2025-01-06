@@ -11,7 +11,7 @@ docker run --rm -p 4200:4200 benchmarking-frontend
 IMAGE=benchmarking-frontend:latest
 ocker tag ghcr.io/flatland-association/fab:latest swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE}
 docker push swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE} --platform  linux/amd64
-
+  
 # push local build to registry
 IMAGE=benchmarking-frontend:latest
 docker tag docker.io/library/${IMAGE} swr.eu-ch2.sc.otc.t-systems.com/flatland-association/${IMAGE}
