@@ -1,4 +1,4 @@
-name: Build Keycloak Image
+name: Build FAB frontend and backend images and upload to ghcr.io
 
 on:
   workflow_dispatch:
