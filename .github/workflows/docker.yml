@@ -1,4 +1,4 @@
-name: Build Keycloak Image
+name: Build FAB frontend and backend images and upload to ghcr.io
 
 on:
   workflow_dispatch:
@@ -16,8 +16,8 @@ defaults:
     shell: bash
 
 jobs:
-  build-image:
-    name: Build Custom Keycloak Image
+  build-frontend-image:
+    name: Build frontend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -39,4 +39,28 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |
-            ghcr.io/flatland-association/fab:${{ github.event.inputs.tag }}
+            ghcr.io/flatland-association/fab-frontend:${{ github.event.inputs.tag }}
+  build-backend-image:
+    name: Build backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push Container Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deployment/backend/Dockerfile
+          platforms: linux/amd64,linux/arm64/v8
+          push: true
+          tags: |
+            ghcr.io/flatland-association/fab-backend:${{ github.event.inputs.tag }}
