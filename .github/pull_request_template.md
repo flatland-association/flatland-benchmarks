@@ -6,6 +6,10 @@ Describe the changes you made.
 
 Link to every issue from the issue tracker (if any) you addressed in this PR.
 
+## Request for Comment
+Risk: low/mid/high
+Discussion: low/mid/high
+
 ## Checklist
 
 - [ ] Tests are included for relevant behavior changes.
