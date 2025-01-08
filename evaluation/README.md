@@ -8,13 +8,13 @@ Referring to [Information Flow](../docs/img/architecture/InformationFlow.drawio.
 
 | Component           | Service                                                                                                                                                |
 |---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Evaluation Queue    | `rabbitmq`: send tasks to worker                                                                                                                       |
-| Compute Worker Pool | `compute_worker`: Celery worker, receives task and runs two containers `evaluator` and `agent`                                                         | 
-| Evaluator           | `evaluator`: waits for messages from agent                                                                                                             |
-| Agent               | `agent`: runs environments and sends messages to evaluator                                                                                             |
-| Result Store        | `redis`: kv store used for messaging                                                                                                                   |
+| Evaluation Queue    | `rabbitmq` send tasks to worker                                                                                                                        |
+| Compute Worker Pool | `compute_worker` Celery worker, receives task and runs two containers `evaluator` and `agent`                                                          | 
+| Evaluator           | `evaluator` waits for messages from agent                                                                                                              |
+| Agent               | `agent` runs environments and sends messages to evaluator                                                                                              |
+| Result Store        | `redis` kv store used for messaging                                                                                                                    |
 | Evaluation Broker   | N.B. The same `redis` instance is used as Celery backend (`codabench`) and for communication between `agent` and `evaluator` (`flatland-starter-kit`). |
-| (Flatland API)      | `submitter`: simulates submission from portal by scheduling `compute_worker` task                                                                      |
+| (Flatland API)      | `submitter` simulates submission from portal by scheduling `compute_worker` task                                                                       |
 
 Its starting point was an integration of
 
