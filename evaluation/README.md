@@ -1,8 +1,41 @@
-flatland-starterkit-docker-compose
-==================================
+Evaluation
+==========
 
-This repo provides a `docker-compose.yml`
+This directory provides a `docker-compose.yml`
 for [testing Flatland 3 submissions locally](https://flatland.aicrowd.com/challenges/flatland3/test-submissions-local.html#).
+
+Referring to [Information Flow](../docs/img/architecture/InformationFlow.drawio.png), it covers the components by running 7 services:
+
+| Component           | Service                                                                                                                                                |
+|---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Evaluation Queue    | `rabbitmq`: send tasks to worker                                                                                                                       |
+| Compute Worker Pool | `compute_worker`: Celery worker, receives task and runs two containers `evaluator` and `agent`                                                         | 
+| Evaluator           | `evaluator`: waits for messages from agent                                                                                                             |
+| Agent               | `agent`: runs environments and sends messages to evaluator                                                                                             |
+| Result Store        | `redis`: kv store used for messaging                                                                                                                   |
+| Evaluation Broker   | N.B. The same `redis` instance is used as Celery backend (`codabench`) and for communication between `agent` and `evaluator` (`flatland-starter-kit`). |
+| (Flatland API)      | `submitter`: simulates submission from portal by scheduling `compute_worker` task                                                                      |
+
+Its starting point was an integration of
+
+* [flatland-starter-kit](https://gitlab.aicrowd.com/flatland/flatland-starter-kit.git/) and
+* [codabench](https://github.com/codalab/codabench),
+
+both from a conceptual and an implementation point of view.
+
+### Deployment View
+
+![deployment.drawio.png](img/deployment.drawio.png)
+
+### Information Flow View
+
+> [!IMPORTANT]  
+> Arrows indicate the direction of information flow and not direction of calls!
+
+The following [UML information flow diagram](https://www.uml-diagrams.org/information-flow-diagrams.html) shows the exchange of information between system components at high level:
+
+![information_flow.drawio.png](img/information_flow.drawio.png)
+
 It illustrates how to integrate
 
 * [flatland-starter-kit](https://gitlab.aicrowd.com/flatland/flatland-starter-kit.git/)
@@ -34,33 +67,6 @@ python submitter.py
 # CTRL-C and then
 docker compose down
 ```
-
-## Architecture
-
-There are 7 services:
-
-* `redis`: kv store used for messaging
-* `rabbitmq`: send tasks to worker
-* `redis`: results from tasks
-* `submitter`: simulates submission from portal by scheduling `compute_worker` task
-* `compute_worker`: Celery worker, receives task and runs two containers:
-  * `evaluator`: waits for messages from agent
-  * `agent`: runs environments and sends messages to evaluator
-
-N.B. The same `redis` instance is used as Celery backend (`codabench`) and for communication between `agent` and `evaluator` (`flatland-starter-kit`).
-
-### Deployment View
-
-![deployment.drawio.png](img/deployment.drawio.png)
-
-### Information Flow View
-
-> [!IMPORTANT]  
-> Arrows indicate the direction of information flow and not direction of calls!
-
-The following [UML information flow diagram](https://www.uml-diagrams.org/information-flow-diagrams.html) shows the exchange of information between system components at high level:
-
-![information_flow.drawio.png](img/information_flow.drawio.png)
 
 ## Debunking Celery
 
