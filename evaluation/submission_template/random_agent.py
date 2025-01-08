@@ -19,7 +19,7 @@ my_observation_builder = GlobalObsForRailEnv()
 episode = 0
 
 while True:
-
+  print("/ start random_agent", flush=True)
   print("==============")
   episode += 1
   print("[INFO] EPISODE_START : {}".format(episode))
@@ -54,3 +54,4 @@ while True:
 
 print("Evaluation Complete...")
 print(remote_client.submit())
+print("\\ end random_agent", flush=True)

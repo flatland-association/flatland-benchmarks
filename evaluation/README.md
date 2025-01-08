@@ -4,6 +4,14 @@ Evaluation
 This directory provides a `docker-compose.yml`
 for [testing Flatland 3 submissions locally](https://flatland.aicrowd.com/challenges/flatland3/test-submissions-local.html#).
 
+Its starting point was an integration of
+
+* [flatland-starter-kit](https://gitlab.aicrowd.com/flatland/flatland-starter-kit.git/) and
+* [codabench](https://github.com/codalab/codabench),
+
+both from a conceptual and an implementation point of view.
+
+## Architecture
 Referring to [Information Flow](../docs/img/architecture/InformationFlow.drawio.png), it covers the components by running 7 services:
 
 | Component           | Service                                                                                                                                                |
@@ -16,12 +24,7 @@ Referring to [Information Flow](../docs/img/architecture/InformationFlow.drawio.
 | Evaluation Broker   | N.B. The same `redis` instance is used as Celery backend (`codabench`) and for communication between `agent` and `evaluator` (`flatland-starter-kit`). |
 | (Flatland API)      | `submitter` simulates submission from portal by scheduling `compute_worker` task                                                                       |
 
-Its starting point was an integration of
 
-* [flatland-starter-kit](https://gitlab.aicrowd.com/flatland/flatland-starter-kit.git/) and
-* [codabench](https://github.com/codalab/codabench),
-
-both from a conceptual and an implementation point of view.
 
 ### Deployment View
 
@@ -53,7 +56,7 @@ docker compose up
 2. In separate shell, run
 
 ```
-cd evaluation/ubmitter
+cd evaluation/submitter
 conda env update -f environment.yml
 conda activate benchmarksubmitter 
 python submitter.py

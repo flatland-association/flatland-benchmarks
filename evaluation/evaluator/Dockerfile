@@ -1,29 +1,25 @@
-FROM codalab/codalab-legacy:py37
+FROM continuumio/miniconda3
 
+RUN apt-get update && apt-get install gcc build-essential wget zip -y
 
 # Replace shell with bash so we can source files
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
-# download environment.yml for flatland-rl conda env
-# TODO hard-code in repo?
-RUN wget "https://gitlab.aicrowd.com/flatland/flatland-starter-kit/-/archive/master/flatland-starter-kit-master.zip" && \
-    unzip flatland-starter-kit-master.zip && \
-    rm flatland-starter-kit-master.zip
-WORKDIR flatland-starter-kit-master
+# Use non-root user
+RUN useradd conda --home-dir /home/conda --create-home
+RUN chown -R conda /opt/conda
+USER conda
 
 # setup flatland-rl conda env
-RUN conda --version  && \
+COPY environment.yml ./
+RUN set -e && set -x && conda --version  && \
     conda env create -f environment.yml && \
     conda init bash && \
-    source ~/.bashrc && \
+    source /home/conda/.bashrc && \
+    source activate base && \
     conda env list  && \
-    conda activate flatland-rl
+    conda activate flatland-rl && \
+    python -c 'from flatland.evaluators.service import FlatlandRemoteEvaluationService'
 
-# install flatland-rl pip package
-RUN python --version  && \
-    python -m pip install --upgrade pip && \
-    python -m pip install pyarrow flatland-rl
-
-COPY evaluator.py  ./
 COPY run.sh ./
-
+COPY evaluator.py ./

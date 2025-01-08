@@ -11,6 +11,8 @@ app = Celery(
 HOST_DIRECTORY = os.environ.get("HOST_DIRECTORY", "/tmp/codabench/")
 
 
+# docker run --rm -e redis_ip=redis -v /Users/che/workspaces/benchmarking/evaluation/evaluator/debug-environments/:/tmp/debug-environments/ --network evaluation_default evaluation-evaluator:latest bash run.sh
+# docker run --rm -e redis_ip=redis -e AICROWD_TESTS_FOLDER=/tmp/debug-environments/ -v /Users/che/workspaces/benchmarking/evaluation/evaluator/debug-environments/:/tmp/debug-environments/ --network evaluation_default evaluation-submission:latest bash run.sh
 # N.B. name to be used by send_task
 @app.task(name="doit")
 def the_task(docker_image: str, submission_image: str):
@@ -49,6 +51,7 @@ def the_task(docker_image: str, submission_image: str):
     loop=loop
   )
   loop.run_until_complete(gathered_tasks)
+  print("loop completed")
   return (future1.result(), future2.result())
 
 
@@ -62,3 +65,6 @@ async def run_async_and_catch_output(future, exec_args):
   print(exec_args)
   stdout, stderr = await proc.communicate()
   future.set_result((proc.returncode, stdout, stderr))
+  print(f"task rc={proc.returncode}")
+  print(f"task stdout={stdout}")
+  print(f"task stderr={stderr}")
