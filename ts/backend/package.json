@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "description": "FAB backend",
   "scripts": {
-    "serve": "tsc --project tsconfig.development.json && cd ../../out-tsc/backend/app && node main.js",
-    "build": "tsc",
+    "serve": "tsc --project tsconfig.development.json && mkdir -p ../../out-tsc/backend/config && cp -n src/config/config.jsonc \"$_\" && cd ../../out-tsc/backend/app && node main.mjs",
+    "build": "tsc && mkdir -p ../../dist/backend/config",
     "docker:rabbitmq": "docker run -d --name amqp.test -p 5672:5672 rabbitmq"
   }
 }

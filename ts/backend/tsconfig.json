@@ -13,12 +13,11 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "moduleResolution": "node16",
-    "resolveJsonModule": true,
     "importHelpers": true,
     "target": "ES2022",
     "module": "Node16"
   },
   "files": [
-    "src/app/main.ts"
+    "src/app/main.mts"
   ]
 }
