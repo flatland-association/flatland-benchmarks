@@ -76,7 +76,8 @@ ng generate --help
 
 For other features without provided schematics (i.e. `type`, `const`, `function`), create the `.ts` file manually.
 
-> For these kinds of features, no type infix is used. This is because one file could hold a mixture of feature types, especially when circular imports couldn't be prevented otherwise.
+For these kinds of features, no type infix is used. This is because one file could hold a mixture of feature types, especially when circular imports couldn't be prevented otherwise.
+
 
 ## Building
 
