@@ -5,7 +5,7 @@ import wait from '../utils/wait.mjs'
 import { Server } from './server.mjs'
 
 /**
- * Returns a short recap of requested endpoint (method + url).
+ * Returns a short recap of requested endpoint (method + url) for logging.
  */
 function dbgRequestEndpoint(req: Request) {
   return `${req.method} ${req.url}`
