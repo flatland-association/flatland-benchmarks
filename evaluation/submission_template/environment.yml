@@ -3,4 +3,4 @@ dependencies:
   - python==3.10.16
   - pip:
       - pyyaml
-      - flatland-rl==3.0.15
+      - flatland-rl==4.0.3
