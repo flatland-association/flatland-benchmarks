@@ -9,3 +9,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 * Added Angular project `ts/frontend`
 * Added Node.js project `ts/backend`
+* Added UI library `@flatland-association/flatland-ui`
