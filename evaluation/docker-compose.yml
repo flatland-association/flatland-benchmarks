@@ -73,13 +73,19 @@ services:
 
   evaluator:
     # build only, service exits immediately.
+    # TODO build independently from docker compose
     build:
       context: evaluator
       dockerfile: Dockerfile
+    entrypoint: /bin/bash
+    command: -c echo nix
 
 
   submission:
     # build only, service exits immediately.
+    # TODO build independently from docker compose
     build:
       context: submission_template
       dockerfile: Dockerfile
+    entrypoint: /bin/bash
+    command: -c echo nix

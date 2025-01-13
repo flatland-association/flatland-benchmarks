@@ -12,8 +12,6 @@ def my_controller(obs, _env):
   return _action
 
 
-# my_observation_builder = TreeObsForRailEnv(
-#     max_depth=3, predictor=ShortestPathPredictorForRailEnv())
 my_observation_builder = GlobalObsForRailEnv()
 
 episode = 0

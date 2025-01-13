@@ -23,3 +23,5 @@ RUN set -e && set -x && conda --version  && \
 
 COPY run.sh ./
 COPY evaluator.py ./
+
+ENTRYPOINT bash run.sh

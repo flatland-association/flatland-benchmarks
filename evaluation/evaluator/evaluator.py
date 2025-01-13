@@ -3,8 +3,6 @@ from flatland.evaluators.service import FlatlandRemoteEvaluationService
 if __name__ == '__main__':
   print("/ start grader", flush=True)
   grader = FlatlandRemoteEvaluationService(
-    # TODO hard-coded
-    test_env_folder="/tmp/debug-environments",
     # flatland_rl_service_id=service_id,
     visualize=False,
     # result_output_path=results_path,

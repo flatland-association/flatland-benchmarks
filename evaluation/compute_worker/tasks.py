@@ -26,12 +26,10 @@ def the_task(docker_image: str, submission_image: str):
       "--rm",
       "-e", "redis_ip=redis",
       # TODO workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....), establish convention for custom compute_workers...
-      "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/debug-environments/",
+      "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/",
       # TODO hacky: inject network name instead
       "--network", "evaluation_default",
       docker_image,
-      # TODO document as entry point
-      "bash", "run.sh"
     ]),
     run_async_and_catch_output(future2, exec_args=[
       "docker", "run",
@@ -41,12 +39,10 @@ def the_task(docker_image: str, submission_image: str):
       "-e", "AICROWD_TESTS_FOLDER=/tmp/debug-environments/",
       # TODO workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....)
       "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/debug-environments/",
-      # TODO hacky: inject network name instead
+      # TODO allow only
       "--network", "evaluation_default",
       # TODO hacky: extract image creation to submission submodule, extract from message?
       submission_image,
-      # TODO document as entry point
-      "bash", "run.sh"
     ]),
     loop=loop
   )

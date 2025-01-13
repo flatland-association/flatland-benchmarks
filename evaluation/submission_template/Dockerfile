@@ -23,3 +23,5 @@ RUN conda --version  && \
 
 COPY run.sh ./
 COPY random_agent.py ./
+
+ENTRYPOINT bash run.sh
