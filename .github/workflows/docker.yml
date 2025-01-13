@@ -1,4 +1,4 @@
-name: Build FAB frontend and backend images and upload to ghcr.io
+name: Build FAB frontend and backend, as well as Flatland evaluator and submission template images and upload to ghcr.io
 
 on:
   workflow_dispatch:
@@ -82,7 +82,7 @@ jobs:
       - name: Build and Push Container Image
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: evaluation/evaluator
           file: evaluation/evaluator/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
@@ -106,7 +106,7 @@ jobs:
       - name: Build and Push Container Image
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: evaluation/evaluator
           file: evaluation/submission_template/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
