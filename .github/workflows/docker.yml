@@ -65,7 +65,7 @@ jobs:
           tags: |
             ghcr.io/flatland-association/fab-backend:${{ github.event.inputs.tag }}
   build-flatland-evaluator:
-    name: Build frontend
+    name: Build Flatland Evaluator
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -89,7 +89,7 @@ jobs:
           tags: |
             ghcr.io/flatland-association/fab-flatland-evaluator:${{ github.event.inputs.tag }}
   build-flatland-submission-template:
-    name: Build frontend
+    name: Build Flatland Submission Template
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
