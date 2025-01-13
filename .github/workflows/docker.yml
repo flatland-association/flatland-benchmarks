@@ -106,7 +106,7 @@ jobs:
       - name: Build and Push Container Image
         uses: docker/build-push-action@v6
         with:
-          context: evaluation/evaluator
+          context: evaluation/submission_template
           file: evaluation/submission_template/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
