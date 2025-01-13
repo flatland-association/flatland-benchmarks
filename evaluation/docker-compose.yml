@@ -17,8 +17,6 @@ services:
       dockerfile: Dockerfile
       args:
         - WORKER_CONNECTION_TIMEOUT=${WORKER_CONNECTION_TIMEOUT}
-    # setting hostname here makes data persist properly between
-    # containers being destroyed..!
     hostname: rabbit
     env_file: .env
     environment:
@@ -28,8 +26,6 @@ services:
     ports:
       - ${RABBITMQ_MANAGEMENT_PORT:-15672}:15672
       - ${RABBITMQ_PORT}:5672
-    #    volumes:
-    #      - ./var/rabbit:/var/lib/rabbitmq
     restart: unless-stopped
     logging:
       options:
@@ -45,26 +41,21 @@ services:
 
   compute_worker:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
-    command: celery -A tasks worker -l info -n compute-worker@%n
-    working_dir: /app
+    command: python -m celery -A tasks worker -l info -n compute-worker@%n
     build:
       context: compute_worker
       dockerfile: Dockerfile
     depends_on:
-      #      - django
       rabbit:
         condition: service_healthy
     volumes:
-      - ./compute_worker:/app
-      #      - ${HOST_DIRECTORY:-/tmp/codabench}:/codabench
       # Actual connection back to docker parent to run things
+      # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 runn as non-root?
       - /var/run/docker.sock:/var/run/docker.sock
     env_file: .env
     environment:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//
       - HOST_DIRECTORY=${PWD}
-      #      # Make the worker leave behind the submission so we can examine it
-      #      - CODALAB_IGNORE_CLEANUP_STEP=1
       - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
     logging:
       options:
