@@ -44,9 +44,8 @@ services:
       - flatland-benchmarks
 
   compute_worker:
-    # TODO rapid prototyping with tasks.py - use compute_worker.py with codabench interface instead
-    #    command: bash -c "watchmedo auto-restart -p '*.py' --recursive -- celery -A compute_worker worker -l info -Q compute-worker -n compute-worker@%n"
-    command: celery -A tasks worker --loglevel=INFO
+    # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
+    command: celery -A tasks worker -l info -n compute-worker@%n
     working_dir: /app
     build:
       context: compute_worker
