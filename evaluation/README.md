@@ -81,11 +81,14 @@ Manual triggering via RabbitMQ web triggers `compute_worker`:
 
 ![celery_manual_publish.png](img/celery_manual_publish.png)
 
+TODO use ghcr images instead of local ones!
+
 ```json
 [
   [],
   {
-    "docker_image": "flatland-starterkit-docker-compose-evaluator:latest"
+    "docker_image": "evaluation-evaluator:latest",
+    "submission_image": "evaluation-submission:latest"
   },
   {
     "callbacks": null,
