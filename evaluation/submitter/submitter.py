@@ -10,7 +10,7 @@ app = Celery(
 if __name__ == '__main__':
   print("/ Start simulate submission from portal.....")
   ((rc, stdout, stderr), (rc2, stdout2, stderr2)) = app.send_task(
-    'doit',
+    'flatland3-evaluation',
     # TODO build docker image
     # TODO pass submission image as well - currently hard-coded to this same value
     kwargs={"docker_image": "evaluation-evaluator:latest",

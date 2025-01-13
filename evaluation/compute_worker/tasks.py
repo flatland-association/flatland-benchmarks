@@ -16,7 +16,7 @@ BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
 # docker run --rm -e redis_ip=redis -v /Users/che/workspaces/benchmarking/evaluation/evaluator/debug-environments/:/tmp/debug-environments/ --network evaluation_default evaluation-evaluator:latest bash run.sh
 # docker run --rm -e redis_ip=redis -e AICROWD_TESTS_FOLDER=/tmp/debug-environments/ -v /Users/che/workspaces/benchmarking/evaluation/evaluator/debug-environments/:/tmp/debug-environments/ --network evaluation_default evaluation-submission:latest bash run.sh
 # N.B. name to be used by send_task
-@app.task(name="doit")
+@app.task(name="flatland3-evaluation")
 def the_task(docker_image: str, submission_image: str):
   assert BENCHMARKING_NETWORK is not None
   loop = asyncio.new_event_loop()
