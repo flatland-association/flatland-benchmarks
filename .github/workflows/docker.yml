@@ -1,4 +1,4 @@
-name: Build FAB frontend and backend, as well as Flatland evaluator and submission template images and upload to ghcr.io
+name: Build FAB images and upload to ghcr.io
 
 on:
   workflow_dispatch:
