@@ -64,6 +64,8 @@ services:
       - HOST_DIRECTORY=${PWD}
     #      # Make the worker leave behind the submission so we can examine it
     #      - CODALAB_IGNORE_CLEANUP_STEP=1
+      # TODO hacky - define network
+      - BENCHMARKING_NETWORK=evaluation_default
     logging:
       options:
         max-size: "20m"
@@ -73,7 +75,7 @@ services:
 
   evaluator:
     # build only, service exits immediately.
-    # TODO build independently from docker compose
+    # TODO build independently from docker compose -> ghcr
     build:
       context: evaluator
       dockerfile: Dockerfile
@@ -83,7 +85,7 @@ services:
 
   submission:
     # build only, service exits immediately.
-    # TODO build independently from docker compose
+    # TODO build independently from docker compose -> ghcr
     build:
       context: submission_template
       dockerfile: Dockerfile
