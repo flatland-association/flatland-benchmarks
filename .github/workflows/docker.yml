@@ -17,7 +17,7 @@ defaults:
 
 jobs:
   build-frontend-image:
-    name: Build frontend
+    name: Build FAB Frontend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -41,7 +41,7 @@ jobs:
           tags: |
             ghcr.io/flatland-association/fab-frontend:${{ github.event.inputs.tag }}
   build-backend-image:
-    name: Build backend
+    name: Build FAB Backend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
