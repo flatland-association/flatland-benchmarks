@@ -9,4 +9,12 @@ export const defaults = {
     host: 'localhost',
     port: 5672,
   },
+  /* Postgres database server */
+  postgres: {
+    host: 'localhost',
+    port: 5432,
+    user: 'benchmarks',
+    password: 'benchmarks',
+    database: 'benchmarks',
+  },
 }
