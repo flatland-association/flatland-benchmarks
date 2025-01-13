@@ -76,6 +76,8 @@
     "typescript-eslint": "8.16.0"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "docker:up": "cd evaluation && docker compose up -d",
+    "docker:down": "cd evaluation && docker compose down"
   }
 }
