@@ -8,7 +8,8 @@ services:
       options:
         max-size: "20m"
         max-file: "5"
-
+    networks:
+      - flatland-benchmarks
 
   rabbit:
     build:
@@ -39,6 +40,8 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+    networks:
+      - flatland-benchmarks
 
   compute_worker:
     # TODO rapid prototyping with tasks.py - use compute_worker.py with codabench interface instead
@@ -60,17 +63,18 @@ services:
     env_file: .env
     environment:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//
-      # TODO: is ${PWD} safe?
       - HOST_DIRECTORY=${PWD}
       #      # Make the worker leave behind the submission so we can examine it
       #      - CODALAB_IGNORE_CLEANUP_STEP=1
-      # TODO hacky - define network
-      - BENCHMARKING_NETWORK=evaluation_default
+      - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
     logging:
       options:
         max-size: "20m"
         max-file: "5"
     healthcheck:
       test: celery -A tasks inspect ping
+    networks:
+      - flatland-benchmarks
 
-
+networks:
+  flatland-benchmarks:
