@@ -62,8 +62,8 @@ services:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//
       # TODO: is ${PWD} safe?
       - HOST_DIRECTORY=${PWD}
-    #      # Make the worker leave behind the submission so we can examine it
-    #      - CODALAB_IGNORE_CLEANUP_STEP=1
+      #      # Make the worker leave behind the submission so we can examine it
+      #      - CODALAB_IGNORE_CLEANUP_STEP=1
       # TODO hacky - define network
       - BENCHMARKING_NETWORK=evaluation_default
     logging:
@@ -73,21 +73,4 @@ services:
     healthcheck:
       test: celery -A tasks inspect ping
 
-  evaluator:
-    # build only, service exits immediately.
-    # TODO build independently from docker compose -> ghcr
-    build:
-      context: evaluator
-      dockerfile: Dockerfile
-    entrypoint: /bin/bash
-    command: -c echo nix
 
-
-  submission:
-    # build only, service exits immediately.
-    # TODO build independently from docker compose -> ghcr
-    build:
-      context: submission_template
-      dockerfile: Dockerfile
-    entrypoint: /bin/bash
-    command: -c echo nix
