@@ -10,11 +10,11 @@ app = Celery(
 
 HOST_DIRECTORY = os.environ.get("HOST_DIRECTORY", "/tmp/codabench/")
 
-# TODO should we set up an ad-hoc network? What about communication to rabbit?
+# TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 should we set up an ad-hoc network? What about communication to rabbit?
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
 
-# docker run --rm -e redis_ip=redis -v /Users/che/workspaces/benchmarking/evaluation/evaluator/debug-environments/:/tmp/debug-environments/ --network evaluation_default evaluation-evaluator:latest bash run.sh
-# docker run --rm -e redis_ip=redis -e AICROWD_TESTS_FOLDER=/tmp/debug-environments/ -v /Users/che/workspaces/benchmarking/evaluation/evaluator/debug-environments/:/tmp/debug-environments/ --network evaluation_default evaluation-submission:latest bash run.sh
+
+# TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 start own redis for evaluator <-> submission communication? Split in flatland-repo?
 # N.B. name to be used by send_task
 @app.task(name="flatland3-evaluation")
 def the_task(docker_image: str, submission_image: str):
@@ -28,7 +28,7 @@ def the_task(docker_image: str, submission_image: str):
       "docker", "run",
       "--rm",
       "-e", "redis_ip=redis",
-      # TODO workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....), establish convention for custom compute_workers...
+      # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....), establish convention for custom compute_workers...
       "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/",
       "--network", BENCHMARKING_NETWORK,
       docker_image,
@@ -37,11 +37,11 @@ def the_task(docker_image: str, submission_image: str):
       "docker", "run",
       "--rm",
       "-e", "redis_ip=redis",
-      # TODO should data be mounted or...?
+      # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 https://github.com/flatland-association/flatland-benchmarks/issues/27 should data be mounted or...?
       "-e", "AICROWD_TESTS_FOLDER=/tmp/debug-environments/",
-      # TODO workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....)
+      # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....)
       "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/debug-environments/",
-      # TODO ensure no traffic going to the outside world.
+      # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 ensure no traffic going to the outside world.
       "--network", BENCHMARKING_NETWORK,
       submission_image,
     ]),
