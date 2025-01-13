@@ -21,20 +21,19 @@ def the_task(docker_image: str, submission_image: str):
   assert BENCHMARKING_NETWORK is not None
   loop = asyncio.new_event_loop()
   # TODO use compute_worker.py instead, which has most of the async spawning magic?
-  future1 = loop.create_future()
-  future2 = loop.create_future()
+  evaluator_future = loop.create_future()
+  submission_future = loop.create_future()
   gathered_tasks = asyncio.gather(
-    run_async_and_catch_output(future1, exec_args=[
+    run_async_and_catch_output(evaluator_future, exec_args=[
       "docker", "run",
       "--rm",
       "-e", "redis_ip=redis",
       # TODO workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....), establish convention for custom compute_workers...
       "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/",
-      # TODO hacky: inject network name instead
       "--network", BENCHMARKING_NETWORK,
       docker_image,
     ]),
-    run_async_and_catch_output(future2, exec_args=[
+    run_async_and_catch_output(submission_future, exec_args=[
       "docker", "run",
       "--rm",
       "-e", "redis_ip=redis",
@@ -50,7 +49,7 @@ def the_task(docker_image: str, submission_image: str):
   )
   loop.run_until_complete(gathered_tasks)
   print("loop completed")
-  return (future1.result(), future2.result())
+  return (evaluator_future.result(), submission_future.result())
 
 
 async def run_async_and_catch_output(future, exec_args):
