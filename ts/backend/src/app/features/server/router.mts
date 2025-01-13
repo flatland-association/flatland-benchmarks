@@ -1,6 +1,7 @@
 import amqp from 'amqplib'
 import type { Request } from 'express'
 import express from 'express'
+import { SqlService } from '../services/sql-service.mjs'
 import wait from '../utils/wait.mjs'
 import { Server } from './server.mjs'
 
@@ -90,6 +91,51 @@ export function router(server: Server) {
       next(error)
     }
   })
+
+  // Sets up tables in database
+  router.get('/dbsetup', async (req, res) => {
+    const sql = SqlService.getInstance()
+    const result = await sql?.setup()
+    res.json(result)
+  })
+
+  // apiService.post('submissions', {submission_image: "ghcr.io/flatland-association/fab-flatland-submission-template:latest"})
+  router.post('/submissions', async (req, res) => {
+    const submission_image = req.body.submission_image
+    if (typeof submission_image !== 'string') {
+      res.json('ERROR: `submission_image` must be string')
+      return
+    }
+    const sql = SqlService.getInstance()
+    if (!sql) {
+      res.json('ERROR: SqlService not available')
+      return
+    }
+    const id = await sql.query`
+      INSERT INTO submissions (
+        submission_image
+      ) VALUES (
+        ${submission_image}
+      )
+      RETURNING id
+    `
+    res.json(id)
+  })
+
+  router.get('/submissions', async (req, res) => {
+    const sql = SqlService.getInstance()
+    if (!sql) {
+      res.json('ERROR: SqlService not available')
+      return
+    }
+    const submissions = await sql.query`
+      SELECT * FROM submissions
+      ORDER BY id ASC
+    `
+    res.json(submissions)
+  })
+
+  // TODO: /submission/:id/run to queue run
 
   return router
 }
