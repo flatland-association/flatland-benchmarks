@@ -1,0 +1,22 @@
+<lib-content>
+  <h2 class="pb-8 text-2xl font-bold text-neutral-500">Participate</h2>
+  <div class="flex flex-col gap-y-8">
+    <label class="block text-left">
+      <span>Your submission (URL to Docker image)</span>
+      <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-image-url" [(ngModel)]="submissionImageUrl">
+    </label>
+
+    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="submit()">
+      Submit
+    </button>
+  </div>
+</lib-content>
+
+@if (submissionResult) {
+  <lib-content>
+    <h2 class="pb-8 text-2xl font-bold text-neutral-500">Your results</h2>
+    <div class="font-mono">
+      {{ submissionResult }}
+    </div>
+  </lib-content>
+}
