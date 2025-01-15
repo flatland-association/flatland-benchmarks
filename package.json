@@ -78,6 +78,7 @@
   "scripts": {
     "prepare": "husky",
     "docker:up": "cd evaluation && docker compose up -d",
+    "docker:up:cvolumes": "cd evaluation && docker compose --env-file .env.cvolumes --env-file .env up -d",
     "docker:down": "cd evaluation && docker compose down"
   }
 }

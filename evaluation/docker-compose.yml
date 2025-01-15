@@ -21,6 +21,8 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - ${POSTGRES_PORT}:5432
+    volumes:
+      - ${POSTGRES_VOLUME:-./var/postgres}:/var/lib/postgresql/data:delegated
 
   pgadmin:
     image: dpage/pgadmin4
@@ -33,6 +35,8 @@ services:
       - PGADMIN_LISTEN_ADDRESS=0.0.0.0
     ports:
       - ${PGADMIN_LISTEN_PORT}:15432
+    volumes:
+      - ${PGADMIN_VOLUME:-./var/pgadmin}:/var/lib/pgadmin:delegated
 
   rabbit:
     build:
