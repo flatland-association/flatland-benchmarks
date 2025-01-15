@@ -1,0 +1,70 @@
+services:
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    networks:
+      - flatland-benchmarks
+
+  rabbit:
+    build:
+      context: rabbitmq
+      dockerfile: Dockerfile
+      args:
+        - WORKER_CONNECTION_TIMEOUT=${WORKER_CONNECTION_TIMEOUT}
+    hostname: rabbit
+    env_file: .env
+    environment:
+      - http_proxy=${RABBITMQ_HTTP_PROXY}
+      - https_proxy=${RABBITMQ_HTTPS_PROXY}
+      - no_proxy=${RABBITMQ_NO_PROXY}
+    ports:
+      - ${RABBITMQ_MANAGEMENT_PORT:-15672}:15672
+      - ${RABBITMQ_PORT}:5672
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 1s
+      timeout: 3s
+      retries: 30
+    networks:
+      - flatland-benchmarks
+
+  compute_worker:
+    # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
+    command: python -m celery -A tasks worker -l info -n compute-worker@%n
+    build:
+      context: compute_worker
+      dockerfile: Dockerfile
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    volumes:
+      # Actual connection back to docker parent to run things
+      # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 runn as non-root?
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file: .env
+    environment:
+      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//
+      - HOST_DIRECTORY=${PWD}
+      - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: celery -A tasks inspect ping
+    networks:
+      - flatland-benchmarks
+
+networks:
+  flatland-benchmarks:

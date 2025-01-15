@@ -1,0 +1,6 @@
+name: flatland-rl
+dependencies:
+  - python==3.10.16
+  - pip:
+      - pyyaml
+      - flatland-rl==4.0.3
