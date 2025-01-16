@@ -3,6 +3,9 @@
   "compilerOptions": {
     "outDir": "../../dist/backend",
     "rootDir": "./src",
+    "paths": {
+      "@common/*": ["./src/common/*"]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
