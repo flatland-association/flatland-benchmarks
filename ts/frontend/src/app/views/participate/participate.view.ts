@@ -16,16 +16,16 @@ export class ParticipateView {
   constructor(public apiService: ApiService) {}
 
   async submit() {
-    const idRow = await this.apiService.post('submissions', {
-      submission_image: this.submissionImageUrl,
+    const response = await this.apiService.post('/submissions', {
+      body: { submission_image: this.submissionImageUrl },
     })
-    if (idRow instanceof Array) {
-      const id = idRow.at(0)?.id
+    if (response.body?.id) {
+      const id = response.body.id
       console.log(id)
       const interval = window.setInterval(() => {
-        this.apiService.get(`submissions/${id}`).then((res) => {
-          if (res) {
-            this.submissionResult = JSON.stringify(res)
+        this.apiService.get('/submissions/:id', { params: { id: `${id}` } }).then((res) => {
+          if (res.body) {
+            this.submissionResult = JSON.stringify(res.body)
             window.clearInterval(interval)
           }
           console.log(res)

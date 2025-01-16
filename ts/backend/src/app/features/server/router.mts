@@ -1,6 +1,9 @@
+import type { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
+import { ApiResponse } from '@common/api-response.mjs'
 import amqp from 'amqplib'
-import type { Request } from 'express'
+import type { NextFunction, Request, Response, Router } from 'express'
 import express from 'express'
+import type { RequestHandler, RouteParameters } from 'express-serve-static-core'
 import { createClient } from 'redis'
 import { SqlService } from '../services/sql-service.mjs'
 import wait from '../utils/wait.mjs'
@@ -31,86 +34,193 @@ function dbgRequestObject(req: Request) {
   }
 }
 
+/*
+The wrapper functions serve two purposes:
+1. They provide a common try catch wrap around the handler.
+2. they allow type inferring from route (Express' types are too convoluted to
+   be overriden by declares IMHO).
+*/
+
+// typed overload
+/**
+ * Attach a GET endpoint handler.
+ * @param router Express router.
+ * @param endpoint String represantation of the route.
+ * @param handler Handler function.
+ * @see {@link ApiGetEndpoints}
+ */
+function attachGet<E extends keyof ApiGetEndpoints>(
+  router: Router,
+  endpoint: E,
+  handler: (
+    req: Request<RouteParameters<E>, unknown, ApiGetEndpoints[E]['request']['body']>,
+    res: Response<ApiGetEndpoints[E]['response']>,
+    next: NextFunction,
+  ) => void | Promise<void>,
+): void
+// un-typed fallback overload
+function attachGet(router: Router, endpoint: string, handler: RequestHandler): void
+
+function attachGet(router: Router, endpoint: string, handler: RequestHandler) {
+  router.get(endpoint, async (req, res, next) => {
+    try {
+      await handler(req, res, next)
+    } catch (error) {
+      next(error)
+    }
+  })
+}
+
+// typed overload
+/**
+ * Attach a POST endpoint handler.
+ * @param router Express router.
+ * @param endpoint String represantation of the route.
+ * @param handler Handler function.
+ * @see {@link ApiPostEndpoints}
+ */
+function attachPost<E extends keyof ApiPostEndpoints>(
+  router: Router,
+  endpoint: E,
+  handler: (
+    req: Request<RouteParameters<E>, unknown, ApiPostEndpoints[E]['request']['body']>,
+    res: Response<ApiPostEndpoints[E]['response']>,
+    next: NextFunction,
+  ) => void | Promise<void>,
+): void
+// un-typed fallback overload
+function attachPost(router: Router, endpoint: string, handler: RequestHandler): void
+
+function attachPost(router: Router, endpoint: string, handler: RequestHandler) {
+  router.post(endpoint, async (req, res, next) => {
+    try {
+      await handler(req, res, next)
+    } catch (error) {
+      next(error)
+    }
+  })
+}
+
+/**
+ * Send a well-typed JSON response with optional debug info.
+ * @param res Express response.
+ * @param body Response body. Type is derived from endpoint registry.
+ * @param dbg Additional debug info.
+ * @see {@link ApiResponse}
+ */
+function respond<T>(res: Response<ApiResponse<T>>, body: T, dbg?: unknown) {
+  res.json({
+    body: body,
+    dbg,
+  })
+}
+
+/**
+ * Send a well-typed error with code 400 (Bad request), additional error text
+ * and optional debug info.
+ * @param res Express response.
+ * @param error Error object.
+ * @param dbg Additional debug info.
+ * @see {@link ApiResponse}
+ */
+function requestError<T>(res: Response<ApiResponse<T>>, error: ApiResponse<T>['error'], dbg?: unknown) {
+  res.status(400)
+  res.json({
+    error,
+    dbg,
+  })
+}
+
+/**
+ * Send a well-typed error with code 500 (Internal server error), additional
+ * error text and optional debug info.
+ * @param res Express response.
+ * @param error Error object.
+ * @param dbg Additional debug info.
+ * @see {@link ApiResponse}
+ */
+function serverError<T>(res: Response<ApiResponse<T>>, error: ApiResponse<T>['error'], dbg?: unknown) {
+  res.status(500)
+  res.json({
+    error,
+    dbg,
+  })
+}
+
 export function router(server: Server) {
   const router = express.Router()
 
-  // Returns JSON excerpt of request
-  router.get('/mirror', (req, res) => {
-    console.log(dbgRequestEndpoint(req))
-    res.json(dbgRequestObject(req))
+  // mirror endpoints - for dev/debug purposes
+  attachGet(router, '/mirror', (req, res) => {
+    respond(res, 'This is the /mirror endpoint', dbgRequestObject(req))
   })
 
-  // Returns JSON excerpt of request
-  router.get('/mirror/:id', (req, res) => {
-    console.log(dbgRequestEndpoint(req))
-    res.json(dbgRequestObject(req))
+  attachGet(router, '/mirror/:id', (req, res) => {
+    respond(res, 'This is the /mirror/:id endpoint', dbgRequestObject(req))
   })
 
-  // Returns JSON excerpt of request
-  router.post('/mirror', (req, res) => {
-    console.log(dbgRequestEndpoint(req))
-    res.json(dbgRequestObject(req))
+  attachPost(router, '/mirror', (req, res) => {
+    // do not set body.data to see `requestError` in action
+    // do not set body at all to see fallback error handling in action
+    if (!req.body.data) {
+      requestError(res, { text: 'No data set in request body' })
+      return
+    } else {
+      respond(res, req.body, dbgRequestObject(req))
+    }
   })
 
   // Returns last message in amqp queue
-  router.get('/amqp', async (req, res, next) => {
-    try {
-      console.log(dbgRequestEndpoint(req))
-      // connect to debug queue on rabbitmq server
-      const connection = await amqp.connect(`amqp://${server.config.amqp.host}:${server.config.amqp.port}`)
-      const channel = await connection.createChannel()
-      channel.assertQueue('debug', { durable: false })
-      // consume messages
-      let message: string | undefined = undefined
-      channel.consume('debug', (msg) => {
-        message = msg?.content.toString()
-      })
-      // await timeout (gives back control to main event loop for the consume callback)
-      await wait(100)
-      // close connection
-      connection.close()
-      // report last consumed message
-      res.json(`relayed from "debug": ${message ?? null}`)
-    } catch (error) {
-      next(error)
-    }
+  attachGet(router, '/ampq', async (req, res) => {
+    console.log(dbgRequestEndpoint(req))
+    // connect to debug queue on rabbitmq server
+    const connection = await amqp.connect(`amqp://${server.config.amqp.host}:${server.config.amqp.port}`)
+    const channel = await connection.createChannel()
+    channel.assertQueue('debug', { durable: false })
+    // consume messages
+    let message: string | undefined = undefined
+    channel.consume('debug', (msg) => {
+      message = msg?.content.toString()
+    })
+    // await timeout (gives back control to main event loop for the consume callback)
+    await wait(100)
+    // close connection
+    connection.close()
+    // report last consumed message
+    respond(res, `relayed from "debug": ${message ?? null}`)
   })
 
   // Posts a message to amqp queue
-  router.post('/amqp', async (req, res, next) => {
-    try {
-      console.log(dbgRequestEndpoint(req))
-      // connect to debug queue on rabbitmq server
-      const connection = await amqp.connect(`amqp://${server.config.amqp.host}:${server.config.amqp.port}`)
-      const channel = await connection.createChannel()
-      channel.assertQueue('debug', { durable: false })
-      // send message
-      channel.sendToQueue('debug', Buffer.from(JSON.stringify(req.body)))
-      // report what was sent
-      res.json(`relayed to "debug": ${JSON.stringify(req.body)}`)
-    } catch (error) {
-      next(error)
-    }
+  attachPost(router, '/ampq', async (req, res) => {
+    console.log(dbgRequestEndpoint(req))
+    // connect to debug queue on rabbitmq server
+    const connection = await amqp.connect(`amqp://${server.config.amqp.host}:${server.config.amqp.port}`)
+    const channel = await connection.createChannel()
+    channel.assertQueue('debug', { durable: false })
+    // send message
+    channel.sendToQueue('debug', Buffer.from(JSON.stringify(req.body)))
+    // report what was sent
+    respond(res, `relayed to "debug": ${JSON.stringify(req.body)}`)
   })
 
   // Sets up tables in database
-  router.get('/dbsetup', async (req, res) => {
+  attachGet(router, '/dbsetup', async (req, res) => {
     const sql = SqlService.getInstance()
     const result = await sql?.setup()
-    res.json(result)
+    respond(res, result)
   })
 
   // apiService.post('submissions', {submission_image: "ghcr.io/flatland-association/fab-flatland-submission-template:latest"})
-  router.post('/submissions', async (req, res) => {
+  attachPost(router, '/submissions', async (req, res) => {
     const submission_image = req.body.submission_image
     if (typeof submission_image !== 'string') {
-      res.json('ERROR: `submission_image` must be string')
+      requestError(res, { text: '`submission_image` must be string' })
       return
     }
     // save submission in db
     const sql = SqlService.getInstance()
     if (!sql) {
-      res.json('ERROR: SqlService not available')
+      serverError(res, { text: 'SqlService not available' })
       return
     }
     const idRow = await sql.query`
@@ -121,7 +231,7 @@ export function router(server: Server) {
       )
       RETURNING id
     `
-    const id = idRow.at(0)?.['id'] ?? 'null'
+    const id: number = idRow.at(0)?.['id'] ?? 0
     // start evaluator
     const connection = await amqp.connect(`amqp://${server.config.amqp.host}:${server.config.amqp.port}`)
     const channel = await connection.createChannel()
@@ -147,47 +257,43 @@ export function router(server: Server) {
       contentType: 'application/json',
       persistent: true,
     })
-    res.json(idRow)
+    respond(res, { id })
   })
 
-  router.get('/submissions', async (req, res) => {
+  attachGet(router, '/submissions', async (req, res) => {
     const sql = SqlService.getInstance()
     if (!sql) {
-      res.json('ERROR: SqlService not available')
+      serverError(res, { text: 'SqlService not available' })
       return
     }
     const submissions = await sql.query`
       SELECT * FROM submissions
       ORDER BY id ASC
     `
-    res.json(submissions)
+    respond(res, submissions)
   })
 
-  router.get('/submissions/:id', async (req, res, next) => {
+  attachGet(router, '/submissions/:id', async (req, res) => {
     const id = req.params.id
-    try {
-      const client = await createClient()
-        .on('error', (err) => console.log('Redis Client Error', err))
-        .connect()
+    const client = await createClient()
+      .on('error', (err) => console.log('Redis Client Error', err))
+      .connect()
 
-      // console.log(await client.keys('*'))
+    // console.log(await client.keys('*'))
 
-      const keys = await client.keys(`*-sub${id}`)
+    const keys = await client.keys(`*-sub${id}`)
 
-      if (!keys || keys.length == 0) {
-        res.json(null)
-        return
-      }
-
-      // assume keys[0] is the one we're interested in
-      const key = keys[0]
-      const value = JSON.parse((await client.get(key)) ?? 'null')
-
-      await client.disconnect()
-      res.json(value)
-    } catch (error) {
-      next(error)
+    if (!keys || keys.length == 0) {
+      respond(res, null)
+      return
     }
+
+    // assume keys[0] is the one we're interested in
+    const key = keys[0]
+    const value = JSON.parse((await client.get(key)) ?? 'null')
+
+    await client.disconnect()
+    respond(res, value)
   })
 
   // TODO: /submission/:id/run to queue run
