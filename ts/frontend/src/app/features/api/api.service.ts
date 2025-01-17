@@ -1,18 +1,14 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
-import type { BanNull, EmptyToNull } from '@common/utility-types.mjs'
+import type { BanEmpty, Empty } from '@common/utility-types.mjs'
 import type { RouteParameters } from 'express-serve-static-core'
 import { firstValueFrom } from 'rxjs'
 import { environment } from '../../../environments/environment'
 
 /*
-If there should ever be the possibility to call unregistered endpoints, use
-
-const symUnregistered = Symbol()
-export type UnregisteredEndpoint = string & { [symUnregistered]: number }
-
-and invoke the api method using `"endpoint" as UnregisteredEndpoint`.
+If there should ever be the possibility to call unregistered endpoints, use the
+commented out overloads.
 */
 
 @Injectable({
@@ -25,31 +21,47 @@ export class ApiService {
     window['apiService'] = this
   }
 
-  public async get<E extends keyof ApiGetEndpoints>(
-    endpoint: E,
-    options: BanNull<{
-      params: EmptyToNull<RouteParameters<E>>
+  // typed overload
+  /**
+   * Send GET request to API.
+   * @param endpoint String representation of the enpoint route.
+   * @param options Request options.
+   * @see {@link ApiGetEndpoints}
+   */
+  public async get<
+    E extends keyof ApiGetEndpoints,
+    O extends BanEmpty<{
+      params: RouteParameters<E>
     }>,
-  ): Promise<ApiGetEndpoints[E]['response']>
-  // public async get(endpoint: UnregisteredEndpoint, options: unknown): Promise<unknown>
+  >(endpoint: E, ...options: Empty extends O ? [options?: undefined] : [O]): Promise<ApiGetEndpoints[E]['response']>
+  // un-typed fallback overload
+  // public async get<E extends string>(endpoint: NotKeyOf<E, ApiGetEndpoints>, options?: unknown): Promise<unknown>
 
-  public async get(endpoint: string, options: { params?: undefined }) {
-    const response = await firstValueFrom(this.http.get(this.buildUrl(endpoint, options.params)))
+  public async get(endpoint: string, options?: { params?: undefined }) {
+    const response = await firstValueFrom(this.http.get(this.buildUrl(endpoint, options?.params)))
     console.log(response)
     return response
   }
 
-  public async post<E extends keyof ApiPostEndpoints>(
-    endpoint: E,
-    options: BanNull<{
-      params: EmptyToNull<RouteParameters<E>>
+  // typed overload
+  /**
+   * Send POST request to API.
+   * @param endpoint String representation of the enpoint route.
+   * @param options Request options.
+   * @see {@link ApiGetEndpoints}
+   */
+  public async post<
+    E extends keyof ApiPostEndpoints,
+    O extends BanEmpty<{
+      params: RouteParameters<E>
       body: ApiPostEndpoints[E]['request']['body']
     }>,
-  ): Promise<ApiPostEndpoints[E]['response']>
-  // public async post(endpoint: UnregisteredEndpoint, options: unknown): Promise<unknown>
+  >(endpoint: E, ...options: Empty extends O ? [options?: undefined] : [O]): Promise<ApiPostEndpoints[E]['response']>
+  // un-typed fallback overload
+  // public async post<E extends string>(endpoint: NotKeyOf<E, ApiPostEndpoints>, options?: unknown): Promise<unknown>
 
-  public async post(endpoint: string, options: { params?: undefined; body?: unknown }) {
-    const response = await firstValueFrom(this.http.post(this.buildUrl(endpoint, options.params), options.body))
+  public async post(endpoint: string, options?: { params?: undefined; body?: unknown }) {
+    const response = await firstValueFrom(this.http.post(this.buildUrl(endpoint, options?.params), options?.body))
     console.log(response)
     return response
   }

@@ -1,10 +1,11 @@
 import { ApiRequest } from './api-request.mjs'
 import { ApiResponse } from './api-response.mjs'
+import { Empty } from './utility-types.mjs'
 
 /**
  * Base interface for registered API endpoints.
- * @param Request Type of request body. Use `null` to indicate absence.
- * @param Response Type of response body. Use `null` to indicate absence.
+ * @param Request Type of request body. Use `Empty` to indicate absence.
+ * @param Response Type of response body. Use `null` or `Empty` to indicate absence.
  */
 export interface ApiEndpoint<Request, Response> {
   request: ApiRequest<Request>
@@ -18,12 +19,13 @@ export interface ApiEndpoint<Request, Response> {
  * @see {@link ApiEndpoint}
  */
 export interface ApiGetEndpoints {
-  '/mirror': ApiEndpoint<null, string>
-  '/mirror/:id': ApiEndpoint<null, string>
-  '/dbsetup': ApiEndpoint<null, unknown>
-  '/ampq': ApiEndpoint<null, string>
-  '/submissions': ApiEndpoint<null, unknown>
-  '/submissions/:id': ApiEndpoint<null, unknown>
+  '/mirror': ApiEndpoint<Empty, string>
+  '/mirror/:id': ApiEndpoint<Empty, string>
+  '/dbsetup': ApiEndpoint<Empty, unknown>
+  '/ampq': ApiEndpoint<Empty, string>
+  '/submissions': ApiEndpoint<Empty, unknown>
+  '/submissions/:id': ApiEndpoint<Empty, unknown>
+  '/test': ApiEndpoint<Empty, Empty>
 }
 
 /**

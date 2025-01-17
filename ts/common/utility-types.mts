@@ -1,18 +1,23 @@
 /**
- * Utility type turning the empty object `{}` into `null`.
+ * Utility type for the empty object `{}`.
  */
-export type EmptyToNull<T> = Record<string, never> extends T ? null : T
+export type Empty = Record<string, never>
 
 /**
- * Utility type making all `null` typed fields in T optional and re-type them
+ * Utility type making all `Empty` typed fields in T optional and re-type them
  * as `undefined`, effectively banning them from T.
  */
-export type BanNull<T> =
+export type BanEmpty<T> =
   // prettier-ignore
   {
-    // build a type that is the intersection of all "null" fields made optional
-    [K in keyof T as null extends T[K] ? K : never]?: undefined
+    // build a type that is the intersection of all "Empty" fields made optional
+    [K in keyof T as Empty extends T[K] ? K : never]?: undefined
   } & {
     //... and all others as-is
-    [K in keyof T as null extends T[K] ? never : K]: T[K]
+    [K in keyof T as Empty extends T[K] ? never : K]: T[K]
   }
+
+/**
+ * Guard type for checking if `T` is not a key of `R`.
+ */
+export type NotKeyOf<T, R> = T extends keyof R ? never : T
