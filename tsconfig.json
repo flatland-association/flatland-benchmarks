@@ -5,7 +5,7 @@
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "paths": {
-      "@common/*": ["./ts/backend/src/common/*"]
+      "@common/*": ["./ts/common/*"]
     },
     "strict": true,
     "noImplicitOverride": true,

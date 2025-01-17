@@ -1,1 +1,0 @@
-This directory will move to `/ts/common` eventually. However, doing so will change the folder structure of `/out-tsc/backend` and require a touch-up of deployment scripts.

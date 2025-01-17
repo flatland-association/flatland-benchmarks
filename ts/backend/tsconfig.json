@@ -1,10 +1,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "../../dist/backend",
-    "rootDir": "./src",
+    "outDir": "../../out-tsc/backend-build",
+    // "rootDir": "./src",
+    "rootDirs": ["./src", "../common"],
     "paths": {
-      "@common/*": ["./src/common/*"]
+      "@common/*": ["../common/*"]
     },
     "strict": true,
     "noImplicitOverride": true,
@@ -15,10 +16,10 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node16",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "Node16"
+    "module": "ES2022"
   },
   "files": [
     "src/app/main.mts"
