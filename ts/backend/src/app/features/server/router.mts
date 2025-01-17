@@ -59,7 +59,7 @@ function attachGet<E extends keyof ApiGetEndpoints>(
   ) => void | Promise<void>,
 ): void
 // un-typed fallback overload
-function attachGet(router: Router, endpoint: string, handler: RequestHandler): void
+// function attachGet(router: Router, endpoint: string, handler: RequestHandler): void
 
 function attachGet(router: Router, endpoint: string, handler: RequestHandler) {
   router.get(endpoint, async (req, res, next) => {
@@ -89,7 +89,7 @@ function attachPost<E extends keyof ApiPostEndpoints>(
   ) => void | Promise<void>,
 ): void
 // un-typed fallback overload
-function attachPost(router: Router, endpoint: string, handler: RequestHandler): void
+// function attachPost(router: Router, endpoint: string, handler: RequestHandler): void
 
 function attachPost(router: Router, endpoint: string, handler: RequestHandler) {
   router.post(endpoint, async (req, res, next) => {
