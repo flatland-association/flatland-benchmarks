@@ -1,44 +1,16 @@
 import { json } from '@common/utility-types.mjs'
 import amqp from 'amqplib'
 import { configuration } from '../config/config.mjs'
-
-const instances = new Map<string, AmpqService>()
-
-// // eslint-disable-next-line @typescript-eslint/no-explicit-any
-// export type json = any
-
-// TODO: base class Service with getInstance() and just hack together late static binding FFS
+import { Service } from './service.mjs'
 
 /**
  * Service class providing common AMQP functionality.
  */
-export class AmpqService {
-  // default is always available
-  /**
-   * Returns a previously constructed instance of `AmpqService`.
-   * @returns Default `AmpqService` instance.
-   */
-  static getInstance(): AmpqService
-
-  //... others might not necessarily be
-  /**
-   * Returns a previously constructed instance of `AmpqService`.
-   * @param ident Instance identifier.
-   * @returns A `AmpqService` instance or `undefined` when an un-constructed instance was requested.
-   */
-  static getInstance(ident: string): AmpqService | undefined
-
-  static getInstance(ident = 'default') {
-    return instances.get(ident)
-  }
-
+export class AmpqService extends Service {
   channelPromise
 
-  constructor(
-    public config: configuration,
-    ident = 'default',
-  ) {
-    instances.set(ident, this)
+  constructor(config: configuration) {
+    super(config)
 
     this.channelPromise = amqp.connect(`amqp://${this.config.amqp.host}:${this.config.amqp.port}`).then((conn) => {
       return conn.createChannel()

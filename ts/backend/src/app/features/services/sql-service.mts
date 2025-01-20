@@ -1,31 +1,11 @@
 import postgres from 'postgres'
 import { configuration } from '../config/config.mjs'
-
-const instances = new Map<string, SqlService>()
+import { Service } from './service.mjs'
 
 /**
  * Service class providing common SQL functionality.
  */
-export class SqlService {
-  // default is always available
-  /**
-   * Returns a previously constructed instance of `SqlService`.
-   * @returns Default `SqlService` instance.
-   */
-  static getInstance(): SqlService
-
-  //... others might not necessarily be
-  /**
-   * Returns a previously constructed instance of `SqlService`.
-   * @param ident Instance identifier.
-   * @returns A `SqlService` instance or `undefined` when an un-constructed instance was requested.
-   */
-  static getInstance(ident: string): SqlService | undefined
-
-  static getInstance(ident = 'default') {
-    return instances.get(ident)
-  }
-
+export class SqlService extends Service {
   /**
    * Template tag to make SQL queries.
    * @example
@@ -36,18 +16,15 @@ export class SqlService {
    */
   query
 
-  constructor(
-    public config: configuration,
-    ident = 'default',
-  ) {
-    instances.set(ident, this)
+  constructor(config: configuration) {
+    super(config)
 
     this.query = postgres({
-      host: config.postgres.host,
-      port: config.postgres.port,
-      user: config.postgres.user,
-      password: config.postgres.password,
-      database: config.postgres.database,
+      host: this.config.postgres.host,
+      port: this.config.postgres.port,
+      user: this.config.postgres.user,
+      password: this.config.postgres.password,
+      database: this.config.postgres.database,
     })
   }
 

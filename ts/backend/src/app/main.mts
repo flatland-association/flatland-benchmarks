@@ -6,8 +6,9 @@ import { SqlService } from './features/services/sql-service.mjs'
 
 const config = loadConfig()
 // set up services first
-new SqlService(config)
-new AmpqService(config)
+SqlService.create(config)
+AmpqService.create(config)
+
 // once services are set up, start server
 new Server(config)
 
