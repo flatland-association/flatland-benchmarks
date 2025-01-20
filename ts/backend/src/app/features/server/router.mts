@@ -1,12 +1,11 @@
 import type { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
 import { ApiResponse } from '@common/api-response.mjs'
-import amqp from 'amqplib'
 import type { NextFunction, Request, Response, Router } from 'express'
 import express from 'express'
 import type { RequestHandler, RouteParameters } from 'express-serve-static-core'
 import { createClient } from 'redis'
+import { AmpqService } from '../services/ampq-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
-import wait from '../utils/wait.mjs'
 import { Server } from './server.mjs'
 
 /**
@@ -147,7 +146,7 @@ function serverError<T>(res: Response<ApiResponse<T>>, error: ApiResponse<T>['er
   })
 }
 
-export function router(server: Server) {
+export function router(_server: Server) {
   const router = express.Router()
 
   // mirror endpoints - for dev/debug purposes
@@ -173,32 +172,24 @@ export function router(server: Server) {
   // Returns last message in amqp queue
   attachGet(router, '/ampq', async (req, res) => {
     console.log(dbgRequestEndpoint(req))
-    // connect to debug queue on rabbitmq server
-    const connection = await amqp.connect(`amqp://${server.config.amqp.host}:${server.config.amqp.port}`)
-    const channel = await connection.createChannel()
-    channel.assertQueue('debug', { durable: false })
-    // consume messages
-    let message: string | undefined = undefined
-    channel.consume('debug', (msg) => {
-      message = msg?.content.toString()
-    })
-    // await timeout (gives back control to main event loop for the consume callback)
-    await wait(100)
-    // close connection
-    connection.close()
-    // report last consumed message
-    respond(res, `relayed from "debug": ${message ?? null}`)
+    const ampq = AmpqService.getInstance()
+    const channel = await ampq.getChannel()
+    // Using the pull API is *perfectly* fine here because this is a debug
+    // method for dev purposes only.
+    const message = await channel.get('debug', { noAck: true })
+    if (message) {
+      respond(res, `relayed from "debug": ${message.content.toString() ?? null}`)
+    } else {
+      respond(res, 'no messages to relay from "debug"')
+    }
   })
 
   // Posts a message to amqp queue
   attachPost(router, '/ampq', async (req, res) => {
     console.log(dbgRequestEndpoint(req))
-    // connect to debug queue on rabbitmq server
-    const connection = await amqp.connect(`amqp://${server.config.amqp.host}:${server.config.amqp.port}`)
-    const channel = await connection.createChannel()
-    channel.assertQueue('debug', { durable: false })
-    // send message
-    channel.sendToQueue('debug', Buffer.from(JSON.stringify(req.body)))
+    // send message to debug queue
+    const ampq = AmpqService.getInstance()
+    await ampq.sendToQueue('debug', req.body)
     // report what was sent
     respond(res, `relayed to "debug": ${JSON.stringify(req.body)}`)
   })
@@ -229,9 +220,7 @@ export function router(server: Server) {
     `
     const id: number = idRow.at(0)?.['id'] ?? 0
     // start evaluator
-    const connection = await amqp.connect(`amqp://${server.config.amqp.host}:${server.config.amqp.port}`)
-    const channel = await connection.createChannel()
-    channel.assertQueue('celery', { durable: true })
+    const ampq = AmpqService.getInstance()
     const payload = [
       [],
       {
@@ -245,7 +234,7 @@ export function router(server: Server) {
         chord: null,
       },
     ]
-    channel.sendToQueue('celery', Buffer.from(JSON.stringify(payload)), {
+    ampq.sendToQueue('celery', payload, {
       headers: {
         task: 'flatland3-evaluation',
         id: `sub${id}`,
