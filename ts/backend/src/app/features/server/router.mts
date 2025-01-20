@@ -206,7 +206,7 @@ export function router(server: Server) {
   // Sets up tables in database
   attachGet(router, '/dbsetup', async (req, res) => {
     const sql = SqlService.getInstance()
-    const result = await sql?.setup()
+    const result = await sql.setup()
     respond(res, result)
   })
 
@@ -219,10 +219,6 @@ export function router(server: Server) {
     }
     // save submission in db
     const sql = SqlService.getInstance()
-    if (!sql) {
-      serverError(res, { text: 'SqlService not available' })
-      return
-    }
     const idRow = await sql.query`
       INSERT INTO submissions (
         submission_image
@@ -262,10 +258,6 @@ export function router(server: Server) {
 
   attachGet(router, '/submissions', async (req, res) => {
     const sql = SqlService.getInstance()
-    if (!sql) {
-      serverError(res, { text: 'SqlService not available' })
-      return
-    }
     const submissions = await sql.query`
       SELECT * FROM submissions
       ORDER BY id ASC
