@@ -1,6 +1,6 @@
 import { ApiRequest } from './api-request.mjs'
 import { ApiResponse } from './api-response.mjs'
-import { Empty } from './utility-types.mjs'
+import { Empty, json } from './utility-types.mjs'
 
 /**
  * Base interface for registered API endpoints.
@@ -34,7 +34,6 @@ export interface ApiGetEndpoints {
  */
 export interface ApiPostEndpoints {
   '/mirror': ApiEndpoint<{ data: unknown }, unknown>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  '/ampq': ApiEndpoint<any, string>
+  '/ampq': ApiEndpoint<json, string>
   '/submissions': ApiEndpoint<{ submission_image: string }, { id: number }>
 }

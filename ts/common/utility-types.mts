@@ -21,3 +21,11 @@ export type BanEmpty<T> =
  * Guard type for checking if `T` is not a key of `R`.
  */
 export type NotKeyOf<T, R> = T extends keyof R ? never : T
+
+// `undefined` does not actually occur in JSON, but it's allowed as value in
+// `JSON.stringify`.
+/**
+ * Data type for values that can be serialized and deserialized using
+ * `JSON.stringify` and `JSON.parse`.
+ */
+export type json = boolean | number | string | null | undefined | { [key: string]: json } | json[]
