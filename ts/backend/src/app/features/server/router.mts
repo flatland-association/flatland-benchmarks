@@ -6,6 +6,7 @@ import type { RequestHandler, RouteParameters } from 'express-serve-static-core'
 import { createClient } from 'redis'
 import { AmpqService } from '../services/ampq-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
+import { Schema } from '../setup/schema.mjs'
 import { Server } from './server.mjs'
 
 /**
@@ -196,9 +197,8 @@ export function router(_server: Server) {
 
   // Sets up tables in database
   attachGet(router, '/dbsetup', async (req, res) => {
-    const sql = SqlService.getInstance()
-    const result = await sql.setup()
-    respond(res, result)
+    Schema.setup()
+    respond(res, null)
   })
 
   // apiService.post('submissions', {submission_image: "ghcr.io/flatland-association/fab-flatland-submission-template:latest"})
