@@ -27,6 +27,12 @@ export class SqlService extends Service {
    * ```
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates | Tagged Templates}
    */
+  query(
+    strings: TemplateStringsArray,
+    ...params: (number | string)[]
+  ): Promise<postgres.RowList<postgres.Row[]> | never[]>
+  query<T>(strings: TemplateStringsArray, ...params: (number | string)[]): Promise<T[]>
+
   query(strings: TemplateStringsArray, ...params: (number | string)[]) {
     this.notices = undefined
     this.errors = undefined
