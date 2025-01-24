@@ -1,36 +1,32 @@
-import { Component } from '@angular/core'
-import { FormsModule } from '@angular/forms'
+import { Component, OnInit } from '@angular/core'
+import { RouterModule } from '@angular/router'
+import { Benchmark } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
+import { BenchmarkCardComponent } from '../../components/benchmark-card/benchmark-card.component'
 import { ApiService } from '../../features/api/api.service'
 
 @Component({
   selector: 'view-participate',
-  imports: [FormsModule, ContentComponent],
+  imports: [ContentComponent, RouterModule, BenchmarkCardComponent],
   templateUrl: './participate.view.html',
   styleUrl: './participate.view.scss',
 })
-export class ParticipateView {
-  submissionImageUrl = ''
-  submissionResult?: string
+export class ParticipateView implements OnInit {
+  benchmarks?: Benchmark[]
 
   constructor(public apiService: ApiService) {}
 
-  async submit() {
-    const response = await this.apiService.post('/submissions', {
-      body: { submission_image: this.submissionImageUrl },
-    })
-    if (response.body?.id) {
-      const id = response.body.id
-      console.log(id)
-      const interval = window.setInterval(() => {
-        this.apiService.get('/submissions/:id', { params: { id: `${id}` } }).then((res) => {
-          if (res.body) {
-            this.submissionResult = JSON.stringify(res.body)
-            window.clearInterval(interval)
-          }
-          console.log(res)
-        })
-      }, 1000)
-    }
+  async ngOnInit() {
+    const URIs = (await this.apiService.get('/benchmarks')).body
+    // TODO: concentrate requests
+    this.benchmarks = URIs
+      ? (
+          await Promise.all(
+            URIs?.map(async (uri) => {
+              return (await this.apiService.get<Benchmark[]>(uri)).body?.at(0)
+            }),
+          )
+        ).filter((b) => !!b)
+      : []
   }
 }
