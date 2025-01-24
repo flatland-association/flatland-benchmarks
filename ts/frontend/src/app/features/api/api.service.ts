@@ -69,10 +69,7 @@ export class ApiService {
   buildUrl(endpoint: string, params?: Record<string, string>) {
     // replace all known :<name> params first
     if (params) {
-      Object.entries(params).forEach(([key, value]) => {
-        // replace ':' + key + boundary with interpolated value
-        endpoint = endpoint.replace(new RegExp(`:${key}\\b`), `${value}`)
-      })
+      endpoint = interpolateEndpoint(endpoint, params)
     }
     // prepend api base (the delimiting '/' is supposed to be in endpoint)
     return `${environment.apiBase}${endpoint}`
