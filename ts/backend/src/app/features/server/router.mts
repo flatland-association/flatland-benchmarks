@@ -1,5 +1,7 @@
 import type { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
 import { ApiResponse } from '@common/api-response.mjs'
+import { spreadEndpoints } from '@common/endpoint-utils.mjs'
+import { Benchmark, Resource } from '@common/interfaces.mjs'
 import type { NextFunction, Request, Response, Router } from 'express'
 import express from 'express'
 import type { RequestHandler, RouteParameters } from 'express-serve-static-core'
@@ -199,6 +201,24 @@ export function router(_server: Server) {
   attachGet(router, '/dbsetup', async (req, res) => {
     Schema.setup()
     respond(res, null)
+  })
+
+  attachGet(router, '/benchmarks', async (req, res) => {
+    const sql = SqlService.getInstance()
+    const rows = await sql.query<Resource>`
+      SELECT id FROM benchmarks
+      ORDER BY id ASC
+    `
+    respond(res, spreadEndpoints('/benchmarks/:id', rows))
+  })
+  attachGet(router, '/benchmarks/:id', async (req, res) => {
+    const sql = SqlService.getInstance()
+    const rows = await sql.query<Benchmark>`
+      SELECT * FROM benchmarks
+      WHERE id=${req.params.id}
+      LIMIT 1
+    `
+    respond(res, rows)
   })
 
   // apiService.post('submissions', {submission_image: "ghcr.io/flatland-association/fab-flatland-submission-template:latest"})
