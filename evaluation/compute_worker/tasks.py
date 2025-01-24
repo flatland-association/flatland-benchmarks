@@ -10,7 +10,7 @@ logger = logging.getLogger()
 
 app = Celery(
     broker=os.environ.get('BROKER_URL'),
-    backend='redis://redis:6379',
+  backend=os.environ.get('REDIS_IP'),
 )
 
 HOST_DIRECTORY = os.environ.get("HOST_DIRECTORY", "/tmp/codabench/")

@@ -55,6 +55,7 @@ services:
     env_file: .env
     environment:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//
+      - REDIS_IP=redis://redis:6379
       - HOST_DIRECTORY=${PWD}
       - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
     logging:
