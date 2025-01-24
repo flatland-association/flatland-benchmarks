@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
-import type { BanEmpty, Empty } from '@common/utility-types.mjs'
+import { ApiResponse } from '@common/api-response.mjs'
+import { interpolateEndpoint } from '@common/endpoint-utils.mjs'
+import type { BanEmpty, Empty, NotKeyOf } from '@common/utility-types.mjs'
 import type { RouteParameters } from 'express-serve-static-core'
 import { firstValueFrom } from 'rxjs'
 import { environment } from '../../../environments/environment'
@@ -35,7 +37,13 @@ export class ApiService {
     }>,
   >(endpoint: E, ...options: Empty extends O ? [options?: undefined] : [O]): Promise<ApiGetEndpoints[E]['response']>
   // un-typed fallback overload
-  // public async get<E extends string>(endpoint: NotKeyOf<E, ApiGetEndpoints>, options?: unknown): Promise<unknown>
+  // (have to use the NotKeyOf approach here, otherwise typed calls with option
+  // type mismatch would be interpreted as a call of the un-typed overload and
+  // pass linting)
+  public async get<E extends string>(endpoint: NotKeyOf<E, ApiGetEndpoints>, options?: unknown): Promise<unknown>
+  // overload for when the response type is known a priori and doesn't need to
+  // be inferred from the endpoint
+  public async get<R>(endpoint: string, options?: unknown): Promise<ApiResponse<R>>
 
   public async get(endpoint: string, options?: { params?: undefined }) {
     const response = await firstValueFrom(this.http.get(this.buildUrl(endpoint, options?.params)))
