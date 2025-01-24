@@ -1,4 +1,4 @@
-name: Build FAB Flatland 3 evaluator and submission template images and upload to ghcr.io
+name: Build FAB Flatland 3 compute worker, evaluator and submission template images and upload to ghcr.io
 
 on:
   workflow_dispatch:
