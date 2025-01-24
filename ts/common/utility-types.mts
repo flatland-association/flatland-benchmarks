@@ -29,3 +29,38 @@ export type NotKeyOf<T, R> = T extends keyof R ? never : T
  * `JSON.stringify` and `JSON.parse`.
  */
 export type json = boolean | number | string | null | undefined | { [key: string]: json } | json[]
+
+/**
+ * Coerces given type to accept `string | number` where it initially only
+ * accepted `string`.
+ */
+export type AcceptNumberAsString<T> =
+  // build intersection type of
+  {
+    //... required string fields coerced to string | number
+    [K in keyof RequiredOnly<T> as T[K] extends string ? K : never]: string | number
+  } & {
+    //... optional string fields coerced to ?: string | number
+    [K in keyof OptionalOnly<T> as T[K] extends string | undefined ? K : never]?: string | number
+  } & {
+    //... and all others as-is
+    [K in keyof RequiredOnly<T> as T[K] extends string ? never : K]: T[K]
+  } & {
+    [K in keyof OptionalOnly<T> as T[K] extends string | undefined ? never : K]?: T[K]
+  }
+// TODO: decide whether it should coerce deep or top level only
+// TODO: decide whether it should accept all primitives (+ rename)
+
+/**
+ * Utility type removing all optional fields.
+ */
+export type RequiredOnly<T> = {
+  [K in keyof T as T[K] extends Required<T>[K] ? K : never]: T[K]
+}
+
+/**
+ * Utility type removing all required fields.
+ */
+export type OptionalOnly<T> = {
+  [K in keyof T as T[K] extends Required<T>[K] ? never : K]: T[K]
+}
