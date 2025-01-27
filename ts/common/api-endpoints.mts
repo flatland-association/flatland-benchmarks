@@ -24,12 +24,8 @@ export interface ApiGetEndpoints {
   '/mirror/:id': ApiEndpoint<Empty, string>
   '/dbsetup': ApiEndpoint<Empty, unknown>
   '/ampq': ApiEndpoint<Empty, string>
-  // List gets should only return URIs instead of resources. This enables
-  // effective caching on the client side.
-  '/benchmarks': ApiEndpoint<Empty, string[]>
-  // Resource gets should always return an array of type. This future-proofs
-  // get handlers for multi-id requests.
-  '/benchmarks/:id': ApiEndpoint<Empty, Benchmark[]>
+  '/benchmarks': ApiEndpoint<Empty, string[]> // string[] - dev.001
+  '/benchmarks/:id': ApiEndpoint<Empty, Benchmark[]> // [] - dev.002
   '/submissions': ApiEndpoint<Empty, unknown>
   '/submissions/:id': ApiEndpoint<Empty, unknown>
   '/test': ApiEndpoint<Empty, Empty>
