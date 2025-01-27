@@ -76,8 +76,8 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str):
         _ret["job_status"] = job.status.conditions[0].type
         _ret["image_id"] = pod.status.container_statuses[0].image_id
         _ret["log"] = log
-        _ret["job"] = job
-        _ret["pod"] = pod
+        _ret["job"] = job.to_dict()
+        _ret["pod"] = pod.to_dict()
         ret[job_name] = _ret
 
   all_completed = all([s == "Complete" for s in status])
