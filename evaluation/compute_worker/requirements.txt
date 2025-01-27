@@ -1,1 +1,2 @@
-celery[redis]
+celery[redis]==5.4.0
+kubernetes==31.0.0
