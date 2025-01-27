@@ -41,9 +41,14 @@ export class ApiService {
   // type mismatch would be interpreted as a call of the un-typed overload and
   // pass linting)
   public async get<E extends string>(endpoint: NotKeyOf<E, ApiGetEndpoints>, options?: unknown): Promise<unknown>
-  // overload for when the response type is known a priori and doesn't need to
-  // be inferred from the endpoint
-  public async get<R>(endpoint: string, options?: unknown): Promise<ApiResponse<R>>
+  // Overload for when the response type is known a priori and doesn't need to
+  // be inferred from the endpoint.
+  // The use of NotKeyOf is necessary, otherwise a type-mismatch in the typed
+  // overload will fall through to this one.
+  public async get<R, E extends string = string>(
+    endpoint: NotKeyOf<E, ApiGetEndpoints>,
+    options?: unknown,
+  ): Promise<ApiResponse<R>>
 
   public async get(endpoint: string, options?: { params?: undefined }) {
     const response = await firstValueFrom(this.http.get(this.buildUrl(endpoint, options?.params)))
