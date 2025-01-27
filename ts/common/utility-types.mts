@@ -35,20 +35,19 @@ export type json = boolean | number | string | null | undefined | { [key: string
  * accepted `string`.
  */
 export type AcceptNumberAsString<T> =
-  // build intersection type of
+  // prettier-ignore
   {
-    //... required string fields coerced to string | number
-    [K in keyof RequiredOnly<T> as T[K] extends string ? K : never]: string | number
-  } & {
-    //... optional string fields coerced to ?: string | number
-    [K in keyof OptionalOnly<T> as T[K] extends string | undefined ? K : never]?: string | number
-  } & {
-    //... and all others as-is
-    [K in keyof RequiredOnly<T> as T[K] extends string ? never : K]: T[K]
-  } & {
-    [K in keyof OptionalOnly<T> as T[K] extends string | undefined ? never : K]?: T[K]
+    // remap all keys
+    [K in keyof T]:
+      //... from string
+      T[K] extends string ? string | number :
+      //... from string | undefined
+      T[K] extends string | undefined ? string | number | undefined :
+      //... leave the rest as-is
+      T[K]
   }
 // TODO: decide whether it should coerce deep or top level only
+// TODO: decide whether string | null should also be coerced
 // TODO: decide whether it should accept all primitives (+ rename)
 
 /**
