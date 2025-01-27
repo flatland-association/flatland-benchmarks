@@ -1,7 +1,7 @@
 import type { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
 import { ApiResponse } from '@common/api-response.mjs'
 import { spreadEndpoints } from '@common/endpoint-utils.mjs'
-import { Benchmark, Resource } from '@common/interfaces.mjs'
+import { Benchmark, Resource, Test } from '@common/interfaces.mjs'
 import type { NextFunction, Request, Response, Router } from 'express'
 import express from 'express'
 import type { RequestHandler, RouteParameters } from 'express-serve-static-core'
@@ -233,31 +233,59 @@ export function router(_server: Server) {
     respond(res, rows)
   })
 
+  attachGet(router, '/tests/:ids', async (req, res) => {
+    const ids = req.params.ids.split(',').map((s) => +s)
+    const sql = SqlService.getInstance()
+    // id=ANY - dev.003
+    const rows = await sql.query<Test>`
+      SELECT * FROM tests
+      WHERE id=ANY(${ids})
+      LIMIT ${ids.length}
+    `
+    // return array - dev.002
+    respond(res, rows, dbgSqlState(sql))
+  })
+
   // apiService.post('submissions', {submission_image: "ghcr.io/flatland-association/fab-flatland-submission-template:latest"})
   attachPost(router, '/submissions', async (req, res) => {
-    const submission_image = req.body.submission_image
-    if (typeof submission_image !== 'string') {
-      requestError(res, { text: '`submission_image` must be string' })
-      return
-    }
     // save submission in db
     const sql = SqlService.getInstance()
     const idRow = await sql.query`
       INSERT INTO submissions (
-        submission_image
+        benchmark,
+        submission_image,
+        code_repository,
+        tests
       ) VALUES (
-        ${submission_image}
+        ${req.body.benchmark},
+        ${req.body.submission_image},
+        ${req.body.code_repository},
+        ${req.body.tests}
       )
       RETURNING id
     `
     const id: number = idRow.at(0)?.['id'] ?? 0
+    // get benchmark docker image
+    const [{ dockerImage }] = await sql.query`
+      SELECT docker_image FROM benchmarks
+      WHERE id=${req.body.benchmark}
+    `
+    // get test names
+    const tests = (
+      await sql.query<{ name: string }>`
+        SELECT name FROM tests
+        WHERE id=ANY(${req.body.tests})
+        LIMIT ${req.body.tests.length}
+      `
+    ).map((r) => r.name)
     // start evaluator
     const ampq = AmpqService.getInstance()
     const payload = [
       [],
       {
-        docker_image: 'ghcr.io/flatland-association/fab-flatland-evaluator:latest',
-        submission_image: submission_image,
+        docker_image: dockerImage,
+        submission_image: req.body.submission_image,
+        tests: tests,
       },
       {
         callbacks: null,
@@ -274,7 +302,7 @@ export function router(_server: Server) {
       contentType: 'application/json',
       persistent: true,
     })
-    respond(res, { id })
+    respond(res, { id }, payload)
   })
 
   attachGet(router, '/submissions', async (req, res) => {
