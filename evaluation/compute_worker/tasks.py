@@ -52,8 +52,7 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str):
   batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
 
   done = False
-  status = []
-  logs = []
+  ret = {}
   while not done:
     print(".")
     jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"task_id={task_id}")
@@ -63,25 +62,29 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str):
 
     for job in jobs.items:
       done = done and job.status.conditions is not None
-      if job.status.conditions is not None:
-        status.append(job.status.conditions[0].type)
 
     if done:
       for job in jobs.items:
-        pods = core_api.list_namespaced_pod(namespace=KUBERNETES_NAMESPACE, label_selector=f"job-name={job.metadata.name}")
+        status.append(job.status.conditions[0].type)
+        job_name = job.metadata.name
+        pods = core_api.list_namespaced_pod(namespace=KUBERNETES_NAMESPACE, label_selector=f"job-name={job_name}")
         assert len(pods.items) == 1
         pod = pods.items[0]
         log = core_api.read_namespaced_pod_log(pod.metadata.name, namespace=KUBERNETES_NAMESPACE)
-        logs.append(log)
+
+        _ret = {}
+        _ret["job_status"] = job.status.conditions[0].type
+        _ret["image_id"] = pod.status.container_statuses[0].image_id
+        _ret["log"] = log
+        _ret["job"] = job
+        _ret["pod"] = pod
+        ret[job_name] = _ret
 
   all_completed = all([s == "Complete" for s in status])
   print(f"done {status}, all_completed={all_completed}")
   duration = time.time() - start_time
-  logger.info(f"\\ end task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.")
-
-  # TODO dict instead?
-  ret = list(zip(status, logs))
   print(ret)
+  logger.info(f"\\ end task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.")
   return ret
 
 
@@ -90,6 +93,6 @@ if __name__ == '__main__':
   config.load_kube_config()
   run_evaluation(
     task_id=TASK_ID,
-    submission_image="swr.eu-ch2.sc.otc.t-systems.com/flatland-association/fab-flatland-submission-template:latest",
-    docker_image="swr.eu-ch2.sc.otc.t-systems.com/flatland-association/fab-flatland-evaluator:latest",
+    submission_image="ghcr.io/flatland-association/fab-flatland-submission-template:latest",
+    docker_image="ghcr.io/flatland-association/fab-flatland-evaluator:latest",
   )
