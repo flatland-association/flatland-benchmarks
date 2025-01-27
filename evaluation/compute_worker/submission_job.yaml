@@ -15,6 +15,7 @@ spec:
             - name: AICROWD_TESTS_FOLDER
               value: /tmp
           image:
+          pullPolicy: Always
           name: f3-submission
           volumeMounts:
             - mountPath: /tmp
