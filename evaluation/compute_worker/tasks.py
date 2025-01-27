@@ -16,7 +16,11 @@ app = Celery(
 )
 
 KUBERNETES_NAMESPACE = os.environ.get("KUBERNETES_NAMESPACE", "nge-int")
-
+AWS_ENDPOINT_URL = os.environ.get("https://obs.eu-ch2.sc.otc.t-systems.com", None)
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
+S3_BUCKET = os.environ.get("S3_BUCKET", None)
+AICROWD_IS_GRADING = os.environ.get("AICROWD_IS_GRADING", None)
 
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 start own redis for evaluator <-> submission communication? Split in flatland-repo?
 # N.B. name to be used by send_task
@@ -40,14 +44,29 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str):
   evaluator_definition = yaml.safe_load(open("evaluator_job.yaml"))
   evaluator_definition["metadata"]["name"] = f"{evaluator_definition['metadata']['name']}-{task_id}"
   evaluator_definition["metadata"]["labels"]["task_id"] = task_id
-  evaluator_definition["spec"]["template"]["spec"]["containers"][0]["image"] = docker_image
+  evaluator_container_definition = evaluator_definition["spec"]["template"]["spec"]["containers"][0]
+  evaluator_container_definition["image"] = docker_image
+  evaluator_container_definition["env"].append({"name": "AICROWD_SUBMISSION_ID", "value": task_id})
+
+  if AWS_ENDPOINT_URL:
+    evaluator_container_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": AWS_ENDPOINT_URL})
+  if AWS_ACCESS_KEY_ID:
+    evaluator_container_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": AWS_ACCESS_KEY_ID})
+  if AWS_SECRET_ACCESS_KEY:
+    evaluator_container_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": AWS_SECRET_ACCESS_KEY})
+  if S3_BUCKET:
+    evaluator_container_definition["env"].append({"name": "S3_BUCKET", "value": S3_BUCKET})
+  if AICROWD_IS_GRADING:
+    evaluator_container_definition["env"].append({"name": "AICROWD_IS_GRADING", "value": AICROWD_IS_GRADING})
   evaluator = client.V1Job(metadata=evaluator_definition["metadata"], spec=evaluator_definition["spec"])
   batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, evaluator)
 
   submission_definition = yaml.safe_load(open("submission_job.yaml"))
   submission_definition["metadata"]["name"] = f"{submission_definition['metadata']['name']}-{task_id}"
   submission_definition["metadata"]["labels"]["task_id"] = task_id
-  submission_definition["spec"]["template"]["spec"]["containers"][0]["image"] = submission_image
+  submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
+  submission_container_definition["image"] = submission_image
+  submission_container_definition["env"].append({"name": "AICROWD_SUBMISSION_ID", "value": task_id})
   submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
   batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
 

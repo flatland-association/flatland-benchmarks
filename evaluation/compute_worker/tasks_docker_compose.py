@@ -14,6 +14,11 @@ app = Celery(
 )
 
 HOST_DIRECTORY = os.environ.get("HOST_DIRECTORY", "/tmp/codabench/")
+AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
+AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
+AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
+S3_BUCKET = os.environ.get("S3_BUCKET", None)
+AICROWD_IS_GRADING = os.environ.get("AICROWD_IS_GRADING", None)
 
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 should we set up an ad-hoc network? What about communication to rabbit?
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
@@ -34,22 +39,33 @@ def the_task(self, docker_image: str, submission_image: str):
     "docker", "run",
     "--rm",
     "-e", "redis_ip=redis",
-    # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....), establish convention for custom compute_workers...
+    "-e", f"AICROWD_SUBMISSION_ID={task_id}",
+  ]
+  if AWS_ENDPOINT_URL:
+    evaluator_exec_args.extend(["-e", f"AWS_ENDPOINT_URL={AWS_ENDPOINT_URL}"])
+  if AWS_ACCESS_KEY_ID:
+    evaluator_exec_args.extend(["-e", f"AWS_ACCESS_KEY_ID={AWS_ACCESS_KEY_ID}"])
+  if AWS_SECRET_ACCESS_KEY:
+    evaluator_exec_args.extend(["-e", f"AWS_SECRET_ACCESS_KEY={AWS_SECRET_ACCESS_KEY}"])
+  if S3_BUCKET:
+    evaluator_exec_args.extend(["-e", f"S3_BUCKET={S3_BUCKET}"])
+  if AICROWD_IS_GRADING:
+    evaluator_exec_args.extend(["-e", f"AICROWD_IS_GRADING={AICROWD_IS_GRADING}"])
+
+  evaluator_exec_args.extend([
     "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/",
     "--network", BENCHMARKING_NETWORK,
     docker_image,
-  ]
+  ])
   gathered_tasks = asyncio.gather(
     run_async_and_catch_output(evaluator_future, exec_args=evaluator_exec_args),
     run_async_and_catch_output(submission_future, exec_args=[
       "docker", "run",
       "--rm",
       "-e", "redis_ip=redis",
-      # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 https://github.com/flatland-association/flatland-benchmarks/issues/27 should data be mounted or...?
       "-e", "AICROWD_TESTS_FOLDER=/tmp/debug-environments/",
-      # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 workaround as volumes come from host - will depend on where submissions come from (zip-minio, git,....)
+      "-e", f"AICROWD_SUBMISSION_ID={task_id}",
       "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/debug-environments/",
-      # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 ensure no traffic going to the outside world.
       "--network", BENCHMARKING_NETWORK,
       submission_image,
     ]),
