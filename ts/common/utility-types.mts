@@ -63,3 +63,9 @@ export type RequiredOnly<T> = {
 export type OptionalOnly<T> = {
   [K in keyof T as T[K] extends Required<T>[K] ? never : K]: T[K]
 }
+
+/**
+ * Strip the `id` field from given type/interface. Used for typed post requests
+ * where `id` is never part of the request.
+ */
+export type StripId<T> = Omit<T, 'id'>
