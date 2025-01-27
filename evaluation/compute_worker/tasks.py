@@ -21,7 +21,7 @@ KUBERNETES_NAMESPACE = os.environ.get("KUBERNETES_NAMESPACE", "nge-int")
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 start own redis for evaluator <-> submission communication? Split in flatland-repo?
 # N.B. name to be used by send_task
 @app.task(name="flatland3-evaluation", bind=True)
-def the_task(self, docker_image: str, submission_image: str, config):
+def the_task(self, docker_image: str, submission_image: str):
   task_id = self.request.id
   config.load_incluster_config()
   run_evaluation(task_id=task_id, docker_image=docker_image, submission_image=submission_image)
