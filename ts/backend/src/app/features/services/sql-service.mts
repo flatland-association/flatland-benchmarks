@@ -18,6 +18,12 @@ export class SqlService extends Service {
   errors?: postgres.Error[]
 
   /**
+   * Postgres statement from `query`. Is reset to `undefined` upon invoking
+   * `query`.
+   */
+  statement?: postgres.Statement
+
+  /**
    * Template tag to make SQL queries. All notices and errors raised during
    * query execution are written to {@link notices} and {@link errors}
    * respectively, which in turn are emptied at the start of `query`.
@@ -29,18 +35,24 @@ export class SqlService extends Service {
    */
   query(
     strings: TemplateStringsArray,
-    ...params: (number | string)[]
+    ...params: postgres.ParameterOrFragment<never>[]
   ): Promise<postgres.RowList<postgres.Row[]> | never[]>
-  query<T>(strings: TemplateStringsArray, ...params: (number | string)[]): Promise<T[]>
+  query<T>(strings: TemplateStringsArray, ...params: postgres.ParameterOrFragment<never>[]): Promise<T[]>
 
-  query(strings: TemplateStringsArray, ...params: (number | string)[]) {
+  query(strings: TemplateStringsArray, ...params: postgres.ParameterOrFragment<never>[]) {
     this.notices = undefined
     this.errors = undefined
-    return this._query(strings, params).catch((error) => {
-      this.errors ??= []
-      this.errors.push(error)
-      return []
-    })
+    this.statement = undefined
+    return this._query(strings, ...params)
+      .then((q) => {
+        this.statement = q.statement
+        return q
+      })
+      .catch((error) => {
+        this.errors ??= []
+        this.errors.push(error)
+        return []
+      })
   }
 
   private _query
@@ -54,6 +66,7 @@ export class SqlService extends Service {
       user: this.config.postgres.user,
       password: this.config.postgres.password,
       database: this.config.postgres.database,
+      debug: true, // otherwise errors will be empty object
       // default onnotice console.logs, overwrite that to push to notices
       // notices is emptied upon query()
       onnotice: (notice) => {

@@ -36,6 +36,18 @@ function dbgRequestObject(req: Request) {
   }
 }
 
+/**
+ * Returns an object based off current SqlService state.
+ * @param sql SqlService instance
+ */
+function dbgSqlState(sql: SqlService) {
+  return {
+    notices: sql.notices,
+    errors: sql.errors,
+    statement: sql.statement,
+  }
+}
+
 /*
 The wrapper functions serve two purposes:
 1. They provide a common try catch wrap around the handler.
