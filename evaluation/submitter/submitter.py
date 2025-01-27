@@ -19,8 +19,8 @@ if __name__ == '__main__':
             },
   ).get(timeout=120)
   print(ret)
-  all_completed = all([s["status"] == "Complete" for s in ret.values()])
+  all_completed = all([s["job_status"] == "Complete" for s in ret.values()])
 
   assert all_completed, ret
   print(
-    f"\\ End simulate submission from portal for task_id={task_id}: {[(k, v['status'], v['image_id'], v['log']) for k, v in ret.items()]}")
+    f"\\ End simulate submission from portal for task_id={task_id}: {[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
