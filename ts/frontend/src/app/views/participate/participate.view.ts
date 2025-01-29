@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { RouterModule } from '@angular/router'
+import { consolidateResourceLocator, endpointFromResourceLocator } from '@common/endpoint-utils.mjs'
 import { Benchmark } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BenchmarkCardComponent } from '../../components/benchmark-card/benchmark-card.component'
@@ -17,16 +18,10 @@ export class ParticipateView implements OnInit {
   constructor(public apiService: ApiService) {}
 
   async ngOnInit() {
-    const URIs = (await this.apiService.get('/benchmarks')).body
-    // TODO: concentrate requests
-    this.benchmarks = URIs
-      ? (
-          await Promise.all(
-            URIs?.map(async (uri) => {
-              return (await this.apiService.get<Benchmark[]>(uri)).body?.at(0)
-            }),
-          )
-        ).filter((b) => !!b)
-      : []
+    const locators = (await this.apiService.get('/benchmarks')).body
+    if (locators) {
+      const combined = consolidateResourceLocator(locators)
+      this.benchmarks = (await this.apiService.get<Benchmark[]>(...endpointFromResourceLocator(combined))).body
+    }
   }
 }

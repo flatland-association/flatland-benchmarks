@@ -1,5 +1,13 @@
 import type { RouteParameters } from 'express-serve-static-core'
-import type { AcceptNumberAsString } from './utility-types.mjs'
+import { Resource } from './interfaces.mjs'
+import type {
+  AcceptNumberAsString,
+  ConsolidatedResourceLocator,
+  NotUnion,
+  ResourceDir,
+  ResourceLocator,
+  StripDir,
+} from './utility-types.mjs'
 
 /**
  * Replaces the `:<key>` parts in `endpoint` with corresponding values from `params`.
@@ -24,11 +32,68 @@ export function interpolateEndpoint(endpoint: string, params: Record<string, str
  * @param endpoint Endpoint name
  * @param params Array of objects providing the replacement values.
  */
-export function spreadEndpoints<E extends string>(
-  endpoint: E,
-  params: AcceptNumberAsString<RouteParameters<E>>[],
-): string[]
+// export function spreadEndpoints<E extends string>(
+//   endpoint: E,
+//   params: AcceptNumberAsString<RouteParameters<E>>[],
+// ): string[]
 
-export function spreadEndpoints(endpoint: string, params: Record<string, string | number>[]) {
-  return params.map((p) => interpolateEndpoint(endpoint, p))
+// export function spreadEndpoints(endpoint: string, params: Record<string, string | number>[]) {
+//   return params.map((p) => interpolateEndpoint(endpoint, p))
+// }
+
+/**
+ * Turns resources without `dir` into such with `dir`, allowing them to be
+ * upcast into specific resources.
+ * @param directory A {@link ResourceDir}.
+ * @param resources {@link Resource}s to which `dir` should be appended.
+ * @returns Copy of resources with `dir` appended.
+ */
+export function appendDir<Dir extends ResourceDir, T extends Resource<Dir>>(
+  directory: Dir,
+  resources: StripDir<T>[],
+): T[] {
+  return resources.map((r) => {
+    // prepend the `dir` field, spread rest of resource into it, cast to T
+    return {
+      dir: directory,
+      ...r,
+    } as T
+  })
 }
+
+/**
+ * Turns resources into {@link ResourceLocator}s.
+ * @param resources {@link Resource}s
+ */
+export function toResourceLocators<Dir extends ResourceDir>(resources: Resource<Dir>[]): ResourceLocator<Dir>[] {
+  return resources.map((r) => [r.dir, r.id])
+}
+
+/**
+ * Turns multiple locators into one {@link ConsolidatedResourceLocator}.
+ * **Do not pass locators with different `ResourceDir` values!**
+ * @param locators {@link ResourceLocator}s
+ */
+export function consolidateResourceLocator<Dir extends ResourceDir>(
+  locators: ResourceLocator<NotUnion<Dir>>[],
+): ConsolidatedResourceLocator<Dir> {
+  // Generic Dir let's us (quite) safely assume locators[0]' dir field is the
+  // same for all locators. Unless a union is used for Dir.
+  return [locators[0][0], locators.map((l) => l[1])]
+}
+
+/**
+ * Turns a locator into a tuple of `[endpoint, params]`, which can be spread
+ * directly into API Service functions, e.g. `ApiService.get`.
+ * @param locator {@link ResourceLocator} or {@link ConsolidatedResourceLocator}.
+ */
+export function endpointFromResourceLocator<Dir extends ResourceDir>(
+  locator: ResourceLocator<Dir> | ConsolidatedResourceLocator<Dir>,
+): [string, { params: { id: string } }] {
+  // by contract, locator[0] is the static part of the corresponding endpoint
+  const endpoint = `${locator[0]}:id`
+  // ids and id are interchangeable in GET requests as per dev.005
+  const ids = Array.isArray(locator[1]) ? locator[1] : [locator[1]]
+  return [endpoint, { params: { id: ids.join(',') } }]
+}
+// TODO: further narrow types of returned tuple

@@ -33,9 +33,9 @@ export class BenchmarksDetailView implements OnInit {
     this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
     // load all the available tests
     this.tests = (
-      await this.apiService.get('/tests/:ids', {
+      await this.apiService.get('/tests/:id', {
         params: {
-          ids: this.benchmark!.tests.join(','),
+          id: this.benchmark!.tests.join(','),
         },
       })
     ).body

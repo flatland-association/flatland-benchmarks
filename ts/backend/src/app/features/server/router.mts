@@ -1,7 +1,8 @@
 import type { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
 import { ApiResponse } from '@common/api-response.mjs'
-import { spreadEndpoints } from '@common/endpoint-utils.mjs'
-import { Benchmark, Resource, Test } from '@common/interfaces.mjs'
+import { appendDir, toResourceLocators } from '@common/endpoint-utils.mjs'
+import { Benchmark, Resource, Submission, Test } from '@common/interfaces.mjs'
+import { StripDir } from '@common/utility-types.mjs'
 import type { NextFunction, Request, Response, Router } from 'express'
 import express from 'express'
 import type { RequestHandler, RouteParameters } from 'express-serve-static-core'
@@ -217,33 +218,38 @@ export function router(_server: Server) {
 
   attachGet(router, '/benchmarks', async (req, res) => {
     const sql = SqlService.getInstance()
-    const rows = await sql.query<Resource>`
+    const rows = await sql.query<StripDir<Resource>>`
       SELECT id FROM benchmarks
       ORDER BY id ASC
     `
-    respond(res, spreadEndpoints('/benchmarks/:id', rows))
+    const resources = appendDir('/benchmarks/', rows)
+    respond(res, toResourceLocators(resources))
   })
   attachGet(router, '/benchmarks/:id', async (req, res) => {
-    const sql = SqlService.getInstance()
-    const rows = await sql.query<Benchmark>`
-      SELECT * FROM benchmarks
-      WHERE id=${req.params.id}
-      LIMIT 1
-    `
-    respond(res, rows)
-  })
-
-  attachGet(router, '/tests/:ids', async (req, res) => {
-    const ids = req.params.ids.split(',').map((s) => +s)
+    const ids = req.params.id.split(',').map((s) => +s)
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
-    const rows = await sql.query<Test>`
+    const rows = await sql.query<StripDir<Benchmark>>`
+      SELECT * FROM benchmarks
+      WHERE id=ANY(${ids})
+      LIMIT ${ids.length}
+    `
+    const benchmarks = appendDir('/benchmarks/', rows)
+    respond(res, benchmarks)
+  })
+
+  attachGet(router, '/tests/:id', async (req, res) => {
+    const ids = req.params.id.split(',').map((s) => +s)
+    const sql = SqlService.getInstance()
+    // id=ANY - dev.003
+    const rows = await sql.query<StripDir<Test>>`
       SELECT * FROM tests
       WHERE id=ANY(${ids})
       LIMIT ${ids.length}
     `
+    const tests = appendDir('/tests/', rows)
     // return array - dev.002
-    respond(res, rows, dbgSqlState(sql))
+    respond(res, tests)
   })
 
   // apiService.post('submissions', {submission_image: "ghcr.io/flatland-association/fab-flatland-submission-template:latest"})
@@ -307,14 +313,16 @@ export function router(_server: Server) {
 
   attachGet(router, '/submissions', async (req, res) => {
     const sql = SqlService.getInstance()
-    const submissions = await sql.query`
+    const rows = await sql.query<StripDir<Submission>>`
       SELECT * FROM submissions
       ORDER BY id ASC
     `
+    const submissions = appendDir('/submissions/', rows)
     respond(res, submissions)
   })
 
   attachGet(router, '/submissions/:id', async (req, res) => {
+    // TODO: make dev.005 compliant
     const id = req.params.id
     const client = await createClient()
       .on('error', (err) => console.log('Redis Client Error', err))

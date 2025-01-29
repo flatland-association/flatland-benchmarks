@@ -1,7 +1,7 @@
 import { ApiRequest } from './api-request.mjs'
 import { ApiResponse } from './api-response.mjs'
 import { Benchmark, Submission, Test } from './interfaces.mjs'
-import { Empty, json, StripId } from './utility-types.mjs'
+import { Empty, json, ResourceId, ResourceLocator, StripLocator } from './utility-types.mjs'
 
 /**
  * Base interface for registered API endpoints.
@@ -24,9 +24,9 @@ export interface ApiGetEndpoints {
   '/mirror/:id': ApiEndpoint<Empty, string>
   '/dbsetup': ApiEndpoint<Empty, unknown>
   '/ampq': ApiEndpoint<Empty, string>
-  '/benchmarks': ApiEndpoint<Empty, string[]> // string[] - dev.001
+  '/benchmarks': ApiEndpoint<Empty, ResourceLocator<'/benchmarks/'>[]> // dev.001
   '/benchmarks/:id': ApiEndpoint<Empty, Benchmark[]> // [] - dev.002
-  '/tests/:ids': ApiEndpoint<Empty, Test[]> // [] - dev.002
+  '/tests/:id': ApiEndpoint<Empty, Test[]> // [] - dev.002
   '/submissions': ApiEndpoint<Empty, unknown>
   '/submissions/:id': ApiEndpoint<Empty, unknown>
   '/test': ApiEndpoint<Empty, Empty>
@@ -39,5 +39,5 @@ export interface ApiGetEndpoints {
 export interface ApiPostEndpoints {
   '/mirror': ApiEndpoint<{ data: unknown }, unknown>
   '/ampq': ApiEndpoint<json, string>
-  '/submissions': ApiEndpoint<StripId<Submission>, { id: number }>
+  '/submissions': ApiEndpoint<StripLocator<Submission>, { id: ResourceId }>
 }
