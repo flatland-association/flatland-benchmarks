@@ -4,7 +4,7 @@ import uuid
 from celery import Celery
 
 app = Celery(
-  broker=os.environ.get('BROKER_URL'),
+  broker=os.environ.get('BROKER_URL', "pyamqp://user:bitnami@localhost:5672"),
   backend='redis://localhost:6379',
 )
 
