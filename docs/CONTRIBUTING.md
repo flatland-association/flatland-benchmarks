@@ -6,7 +6,7 @@ Contributions are welcome, and they are greatly appreciated! Every little bit he
 
 ### Report Bugs
 
-Report bugs using our [issue tracker](https://github.com/flatland-association/benchmarking/issues).
+Report bugs using our [issue tracker](https://github.com/flatland-association/flatland-benchmarks/issues).
 
 If you are reporting a bug, please make sure to fill out the appropriate issue template.
 
@@ -27,7 +27,7 @@ See [GitHub Markdown](https://docs.github.com/en/get-started/writing-on-github/g
 
 ### Submit Feedback
 
-The best way to send feedback is to [file an issue](https://github.com/flatland-association/benchmarking/issues).
+The best way to send feedback is to [file an issue](https://github.com/flatland-association/flatland-benchmarks/issues).
 
 If you are proposing a feature:
 

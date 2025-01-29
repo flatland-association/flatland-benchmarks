@@ -1,6 +1,6 @@
 Flatland Benchmarks
 ===================
-[![Main](https://github.com/flatland-association/benchmarking/actions/workflows/main.yml/badge.svg)](https://github.com/flatland-association/benchmarking/actions/workflows/main.yml)
+[![Main](https://github.com/flatland-association/flatland-benchmarks/actions/workflows/main.yml/badge.svg)](https://github.com/flatland-association/flatland-benchmarks/actions/workflows/main.yml)
 
 Flatland Benchmarks (FAB) is an open-source web-based platform for running Benchmarks to foster Open Research aiming at:
 
@@ -31,4 +31,4 @@ e.g. this one). If you wish to configure your own instance of the platform, here
 💬 Communication
 ----------------
 
-* [Issue Tracker](https://github.com/flatland-association/benchmarking/issues/)
+* [Issue Tracker](https://github.com/flatland-association/flatland-benchmarks/issues/)

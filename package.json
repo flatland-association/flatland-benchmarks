@@ -7,11 +7,11 @@
     "benchmark"
   ],
   "bugs": {
-    "url": "https://github.com/flatland-association/benchmarking/issues"
+    "url": "https://github.com/flatland-association/flatland-benchmarks/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/flatland-association/benchmarking.git"
+    "url": "git+https://github.com/flatland-association/flatland-benchmarks.git"
   },
   "license": "MIT",
   "author": "Flatland Association",
