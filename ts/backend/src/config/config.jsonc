@@ -8,5 +8,13 @@
   "amqp": {
     "host": "localhost",
     "port": 5672
+  },
+  /* Postgres DB */
+  "postgres": {
+    "host": "localhost",
+    "port": 5432,
+    "user": "benchmarks",
+    "password": "benchmarks",
+    "database": "benchmarks"
   }
 }
