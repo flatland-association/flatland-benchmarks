@@ -65,7 +65,7 @@ export function appendDir<Dir extends ResourceDir, T extends Resource<Dir>>(
  * Turns resources into {@link ResourceLocator}s.
  * @param resources {@link Resource}s
  */
-export function toResourceLocators<Dir extends ResourceDir>(resources: Resource<Dir>[]): ResourceLocator<Dir>[] {
+export function toResourceLocators<R extends Resource>(resources: R[]): ResourceLocator<R>[] {
   return resources.map((r) => [r.dir, r.id])
 }
 
@@ -74,11 +74,11 @@ export function toResourceLocators<Dir extends ResourceDir>(resources: Resource<
  * **Do not pass locators with different `ResourceDir` values!**
  * @param locators {@link ResourceLocator}s
  */
-export function consolidateResourceLocator<Dir extends ResourceDir>(
-  locators: ResourceLocator<NotUnion<Dir>>[],
-): ConsolidatedResourceLocator<Dir> {
-  // Generic Dir let's us (quite) safely assume locators[0]' dir field is the
-  // same for all locators. Unless a union is used for Dir.
+export function consolidateResourceLocator<R extends Resource>(
+  locators: ResourceLocator<NotUnion<R>>[],
+): ConsolidatedResourceLocator<R> {
+  // Generic NotUnion<R> let's us (quite) safely assume locators[0]' dir field
+  // is the same for all locators. Unless it's programmatically made a union.
   return [locators[0][0], locators.map((l) => l[1])]
 }
 
@@ -87,8 +87,8 @@ export function consolidateResourceLocator<Dir extends ResourceDir>(
  * directly into API Service functions, e.g. `ApiService.get`.
  * @param locator {@link ResourceLocator} or {@link ConsolidatedResourceLocator}.
  */
-export function endpointFromResourceLocator<Dir extends ResourceDir>(
-  locator: ResourceLocator<Dir> | ConsolidatedResourceLocator<Dir>,
+export function endpointFromResourceLocator<R extends Resource>(
+  locator: ResourceLocator<R> | ConsolidatedResourceLocator<R>,
 ): [string, { params: { id: string } }] {
   // by contract, locator[0] is the static part of the corresponding endpoint
   const endpoint = `${locator[0]}:id`

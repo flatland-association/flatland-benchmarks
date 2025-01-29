@@ -1,3 +1,5 @@
+import { Resource } from './interfaces.mjs'
+
 /**
  * Utility type for the empty object `{}`.
  */
@@ -107,12 +109,11 @@ export type ResourceId = number | string
  * Composite resource locator - directory / id tuple. The reason this is a
  * tuple and not simply `Resource` is additional type safety.
  */
-export type ResourceLocator<Dir extends ResourceDir> = [Dir, ResourceId]
-// TODO: can this be typed with specific Resource instead of ResourceDir?
+export type ResourceLocator<R extends Resource> = [R['dir'], ResourceId]
 
 /**
  * Consolidated composite resource locator - directory / ids tuple.
  * Makes programmatically merging and splitting resources from the same
  * directory easier.
  */
-export type ConsolidatedResourceLocator<Dir extends ResourceDir> = [Dir, ResourceId[]]
+export type ConsolidatedResourceLocator<R extends Resource> = [R['dir'], ResourceId[]]

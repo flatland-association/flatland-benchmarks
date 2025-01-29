@@ -24,10 +24,10 @@ export interface ApiGetEndpoints {
   '/mirror/:id': ApiEndpoint<Empty, string>
   '/dbsetup': ApiEndpoint<Empty, unknown>
   '/ampq': ApiEndpoint<Empty, string>
-  '/benchmarks': ApiEndpoint<Empty, ResourceLocator<'/benchmarks/'>[]> // dev.001
+  '/benchmarks': ApiEndpoint<Empty, ResourceLocator<Benchmark>[]> // dev.001
   '/benchmarks/:id': ApiEndpoint<Empty, Benchmark[]> // [] - dev.002
   '/tests/:id': ApiEndpoint<Empty, Test[]> // [] - dev.002
-  '/submissions': ApiEndpoint<Empty, ResourceLocator<'/submissions/'>[]>
+  '/submissions': ApiEndpoint<Empty, ResourceLocator<Submission>[]>
   '/submissions/:id': ApiEndpoint<Empty, Submission[]>
   '/submissions/:id/results': ApiEndpoint<Empty, unknown>
   '/test': ApiEndpoint<Empty, Empty>
