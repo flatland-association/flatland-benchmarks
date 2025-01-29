@@ -20,7 +20,6 @@ AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
 S3_BUCKET = os.environ.get("S3_BUCKET", None)
 AICROWD_IS_GRADING = os.environ.get("AICROWD_IS_GRADING", None)
 
-# TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 should we set up an ad-hoc network? What about communication to rabbit?
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
 
 
