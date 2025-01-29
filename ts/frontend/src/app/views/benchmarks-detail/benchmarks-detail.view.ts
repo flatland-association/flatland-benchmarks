@@ -33,8 +33,7 @@ export class BenchmarksDetailView implements OnInit {
 
   async ngOnInit() {
     this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
-    // TODO: add query params and only get submissions for this benchmark
-    const locators = (await this.apiService.get('/submissions')).body
+    const locators = (await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id } })).body
     if (locators && locators.length > 0) {
       const combined = consolidateResourceLocator(locators)
       this.submissions = (await this.apiService.get<Submission[]>(...endpointFromResourceLocator(combined))).body

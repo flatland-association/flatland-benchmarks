@@ -312,13 +312,15 @@ export function router(_server: Server) {
   })
 
   attachGet(router, '/submissions', async (req, res) => {
+    const benchmarkId = req.query['benchmark']
     const sql = SqlService.getInstance()
     const rows = await sql.query<StripDir<Resource>>`
       SELECT * FROM submissions
+      ${typeof benchmarkId === 'string' ? sql.fragment`WHERE benchmark=${benchmarkId}` : sql.fragment``}
       ORDER BY id ASC
     `
     const resources = appendDir('/submissions/', rows)
-    respond(res, toResourceLocators(resources))
+    respond(res, toResourceLocators(resources), dbgRequestObject(req))
   })
 
   attachGet(router, '/submissions/:id', async (req, res) => {
