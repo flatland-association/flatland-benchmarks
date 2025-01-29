@@ -13,6 +13,13 @@ export interface ApiEndpoint<Request, Response> {
   response: ApiResponse<Response>
 }
 
+// TODO: remove above, clone below for POST
+
+export interface ApiGetEndpoint<Query, Response> {
+  request: ApiRequest<Empty, Query>
+  response: ApiResponse<Response>
+}
+
 /**
  * Registered API endpoints for GET method.
  * Pairs of `path : ApiEndpoint<Request, Response>` with `path` being a string
@@ -20,17 +27,17 @@ export interface ApiEndpoint<Request, Response> {
  * @see {@link ApiEndpoint}
  */
 export interface ApiGetEndpoints {
-  '/mirror': ApiEndpoint<Empty, string>
-  '/mirror/:id': ApiEndpoint<Empty, string>
-  '/dbsetup': ApiEndpoint<Empty, unknown>
-  '/ampq': ApiEndpoint<Empty, string>
-  '/benchmarks': ApiEndpoint<Empty, ResourceLocator<Benchmark>[]> // dev.001
-  '/benchmarks/:id': ApiEndpoint<Empty, Benchmark[]> // [] - dev.002
-  '/tests/:id': ApiEndpoint<Empty, Test[]> // [] - dev.002
-  '/submissions': ApiEndpoint<Empty, ResourceLocator<Submission>[]>
-  '/submissions/:id': ApiEndpoint<Empty, Submission[]>
-  '/submissions/:id/results': ApiEndpoint<Empty, unknown>
-  '/test': ApiEndpoint<Empty, Empty>
+  '/mirror': ApiGetEndpoint<Empty, string>
+  '/mirror/:id': ApiGetEndpoint<Empty, string>
+  '/dbsetup': ApiGetEndpoint<Empty, unknown>
+  '/ampq': ApiGetEndpoint<Empty, string>
+  '/benchmarks': ApiGetEndpoint<Empty, ResourceLocator<Benchmark>[]> // dev.001
+  '/benchmarks/:id': ApiGetEndpoint<Empty, Benchmark[]> // [] - dev.002
+  '/tests/:id': ApiGetEndpoint<Empty, Test[]> // [] - dev.002
+  '/submissions': ApiGetEndpoint<{ benchmark?: ResourceId }, ResourceLocator<Submission>[]>
+  '/submissions/:id': ApiGetEndpoint<Empty, Submission[]>
+  '/submissions/:id/results': ApiGetEndpoint<Empty, unknown>
+  '/test': ApiGetEndpoint<Empty, Empty>
 }
 
 /**
