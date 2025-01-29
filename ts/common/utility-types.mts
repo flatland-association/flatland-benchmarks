@@ -13,10 +13,12 @@ export type BanEmpty<T> =
   // prettier-ignore
   {
     // build a type that is the intersection of all "Empty" fields made optional
-    [K in keyof T as Empty extends T[K] ? K : never]?: undefined
+    // Required<T> is required, otherwise objects with nothing but optional
+    // fields would be treated as empty.
+    [K in keyof T as Empty extends Required<T[K]> ? K : never]?: undefined
   } & {
     //... and all others as-is
-    [K in keyof T as Empty extends T[K] ? never : K]: T[K]
+    [K in keyof T as Empty extends Required<T[K]> ? never : K]: T[K]
   }
 
 /**
