@@ -18,9 +18,15 @@ export type BanEmpty<T> =
   }
 
 /**
- * Guard type for checking if `T` is not a key of `R`.
+ * Guard type checking that `T` is not a key of `R`.
  */
 export type NotKeyOf<T, R> = T extends keyof R ? never : T
+
+// https://stackoverflow.com/a/50644844/10135201
+/**
+ * Guard type checking that `T` is not a union type.
+ */
+export type NotUnion<T, U = T> = U extends T ? ([T] extends [U] ? T : never) : never
 
 // `undefined` does not actually occur in JSON, but it's allowed as value in
 // `JSON.stringify`.
