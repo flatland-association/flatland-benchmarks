@@ -57,6 +57,11 @@ export class SqlService extends Service {
 
   private _query
 
+  /**
+   * Alias for the original postgres template tag for nested queries.
+   */
+  fragment
+
   constructor(config: configuration) {
     super(config)
 
@@ -74,6 +79,8 @@ export class SqlService extends Service {
         this.notices.push(notice)
       },
     })
+
+    this.fragment = this._query
   }
 
   /**
