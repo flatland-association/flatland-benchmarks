@@ -2,7 +2,9 @@ import json
 import logging
 import subprocess
 import uuid
+from io import StringIO
 
+import pandas as pd
 import pytest
 import redis
 from celery import Celery
@@ -73,9 +75,10 @@ def test_succesful_run(test_containers_fixture: str):
     logger.info(
         f"\\ End simulate submission from portal for task_id={task_id}: {[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
 
+    # check Celery direct return value
     assert set(ret.keys()) == {"evaluator", "submission"}
 
-    assert set(ret["evaluator"].keys()) == {"job_status", "image_id", "log", "job", "pod"}
+    assert set(ret["evaluator"].keys()) == {"job_status", "image_id", "log", "job", "pod", "results.csv", "results.json"}
     assert set(ret["submission"].keys()) == {"job_status", "image_id", "log", "job", "pod"}
 
     assert ret["evaluator"]["job_status"] == "Complete"
@@ -87,6 +90,12 @@ def test_succesful_run(test_containers_fixture: str):
     assert "end evaluator/run.sh" in str(ret["evaluator"]["log"])
     assert "end submission_template/run.sh" in str(ret["submission"]["log"])
 
+    res_df = pd.read_csv(StringIO(ret["evaluator"]["results.csv"]))
+    print(res_df)
+    res_json = json.loads(ret["evaluator"]["results.json"])
+    print(res_json)
+
+    # check Celery return value from redis
     r = redis.Redis(host='localhost', port=6379, db=0)
     res = r.get(f"celery-task-meta-{task_id}")
     res = json.loads(res.decode("utf-8"))
@@ -96,7 +105,7 @@ def test_succesful_run(test_containers_fixture: str):
     ret = res["result"]
     assert set(ret.keys()) == {"evaluator", "submission"}
 
-    assert set(ret["evaluator"].keys()) == {"job_status", "image_id", "log", "job", "pod"}
+    assert set(ret["evaluator"].keys()) == {"job_status", "image_id", "log", "job", "pod", "results.csv", "results.json"}
     assert set(ret["submission"].keys()) == {"job_status", "image_id", "log", "job", "pod"}
 
     assert ret["evaluator"]["job_status"] == "Complete"
@@ -107,3 +116,8 @@ def test_succesful_run(test_containers_fixture: str):
 
     assert "end evaluator/run.sh" in str(ret["evaluator"]["log"])
     assert "end submission_template/run.sh" in str(ret["submission"]["log"])
+
+    res_df = pd.read_csv(StringIO(ret["evaluator"]["results.csv"]))
+    print(res_df)
+    res_json = json.loads(ret["evaluator"]["results.json"])
+    print(res_json)

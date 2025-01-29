@@ -1,2 +1,3 @@
 pytest-mockito==0.0.4
 testcontainers==4.9.1
+pandas==2.2.3
