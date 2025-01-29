@@ -108,6 +108,7 @@ export type ResourceId = number | string
  * tuple and not simply `Resource` is additional type safety.
  */
 export type ResourceLocator<Dir extends ResourceDir> = [Dir, ResourceId]
+// TODO: can this be typed with specific Resource instead of ResourceDir?
 
 /**
  * Consolidated composite resource locator - directory / ids tuple.
