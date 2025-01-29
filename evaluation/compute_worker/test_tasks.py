@@ -2,7 +2,7 @@ from unittest.mock import Mock
 
 from kubernetes.client import V1JobList
 
-from evaluation.compute_worker.tasks import run_evaluation
+from tasks import run_evaluation
 
 
 def test_tasks():
