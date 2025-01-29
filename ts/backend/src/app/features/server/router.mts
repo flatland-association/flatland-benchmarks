@@ -313,15 +313,29 @@ export function router(_server: Server) {
 
   attachGet(router, '/submissions', async (req, res) => {
     const sql = SqlService.getInstance()
-    const rows = await sql.query<StripDir<Submission>>`
+    const rows = await sql.query<StripDir<Resource>>`
       SELECT * FROM submissions
       ORDER BY id ASC
     `
-    const submissions = appendDir('/submissions/', rows)
-    respond(res, submissions)
+    const resources = appendDir('/submissions/', rows)
+    respond(res, toResourceLocators(resources))
   })
 
   attachGet(router, '/submissions/:id', async (req, res) => {
+    const ids = req.params.id.split(',').map((s) => +s)
+    const sql = SqlService.getInstance()
+    // id=ANY - dev.003
+    const rows = await sql.query<StripDir<Submission>>`
+      SELECT * FROM submissions
+      WHERE id=ANY(${ids})
+      LIMIT ${ids.length}
+    `
+    const submissions = appendDir('/submissions/', rows)
+    // return array - dev.002
+    respond(res, submissions)
+  })
+
+  attachGet(router, '/submissions/:id/results', async (req, res) => {
     // TODO: make dev.005 compliant
     const id = req.params.id
     const client = await createClient()

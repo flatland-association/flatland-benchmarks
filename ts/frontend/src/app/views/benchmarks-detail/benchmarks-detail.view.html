@@ -4,6 +4,15 @@
   <p class="pb-8">{{ benchmark?.description }}</p>
 </lib-content>
 
+<lib-content>
+  <h3 class="pb-8 text-xl font-bold">Top solutions</h3>
+  <div class="flex flex-col gap-y-8">
+    @for (submission of submissions; track $index) {
+      <div>{{ submission.id }} at {{ submission.code_repository }}</div>
+    }
+  </div>
+</lib-content>
+
 <lib-content class="bg-primary-100">
   <h3 class="pb-8 text-xl font-bold">Submit your solution</h3>
 

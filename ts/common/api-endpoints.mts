@@ -27,8 +27,9 @@ export interface ApiGetEndpoints {
   '/benchmarks': ApiEndpoint<Empty, ResourceLocator<'/benchmarks/'>[]> // dev.001
   '/benchmarks/:id': ApiEndpoint<Empty, Benchmark[]> // [] - dev.002
   '/tests/:id': ApiEndpoint<Empty, Test[]> // [] - dev.002
-  '/submissions': ApiEndpoint<Empty, unknown>
-  '/submissions/:id': ApiEndpoint<Empty, unknown>
+  '/submissions': ApiEndpoint<Empty, ResourceLocator<'/submissions/'>[]>
+  '/submissions/:id': ApiEndpoint<Empty, Submission[]>
+  '/submissions/:id/results': ApiEndpoint<Empty, unknown>
   '/test': ApiEndpoint<Empty, Empty>
 }
 

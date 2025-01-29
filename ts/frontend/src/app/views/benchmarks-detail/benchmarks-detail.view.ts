@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { Benchmark, Test } from '@common/interfaces.mjs'
+import { consolidateResourceLocator, endpointFromResourceLocator } from '@common/endpoint-utils.mjs'
+import { Benchmark, Submission, Test } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { ApiService } from '../../features/api/api.service'
 
@@ -14,6 +15,7 @@ import { ApiService } from '../../features/api/api.service'
 export class BenchmarksDetailView implements OnInit {
   id: string
   benchmark?: Benchmark
+  submissions?: Submission[]
   tests?: Test[]
 
   submissionImageUrl = ''
@@ -31,6 +33,12 @@ export class BenchmarksDetailView implements OnInit {
 
   async ngOnInit() {
     this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
+    // TODO: add query params and only get submissions for this benchmark
+    const locators = (await this.apiService.get('/submissions')).body
+    if (locators && locators.length > 0) {
+      const combined = consolidateResourceLocator(locators)
+      this.submissions = (await this.apiService.get<Submission[]>(...endpointFromResourceLocator(combined))).body
+    }
     // load all the available tests
     this.tests = (
       await this.apiService.get('/tests/:id', {
@@ -55,7 +63,7 @@ export class BenchmarksDetailView implements OnInit {
       const id = response.body.id
       console.log(id)
       const interval = window.setInterval(() => {
-        this.apiService.get('/submissions/:id', { params: { id: `${id}` } }).then((res) => {
+        this.apiService.get('/submissions/:id/results', { params: { id: `${id}` } }).then((res) => {
           if (res.body) {
             this.submissionResult = JSON.stringify(res.body)
             window.clearInterval(interval)
