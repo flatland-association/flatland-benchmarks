@@ -1,4 +1,4 @@
-# Flatland Association Benchmarking Architecture Overview
+# Flatland Benchmarks Architecture Overview
 
 **About arc42**
 

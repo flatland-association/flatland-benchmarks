@@ -1,4 +1,4 @@
-# Flatland Association Benchmarking Developer's Guide
+# Flatland Benchmarks Developer's Guide
 
 > [!NOTE]  
 > Documentation for platform developers.

@@ -1,4 +1,4 @@
-# Flatland Association Benchmarking User's Guide
+# Flatland Benchmarks User's Guide
 
 > [!NOTE]  
 > User documentation for benchmark participants and benchmark administrators.
