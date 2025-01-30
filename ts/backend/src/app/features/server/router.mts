@@ -192,7 +192,7 @@ export function router(_server: Server) {
     const channel = await ampq.getChannel()
     // Using the pull API is *perfectly* fine here because this is a debug
     // method for dev purposes only.
-    const message = await channel.get('debug', { noAck: true })
+    const message = await channel?.get('debug', { noAck: true })
     if (message) {
       respond(res, `relayed from "debug": ${message.content.toString() ?? null}`)
     } else {
@@ -205,9 +205,13 @@ export function router(_server: Server) {
     console.log(dbgRequestEndpoint(req))
     // send message to debug queue
     const ampq = AmpqService.getInstance()
-    await ampq.sendToQueue('debug', req.body)
+    const sent = await ampq.sendToQueue('debug', req.body)
     // report what was sent
-    respond(res, `relayed to "debug": ${JSON.stringify(req.body)}`)
+    if (sent) {
+      respond(res, `relayed to "debug": ${JSON.stringify(req.body)}`)
+    } else {
+      respond(res, 'There was an error sending the message. Check backend log.')
+    }
   })
 
   // Sets up tables in database
@@ -300,7 +304,7 @@ export function router(_server: Server) {
         chord: null,
       },
     ]
-    ampq.sendToQueue('celery', payload, {
+    const sent = await ampq.sendToQueue('celery', payload, {
       headers: {
         task: 'flatland3-evaluation',
         id: `sub${id}`,
@@ -308,7 +312,11 @@ export function router(_server: Server) {
       contentType: 'application/json',
       persistent: true,
     })
-    respond(res, { id }, payload)
+    if (sent) {
+      respond(res, { id }, payload)
+    } else {
+      respond(res, { id }, 'Could not send message to AMQP service. Check backend log.')
+    }
   })
 
   attachGet(router, '/submissions', async (req, res) => {
