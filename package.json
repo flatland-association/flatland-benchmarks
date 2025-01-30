@@ -34,6 +34,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "amqplib": "^0.10.5",
+    "angular-oauth2-oidc": "^19.0.0",
     "ansi-styles": "^6.2.1",
     "cors": "^2.8.5",
     "express": "^5.0.0",
