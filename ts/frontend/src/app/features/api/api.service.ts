@@ -2,10 +2,9 @@ import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
 import { ApiResponse } from '@common/api-response.mjs'
-import { ApiGetOptions } from '@common/api-types.mjs'
+import { ApiGetOptions, ApiPostOptions } from '@common/api-types.mjs'
 import { interpolateEndpoint } from '@common/endpoint-utils.mjs'
 import type { BanEmpty, Empty, NotKeyOf } from '@common/utility-types.mjs'
-import type { RouteParameters } from 'express-serve-static-core'
 import { firstValueFrom } from 'rxjs'
 import { environment } from '../../../environments/environment'
 
@@ -31,11 +30,10 @@ export class ApiService {
    * @param options Request options.
    * @see {@link ApiGetEndpoints}
    */
-  public async get<
-    E extends keyof ApiGetEndpoints,
-    T extends ApiGetEndpoints[E],
-    O extends BanEmpty<ApiGetOptions<E, T['request']['query']>>,
-  >(endpoint: E, ...options: Empty extends O ? [options?: undefined] : [O]): Promise<T['response']>
+  public async get<E extends keyof ApiGetEndpoints, O extends BanEmpty<ApiGetOptions<E>>>(
+    endpoint: E,
+    ...options: Empty extends O ? [options?: undefined] : [O]
+  ): Promise<ApiGetEndpoints[E]['response']>
   // un-typed fallback overload
   // (have to use the NotKeyOf approach here, otherwise typed calls with option
   // type mismatch would be interpreted as a call of the un-typed overload and
@@ -65,13 +63,10 @@ export class ApiService {
    * @param options Request options.
    * @see {@link ApiGetEndpoints}
    */
-  public async post<
-    E extends keyof ApiPostEndpoints,
-    O extends BanEmpty<{
-      params: RouteParameters<E>
-      body: ApiPostEndpoints[E]['request']['body']
-    }>,
-  >(endpoint: E, ...options: Empty extends O ? [options?: undefined] : [O]): Promise<ApiPostEndpoints[E]['response']>
+  public async post<E extends keyof ApiPostEndpoints, O extends BanEmpty<ApiPostOptions<E>>>(
+    endpoint: E,
+    ...options: Empty extends O ? [options?: undefined] : [O]
+  ): Promise<ApiPostEndpoints[E]['response']>
   // un-typed fallback overload
   // public async post<E extends string>(endpoint: NotKeyOf<E, ApiPostEndpoints>, options?: unknown): Promise<unknown>
 

@@ -338,7 +338,6 @@ export function router(_server: Server) {
   })
 
   attachGet(router, '/submissions/:id/results', async (req, res) => {
-    // TODO: make dev.005 compliant
     const id = req.params.id
     const client = await createClient()
       .on('error', (err) => console.log('Redis Client Error', err))
