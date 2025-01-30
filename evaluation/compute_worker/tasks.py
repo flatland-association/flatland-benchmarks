@@ -22,10 +22,11 @@ AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
 S3_BUCKET = os.environ.get("S3_BUCKET", None)
 AICROWD_IS_GRADING = os.environ.get("AICROWD_IS_GRADING", None)
 
+
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 start own redis for evaluator <-> submission communication? Split in flatland-repo?
 # N.B. name to be used by send_task
 @app.task(name="flatland3-evaluation", bind=True)
-def the_task(self, docker_image: str, submission_image: str):
+def the_task(self, docker_image: str, submission_image: str, **kwargs):
   task_id = self.request.id
   config.load_incluster_config()
   return run_evaluation(task_id=task_id, docker_image=docker_image, submission_image=submission_image)

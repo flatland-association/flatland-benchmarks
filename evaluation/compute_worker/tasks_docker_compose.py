@@ -26,7 +26,7 @@ BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 start own redis for evaluator <-> submission communication? Split in flatland-repo?
 # N.B. name to be used by send_task
 @app.task(name="flatland3-evaluation", bind=True)
-def the_task(self, docker_image: str, submission_image: str):
+def the_task(self, docker_image: str, submission_image: str, **kwargs):
   task_id = self.request.id
   start_time = time.time()
   logger.info(f"/ start task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}")
