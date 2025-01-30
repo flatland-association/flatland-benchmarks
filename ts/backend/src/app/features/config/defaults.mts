@@ -17,4 +17,8 @@ export const defaults = {
     password: 'benchmarks',
     database: 'benchmarks',
   },
+  /* Redis endpoint */
+  redis: {
+    url: 'redis://localhost:6379',
+  },
 }
