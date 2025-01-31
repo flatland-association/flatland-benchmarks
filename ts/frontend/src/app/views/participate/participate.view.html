@@ -1,0 +1,10 @@
+<lib-content>
+  <h2 class="pb-8 text-2xl font-bold text-neutral-500">Participate</h2>
+  <p class="pb-8">Choose a benchmark to participate in.</p>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    @for (benchmark of benchmarks; track $index) {
+      <app-benchmark-card [benchmark]="benchmark"></app-benchmark-card>
+    }
+  </div>
+</lib-content>

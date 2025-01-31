@@ -1,0 +1,6 @@
+@if (benchmark) {
+  <div class="max-w-80 p-8 rounded overflow-hidden shadow-lg cursor-pointer" [routerLink]="['/', 'benchmarks', benchmark.id]">
+    <h3 class="pb-4 text-xl font-bold text-neutral-500">{{ benchmark.name }}</h3>
+    <p>{{ benchmark.description }}</p>
+  </div>
+}

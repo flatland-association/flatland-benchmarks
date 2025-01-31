@@ -1,7 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    /* output to out-tsc i.o.t. to not mix with actual build */
-    "outDir": "../../out-tsc/backend"
-  }
-}

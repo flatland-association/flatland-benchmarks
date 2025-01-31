@@ -36,8 +36,10 @@
     "amqplib": "^0.10.5",
     "ansi-styles": "^6.2.1",
     "cors": "^2.8.5",
-    "express": "^4.21.2",
+    "express": "^5.0.0",
     "json5": "^2.2.3",
+    "postgres": "^3.4.5",
+    "redis": "^4.7.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -70,10 +72,17 @@
     "prettier-plugin-packagejson": "^2.5.6",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "tailwindcss": "^3.4.16",
+    "tsc-alias": "^1.8.10",
     "typescript": "~5.6.2",
-    "typescript-eslint": "8.16.0"
+    "typescript-eslint": "8.16.0",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1",
+    "webpack-node-externals": "^3.0.0"
   },
   "scripts": {
-    "prepare": "husky"
+    "prepare": "husky",
+    "docker:up": "cd evaluation && docker compose up -d",
+    "docker:up:cvolumes": "cd evaluation && docker compose --env-file .env.cvolumes --env-file .env up -d",
+    "docker:down": "cd evaluation && docker compose down"
   }
 }

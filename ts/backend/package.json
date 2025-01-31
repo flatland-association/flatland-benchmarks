@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "description": "FAB backend",
   "scripts": {
-    "serve": "tsc --project tsconfig.development.json && mkdir -p ../../out-tsc/backend/config && cp -n src/config/config.jsonc \"$_\" && cd ../../out-tsc/backend/app && node main.mjs",
-    "build": "tsc && mkdir -p ../../dist/backend/config",
-    "docker:rabbitmq": "docker run -d --name amqp.test -p 5672:5672 rabbitmq"
+    "serve": "npm run private:build && cd ../../out-tsc && mkdir -p backend && cp -r backend-build/app backend && mkdir -p backend/config && cp -n ../ts/backend/src/config/config.jsonc \"$_\" && cd backend/app && node main.min.js",
+    "build": "npm run private:build && mkdir -p ../../dist/backend/config && cp -r ../../out-tsc/backend-build/app ../../dist/backend",
+    "private:build": "tsc && tsc-alias && npx webpack"
   }
 }
