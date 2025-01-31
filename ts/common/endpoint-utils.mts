@@ -28,20 +28,6 @@ export function interpolateEndpoint(endpoint: string, params: Record<string, str
 }
 
 /**
- * Builds an array of endpoints from `endpoint` for every `params` element.
- * @param endpoint Endpoint name
- * @param params Array of objects providing the replacement values.
- */
-// export function spreadEndpoints<E extends string>(
-//   endpoint: E,
-//   params: AcceptNumberAsString<RouteParameters<E>>[],
-// ): string[]
-
-// export function spreadEndpoints(endpoint: string, params: Record<string, string | number>[]) {
-//   return params.map((p) => interpolateEndpoint(endpoint, p))
-// }
-
-/**
  * Turns resources without `dir` into such with `dir`, allowing them to be
  * upcast into specific resources.
  * @param directory A {@link ResourceDir}.
@@ -96,4 +82,3 @@ export function endpointFromResourceLocator<R extends Resource>(
   const ids = Array.isArray(locator[1]) ? locator[1] : [locator[1]]
   return [endpoint, { params: { id: ids.join(',') } }]
 }
-// TODO: further narrow types of returned tuple

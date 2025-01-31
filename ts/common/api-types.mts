@@ -10,5 +10,3 @@ export interface ApiPostOptions<E extends keyof ApiPostEndpoints> {
   params: RouteParameters<E>
   body: ApiPostEndpoints[E]['request']['body']
 }
-
-// TODO: consolidate other api-types in this file

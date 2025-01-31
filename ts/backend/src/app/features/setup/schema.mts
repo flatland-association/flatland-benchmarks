@@ -1,8 +1,6 @@
 import ansiStyles from 'ansi-styles'
 import { SqlService } from '../services/sql-service.mjs'
 
-// TODO: Consider making this a service that auto-boots.
-
 export class Schema {
   static sql: SqlService
 

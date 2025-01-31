@@ -56,9 +56,6 @@ export type AcceptNumberAsString<T> =
       //... leave the rest as-is
       T[K]
   }
-// TODO: decide whether it should coerce deep or top level only
-// TODO: decide whether string | null should also be coerced
-// TODO: decide whether it should accept all primitives (+ rename)
 
 /**
  * Utility type removing all optional fields.
