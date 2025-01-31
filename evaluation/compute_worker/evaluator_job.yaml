@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: f3-evaluator
+  annotations: { }
+  labels: { }
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - env:
+            - name: redis_ip
+              value: fab-int-redis-master
+          image:
+          name: f3-evaluator
+          pullPolicy: Always
+          volumeMounts:
+            - mountPath: /tmp
+              name: debug-environments
+      initContainers:
+        - args:
+            - -c
+            - cd /tmp; unzip debug-environments.zip
+          command:
+            - /bin/sh
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          name: startup
+          volumeMounts:
+            - mountPath: /tmp/debug-environments.zip
+              name: fab-flatland3-data-vol
+              subPath: debug-environments.zip
+            - mountPath: /tmp/debug-environments
+              name: debug-environments
+      volumes:
+        - configMap:
+            name: fab-flatland3-data
+          name: fab-flatland3-data-vol
+        - emptyDir: { }
+          name: debug-environments

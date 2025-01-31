@@ -1,4 +1,23 @@
 services:
+  postgres:
+    image: postgres:15
+    hostname: postgres
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:5432
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-d", "${POSTGRES_DB}" ]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
+    networks:
+      - flatland-benchmarks
   redis:
     image: redis
     ports:
@@ -33,7 +52,7 @@ services:
         max-file: "5"
     healthcheck:
       test: rabbitmq-diagnostics check_port_connectivity
-      interval: 10s
+      interval: 1s
       timeout: 3s
       retries: 30
     networks:
@@ -41,16 +60,13 @@ services:
 
   compute_worker:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
-    command: python -m celery -A tasks worker -l info -n compute-worker@%n --autoscale=5,1 --without-gossip --without-mingle
-    build:
-      context: compute_worker
-      dockerfile: Dockerfile
+    command: python -m celery -A tasks worker -l info -n compute-worker@%n
+    image: ghcr.io/flatland-association/fab-flatland-compute-worker:latest
+    pull_policy: always
     depends_on:
       rabbit:
         condition: service_healthy
     volumes:
-      # Actual connection back to docker parent to run things
-      # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 runn as non-root?
       - /var/run/docker.sock:/var/run/docker.sock
       - ./compute_worker/tasks_docker_compose.py:/app/tasks.py
     env_file: .env
@@ -67,6 +83,28 @@ services:
       test: celery -A tasks inspect ping
     networks:
       - flatland-benchmarks
+  fab-backend:
+    image: ghcr.io/flatland-association/fab-backend:latest
+    pull_policy: always
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./config.jsonc:/usr/src/app/dist/backend/config/config.jsonc
+    ports:
+      - 8000:8000
+    networks:
+      - flatland-benchmarks
 
+  fab-frontend:
+    image: ghcr.io/flatland-association/fab-frontend:latest
+    pull_policy: always
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    ports:
+      - 80:80
 networks:
   flatland-benchmarks:
