@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Help & Support
-    url: https://community.cryptomator.org/
-    about: You will find answers in our community forum
+    url: https://github.com/flatland-association/flatland-benchmarks/issues
+    about: You will find answers in our GitHub issues
   - name: User Manual
-    url: https://docs.cryptomator.org/
-    about: Read the Cryptomator Hub documentation here
+    url: https://github.com/flatland-association/flatland-benchmarks/blob/main/docs/USER_GUIDE.md
+    about: Read the User Guide documentation here
