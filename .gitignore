@@ -165,3 +165,6 @@ playground/
 images
 
 *.drawio
+
+# private files (require local changes to work properly)
+/evaluation/.env.cvolumes
