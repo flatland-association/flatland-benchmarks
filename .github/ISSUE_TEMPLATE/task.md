@@ -1,16 +1,13 @@
 ---
-name: Story
-about: Persona needs for purpose.
-title: "[Story]"
+name: Task
+about: Task.
+title: ""
 labels: ''
 assignees: ''
 
 ---
 
-### Story
-* **Persona**:
-* **Need**: 
-* **Purpose**:
+### Introduction
 
 
 ### Acceptance Criteria
