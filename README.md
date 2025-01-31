@@ -24,7 +24,7 @@ The FAB system is supposed to support validation campaigns in two modes
 * FAB-internal evaluation: domain-specific evaluation systems are managed and spawned by FAB
 * FAB-external evaluation: evaluation is performed externally to FAB, the results are uploaded to FAB either manually or via a technical interface by the FAB-external evaluation system.
 
-![Closed_and_Interactive_Loop_Eval.drawio.png](docs/img/readme/SystemContext.drawio.png)
+![SystemContext.drawio.png](docs/img/readme/SystemContext.drawio.png)
 
 Arrows represent control flow.
 Both, FAB-internal and FAB-external evaluation, can be closed-loop or interactive-loop (see above).
@@ -56,6 +56,26 @@ This building block view conceptually reflects closed-loop or interactive-loop, 
 | AI Agent             | E.g. a Flatland 3 competition solution taking actions on the Flatland environment based on observations and rewards from the environment. |
 | Evaluation Submodule | E.g. FAB Flatland 3 evaluator.                                                                                                            |
 | UI                   | E.g. Interactive AI Frontend                                                                                                              |
+
+## Data Model
+
+Inspired by [LIPS](https://github.com/IRT-SystemX/LIPS), high-level data model is as follows:
+
+![DataModel.drawio.png](docs/img/readme/DataModel.drawio.png)
+
+In words:
+
+* The simulation engine produces run information/measurements, referring to a scenario. The exact contents are domain-specific. In the railway domain, these are the actions taken by the action and the rewards given by the environment. In the power grid case, these are observations and predictions.
+* The evaluation submodule has an evaluation. It may also have scenario-specific metadata (e.g. ground truth for prediction into the future problems). In the railway domain, the evaluation module aggregates the rewards along different simulation steps and episodes.
+* The output of the evaluation submodule is in a generic form referring to a scenario and the simulation engine run: it contains metrics values grouped by categories.
+* Validation campaigns can be defined in the FAB hub: per domain (power grid, ATM, railway), weights and thresholds are defined for individual metrics and per category.
+
+| Level                      | Validation                                                                                                                           |
+|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| Validation Campaign        | <ul><li>succeeded yes or no (iff all domain validation campaigns succeed)</li></ul>                                                  |
+| Domain Validation Campaign | <ul><li>succeeded yes or no (iff threshold met)</li><li>diff to threshold</li><li>weighted value</li><li>...</li></ul>               |
+| Metrics Category           | <ul><li>succeeded yes or no (iff threshold met)</li><li>diff to threshold</li><li>weighted value</li><li>...</li></ul>               |
+| Metrics                    | <ul><li>succeeded yes or no (iff threshold met)</li><li>diff to threshold</li><li>weighted value</li><li>value</li><li>...</li></ul> |
 
 📦 TL; DR;
 ----------
