@@ -276,7 +276,7 @@ export function router(_server: Server) {
     `
     const id: number = idRow.at(0)?.['id'] ?? 0
     // get benchmark docker image
-    const [{ dockerImage }] = await sql.query`
+    const [{ docker_image: dockerImage }] = await sql.query`
       SELECT docker_image FROM benchmarks
       WHERE id=${req.body.benchmark}
     `
