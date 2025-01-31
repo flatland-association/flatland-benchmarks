@@ -21,8 +21,8 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - ${POSTGRES_PORT}:5432
+    # If persistent storage is required, uncomment volumes list:
     # volumes:
-      # persistent storage temporarily disabled for schema dev
       # - ${POSTGRES_VOLUME:-./var/postgres}:/var/lib/postgresql/data:delegated
 
   pgadmin:
