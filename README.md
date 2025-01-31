@@ -12,14 +12,50 @@ Flatland Benchmarks (FAB) is an open-source web-based platform for running Bench
 
 It supports both
 
-* closed-loop and
-* interactive-loop
+* closed-loop: the evaluation is carried out human in the loop
+* interactive-loop: the evaluation is carried by a human Operator interacting with a UI
 
-evaluation:
+evaluation.
+
+## FAB Scope and Context
+
+The FAB system is supposed to support validation campaigns in two modes
+
+* FAB-internal evaluation: domain-specific evaluation systems are managed and spawned by FAB
+* FAB-external evaluation: evaluation is performed externally to FAB, the results are uploaded to FAB either manually or via a technical interface by the FAB-external evaluation system.
+
+![Closed_and_Interactive_Loop_Eval.drawio.png](docs/img/readme/SystemContext.drawio.png)
+
+Arrows represent control flow.
+Both, FAB-internal and FAB-external evaluation, can be closed-loop or interactive-loop (see above).
+
+| System/Role                                 | Description                                                                                                                                                                                                                                                              |
+|---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| FAB                                         | central hub for validation campaign evaluation results. Entry-point for FAB-internal evaluation.                                                                                                                                                                         |
+| External Domain-Specific Evaluation Systems | run FAB-external evaluations.                                                                                                                                                                                                                                            |
+| Algorithmic Researcher                      | requests simulation for scenario and analyses scenario outcome, either from FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation)                                                                                                 |
+| Human-in-the-Loop Researcher                | requests simulation for scenario and analyses run information or measurements,                                                                                                                                                                                           |
+| Operator                                    | interacts with UI (issuing requests to based on information or action options from) either FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation).                                                                                 |
+| Domain Expert Evaluator                     | anylyses scenario outcomes, either from FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation), or uploads scenario outcomes to FAB from FAB-external evaluations. Domain Expert Evaluator may interview Operators for evaluation. |
+
+## Building Block View
+
+The following [building block view](https://docs.arc42.org/section-5/) shows the static decomposition of the system into building blocks (modules, components, subsystems, classes, interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations, data structures, …) as well as their dependencies (relationships, associations, …)
 
 ![Closed_and_Interactive_Loop_Eval.drawio.png](docs/img/readme/Closed_and_Interactive_Loop_Eval.drawio.png)
 
 Arrows represent flow of information (and not control flow).
+
+This building block view conceptually reflects closed-loop or interactive-loop, both of FAB-internal and FAB-external evaluation (ignoring FAB system boundary, i.e. whether the domain-specific evaluation systems are managed by FAB or external).
+
+| Component            | Responsibility                                                                                                                            |
+|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| FAB Web+Backend      | Manage scenarios for FAB-internal evaluation. Manage validation campgains and results for both FAB-internal and FAB-external evaluation.  |
+| Simulation Engine    | E.g. FAB Flatland 3 compute worker and or InteractiveAI Services                                                                          |
+| Digital Environment  | E.g. Flatland, Grid2Ops.                                                                                                                  |
+| AI Agent             | E.g. a Flatland 3 competition solution taking actions on the Flatland environment based on observations and rewards from the environment. |
+| Evaluation Submodule | E.g. FAB Flatland 3 evaluator.                                                                                                            |
+| UI                   | E.g. Interactive AI Frontend                                                                                                              |
 
 📦 TL; DR;
 ----------
