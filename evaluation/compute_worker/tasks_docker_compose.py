@@ -23,7 +23,6 @@ AICROWD_IS_GRADING = os.environ.get("AICROWD_IS_GRADING", None)
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
 
 
-# TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 start own redis for evaluator <-> submission communication? Split in flatland-repo?
 # N.B. name to be used by send_task
 @app.task(name="flatland3-evaluation", bind=True)
 def the_task(self, docker_image: str, submission_image: str, **kwargs):
@@ -73,7 +72,11 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
   loop.run_until_complete(gathered_tasks)
   duration = time.time() - start_time
   logger.info(f"\\ end task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.")
-  return {"evaluator": evaluator_future.result(), "submission": submission_future.result()}
+  ret_evaluator = evaluator_future.result()
+  ret_evaluator["image_id"] = docker_image
+  ret_submission = submission_future.result()
+  ret_submission["image_id"] = submission_image
+  return {"evaluator": ret_evaluator, "submission": ret_submission}
 
 
 # based on https://github.com/codalab/codabench/blob/develop/compute_worker/compute_worker.py:_run_container_engine_cmd
@@ -94,7 +97,7 @@ async def run_async_and_catch_output(future, exec_args):
   _ret["job"] = ""
   _ret["pod"] = ""
   future.set_result(_ret)
-  logger.info(f"task rc=%s", proc.returncode)
+  logger.info(f"task rc=%s (for %s)", proc.returncode, exec_args)
   logger.debug(f"task stdout=%s", stdout)
   logger.debug(f"task stderr=%s", stderr)
   return _ret
