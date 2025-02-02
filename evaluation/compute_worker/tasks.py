@@ -73,7 +73,6 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   done = False
   ret = {}
   while not done:
-    print(".")
     jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"task_id={task_id}")
     assert len(jobs.items) == 2
     done = True
