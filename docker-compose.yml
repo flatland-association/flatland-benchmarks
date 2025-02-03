@@ -2,8 +2,7 @@ services:
   blup:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     command: |
-
-      docker run -v mydata:/tmp/results/fritz -i alpine touch /tmp/results/fritz/nix
+      docker run -v mydata:/tmp/results/fritz/ -i alpine touch /tmp/results/fritz/nix
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,7 +12,7 @@ services:
   blup2:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     command: |
-      docker run -v mydata:/tmp/results/fritz -i alpine find /tmp/results/fritz
+      docker run -v mydata:/tmp/results/fritz/ -i alpine find /tmp/results/fritz
     build:
       context: .
       dockerfile: Dockerfile
