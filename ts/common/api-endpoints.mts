@@ -36,6 +36,7 @@ export interface ApiGetEndpoints {
   '/mirror/:id': ApiGetEndpoint<Empty, string>
   '/dbsetup': ApiGetEndpoint<Empty, unknown>
   '/ampq': ApiGetEndpoint<Empty, string>
+  '/whoami': ApiGetEndpoint<Empty, json>
   '/benchmarks': ApiGetEndpoint<Empty, ResourceLocator<Benchmark>[]>
   '/benchmarks/:id': ApiGetEndpoint<Empty, Benchmark[]>
   '/tests/:id': ApiGetEndpoint<Empty, Test[]>
