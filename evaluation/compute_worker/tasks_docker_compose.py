@@ -26,7 +26,7 @@ BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
 
 
 # N.B. name to be used by send_task
-@app.task(name="flatland3-evaluation", bind=True, soft_time_limit=2, time_limit=120)
+@app.task(name="flatland3-evaluation", bind=True, soft_time_limit=15, time_limit=120)
 def the_task(self, docker_image: str, submission_image: str, **kwargs):
   task_id = self.request.id
   try:
@@ -84,6 +84,7 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     return {"evaluator": ret_evaluator, "submission": ret_submission}
   except celery.exceptions.SoftTimeLimitExceeded as e:
     print(f"Hit {e} - getting logs from containers")
+    subprocess.call(["docker", "ps"])
     try:
       logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
       subprocess.call(["docker", "logs", f"flatland3-evaluator-{task_id}", ])
