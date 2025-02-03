@@ -20,5 +20,10 @@
   /* Redis endpoint */
   "redis": {
     "url": "redis://localhost:6379" // redis[s]://[[username][:password]@][host][:port][/db-number]
+  },
+  /* Keycloak endpoint */
+  "keycloak": {
+    "url": "http://localhost:8081", // http[s]://[host][:port]
+    "realm": "netzgrafikeditor",
   }
 }
