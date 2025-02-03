@@ -7,6 +7,7 @@ ENV PYTHONUNBUFFERED=1
 RUN addgroup runner && adduser --system --disabled-password --home /app --ingroup runner runner
 WORKDIR /app
 
+# https://stackoverflow.com/questions/74247999/github-actions-self-hosted-runner-sibling-container-permission-denied-docker
 # Docker in Docker https://github.com/CloudSnorkel/cdk-github-runners/blob/b45d173c166d1f7e3cf5b8bc4524a179f0e99005/src/providers/docker-images/codebuild/linux-x64/Dockerfile#L48-L61
 ARG DOCKER_CHANNEL="stable"
 ARG DIND_COMMIT="42b1175eda071c0e9121e1d64345928384a93df1"
@@ -35,3 +36,8 @@ RUN python -m pip install -U -r requirements.txt
 
 ADD ./evaluator_job.yaml ./evaluator_job.yaml
 ADD ./submission_job.yaml ./submission_job.yaml
+
+VOLUME /var/lib/docker
+
+# configure runner
+USER runner
