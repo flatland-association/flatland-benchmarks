@@ -59,6 +59,10 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
       "--network", BENCHMARKING_NETWORK,
       docker_image,
     ])
+
+    subprocess.call(["docker", "pull", docker_image])
+    subprocess.call(["docker", "pull", submission_image])
+
     gathered_tasks = asyncio.gather(
       run_async_and_catch_output(evaluator_future, exec_args=evaluator_exec_args),
       run_async_and_catch_output(submission_future, exec_args=[
