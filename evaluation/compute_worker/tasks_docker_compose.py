@@ -85,14 +85,14 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     try:
       logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
       subprocess.call(["docker", "logs", f"flatland3-evaluator-{task_id}", ])
-      subprocess.call(["docker", "rm", f"flatland3-evaluator-{task_id}", ])
+      # subprocess.call(["docker", "rm", f"flatland3-evaluator-{task_id}", ])
       logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
     try:
       logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
       subprocess.call(["docker", "logs", f"flatland3-submission-{task_id}", ])
-      subprocess.call(["docker", "rm", f"flatland3-submission-{task_id}", ])
+      # subprocess.call(["docker", "rm", f"flatland3-submission-{task_id}", ])
       logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")

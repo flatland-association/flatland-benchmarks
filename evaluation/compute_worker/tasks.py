@@ -10,7 +10,7 @@ from celery import Celery
 from kubernetes import client, config
 from kubernetes.client import BatchV1Api, CoreV1Api
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),

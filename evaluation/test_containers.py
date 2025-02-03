@@ -1,4 +1,6 @@
 import json
+import logging
+import subprocess
 import uuid
 
 import pytest
@@ -6,34 +8,54 @@ import redis
 from celery import Celery
 from testcontainers.compose import DockerCompose
 
+logger = logging.getLogger(__name__)
 
 @pytest.fixture
-def setup_class():
+def test_containers_fixture():
     global basic
 
     basic = DockerCompose(context=".", compose_file_name="docker-compose-demo.yml")
-    print("/ start docker compose up")
+    logger.info("/ start docker compose up")
     basic.start()
-    print("\\ end docker compose")
-    yield
+    logger.info("\\ end docker compose")
+    task_id = str(uuid.uuid4())
+    yield task_id
     stdout, stderr = basic.get_logs()
-    print("stdout from docker compose")
-    print(stdout)
-    print("stderr from docker compose")
-    print(stderr)
-    print("/ start docker compose down")
+    logger.info("stdout from docker compose")
+    logger.info(stdout)
+    logger.error("stderr from docker compose")
+    logger.error(stderr)
+
+    logger.info(f"Getting logs from containers")
+    subprocess.call(["docker", "ps", "--all"])
+    try:
+        logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
+        subprocess.call(["docker", "logs", f"flatland3-evaluator-{task_id}", ])
+        subprocess.call(["docker", "rm", f"flatland3-evaluator-{task_id}", ])
+        logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
+    except:
+        logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
+    try:
+        logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
+        subprocess.call(["docker", "logs", f"flatland3-submission-{task_id}", ])
+        subprocess.call(["docker", "rm", f"flatland3-submission-{task_id}", ])
+        logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
+    except:
+        logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
+
+    logger.info("/ start docker compose down")
     basic.stop()
-    print("\\ end docker down")
+    logger.info("\\ end docker down")
 
 
-@pytest.mark.usefixtures("setup_class")
-def test_succesful_run():
+@pytest.mark.usefixtures("test_containers_fixture")
+def test_succesful_run(test_containers_fixture: str):
+    task_id = test_containers_fixture
     app = Celery(
         broker="pyamqp://localhost:5672",
         backend='redis://localhost:6379',
     )
-    task_id = str(uuid.uuid4())
-    print(f"/ Start simulate submission from portal for task_id={task_id}.....")
+    logger.info(f"/ Start simulate submission from portal for task_id={task_id}.....")
     ret = app.send_task(
         'flatland3-evaluation',
         task_id=task_id,
@@ -42,11 +64,11 @@ def test_succesful_run():
             "submission_image": "ghcr.io/flatland-association/fab-flatland-submission-template:latest"
         },
     ).get()
-    print(ret)
+    logger.info(ret)
     all_completed = all([s["job_status"] == "Complete" for s in ret.values()])
 
     assert all_completed, ret
-    print(
+    logger.info(
         f"\\ End simulate submission from portal for task_id={task_id}: {[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
 
     assert set(ret.keys()) == {"evaluator", "submission"}
