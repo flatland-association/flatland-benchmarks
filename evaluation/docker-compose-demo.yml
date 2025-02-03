@@ -63,6 +63,7 @@ services:
     command: python -m celery -A tasks worker -l debug -n compute-worker@%n
     image: ghcr.io/flatland-association/fab-flatland-compute-worker:latest
     pull_policy: always
+    privileged: true
     depends_on:
       rabbit:
         condition: service_healthy
