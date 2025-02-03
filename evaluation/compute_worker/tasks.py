@@ -7,6 +7,7 @@ import uuid
 import yaml
 from celery import Celery
 from kubernetes import client, config
+from kubernetes.client import BatchV1Api, CoreV1Api
 
 logger = logging.getLogger()
 
@@ -29,18 +30,16 @@ AICROWD_IS_GRADING = os.environ.get("AICROWD_IS_GRADING", None)
 def the_task(self, docker_image: str, submission_image: str, **kwargs):
   task_id = self.request.id
   config.load_incluster_config()
-  return run_evaluation(task_id=task_id, docker_image=docker_image, submission_image=submission_image)
-
-
-def run_evaluation(task_id: str, docker_image: str, submission_image: str):
-  start_time = time.time()
-  logger.info(f"/ start task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}")
-
   # https://github.com/kubernetes-client/python/
   # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py
-
   batch_api = client.BatchV1Api()
   core_api = client.CoreV1Api()
+  return run_evaluation(task_id=task_id, docker_image=docker_image, submission_image=submission_image, batch_api=batch_api, core_api=core_api)
+
+
+def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch_api: BatchV1Api, core_api: CoreV1Api):
+  start_time = time.time()
+  logger.info(f"/ start task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}")
 
   evaluator_definition = yaml.safe_load(open("evaluator_job.yaml"))
   evaluator_definition["metadata"]["name"] = f"{evaluator_definition['metadata']['name']}-{task_id}"
@@ -74,7 +73,6 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str):
   done = False
   ret = {}
   while not done:
-    print(".")
     jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"task_id={task_id}")
     assert len(jobs.items) == 2
     done = True
