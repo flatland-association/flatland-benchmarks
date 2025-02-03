@@ -1,0 +1,10 @@
+services:
+  blup:
+    # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
+    command: docker ps
+    build:
+      context: .
+      dockerfile: Dockerfile
+    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
