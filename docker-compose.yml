@@ -1,7 +1,7 @@
 services:
   blup:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
-    command: docker ps
+    command: docker run hello-world
     build:
       context: .
       dockerfile: Dockerfile
