@@ -124,3 +124,7 @@ services:
       - 80:80
 networks:
   flatland-benchmarks:
+
+volumes:
+  flatland-benchmarks:
+    external: true
