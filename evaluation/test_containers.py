@@ -31,6 +31,7 @@ def test_containers_fixture():
     try:
         logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
         subprocess.call(["docker", "logs", f"flatland3-evaluator-{task_id}", ])
+        subprocess.call(["docker", "stop", f"flatland3-evaluator-{task_id}", ])
         subprocess.call(["docker", "rm", f"flatland3-evaluator-{task_id}", ])
         logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
     except:
@@ -38,6 +39,7 @@ def test_containers_fixture():
     try:
         logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
         subprocess.call(["docker", "logs", f"flatland3-submission-{task_id}", ])
+        subprocess.call(["docker", "stop", f"flatland3-submission-{task_id}", ])
         subprocess.call(["docker", "rm", f"flatland3-submission-{task_id}", ])
         logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
     except:
