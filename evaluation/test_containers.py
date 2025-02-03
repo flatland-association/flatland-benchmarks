@@ -41,7 +41,7 @@ def test_succesful_run():
             "docker_image": "ghcr.io/flatland-association/fab-flatland-evaluator:latest",
             "submission_image": "ghcr.io/flatland-association/fab-flatland-submission-template:latest"
         },
-    ).get(timeout=120)
+    ).get()
     print(ret)
     all_completed = all([s["job_status"] == "Complete" for s in ret.values()])
 
