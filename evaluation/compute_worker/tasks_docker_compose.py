@@ -26,7 +26,7 @@ BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
 
 
 # N.B. name to be used by send_task
-@app.task(name="flatland3-evaluation", bind=True, soft_time_limit=60, time_limit=120)
+@app.task(name="flatland3-evaluation", bind=True, soft_time_limit=360, time_limit=480)
 def the_task(self, docker_image: str, submission_image: str, **kwargs):
   task_id = self.request.id
   try:
