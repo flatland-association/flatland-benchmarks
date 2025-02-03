@@ -55,7 +55,7 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
 
     evaluator_exec_args.extend([
       "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/",
-      "-v", f"flatland-benchmarks:/tmp/results/",
+      "-v", f"flatland-benchmarks:/tmp/results",
       "--network", BENCHMARKING_NETWORK,
       docker_image,
     ])
