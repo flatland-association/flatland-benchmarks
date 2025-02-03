@@ -1,10 +1,28 @@
 services:
   blup:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
-    command: docker run hello-world
+    command: |
+      docker run -v mydata:/tmp/ -i alpine find /tmp
     build:
       context: .
       dockerfile: Dockerfile
     #    privileged: true
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+  blup2:
+    # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
+    command: |
+      docker run -v mydata:/tmp/ -i alpine touch /tmp/nix
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #    privileged: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      blup:
+        condition: service_completed_successfully
+
+
+volumes:
+  mydata:
