@@ -26,7 +26,7 @@ BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
 
 
 # N.B. name to be used by send_task
-@app.task(name="flatland3-evaluation", bind=True, soft_time_limit=360, time_limit=480)
+@app.task(name="flatland3-evaluation", bind=True, soft_time_limit=10 * 60, time_limit=12 * 60)
 def the_task(self, docker_image: str, submission_image: str, **kwargs):
   task_id = self.request.id
   try:
@@ -39,7 +39,6 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     evaluator_exec_args = [
       "docker", "run",
       "--name", f"flatland3-evaluator-{task_id}",
-      "--rm",
       "-e", "redis_ip=redis",
       "-e", f"AICROWD_SUBMISSION_ID={task_id}",
     ]
@@ -68,7 +67,6 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
       run_async_and_catch_output(submission_future, exec_args=[
         "docker", "run",
         "--name", f"flatland3-submission-{task_id}",
-        "--rm",
         "-e", "redis_ip=redis",
         "-e", "AICROWD_TESTS_FOLDER=/tmp/debug-environments/",
         "-e", f"AICROWD_SUBMISSION_ID={task_id}",
@@ -81,20 +79,38 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     loop.run_until_complete(gathered_tasks)
     duration = time.time() - start_time
     logger.info(f"\\ end task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.")
+
+    logger.info(f"Getting logs from containers")
+    subprocess.call(["docker", "ps"])
+    try:
+      logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
+      subprocess.call(["docker", "logs", f"flatland3-evaluator-{task_id}", ])
+      subprocess.call(["docker", "rm", f"flatland3-evaluator-{task_id}", ])
+      logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
+    except:
+      logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
+    try:
+      logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
+      subprocess.call(["docker", "logs", f"flatland3-submission-{task_id}", ])
+      subprocess.call(["docker", "rm", f"flatland3-submission-{task_id}", ])
+      logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
+    except:
+      logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
     ret_evaluator = evaluator_future.result()
     ret_evaluator["image_id"] = docker_image
     ret_submission = submission_future.result()
     ret_submission["image_id"] = submission_image
     return {"evaluator": ret_evaluator, "submission": ret_submission}
+
   except celery.exceptions.SoftTimeLimitExceeded as e:
-    print(f"Hit {e} - getting logs from containers")
+    logger.info(f"Hit {e} - getting logs from containers")
     subprocess.call(["docker", "ps"])
     try:
       logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
       subprocess.call(["docker", "logs", f"flatland3-evaluator-{task_id}", ])
       logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
     except:
-      logger.warning("Could not fetch logs from container {}", f"flatland3-evaluator-{task_id}")
+      logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
     try:
       logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
       subprocess.call(["docker", "logs", f"flatland3-submission-{task_id}", ])
