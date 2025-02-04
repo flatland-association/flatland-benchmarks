@@ -93,3 +93,4 @@ def test_tasks_successful():
 
   assert ret["f3-evaluator"]["job"] == job_eva.to_dict()
   assert ret["f3-submission"]["job"] == job_subi.to_dict()
+  mockito.unstub()
