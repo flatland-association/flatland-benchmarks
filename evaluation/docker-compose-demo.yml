@@ -30,6 +30,20 @@ services:
     networks:
       - flatland-benchmarks
 
+  redis-monitor:
+    image: redis
+    command: redis-cli -h redis -p 6379 monitor
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    depends_on:
+      redis:
+        condition: service_started
+    networks:
+      - flatland-benchmarks
+
   rabbit:
     build:
       context: rabbitmq
@@ -83,6 +97,7 @@ services:
       test: celery -A tasks inspect ping
     networks:
       - flatland-benchmarks
+
   fab-backend:
     image: ghcr.io/flatland-association/fab-backend:latest
     pull_policy: always
@@ -108,3 +123,7 @@ services:
       - 80:80
 networks:
   flatland-benchmarks:
+
+volumes:
+  flatland-benchmarks:
+    external: true

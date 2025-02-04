@@ -3,13 +3,14 @@ import logging
 import os
 import time
 import uuid
+from pathlib import Path
 
 import yaml
 from celery import Celery
 from kubernetes import client, config
 from kubernetes.client import BatchV1Api, CoreV1Api
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
@@ -41,7 +42,7 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   start_time = time.time()
   logger.info(f"/ start task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}")
 
-  evaluator_definition = yaml.safe_load(open("evaluator_job.yaml"))
+  evaluator_definition = yaml.safe_load(open(Path(__file__).parent / "evaluator_job.yaml"))
   evaluator_definition["metadata"]["name"] = f"{evaluator_definition['metadata']['name']}-{task_id}"
   evaluator_definition["metadata"]["labels"]["task_id"] = task_id
   evaluator_container_definition = evaluator_definition["spec"]["template"]["spec"]["containers"][0]
@@ -61,7 +62,7 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   evaluator = client.V1Job(metadata=evaluator_definition["metadata"], spec=evaluator_definition["spec"])
   batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, evaluator)
 
-  submission_definition = yaml.safe_load(open("submission_job.yaml"))
+  submission_definition = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))
   submission_definition["metadata"]["name"] = f"{submission_definition['metadata']['name']}-{task_id}"
   submission_definition["metadata"]["labels"]["task_id"] = task_id
   submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
