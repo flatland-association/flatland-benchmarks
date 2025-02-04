@@ -1,6 +1,5 @@
 import json
 import logging
-import subprocess
 import uuid
 from io import StringIO
 
@@ -20,32 +19,15 @@ def test_containers_fixture():
     logger.info("/ start docker compose up")
     basic.start()
     logger.info("\\ end docker compose")
+
     task_id = str(uuid.uuid4())
     yield task_id
+
     stdout, stderr = basic.get_logs()
     logger.info("stdout from docker compose")
     logger.info(stdout)
     logger.error("stderr from docker compose")
     logger.error(stderr)
-
-    logger.info(f"Getting logs from containers")
-    subprocess.call(["docker", "ps", "--all"])
-    try:
-        logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
-        subprocess.call(["docker", "logs", f"flatland3-evaluator-{task_id}", ])
-        subprocess.call(["docker", "stop", f"flatland3-evaluator-{task_id}", ])
-        subprocess.call(["docker", "rm", f"flatland3-evaluator-{task_id}", ])
-        logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
-    except:
-        logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
-    try:
-        logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
-        subprocess.call(["docker", "logs", f"flatland3-submission-{task_id}", ])
-        subprocess.call(["docker", "stop", f"flatland3-submission-{task_id}", ])
-        subprocess.call(["docker", "rm", f"flatland3-submission-{task_id}", ])
-        logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
-    except:
-        logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
 
     logger.info("/ start docker compose down")
     basic.stop()
