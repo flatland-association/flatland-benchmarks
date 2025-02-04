@@ -74,7 +74,7 @@ services:
 
   compute_worker:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
-    command: python -m celery -A tasks worker -l debug -n compute-worker@%n
+    command: python -m celery -A tasks worker -l info -n compute-worker@%n
     image: ghcr.io/flatland-association/fab-flatland-compute-worker:latest
     pull_policy: always
     depends_on:
