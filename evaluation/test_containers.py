@@ -58,23 +58,23 @@ def test_succesful_run(test_containers_fixture: str):
         f"\\ End simulate submission from portal for task_id={task_id}: {[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
 
     # check Celery direct return value
-    assert set(ret.keys()) == {"evaluator", "submission"}
+    assert set(ret.keys()) == {"f3-evaluator", "f3-submission"}
 
-    assert set(ret["evaluator"].keys()) == {"job_status", "image_id", "log", "job", "pod", "results.csv", "results.json"}
-    assert set(ret["submission"].keys()) == {"job_status", "image_id", "log", "job", "pod"}
+    assert set(ret["f3-evaluator"].keys()) == {"job_status", "image_id", "log", "job", "pod", "results.csv", "results.json"}
+    assert set(ret["f3-submission"].keys()) == {"job_status", "image_id", "log", "job", "pod"}
 
-    assert ret["evaluator"]["job_status"] == "Complete"
-    assert ret["submission"]["job_status"] == "Complete"
+    assert ret["f3-evaluator"]["job_status"] == "Complete"
+    assert ret["f3-submission"]["job_status"] == "Complete"
 
-    assert ret["evaluator"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-evaluator:latest"
-    assert ret["submission"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-submission-template:latest"
+    assert ret["f3-evaluator"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-evaluator:latest"
+    assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-submission-template:latest"
 
-    assert "end evaluator/run.sh" in str(ret["evaluator"]["log"])
-    assert "end submission_template/run.sh" in str(ret["submission"]["log"])
+    assert "end evaluator/run.sh" in str(ret["f3-evaluator"]["log"])
+    assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])
 
-    res_df = pd.read_csv(StringIO(ret["evaluator"]["results.csv"]))
+    res_df = pd.read_csv(StringIO(ret["f3-evaluator"]["results.csv"]))
     print(res_df)
-    res_json = json.loads(ret["evaluator"]["results.json"])
+    res_json = json.loads(ret["f3-evaluator"]["results.json"])
     print(res_json)
 
     # check Celery return value from redis
@@ -85,21 +85,21 @@ def test_succesful_run(test_containers_fixture: str):
     assert res["status"] == "SUCCESS"
     assert res["task_id"] == task_id
     ret = res["result"]
-    assert set(ret.keys()) == {"evaluator", "submission"}
+    assert set(ret.keys()) == {"f3-evaluator", "f3-submission"}
 
-    assert set(ret["evaluator"].keys()) == {"job_status", "image_id", "log", "job", "pod", "results.csv", "results.json"}
-    assert set(ret["submission"].keys()) == {"job_status", "image_id", "log", "job", "pod"}
+    assert set(ret["f3-evaluator"].keys()) == {"job_status", "image_id", "log", "job", "pod", "results.csv", "results.json"}
+    assert set(ret["f3-submission"].keys()) == {"job_status", "image_id", "log", "job", "pod"}
 
-    assert ret["evaluator"]["job_status"] == "Complete"
-    assert ret["submission"]["job_status"] == "Complete"
+    assert ret["f3-evaluator"]["job_status"] == "Complete"
+    assert ret["f3-submission"]["job_status"] == "Complete"
 
-    assert ret["evaluator"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-evaluator:latest"
-    assert ret["submission"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-submission-template:latest"
+    assert ret["f3-evaluator"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-evaluator:latest"
+    assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-submission-template:latest"
 
-    assert "end evaluator/run.sh" in str(ret["evaluator"]["log"])
-    assert "end submission_template/run.sh" in str(ret["submission"]["log"])
+    assert "end evaluator/run.sh" in str(ret["f3-evaluator"]["log"])
+    assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])
 
-    res_df = pd.read_csv(StringIO(ret["evaluator"]["results.csv"]))
+    res_df = pd.read_csv(StringIO(ret["f3-evaluator"]["results.csv"]))
     print(res_df)
-    res_json = json.loads(ret["evaluator"]["results.json"])
+    res_json = json.loads(ret["f3-evaluator"]["results.json"])
     print(res_json)

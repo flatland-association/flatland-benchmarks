@@ -10,14 +10,16 @@ spec:
       restartPolicy: Never
       containers:
         - env:
-            - name: redis_ip
-              value: fab-int-redis-master
+            - name: AICROWD_TESTS_FOLDER
+              value: /tmp/debug-environments
           image:
           name: f3-evaluator
           pullPolicy: Always
           volumeMounts:
-            - mountPath: /tmp
+            - mountPath: /tmp/debug-environments
               name: debug-environments
+            - mountPath: /tmp/results
+              name: fab-flatland3-results
       initContainers:
         - args:
             - -c
@@ -39,3 +41,6 @@ spec:
           name: fab-flatland3-data-vol
         - emptyDir: { }
           name: debug-environments
+        - name: fab-flatland3-results
+          persistentVolumeClaim:
+            claimName:
