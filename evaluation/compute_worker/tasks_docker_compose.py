@@ -86,9 +86,17 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
 
     logger.info(f"Getting logs from containers")
     # copy results files from container
-    subprocess.call(["docker", "cp", f"flatland-benchmarks:/tmp/results/results-{task_id}.csv", f"/tmp/results-{task_id}.csv"])
-    subprocess.call(["docker", "cp", f"flatland-benchmarks:/tmp/results/results-{task_id}.json", f"/tmp/results-{task_id}.json"])
 
+    exec_args = ["docker", "cp", f"flatland3-evaluator-{task_id}:/tmp/results/results-{task_id}.csv", f"/tmp/results-{task_id}.csv"]
+    logger.debug(exec_args)
+    rc = subprocess.call(exec_args)
+    if rc != 0:
+      raise FileNotFoundError(exec_args)
+    exec_args = ["docker", "cp", f"flatland3-evaluator-{task_id}:/tmp/results/results-{task_id}.json", f"/tmp/results-{task_id}.json"]
+    logger.debug(exec_args)
+    rc = subprocess.call(exec_args)
+    if rc != 0:
+      raise FileNotFoundError(exec_args)
 
     ret_evaluator["results.csv"] = open(f"/tmp/results-{task_id}.csv").read()
     ret_evaluator["results.json"] = open(f"/tmp/results-{task_id}.json").read()
@@ -96,14 +104,14 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     try:
       logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
       subprocess.call(["docker", "logs", f"flatland3-evaluator-{task_id}", ])
-      # subprocess.call(["docker", "rm", f"flatland3-evaluator-{task_id}", ])
+      subprocess.call(["docker", "rm", f"flatland3-evaluator-{task_id}", ])
       logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
     try:
       logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
       subprocess.call(["docker", "logs", f"flatland3-submission-{task_id}", ])
-      # subprocess.call(["docker", "rm", f"flatland3-submission-{task_id}", ])
+      subprocess.call(["docker", "rm", f"flatland3-submission-{task_id}", ])
       logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
