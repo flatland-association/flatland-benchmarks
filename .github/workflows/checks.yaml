@@ -5,7 +5,7 @@ on:
   pull_request:
 
 concurrency:
-  group: ${{ github.head_ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -34,4 +34,3 @@ jobs:
       - name: Run tests
         working-directory: ./evaluation/
         run: pytest -s
-
