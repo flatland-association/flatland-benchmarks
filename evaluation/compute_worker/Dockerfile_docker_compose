@@ -1,10 +1,13 @@
-FROM ghcr.io/flatland-association/fab-flatland-compute-worker:latest
+FROM python:3.9
 
-RUN apt-get update \
- && apt-get install -y sudo
+# This makes output not buffer and return immediately, nice for seeing results in stdout
+ENV PYTHONUNBUFFERED=1
+
+# Install Docker
+RUN apt-get update && curl -fsSL https://get.docker.com | sh
+
 # setup user and workdir
-RUN addgroup runner && adduser --system --disabled-password --home /app --ingroup runner --ingroup sudo runner
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN addgroup runner && adduser --system --disabled-password --home /app --ingroup runner runner
 WORKDIR /app
 
 ADD ./tasks.py ./tasks.py
@@ -14,6 +17,23 @@ RUN python -m pip install -U -r requirements.txt
 
 ADD ./evaluator_job.yaml ./evaluator_job.yaml
 ADD ./submission_job.yaml ./submission_job.yaml
+
+# configure runner
+USER runner
+
+
+# TODO drop above once built and we can inherit:
+# FROM ghcr.io/flatland-association/fab-flatland-compute-worker:latest
+
+# switch to root again
+USER root
+
+RUN apt-get update \
+ && apt-get install -y sudo
+
+RUN usermod -a -G sudo runner
+
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # configure runner
 USER runner
