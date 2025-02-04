@@ -1,0 +1,21 @@
+FROM ghcr.io/flatland-association/fab-flatland-compute-worker:latest
+
+RUN apt-get update \
+ && apt-get install -y sudo
+# setup user and workdir
+RUN addgroup runner && adduser --system --disabled-password --home /app --ingroup runner --ingroup sudo runner
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+WORKDIR /app
+
+ADD ./tasks.py ./tasks.py
+ADD ./requirements.txt ./requirements.txt
+
+RUN python -m pip install -U -r requirements.txt
+
+ADD ./evaluator_job.yaml ./evaluator_job.yaml
+ADD ./submission_job.yaml ./submission_job.yaml
+
+# configure runner
+USER runner
+
+RUN sudo ls /tmp
