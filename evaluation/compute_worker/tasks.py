@@ -31,6 +31,7 @@ app = Celery(
   backend=REDIS_IP,
 )
 
+
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 start own redis for evaluator <-> submission communication? Split in flatland-repo?
 # N.B. name to be used by send_task
 @app.task(name="flatland3-evaluation", bind=True)
@@ -66,7 +67,6 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   if S3_BUCKET:
     evaluator_container_definition["env"].append({"name": "S3_BUCKET", "value": S3_BUCKET})
   evaluator_container_definition["env"].append({"name": "AICROWD_IS_GRADING", "value": "True"})
-
 
   evaluator = client.V1Job(metadata=evaluator_definition["metadata"], spec=evaluator_definition["spec"])
   batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, evaluator)
@@ -120,14 +120,16 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
     if resp.status.phase != 'Pending':
       break
     time.sleep(1)
-  k8s_copy_file_from_pod(namespace=KUBERNETES_NAMESPACE, pod_name=f"f3-retriever-{task_id}", source_file=f"/data/", dest_path=f"/tmp/results-{task_id}")
-  k8s_copy_file_from_pod(namespace=KUBERNETES_NAMESPACE, pod_name=f"f3-retriever-{task_id}", source_file=f"/data/", dest_path=f"/tmp/results-{task_id}")
+  k8s_copy_file_from_pod(core_api=core_api, namespace=KUBERNETES_NAMESPACE, pod_name=f"f3-retriever-{task_id}", source_file=f"/data/",
+                         dest_path=f"/tmp/results-{task_id}")
+  k8s_copy_file_from_pod(core_api=core_api, namespace=KUBERNETES_NAMESPACE, pod_name=f"f3-retriever-{task_id}", source_file=f"/data/",
+                         dest_path=f"/tmp/results-{task_id}")
   core_api.delete_namespaced_pod(namespace=KUBERNETES_NAMESPACE, name=f"f3-retriever-{task_id}")
 
-  ret["f3-evaluator"] = ret[f"f3-evaluator-{TASK_ID}"]
-  ret["f3-submission"] = ret[f"f3-submission-{TASK_ID}"]
-  del ret[f"f3-evaluator-{TASK_ID}"]
-  del ret[f"f3-submission-{TASK_ID}"]
+  ret["f3-evaluator"] = ret[f"f3-evaluator-{task_id}"]
+  ret["f3-submission"] = ret[f"f3-submission-{task_id}"]
+  del ret[f"f3-evaluator-{task_id}"]
+  del ret[f"f3-submission-{task_id}"]
 
   ret["f3-evaluator"]["results.csv"] = open(f"/tmp/results-{task_id}/data/results-{task_id}.csv").read()
   ret["f3-evaluator"]["results.json"] = open(f"/tmp/results-{task_id}/data/results-{task_id}.json").read()
@@ -141,10 +143,10 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
 
 
 # source: https://github.com/kubernetes-client/python/issues/476
-def k8s_copy_file_from_pod(namespace: str, pod_name: str, source_file: str, dest_path: str):
+def k8s_copy_file_from_pod(core_api: CoreV1Api, namespace: str, pod_name: str, source_file: str, dest_path: str):
   exec_command = ['/bin/sh', '-c', f'cd {Path(source_file).parent}; tar czf - {Path(source_file).name}']
   with tempfile.TemporaryFile() as buff:
-    resp = kubernetes.stream.stream(kubernetes.client.CoreV1Api().connect_get_namespaced_pod_exec, pod_name, namespace,
+    resp = kubernetes.stream.stream(core_api.connect_get_namespaced_pod_exec, pod_name, namespace,
                                     command=exec_command,
                                     binary=True,
                                     stderr=True, stdin=True,
