@@ -11,7 +11,7 @@ from mockito import mock
 from mockito import verify
 from mockito import when
 
-from evaluation.compute_worker import tasks
+import tasks
 from tasks import run_evaluation
 
 
