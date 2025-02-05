@@ -3,10 +3,12 @@ import logging
 import uuid
 from io import StringIO
 
+import boto3
 import pandas as pd
 import pytest
 import redis
 from celery import Celery
+from dotenv import dotenv_values
 from testcontainers.compose import DockerCompose
 
 logger = logging.getLogger(__name__)
@@ -26,8 +28,8 @@ def test_containers_fixture():
     stdout, stderr = basic.get_logs()
     logger.info("stdout from docker compose")
     logger.info(stdout)
-    logger.error("stderr from docker compose")
-    logger.error(stderr)
+    logger.warning("stderr from docker compose")
+    logger.warning(stderr)
 
     logger.info("/ start docker compose down")
     basic.stop()
@@ -73,9 +75,9 @@ def test_succesful_run(test_containers_fixture: str):
     assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])
 
     res_df = pd.read_csv(StringIO(ret["f3-evaluator"]["results.csv"]))
-    print(res_df)
+    logger.debug(res_df)
     res_json = json.loads(ret["f3-evaluator"]["results.json"])
-    print(res_json)
+    logger.debug(res_json)
 
     # check Celery return value from redis
     r = redis.Redis(host='localhost', port=6379, db=0)
@@ -100,6 +102,18 @@ def test_succesful_run(test_containers_fixture: str):
     assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])
 
     res_df = pd.read_csv(StringIO(ret["f3-evaluator"]["results.csv"]))
-    print(res_df)
+    logger.debug(res_df)
     res_json = json.loads(ret["f3-evaluator"]["results.json"])
-    print(res_json)
+    logger.debug(res_json)
+
+    logger.info("Download results from S3")
+    config = dotenv_values(".env")
+    s3 = boto3.client(
+        's3',
+        # https://docs.weka.io/additional-protocols/s3/s3-examples-using-boto3
+        endpoint_url=f'http://localhost:{config["MINIO_PORT"]}',
+        aws_access_key_id=config["MINIO_ROOT_USER"],
+        aws_secret_access_key=config["MINIO_ROOT_PASSWORD"]
+    )
+    objects = set([s["Key"] for s in s3.list_objects(Bucket=config["S3_BUCKET"])['Contents']])
+    assert objects == {f'results/{task_id}.csv', f'results/{task_id}.json'}, objects

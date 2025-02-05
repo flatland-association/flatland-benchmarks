@@ -90,6 +90,9 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     ret_submission = submission_future.result()
     ret_submission["image_id"] = submission_image
 
+    logger.info(ret_evaluator)
+    logger.info(ret_submission)
+
     logger.info(f"Getting logs from containers")
 
     # copy results files from container
@@ -97,12 +100,12 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     logger.debug(exec_args)
     rc = subprocess.call(exec_args)
     if rc != 0:
-      raise FileNotFoundError(exec_args)
+      raise FileNotFoundError(f"Could not get logs executing {exec_args}")
     exec_args = ["sudo", "docker", "cp", f"flatland3-evaluator-{task_id}:/tmp/results/results-{task_id}.json", f"/tmp/results-{task_id}.json"]
     logger.debug(exec_args)
     rc = subprocess.call(exec_args)
     if rc != 0:
-      raise FileNotFoundError(exec_args)
+      raise FileNotFoundError(f"Could not get logs executing {exec_args}")
 
     ret_evaluator["results.csv"] = open(f"/tmp/results-{task_id}.csv").read()
     ret_evaluator["results.json"] = open(f"/tmp/results-{task_id}.json").read()

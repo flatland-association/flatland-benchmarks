@@ -88,6 +88,8 @@ services:
       timeout: 1s
       retries: 5
     command: server /data --address :${MINIO_PORT} --console-address :${MINIO_CONSOLE_PORT}
+    networks:
+      - flatland-benchmarks
 
   minio_setup:
     image: minio/mc:RELEASE.2024-11-05T11-29-45Z
@@ -104,7 +106,8 @@ services:
         /usr/bin/mc mb myminio/${S3_BUCKET}
 
         echo "createbuckets successful"
-
+    networks:
+      - flatland-benchmarks
   compute_worker:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     command: python -m celery -A tasks worker -l info -n compute-worker@%n
@@ -125,6 +128,17 @@ services:
       - REDIS_IP=redis://redis:6379
       - HOST_DIRECTORY=${PWD}
       - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
+      - S3_BUCKET=${S3_BUCKET}
+      # for backend to S3 communication, use internal docker hostname
+      - AWS_ENDPOINT_URL=http://minio:${MINIO_PORT}
+      - AWS_ACCESS_KEY_ID=${MINIO_ROOT_USER}
+      - AWS_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD}
+      # TODO remove:
+      - S3_UPLOAD_PATH_TEMPLATE=${S3_UPLOAD_PATH_TEMPLATE}
+      - S3_UPLOAD_WITH_SUBMISSION_ID=true
+      - S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=${S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}
+
+
     logging:
       options:
         max-size: "20m"
