@@ -26,3 +26,11 @@ export interface Submission extends Resource<'/submissions/'> {
   code_repository: string
   tests: ResourceId[]
 }
+
+export interface Result extends Resource<'/results/'> {
+  submission: ResourceId
+  done_at: string | null
+  success: boolean | null
+  scores: number[] | null
+  results_str: string | null
+}
