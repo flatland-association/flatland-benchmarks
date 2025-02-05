@@ -28,7 +28,7 @@ S3_BUCKET = os.environ.get("S3_BUCKET", None)
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
-  backend=REDIS_IP,
+  backend=f"redis://{REDIS_IP}:6379",
 )
 
 
