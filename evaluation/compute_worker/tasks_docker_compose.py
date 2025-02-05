@@ -5,6 +5,7 @@ import os
 import subprocess
 import time
 
+import boto3
 import celery.exceptions
 from celery import Celery
 
@@ -59,7 +60,6 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
 
     evaluator_exec_args.extend([
       "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/",
-      "-v", f"flatland-benchmarks:/tmp/results",
       "--network", BENCHMARKING_NETWORK,
       docker_image,
     ])
@@ -89,26 +89,24 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     ret_evaluator["image_id"] = docker_image
     ret_submission = submission_future.result()
     ret_submission["image_id"] = submission_image
+    ret = {"f3-evaluator": ret_evaluator, "f3-submission": ret_submission}
 
-    logger.info(ret_evaluator)
-    logger.info(ret_submission)
+    logger.debug("Task with task_id=%s got results from Celery: %s.", task_id, ret)
 
-    logger.info(f"Getting logs from containers")
+    logger.info("Get results files from S3 under %s...", AWS_ENDPOINT_URL)
+    s3 = boto3.client(
+      's3',
+      # https://docs.weka.io/additional-protocols/s3/s3-examples-using-boto3
+      endpoint_url=AWS_ENDPOINT_URL,
+      aws_access_key_id=AWS_ACCESS_KEY_ID,
+      aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+    )
+    obj = s3.get_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + ".csv")
+    ret_evaluator["results.csv"] = obj['Body'].read().decode("utf-8")
+    obj = s3.get_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + ".json")
+    ret_evaluator["results.json"] = obj['Body'].read().decode("utf-8")
 
-    # copy results files from container
-    exec_args = ["sudo", "docker", "cp", f"flatland3-evaluator-{task_id}:/tmp/results/results-{task_id}.csv", f"/tmp/results-{task_id}.csv"]
-    logger.debug(exec_args)
-    rc = subprocess.call(exec_args)
-    if rc != 0:
-      raise FileNotFoundError(f"Could not get logs executing {exec_args}")
-    exec_args = ["sudo", "docker", "cp", f"flatland3-evaluator-{task_id}:/tmp/results/results-{task_id}.json", f"/tmp/results-{task_id}.json"]
-    logger.debug(exec_args)
-    rc = subprocess.call(exec_args)
-    if rc != 0:
-      raise FileNotFoundError(f"Could not get logs executing {exec_args}")
-
-    ret_evaluator["results.csv"] = open(f"/tmp/results-{task_id}.csv").read()
-    ret_evaluator["results.json"] = open(f"/tmp/results-{task_id}.json").read()
+    logger.info(f"Get logs from containers...")
     subprocess.call(["sudo", "docker", "ps"])
     try:
       logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
@@ -124,8 +122,7 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
       logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
-
-    return {"f3-evaluator": ret_evaluator, "f3-submission": ret_submission}
+    return ret
 
   except celery.exceptions.SoftTimeLimitExceeded as e:
     logger.info(f"Hit {e} - getting logs from containers")
