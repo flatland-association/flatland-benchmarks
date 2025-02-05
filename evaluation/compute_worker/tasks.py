@@ -42,6 +42,18 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
   # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py
   batch_api = client.BatchV1Api()
   core_api = client.CoreV1Api()
+  if not AWS_ENDPOINT_URL:
+    return RuntimeError("Misconfiguration: AWS_ENDPOINT_URL must be set in the compute worker")
+  if not AWS_ACCESS_KEY_ID:
+    return RuntimeError("Misconfiguration: AWS_ACCESS_KEY_ID must be set in the compute worker")
+  if not AWS_SECRET_ACCESS_KEY:
+    return RuntimeError("Misconfiguration: AWS_SECRET_ACCESS_KEY must be set in the compute worker")
+  if not S3_BUCKET:
+    return RuntimeError("Misconfiguration: S3_BUCKET must be set in the compute worker")
+  if not S3_UPLOAD_PATH_TEMPLATE:
+    return RuntimeError("Misconfiguration: S3_UPLOAD_PATH_TEMPLATE must be set in the compute worker")
+  if not S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID:
+    return RuntimeError("Misconfiguration: S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID must be set to true in the compute worker")
   s3 = boto3.client(
     's3',
     # https://docs.weka.io/additional-protocols/s3/s3-examples-using-boto3
@@ -138,9 +150,9 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   ret["f3-evaluator"]["results.json"] = obj['Body'].read().decode("utf-8")
 
   all_completed = all([s == "Complete" for s in status])
-  print(f"done {status}, all_completed={all_completed}")
+  logger.info("done %s, all_completed=%s", status, all_completed)
   duration = time.time() - start_time
-  print(ret)
+  logger.debug(ret)
   logger.info(f"\\ end task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.")
   return ret
 
