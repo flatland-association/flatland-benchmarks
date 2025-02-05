@@ -25,6 +25,8 @@ AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
 S3_BUCKET = os.environ.get("S3_BUCKET", None)
+S3_UPLOAD_PATH_TEMPLATE = os.getenv("S3_UPLOAD_PATH_TEMPLATE", None)
+S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.getenv("S3_UPLOAD_WITH_SUBMISSION_ID", None)
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
@@ -66,6 +68,11 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
     evaluator_container_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": AWS_SECRET_ACCESS_KEY})
   if S3_BUCKET:
     evaluator_container_definition["env"].append({"name": "S3_BUCKET", "value": S3_BUCKET})
+  if S3_UPLOAD_PATH_TEMPLATE:
+    evaluator_container_definition["env"].append({"name": "S3_UPLOAD_PATH_TEMPLATE", "value": S3_UPLOAD_PATH_TEMPLATE})
+  if S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID:
+    evaluator_container_definition["env"].append({"name": "S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", "value": S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID})
+
   evaluator_container_definition["env"].append({"name": "AICROWD_IS_GRADING", "value": "True"})
 
   evaluator = client.V1Job(metadata=evaluator_definition["metadata"], spec=evaluator_definition["spec"])
