@@ -59,7 +59,8 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     evaluator_exec_args.extend(["-e", f"AICROWD_IS_GRADING={True}"])
 
     evaluator_exec_args.extend([
-      "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/",
+      "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/debug-environments",
+      "-e", "AICROWD_TESTS_FOLDER=/tmp/debug-environments/",
       "--network", BENCHMARKING_NETWORK,
       docker_image,
     ])
