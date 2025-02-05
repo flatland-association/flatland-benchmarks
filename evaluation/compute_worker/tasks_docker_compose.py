@@ -36,7 +36,7 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     evaluator_future = loop.create_future()
     submission_future = loop.create_future()
     evaluator_exec_args = [
-      "docker", "run",
+      "sudo", "docker", "run",
       "--name", f"flatland3-evaluator-{task_id}",
       "-e", "redis_ip=redis",
       "-e", f"AICROWD_SUBMISSION_ID={task_id}",
@@ -58,13 +58,13 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
       docker_image,
     ])
 
-    subprocess.call(["docker", "pull", docker_image])
-    subprocess.call(["docker", "pull", submission_image])
+    subprocess.call(["sudo", "docker", "pull", docker_image])
+    subprocess.call(["sudo", "docker", "pull", submission_image])
 
     gathered_tasks = asyncio.gather(
       run_async_and_catch_output(evaluator_future, exec_args=evaluator_exec_args),
       run_async_and_catch_output(submission_future, exec_args=[
-        "docker", "run",
+        "sudo", "docker", "run",
         "--name", f"flatland3-submission-{task_id}",
         "-e", "redis_ip=redis",
         "-e", "AICROWD_TESTS_FOLDER=/tmp/debug-environments/",
@@ -85,14 +85,14 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     ret_submission["image_id"] = submission_image
 
     logger.info(f"Getting logs from containers")
-    # copy results files from container
 
-    exec_args = ["docker", "cp", f"flatland3-evaluator-{task_id}:/tmp/results/results-{task_id}.csv", f"/tmp/results-{task_id}.csv"]
+    # copy results files from container
+    exec_args = ["sudo", "docker", "cp", f"flatland3-evaluator-{task_id}:/tmp/results/results-{task_id}.csv", f"/tmp/results-{task_id}.csv"]
     logger.debug(exec_args)
     rc = subprocess.call(exec_args)
     if rc != 0:
       raise FileNotFoundError(exec_args)
-    exec_args = ["docker", "cp", f"flatland3-evaluator-{task_id}:/tmp/results/results-{task_id}.json", f"/tmp/results-{task_id}.json"]
+    exec_args = ["sudo", "docker", "cp", f"flatland3-evaluator-{task_id}:/tmp/results/results-{task_id}.json", f"/tmp/results-{task_id}.json"]
     logger.debug(exec_args)
     rc = subprocess.call(exec_args)
     if rc != 0:
@@ -100,18 +100,18 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
 
     ret_evaluator["results.csv"] = open(f"/tmp/results-{task_id}.csv").read()
     ret_evaluator["results.json"] = open(f"/tmp/results-{task_id}.json").read()
-    subprocess.call(["docker", "ps"])
+    subprocess.call(["sudo", "docker", "ps"])
     try:
       logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
-      subprocess.call(["docker", "logs", f"flatland3-evaluator-{task_id}", ])
-      subprocess.call(["docker", "rm", f"flatland3-evaluator-{task_id}", ])
+      subprocess.call(["sudo", "docker", "logs", f"flatland3-evaluator-{task_id}", ])
+      subprocess.call(["sudo", "docker", "rm", f"flatland3-evaluator-{task_id}", ])
       logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
     try:
       logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
-      subprocess.call(["docker", "logs", f"flatland3-submission-{task_id}", ])
-      subprocess.call(["docker", "rm", f"flatland3-submission-{task_id}", ])
+      subprocess.call(["sudo", "docker", "logs", f"flatland3-submission-{task_id}", ])
+      subprocess.call(["sudo", "docker", "rm", f"flatland3-submission-{task_id}", ])
       logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
@@ -120,16 +120,16 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
 
   except celery.exceptions.SoftTimeLimitExceeded as e:
     logger.info(f"Hit {e} - getting logs from containers")
-    subprocess.call(["docker", "ps"])
+    subprocess.call(["sudo", "docker", "ps"])
     try:
       logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
-      subprocess.call(["docker", "logs", f"flatland3-evaluator-{task_id}", ])
+      subprocess.call(["sudo", "docker", "logs", f"flatland3-evaluator-{task_id}", ])
       logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
     try:
       logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
-      subprocess.call(["docker", "logs", f"flatland3-submission-{task_id}", ])
+      subprocess.call(["sudo", "docker", "logs", f"flatland3-submission-{task_id}", ])
       logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
