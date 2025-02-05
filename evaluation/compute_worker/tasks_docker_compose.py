@@ -90,8 +90,7 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     ret_submission = submission_future.result()
     ret_submission["image_id"] = submission_image
     ret = {"f3-evaluator": ret_evaluator, "f3-submission": ret_submission}
-
-    logger.debug("Task with task_id=%s got results from Celery: %s.", task_id, ret)
+    logger.debug("Task with task_id=%s got results from docker run: %s.", task_id, ret)
 
     logger.info("Get results files from S3 under %s...", AWS_ENDPOINT_URL)
     s3 = boto3.client(
