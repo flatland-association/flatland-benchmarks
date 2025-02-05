@@ -10,8 +10,6 @@ spec:
       restartPolicy: Never
       containers:
         - env:
-            - name: redis_ip
-              value: fab-int-redis-master
             - name: AICROWD_TESTS_FOLDER
               value: /tmp
           image:
