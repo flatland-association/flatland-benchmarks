@@ -20,7 +20,6 @@ AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
 S3_BUCKET = os.environ.get("S3_BUCKET", None)
-AICROWD_IS_GRADING = os.environ.get("AICROWD_IS_GRADING", None)
 
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
 
@@ -50,8 +49,7 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
       evaluator_exec_args.extend(["-e", f"AWS_SECRET_ACCESS_KEY={AWS_SECRET_ACCESS_KEY}"])
     if S3_BUCKET:
       evaluator_exec_args.extend(["-e", f"S3_BUCKET={S3_BUCKET}"])
-    if AICROWD_IS_GRADING:
-      evaluator_exec_args.extend(["-e", f"AICROWD_IS_GRADING={AICROWD_IS_GRADING}"])
+    evaluator_exec_args.extend(["-e", f"AICROWD_IS_GRADING={True}"])
 
     evaluator_exec_args.extend([
       "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/",
@@ -81,26 +79,43 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     duration = time.time() - start_time
     logger.info(f"\\ end task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.")
 
+    ret_evaluator = evaluator_future.result()
+    ret_evaluator["image_id"] = docker_image
+    ret_submission = submission_future.result()
+    ret_submission["image_id"] = submission_image
+
     logger.info(f"Getting logs from containers")
+    # copy results files from container
+
+    exec_args = ["docker", "cp", f"flatland3-evaluator-{task_id}:/tmp/results/results-{task_id}.csv", f"/tmp/results-{task_id}.csv"]
+    logger.debug(exec_args)
+    rc = subprocess.call(exec_args)
+    if rc != 0:
+      raise FileNotFoundError(exec_args)
+    exec_args = ["docker", "cp", f"flatland3-evaluator-{task_id}:/tmp/results/results-{task_id}.json", f"/tmp/results-{task_id}.json"]
+    logger.debug(exec_args)
+    rc = subprocess.call(exec_args)
+    if rc != 0:
+      raise FileNotFoundError(exec_args)
+
+    ret_evaluator["results.csv"] = open(f"/tmp/results-{task_id}.csv").read()
+    ret_evaluator["results.json"] = open(f"/tmp/results-{task_id}.json").read()
     subprocess.call(["docker", "ps"])
     try:
       logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
       subprocess.call(["docker", "logs", f"flatland3-evaluator-{task_id}", ])
-      # subprocess.call(["docker", "rm", f"flatland3-evaluator-{task_id}", ])
+      subprocess.call(["docker", "rm", f"flatland3-evaluator-{task_id}", ])
       logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
     try:
       logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
       subprocess.call(["docker", "logs", f"flatland3-submission-{task_id}", ])
-      # subprocess.call(["docker", "rm", f"flatland3-submission-{task_id}", ])
+      subprocess.call(["docker", "rm", f"flatland3-submission-{task_id}", ])
       logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
-    ret_evaluator = evaluator_future.result()
-    ret_evaluator["image_id"] = docker_image
-    ret_submission = submission_future.result()
-    ret_submission["image_id"] = submission_image
+
     return {"evaluator": ret_evaluator, "submission": ret_submission}
 
   except celery.exceptions.SoftTimeLimitExceeded as e:

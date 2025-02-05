@@ -22,7 +22,6 @@ AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
 S3_BUCKET = os.environ.get("S3_BUCKET", None)
-AICROWD_IS_GRADING = os.environ.get("AICROWD_IS_GRADING", None)
 
 
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 start own redis for evaluator <-> submission communication? Split in flatland-repo?
@@ -57,8 +56,7 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
     evaluator_container_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": AWS_SECRET_ACCESS_KEY})
   if S3_BUCKET:
     evaluator_container_definition["env"].append({"name": "S3_BUCKET", "value": S3_BUCKET})
-  if AICROWD_IS_GRADING:
-    evaluator_container_definition["env"].append({"name": "AICROWD_IS_GRADING", "value": AICROWD_IS_GRADING})
+  evaluator_container_definition["env"].append({"name": "AICROWD_IS_GRADING", "value": True})
   evaluator = client.V1Job(metadata=evaluator_definition["metadata"], spec=evaluator_definition["spec"])
   batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, evaluator)
 
