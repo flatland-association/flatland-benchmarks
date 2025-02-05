@@ -25,10 +25,12 @@ AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
 S3_BUCKET = os.environ.get("S3_BUCKET", None)
+S3_UPLOAD_PATH_TEMPLATE = os.getenv("S3_UPLOAD_PATH_TEMPLATE", None)
+S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.getenv("S3_UPLOAD_WITH_SUBMISSION_ID", None)
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
-  backend=REDIS_IP,
+  backend=f"redis://{REDIS_IP}:6379",
 )
 
 
@@ -66,6 +68,11 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
     evaluator_container_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": AWS_SECRET_ACCESS_KEY})
   if S3_BUCKET:
     evaluator_container_definition["env"].append({"name": "S3_BUCKET", "value": S3_BUCKET})
+  if S3_UPLOAD_PATH_TEMPLATE:
+    evaluator_container_definition["env"].append({"name": "S3_UPLOAD_PATH_TEMPLATE", "value": S3_UPLOAD_PATH_TEMPLATE})
+  if S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID:
+    evaluator_container_definition["env"].append({"name": "S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", "value": S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID})
+
   evaluator_container_definition["env"].append({"name": "AICROWD_IS_GRADING", "value": "True"})
 
   evaluator = client.V1Job(metadata=evaluator_definition["metadata"], spec=evaluator_definition["spec"])
@@ -83,6 +90,7 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
 
   done = False
   ret = {}
+  status = []
   while not done:
     jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"task_id={task_id}")
     assert len(jobs.items) == 2
@@ -101,12 +109,13 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
         pod = pods.items[0]
         log = core_api.read_namespaced_pod_log(pod.metadata.name, namespace=KUBERNETES_NAMESPACE)
 
-        _ret = {}
-        _ret["job_status"] = job.status.conditions[0].type
-        _ret["image_id"] = pod.status.container_statuses[0].image_id
-        _ret["log"] = log
-        _ret["job"] = job.to_dict()
-        _ret["pod"] = pod.to_dict()
+        _ret = {
+          "job_status": job.status.conditions[0].type,
+          "image_id": pod.status.container_statuses[0].image_id,
+          "log": log,
+          "job": job.to_dict(),
+          "pod": pod.to_dict()
+        }
         ret[job_name] = _ret
     time.sleep(1)
 
@@ -171,34 +180,32 @@ def k8s_copy_file_from_pod(core_api: CoreV1Api, namespace: str, pod_name: str, s
 
 
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/82 automated integration test against deployed FAB...
-if __name__ == '__main__':
-  TASK_ID = str(uuid.uuid4())
+def main():
+  task_id = str(uuid.uuid4())
   config.load_kube_config()
   batch_api = client.BatchV1Api()
   core_api = client.CoreV1Api()
   ret = run_evaluation(
     batch_api=batch_api,
     core_api=core_api,
-    task_id=TASK_ID,
+    task_id=task_id,
     submission_image="ghcr.io/flatland-association/fab-flatland-submission-template:latest",
     docker_image="ghcr.io/flatland-association/fab-flatland-evaluator:latest",
   )
-
   assert set(ret.keys()) == {"f3-evaluator", "f3-submission"}
-
   assert set(ret["f3-evaluator"].keys()) == {"job_status", "image_id", "log", "job", "pod", "results.csv", "results.json"}
   assert set(ret["f3-submission"].keys()) == {"job_status", "image_id", "log", "job", "pod"}
-
   assert ret["f3-evaluator"]["job_status"] == "Complete"
   assert ret["f3-submission"]["job_status"] == "Complete"
-
   assert ret["f3-evaluator"]["image_id"].startswith("ghcr.io/flatland-association/fab-flatland-evaluator")
   assert ret["f3-submission"]["image_id"].startswith("ghcr.io/flatland-association/fab-flatland-submission-template")
-
   assert "end evaluator/run.sh" in str(ret["f3-evaluator"]["log"])
   assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])
-
   res_df = pd.read_csv(StringIO(ret["f3-evaluator"]["results.csv"]))
   print(res_df)
   res_json = json.loads(ret["f3-evaluator"]["results.json"])
   print(res_json)
+
+
+if __name__ == '__main__':
+  main()
