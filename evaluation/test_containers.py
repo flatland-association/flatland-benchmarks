@@ -20,7 +20,7 @@ def test_containers_fixture():
     basic = DockerCompose(context=".", compose_file_name="docker-compose-demo.yml")
     logger.info("/ start docker compose up")
     basic.start()
-    logger.info("\\ end docker compose")
+    logger.info("\\ end docker compose up")
 
     task_id = str(uuid.uuid4())
     yield task_id
