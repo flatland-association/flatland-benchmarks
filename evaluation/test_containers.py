@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 import uuid
 from io import StringIO
 
@@ -17,28 +18,37 @@ logger = logging.getLogger(__name__)
 def test_containers_fixture():
     global basic
 
+    start_time = time.time()
     basic = DockerCompose(context=".", compose_file_name="docker-compose-demo.yml")
     logger.info("/ start docker compose up")
     basic.start()
-    logger.info("\\ end docker compose up")
+    duration = time.time() - start_time
+    logger.info(f"\\ end docker compose up. Took {duration} seconds.")
 
     task_id = str(uuid.uuid4())
     yield task_id
 
+    start_time = time.time()
+    logger.info("/ start get docker compose logs")
     stdout, stderr = basic.get_logs()
     logger.info("stdout from docker compose")
     logger.info(stdout)
     logger.warning("stderr from docker compose")
     logger.warning(stderr)
+    duration = time.time() - start_time
+    logger.info(f"\\ end get docker compose logs. Took {duration} seconds.")
 
+    start_time = time.time()
     logger.info("/ start docker compose down")
     basic.stop()
-    logger.info("\\ end docker down")
+    duration = time.time() - start_time
+    logger.info(f"\\ end docker down. Took {duration} seconds.")
 
 
 @pytest.mark.usefixtures("test_containers_fixture")
 def test_succesful_run(test_containers_fixture: str):
     task_id = test_containers_fixture
+    start_time = time.time()
     app = Celery(
         broker="pyamqp://localhost:5672",
         backend='redis://localhost:6379',
@@ -53,11 +63,13 @@ def test_succesful_run(test_containers_fixture: str):
         },
     ).get()
     logger.info(ret)
-    all_completed = all([s["job_status"] == "Complete" for s in ret.values()])
 
-    assert all_completed, ret
+    duration = time.time() - start_time
     logger.info(
-        f"\\ End simulate submission from portal for task_id={task_id}: {[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
+        f"\\ End simulate submission from portal for task_id={task_id}. Took {duration} seconds: {[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
+
+    all_completed = all([s["job_status"] == "Complete" for s in ret.values()])
+    assert all_completed, ret
 
     # check Celery direct return value
     assert set(ret.keys()) == {"f3-evaluator", "f3-submission"}
