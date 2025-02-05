@@ -116,7 +116,7 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
 
-    return {"evaluator": ret_evaluator, "submission": ret_submission}
+    return {"f3-evaluator": ret_evaluator, "f3-submission": ret_submission}
 
   except celery.exceptions.SoftTimeLimitExceeded as e:
     logger.info(f"Hit {e} - getting logs from containers")
