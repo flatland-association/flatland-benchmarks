@@ -17,7 +17,6 @@ RUN python -m pip install -U -r requirements.txt
 
 ADD ./evaluator_job.yaml ./evaluator_job.yaml
 ADD ./submission_job.yaml ./submission_job.yaml
-ADD ./retriever_pod.yaml ./retriever_pod.yaml
 
 # configure runner
 USER runner
