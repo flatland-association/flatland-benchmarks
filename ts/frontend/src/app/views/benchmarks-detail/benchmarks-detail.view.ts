@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { consolidateResourceLocator, endpointFromResourceLocator } from '@common/endpoint-utils.mjs'
-import { Benchmark, Submission, Test } from '@common/interfaces.mjs'
+import { Benchmark, Result, Submission, Test } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { ApiService } from '../../features/api/api.service'
 
@@ -17,12 +17,11 @@ export class BenchmarksDetailView implements OnInit {
   benchmark?: Benchmark
   submissions?: Submission[]
   tests?: Test[]
+  result?: Result
 
   submissionImageUrl = ''
   codeRepositoryUrl = ''
   testsSelection: boolean[] = []
-
-  submissionResult?: string
 
   constructor(
     route: ActivatedRoute,
@@ -60,16 +59,17 @@ export class BenchmarksDetailView implements OnInit {
     })
     if (response.body?.id) {
       const id = response.body.id
-      console.log(id)
       const interval = window.setInterval(() => {
         this.apiService.get('/submissions/:id/results', { params: { id: `${id}` } }).then((res) => {
           if (res.body) {
-            this.submissionResult = JSON.stringify(res.body)
-            window.clearInterval(interval)
+            this.result = res.body[0]
+            // clear interval once the result indicates success
+            if (this.result.success) {
+              window.clearInterval(interval)
+            }
           }
-          console.log(res)
         })
-      }, 1000)
+      }, 10000)
     }
   }
 }

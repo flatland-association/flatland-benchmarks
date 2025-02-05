@@ -47,10 +47,21 @@
     </button>
   </div>
 
-  @if (submissionResult) {
+  @if (result) {
     <h4 class="pb-8 font-bold">Your results</h4>
-    <div class="font-mono">
-      {{ submissionResult }}
-    </div>
+    @if (!result.done_at) {
+      <div class="text-center">Please wait while your submission is being evaluated.</div>
+    } @else {
+      @if (result.success && result.scores) {
+        <h5 class="pb-4 font-bold">Success!</h5>
+        <div>Primary score: {{ result.scores[0] }}</div>
+        <div>Secondary score: {{ result.scores[1] }}</div>
+      } @else {
+        <h5 class="pb-4 font-bold">Something went wrong</h5>
+      }
+      <div class="font-mono">
+        {{ result.results_str }}
+      </div>
+    }
   }
 </lib-content>
