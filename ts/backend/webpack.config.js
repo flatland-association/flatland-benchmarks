@@ -12,7 +12,7 @@ module.exports = {
     filename: 'main.min.js',
   },
   optimization: {
-    minimize: true,
+    minimize: false,
   },
   // mode: 'development'
   mode: 'production',

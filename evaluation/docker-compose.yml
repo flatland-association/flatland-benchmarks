@@ -96,5 +96,18 @@ services:
     networks:
       - flatland-benchmarks
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0
+    # as we need to access keycloak from backend Docker container under docker internal port, we need to start Keycloak on 8081, port forwarding in Docker run is not enough
+    command: start-dev --import-realm --http-port 8081 --hostname localhost
+    ports:
+      - 8081:8081
+    volumes:
+      # TODO can we avoid copying the realm config? Download in an init container from the repo....?
+      - ./keycloak/netzgrafikeditor-realm.json:/opt/keycloak/data/import/netzgrafikeditor-realm.json
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=netzgrafikeditor
+
 networks:
   flatland-benchmarks:

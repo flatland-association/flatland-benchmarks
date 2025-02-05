@@ -58,6 +58,16 @@ ng generate pipe pipes/<pipe-name>
 
 This will generate a new pipe in `src/app/pipes/<pipe-name>/`. For reasons of clarity about what pipe selectors are in use, generate all pipes in `pipes`.
 
+### Guards
+
+```bash
+ng generate guard guards/<guard-name> --functional=false
+```
+
+This will generate a new guard in `src/app/guards/`. For reasons of clarity about what guard selectors are in use, generate all guards in `guards`.
+
+It's recommended to set the `functional` option to false, as functional guards are often too basic.
+
 ### Classes, Interfaces etc.
 
 For other schematics (i.e. `class`, `interface`, `enum`), the `flat` option defaults to `false`, meaning they can be generated e.g. like:

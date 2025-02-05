@@ -8,6 +8,7 @@ import express from 'express'
 import type { RequestHandler, RouteParameters } from 'express-serve-static-core'
 import { createClient } from 'redis'
 import { AmpqService } from '../services/ampq-service.mjs'
+import { AuthService } from '../services/auth-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import { Schema } from '../setup/schema.mjs'
 import { Server } from './server.mjs'
@@ -218,6 +219,26 @@ export function router(_server: Server) {
   attachGet(router, '/dbsetup', async (req, res) => {
     Schema.setup()
     respond(res, null)
+  })
+
+  // auth test endpoints - for dev/debug purposes
+  attachGet(router, '/whoami', async (req, res) => {
+    const auth = AuthService.getInstance()
+    auth
+      .authorization(req)
+      .then((jwtp) => {
+        const iam = jwtp
+          ? {
+              id: jwtp.sub,
+              email: jwtp['email'],
+              name: jwtp['name'],
+            }
+          : null
+        respond(res, iam, jwtp)
+      })
+      .catch((err) => {
+        serverError(res, err)
+      })
   })
 
   attachGet(router, '/benchmarks', async (req, res) => {

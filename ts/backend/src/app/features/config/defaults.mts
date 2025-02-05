@@ -21,4 +21,9 @@ export const defaults = {
   redis: {
     url: 'redis://localhost:6379',
   },
+  /* Keycloak endpoint */
+  keycloak: {
+    url: 'http://localhost:8081',
+    realm: 'netzgrafikeditor',
+  },
 }
