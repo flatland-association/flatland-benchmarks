@@ -12,6 +12,7 @@ RUN npm ci && cd ts/frontend && npm run build
 
 FROM nginx:latest
 
+COPY ./deployment/frontend/nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /usr/src/app/dist/frontend/browser /usr/share/nginx/html
 
 EXPOSE 80

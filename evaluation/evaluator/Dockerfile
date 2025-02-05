@@ -28,4 +28,7 @@ RUN set -e && set -x && conda --version  && \
 COPY run.sh ./
 COPY evaluator.py ./
 
+# create directory as conda!
+RUN mkdir -p /tmp/results
+
 ENTRYPOINT bash run.sh
