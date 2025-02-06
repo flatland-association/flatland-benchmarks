@@ -491,8 +491,6 @@ export function router(_server: Server) {
     respond(res, results)
   })
 
-  // TODO: /submission/:id/run to queue run
-
   attachPatch(router, '/result', async (req, res) => {
     const id = req.body.id
     // restrict to patchable fields
