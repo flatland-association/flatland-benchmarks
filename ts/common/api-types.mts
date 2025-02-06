@@ -1,5 +1,5 @@
 import type { RouteParameters } from 'express-serve-static-core'
-import { ApiGetEndpoints, ApiPostEndpoints } from './api-endpoints.mjs'
+import { ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoints } from './api-endpoints.mjs'
 
 export interface ApiGetOptions<E extends keyof ApiGetEndpoints> {
   params: RouteParameters<E>
@@ -9,4 +9,9 @@ export interface ApiGetOptions<E extends keyof ApiGetEndpoints> {
 export interface ApiPostOptions<E extends keyof ApiPostEndpoints> {
   params: RouteParameters<E>
   body: ApiPostEndpoints[E]['request']['body']
+}
+
+export interface ApiPatchOptions<E extends keyof ApiPatchEndpoints> {
+  params: RouteParameters<E>
+  body: ApiPatchEndpoints[E]['request']['body']
 }

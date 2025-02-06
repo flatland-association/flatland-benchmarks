@@ -45,4 +45,5 @@ export interface Result extends Resource<'/results/'> {
   success: boolean | null
   scores: number[] | null
   results_str: string | null
+  public: boolean | null
 }

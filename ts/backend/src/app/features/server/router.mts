@@ -1,4 +1,4 @@
-import type { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
+import type { ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
 import { ApiResponse } from '@common/api-response.mjs'
 import { appendDir } from '@common/endpoint-utils.mjs'
 import { Benchmark, BenchmarkPreview, Result, Submission, SubmissionPreview, Test } from '@common/interfaces.mjs'
@@ -109,6 +109,36 @@ function attachPost<E extends keyof ApiPostEndpoints>(
 
 function attachPost(router: Router, endpoint: string, handler: RequestHandler) {
   router.post(endpoint, async (req, res, next) => {
+    try {
+      await handler(req, res, next)
+    } catch (error) {
+      next(error)
+    }
+  })
+}
+
+// typed overload
+/**
+ * Attach a PATCH endpoint handler.
+ * @param router Express router.
+ * @param endpoint String represantation of the route.
+ * @param handler Handler function.
+ * @see {@link ApiPatchEndpoints}
+ */
+function attachPatch<E extends keyof ApiPatchEndpoints>(
+  router: Router,
+  endpoint: E,
+  handler: (
+    req: Request<RouteParameters<E>, unknown, ApiPatchEndpoints[E]['request']['body']>,
+    res: Response<ApiPatchEndpoints[E]['response']>,
+    next: NextFunction,
+  ) => void | Promise<void>,
+): void
+// un-typed fallback overload
+// function attachPatch(router: Router, endpoint: string, handler: RequestHandler): void
+
+function attachPatch(router: Router, endpoint: string, handler: RequestHandler) {
+  router.patch(endpoint, async (req, res, next) => {
     try {
       await handler(req, res, next)
     } catch (error) {
@@ -466,7 +496,22 @@ export function router(_server: Server) {
     respond(res, results)
   })
 
-  // TODO: /submission/:id/run to queue run
+  attachPatch(router, '/result', async (req, res) => {
+    const id = req.body.id
+    // restrict to patchable fields
+    const patch = {
+      public: req.body.public,
+    }
+    const sql = SqlService.getInstance()
+    const [row] = await sql.query<StripDir<Result>>`
+      UPDATE results SET ${sql.fragment(patch, 'public')}
+        WHERE id = ${id}
+        RETURNING *
+    `
+
+    const [result] = appendDir('/results/', [row])
+    respond(res, result)
+  })
 
   return router
 }
