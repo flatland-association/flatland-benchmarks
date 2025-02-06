@@ -8,9 +8,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: baseTheme.colors.turquoise,
-        gradientFrom: baseTheme.colors.turquoiseBright['500'],
-        gradientTo: baseTheme.colors.turquoise['600'],
+        primary: baseTheme.colors.neutral,
+        gradientFrom: baseTheme.colors.neutral['400'],
+        gradientTo: baseTheme.colors.neutral['600'],
       },
     },
   },
