@@ -24,7 +24,7 @@ export interface ApiPostEndpoint<Body, Response> {
 }
 
 /**
- * Base interface for registered API PATCh endpoints.
+ * Base interface for registered API PATCH endpoints.
  * @param Body Type of request body. Use `Empty` to indicate absence.
  * @param Response Type of response body. Use `null` or `Empty` to indicate absence.
  */
@@ -72,8 +72,8 @@ export interface ApiPostEndpoints {
  * Registered API endpoints for PATCH method.
  * Pairs of `path : ApiPatchEndpoint<Body, Response>` with `path` being a string
  * starting with `/`. Use `:<name>` syntax to set up named parameters.
- * @see {@link ApiPostEndpoint} for syntax.
+ * @see {@link ApiPatchEndpoints} for syntax.
  */
 export interface ApiPatchEndpoints {
-  '/result': ApiPostEndpoint<Partial<Result>, Result>
+  '/result': ApiPatchEndpoint<Partial<Result>, Result>
 }
