@@ -20,6 +20,8 @@ AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
 S3_BUCKET = os.environ.get("S3_BUCKET", None)
+S3_UPLOAD_PATH_TEMPLATE = os.getenv("S3_UPLOAD_PATH_TEMPLATE", None)
+S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.getenv("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
 
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
 
@@ -49,6 +51,10 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
       evaluator_exec_args.extend(["-e", f"AWS_SECRET_ACCESS_KEY={AWS_SECRET_ACCESS_KEY}"])
     if S3_BUCKET:
       evaluator_exec_args.extend(["-e", f"S3_BUCKET={S3_BUCKET}"])
+    if S3_UPLOAD_PATH_TEMPLATE:
+      evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE={S3_UPLOAD_PATH_TEMPLATE}"])
+    if S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID:
+      evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID={S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}"])
     evaluator_exec_args.extend(["-e", f"AICROWD_IS_GRADING={True}"])
 
     evaluator_exec_args.extend([
