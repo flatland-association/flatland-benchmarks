@@ -3,11 +3,12 @@ import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { Benchmark, Result, SubmissionPreview, Test } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
+import { LeaderboardComponent } from '../../components/leaderboard/leaderboard.component'
 import { ApiService } from '../../features/api/api.service'
 
 @Component({
   selector: 'view-benchmarks-detail',
-  imports: [FormsModule, ContentComponent],
+  imports: [FormsModule, ContentComponent, LeaderboardComponent],
   templateUrl: './benchmarks-detail.view.html',
   styleUrl: './benchmarks-detail.view.scss',
 })

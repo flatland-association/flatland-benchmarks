@@ -6,33 +6,9 @@
 
 <lib-content>
   <h3 class="pb-8 text-xl font-bold">Top solutions</h3>
-  <div class="flex flex-col gap-y-8">
-    <table>
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th>Submitter</th>
-          <th>Primary score</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (submission of submissions; track $index) {
-          <tr>
-            <td>
-              {{ $index+1 }}
-            </td>
-            <td>
-              {{ submission.submitted_by_username }}
-            </td>
-            <td>
-              {{ submission.scores[0] }}
-            </td>
-          </tr>
-        }
-      </tbody>
-    </table>
-
-  </div>
+  @if(submissions) {
+    <app-leaderboard [submissions]="submissions"></app-leaderboard>
+  }
 </lib-content>
 
 <lib-content class="bg-primary-100">
