@@ -58,6 +58,16 @@ export class BenchmarksDetailView implements OnInit {
       },
     })
     if (response.body?.id) {
+      // start with an empty result (user feedback, something is going)
+      this.result = {
+        dir: '/results/',
+        id: 0,
+        submission: response.body.id,
+        done_at: null,
+        success: null,
+        scores: null,
+        results_str: null,
+      }
       const id = response.body.id
       const interval = window.setInterval(() => {
         this.apiService.get('/submissions/:id/results', { params: { id: `${id}` } }).then((res) => {
