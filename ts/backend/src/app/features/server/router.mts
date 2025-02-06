@@ -408,19 +408,38 @@ export function router(_server: Server) {
 
   // returns scored and public submissions as preview
   attachGet(router, '/submissions', async (req, res) => {
-    const benchmarkId = req.query['benchmark']
+    const benchmarkId = req.query['benchmark'] as string | undefined
+    const submissionIds = (req.query['id'] as string | undefined)?.split(',').map((s) => +s)
+
     const sql = SqlService.getInstance()
+
+    let whereScores = sql.fragment`results.scores IS NOT NULL`
+    let wherePublic = sql.fragment`results.public = true`
+    const whereBenchmark = benchmarkId ? sql.fragment`benchmark=${benchmarkId}` : sql.fragment`1=1`
+    let whereSubmission = sql.fragment`1=1`
+    let limit = 3
+    if (submissionIds) {
+      // turn off scores and public requirements if id is given
+      whereScores = sql.fragment`1=1`
+      wherePublic = sql.fragment`1=1`
+      whereSubmission = sql.fragment`submissions.id=ANY(${submissionIds})`
+      limit = submissionIds.length
+    }
+
     const rows = await sql.query<StripDir<SubmissionPreview>>`
       SELECT submissions.id, benchmark, submitted_at, submitted_by_username, scores
         FROM submissions
         LEFT JOIN results ON results.submission = submissions.id
-        WHERE results.scores IS NOT null AND results.public = true
-        ${typeof benchmarkId === 'string' ? sql.fragment`AND benchmark=${benchmarkId}` : sql.fragment``}
+        WHERE
+          ${whereScores} AND
+          ${wherePublic} AND
+          ${whereBenchmark} AND
+          ${whereSubmission}
         ORDER BY scores[1] DESC
-        LIMIT 3
+        LIMIT ${limit}
     `
     const resources = appendDir('/submissions/', rows)
-    respond(res, resources, dbgRequestObject(req))
+    respond(res, resources, { dbg: dbgRequestObject(req), sql: dbgSqlState(sql) })
   })
 
   attachGet(router, '/submissions/:id', async (req, res) => {
