@@ -7,6 +7,8 @@ import { Benchmark, Result, Submission, Test } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { ApiService } from '../../features/api/api.service'
 
+const CHECK_RESULT_INTERVAL = 10000 // [ms]
+
 @Component({
   selector: 'view-benchmarks-detail',
   imports: [CommonModule, FormsModule, ContentComponent],
@@ -82,7 +84,7 @@ export class BenchmarksDetailView implements OnInit {
             }
           }
         })
-      }, 10000)
+      }, CHECK_RESULT_INTERVAL)
     }
   }
 
