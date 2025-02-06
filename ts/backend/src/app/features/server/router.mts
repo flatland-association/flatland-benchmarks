@@ -387,6 +387,7 @@ export function router(_server: Server) {
         WHERE results.scores IS NOT null AND results.public = true
         ${typeof benchmarkId === 'string' ? sql.fragment`AND benchmark=${benchmarkId}` : sql.fragment``}
         ORDER BY scores[1] DESC
+        LIMIT 3
     `
     const resources = appendDir('/submissions/', rows)
     respond(res, resources, dbgRequestObject(req))
