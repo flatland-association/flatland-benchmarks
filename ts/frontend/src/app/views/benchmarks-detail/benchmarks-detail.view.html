@@ -7,9 +7,31 @@
 <lib-content>
   <h3 class="pb-8 text-xl font-bold">Top solutions</h3>
   <div class="flex flex-col gap-y-8">
-    @for (submission of submissions; track $index) {
-      <div>{{ submission.id }} at {{ submission.code_repository }}</div>
-    }
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Submitter</th>
+          <th>Primary score</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (submission of submissions; track $index) {
+          <tr>
+            <td>
+              {{ $index+1 }}
+            </td>
+            <td>
+              {{ submission.submitted_by_username }}
+            </td>
+            <td>
+              {{ submission.scores[0] }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
   </div>
 </lib-content>
 

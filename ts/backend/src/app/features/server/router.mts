@@ -1,7 +1,7 @@
 import type { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
 import { ApiResponse } from '@common/api-response.mjs'
-import { appendDir, toResourceLocators } from '@common/endpoint-utils.mjs'
-import { Benchmark, Resource, Result, Submission, Test } from '@common/interfaces.mjs'
+import { appendDir } from '@common/endpoint-utils.mjs'
+import { Benchmark, BenchmarkPreview, Result, Submission, SubmissionPreview, Test } from '@common/interfaces.mjs'
 import { StripDir } from '@common/utility-types.mjs'
 import type { NextFunction, Request, Response, Router } from 'express'
 import express from 'express'
@@ -259,12 +259,12 @@ export function router(_server: Server) {
 
   attachGet(router, '/benchmarks', async (req, res) => {
     const sql = SqlService.getInstance()
-    const rows = await sql.query<StripDir<Resource>>`
-      SELECT id FROM benchmarks
+    const rows = await sql.query<StripDir<BenchmarkPreview>>`
+      SELECT id, name, description FROM benchmarks
       ORDER BY id ASC
     `
     const resources = appendDir('/benchmarks/', rows)
-    respond(res, toResourceLocators(resources))
+    respond(res, resources)
   })
   attachGet(router, '/benchmarks/:id', async (req, res) => {
     const ids = req.params.id.split(',').map((s) => +s)
@@ -376,16 +376,20 @@ export function router(_server: Server) {
     }
   })
 
+  // returns scored and public submissions as preview
   attachGet(router, '/submissions', async (req, res) => {
     const benchmarkId = req.query['benchmark']
     const sql = SqlService.getInstance()
-    const rows = await sql.query<StripDir<Resource>>`
-      SELECT * FROM submissions
-      ${typeof benchmarkId === 'string' ? sql.fragment`WHERE benchmark=${benchmarkId}` : sql.fragment``}
-      ORDER BY id ASC
+    const rows = await sql.query<StripDir<SubmissionPreview>>`
+      SELECT submissions.id, benchmark, submitted_at, submitted_by_username, scores
+        FROM submissions
+        LEFT JOIN results ON results.submission = submissions.id
+        WHERE results.scores IS NOT null AND results.public = true
+        ${typeof benchmarkId === 'string' ? sql.fragment`AND benchmark=${benchmarkId}` : sql.fragment``}
+        ORDER BY scores[1] DESC
     `
     const resources = appendDir('/submissions/', rows)
-    respond(res, toResourceLocators(resources), dbgRequestObject(req))
+    respond(res, resources, dbgRequestObject(req))
   })
 
   attachGet(router, '/submissions/:id', async (req, res) => {

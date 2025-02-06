@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { consolidateResourceLocator, endpointFromResourceLocator } from '@common/endpoint-utils.mjs'
-import { Benchmark, Result, Submission, Test } from '@common/interfaces.mjs'
+import { Benchmark, Result, SubmissionPreview, Test } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { ApiService } from '../../features/api/api.service'
 
@@ -15,7 +14,7 @@ import { ApiService } from '../../features/api/api.service'
 export class BenchmarksDetailView implements OnInit {
   id: string
   benchmark?: Benchmark
-  submissions?: Submission[]
+  submissions?: SubmissionPreview[]
   tests?: Test[]
   result?: Result
 
@@ -32,11 +31,7 @@ export class BenchmarksDetailView implements OnInit {
 
   async ngOnInit() {
     this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
-    const locators = (await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id } })).body
-    if (locators && locators.length > 0) {
-      const combined = consolidateResourceLocator(locators)
-      this.submissions = (await this.apiService.get<Submission[]>(...endpointFromResourceLocator(combined))).body
-    }
+    this.submissions = (await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id } })).body
     // load all the available tests
     this.tests = (
       await this.apiService.get('/tests/:id', {
