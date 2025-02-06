@@ -50,10 +50,9 @@
     @if (!result.done_at) {
       <div class="text-center">Please wait while your submission is being evaluated.</div>
     } @else {
-      @if (result.success && result.scores) {
+      @if (mySubmission) {
         <h5 class="pb-4 font-bold">Success!</h5>
-        <div>Primary score: {{ result.scores[0] }}</div>
-        <div>Secondary score: {{ result.scores[1] }}</div>
+        <app-leaderboard [submissions]="[mySubmission]"></app-leaderboard>
         <label class="cursor-pointer my-8">
             <input type="checkbox" id="accept-eula" [(ngModel)]="acceptEula">
           <span class="pl-2">I accept that I must make the source code to my submission publicly available in order to publish my result.</span>

@@ -21,6 +21,7 @@ export class BenchmarksDetailView implements OnInit {
   submissions?: SubmissionPreview[]
   tests?: Test[]
   result?: Result
+  mySubmission?: SubmissionPreview
 
   submissionImageUrl = ''
   codeRepositoryUrl = ''
@@ -74,8 +75,19 @@ export class BenchmarksDetailView implements OnInit {
         this.apiService.get('/submissions/:id/results', { params: { id: `${id}` } }).then((res) => {
           if (res.body) {
             this.result = res.body[0]
-            // clear interval once the result indicates success
+            // once result indicates success
             if (this.result.success) {
+              //... load submissions preview from backend so it's complete
+              this.apiService
+                .get('/submissions', {
+                  query: {
+                    id: response.body?.id,
+                  },
+                })
+                .then((r) => {
+                  this.mySubmission = r.body?.at(0)
+                })
+              //... and clear interval
               window.clearInterval(interval)
             }
           }
