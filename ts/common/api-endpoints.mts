@@ -24,6 +24,16 @@ export interface ApiPostEndpoint<Body, Response> {
 }
 
 /**
+ * Base interface for registered API PATCh endpoints.
+ * @param Body Type of request body. Use `Empty` to indicate absence.
+ * @param Response Type of response body. Use `null` or `Empty` to indicate absence.
+ */
+export interface ApiPatchEndpoint<Body, Response> {
+  request: ApiRequest<Body, Empty>
+  response: ApiResponse<Response>
+}
+
+/**
  * Registered API endpoints for GET method.
  * Pairs of `path : ApiGetEndpoint<Query, Response>` with `path` being a string
  * starting with `/`. Use `:<name>` syntax to set up named parameters.
@@ -56,4 +66,14 @@ export interface ApiPostEndpoints {
   '/mirror': ApiPostEndpoint<{ data: unknown }, unknown>
   '/ampq': ApiPostEndpoint<json, string>
   '/submissions': ApiPostEndpoint<StripLocator<Submission>, { id: ResourceId }>
+}
+
+/**
+ * Registered API endpoints for PATCH method.
+ * Pairs of `path : ApiPatchEndpoint<Body, Response>` with `path` being a string
+ * starting with `/`. Use `:<name>` syntax to set up named parameters.
+ * @see {@link ApiPostEndpoint} for syntax.
+ */
+export interface ApiPatchEndpoints {
+  '/result': ApiPostEndpoint<Partial<Result>, Result>
 }

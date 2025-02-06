@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
@@ -8,7 +9,7 @@ import { ApiService } from '../../features/api/api.service'
 
 @Component({
   selector: 'view-benchmarks-detail',
-  imports: [FormsModule, ContentComponent],
+  imports: [CommonModule, FormsModule, ContentComponent],
   templateUrl: './benchmarks-detail.view.html',
   styleUrl: './benchmarks-detail.view.scss',
 })
@@ -22,6 +23,7 @@ export class BenchmarksDetailView implements OnInit {
   submissionImageUrl = ''
   codeRepositoryUrl = ''
   testsSelection: boolean[] = []
+  acceptEula = false
 
   constructor(
     route: ActivatedRoute,
@@ -67,6 +69,7 @@ export class BenchmarksDetailView implements OnInit {
         success: null,
         scores: null,
         results_str: null,
+        public: null,
       }
       const id = response.body.id
       const interval = window.setInterval(() => {
@@ -80,6 +83,13 @@ export class BenchmarksDetailView implements OnInit {
           }
         })
       }, 10000)
+    }
+  }
+
+  async publishResult() {
+    if (this.result) {
+      this.result.public = true
+      this.result = (await this.apiService.patch('/result', { body: this.result })).body
     }
   }
 }
