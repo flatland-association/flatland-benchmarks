@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
+import { ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
 import { ApiResponse } from '@common/api-response.mjs'
-import { ApiGetOptions, ApiPostOptions } from '@common/api-types.mjs'
+import { ApiGetOptions, ApiPatchOptions, ApiPostOptions } from '@common/api-types.mjs'
 import { interpolateEndpoint } from '@common/endpoint-utils.mjs'
 import type { BanEmpty, Empty, NotKeyOf } from '@common/utility-types.mjs'
 import { firstValueFrom } from 'rxjs'
@@ -72,6 +72,26 @@ export class ApiService {
 
   public async post(endpoint: string, options?: { params?: undefined; body?: unknown }) {
     const response = await firstValueFrom(this.http.post(this.buildUrl(endpoint, options?.params), options?.body))
+    console.log(response)
+    return response
+  }
+
+  // typed overload
+  /**
+   * Send PATCH request to API.
+   * @param endpoint String representation of the enpoint route.
+   * @param options Request options.
+   * @see {@link ApiGetEndpoints}
+   */
+  public async patch<E extends keyof ApiPatchEndpoints, O extends BanEmpty<ApiPatchOptions<E>>>(
+    endpoint: E,
+    ...options: Empty extends O ? [options?: undefined] : [O]
+  ): Promise<ApiPatchEndpoints[E]['response']>
+  // un-typed fallback overload
+  // public async post<E extends string>(endpoint: NotKeyOf<E, ApiPatchEndpoints>, options?: unknown): Promise<unknown>
+
+  public async patch(endpoint: string, options?: { params?: undefined; body?: unknown }) {
+    const response = await firstValueFrom(this.http.patch(this.buildUrl(endpoint, options?.params), options?.body))
     console.log(response)
     return response
   }

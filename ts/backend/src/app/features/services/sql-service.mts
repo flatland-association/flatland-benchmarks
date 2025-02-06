@@ -35,11 +35,15 @@ export class SqlService extends Service {
    */
   query(
     strings: TemplateStringsArray,
-    ...params: postgres.ParameterOrFragment<never>[]
-  ): Promise<postgres.RowList<postgres.Row[]> | never[]>
-  query<T>(strings: TemplateStringsArray, ...params: postgres.ParameterOrFragment<never>[]): Promise<T[]>
+    // TypeScript won't infer fragment type if not using `any`
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...params: postgres.ParameterOrFragment<any>[] // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ): Promise<postgres.RowList<postgres.Row[]> | any[]>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  query<T>(strings: TemplateStringsArray, ...params: postgres.ParameterOrFragment<any>[]): Promise<T[]>
 
-  query(strings: TemplateStringsArray, ...params: postgres.ParameterOrFragment<never>[]) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  query(strings: TemplateStringsArray, ...params: postgres.ParameterOrFragment<any>[]) {
     this.notices = undefined
     this.errors = undefined
     this.statement = undefined
