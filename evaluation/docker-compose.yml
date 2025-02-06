@@ -71,8 +71,8 @@ services:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     command: python -m celery -A tasks worker -l info -n compute-worker@%n --autoscale=5,1 --without-gossip --without-mingle
     build:
-      context: compute_worker
-      dockerfile: Dockerfile
+      context: ./compute_worker
+      dockerfile: Dockerfile_docker_compose
     depends_on:
       rabbit:
         condition: service_healthy

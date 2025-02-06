@@ -1,7 +1,7 @@
 import type { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
 import { ApiResponse } from '@common/api-response.mjs'
 import { appendDir, toResourceLocators } from '@common/endpoint-utils.mjs'
-import { Benchmark, Resource, Submission, Test } from '@common/interfaces.mjs'
+import { Benchmark, Resource, Result, Submission, Test } from '@common/interfaces.mjs'
 import { StripDir } from '@common/utility-types.mjs'
 import type { NextFunction, Request, Response, Router } from 'express'
 import express from 'express'
@@ -148,6 +148,22 @@ function requestError<T>(res: Response<ApiResponse<T>>, error: ApiResponse<T>['e
 }
 
 /**
+ * Send a well-typed error with code 401 (Unauthorized), additional
+ * error text and optional debug info.
+ * @param res Express response.
+ * @param error Error object.
+ * @param dbg Additional debug info.
+ * @see {@link ApiResponse}
+ */
+function unauthorizedError<T>(res: Response<ApiResponse<T>>, error: ApiResponse<T>['error'], dbg?: unknown) {
+  res.status(401)
+  res.json({
+    error,
+    dbg,
+  })
+}
+
+/**
  * Send a well-typed error with code 500 (Internal server error), additional
  * error text and optional debug info.
  * @param res Express response.
@@ -279,6 +295,12 @@ export function router(_server: Server) {
 
   // apiService.post('submissions', {submission_image: "ghcr.io/flatland-association/fab-flatland-submission-template:latest"})
   attachPost(router, '/submissions', async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth) {
+      unauthorizedError(res, { text: 'Not authorized' })
+      return
+    }
     // save submission in db
     const sql = SqlService.getInstance()
     const idRow = await sql.query`
@@ -286,16 +308,30 @@ export function router(_server: Server) {
         benchmark,
         submission_image,
         code_repository,
-        tests
+        tests,
+        submitted_at,
+        submitted_by,
+        submitted_by_username
       ) VALUES (
         ${req.body.benchmark},
         ${req.body.submission_image},
         ${req.body.code_repository},
-        ${req.body.tests}
+        ${req.body.tests},
+        current_timestamp,
+        ${auth.sub ?? null},
+        ${auth['preferred_username'] ?? null}
       )
       RETURNING id
     `
     const id: number = idRow.at(0)?.['id'] ?? 0
+    // prepare results entry
+    await sql.query`
+      INSERT INTO results (
+        submission
+      ) VALUES (
+        ${id}
+      )
+    `
     // get benchmark docker image
     const [{ docker_image: dockerImage }] = await sql.query`
       SELECT docker_image FROM benchmarks
@@ -368,25 +404,61 @@ export function router(_server: Server) {
 
   attachGet(router, '/submissions/:id/results', async (req, res) => {
     const id = req.params.id
-    const client = await createClient({ url: _server.config.redis.url })
-      .on('error', (err) => console.log('Redis Client Error', err))
-      .connect()
+    const sql = SqlService.getInstance()
+    const [row] = await sql.query<StripDir<Result>>`
+      SELECT * FROM results
+      WHERE submission=${id}
+    `
 
-    // console.log(await client.keys('*'))
+    // try updating incomplete (no done_at) results
+    if (!row.done_at) {
+      const client = await createClient({ url: _server.config.redis.url })
+        .on('error', (err) => console.log('Redis Client Error', err))
+        .connect()
+      const keys = await client.keys(`*-sub${id}`)
 
-    const keys = await client.keys(`*-sub${id}`)
+      if (keys && keys.length > 0) {
+        // assume keys[0] is the one we're interested in
+        const key = keys[0]
+        const value = JSON.parse((await client.get(key)) ?? 'null')
 
-    if (!keys || keys.length == 0) {
-      respond(res, null)
-      return
+        if (value) {
+          // date_done could probably be fed directly into DB, but for response the date should be reformatted
+          row.done_at = new Date(value['date_done']).toISOString()
+          row.success = value['status'] === 'SUCCESS'
+          // (only) on success, try reading score
+          if (row.success) {
+            // currently hardcoded: result scheme
+            const resultScheme = 'f3-evaluator'
+            const results = {
+              'results.csv': value['result'][resultScheme]['results.csv'],
+              'results.json': value['result'][resultScheme]['results.json'],
+            }
+            // save original results "object"
+            row.results_str = JSON.stringify(results)
+            const resultsJson = JSON.parse(results['results.json'])
+            const scores = resultsJson['score']
+            // extract N-scores from results
+            row.scores = [scores['score'], scores['score_secondary']]
+          }
+
+          // update result in DB
+          await sql.query`
+          UPDATE results
+            SET
+              done_at = ${row.done_at},
+              success = ${row.success},
+              scores = ${row.scores},
+              results_str = ${row.results_str}
+            WHERE id = ${row.id}
+        `
+        }
+      }
+      await client.disconnect()
     }
 
-    // assume keys[0] is the one we're interested in
-    const key = keys[0]
-    const value = JSON.parse((await client.get(key)) ?? 'null')
-
-    await client.disconnect()
-    respond(res, value)
+    const results = appendDir('/results/', [row])
+    respond(res, results)
   })
 
   // TODO: /submission/:id/run to queue run

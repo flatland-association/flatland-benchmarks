@@ -1,6 +1,6 @@
 import { ApiRequest } from './api-request.mjs'
 import { ApiResponse } from './api-response.mjs'
-import { Benchmark, Submission, Test } from './interfaces.mjs'
+import { Benchmark, Result, Submission, Test } from './interfaces.mjs'
 import { Empty, json, ResourceId, ResourceLocator, StripLocator } from './utility-types.mjs'
 
 /**
@@ -42,7 +42,7 @@ export interface ApiGetEndpoints {
   '/tests/:id': ApiGetEndpoint<Empty, Test[]>
   '/submissions': ApiGetEndpoint<{ benchmark?: ResourceId }, ResourceLocator<Submission>[]>
   '/submissions/:id': ApiGetEndpoint<Empty, Submission[]>
-  '/submissions/:id/results': ApiGetEndpoint<Empty, unknown>
+  '/submissions/:id/results': ApiGetEndpoint<Empty, Result[]>
   '/test': ApiGetEndpoint<Empty, Empty>
 }
 
