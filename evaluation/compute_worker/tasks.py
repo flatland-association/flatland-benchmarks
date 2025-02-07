@@ -25,6 +25,7 @@ AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
 S3_BUCKET = os.environ.get("S3_BUCKET", None)
 S3_UPLOAD_PATH_TEMPLATE = os.getenv("S3_UPLOAD_PATH_TEMPLATE", None)
 S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.getenv("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
+ACTIVE_DEADLINE_SECONDS = os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
@@ -77,6 +78,7 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   evaluator_container_definition["env"].append({"name": "AICROWD_SUBMISSION_ID", "value": task_id})
   evaluator_container_definition["env"].append({"name": "redis_ip", "value": REDIS_IP})
   evaluator_definition["spec"]["template"]["spec"]["volumes"][2]["persistentVolumeClaim"]["claimName"] = KUBERNETES_PVC
+  evaluator_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = ACTIVE_DEADLINE_SECONDS
 
   if AWS_ENDPOINT_URL:
     evaluator_container_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": AWS_ENDPOINT_URL})
@@ -99,6 +101,7 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   submission_definition = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))
   submission_definition["metadata"]["name"] = f"{submission_definition['metadata']['name']}-{task_id}"
   submission_definition["metadata"]["labels"]["task_id"] = task_id
+  submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = ACTIVE_DEADLINE_SECONDS
   submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
   submission_container_definition["image"] = submission_image
   submission_container_definition["env"].append({"name": "AICROWD_SUBMISSION_ID", "value": task_id})
