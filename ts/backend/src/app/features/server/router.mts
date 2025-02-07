@@ -417,6 +417,7 @@ export function router(_server: Server) {
   attachGet(router, '/submissions', async (req, res) => {
     const benchmarkId = req.query['benchmark'] as string | undefined
     const submissionUuids = (req.query['uuid'] as string | undefined)?.split(',')
+    const submittedBy = req.query['submitted_by'] as string | undefined
 
     const sql = SqlService.getInstance()
 
@@ -424,13 +425,21 @@ export function router(_server: Server) {
     let wherePublic = sql.fragment`results.public = true`
     const whereBenchmark = benchmarkId ? sql.fragment`benchmark=${benchmarkId}` : sql.fragment`1=1`
     let whereSubmission = sql.fragment`1=1`
-    let limit = 3
+    let whereSubmittedBy = sql.fragment`1=1`
+    let limit = sql.fragment`LIMIT 3`
     if (submissionUuids) {
       // turn off scores and public requirements if id is given
       whereScores = sql.fragment`1=1`
       wherePublic = sql.fragment`1=1`
       whereSubmission = sql.fragment`submissions.uuid=ANY(${submissionUuids})`
-      limit = submissionUuids.length
+      limit = sql.fragment`LIMIT ${submissionUuids.length}`
+    }
+    if (submittedBy) {
+      // turn off limit, scores and public requirements if submitter is given
+      whereScores = sql.fragment`1=1`
+      wherePublic = sql.fragment`1=1`
+      whereSubmittedBy = sql.fragment`submitted_by=${submittedBy}`
+      limit = sql.fragment``
     }
 
     const rows = await sql.query<StripDir<SubmissionPreview>>`
@@ -441,9 +450,10 @@ export function router(_server: Server) {
           ${whereScores} AND
           ${wherePublic} AND
           ${whereBenchmark} AND
-          ${whereSubmission}
+          ${whereSubmission} AND
+          ${whereSubmittedBy}
         ORDER BY scores[1] DESC
-        LIMIT ${limit}
+        ${limit}
     `
     const resources = appendDir('/submissions/', rows)
     respond(res, resources, { dbg: dbgRequestObject(req), sql: dbgSqlState(sql) })
