@@ -11,56 +11,6 @@
   }
 </lib-content>
 
-<lib-content class="bg-primary-100">
-  <h3 class="pb-8 text-xl font-bold">Submit your solution</h3>
-
-  <div class="pb-8 flex flex-col gap-y-8">
-    <label class="block text-left cursor-pointer">
-      <span>Your submission (URL to Docker image)</span>
-      <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-image-url" [(ngModel)]="submissionImageUrl">
-    </label>
-
-    <label class="block text-left cursor-pointer">
-      <span>Code repository (can be private)</span>
-      <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-image-url" [(ngModel)]="codeRepositoryUrl">
-    </label>
-
-    <div>
-      <span>Tests to test your submission against</span>
-      <div class="grid grid-cols-[auto_auto_1fr] gap-x-4 gap-y-2">
-        @for (test of tests; track $index) {
-          <label class="contents cursor-pointer">
-            <div>
-              <input type="checkbox" [id]="'test-' + $index" [(ngModel)]="testsSelection[$index]">
-            </div>
-            <span>{{ test.name }}</span>
-            <p>{{ test.description }}</p>
-          </label>
-        }
-      </div>
-    </div>
-
-    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="submit()">
-      Submit
-    </button>
-  </div>
-
-  @if (result) {
-    <h4 class="pb-8 font-bold">Your results</h4>
-    @if (!result.done_at) {
-      <div class="text-center">Please wait while your submission is being evaluated.</div>
-    } @else {
-      @if (mySubmission) {
-        <h5 class="pb-4 font-bold">Success!</h5>
-        <app-leaderboard [submissions]="[mySubmission]"></app-leaderboard>
-        <label class="cursor-pointer my-8">
-            <input type="checkbox" id="accept-eula" [(ngModel)]="acceptEula">
-          <span class="pl-2">I accept that I must make the source code to my submission publicly available in order to publish my result.</span>
-        </label>
-        <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="publishResult()" [attr.disabled]="acceptEula ? null : true" [ngClass]="{'bg-neutral-100': !acceptEula, 'hover:bg-neutral-100': !acceptEula}">Publish this result</button>
-      } @else {
-        <h5 class="pb-4 font-bold">Something went wrong</h5>
-      }
-    }
-  }
+<lib-content>
+  <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'participate'">Participate</button>
 </lib-content>

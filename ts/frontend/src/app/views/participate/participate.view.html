@@ -1,0 +1,20 @@
+<lib-content>
+  <h2 class="pb-8 text-2xl font-bold text-neutral-500">{{ benchmark?.name }}</h2>
+
+  <p class="pb-8">{{ benchmark?.description }}</p>
+
+  <h3 class="pb-8 text-xl font-bold">Top solutions</h3>
+  @if(submissions) {
+    <app-leaderboard [submissions]="submissions"></app-leaderboard>
+  }
+
+  <h3 class="py-8 text-xl font-bold">My solutions</h3>
+  @if(mySubmissions) {
+    <app-leaderboard [submissions]="mySubmissions"></app-leaderboard>
+  }
+
+  <div class="py-8">
+    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'new-submission'">Add submission</button>
+  </div>
+
+</lib-content>
