@@ -26,6 +26,7 @@ S3_BUCKET = os.environ.get("S3_BUCKET", None)
 S3_UPLOAD_PATH_TEMPLATE = os.getenv("S3_UPLOAD_PATH_TEMPLATE", None)
 S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.getenv("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
 ACTIVE_DEADLINE_SECONDS = os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)
+SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.3")
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
@@ -92,6 +93,8 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
     evaluator_container_definition["env"].append({"name": "S3_UPLOAD_PATH_TEMPLATE", "value": s3_upload_path_template})
   if S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID:
     evaluator_container_definition["env"].append({"name": "S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", "value": S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID})
+  if SUPPORTED_CLIENT_VERSIONS is not None:
+    evaluator_container_definition["env"].append({"name": "SUPPORTED_CLIENT_VERSIONS", "value": SUPPORTED_CLIENT_VERSIONS})
 
   evaluator_container_definition["env"].append({"name": "AICROWD_IS_GRADING", "value": "True"})
 
