@@ -6,12 +6,12 @@ import { BenchmarkCardComponent } from '../../components/benchmark-card/benchmar
 import { ApiService } from '../../features/api/api.service'
 
 @Component({
-  selector: 'view-participate',
+  selector: 'view-benchmarks',
   imports: [ContentComponent, RouterModule, BenchmarkCardComponent],
-  templateUrl: './participate.view.html',
-  styleUrl: './participate.view.scss',
+  templateUrl: './benchmarks.view.html',
+  styleUrl: './benchmarks.view.scss',
 })
-export class ParticipateView implements OnInit {
+export class BenchmarkView implements OnInit {
   benchmarks?: BenchmarkPreview[]
 
   constructor(public apiService: ApiService) {}
