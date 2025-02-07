@@ -323,7 +323,7 @@ export function router(_server: Server) {
     respond(res, tests)
   })
 
-  // apiService.post('submissions', {submission_image: "ghcr.io/flatland-association/fab-flatland-submission-template:latest"})
+  // apiService.post('submissions', {submission_image: "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest"})
   attachPost(router, '/submissions', async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)

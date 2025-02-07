@@ -177,7 +177,7 @@ def main():
     batch_api=batch_api,
     core_api=core_api,
     task_id=task_id,
-    submission_image="ghcr.io/flatland-association/fab-flatland-submission-template:latest",
+    submission_image="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
     docker_image="ghcr.io/flatland-association/fab-flatland-evaluator:latest",
     s3_upload_path_template="results/{}",
     s3=s3
@@ -188,7 +188,7 @@ def main():
   assert ret["f3-evaluator"]["job_status"] == "Complete"
   assert ret["f3-submission"]["job_status"] == "Complete"
   assert ret["f3-evaluator"]["image_id"].startswith("ghcr.io/flatland-association/fab-flatland-evaluator")
-  assert ret["f3-submission"]["image_id"].startswith("ghcr.io/flatland-association/fab-flatland-submission-template")
+  assert ret["f3-submission"]["image_id"].startswith("ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest")
   assert "end evaluator/run.sh" in str(ret["f3-evaluator"]["log"])
   assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])
   res_df = pd.read_csv(StringIO(ret["f3-evaluator"]["results.csv"]))

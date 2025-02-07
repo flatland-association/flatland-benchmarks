@@ -25,7 +25,7 @@ S3_UPLOAD_PATH_TEMPLATE = os.getenv("S3_UPLOAD_PATH_TEMPLATE", None)
 S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.getenv("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
 
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
-
+SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.3,4.0.3.dev23+gaa5df390")
 
 # N.B. name to be used by send_task
 @app.task(name="flatland3-evaluation", bind=True, soft_time_limit=10 * 60, time_limit=12 * 60)
@@ -56,6 +56,8 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
       evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE={S3_UPLOAD_PATH_TEMPLATE}"])
     if S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID:
       evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID={S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}"])
+    if SUPPORTED_CLIENT_VERSIONS is not None:
+      evaluator_exec_args.extend(["-e", f"SUPPORTED_CLIENT_VERSIONS={SUPPORTED_CLIENT_VERSIONS}"])
     evaluator_exec_args.extend(["-e", f"AICROWD_IS_GRADING={True}"])
 
     evaluator_exec_args.extend([
