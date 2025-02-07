@@ -3,6 +3,7 @@ import logging
 import time
 import uuid
 from io import StringIO
+from typing import List
 
 import boto3
 import pandas as pd
@@ -12,7 +13,9 @@ from celery import Celery
 from dotenv import dotenv_values
 from testcontainers.compose import DockerCompose
 
+TRACE = 5
 logger = logging.getLogger(__name__)
+
 
 @pytest.fixture
 def test_containers_fixture():
@@ -20,14 +23,20 @@ def test_containers_fixture():
 
     start_time = time.time()
     basic = DockerCompose(context=".", compose_file_name="docker-compose-demo.yml")
+    logger.info("/ start docker compose down")
+    basic.stop()
+    duration = time.time() - start_time
+    logger.info(f"\\ end docker compose down. Took {duration:.2f} seconds.")
+    start_time = time.time()
     logger.info("/ start docker compose up")
     basic.start()
     duration = time.time() - start_time
-    logger.info(f"\\ end docker compose up. Took {duration} seconds.")
+    logger.info(f"\\ end docker compose up. Took {duration:.2f} seconds.")
 
     task_id = str(uuid.uuid4())
     yield task_id
 
+    # TODO workaround for testcontainers not supporting streaming to logger
     start_time = time.time()
     logger.info("/ start get docker compose logs")
     stdout, stderr = basic.get_logs()
@@ -36,17 +45,19 @@ def test_containers_fixture():
     logger.warning("stderr from docker compose")
     logger.warning(stderr)
     duration = time.time() - start_time
-    logger.info(f"\\ end get docker compose logs. Took {duration} seconds.")
+    logger.info(f"\\ end get docker compose logs. Took {duration:.2f} seconds.")
 
     start_time = time.time()
     logger.info("/ start docker compose down")
     basic.stop()
     duration = time.time() - start_time
-    logger.info(f"\\ end docker down. Took {duration} seconds.")
+    logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
 
 
 @pytest.mark.usefixtures("test_containers_fixture")
-def test_succesful_run(test_containers_fixture: str):
+@pytest.mark.parametrize("tests", [
+    None, ["Test_0", "Test_1"], ["Test_1"]], ids=["all", "Test_0,Test_1", "Test1"])
+def test_succesful_run(test_containers_fixture: str, tests: List[str]):
     task_id = test_containers_fixture
     start_time = time.time()
     app = Celery(
@@ -54,19 +65,25 @@ def test_succesful_run(test_containers_fixture: str):
         backend='redis://localhost:6379',
     )
     logger.info(f"/ Start simulate submission from portal for task_id={task_id}.....")
+    kwargs = {
+        "docker_image": "ghcr.io/flatland-association/fab-flatland-evaluator:latest",
+        "submission_image": "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
+    }
+    if tests is not None:
+        kwargs["tests"] = tests
     ret = app.send_task(
         'flatland3-evaluation',
         task_id=task_id,
-        kwargs={
-            "docker_image": "ghcr.io/flatland-association/fab-flatland-evaluator:latest",
-            "submission_image": "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest"
-        },
+        kwargs=kwargs,
     ).get()
-    logger.info(ret)
+    logger.log(TRACE, ret)
 
     duration = time.time() - start_time
     logger.info(
-        f"\\ End simulate submission from portal for task_id={task_id}. Took {duration} seconds: {[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
+        f"\\ End simulate submission from portal for task_id={task_id}. Took {duration:.2f} seconds.")
+
+    for k, v in ret.items():
+        logger.log(TRACE, "Got %s", (k, v['job_status'], v['image_id'], v['log']))
 
     all_completed = all([s["job_status"] == "Complete" for s in ret.values()])
     assert all_completed, ret
