@@ -6,11 +6,9 @@
 
 <lib-content>
   <h3 class="pb-8 text-xl font-bold">Top solutions</h3>
-  <div class="flex flex-col gap-y-8">
-    @for (submission of submissions; track $index) {
-      <div>{{ submission.id }} at {{ submission.code_repository }}</div>
-    }
-  </div>
+  @if(submissions) {
+    <app-leaderboard [submissions]="submissions"></app-leaderboard>
+  }
 </lib-content>
 
 <lib-content class="bg-primary-100">
@@ -52,10 +50,9 @@
     @if (!result.done_at) {
       <div class="text-center">Please wait while your submission is being evaluated.</div>
     } @else {
-      @if (result.success && result.scores) {
+      @if (mySubmission) {
         <h5 class="pb-4 font-bold">Success!</h5>
-        <div>Primary score: {{ result.scores[0] }}</div>
-        <div>Secondary score: {{ result.scores[1] }}</div>
+        <app-leaderboard [submissions]="[mySubmission]"></app-leaderboard>
         <label class="cursor-pointer my-8">
             <input type="checkbox" id="accept-eula" [(ngModel)]="acceptEula">
           <span class="pl-2">I accept that I must make the source code to my submission publicly available in order to publish my result.</span>

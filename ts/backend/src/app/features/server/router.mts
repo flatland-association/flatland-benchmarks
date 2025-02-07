@@ -1,7 +1,7 @@
 import type { ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
 import { ApiResponse } from '@common/api-response.mjs'
-import { appendDir, toResourceLocators } from '@common/endpoint-utils.mjs'
-import { Benchmark, Resource, Result, Submission, Test } from '@common/interfaces.mjs'
+import { appendDir } from '@common/endpoint-utils.mjs'
+import { Benchmark, BenchmarkPreview, Result, Submission, SubmissionPreview, Test } from '@common/interfaces.mjs'
 import { StripDir } from '@common/utility-types.mjs'
 import type { NextFunction, Request, Response, Router } from 'express'
 import express from 'express'
@@ -289,12 +289,12 @@ export function router(_server: Server) {
 
   attachGet(router, '/benchmarks', async (req, res) => {
     const sql = SqlService.getInstance()
-    const rows = await sql.query<StripDir<Resource>>`
-      SELECT id FROM benchmarks
+    const rows = await sql.query<StripDir<BenchmarkPreview>>`
+      SELECT id, name, description FROM benchmarks
       ORDER BY id ASC
     `
     const resources = appendDir('/benchmarks/', rows)
-    respond(res, toResourceLocators(resources))
+    respond(res, resources)
   })
   attachGet(router, '/benchmarks/:id', async (req, res) => {
     const ids = req.params.id.split(',').map((s) => +s)
@@ -406,16 +406,40 @@ export function router(_server: Server) {
     }
   })
 
+  // returns scored and public submissions as preview
   attachGet(router, '/submissions', async (req, res) => {
-    const benchmarkId = req.query['benchmark']
+    const benchmarkId = req.query['benchmark'] as string | undefined
+    const submissionIds = (req.query['id'] as string | undefined)?.split(',').map((s) => +s)
+
     const sql = SqlService.getInstance()
-    const rows = await sql.query<StripDir<Resource>>`
-      SELECT * FROM submissions
-      ${typeof benchmarkId === 'string' ? sql.fragment`WHERE benchmark=${benchmarkId}` : sql.fragment``}
-      ORDER BY id ASC
+
+    let whereScores = sql.fragment`results.scores IS NOT NULL`
+    let wherePublic = sql.fragment`results.public = true`
+    const whereBenchmark = benchmarkId ? sql.fragment`benchmark=${benchmarkId}` : sql.fragment`1=1`
+    let whereSubmission = sql.fragment`1=1`
+    let limit = 3
+    if (submissionIds) {
+      // turn off scores and public requirements if id is given
+      whereScores = sql.fragment`1=1`
+      wherePublic = sql.fragment`1=1`
+      whereSubmission = sql.fragment`submissions.id=ANY(${submissionIds})`
+      limit = submissionIds.length
+    }
+
+    const rows = await sql.query<StripDir<SubmissionPreview>>`
+      SELECT submissions.id, benchmark, submitted_at, submitted_by_username, scores
+        FROM submissions
+        LEFT JOIN results ON results.submission = submissions.id
+        WHERE
+          ${whereScores} AND
+          ${wherePublic} AND
+          ${whereBenchmark} AND
+          ${whereSubmission}
+        ORDER BY scores[1] DESC
+        LIMIT ${limit}
     `
     const resources = appendDir('/submissions/', rows)
-    respond(res, toResourceLocators(resources), dbgRequestObject(req))
+    respond(res, resources, { dbg: dbgRequestObject(req), sql: dbgSqlState(sql) })
   })
 
   attachGet(router, '/submissions/:id', async (req, res) => {

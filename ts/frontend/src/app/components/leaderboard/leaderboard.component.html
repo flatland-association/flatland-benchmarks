@@ -1,0 +1,25 @@
+<table class="rounded-sm">
+  <thead>
+    <tr class="bg-primary-100">
+      <th class="px-4 py-2">Submission</th>
+      <th class="px-4 py-2">Overall score</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (submission of submissions; track $index) {
+      <tr class="bg-primary-50">
+        <td class="px-4 py-2">
+          <div class="font-medium">
+            Submission {{ submission.id }}
+          </div>
+          <div class="text-sm">
+            by {{ submission.submitted_by_username }}
+          </div>
+        </td>
+        <td class="px-4 py-2 text-center text-xl">
+          {{ submission.scores[0] | number:'1.3-3' }}
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

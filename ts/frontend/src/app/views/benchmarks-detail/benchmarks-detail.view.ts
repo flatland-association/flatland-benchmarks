@@ -2,25 +2,26 @@ import { CommonModule } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { consolidateResourceLocator, endpointFromResourceLocator } from '@common/endpoint-utils.mjs'
-import { Benchmark, Result, Submission, Test } from '@common/interfaces.mjs'
+import { Benchmark, Result, SubmissionPreview, Test } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
+import { LeaderboardComponent } from '../../components/leaderboard/leaderboard.component'
 import { ApiService } from '../../features/api/api.service'
 
 const CHECK_RESULT_INTERVAL = 10000 // [ms]
 
 @Component({
   selector: 'view-benchmarks-detail',
-  imports: [CommonModule, FormsModule, ContentComponent],
+  imports: [CommonModule, FormsModule, ContentComponent, LeaderboardComponent],
   templateUrl: './benchmarks-detail.view.html',
   styleUrl: './benchmarks-detail.view.scss',
 })
 export class BenchmarksDetailView implements OnInit {
   id: string
   benchmark?: Benchmark
-  submissions?: Submission[]
+  submissions?: SubmissionPreview[]
   tests?: Test[]
   result?: Result
+  mySubmission?: SubmissionPreview
 
   submissionImageUrl = ''
   codeRepositoryUrl = ''
@@ -36,11 +37,7 @@ export class BenchmarksDetailView implements OnInit {
 
   async ngOnInit() {
     this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
-    const locators = (await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id } })).body
-    if (locators && locators.length > 0) {
-      const combined = consolidateResourceLocator(locators)
-      this.submissions = (await this.apiService.get<Submission[]>(...endpointFromResourceLocator(combined))).body
-    }
+    this.submissions = (await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id } })).body
     // load all the available tests
     this.tests = (
       await this.apiService.get('/tests/:id', {
@@ -78,8 +75,19 @@ export class BenchmarksDetailView implements OnInit {
         this.apiService.get('/submissions/:id/results', { params: { id: `${id}` } }).then((res) => {
           if (res.body) {
             this.result = res.body[0]
-            // clear interval once the result indicates success
+            // once result indicates success
             if (this.result.success) {
+              //... load submissions preview from backend so it's complete
+              this.apiService
+                .get('/submissions', {
+                  query: {
+                    id: response.body?.id,
+                  },
+                })
+                .then((r) => {
+                  this.mySubmission = r.body?.at(0)
+                })
+              //... and clear interval
               window.clearInterval(interval)
             }
           }

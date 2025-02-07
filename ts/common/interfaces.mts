@@ -9,6 +9,11 @@ export interface Resource<Dir extends ResourceDir = ResourceDir> {
   id: ResourceId
 }
 
+export interface BenchmarkPreview extends Resource<'/benchmarks/'> {
+  name: string
+  description: string
+}
+
 export interface Benchmark extends Resource<'/benchmarks/'> {
   name: string
   description: string
@@ -18,6 +23,13 @@ export interface Benchmark extends Resource<'/benchmarks/'> {
 export interface Test extends Resource<'/tests/'> {
   name: string
   description: string
+}
+
+export interface SubmissionPreview extends Resource<'/submissions/'> {
+  benchmark: ResourceId
+  submitted_at: string
+  submitted_by_username: string
+  scores: number[]
 }
 
 export interface Submission extends Resource<'/submissions/'> {

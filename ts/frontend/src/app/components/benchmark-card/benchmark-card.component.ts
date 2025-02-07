@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import { Benchmark } from '@common/interfaces.mjs'
+import { Benchmark, BenchmarkPreview } from '@common/interfaces.mjs'
 
 @Component({
   selector: 'app-benchmark-card',
@@ -10,5 +10,5 @@ import { Benchmark } from '@common/interfaces.mjs'
 })
 export class BenchmarkCardComponent {
   @Input()
-  benchmark?: Benchmark
+  benchmark?: Benchmark | BenchmarkPreview
 }

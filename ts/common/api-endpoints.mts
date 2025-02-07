@@ -1,7 +1,7 @@
 import { ApiRequest } from './api-request.mjs'
 import { ApiResponse } from './api-response.mjs'
-import { Benchmark, Result, Submission, Test } from './interfaces.mjs'
-import { Empty, json, ResourceId, ResourceLocator, StripLocator } from './utility-types.mjs'
+import { Benchmark, BenchmarkPreview, Result, Submission, SubmissionPreview, Test } from './interfaces.mjs'
+import { Empty, json, ResourceId, StripLocator } from './utility-types.mjs'
 
 /**
  * Base interface for registered API GET endpoints.
@@ -47,10 +47,10 @@ export interface ApiGetEndpoints {
   '/dbsetup': ApiGetEndpoint<Empty, unknown>
   '/ampq': ApiGetEndpoint<Empty, string>
   '/whoami': ApiGetEndpoint<Empty, json>
-  '/benchmarks': ApiGetEndpoint<Empty, ResourceLocator<Benchmark>[]>
+  '/benchmarks': ApiGetEndpoint<Empty, BenchmarkPreview[]>
   '/benchmarks/:id': ApiGetEndpoint<Empty, Benchmark[]>
   '/tests/:id': ApiGetEndpoint<Empty, Test[]>
-  '/submissions': ApiGetEndpoint<{ benchmark?: ResourceId }, ResourceLocator<Submission>[]>
+  '/submissions': ApiGetEndpoint<{ benchmark?: ResourceId; id?: ResourceId }, SubmissionPreview[]>
   '/submissions/:id': ApiGetEndpoint<Empty, Submission[]>
   '/submissions/:id/results': ApiGetEndpoint<Empty, Result[]>
   '/test': ApiGetEndpoint<Empty, Empty>
