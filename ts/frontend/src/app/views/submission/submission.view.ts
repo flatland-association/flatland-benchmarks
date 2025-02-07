@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { Result, SubmissionPreview } from '@common/interfaces.mjs'
@@ -15,23 +15,15 @@ const CHECK_RESULT_INTERVAL = 10000 // [ms]
   templateUrl: './submission.view.html',
   styleUrl: './submission.view.scss',
 })
-export class SubmissionView implements OnInit {
+export class SubmissionView implements OnInit, OnDestroy {
   submissionUuid?: string
 
   mySubmission?: SubmissionPreview
 
-  // start with an empty result (user feedback, something is going)
-  result?: Result = {
-    dir: '/results/',
-    id: 0,
-    submission: 0,
-    done_at: null,
-    success: null,
-    scores: null,
-    results_str: null,
-    public: null,
-  }
+  result?: Result
   acceptEula = false
+
+  interval?: number
 
   constructor(
     route: ActivatedRoute,
@@ -41,28 +33,43 @@ export class SubmissionView implements OnInit {
   }
 
   ngOnInit() {
-    const interval = window.setInterval(() => {
-      this.apiService.get('/submissions/:uuid/results', { params: { uuid: `${this.submissionUuid}` } }).then((res) => {
-        if (res.body) {
-          this.result = res.body[0]
-          // once result indicates success
-          if (this.result.success) {
-            //... load submissions preview from backend so it's complete
-            this.apiService
-              .get('/submissions', {
-                query: {
-                  uuid: this.submissionUuid,
-                },
-              })
-              .then((r) => {
-                this.mySubmission = r.body?.at(0)
-              })
-            //... and clear interval
-            window.clearInterval(interval)
+    // try loading result directly
+    this.loadResult()
+    // and after that, auto-refresh until results are here (check done in loadResult())
+    this.interval = window.setInterval(() => {
+      this.loadResult()
+    }, CHECK_RESULT_INTERVAL)
+  }
+
+  ngOnDestroy() {
+    if (this.interval) {
+      window.clearInterval(this.interval)
+    }
+  }
+
+  async loadResult() {
+    this.apiService.get('/submissions/:uuid/results', { params: { uuid: `${this.submissionUuid}` } }).then((res) => {
+      if (res.body) {
+        this.result = res.body[0]
+        // once result indicates success
+        if (this.result.success) {
+          //... load submissions preview from backend so it's complete
+          this.apiService
+            .get('/submissions', {
+              query: {
+                uuid: this.submissionUuid,
+              },
+            })
+            .then((r) => {
+              this.mySubmission = r.body?.at(0)
+            })
+          //... and clear interval
+          if (this.interval) {
+            window.clearInterval(this.interval)
           }
         }
-      })
-    }, CHECK_RESULT_INTERVAL)
+      }
+    })
   }
 
   async publishResult() {
