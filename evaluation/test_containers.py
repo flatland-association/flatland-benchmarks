@@ -63,11 +63,11 @@ def test_containers_fixture():
 
 @pytest.mark.usefixtures("test_containers_fixture")
 @pytest.mark.parametrize(
-    "tests",
-    [None, ["Test_0", "Test_1"], ["Test_1"]],
-    ids=["all", "Test_0,Test_1", "Test1"]
+    "tests,expected_total_simulation_count",
+    [(None, 5), (["Test_0", "Test_1"], 5), (["Test_0"], 2), (["Test_1"], 3)],
+    ids=["all", "Test_0,Test_1", "Test0", "Test1"]
 )
-def test_succesful_run(test_containers_fixture: str, tests: List[str]):
+def test_succesful_run(test_containers_fixture: str, expected_total_simulation_count, tests: List[str]):
     task_id = test_containers_fixture
     start_time = time.time()
     app = Celery(
@@ -125,8 +125,7 @@ def test_succesful_run(test_containers_fixture: str, tests: List[str]):
 
     scenarios_run = res_df.loc[res_df['controller_inference_time_max'].notna()]
     tests_with_some_steps = set(scenarios_run["test_id"])
-    # The mean percentage of done agents during the last Test (2 environments) was too low: 0.100 < 0.25
-    assert len(scenarios_run) == 2, scenarios_run
+    # Due to non-determinism of agent and early stopping ("The mean percentage of done agents during the last Test (2 environments) was too low: 0.100 < 0.25"), we cannot check the number of scenarios or tests run
     if tests is not None:
         assert len(tests_with_some_steps.difference(tests)) == 0, (tests_with_some_steps, tests)
 
@@ -151,6 +150,9 @@ def test_succesful_run(test_containers_fixture: str, tests: List[str]):
     logger.debug(res_df)
     res_json = json.loads(ret["f3-evaluator"]["results.json"])
     logger.debug(res_json)
+
+    assert res_json["total_simulation_count"] == expected_total_simulation_count
+    assert res_json["simulation_count"] == len(scenarios_run)
 
     logger.info("Download results from S3")
     config = dotenv_values(".env")
