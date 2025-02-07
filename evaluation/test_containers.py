@@ -16,9 +16,16 @@ from testcontainers.compose import DockerCompose
 TRACE = 5
 logger = logging.getLogger(__name__)
 
+# set to True if docker-compose-demo.yml is already up and running
+ATTENDED = False
+
 
 @pytest.fixture
 def test_containers_fixture():
+    if ATTENDED:
+        yield str(uuid.uuid4())
+        return
+
     global basic
 
     start_time = time.time()
@@ -55,8 +62,11 @@ def test_containers_fixture():
 
 
 @pytest.mark.usefixtures("test_containers_fixture")
-@pytest.mark.parametrize("tests", [
-    None, ["Test_0", "Test_1"], ["Test_1"]], ids=["all", "Test_0,Test_1", "Test1"])
+@pytest.mark.parametrize(
+    "tests",
+    [None, ["Test_0", "Test_1"], ["Test_1"]],
+    ids=["all", "Test_0,Test_1", "Test1"]
+)
 def test_succesful_run(test_containers_fixture: str, tests: List[str]):
     task_id = test_containers_fixture
     start_time = time.time()
@@ -113,6 +123,13 @@ def test_succesful_run(test_containers_fixture: str, tests: List[str]):
     res = r.get(f"celery-task-meta-{task_id}")
     res = json.loads(res.decode("utf-8"))
 
+    scenarios_run = res_df.loc[res_df['controller_inference_time_max'].notna()]
+    tests_with_some_steps = set(scenarios_run["test_id"])
+    # The mean percentage of done agents during the last Test (2 environments) was too low: 0.100 < 0.25
+    assert len(scenarios_run) == 2, scenarios_run
+    if tests is not None:
+        assert len(tests_with_some_steps.difference(tests)) == 0, (tests_with_some_steps, tests)
+
     assert res["status"] == "SUCCESS"
     assert res["task_id"] == task_id
     ret = res["result"]
@@ -145,4 +162,4 @@ def test_succesful_run(test_containers_fixture: str, tests: List[str]):
         aws_secret_access_key=config["MINIO_ROOT_PASSWORD"]
     )
     objects = set([s["Key"] for s in s3.list_objects(Bucket=config["S3_BUCKET"])['Contents']])
-    assert objects == {f'results/{task_id}.csv', f'results/{task_id}.json'}, objects
+    assert objects.issuperset({f'results/{task_id}.csv', f'results/{task_id}.json'}), objects
