@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.13
 
 # This makes output not buffer and return immediately, nice for seeing results in stdout
 ENV PYTHONUNBUFFERED=1
@@ -17,7 +17,6 @@ RUN python -m pip install -U -r requirements.txt
 
 ADD ./evaluator_job.yaml ./evaluator_job.yaml
 ADD ./submission_job.yaml ./submission_job.yaml
-ADD ./retriever_pod.yaml ./retriever_pod.yaml
 
 # configure runner
 USER runner

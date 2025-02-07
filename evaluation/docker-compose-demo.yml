@@ -72,6 +72,42 @@ services:
     networks:
       - flatland-benchmarks
 
+  minio:
+    hostname: minio
+    image: "minio/minio:RELEASE.2024-11-07T00-52-20Z"
+    restart: on-failure
+    ports:
+      - "${MINIO_PORT}:${MINIO_PORT}"
+      - "${MINIO_CONSOLE_PORT}:${MINIO_CONSOLE_PORT}"
+    environment:
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "curl -v --fail 127.0.0.1:${MINIO_PORT}/minio/health/ready" ]
+      interval: 5s
+      timeout: 1s
+      retries: 5
+    command: server /data --address :${MINIO_PORT} --console-address :${MINIO_CONSOLE_PORT}
+    networks:
+      - flatland-benchmarks
+
+  minio_setup:
+    image: minio/mc:RELEASE.2024-11-05T11-29-45Z
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: [ "/bin/sh","-c" ]
+    command:
+      - |
+        set -x
+        set -e
+        /usr/bin/mc config host add myminio http://minio:${MINIO_PORT} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
+
+        /usr/bin/mc mb myminio/${S3_BUCKET}
+
+        echo "createbuckets successful"
+    networks:
+      - flatland-benchmarks
   compute_worker:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     command: python -m celery -A tasks worker -l info -n compute-worker@%n
@@ -81,6 +117,8 @@ services:
     depends_on:
       rabbit:
         condition: service_healthy
+      minio_setup:
+        condition: service_completed_successfully
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./compute_worker/tasks_docker_compose.py:/app/tasks.py
@@ -90,6 +128,17 @@ services:
       - REDIS_IP=redis://redis:6379
       - HOST_DIRECTORY=${PWD}
       - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
+      - S3_BUCKET=${S3_BUCKET}
+      # for backend to S3 communication, use internal docker hostname
+      - AWS_ENDPOINT_URL=http://minio:${MINIO_PORT}
+      - AWS_ACCESS_KEY_ID=${MINIO_ROOT_USER}
+      - AWS_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD}
+      # TODO remove:
+      - S3_UPLOAD_PATH_TEMPLATE=${S3_UPLOAD_PATH_TEMPLATE}
+      - S3_UPLOAD_WITH_SUBMISSION_ID=true
+      - S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=${S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}
+
+
     logging:
       options:
         max-size: "20m"
@@ -125,6 +174,3 @@ services:
 networks:
   flatland-benchmarks:
 
-volumes:
-  flatland-benchmarks:
-    external: true

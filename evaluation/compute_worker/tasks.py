@@ -2,14 +2,12 @@
 import json
 import logging
 import os
-import tarfile
-import tempfile
 import time
 import uuid
 from io import StringIO
 from pathlib import Path
 
-import kubernetes
+import boto3
 import pandas as pd
 import yaml
 from celery import Celery
@@ -44,10 +42,30 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
   # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py
   batch_api = client.BatchV1Api()
   core_api = client.CoreV1Api()
-  return run_evaluation(task_id=task_id, docker_image=docker_image, submission_image=submission_image, batch_api=batch_api, core_api=core_api)
+  if not AWS_ENDPOINT_URL:
+    return RuntimeError("Misconfiguration: AWS_ENDPOINT_URL must be set in the compute worker")
+  if not AWS_ACCESS_KEY_ID:
+    return RuntimeError("Misconfiguration: AWS_ACCESS_KEY_ID must be set in the compute worker")
+  if not AWS_SECRET_ACCESS_KEY:
+    return RuntimeError("Misconfiguration: AWS_SECRET_ACCESS_KEY must be set in the compute worker")
+  if not S3_BUCKET:
+    return RuntimeError("Misconfiguration: S3_BUCKET must be set in the compute worker")
+  if not S3_UPLOAD_PATH_TEMPLATE:
+    return RuntimeError("Misconfiguration: S3_UPLOAD_PATH_TEMPLATE must be set in the compute worker")
+  if not S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID:
+    return RuntimeError("Misconfiguration: S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID must be set to true in the compute worker")
+  s3 = boto3.client(
+    's3',
+    # https://docs.weka.io/additional-protocols/s3/s3-examples-using-boto3
+    endpoint_url=AWS_ENDPOINT_URL,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+  )
+  return run_evaluation(task_id=task_id, docker_image=docker_image, submission_image=submission_image, batch_api=batch_api, core_api=core_api, s3=s3,
+                        s3_upload_path_template=S3_UPLOAD_PATH_TEMPLATE)
 
 
-def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch_api: BatchV1Api, core_api: CoreV1Api):
+def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch_api: BatchV1Api, core_api: CoreV1Api, s3, s3_upload_path_template: str):
   start_time = time.time()
   logger.info(f"/ start task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}")
 
@@ -68,8 +86,8 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
     evaluator_container_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": AWS_SECRET_ACCESS_KEY})
   if S3_BUCKET:
     evaluator_container_definition["env"].append({"name": "S3_BUCKET", "value": S3_BUCKET})
-  if S3_UPLOAD_PATH_TEMPLATE:
-    evaluator_container_definition["env"].append({"name": "S3_UPLOAD_PATH_TEMPLATE", "value": S3_UPLOAD_PATH_TEMPLATE})
+  if s3_upload_path_template:
+    evaluator_container_definition["env"].append({"name": "S3_UPLOAD_PATH_TEMPLATE", "value": s3_upload_path_template})
   if S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID:
     evaluator_container_definition["env"].append({"name": "S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", "value": S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID})
 
@@ -119,64 +137,24 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
         ret[job_name] = _ret
     time.sleep(1)
 
-  retriever_definition = yaml.safe_load(open(Path(__file__).parent / "retriever_pod.yaml"))
-  retriever_definition["metadata"]["name"] = f"f3-retriever-{task_id}"
-  retriever = client.V1Pod(metadata=retriever_definition["metadata"], spec=retriever_definition["spec"])
-
-  core_api.create_namespaced_pod(KUBERNETES_NAMESPACE, retriever)
-  while True:
-    resp = core_api.read_namespaced_pod(name=f"f3-retriever-{task_id}", namespace=KUBERNETES_NAMESPACE)
-    if resp.status.phase != 'Pending':
-      break
-    time.sleep(1)
-  k8s_copy_file_from_pod(core_api=core_api, namespace=KUBERNETES_NAMESPACE, pod_name=f"f3-retriever-{task_id}", source_file=f"/data/",
-                         dest_path=f"/tmp/results-{task_id}")
-  k8s_copy_file_from_pod(core_api=core_api, namespace=KUBERNETES_NAMESPACE, pod_name=f"f3-retriever-{task_id}", source_file=f"/data/",
-                         dest_path=f"/tmp/results-{task_id}")
-  core_api.delete_namespaced_pod(namespace=KUBERNETES_NAMESPACE, name=f"f3-retriever-{task_id}")
-
   ret["f3-evaluator"] = ret[f"f3-evaluator-{task_id}"]
   ret["f3-submission"] = ret[f"f3-submission-{task_id}"]
   del ret[f"f3-evaluator-{task_id}"]
   del ret[f"f3-submission-{task_id}"]
+  logger.debug("Task with task_id=%s got results from k8s: %s.", task_id, ret)
 
-  ret["f3-evaluator"]["results.csv"] = open(f"/tmp/results-{task_id}/data/results-{task_id}.csv").read()
-  ret["f3-evaluator"]["results.json"] = open(f"/tmp/results-{task_id}/data/results-{task_id}.json").read()
+  logger.info("Get results files from S3 under %s...", AWS_ENDPOINT_URL)
+  obj = s3.get_object(Bucket=S3_BUCKET, Key=s3_upload_path_template.format(task_id) + ".csv")
+  ret["f3-evaluator"]["results.csv"] = obj['Body'].read().decode("utf-8")
+  obj = s3.get_object(Bucket=S3_BUCKET, Key=s3_upload_path_template.format(task_id) + ".json")
+  ret["f3-evaluator"]["results.json"] = obj['Body'].read().decode("utf-8")
 
   all_completed = all([s == "Complete" for s in status])
-  print(f"done {status}, all_completed={all_completed}")
+  logger.info("done %s, all_completed=%s", status, all_completed)
   duration = time.time() - start_time
-  print(ret)
+  logger.debug(ret)
   logger.info(f"\\ end task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.")
   return ret
-
-
-# source: https://github.com/kubernetes-client/python/issues/476
-def k8s_copy_file_from_pod(core_api: CoreV1Api, namespace: str, pod_name: str, source_file: str, dest_path: str):
-  exec_command = ['/bin/sh', '-c', f'cd {Path(source_file).parent}; tar czf - {Path(source_file).name}']
-  with tempfile.TemporaryFile() as buff:
-    resp = kubernetes.stream.stream(core_api.connect_get_namespaced_pod_exec, pod_name, namespace,
-                                    command=exec_command,
-                                    binary=True,
-                                    stderr=True, stdin=True,
-                                    stdout=True, tty=False,
-                                    _preload_content=False)
-    while resp.is_open():
-      resp.update(timeout=1)
-      if resp.peek_stdout():
-        out = resp.read_stdout()
-        logging.info(f"got {len(out)} bytes")
-        buff.write(out)
-      if resp.peek_stderr():
-        logging.warning(f"STDERR: {resp.read_stderr().decode('utf-8')}")
-    resp.close()
-    buff.flush()
-    buff.seek(0)
-    with tarfile.open(fileobj=buff, mode='r:gz') as tar:
-      subdir_and_files = [
-        tarinfo for tarinfo in tar.getmembers()
-      ]
-      tar.extractall(path=dest_path, members=subdir_and_files)
 
 
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/82 automated integration test against deployed FAB...
@@ -185,12 +163,21 @@ def main():
   config.load_kube_config()
   batch_api = client.BatchV1Api()
   core_api = client.CoreV1Api()
+  s3 = boto3.client(
+    's3',
+    # https://docs.weka.io/additional-protocols/s3/s3-examples-using-boto3
+    endpoint_url=AWS_ENDPOINT_URL,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY
+  )
   ret = run_evaluation(
     batch_api=batch_api,
     core_api=core_api,
     task_id=task_id,
     submission_image="ghcr.io/flatland-association/fab-flatland-submission-template:latest",
     docker_image="ghcr.io/flatland-association/fab-flatland-evaluator:latest",
+    s3_upload_path_template="results/{}",
+    s3=s3
   )
   assert set(ret.keys()) == {"f3-evaluator", "f3-submission"}
   assert set(ret["f3-evaluator"].keys()) == {"job_status", "image_id", "log", "job", "pod", "results.csv", "results.json"}
