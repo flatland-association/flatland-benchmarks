@@ -353,8 +353,12 @@ export function router(_server: Server) {
       )
       RETURNING id, uuid
     `
-    const id: string = idRow.at(0)?.['id'] ?? 0
-    const uuid: string = idRow.at(0)?.['uuid'] ?? '00000000-0000-0000-0000-000000000000'
+    const id: number | undefined = idRow.at(0)?.['id']
+    const uuid: string | undefined = idRow.at(0)?.['uuid']
+    if (!id || !uuid) {
+      serverError(res, { text: `could not insert submission` }, { id, uuid })
+      return
+    }
     // prepare results entry
     await sql.query`
       INSERT INTO results (
