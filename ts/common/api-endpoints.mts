@@ -50,9 +50,9 @@ export interface ApiGetEndpoints {
   '/benchmarks': ApiGetEndpoint<Empty, BenchmarkPreview[]>
   '/benchmarks/:id': ApiGetEndpoint<Empty, Benchmark[]>
   '/tests/:id': ApiGetEndpoint<Empty, Test[]>
-  '/submissions': ApiGetEndpoint<{ benchmark?: ResourceId; id?: ResourceId }, SubmissionPreview[]>
-  '/submissions/:id': ApiGetEndpoint<Empty, Submission[]>
-  '/submissions/:id/results': ApiGetEndpoint<Empty, Result[]>
+  '/submissions': ApiGetEndpoint<{ benchmark?: ResourceId; uuid?: string }, SubmissionPreview[]>
+  '/submissions/:uuid': ApiGetEndpoint<Empty, Submission[]>
+  '/submissions/:uuid/results': ApiGetEndpoint<Empty, Result[]>
   '/test': ApiGetEndpoint<Empty, Empty>
 }
 
@@ -65,7 +65,7 @@ export interface ApiGetEndpoints {
 export interface ApiPostEndpoints {
   '/mirror': ApiPostEndpoint<{ data: unknown }, unknown>
   '/ampq': ApiPostEndpoint<json, string>
-  '/submissions': ApiPostEndpoint<StripLocator<Submission>, { id: ResourceId }>
+  '/submissions': ApiPostEndpoint<StripLocator<Submission>, { uuid: string }>
 }
 
 /**
