@@ -58,21 +58,21 @@ export class BenchmarksDetailView implements OnInit {
         tests: this.tests?.filter((t, i) => this.testsSelection[i]).map((t) => t.id) ?? [],
       },
     })
-    if (response.body?.id) {
+    if (response.body?.uuid) {
       // start with an empty result (user feedback, something is going)
       this.result = {
         dir: '/results/',
         id: 0,
-        submission: response.body.id,
+        submission: response.body.uuid,
         done_at: null,
         success: null,
         scores: null,
         results_str: null,
         public: null,
       }
-      const id = response.body.id
+      const id = response.body.uuid
       const interval = window.setInterval(() => {
-        this.apiService.get('/submissions/:id/results', { params: { id: `${id}` } }).then((res) => {
+        this.apiService.get('/submissions/:uuid/results', { params: { uuid: `${id}` } }).then((res) => {
           if (res.body) {
             this.result = res.body[0]
             // once result indicates success
@@ -81,7 +81,7 @@ export class BenchmarksDetailView implements OnInit {
               this.apiService
                 .get('/submissions', {
                   query: {
-                    id: response.body?.id,
+                    uuid: response.body?.uuid,
                   },
                 })
                 .then((r) => {

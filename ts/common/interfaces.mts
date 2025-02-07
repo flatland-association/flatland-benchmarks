@@ -7,6 +7,8 @@ export interface Resource<Dir extends ResourceDir = ResourceDir> {
   dir: Dir
   /** Identifier of resource within its directory. */
   id: ResourceId
+  /** Resource UUID */
+  uuid?: string
 }
 
 export interface BenchmarkPreview extends Resource<'/benchmarks/'> {

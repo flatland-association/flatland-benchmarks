@@ -351,15 +351,22 @@ export function router(_server: Server) {
         ${auth.sub ?? null},
         ${auth['preferred_username'] ?? null}
       )
-      RETURNING id
+      RETURNING id, uuid
     `
-    const id: number = idRow.at(0)?.['id'] ?? 0
+    const id: number | undefined = idRow.at(0)?.['id']
+    const uuid: string | undefined = idRow.at(0)?.['uuid']
+    if (!id || !uuid) {
+      serverError(res, { text: `could not insert submission` }, { id, uuid })
+      return
+    }
     // prepare results entry
     await sql.query`
       INSERT INTO results (
-        submission
+        submission,
+        submission_uuid
       ) VALUES (
-        ${id}
+        ${id},
+        ${uuid}
       )
     `
     // get benchmark docker image
@@ -394,22 +401,22 @@ export function router(_server: Server) {
     const sent = await ampq.sendToQueue('celery', payload, {
       headers: {
         task: 'flatland3-evaluation',
-        id: `sub${id}`,
+        id: `sub-${uuid}`,
       },
       contentType: 'application/json',
       persistent: true,
     })
     if (sent) {
-      respond(res, { id }, payload)
+      respond(res, { uuid }, payload)
     } else {
-      respond(res, { id }, 'Could not send message to AMQP service. Check backend log.')
+      respond(res, { uuid }, 'Could not send message to AMQP service. Check backend log.')
     }
   })
 
   // returns scored and public submissions as preview
   attachGet(router, '/submissions', async (req, res) => {
     const benchmarkId = req.query['benchmark'] as string | undefined
-    const submissionIds = (req.query['id'] as string | undefined)?.split(',').map((s) => +s)
+    const submissionUuids = (req.query['uuid'] as string | undefined)?.split(',')
 
     const sql = SqlService.getInstance()
 
@@ -418,18 +425,18 @@ export function router(_server: Server) {
     const whereBenchmark = benchmarkId ? sql.fragment`benchmark=${benchmarkId}` : sql.fragment`1=1`
     let whereSubmission = sql.fragment`1=1`
     let limit = 3
-    if (submissionIds) {
+    if (submissionUuids) {
       // turn off scores and public requirements if id is given
       whereScores = sql.fragment`1=1`
       wherePublic = sql.fragment`1=1`
-      whereSubmission = sql.fragment`submissions.id=ANY(${submissionIds})`
-      limit = submissionIds.length
+      whereSubmission = sql.fragment`submissions.uuid=ANY(${submissionUuids})`
+      limit = submissionUuids.length
     }
 
     const rows = await sql.query<StripDir<SubmissionPreview>>`
-      SELECT submissions.id, benchmark, submitted_at, submitted_by_username, scores
+      SELECT submissions.id, submissions.uuid, benchmark, submitted_at, submitted_by_username, scores
         FROM submissions
-        LEFT JOIN results ON results.submission = submissions.id
+        LEFT JOIN results ON results.submission_uuid = submissions.uuid
         WHERE
           ${whereScores} AND
           ${wherePublic} AND
@@ -442,26 +449,26 @@ export function router(_server: Server) {
     respond(res, resources, { dbg: dbgRequestObject(req), sql: dbgSqlState(sql) })
   })
 
-  attachGet(router, '/submissions/:id', async (req, res) => {
-    const ids = req.params.id.split(',').map((s) => +s)
+  attachGet(router, '/submissions/:uuid', async (req, res) => {
+    const uuids = req.params.uuid.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<Submission>>`
       SELECT * FROM submissions
-      WHERE id=ANY(${ids})
-      LIMIT ${ids.length}
+      WHERE uuid=ANY(${uuids})
+      LIMIT ${uuids.length}
     `
     const submissions = appendDir('/submissions/', rows)
     // return array - dev.002
     respond(res, submissions)
   })
 
-  attachGet(router, '/submissions/:id/results', async (req, res) => {
-    const id = req.params.id
+  attachGet(router, '/submissions/:uuid/results', async (req, res) => {
+    const uuid = req.params.uuid
     const sql = SqlService.getInstance()
     const [row] = await sql.query<StripDir<Result>>`
       SELECT * FROM results
-      WHERE submission=${id}
+      WHERE submission_uuid=${uuid}
     `
 
     // try updating incomplete (no done_at) results
@@ -469,7 +476,7 @@ export function router(_server: Server) {
       const client = await createClient({ url: _server.config.redis.url })
         .on('error', (err) => console.log('Redis Client Error', err))
         .connect()
-      const keys = await client.keys(`*-sub${id}`)
+      const keys = await client.keys(`*-sub-${uuid}`)
 
       if (keys && keys.length > 0) {
         // assume keys[0] is the one we're interested in
@@ -504,7 +511,7 @@ export function router(_server: Server) {
               success = ${row.success},
               scores = ${row.scores},
               results_str = ${row.results_str}
-            WHERE id = ${row.id}
+            WHERE uuid = ${row.uuid}
         `
         }
       }
@@ -516,7 +523,7 @@ export function router(_server: Server) {
   })
 
   attachPatch(router, '/result', async (req, res) => {
-    const id = req.body.id
+    const uuid = req.body.uuid
     // restrict to patchable fields
     const patch = {
       public: req.body.public,
@@ -524,7 +531,7 @@ export function router(_server: Server) {
     const sql = SqlService.getInstance()
     const [row] = await sql.query<StripDir<Result>>`
       UPDATE results SET ${sql.fragment(patch, 'public')}
-        WHERE id = ${id}
+        WHERE uuid=${uuid}
         RETURNING *
     `
 
