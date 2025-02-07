@@ -35,7 +35,7 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     start_time = time.time()
     logger.info(f"/ start task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}")
     assert BENCHMARKING_NETWORK is not None
-    loop = asyncio.new_event_loop()
+    loop = asyncio.get_event_loop()
     evaluator_future = loop.create_future()
     submission_future = loop.create_future()
     evaluator_exec_args = [
@@ -79,8 +79,7 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
         "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/debug-environments/",
         "--network", BENCHMARKING_NETWORK,
         submission_image,
-      ]),
-      loop=loop
+      ])
     )
     loop.run_until_complete(gathered_tasks)
     duration = time.time() - start_time
