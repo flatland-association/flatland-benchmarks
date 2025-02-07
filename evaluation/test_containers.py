@@ -59,7 +59,7 @@ def test_succesful_run(test_containers_fixture: str):
         task_id=task_id,
         kwargs={
             "docker_image": "ghcr.io/flatland-association/fab-flatland-evaluator:latest",
-            "submission_image": "ghcr.io/flatland-association/fab-flatland-submission-template:latest"
+            "submission_image": "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest"
         },
     ).get()
     logger.info(ret)
@@ -81,7 +81,7 @@ def test_succesful_run(test_containers_fixture: str):
     assert ret["f3-submission"]["job_status"] == "Complete"
 
     assert ret["f3-evaluator"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-evaluator:latest"
-    assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-submission-template:latest"
+    assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest"
 
     assert "end evaluator/run.sh" in str(ret["f3-evaluator"]["log"])
     assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])
@@ -108,7 +108,7 @@ def test_succesful_run(test_containers_fixture: str):
     assert ret["f3-submission"]["job_status"] == "Complete"
 
     assert ret["f3-evaluator"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-evaluator:latest"
-    assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-submission-template:latest"
+    assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest"
 
     assert "end evaluator/run.sh" in str(ret["f3-evaluator"]["log"])
     assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])

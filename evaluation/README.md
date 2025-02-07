@@ -87,7 +87,7 @@ Manual triggering via RabbitMQ web triggers `compute_worker`:
   [],
   {
     "docker_image": "ghcr.io/flatland-association/fab-flatland-evaluator:latest",
-    "submission_image": "ghcr.io/flatland-association/fab-flatland-submission-template:latest"
+    "submission_image": "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest"
   },
   {
     "callbacks": null,
