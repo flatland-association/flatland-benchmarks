@@ -115,19 +115,20 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
   batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
 
-  done = False
+  all_done = False
+  any_failed = False
   ret = {}
   status = []
-  while not done:
+  while not all_done or not any_failed:
     jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"task_id={task_id}")
     assert len(jobs.items) == 2
-    done = True
+    all_done = True
     status = []
-
     for job in jobs.items:
-      done = done and job.status.conditions is not None
+      all_done = all_done and job.status.conditions is not None
+      any_failed = any_failed or (job.status.conditions is not None and job.status.conditions[0].type != "Complete")
 
-    if done:
+    if all_done or any_failed:
       for job in jobs.items:
         status.append(job.status.conditions[0].type)
         job_name = job.metadata.name
@@ -145,6 +146,9 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
         }
         ret[job_name] = _ret
     time.sleep(1)
+  if any_failed:
+    duration = time.time() - start_time
+    raise Exception(f"Failed task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.")
 
   ret["f3-evaluator"] = ret[f"f3-evaluator-{task_id}"]
   ret["f3-submission"] = ret[f"f3-submission-{task_id}"]

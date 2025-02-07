@@ -61,6 +61,27 @@ def test_containers_fixture():
     logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
 
 
+def run_task(task_id: str, submission_image: str):
+  start_time = time.time()
+  app = Celery(
+    broker="pyamqp://localhost:5672",
+    backend='redis://localhost:6379',
+  )
+  logger.info(f"/ Start simulate submission from portal for task_id={task_id}.....")
+  ret = app.send_task(
+    'flatland3-evaluation',
+    task_id=task_id,
+    kwargs={
+      "docker_image": "ghcr.io/flatland-association/fab-flatland-evaluator:latest",
+      "submission_image": submission_image
+    },
+  ).get()
+  logger.info(ret)
+  duration = time.time() - start_time
+  logger.info(
+    f"\\ End simulate submission from portal for task_id={task_id}. Took {duration} seconds: {[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
+  return ret
+
 @pytest.mark.usefixtures("test_containers_fixture")
 @pytest.mark.parametrize(
     "tests,expected_total_simulation_count",
@@ -69,28 +90,7 @@ def test_containers_fixture():
 )
 def test_succesful_run(test_containers_fixture: str, expected_total_simulation_count, tests: List[str]):
     task_id = test_containers_fixture
-    start_time = time.time()
-    app = Celery(
-        broker="pyamqp://localhost:5672",
-        backend='redis://localhost:6379',
-    )
-    logger.info(f"/ Start simulate submission from portal for task_id={task_id}.....")
-    kwargs = {
-        "docker_image": "ghcr.io/flatland-association/fab-flatland-evaluator:latest",
-        "submission_image": "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
-    }
-    if tests is not None:
-        kwargs["tests"] = tests
-    ret = app.send_task(
-        'flatland3-evaluation',
-        task_id=task_id,
-        kwargs=kwargs,
-    ).get()
-    logger.log(TRACE, ret)
-
-    duration = time.time() - start_time
-    logger.info(
-        f"\\ End simulate submission from portal for task_id={task_id}. Took {duration:.2f} seconds.")
+    ret = run_task(task_id, "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest")
 
     for k, v in ret.items():
         logger.log(TRACE, "Got %s", (k, v['job_status'], v['image_id'], v['log']))
@@ -165,3 +165,11 @@ def test_succesful_run(test_containers_fixture: str, expected_total_simulation_c
     )
     objects = set([s["Key"] for s in s3.list_objects(Bucket=config["S3_BUCKET"])['Contents']])
     assert objects.issuperset({f'results/{task_id}.csv', f'results/{task_id}.json'}), objects
+
+
+@pytest.mark.usefixtures("test_containers_fixture")
+def test_failing_run(test_containers_fixture: str):
+    task_id = test_containers_fixture
+    with pytest.raises(Exception) as exc_info:
+        run_task(task_id, "asdfasdf")
+        assert str(exc_info.value).startswith(f"Failed execution ['sudo', 'docker', 'run', '--name', 'flatland3-submission-{task_id}'")

@@ -209,4 +209,34 @@ async def run_async_and_catch_output(future, exec_args):
   logger.debug(f"task stdout=%s", stdout)
   logger.debug(f"task stderr=%s", stderr)
   logger.info(f"\\ End run async %s", exec_args)
-  return _ret
+  if proc.returncode != 0:
+    raise Exception(f"Failed execution {exec_args}")
+
+
+# https://superfastpython.com/asyncio-gather-cancel-all-if-one-fails/
+async def run_all_fail_fast(*group):
+  gathered_tasks = asyncio.gather(*group)
+  try:
+    # wait for the group of tasks to complete
+    await gathered_tasks
+  except Exception as e:
+    # report failure
+    logger.error(f'A task failed with: {e}, canceling all tasks')
+    # cancel all tasks
+    cancel_all_tasks()
+    # wait a while
+    await asyncio.sleep(2)
+    raise e
+
+
+# cancel all tasks except the current task
+def cancel_all_tasks():
+  # get all running tasks
+  tasks = asyncio.all_tasks()
+  # get the current task
+  current = asyncio.current_task()
+  # remove current task from all tasks
+  tasks.remove(current)
+  # cancel all remaining running tasks
+  for task in tasks:
+    task.cancel()
