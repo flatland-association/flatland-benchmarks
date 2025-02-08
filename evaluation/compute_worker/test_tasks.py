@@ -9,7 +9,7 @@ from mockito import mock
 from mockito import verify
 from mockito import when
 
-from tasks import run_evaluation
+from tasks import run_evaluation, TaskExecutionError
 
 
 def test_tasks_successful():
@@ -107,11 +107,12 @@ def test_tasks_failing():
   ]))
   when(core_api).read_namespaced_pod_log("subi", namespace="fab-int").thenReturn("abcd")
 
-  with pytest.raises(Exception) as exc_info:
+  with pytest.raises(TaskExecutionError) as exc_info:
     run_evaluation(task_id="1234", docker_image="fancy", submission_image="pancy", batch_api=batch_api, core_api=core_api, s3=s3,
                    s3_upload_path_template="results/{}")
-  assert exc_info.value.args[0].startswith(f"Failed task with task_id=1234 with docker_image=fancy and submission_image=pancy")
-  ret = exc_info.value.args[1]
+
+  assert exc_info.value.message.startswith(f"Failed task with task_id=1234 with docker_image=fancy and submission_image=pancy")
+  ret = exc_info.value.status
 
   verify(batch_api, times=1).list_namespaced_job(...)
   verify(core_api, times=1).list_namespaced_pod(namespace="fab-int", label_selector=f"job-name=f3-evaluator-1234")

@@ -6,6 +6,7 @@ import time
 import uuid
 from io import StringIO
 from pathlib import Path
+from typing import Dict
 from typing import List
 
 import boto3
@@ -33,6 +34,13 @@ app = Celery(
   broker=os.environ.get('BROKER_URL'),
   backend=f"redis://{REDIS_IP}:6379",
 )
+
+
+class TaskExecutionError(Exception):
+  def __init__(self, message: str, status: Dict):
+    super().__init__(message)
+    self.message = message
+    self.status = status
 
 
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 start own redis for evaluator <-> submission communication? Split in flatland-repo?
@@ -155,8 +163,8 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
 
   if any_failed:
     duration = time.time() - start_time
-    raise Exception(f"Failed task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.",
-                    ret)
+    raise TaskExecutionError(
+      f"Failed task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.", ret)
 
   logger.debug("Task with task_id=%s got results from k8s: %s.", task_id, ret)
 
