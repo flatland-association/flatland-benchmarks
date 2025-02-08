@@ -119,7 +119,9 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   any_failed = False
   ret = {}
   status = []
-  while not all_done or not any_failed:
+  while not all_done and not any_failed:
+    time.sleep(1)
+    print(".")
     jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"task_id={task_id}")
     assert len(jobs.items) == 2
     all_done = True
@@ -145,7 +147,7 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
           "pod": pod.to_dict()
         }
         ret[job_name] = _ret
-    time.sleep(1)
+
   if any_failed:
     duration = time.time() - start_time
     raise Exception(f"Failed task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.")
