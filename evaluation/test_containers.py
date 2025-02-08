@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 ATTENDED = False
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def test_containers_fixture():
     if ATTENDED:
         yield str(uuid.uuid4())
