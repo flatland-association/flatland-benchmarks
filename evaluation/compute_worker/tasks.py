@@ -148,14 +148,16 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
         }
         ret[job_name] = _ret
 
-  if any_failed:
-    duration = time.time() - start_time
-    raise Exception(f"Failed task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.")
-
   ret["f3-evaluator"] = ret[f"f3-evaluator-{task_id}"]
   ret["f3-submission"] = ret[f"f3-submission-{task_id}"]
   del ret[f"f3-evaluator-{task_id}"]
   del ret[f"f3-submission-{task_id}"]
+
+  if any_failed:
+    duration = time.time() - start_time
+    raise Exception(f"Failed task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.",
+                    ret)
+
   logger.debug("Task with task_id=%s got results from k8s: %s.", task_id, ret)
 
   logger.info("Get results files from S3 under %s...", AWS_ENDPOINT_URL)
