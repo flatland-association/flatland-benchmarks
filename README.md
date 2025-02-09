@@ -67,15 +67,15 @@ In words:
 
 * The simulation engine produces run information/measurements, referring to a scenario. The exact contents are domain-specific. In the railway domain, these are the actions taken by the action and the rewards given by the environment. In the power grid case, these are observations and predictions.
 * The evaluation submodule has an evaluation. It may also have scenario-specific metadata (e.g. ground truth for prediction into the future problems). In the railway domain, the evaluation module aggregates the rewards along different simulation steps and episodes.
-* The output of the evaluation submodule is in a generic form referring to a scenario and the simulation engine run: it contains metrics values grouped by categories.
-* Validation campaigns can be defined in the FAB hub: per domain (power grid, ATM, railway), weights and thresholds are defined for individual metrics and per category.
+* The output of the evaluation submodule is in a generic form referring to a scenario and the simulation engine run: it contains metrics values grouped by KPI.
+* Validation campaigns can be defined in the FAB hub: weights and thresholds are defined per objective, KPI and/or for individual metrics and per KPI. An overall threshold for the success of the validation campaign is defined.
 
-| Level                      | Validation                                                                                                                           |
-|----------------------------|--------------------------------------------------------------------------------------------------------------------------------------|
-| Validation Campaign        | <ul><li>succeeded yes or no (iff all domain validation campaigns succeed)</li></ul>                                                  |
-| Domain Validation Campaign | <ul><li>succeeded yes or no (iff threshold met)</li><li>diff to threshold</li><li>weighted value</li><li>...</li></ul>               |
-| Metrics Category           | <ul><li>succeeded yes or no (iff threshold met)</li><li>diff to threshold</li><li>weighted value</li><li>...</li></ul>               |
-| Metrics                    | <ul><li>succeeded yes or no (iff threshold met)</li><li>diff to threshold</li><li>weighted value</li><li>value</li><li>...</li></ul> |
+| Level               | Validation                                                                                                                           |
+|---------------------|--------------------------------------------------------------------------------------------------------------------------------------|
+| Validation Campaign | <ul><li>succeeded yes or no (iff all domain validation campaigns succeed)</li></ul>                                                  |
+| Objective           | <ul><li>succeeded yes or no (iff threshold met)</li><li>diff to threshold</li><li>weighted value</li><li>...</li></ul>               |
+| KPI                 | <ul><li>succeeded yes or no (iff threshold met)</li><li>diff to threshold</li><li>weighted value</li><li>...</li></ul>               |
+| Metrics             | <ul><li>succeeded yes or no (iff threshold met)</li><li>diff to threshold</li><li>weighted value</li><li>value</li><li>...</li></ul> |
 
 📦 TL; DR;
 ----------
