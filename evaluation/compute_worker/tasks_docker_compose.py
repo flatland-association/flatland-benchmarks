@@ -79,8 +79,8 @@ def the_task(self, docker_image: str, submission_image: str, tests: List[str] = 
     evaluator_exec_args.extend(["-e", f"AICROWD_IS_GRADING={True}"])
 
     evaluator_exec_args.extend([
-      "-e", "AICROWD_TESTS_FOLDER=/tmp/debug-environments/",
-      "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/debug-environments",
+      "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/environments",
+      "-e", "AICROWD_TESTS_FOLDER=/tmp/environments/",
       "--network", BENCHMARKING_NETWORK,
       docker_image,
     ])
@@ -88,20 +88,18 @@ def the_task(self, docker_image: str, submission_image: str, tests: List[str] = 
     exec_with_logging(["sudo", "docker", "pull", docker_image])
     exec_with_logging(["sudo", "docker", "pull", submission_image])
 
-    submission_exec_args = [
-      "sudo", "docker", "run",
-      "--name", f"flatland3-submission-{task_id}",
-      "-e", "redis_ip=redis",
-      "-e", "AICROWD_TESTS_FOLDER=/tmp/debug-environments/",
-      "-e", f"AICROWD_SUBMISSION_ID={task_id}",
-      "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/debug-environments/",
-      "--network", BENCHMARKING_NETWORK,
-      submission_image
-    ]
-
     gathered_tasks = asyncio.gather(
       run_async_and_catch_output(evaluator_future, exec_args=evaluator_exec_args),
-      run_async_and_catch_output(submission_future, exec_args=submission_exec_args)
+      run_async_and_catch_output(submission_future, exec_args=[
+        "sudo", "docker", "run",
+        "--name", f"flatland3-submission-{task_id}",
+        "-e", "redis_ip=redis",
+        "-e", "AICROWD_TESTS_FOLDER=/tmp/environments/",
+        "-e", f"AICROWD_SUBMISSION_ID={task_id}",
+        "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/environments/",
+        "--network", BENCHMARKING_NETWORK,
+        submission_image,
+      ])
     )
     loop.run_until_complete(gathered_tasks)
     duration = time.time() - start_time

@@ -20,25 +20,25 @@ spec:
           name: f3-submission
           volumeMounts:
             - mountPath: /tmp
-              name: debug-environments
+              name: environments
       initContainers:
         - args:
             - -c
-            - cd /tmp; unzip debug-environments.zip
+            - unzip /tmp/environments.zip -d /tmp/environments
           command:
             - /bin/sh
           image: busybox
           imagePullPolicy: IfNotPresent
           name: startup
           volumeMounts:
-            - mountPath: /tmp/debug-environments.zip
-              name: fab-flatland3-data-vol
-              subPath: debug-environments.zip
-            - mountPath: /tmp/debug-environments
-              name: debug-environments
+            - mountPath: /tmp/environments.zip
+              name: fab-flatland3-submission-data-vol
+              subPath: environments.zip
+            - mountPath: /tmp/environments
+              name: environments
       volumes:
         - configMap:
-            name: fab-flatland3-data
-          name: fab-flatland3-data-vol
+            name: fab-flatland3-submission-data
+          name: fab-flatland3-submission-data-vol
         - emptyDir: { }
-          name: debug-environments
+          name: environments

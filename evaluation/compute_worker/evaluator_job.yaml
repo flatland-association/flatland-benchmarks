@@ -14,36 +14,36 @@ spec:
       containers:
         - env:
             - name: AICROWD_TESTS_FOLDER
-              value: /tmp/debug-environments
+              value: /tmp/environments
           image:
           name: f3-evaluator
           pullPolicy: Always
           volumeMounts:
-            - mountPath: /tmp/debug-environments
-              name: debug-environments
+            - mountPath: /tmp/environments
+              name: environments
             - mountPath: /tmp/results
               name: fab-flatland3-results
       initContainers:
         - args:
             - -c
-            - cd /tmp; unzip debug-environments.zip
+            - unzip /tmp/environments.zip -d /tmp/environments
           command:
             - /bin/sh
           image: busybox
           imagePullPolicy: IfNotPresent
           name: startup
           volumeMounts:
-            - mountPath: /tmp/debug-environments.zip
-              name: fab-flatland3-data-vol
-              subPath: debug-environments.zip
-            - mountPath: /tmp/debug-environments
-              name: debug-environments
+            - mountPath: /tmp/environments.zip
+              name: fab-flatland3-evaluator-data-vol
+              subPath: environments.zip
+            - mountPath: /tmp/environments
+              name: environments
       volumes:
         - configMap:
-            name: fab-flatland3-data
-          name: fab-flatland3-data-vol
+            name: fab-flatland3-evaluator-data
+          name: fab-flatland3-evaluator-data-vol
         - emptyDir: { }
-          name: debug-environments
+          name: environments
         - name: fab-flatland3-results
           persistentVolumeClaim:
             claimName:

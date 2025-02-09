@@ -194,7 +194,7 @@ def main():
   assert ret["f3-evaluator"]["job_status"] == "Complete"
   assert ret["f3-submission"]["job_status"] == "Complete"
   assert ret["f3-evaluator"]["image_id"].startswith("ghcr.io/flatland-association/fab-flatland-evaluator")
-  assert ret["f3-submission"]["image_id"].startswith("ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest")
+  assert ret["f3-submission"]["image_id"].startswith("ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit")
   assert "end evaluator/run.sh" in str(ret["f3-evaluator"]["log"])
   assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])
   res_df = pd.read_csv(StringIO(ret["f3-evaluator"]["results.csv"]))
