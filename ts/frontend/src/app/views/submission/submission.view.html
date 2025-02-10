@@ -1,11 +1,25 @@
 <lib-content>
   @if (result) {
-    <h4 class="pb-8 font-bold">Your results</h4>
+    <h4 class="pb-8 text-2xl font-bold text-neutral-500">Your results</h4>
     @if (!result.done_at) {
       <div class="text-center">Please wait while your submission is being evaluated.</div>
     } @else {
       @if (mySubmission) {
-        <h5 class="pb-4 font-bold">Success!</h5>
+        <h5 class="pb-4 font-bold">Simulation terminated</h5>
+        <div class="grid grid-cols-[max-content_1fr] pb-8">
+          @if (resultsJson?.meta?.normalized_reward) {
+            <div class="font-medium pr-8 pb-2">Normalized reward</div>
+            <div class="font-mono pb-2">{{ resultsJson?.meta?.normalized_reward }}</div>
+          }
+          @if (typeof resultsJson?.meta?.percentage_complete !== 'undefined') {
+              <div class="font-medium pr-8 pb-2">% done</div>
+              <div class="font-mono pb-2">{{ resultsJson?.meta?.percentage_complete | number: '0.3'}}</div>
+          }
+          @if (resultsJson?.meta?.termination_cause) {
+            <div class="font-medium pr-8 pb-2">Termination Cause</div>
+            <div class="font-mono pb-2">{{ resultsJson?.meta?.termination_cause }}</div>
+          }
+        </div>
         <app-leaderboard [submissions]="[mySubmission]"></app-leaderboard>
         <label class="cursor-pointer my-8">
             <input type="checkbox" id="accept-eula" [(ngModel)]="acceptEula">
@@ -14,6 +28,22 @@
         <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="publishResult()" [attr.disabled]="acceptEula ? null : true" [ngClass]="{'bg-neutral-100': !acceptEula, 'hover:bg-neutral-100': !acceptEula}">Publish this result</button>
       } @else {
         <h5 class="pb-4 font-bold">Something went wrong</h5>
+        <div class="grid grid-cols-[max-content_1fr]">
+          @if (resultObj?.result?.exc_type) {
+            <div class="font-medium pr-8 pb-2">Exception type</div>
+            <div class="font-mono pb-2">{{ resultObj?.result?.exc_type }}</div>
+          }
+          @if (resultObj?.result?.exc_message) {
+            @for (msg of resultObj?.result?.exc_message; track $index) {
+              <div class="font-medium pr-8 pb-2">Message</div>
+              <div class="font-mono pb-2">{{ msg }}</div>
+            }
+          }
+          @if (resultObj?.result?.exc_module) {
+            <div class="font-medium pr-8 pb-2">Module</div>
+            <div class="font-mono pb-2">{{ resultObj?.result?.exc_module }}</div>
+          }
+        </div>
       }
     }
   }
