@@ -31,7 +31,9 @@ export interface SubmissionPreview extends Resource<'/submissions/'> {
   benchmark: ResourceId
   submitted_at: string
   submitted_by_username: string
+  public: boolean
   scores: number[]
+  rank: number | null
 }
 
 export interface Submission extends Resource<'/submissions/'> {

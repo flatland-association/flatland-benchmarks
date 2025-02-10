@@ -1,6 +1,7 @@
 <table class="rounded-sm">
   <thead>
     <tr class="bg-neutral-100">
+      <th class="px-4 py-2">#</th>
       <th class="px-4 py-2">Submission</th>
       <th class="px-4 py-2">Total reward</th>
       <th class="px-4 py-2">% done</th>
@@ -9,6 +10,11 @@
   <tbody>
     @for (submission of submissions; track $index) {
       <tr class="bg-neutral-50" [ngClass]="{'cursor-pointer hover:bg-neutral-200': navigates}" (click)="click(submission)">
+        <td class="px-4 py-2 text-xl">
+          @if (submission.public) {
+            {{ submission.rank | number:'2.0'}}
+          }
+        </td>
         <td class="px-4 py-2">
           <div class="font-medium">
             Submission {{ submission.id }}
