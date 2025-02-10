@@ -19,6 +19,13 @@ export const routes: Routes = [
       return 'home'
     },
   },
+  {
+    path: 'hub',
+    redirectTo: () => {
+      location.href = 'https://www.flatland.cloud'
+      return 'home'
+    },
+  },
   { path: 'benchmarks/:id', component: BenchmarksDetailView },
   {
     path: 'benchmarks/:id/participate',

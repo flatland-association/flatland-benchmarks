@@ -21,7 +21,7 @@ export class AppComponent {
       lead: 'Flatland Benchmarks',
     },
     { path: '/benchmarks', label: 'Benchmarks' },
-    { path: '/association', label: 'Association', icon: faArrowUpRightFromSquare },
+    { path: '/hub', label: 'Hub', icon: faArrowUpRightFromSquare },
   ]
   footerNavItems: FooterNavLink[] = [
     { path: '/impressum', label: 'Impressum' },
