@@ -65,9 +65,9 @@ services:
         max-size: "20m"
         max-file: "5"
     healthcheck:
-      test: rabbitmq-diagnostics check_port_connectivity
-      interval: 1s
-      timeout: 3s
+      test: rabbitmqctl status
+      interval: 10s
+      timeout: 10s
       retries: 30
     networks:
       - flatland-benchmarks
