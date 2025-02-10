@@ -1,0 +1,8 @@
+<div class="px-8 py-4">
+  @for (crumb of crumbs; track $index) {
+    <a [routerLink]="getCrumbLink($index)">{{ crumb }}</a>
+    @if ($index < crumbs.length - 1) {
+      /
+    }
+  }
+</div>

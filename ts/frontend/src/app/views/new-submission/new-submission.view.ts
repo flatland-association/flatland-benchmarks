@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { Benchmark, Test } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
+import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { ApiService } from '../../features/api/api.service'
 
 @Component({
   selector: 'view-new-submission',
-  imports: [CommonModule, FormsModule, ContentComponent],
+  imports: [CommonModule, FormsModule, ContentComponent, BreadcrumbsComponent],
   templateUrl: './new-submission.view.html',
   styleUrl: './new-submission.view.scss',
 })
@@ -19,6 +20,7 @@ export class NewSubmissionView implements OnInit {
 
   submissionImageUrl = ''
   codeRepositoryUrl = ''
+  submissionName = ''
   testsSelection: boolean[] = []
 
   constructor(
@@ -42,9 +44,20 @@ export class NewSubmissionView implements OnInit {
     this.testsSelection = Array(this.tests?.length).fill(true)
   }
 
+  canSubmit() {
+    return (
+      this.submissionName != '' &&
+      this.submissionImageUrl != '' &&
+      this.codeRepositoryUrl != '' &&
+      !this.submissionImageUrl.includes(' ') &&
+      this.testsSelection.reduce((p, c) => p + +c, 0)
+    )
+  }
+
   async submit() {
     const response = await this.apiService.post('/submissions', {
       body: {
+        name: this.submissionName,
         benchmark: this.benchmark?.id ?? 0,
         submission_image: this.submissionImageUrl,
         code_repository: this.codeRepositoryUrl,

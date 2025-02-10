@@ -1,5 +1,4 @@
 <lib-content>
-  <h2 class="pb-8 text-2xl font-bold text-neutral-500">Flatland Benchmarks</h2>
   <lib-section>
     <p>Welcome to Flatland Benchmarks, specifically designed to assess algorithms that address resource allocation tasks. These benchmarks operate akin to a machine learning competition, however, our goal is to run them on a continuous basis. This continuous operation provides a platform for researchers to consistently measure and compare their results against established baselines to provide a consistent metric for progress.</p>
 
@@ -7,17 +6,11 @@
 </lib-content>
 
 <!-- dummy content to stretch the page. do not dispute. will be replaced eventually -->
-<lib-content class="bg-neutral-100 pb-8" contentClass="gap-y-8">
+<lib-content class="pb-8" contentClass="gap-y-8">
   <h2 class="text-center text-2xl font-bold text-neutral-500">Discover benchmarks hosted by Flatland</h2>
   <div class="flex flex-wrap justify-center gap-8">
-    <div
-      class="max-size-1/2 flex size-64 flex-col items-center justify-end gap-8 overflow-hidden rounded-md bg-neutral-300 text-white md:size-80"
-    >
-      <fa-icon [icon]="faPlus" class="text-5xl" />
-      <div class="p-4 text-center">
-        Do you have a benchmark you'd like to run?<br />
-        <a href="mailto:contact@flatland-association.org">Get in touch!</a>
-      </div>
-    </div>
+    @for (benchmark of benchmarks; track $index) {
+      <app-benchmark-card class="md:size-80 flex" [benchmark]="benchmark"></app-benchmark-card>
+    }
   </div>
 </lib-content>

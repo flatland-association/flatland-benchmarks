@@ -1,14 +1,16 @@
+<app-breadcrumbs></app-breadcrumbs>
+
 <lib-content>
   <h2 class="pb-8 text-2xl font-bold text-neutral-500">{{ benchmark?.name }}</h2>
 
   <p class="pb-8">{{ benchmark?.description }}</p>
 
-  <h3 class="pb-8 text-xl font-bold">Top solutions</h3>
+  <h3 class="pb-8 text-xl font-bold">Leaderboard</h3>
   @if(submissions) {
-    <app-leaderboard [submissions]="submissions"></app-leaderboard>
+    <app-leaderboard [submissions]="submissions" [navigates]="true"></app-leaderboard>
   }
 
-  <h3 class="py-8 text-xl font-bold">My solutions</h3>
+  <h3 class="py-8 text-xl font-bold">My submissions</h3>
   @if(mySubmissions) {
     <app-leaderboard [submissions]="mySubmissions" [navigates]="true"></app-leaderboard>
   }
