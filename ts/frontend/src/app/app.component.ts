@@ -3,7 +3,6 @@ import { RouterOutlet } from '@angular/router'
 import { FooterNavLink, HeaderNavLink, LayoutComponent } from '@flatland-association/flatland-ui'
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import { OAuthModule } from 'angular-oauth2-oidc'
-import { environment } from '../environments/environment'
 import { ApiService } from './features/api/api.service'
 import { AuthService } from './features/auth/auth.service'
 
@@ -31,9 +30,5 @@ export class AppComponent {
   constructor(
     private _apiService: ApiService,
     private authService: AuthService,
-  ) {
-    if (environment.authConfig) {
-      console.log("Auth config'd")
-    }
-  }
+  ) {}
 }

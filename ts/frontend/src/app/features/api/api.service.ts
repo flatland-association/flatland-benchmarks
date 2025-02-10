@@ -52,7 +52,6 @@ export class ApiService {
     const response = await firstValueFrom(
       this.http.get(this.buildUrl(endpoint, options?.params), { params: options?.query }),
     )
-    console.log(response)
     return response
   }
 
@@ -72,7 +71,6 @@ export class ApiService {
 
   public async post(endpoint: string, options?: { params?: undefined; body?: unknown }) {
     const response = await firstValueFrom(this.http.post(this.buildUrl(endpoint, options?.params), options?.body))
-    console.log(response)
     return response
   }
 
@@ -92,7 +90,6 @@ export class ApiService {
 
   public async patch(endpoint: string, options?: { params?: undefined; body?: unknown }) {
     const response = await firstValueFrom(this.http.patch(this.buildUrl(endpoint, options?.params), options?.body))
-    console.log(response)
     return response
   }
 
