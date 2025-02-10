@@ -20,7 +20,6 @@ export class AppComponent {
       label: 'Home',
       lead: 'Flatland Benchmarks',
     },
-    { path: '/benchmarks', label: 'Benchmarks' },
     { path: '/hub', label: 'Hub', icon: faArrowUpRightFromSquare },
   ]
   footerNavItems: FooterNavLink[] = [
