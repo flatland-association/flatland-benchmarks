@@ -175,6 +175,8 @@ services:
     volumes:
       # TODO can we avoid copying the realm config? Download in an init container from the repo....?
       - ./keycloak/netzgrafikeditor-realm.json:/opt/keycloak/data/import/netzgrafikeditor-realm.json
+      # persist data, otherwise restarting the container nills JWTs
+      - ${KEYCLOAK_VOLUME:-./opt/keycloak}:/opt/keycloak/data/h2:delegated
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=netzgrafikeditor
