@@ -2,7 +2,8 @@
   <thead>
     <tr class="bg-neutral-100">
       <th class="px-4 py-2">Submission</th>
-      <th class="px-4 py-2">Overall score</th>
+      <th class="px-4 py-2">Total reward</th>
+      <th class="px-4 py-2">% done</th>
     </tr>
   </thead>
   <tbody>
@@ -19,6 +20,13 @@
         <td class="px-4 py-2 text-center text-xl">
           @if (submission.scores) {
             {{ submission.scores[0] | number:'1.3-3' }}
+          } @else {
+            N/A
+          }
+        </td>
+        <td class="px-4 py-2 text-center">
+          @if (submission.scores) {
+            {{ submission.scores[1] | number:'1.3-3' }}
           } @else {
             N/A
           }
