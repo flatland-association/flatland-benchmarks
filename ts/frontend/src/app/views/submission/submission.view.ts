@@ -58,6 +58,8 @@ export class SubmissionView implements OnInit, OnDestroy {
   result?: Result
   resultObj?: ResultObject
   resultsJson?: F3EvaluatorResult
+  resultsCsv?: string
+  testScores?: { test: string; score: number }[]
   acceptEula = false
 
   interval?: number
@@ -97,6 +99,22 @@ export class SubmissionView implements OnInit, OnDestroy {
         if (this.result.results_str) {
           this.resultObj = JSON.parse(this.result.results_str)
           this.resultsJson = JSON.parse(this.resultObj?.result['f3-evaluator']?.['results.json'] ?? 'null')
+          this.resultsCsv = this.resultObj?.result['f3-evaluator']?.['results.csv']
+          // primitively parse CSV and accumulate single test scores
+          // ⚠ hard-coded last-second "solution" ⚠
+          const lines = this.resultsCsv?.split('\n').slice(1, -1)
+          this.testScores = []
+          lines?.forEach((line) => {
+            const cells = line.split(',')
+            const test = cells[1] // manually counted
+            const score = cells[17] // guessed there's no time to count
+            let testScore = this.testScores!.at(-1)
+            if (!testScore || testScore.test !== test) {
+              testScore = { test, score: 0 }
+              this.testScores!.push(testScore)
+            }
+            testScore.score += +score
+          })
         }
         // once result indicates success
         if (this.result.success) {

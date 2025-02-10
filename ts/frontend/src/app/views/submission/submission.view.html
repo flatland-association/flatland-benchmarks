@@ -28,8 +28,12 @@
             <div class="font-mono pb-2">{{ resultsJson?.meta?.normalized_reward }}</div>
           }
           @if (resultsJson?.meta?.termination_cause) {
-            <div class="font-medium pr-8 pb-2">Termination Cause</div>
+            <div class="font-medium pr-8 pb-8">Termination Cause</div>
             <div class="font-mono pb-2">{{ resultsJson?.meta?.termination_cause }}</div>
+          }
+          @for (testScore of testScores; track $index) {
+            <div class="font-medium pr-8 pb-2">{{ testScore.test }} score</div>
+            <div class="font-mono pb-2">{{ testScore.score | number:'0.3' }}</div>
           }
         </div>
         <app-leaderboard [submissions]="[mySubmission]"></app-leaderboard>
