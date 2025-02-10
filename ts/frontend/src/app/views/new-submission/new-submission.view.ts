@@ -44,7 +44,13 @@ export class NewSubmissionView implements OnInit {
   }
 
   canSubmit() {
-    return this.submissionName != '' && this.submissionImageUrl != '' && this.codeRepositoryUrl != ''
+    return (
+      this.submissionName != '' &&
+      this.submissionImageUrl != '' &&
+      this.codeRepositoryUrl != '' &&
+      !this.submissionImageUrl.includes(' ') &&
+      this.testsSelection.reduce((p, c) => p + +c, 0)
+    )
   }
 
   async submit() {
