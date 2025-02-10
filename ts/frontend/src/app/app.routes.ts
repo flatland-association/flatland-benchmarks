@@ -37,6 +37,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'benchmarks/:id/participate/submissions',
+    pathMatch: 'full',
+    redirectTo: 'benchmarks/:id/participate',
+  },
+  {
     path: 'benchmarks/:id/participate/submissions/:submission',
     component: SubmissionView,
     canActivate: [AuthGuard],
