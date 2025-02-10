@@ -61,6 +61,8 @@ def create_envs_from_metadata(metadata_template_file: Path, outdir: Path = None,
     if outdir is None:
         outdir = Path.cwd()
 
+    metadata["seed"] = initial_seed + metadata.index
+
     assert os.path.exists(outdir)
 
     with tempfile.TemporaryDirectory() as tmpdirname:
@@ -69,7 +71,7 @@ def create_envs_from_metadata(metadata_template_file: Path, outdir: Path = None,
         for k, v in metadata.iterrows():
             test_id = v["test_id"]
             env_id = v["env_id"]
-            seed = initial_seed + k
+            seed = v["seed"]
             print(f"Generating env for {test_id}/{env_id}")
             print(f"   seed: {seed}")
             print(f"   data: {v}")
@@ -93,8 +95,7 @@ def create_envs_from_metadata(metadata_template_file: Path, outdir: Path = None,
 
         metadata.to_csv(f"{tmpdirname}/metadata.csv")
 
-        zip_directory(tmpdirname, outdir / "environments-evaluator.zip")
-        zip_directory(tmpdirname, outdir / "environments-submission.zip", filter=lambda f: f != "metadata.csv")
+        zip_directory(tmpdirname, outdir / "environments.zip")
 
 
 def zip_directory(directory_path, zip_path, filter: Callable[[Path], bool] = None):
@@ -102,9 +103,8 @@ def zip_directory(directory_path, zip_path, filter: Callable[[Path], bool] = Non
         for root, dirs, files in os.walk(directory_path):
             for file in files:
                 if filter is None or filter(file):
-                    zipf.write(os.path.join(root, file),
-                               os.path.relpath(os.path.join(root, file),
-                                               os.path.join(directory_path, '..')))
+                    arcname = os.path.relpath(os.path.join(root, file), directory_path)
+                    zipf.write(os.path.join(root, file), arcname)
 
 
 if __name__ == '__main__':
