@@ -1,14 +1,21 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
+import { BenchmarkPreview } from '@common/interfaces.mjs'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
-import { FaIconComponent } from '@fortawesome/angular-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { BenchmarkCardComponent } from '../../components/benchmark-card/benchmark-card.component'
+import { ApiService } from '../../features/api/api.service'
 
 @Component({
   selector: 'view-home',
-  imports: [ContentComponent, SectionComponent, FaIconComponent],
+  imports: [ContentComponent, SectionComponent, BenchmarkCardComponent],
   templateUrl: './home.view.html',
   styleUrl: './home.view.scss',
 })
-export class HomeView {
-  faPlus = faPlus
+export class HomeView implements OnInit {
+  benchmarks?: BenchmarkPreview[]
+
+  constructor(public apiService: ApiService) {}
+
+  async ngOnInit() {
+    this.benchmarks = (await this.apiService.get('/benchmarks')).body
+  }
 }
