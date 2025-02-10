@@ -8,7 +8,7 @@
         <h5 class="pb-4 font-bold">Simulation terminated</h5>
         <div class="grid grid-cols-[max-content_1fr] pb-8">
           @if (resultsJson?.score?.['score']) {
-            <div class="font-medium pr-8 pb-2">Total reward</div>
+            <div class="font-medium pr-8 pb-2">Total score</div>
             <div class="font-mono pb-2">{{ resultsJson?.score?.['score'] | number: '0.3' }}</div>
           }
           @if (typeof resultsJson?.meta?.percentage_complete !== 'undefined') {
@@ -24,7 +24,7 @@
             <div class="font-mono pb-2">{{ submission?.code_repository }}</div>
           }
           @if (resultsJson?.meta?.normalized_reward) {
-            <div class="font-medium pr-8 pb-2">Normalized reward</div>
+            <div class="font-medium pr-8 pb-2">Normalized score</div>
             <div class="font-mono pb-2">{{ resultsJson?.meta?.normalized_reward }}</div>
           }
           @if (resultsJson?.meta?.termination_cause) {

@@ -4,7 +4,7 @@
       <th class="px-4 py-2">#</th>
       <th class="px-4 py-2">Particpant</th>
       <th class="px-4 py-2">Submission</th>
-      <th class="px-4 py-2 text-center">Total reward</th>
+      <th class="px-4 py-2 text-center">Total score</th>
       <th class="px-4 py-2 text-center">% done</th>
     </tr>
   </thead>
@@ -22,7 +22,7 @@
         <td class="px-4 py-2">
           {{ submission.name }}
         </td>
-        <td class="px-4 py-2 text-center text-xl">
+        <td class="px-4 py-4 text-center text-xl">
           @if (submission.scores) {
             {{ submission.scores[0] | number:'1.3-3' }}
           } @else {
