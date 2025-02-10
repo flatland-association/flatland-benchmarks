@@ -19,6 +19,8 @@ export class LeaderboardComponent {
   ) {}
 
   click(submission: SubmissionPreview) {
-    this.router.navigate(['submissions', submission.uuid], { relativeTo: this.route })
+    if (this.navigates) {
+      this.router.navigate(['submissions', submission.uuid], { relativeTo: this.route })
+    }
   }
 }

@@ -497,6 +497,8 @@ export function router(_server: Server) {
           // date_done could probably be fed directly into DB, but for response the date should be reformatted
           row.done_at = new Date(value['date_done']).toISOString()
           row.success = value['status'] === 'SUCCESS'
+          // save original results
+          row.results_str = JSON.stringify(value)
           // (only) on success, try reading score
           if (row.success) {
             // currently hardcoded: result scheme
@@ -505,8 +507,6 @@ export function router(_server: Server) {
               'results.csv': value['result'][resultScheme]['results.csv'],
               'results.json': value['result'][resultScheme]['results.json'],
             }
-            // save original results "object"
-            row.results_str = JSON.stringify(results)
             const resultsJson = JSON.parse(results['results.json'])
             const scores = resultsJson['score']
             // extract N-scores from results
