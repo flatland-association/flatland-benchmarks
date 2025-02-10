@@ -42,7 +42,6 @@ spec:
               set -x
               find /tmp
               unzip /tmp/environments/environments.zip -d /tmp/environments/
-              mv /tmp/environments/tmptfguzhxe/* /tmp/environments/
               find /tmp
           command:
             - /bin/sh
