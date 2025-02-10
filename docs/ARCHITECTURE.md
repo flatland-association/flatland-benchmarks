@@ -514,7 +514,34 @@ template:
 
 *\<black box template>*
 
-### Redis result structure
+### Interface 1: Rabbit
+
+```json
+{
+  "benchmark": 1,
+  "submission_image": "ghcr.io/flatland-association/fab-flatland-submission-template:latest",
+  "code_repository": "",
+  "tests": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ]
+}
+```
+
+### Interface 2: Redis result structure
 
 There is currently no generic abstraction for the result structure.
 

@@ -6,6 +6,7 @@ import time
 import uuid
 from io import StringIO
 from pathlib import Path
+from typing import Dict
 from typing import List
 
 import boto3
@@ -32,6 +33,13 @@ app = Celery(
   broker=os.environ.get('BROKER_URL'),
   backend=f"redis://{REDIS_IP}:6379",
 )
+
+
+class TaskExecutionError(Exception):
+  def __init__(self, message: str, status: Dict):
+    super().__init__(message)
+    self.message = message
+    self.status = status
 
 
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 start own redis for evaluator <-> submission communication? Split in flatland-repo?
@@ -127,19 +135,22 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
   batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
 
-  done = False
+  all_done = False
+  any_failed = False
   ret = {}
   status = []
-  while not done:
+  while not all_done and not any_failed:
+    time.sleep(1)
+    print(".")
     jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"task_id={task_id}")
     assert len(jobs.items) == 2
-    done = True
+    all_done = True
     status = []
-
     for job in jobs.items:
-      done = done and job.status.conditions is not None
+      all_done = all_done and job.status.conditions is not None
+      any_failed = any_failed or (job.status.conditions is not None and job.status.conditions[0].type != "Complete")
 
-    if done:
+    if all_done or any_failed:
       for job in jobs.items:
         status.append(job.status.conditions[0].type)
         job_name = job.metadata.name
@@ -156,12 +167,17 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
           "pod": pod.to_dict()
         }
         ret[job_name] = _ret
-    time.sleep(1)
 
   ret["f3-evaluator"] = ret[f"f3-evaluator-{task_id}"]
   ret["f3-submission"] = ret[f"f3-submission-{task_id}"]
   del ret[f"f3-evaluator-{task_id}"]
   del ret[f"f3-submission-{task_id}"]
+
+  if any_failed:
+    duration = time.time() - start_time
+    raise TaskExecutionError(
+      f"Failed task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.", ret)
+
   logger.debug("Task with task_id=%s got results from k8s: %s.", task_id, ret)
 
   logger.info("Get results files from S3 under %s...", AWS_ENDPOINT_URL)
