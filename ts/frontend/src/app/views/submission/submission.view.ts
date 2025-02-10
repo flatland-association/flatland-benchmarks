@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { Result, SubmissionPreview } from '@common/interfaces.mjs'
+import { Result, Submission, SubmissionPreview } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { LeaderboardComponent } from '../../components/leaderboard/leaderboard.component'
 import { ApiService } from '../../features/api/api.service'
@@ -52,6 +52,7 @@ interface F3EvaluatorResult {
 export class SubmissionView implements OnInit, OnDestroy {
   submissionUuid?: string
 
+  submission?: Submission
   mySubmission?: SubmissionPreview
 
   result?: Result
@@ -69,6 +70,12 @@ export class SubmissionView implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // load submission details
+    if (this.submissionUuid) {
+      this.apiService.get('/submissions/:uuid', { params: { uuid: this.submissionUuid } }).then(({ body }) => {
+        this.submission = body?.at(0)
+      })
+    }
     // try loading result directly
     this.loadResult()
     // and after that, auto-refresh until results are here (check done in loadResult())

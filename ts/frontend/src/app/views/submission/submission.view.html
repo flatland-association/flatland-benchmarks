@@ -19,6 +19,10 @@
             <div class="font-medium pr-8 pb-2">Submission image</div>
             <div class="font-mono pb-2">{{ resultObj?.result?.['f3-submission']?.image_id }}</div>
           }
+          @if (submission?.code_repository) {
+            <div class="font-medium pr-8 pb-2">Submission repository</div>
+            <div class="font-mono pb-2">{{ submission?.code_repository }}</div>
+          }
           @if (resultsJson?.meta?.normalized_reward) {
             <div class="font-medium pr-8 pb-2">Normalized reward</div>
             <div class="font-mono pb-2">{{ resultsJson?.meta?.normalized_reward }}</div>
