@@ -465,6 +465,12 @@ export function router(_server: Server) {
   })
 
   attachGet(router, '/submissions/:uuid', async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth) {
+      unauthorizedError(res, { text: 'Not authorized' })
+      return
+    }
     const uuids = req.params.uuid.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
@@ -479,6 +485,12 @@ export function router(_server: Server) {
   })
 
   attachGet(router, '/submissions/:uuid/results', async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth) {
+      unauthorizedError(res, { text: 'Not authorized' })
+      return
+    }
     const uuid = req.params.uuid
     const sql = SqlService.getInstance()
     const [row] = await sql.query<StripDir<Result>>`
@@ -538,6 +550,13 @@ export function router(_server: Server) {
   })
 
   attachPatch(router, '/result', async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth) {
+      unauthorizedError(res, { text: 'Not authorized' })
+      return
+    }
+
     const uuid = req.body.uuid
     // restrict to patchable fields
     const patch = {
