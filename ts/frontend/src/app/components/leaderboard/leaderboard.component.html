@@ -1,10 +1,11 @@
-<table class="rounded-sm">
+<table class="rounded-sm w-full">
   <thead>
     <tr class="bg-neutral-100">
       <th class="px-4 py-2">#</th>
+      <th class="px-4 py-2">Particpant</th>
       <th class="px-4 py-2">Submission</th>
-      <th class="px-4 py-2">Total reward</th>
-      <th class="px-4 py-2">% done</th>
+      <th class="px-4 py-2 text-center">Total reward</th>
+      <th class="px-4 py-2 text-center">% done</th>
     </tr>
   </thead>
   <tbody>
@@ -16,12 +17,10 @@
           }
         </td>
         <td class="px-4 py-2">
-          <div class="font-medium">
-            Submission {{ submission.id }}
-          </div>
-          <div class="text-sm">
-            by {{ submission.submitted_by_username }}
-          </div>
+          {{ submission.submitted_by_username }}
+        </td>
+        <td class="px-4 py-2">
+          Submission {{ submission.id }}
         </td>
         <td class="px-4 py-2 text-center text-xl">
           @if (submission.scores) {
