@@ -1,0 +1,10 @@
+<lib-content>
+  <h2 class="pb-8 text-2xl font-bold text-neutral-500">Benchmarks</h2>
+  <p class="pb-8">Choose a benchmark to participate in.</p>
+
+  <div class="flex flex-wrap justify-center gap-8">
+    @for (benchmark of benchmarks; track $index) {
+      <app-benchmark-card class="md:size-80 flex" [benchmark]="benchmark"></app-benchmark-card>
+    }
+  </div>
+</lib-content>

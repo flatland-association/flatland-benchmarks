@@ -1,22 +1,37 @@
 import { Component, OnInit } from '@angular/core'
-import { RouterModule } from '@angular/router'
-import { BenchmarkPreview } from '@common/interfaces.mjs'
+import { ActivatedRoute, RouterModule } from '@angular/router'
+import { Benchmark, SubmissionPreview } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
-import { BenchmarkCardComponent } from '../../components/benchmark-card/benchmark-card.component'
+import { LeaderboardComponent } from '../../components/leaderboard/leaderboard.component'
 import { ApiService } from '../../features/api/api.service'
+import { AuthService } from '../../features/auth/auth.service'
 
 @Component({
   selector: 'view-participate',
-  imports: [ContentComponent, RouterModule, BenchmarkCardComponent],
+  imports: [RouterModule, ContentComponent, LeaderboardComponent],
   templateUrl: './participate.view.html',
   styleUrl: './participate.view.scss',
 })
 export class ParticipateView implements OnInit {
-  benchmarks?: BenchmarkPreview[]
+  id: string
+  benchmark?: Benchmark
+  submissions?: SubmissionPreview[]
+  mySubmissions?: SubmissionPreview[]
 
-  constructor(public apiService: ApiService) {}
+  constructor(
+    route: ActivatedRoute,
+    public apiService: ApiService,
+    private authService: AuthService,
+  ) {
+    this.id = route.snapshot.params['id']
+  }
 
   async ngOnInit() {
-    this.benchmarks = (await this.apiService.get('/benchmarks')).body
+    const myUuid = this.authService.userUuid
+    this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
+    this.submissions = (await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id } })).body
+    this.mySubmissions = (
+      await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id, submitted_by: myUuid } })
+    ).body
   }
 }

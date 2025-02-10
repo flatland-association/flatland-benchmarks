@@ -1,0 +1,34 @@
+<lib-content>
+  <h3 class="pb-8 text-xl font-bold">Submit your solution</h3>
+
+  <div class="pb-8 flex flex-col gap-y-8">
+    <label class="block text-left cursor-pointer">
+      <span>Your submission (URL to Docker image)</span>
+      <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-image-url" [(ngModel)]="submissionImageUrl">
+    </label>
+
+    <label class="block text-left cursor-pointer">
+      <span>Code repository (can be private)</span>
+      <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-image-url" [(ngModel)]="codeRepositoryUrl">
+    </label>
+
+    <div>
+      <span>Tests to test your submission against</span>
+      <div class="grid grid-cols-[auto_auto_1fr] gap-x-4 gap-y-2">
+        @for (test of tests; track $index) {
+          <label class="contents cursor-pointer">
+            <div>
+              <input type="checkbox" [id]="'test-' + $index" [(ngModel)]="testsSelection[$index]">
+            </div>
+            <span>{{ test.name }}</span>
+            <p>{{ test.description }}</p>
+          </label>
+        }
+      </div>
+    </div>
+
+    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="submit()">
+      Submit
+    </button>
+  </div>
+</lib-content>

@@ -50,7 +50,7 @@ export interface ApiGetEndpoints {
   '/benchmarks': ApiGetEndpoint<Empty, BenchmarkPreview[]>
   '/benchmarks/:id': ApiGetEndpoint<Empty, Benchmark[]>
   '/tests/:id': ApiGetEndpoint<Empty, Test[]>
-  '/submissions': ApiGetEndpoint<{ benchmark?: ResourceId; uuid?: string }, SubmissionPreview[]>
+  '/submissions': ApiGetEndpoint<{ benchmark?: ResourceId; uuid?: string; submitted_by?: string }, SubmissionPreview[]>
   '/submissions/:uuid': ApiGetEndpoint<Empty, Submission[]>
   '/submissions/:uuid/results': ApiGetEndpoint<Empty, Result[]>
   '/test': ApiGetEndpoint<Empty, Empty>

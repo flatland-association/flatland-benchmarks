@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: baseTheme.colors.neutral,
+        primary: baseTheme.colors.orange,
         gradientFrom: baseTheme.colors.neutral['400'],
         gradientTo: baseTheme.colors.neutral['600'],
       },

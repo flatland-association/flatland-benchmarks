@@ -59,6 +59,14 @@ export class AuthService {
     return this.oauthService.logOut(false)
   }
 
+  /**
+   * Returns the UUID of currently logged in user.
+   */
+  get userUuid(): string | undefined {
+    const claims = this.oauthService.getIdentityClaims()
+    return claims['sub']
+  }
+
   get claims(): { email: string; name: string; roles: string[] } {
     return this.oauthService.getIdentityClaims() as {
       email: string
