@@ -461,7 +461,7 @@ export function router(_server: Server) {
         ${limit}
     `
     const resources = appendDir('/submissions/', rows)
-    respond(res, resources, { dbg: dbgRequestObject(req), sql: dbgSqlState(sql) })
+    respond(res, resources)
   })
 
   attachGet(router, '/submissions/:uuid', async (req, res) => {
