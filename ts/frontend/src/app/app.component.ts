@@ -18,7 +18,7 @@ export class AppComponent {
     {
       path: '/home',
       label: 'Home',
-      lead: 'Solving real world problems with open research.',
+      lead: 'Flatland Benchmarks',
     },
     { path: '/benchmarks', label: 'Benchmarks' },
     { path: '/association', label: 'Association', icon: faArrowUpRightFromSquare },
