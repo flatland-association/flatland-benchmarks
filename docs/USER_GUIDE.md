@@ -21,7 +21,6 @@ Our compute worker is responsible for handling submissions.
 * We set two environment variables:
   * `AICROWD_TESTS_FOLDER` (see https://github.com/flatland-association/flatland-rl/blob/03234e2805d3ed3b8e8343d3e861fd3637e6470d/flatland/evaluators/client.py#L91)
   * `redis_ip` (see https://github.com/flatland-association/flatland-rl/blob/03234e2805d3ed3b8e8343d3e861fd3637e6470d/flatland/evaluators/client.py#L57)
-* Environments are mounted at `/tmp/debug-environments/` (hard-coded location)
 
 ### FAB Benchmark Administrators' User Guide
 
@@ -30,4 +29,4 @@ This describes the default `evaluation/compute_worker` used with a different eva
 * Your evaluator Docker image must ship with an entrypoint, so we can run the container without an entrypoint/command.
 * We set one environment variables:
   * `redis_ip` (see https://github.com/flatland-association/flatland-rl/blob/03234e2805d3ed3b8e8343d3e861fd3637e6470d/flatland/evaluators/client.py#L57)
-* Environments are mounted at `/tmp/debug-environments/` (hard-coded location)
+* Environments are mounted at `/tmp/environments/` (hard-coded location)

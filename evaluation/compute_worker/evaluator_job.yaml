@@ -14,36 +14,43 @@ spec:
       containers:
         - env:
             - name: AICROWD_TESTS_FOLDER
-              value: /tmp/debug-environments
+              value: /tmp/environments
           image:
           name: f3-evaluator
           pullPolicy: Always
           volumeMounts:
-            - mountPath: /tmp/debug-environments
-              name: debug-environments
-            - mountPath: /tmp/results
-              name: fab-flatland3-results
+            - mountPath: /tmp/environments
+              name: environments
       initContainers:
+        - image: amazon/aws-cli
+          imagePullPolicy: IfNotPresent
+          name: download-environments
+          env: [ ]
+          command:
+            - aws
+            - s3
+            - cp
+            - s3://fab-data/flatland3/environments.zip
+            - /tmp/environments
+          volumeMounts:
+            - mountPath: /tmp/environments
+              name: environments
         - args:
             - -c
-            - cd /tmp; unzip debug-environments.zip
+            - |
+              set -e
+              set -x
+              find /tmp
+              unzip /tmp/environments/environments.zip -d /tmp/environments/
+              find /tmp
           command:
             - /bin/sh
           image: busybox
           imagePullPolicy: IfNotPresent
-          name: startup
+          name: extract-environments
           volumeMounts:
-            - mountPath: /tmp/debug-environments.zip
-              name: fab-flatland3-data-vol
-              subPath: debug-environments.zip
-            - mountPath: /tmp/debug-environments
-              name: debug-environments
+            - mountPath: /tmp/environments
+              name: environments
       volumes:
-        - configMap:
-            name: fab-flatland3-data
-          name: fab-flatland3-data-vol
         - emptyDir: { }
-          name: debug-environments
-        - name: fab-flatland3-results
-          persistentVolumeClaim:
-            claimName:
+          name: environments
