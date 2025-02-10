@@ -7,13 +7,21 @@
       @if (mySubmission) {
         <h5 class="pb-4 font-bold">Simulation terminated</h5>
         <div class="grid grid-cols-[max-content_1fr] pb-8">
+          @if (resultsJson?.score?.['score']) {
+            <div class="font-medium pr-8 pb-2">Total reward</div>
+            <div class="font-mono pb-2">{{ resultsJson?.score?.['score'] | number: '0.3' }}</div>
+          }
+          @if (typeof resultsJson?.meta?.percentage_complete !== 'undefined') {
+              <div class="font-medium pr-8 pb-8">% done</div>
+              <div class="font-mono pb-4">{{ resultsJson?.meta?.percentage_complete | number: '0.3'}}</div>
+          }
+          @if (resultObj?.result?.['f3-submission']?.image_id) {
+            <div class="font-medium pr-8 pb-2">Submission image</div>
+            <div class="font-mono pb-2">{{ resultObj?.result?.['f3-submission']?.image_id }}</div>
+          }
           @if (resultsJson?.meta?.normalized_reward) {
             <div class="font-medium pr-8 pb-2">Normalized reward</div>
             <div class="font-mono pb-2">{{ resultsJson?.meta?.normalized_reward }}</div>
-          }
-          @if (typeof resultsJson?.meta?.percentage_complete !== 'undefined') {
-              <div class="font-medium pr-8 pb-2">% done</div>
-              <div class="font-mono pb-2">{{ resultsJson?.meta?.percentage_complete | number: '0.3'}}</div>
           }
           @if (resultsJson?.meta?.termination_cause) {
             <div class="font-medium pr-8 pb-2">Termination Cause</div>

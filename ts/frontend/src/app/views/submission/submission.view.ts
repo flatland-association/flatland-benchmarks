@@ -21,6 +21,10 @@ interface ResultObject {
       'results.csv'?: string
       'results.json'?: string
     }
+    'f3-submission'?: {
+      job_status?: string
+      image_id?: string
+    }
   }
 }
 
