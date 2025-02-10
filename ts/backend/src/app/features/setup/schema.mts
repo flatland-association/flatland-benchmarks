@@ -28,7 +28,7 @@ export class Schema {
       INSERT INTO benchmarks
         (id, name, description, docker_image, tests)
       VALUES
-        (1, 'Flatland 3', 'The Flatland 3 Challenge is the newest competition around the Flatland environment.', 'ghcr.io/flatland-association/fab-flatland-evaluator:latest', ARRAY[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+        (1, 'Flatland 3', 'This is the first permanent Flatland benchmark.', 'ghcr.io/flatland-association/fab-flatland-evaluator:latest', ARRAY[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
       ON CONFLICT (id)
         DO NOTHING
     `
