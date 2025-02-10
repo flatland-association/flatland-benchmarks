@@ -335,6 +335,7 @@ export function router(_server: Server) {
     const sql = SqlService.getInstance()
     const idRow = await sql.query`
       INSERT INTO submissions (
+        name,
         benchmark,
         submission_image,
         code_repository,
@@ -343,6 +344,7 @@ export function router(_server: Server) {
         submitted_by,
         submitted_by_username
       ) VALUES (
+        ${req.body.name},
         ${req.body.benchmark},
         ${req.body.submission_image},
         ${req.body.code_repository},
@@ -443,9 +445,9 @@ export function router(_server: Server) {
     }
 
     const rows = await sql.query<StripDir<SubmissionPreview>>`
-      SELECT submissions.id, submissions.uuid, benchmark, submitted_at, submitted_by_username, public, scores, rank
+      SELECT submissions.id, submissions.uuid, name, benchmark, submitted_at, submitted_by_username, public, scores, rank
         FROM (
-          SELECT submissions.id, submissions.uuid, benchmark, submitted_at, submitted_by_username, public, scores, rank() OVER(PARTITION BY benchmark, public ORDER BY scores[1] DESC) AS rank, submitted_by
+          SELECT submissions.id, submissions.uuid, name, benchmark, submitted_at, submitted_by_username, public, scores, rank() OVER(PARTITION BY benchmark, public ORDER BY scores[1] DESC) AS rank, submitted_by
             FROM submissions
             LEFT JOIN results ON results.submission_uuid = submissions.uuid
         ) AS submissions

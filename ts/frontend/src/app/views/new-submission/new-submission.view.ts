@@ -19,6 +19,7 @@ export class NewSubmissionView implements OnInit {
 
   submissionImageUrl = ''
   codeRepositoryUrl = ''
+  submissionName = ''
   testsSelection: boolean[] = []
 
   constructor(
@@ -42,9 +43,14 @@ export class NewSubmissionView implements OnInit {
     this.testsSelection = Array(this.tests?.length).fill(true)
   }
 
+  canSubmit() {
+    return this.submissionName != '' && this.submissionImageUrl != '' && this.codeRepositoryUrl != ''
+  }
+
   async submit() {
     const response = await this.apiService.post('/submissions', {
       body: {
+        name: this.submissionName,
         benchmark: this.benchmark?.id ?? 0,
         submission_image: this.submissionImageUrl,
         code_repository: this.codeRepositoryUrl,

@@ -28,6 +28,7 @@ export interface Test extends Resource<'/tests/'> {
 }
 
 export interface SubmissionPreview extends Resource<'/submissions/'> {
+  name: string
   benchmark: ResourceId
   submitted_at: string
   submitted_by_username: string
@@ -37,6 +38,7 @@ export interface SubmissionPreview extends Resource<'/submissions/'> {
 }
 
 export interface Submission extends Resource<'/submissions/'> {
+  name: string
   benchmark: ResourceId
   submission_image: string
   code_repository: string
