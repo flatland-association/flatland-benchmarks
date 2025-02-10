@@ -6,6 +6,7 @@ import time
 import uuid
 from io import StringIO
 from pathlib import Path
+from typing import List
 
 import boto3
 import pandas as pd
@@ -37,7 +38,7 @@ app = Celery(
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 start own redis for evaluator <-> submission communication? Split in flatland-repo?
 # N.B. name to be used by send_task
 @app.task(name="flatland3-evaluation", bind=True)
-def the_task(self, docker_image: str, submission_image: str, **kwargs):
+def the_task(self, docker_image: str, submission_image: str, tests: List[str] = None, **kwargs):
   task_id = self.request.id
   config.load_incluster_config()
   # https://github.com/kubernetes-client/python/
@@ -64,10 +65,11 @@ def the_task(self, docker_image: str, submission_image: str, **kwargs):
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY
   )
   return run_evaluation(task_id=task_id, docker_image=docker_image, submission_image=submission_image, batch_api=batch_api, core_api=core_api, s3=s3,
-                        s3_upload_path_template=S3_UPLOAD_PATH_TEMPLATE)
+                        s3_upload_path_template=S3_UPLOAD_PATH_TEMPLATE, tests=tests)
 
 
-def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch_api: BatchV1Api, core_api: CoreV1Api, s3, s3_upload_path_template: str):
+def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch_api: BatchV1Api, core_api: CoreV1Api, s3, s3_upload_path_template: str,
+                   tests: List[str] = None):
   start_time = time.time()
   logger.info(f"/ start task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}")
 
@@ -95,8 +97,9 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
     evaluator_container_definition["env"].append({"name": "S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", "value": S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID})
   if SUPPORTED_CLIENT_VERSIONS is not None:
     evaluator_container_definition["env"].append({"name": "SUPPORTED_CLIENT_VERSIONS", "value": SUPPORTED_CLIENT_VERSIONS})
-
   evaluator_container_definition["env"].append({"name": "AICROWD_IS_GRADING", "value": "True"})
+  if tests is not None:
+    evaluator_container_definition["env"].append({"name": "TEST_ID_FILTER", "value": ','.join(tests)})
 
   evaluator = client.V1Job(metadata=evaluator_definition["metadata"], spec=evaluator_definition["spec"])
   batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, evaluator)
