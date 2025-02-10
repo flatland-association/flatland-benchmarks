@@ -22,23 +22,37 @@ spec:
             - mountPath: /tmp
               name: environments
       initContainers:
+        - command:
+            - aws
+            - s3
+            - cp
+            - s3://fab-data/flatland3/environments.zip
+            - /tmp/environments
+          env: [ ]
+          image: amazon/aws-cli
+          imagePullPolicy: IfNotPresent
+          name: download-environments
+          volumeMounts:
+            - mountPath: /tmp/environments
+              name: environments
         - args:
             - -c
-            - unzip /tmp/environments.zip -d /tmp/environments
+            - |
+              set -e
+              set -x
+              find /tmp
+              unzip /tmp/environments/environments.zip -d /tmp/environments/
+              mv /tmp/environments/tmptfguzhxe/* /tmp/environments/
+              find /tmp
           command:
             - /bin/sh
           image: busybox
           imagePullPolicy: IfNotPresent
-          name: startup
+          name: extract-environments
           volumeMounts:
-            - mountPath: /tmp/environments.zip
-              name: fab-flatland3-submission-data-vol
-              subPath: environments.zip
             - mountPath: /tmp/environments
               name: environments
       volumes:
-        - configMap:
-            name: fab-flatland3-submission-data
-          name: fab-flatland3-submission-data-vol
         - emptyDir: { }
           name: environments
+

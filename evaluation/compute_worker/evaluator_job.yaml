@@ -21,29 +21,37 @@ spec:
           volumeMounts:
             - mountPath: /tmp/environments
               name: environments
-            - mountPath: /tmp/results
-              name: fab-flatland3-results
       initContainers:
+        - image: amazon/aws-cli
+          imagePullPolicy: IfNotPresent
+          name: download-environments
+          env: [ ]
+          command:
+            - aws
+            - s3
+            - cp
+            - s3://fab-data/flatland3/environments.zip
+            - /tmp/environments
+          volumeMounts:
+            - mountPath: /tmp/environments
+              name: environments
         - args:
             - -c
-            - unzip /tmp/environments.zip -d /tmp/environments
+            - |
+              set -e
+              set -x
+              find /tmp
+              unzip /tmp/environments/environments.zip -d /tmp/environments/
+              mv /tmp/environments/tmptfguzhxe/* /tmp/environments/
+              find /tmp
           command:
             - /bin/sh
           image: busybox
           imagePullPolicy: IfNotPresent
-          name: startup
+          name: extract-environments
           volumeMounts:
-            - mountPath: /tmp/environments.zip
-              name: fab-flatland3-evaluator-data-vol
-              subPath: environments.zip
             - mountPath: /tmp/environments
               name: environments
       volumes:
-        - configMap:
-            name: fab-flatland3-evaluator-data
-          name: fab-flatland3-evaluator-data-vol
         - emptyDir: { }
           name: environments
-        - name: fab-flatland3-results
-          persistentVolumeClaim:
-            claimName:

@@ -19,7 +19,6 @@ logger = logging.getLogger(__name__)
 
 KUBERNETES_NAMESPACE = os.environ.get("KUBERNETES_NAMESPACE", "fab-int")
 REDIS_IP = os.environ.get('REDIS_IP', KUBERNETES_NAMESPACE + "-redis-master")
-KUBERNETES_PVC = os.environ.get('KUBERNETES_PVC', KUBERNETES_NAMESPACE + "-results")
 AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
 AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
 AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
@@ -80,15 +79,19 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   evaluator_container_definition["image"] = docker_image
   evaluator_container_definition["env"].append({"name": "AICROWD_SUBMISSION_ID", "value": task_id})
   evaluator_container_definition["env"].append({"name": "redis_ip", "value": REDIS_IP})
-  evaluator_definition["spec"]["template"]["spec"]["volumes"][2]["persistentVolumeClaim"]["claimName"] = KUBERNETES_PVC
   evaluator_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = ACTIVE_DEADLINE_SECONDS
+
+  evaluator_download_init_container_definition = evaluator_definition["spec"]["template"]["spec"]["initContainers"][0]
 
   if AWS_ENDPOINT_URL:
     evaluator_container_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": AWS_ENDPOINT_URL})
+    evaluator_download_init_container_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": AWS_ENDPOINT_URL})
   if AWS_ACCESS_KEY_ID:
     evaluator_container_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": AWS_ACCESS_KEY_ID})
+    evaluator_download_init_container_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": AWS_ACCESS_KEY_ID})
   if AWS_SECRET_ACCESS_KEY:
     evaluator_container_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": AWS_SECRET_ACCESS_KEY})
+    evaluator_download_init_container_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": AWS_SECRET_ACCESS_KEY})
   if S3_BUCKET:
     evaluator_container_definition["env"].append({"name": "S3_BUCKET", "value": S3_BUCKET})
   if s3_upload_path_template:
@@ -112,6 +115,15 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   submission_container_definition["image"] = submission_image
   submission_container_definition["env"].append({"name": "AICROWD_SUBMISSION_ID", "value": task_id})
   submission_container_definition["env"].append({"name": "redis_ip", "value": REDIS_IP})
+  submission_download_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
+  if AWS_ENDPOINT_URL:
+    submission_download_initcontainer_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": AWS_ENDPOINT_URL})
+  if AWS_ACCESS_KEY_ID:
+    submission_download_initcontainer_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": AWS_ACCESS_KEY_ID})
+  if AWS_SECRET_ACCESS_KEY:
+    submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": AWS_SECRET_ACCESS_KEY})
+
+
   submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
   batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
 
