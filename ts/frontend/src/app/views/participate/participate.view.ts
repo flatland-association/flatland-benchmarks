@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { Benchmark, SubmissionPreview } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
+import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { LeaderboardComponent } from '../../components/leaderboard/leaderboard.component'
 import { ApiService } from '../../features/api/api.service'
 import { AuthService } from '../../features/auth/auth.service'
 
 @Component({
   selector: 'view-participate',
-  imports: [RouterModule, ContentComponent, LeaderboardComponent],
+  imports: [RouterModule, ContentComponent, BreadcrumbsComponent, LeaderboardComponent],
   templateUrl: './participate.view.html',
   styleUrl: './participate.view.scss',
 })

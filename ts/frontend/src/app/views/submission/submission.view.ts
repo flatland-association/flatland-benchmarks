@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { Result, Submission, SubmissionPreview } from '@common/interfaces.mjs'
 import { ContentComponent } from '@flatland-association/flatland-ui'
+import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { LeaderboardComponent } from '../../components/leaderboard/leaderboard.component'
 import { ApiService } from '../../features/api/api.service'
 
@@ -45,7 +46,7 @@ interface F3EvaluatorResult {
 
 @Component({
   selector: 'view-submission',
-  imports: [CommonModule, FormsModule, ContentComponent, LeaderboardComponent],
+  imports: [CommonModule, FormsModule, ContentComponent, BreadcrumbsComponent, LeaderboardComponent],
   templateUrl: './submission.view.html',
   styleUrl: './submission.view.scss',
 })
