@@ -31,4 +31,5 @@ COPY evaluator.py ./
 # create directory as conda!
 RUN mkdir -p /tmp/results
 
-ENTRYPOINT bash run.sh
+ENTRYPOINT ["bash", "run.sh"]
+
