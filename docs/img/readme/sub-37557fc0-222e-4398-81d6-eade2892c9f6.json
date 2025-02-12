@@ -1,0 +1,17 @@
+{
+  "state": "FINISHED",
+  "progress": 1.0,
+  "simulation_count": 50,
+  "total_simulation_count": 150,
+  "score": {
+    "score": 41.62435556467708,
+    "score_secondary": 0.597
+  },
+  "meta": {
+    "normalized_reward": 0.83249,
+    "termination_cause": "The mean percentage of done agents during the last Test (10 environments) was too low: 0.176 < 0.25",
+    "private_metadata_s3_key": "results/sub-37557fc0-222e-4398-81d6-eade2892c9f6.csv",
+    "reward": -3859.26,
+    "percentage_complete": 0.597
+  }
+}
