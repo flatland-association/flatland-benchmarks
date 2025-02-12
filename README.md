@@ -35,8 +35,8 @@ Both, FAB-internal and FAB-external evaluation, can be closed-loop or interactiv
 | External Domain-Specific Evaluation Systems | run FAB-external evaluations.                                                                                                                                                                                                                                            |
 | Algorithmic Researcher                      | requests simulation for scenario and analyses scenario outcome, either from FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation)                                                                                                 |
 | Human-in-the-Loop Researcher                | requests simulation for scenario and analyses run information or measurements,                                                                                                                                                                                           |
-| Operator                                    | interacts with UI (issuing requests to based on information or action options from) either FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation).                                                                                 |
-| Domain Expert Evaluator                     | anylyses scenario outcomes, either from FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation), or uploads scenario outcomes to FAB from FAB-external evaluations. Domain Expert Evaluator may interview Operators for evaluation. |
+| Operator                                    | interacts with HMI, issuing requests to HMI based on information or action options from HMI.                                                                                 |
+| Domain Expert Evaluator                     | analyses scenario outcomes, either from FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation), or uploads scenario outcomes to FAB from FAB-external evaluations. Domain Expert Evaluator may interview Operators for evaluation. |
 
 ## Building Block View
 
@@ -50,7 +50,7 @@ This building block view conceptually reflects closed-loop or interactive-loop, 
 
 | Component            | Responsibility                                                                                                                            |
 |----------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| FAB Web+Backend      | Manage scenarios for FAB-internal evaluation. Manage validation campgains and results for both FAB-internal and FAB-external evaluation.  |
+| FAB Web+Backend      | Manage scenarios for FAB-internal evaluation. Manage validation campaigns and results for both FAB-internal and FAB-external evaluation.  |
 | Simulation Engine    | E.g. FAB Flatland 3 compute worker and or InteractiveAI Services                                                                          |
 | Digital Environment  | E.g. Flatland, Grid2Ops.                                                                                                                  |
 | AI Agent             | E.g. a Flatland 3 competition solution taking actions on the Flatland environment based on observations and rewards from the environment. |
