@@ -25,11 +25,11 @@ The project is configured to lint and format your source code before committing 
 
 > If `lint-staged` fails and **discards** your changes, you can often `git stash pop` them back into existence. Run the `lint` npm script manually beforehand or install the VSCode plugins as described above to limit any surprises.
 
-## Developper notes
+## Developer notes
 
 ### dev.001 - GET list returns previews instead of full resources
 
-API endpoints listing resources - such as GET `/bechmarks` - should only return list of preview (URI + selected fields). The full resources themselves are then fetched in consecutive requests. This enables effective caching on the client side and minimizes transmitted data load.
+API endpoints listing resources - such as GET `/bechnmarks` - should only return list of preview (URI + selected fields). The full resources themselves are then fetched in consecutive requests. This enables effective caching on the client side and minimizes transmitted data load.
 
 2025-01-24, Olivier Stuker
 
