@@ -23,7 +23,7 @@ if __name__ == '__main__':
   #           'termination_cause': 'The mean percentage of done agents during the last Test (10 environments) was too low: 0.176 < 0.25',
   #           'private_metadata_s3_key': 'results/sub-37557fc0-222e-4398-81d6-eade2892c9f6.csv', 'reward': -3859.26, 'percentage_complete': 0.597}}
 
-  # score == normalized_reward.mean()
+  # score == normalized_reward.sum()
   sum_normalized_reward = df["normalized_reward"].sum()
   assert stats["score"]["score"] == sum_normalized_reward
 
