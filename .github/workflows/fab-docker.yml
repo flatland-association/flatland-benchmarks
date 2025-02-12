@@ -1,9 +1,12 @@
 name: Build FAB frontend and backend images and upload to ghcr.io
 
 on:
+  push:
+    branches: [ "main" ]
   workflow_dispatch:
     inputs:
       tag:
+        default: "latest"
         description: 'Image Tag'
         required: true
 
