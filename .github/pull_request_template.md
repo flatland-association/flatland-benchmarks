@@ -17,14 +17,32 @@ See [here](https://docs.github.com/en/get-started/writing-on-github/working-with
 ## Checklist
 
 - [ ] Tests are included for relevant behavior changes.
-- [ ] Prefix the PR title with one of the labels of [Keep a Changelog](https://keepachangelog.com/).   
+- [ ] Prefix the commits with one of the labels of [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/).
 <!--
-  - `[Added]`  for new features.
-  - `[Changed]` for changes in existing functionality.
-  - `[Deprecated]` for soon-to-be removed features.
-  - `[Removed]` for now removed features.
-  - `[Fixed]` for any bug fixes.
-  - `[Security]` in case of vulnerabilities. 
+The Conventional Commits specification is a lightweight convention on top of commit messages. It provides an easy set of rules for creating an explicit commit history; which makes it easier to write automated tools on top of. This convention dovetails with SemVer, by describing the features, fixes, and breaking changes made in commit messages.
+
+The commit message should be structured as follows:
+  <type>[optional scope]: <description>
+  
+  [optional body]
+  
+  [optional footer(s)]
+
+
+1. fix: a commit of the type fix patches a bug in your codebase (this correlates with PATCH in Semantic Versioning).
+2. feat: a commit of the type feat introduces a new feature to the codebase (this correlates with MINOR in Semantic Versioning).
+3. BREAKING CHANGE: a commit that has a footer BREAKING CHANGE:, or appends a ! after the type/scope, introduces a breaking API change (correlating with MAJOR in Semantic Versioning). A BREAKING CHANGE can be part of commits of any type.
+4. types other than fix: and feat: are allowed, for example @commitlint/config-conventional (based on the Angular convention) recommends 
+    - build:
+    - chore:
+    - ci:
+    - docs:
+    - style:
+    - refactor:
+    - perf:
+    - test:
+5. footers other than BREAKING CHANGE: <description> may be provided and follow a convention similar to git trailer format.
+ 
 -->
 - [ ] Document changes in this pull request above.
 - [ ] Documentation is added in the `docs` folder for relevant behavior changes.

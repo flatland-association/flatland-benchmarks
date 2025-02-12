@@ -14,14 +14,16 @@ It is recommended to use [VSCode](https://code.visualstudio.com) with the [ESLin
 [Node.js](https://nodejs.org) must be installed. It runs frontend and backend code as well as local scripts (e.g. `npx lint-staged` which will lint and format staged source files). Node.js includes npm, which is required to install node modules.
 
 To complete your local setup, run
+
 ```bash
 npm ci
 ```
+
 in the project root folder. This will install all required node modules as listed in `package-lock.json`.
 
 The project is configured to lint and format your source code before committing and also on explicit save (when using VSCode as described above). However, if you're not using VSCode or for some reason not using the extensions, your code will still be linted and formatted before a commit. Be aware that in this case lint warnings and errors will abort your commit!
 
->If `lint-staged` fails and **discards** your changes, you can often `git stash pop` them back into existence. Run the `lint` npm script manually beforehand or install the VSCode plugins as described above to limit any surprises.
+> If `lint-staged` fails and **discards** your changes, you can often `git stash pop` them back into existence. Run the `lint` npm script manually beforehand or install the VSCode plugins as described above to limit any surprises.
 
 ## Developper notes
 
@@ -54,3 +56,8 @@ https://www.reddit.com/r/PostgreSQL/comments/1ffqsvw/stop_using_serial_in_postgr
 GET endpoints should always treat the `id` paramater as comma-separated list of values in accordance with dev.003.
 
 2025-01-29, Olivier Stuker
+
+## Releases
+
+* Release prs are automatically opened by [release-please](https://github.com/googleapis/release-please)/[release-please-action](https://github.com/marketplace/actions/release-please-action) based on [Conventional Commit Messages](https://www.conventionalcommits.org/en/v1.0.0/)
+* [How do I change the version number?](https://github.com/googleapis/release-please?tab=readme-ov-file#how-do-i-change-the-version-number)
