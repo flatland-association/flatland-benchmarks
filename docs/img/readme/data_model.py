@@ -45,7 +45,7 @@ if __name__ == '__main__':
   objective_config = {
     "name": "normalized_reward_all_tests",
     "metric": "normalized_reward_test",
-    "weight": [1] * 10,
+    "weight": [1] * 15,
     "agg": np.sum,
     "threshold": 0.25,
     # "threshold_sign":,
@@ -56,12 +56,13 @@ if __name__ == '__main__':
   def apply_config(config, df):
     name = config["name"]
     agg = config["agg"]
+    weights = config["weight"]
     metric = config["metric"]
     data = df[metric]
     threshold_agg_ = config["threshold_agg"]
     threshold_ = config["threshold"]
     return {
-      name: agg(data),
+      name: agg(data * weights),
       "success": threshold_agg_(data > threshold_)
     }
 
