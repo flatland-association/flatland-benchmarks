@@ -29,7 +29,7 @@ The project is configured to lint and format your source code before committing 
 
 ### dev.001 - GET list returns previews instead of full resources
 
-API endpoints listing resources - such as GET `/bechnmarks` - should only return list of preview (URI + selected fields). The full resources themselves are then fetched in consecutive requests. This enables effective caching on the client side and minimizes transmitted data load.
+API endpoints listing resources - such as GET `/benchmarks` - should only return list of preview (URI + selected fields). The full resources themselves are then fetched in consecutive requests. This enables effective caching on the client side and minimizes transmitted data load.
 
 2025-01-24, Olivier Stuker
 
