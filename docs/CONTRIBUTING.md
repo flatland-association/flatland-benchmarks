@@ -52,10 +52,23 @@ principles. For instance, we write short and concise functions and use appropria
 
 1. Open a pull request on GitHub targeting the `main` branch.
    Make sure to fill out the template.
-    * *Principle 1*: A review from a core team member is automatically requested.
-      At least one approval is required to merge for non-core team members.
-    * *Principle 2*: Formulate your expectations on **risk** (e.g. low/mid/high) and **feedback/discussion** (e.g. high: new concept XYZ, minor: refactoring).
 
-2. Once successfully reviewed, squash-merge the PR.
+* *Principle 1*: A review from a core team member is automatically requested.
+  At least one approval is required to merge for non-core team members.
+* *Principle 2*: Formulate your expectations on **risk** (e.g. low/mid/high) and **feedback/discussion** (e.g. high: new concept XYZ, minor: refactoring).
+
+2. Once successfully reviewed and status checks passed, squash-merge the PR.
    This collapses all the commits into one and merges it into the `main` branch.
-   Please adjust the subject line and body of the commit to accurately reflect your changes.
+   Please adjust the subject line and body of the commit to accurately reflect your changes and prefix the commit with one of the labels of [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/).
+
+### Details
+
+We have [GitHub ruleset](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/about-rulesets) in place for the `main` branch enforcing:
+
+* [Required approvals: 1](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-a-pull-request-before-merging)
+* [Dismiss stale pull request approvals when new commits are pushed](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-a-pull-request-before-merging)
+* [Require review from Code Owners](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-a-pull-request-before-merging)
+* [Require approval of the most recent reviewable push](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-a-pull-request-before-merging)
+* [Allowed merge methods: Squash](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-a-pull-request-before-merging)
+* [Require status checks to pass: Checks](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets#require-status-checks-to-pass-before-merging)
+
