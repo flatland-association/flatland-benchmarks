@@ -21,6 +21,10 @@ jobs:
       - name: Realease FAB frontend and backend images and upload to ghcr.io
         run: gh workflow run fab-docker.yml -f tag=${{ steps.release.outputs.tag_name }}
         if: ${{ steps.release.outputs.release_created }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Realease FAB Flatland 3 compute worker, evaluator and submission template images and upload to ghcr.io
         run: gh workflow run fab-flatland-docker.yml -f tag=${{ steps.release.outputs.tag_name }}
         if: ${{ steps.release.outputs.release_created }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
