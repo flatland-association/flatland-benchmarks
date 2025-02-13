@@ -1,9 +1,11 @@
-import ansiStyles from 'ansi-styles'
 import cors from 'cors'
 import type { Express } from 'express'
 import express from 'express'
 import { configuration } from '../config/config.mjs'
+import { Logger } from '../logger/logger.mjs'
 import { router } from './router.mjs'
+
+const logger = new Logger('server')
 
 export class Server {
   app: Express
@@ -29,17 +31,14 @@ export class Server {
         return next()
       }
 
-      console.log(`${ansiStyles.red.open}Handled exception, responded with 500:${ansiStyles.reset.close}`)
-      console.log(err)
+      logger.error('Handled exception, responded with 500:', err)
       res.status(500)
       res.send('500: Internal server error')
     })
 
     // start listening
     this.app.listen(this.config.api.port, this.config.api.host, () => {
-      console.log(
-        `${ansiStyles.green.open}server is now live on ${this.config.api.host}:${this.config.api.port}${ansiStyles.reset.close}`,
-      )
+      logger.info(`Server is now live on ${this.config.api.host}:${this.config.api.port}`)
     })
   }
 }
