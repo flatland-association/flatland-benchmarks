@@ -1,3 +1,4 @@
+import { parseCommandLine } from './features/config/command-line.mjs'
 import { loadConfig } from './features/config/config.mjs'
 import { Logger } from './features/logger/logger.mjs'
 import { Server } from './features/server/server.mjs'
@@ -7,6 +8,8 @@ import { SqlService } from './features/services/sql-service.mjs'
 import { Schema } from './features/setup/schema.mjs'
 
 const logger = new Logger('main')
+
+parseCommandLine()
 
 const config = loadConfig()
 // set up services first
