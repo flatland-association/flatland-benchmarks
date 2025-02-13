@@ -3,6 +3,13 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.4.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.4.0...v0.4.1) (2025-02-13)
+
+
+### Bug Fixes
+
+* evaluate default value for Docker image tag when triggered by push on main. ([#146](https://github.com/flatland-association/flatland-benchmarks/issues/146)) ([885a3ee](https://github.com/flatland-association/flatland-benchmarks/commit/885a3eee6f39faf58e27658df3efebf32ec45a31))
+
 ## [0.4.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.3.0...v0.4.0) (2025-02-11)
 
 * [Fixed] Fix passing through S3_UPLOAD_PATH_TEMPLATE and S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID from compute worker to evaluator. by @chenkins in https://github.com/flatland-association/flatland-benchmarks/pull/95
@@ -66,5 +73,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 ## New Contributors
 
 * @Holzchopf made their first contribution in https://github.com/flatland-association/flatland-benchmarks/pull/17
-
-
