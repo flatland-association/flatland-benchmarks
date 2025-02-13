@@ -118,6 +118,8 @@ export class Logger {
       let src = stack[3].replace(/\s+at /, '')
       if (src.endsWith(')')) {
         src = src.replace(/\((.*)\)/, '$1')
+      } else {
+        src = '<anonymous> ' + src
       }
       source = ` (${src})`
     }
