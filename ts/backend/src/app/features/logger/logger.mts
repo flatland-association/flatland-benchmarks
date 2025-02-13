@@ -47,7 +47,7 @@ export const LogLevel = {
 // chosen on purpose i.o.t. have logger available at boot already.
 export class Logger {
   /** Default log level. Used if no instance specific log level is present. */
-  static defaultLogLevel: LogLevelNumeric = LogLevel.ALL
+  static defaultLogLevel: LogLevelNumeric = LogLevel.INFO
   // these settings are global to ensure uniform log format while alive
   /** Whether to include the source of the log call. */
   static includeSource = false
