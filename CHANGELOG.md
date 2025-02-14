@@ -3,6 +3,13 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.4.4](https://github.com/flatland-association/flatland-benchmarks/compare/v0.4.3...v0.4.4) (2025-02-14)
+
+
+### Continuous Integration
+
+* fix typo int image tag. ([#155](https://github.com/flatland-association/flatland-benchmarks/issues/155)) ([6009201](https://github.com/flatland-association/flatland-benchmarks/commit/600920116b1e5b4b753e372604fb53876e670b89))
+
 ## [0.4.3](https://github.com/flatland-association/flatland-benchmarks/compare/v0.4.2...v0.4.3) (2025-02-14)
 
 
