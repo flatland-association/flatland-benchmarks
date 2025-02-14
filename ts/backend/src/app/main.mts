@@ -7,9 +7,14 @@ import { AuthService } from './features/services/auth-service.mjs'
 import { SqlService } from './features/services/sql-service.mjs'
 import { Schema } from './features/setup/schema.mjs'
 
+// during boot, use defaults for logger
+Logger.setOptions({})
+
 const logger = new Logger('main')
 
-parseCommandLine()
+const options = parseCommandLine()
+
+Logger.setOptions(options)
 
 const config = loadConfig()
 // set up services first

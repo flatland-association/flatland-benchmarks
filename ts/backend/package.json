@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "FAB backend",
   "scripts": {
-    "serve": "npm run private:build && cd ../../out-tsc && mkdir -p backend && cp -r backend-build/app backend && mkdir -p backend/config && cp -n ../ts/backend/src/config/config.jsonc \"$_\" && cd backend/app && node main.min.js --help --log-level=ALL --log-colorful",
+    "serve": "npm run private:build && cd ../../out-tsc && mkdir -p backend && cp -r backend-build/app backend && mkdir -p backend/config && cp -n ../ts/backend/src/config/config.jsonc \"$_\" && cd backend/app && node main.min.js --help --log-level=ALL --log-colorful --log-stringify",
     "build": "npm run private:build && mkdir -p ../../dist/backend/config && cp -r ../../out-tsc/backend-build/app ../../dist/backend",
     "private:build": "tsc && tsc-alias && npx webpack"
   }

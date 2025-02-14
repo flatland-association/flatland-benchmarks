@@ -1,114 +1,85 @@
 import { json } from '@common/utility-types.mjs'
 import ansiStyles from 'ansi-styles'
-
-// Not using enum because of the JS TSC generates from enums. More info:
-// https://www.typescriptlang.org/docs/handbook/enums.html
-// https://www.totaltypescript.com/why-i-dont-like-typescript-enums
-// numeric values based on https://stackoverflow.com/a/7751276/10135201
-const LogLevelRaw = {
-  OFF: 10_000_000,
-  FATAL: 50_000,
-  ERROR: 40_000,
-  WARN: 30_000,
-  INFO: 20_000,
-  DEBUG: 10_000,
-  TRACE: 5_000,
-  ALL: 0,
-} as const
-
-/**
- * Available keys in `LogLevel`.
- * @see {@link LogLevel}
- */
-export type LogLevelName = keyof typeof LogLevelRaw
-
-/**
- * Numeric `LogLevel` values.
- * @see {@link LogLevel}
- */
-export type LogLevelNumeric = (typeof LogLevelRaw)[LogLevelName]
-
-/**
- * Available log levels.
- */
-export const LogLevel = {
-  ...LogLevelRaw,
-
-  /**
-   * Returns log level name.
-   */
-  name: (id: LogLevelNumeric): LogLevelName => {
-    const names = Object.keys(LogLevelRaw) as LogLevelName[]
-    return names.find((n) => LogLevelRaw[n] === id) ?? 'OFF'
-  },
-}
+import log4js from 'log4js'
+import { cliOptions } from '../config/command-line.mjs'
 
 // The pattern (construct one logger per file instead of a service class) was
 // chosen on purpose i.o.t. have logger available at boot already.
 export class Logger {
   /** Default log level. Used if no instance specific log level is present. */
-  static defaultLogLevel: LogLevelNumeric = LogLevel.INFO
+  static defaultLogLevel: log4js.Level
   // these settings are global to ensure uniform log format while alive
   /** Whether to include the source of the log call. */
-  static includeSource = false
+  static includeStack = false
   /** Whether to output the messages as one JSON array. */
-  static jsonMessage = false
+  static stringifyMessage = false
   /** Whether to use ANSI terminal colors in log. */
   static colorTerminal = false
 
-  logLevel?: LogLevelNumeric
-  category: string
+  static setOptions(options: cliOptions) {
+    // store cli options
+    this.defaultLogLevel = log4js.levels.getLevel(options['--log-level'] ?? 'INFO')
+    this.includeStack = options['--log-stack'] === 'true'
+    this.stringifyMessage = options['--log-stringify'] === 'true'
+    this.colorTerminal = options['--log-colorful'] === 'true'
+
+    // build pattern
+    // stack is optional
+    const stackPattern = this.includeStack ? ' (%X{stack})' : ''
+    // colors are optional
+    const datePattern = this.colorTerminal ? `${ansiStyles.gray.open}%d${ansiStyles.reset.close}` : '%d'
+    const prioPattern = this.colorTerminal ? '%[%-5p%]' : '%-5p'
+    const categoryPattern = this.colorTerminal ? `${ansiStyles.blue.open}[%c]${ansiStyles.reset.close}` : '[%c]'
+
+    const pattern = `${datePattern}${stackPattern} ${prioPattern} ${categoryPattern}: %m`
+
+    // drop previous configuration if there's one
+    if (log4js.isConfigured()) {
+      log4js.shutdown()
+    }
+    log4js.configure({
+      // https://log4js-node.github.io/log4js-node/appenders.html
+      // https://log4js-node.github.io/log4js-node/logLevelFilter.html
+      appenders: {
+        out: { type: 'stdout', layout: { type: 'pattern', pattern: pattern } },
+      },
+      // https://log4js-node.github.io/log4js-node/categories.html
+      categories: {
+        default: { appenders: ['out'], level: 'all' },
+      },
+      levels: {
+        // overwrite trace default (color)
+        TRACE: {
+          value: log4js.levels.TRACE.level,
+          colour: 'grey', //... author chose to go with British English
+        },
+      },
+    })
+  }
+
+  private logger
+  logLevel?: log4js.Level
 
   /**
    * Create a new logger instance.
    * @param category Logger category. Included in log.
    * @param level Optional log level override.
    */
-  constructor(category = 'main', level?: LogLevelNumeric) {
+  constructor(category = 'main', level?: log4js.Level) {
+    this.logger = log4js.getLogger(category)
     this.logLevel = level
-    this.category = category
   }
 
   // Must be private i.o.t. always skip the correct number of stack trace lines.
-  private log(level: LogLevelNumeric, ...messages: json[]) {
-    // don't do anything if log level isn't active
-    if (level < (this.logLevel ?? Logger.defaultLogLevel)) return
-    // color and channel depending on level
-    let dateColor = ansiStyles.color.gray.open
-    let priorityColor = ansiStyles.color.gray.open
-    let categoryColor = ansiStyles.color.blue.open
-    let resetColor = ansiStyles.reset.close
-    let channel = console.log
-    switch (level) {
-      case LogLevel.DEBUG:
-        priorityColor = ansiStyles.color.white.open
-        break
-      case LogLevel.INFO:
-        priorityColor = ansiStyles.color.green.open
-        break
-      case LogLevel.WARN:
-        priorityColor = ansiStyles.color.yellow.open
-        channel = console.error
-        break
-      case LogLevel.ERROR:
-        priorityColor = ansiStyles.color.red.open
-        channel = console.error
-        break
-      case LogLevel.FATAL:
-        priorityColor = ansiStyles.color.magenta.open
-        channel = console.error
-    }
-    if (!Logger.colorTerminal) {
-      dateColor = ''
-      priorityColor = ''
-      categoryColor = ''
-      resetColor = ''
-    }
+  private log(level: log4js.Level, ...messages: json[]) {
+    // update log level (can't be done in constructor because level is set at runtime)
+    this.logger.level = this.logLevel ?? Logger.defaultLogLevel
 
-    const date = new Date().toISOString()
-    const priority = LogLevel.name(level).padEnd(5)
-    let source = ''
-    if (Logger.includeSource) {
+    // log4js' default call stack parser seems to struggle in some cases with
+    // anonymous functions.
+    // Instead of using a custom parser, create the callstack here (where the
+    // stack level won't change) and pass it to the logger as context.
+    if (Logger.includeStack) {
       // stack, beginning with 'Error', Logger.log and Logger.<calledMethod>
       const stack = new Error().stack!.split('\n')
       // relevant line of stack, either `at class.method (path/file:line:char)` or `at path/file:line:char`
@@ -121,62 +92,53 @@ export class Logger {
       } else {
         src = '<anonymous> ' + src
       }
-      source = ` (${src})`
+      this.logger.addContext('stack', src)
     }
-    const message = Logger.jsonMessage
-      ? // with JSON message enabled, output all message bits as array
-        JSON.stringify(messages)
-      : // otherwise stringify only those necessary and separate by space
-        messages
-          .map((m) => {
-            return typeof m === 'object' ? JSON.stringify(m) : m
-          })
-          .join(' ')
 
-    // log pattern here
-    const msg = `${dateColor}${date}${resetColor}${source} ${priorityColor}${priority}${resetColor} ${categoryColor}[${this.category}]${resetColor}: ${message}`
-    channel(msg)
+    this.logger.log(level, Logger.stringifyMessage ? JSON.stringify(messages) : messages)
+
+    return
   }
 
   /**
    * Log a message with log level `TRACE`.
    */
   trace(...messages: json[]) {
-    this.log(LogLevel.TRACE, ...messages)
+    this.log(log4js.levels.TRACE, ...messages)
   }
 
   /**
    * Log a message with log level `DEBUG`.
    */
   debug(...messages: json[]) {
-    this.log(LogLevel.DEBUG, ...messages)
+    this.log(log4js.levels.DEBUG, ...messages)
   }
 
   /**
    * Log a message with log level `INFO`.
    */
   info(...messages: json[]) {
-    this.log(LogLevel.INFO, ...messages)
+    this.log(log4js.levels.INFO, ...messages)
   }
 
   /**
    * Log a message with log level `WARN`.
    */
   warn(...messages: json[]) {
-    this.log(LogLevel.WARN, ...messages)
+    this.log(log4js.levels.WARN, ...messages)
   }
 
   /**
    * Log a message with log level `ERROR`.
    */
   error(...messages: json[]) {
-    this.log(LogLevel.ERROR, ...messages)
+    this.log(log4js.levels.ERROR, ...messages)
   }
 
   /**
    * Log a message with log level `FATAL`.
    */
   fatal(...messages: json[]) {
-    this.log(LogLevel.FATAL, ...messages)
+    this.log(log4js.levels.FATAL, ...messages)
   }
 }

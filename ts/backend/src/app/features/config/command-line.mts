@@ -1,20 +1,29 @@
 import ansiStyles from 'ansi-styles'
 import wrapAnsi from 'wrap-ansi'
-import { Logger, LogLevel, LogLevelName } from '../logger/logger.mjs'
+import { Logger } from '../logger/logger.mjs'
 
 const PRETTY_PRINT_TERMINAL_WIDTH = process.stdout.columns
 const PRETTY_PRINT_TITLE_WIDTH = 24
 
 const logger = new Logger('cli')
 
+export interface cliOptions {
+  '--help'?: string
+  '--log-level'?: string
+  '--log-stack'?: string
+  '--log-colorful'?: string
+  '--log-stringify'?: string
+}
+
 // adhere to this and the manual writes itself
 interface CommandLineArg {
-  argument: string
+  argument: keyof cliOptions
   alias?: string
   description: string
   type?: string
   default?: string
-  evaluator: (val?: string) => void
+  // optional evaluator - default simply returns val
+  evaluator?: (val?: string) => string | undefined
 }
 
 // known command line arguments - the order here defines order of evaluation
@@ -34,6 +43,7 @@ const commandLineArgs: CommandLineArg[] = [
           ...(cla.default ? { default: cla.default } : {}),
         })
       })
+      return undefined
     },
   },
   {
@@ -41,49 +51,29 @@ const commandLineArgs: CommandLineArg[] = [
     description: 'Set log output level.',
     type: 'ALL | TRACE | DEBUG | INFO | WARN | ERROR | FATAL | OFF',
     default: 'INFO',
-    evaluator: (val) => {
-      const level = val ? LogLevel[val as LogLevelName] : undefined
-      if (typeof level != 'undefined') {
-        Logger.defaultLogLevel = level
-      } else {
-        logger.error('Invalid log level', val)
-      }
-    },
   },
   {
-    argument: '--log-source',
+    argument: '--log-stack',
     description: 'Include logging source (method and file path) in log.',
     type: 'false | <any other value>',
     default: 'false',
-    evaluator: (val) => {
-      if (val !== 'false') {
-        Logger.includeSource = true
-      }
-    },
+    evaluator: (val) => (val === 'false' ? 'false' : 'true'),
   },
   {
     argument: '--log-colorful',
     description: 'Enable colorful terminal output for log.',
     type: 'false | <any other value>',
     default: 'false',
-    evaluator: (val) => {
-      if (val !== 'false') {
-        Logger.colorTerminal = true
-      }
-    },
+    evaluator: (val) => (val === 'false' ? 'false' : 'true'),
   },
   {
-    argument: '--log-json',
-    description: 'Output log messages as valid JSON only.',
+    argument: '--log-stringify',
+    description: 'Output log messages as stringified JSON.',
     type: 'false | <any other value>',
     default: 'false',
-    evaluator: (val) => {
-      if (val !== 'false') {
-        Logger.jsonMessage = true
-      }
-    },
+    evaluator: (val) => (val === 'false' ? 'false' : 'true'),
   },
-]
+] as const
 
 // read command line arguments and pass them to their respective evaluators
 export function parseCommandLine() {
@@ -95,22 +85,37 @@ export function parseCommandLine() {
       return [key, value] as const
     }),
   )
+  const options: cliOptions = {}
   commandLineArgs.forEach((cla) => {
+    let has = false
+    let val: string | undefined
     // check for argument (full) first
     if (args.has(cla.argument)) {
-      cla.evaluator(args.get(cla.argument))
-      args.delete(cla.argument)
+      has = true
+      val = args.get(cla.argument)
     }
     //... and only then check for alias. Otherwise de-duplicating could be circumvented.
     else if (cla.alias && args.has(cla.alias)) {
-      cla.evaluator(args.get(cla.alias))
-      args.delete(cla.alias)
+      has = true
+      val = args.get(cla.alias)
+    }
+    if (has) {
+      // evaluate
+      if (cla.evaluator) {
+        options[cla.argument] = cla.evaluator(val)
+      } else {
+        options[cla.argument] = val
+      }
+      // dispose
+      args.delete(cla.argument)
+      if (cla.alias) args.delete(cla.alias)
     }
   })
   // if args are left (undeleted) it means undefined args were given
   Array.from(args.keys()).forEach((key) => {
     logger.error('Invalid command line argument', key)
   })
+  return options
 }
 
 function prettyPrintArgDef(def: Record<string, string>) {
