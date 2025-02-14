@@ -3,12 +3,6 @@ on:
     branches:
       - main
 
-# https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/controlling-permissions-for-github_token
-# https://docs.github.com/en/rest/authentication/permissions-required-for-github-apps?apiVersion=2022-11-28#repository-permissions-for-actions
-permissions:
-  contents: write
-  pull-requests: write
-  actions: write
 
 name: release-please
 
@@ -18,9 +12,113 @@ jobs:
     steps:
       - uses: googleapis/release-please-action@v4
         id: release
-      - name: Realease FAB frontend and backend images and upload to ghcr.io
-        run: gh workflow run fab-docker.yml -f tag=${{ steps.release.outputs.tag_name }}
-        if: ${{ steps.release.outputs.release_created }}
-      - name: Realease FAB Flatland 3 compute worker, evaluator and submission template images and upload to ghcr.io
-        run: gh workflow run fab-flatland-docker.yml -f tag=${{ steps.release.outputs.tag_name }}
-        if: ${{ steps.release.outputs.release_created }}
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      major: ${{ steps.release.outputs.major }}
+      minor: ${{ steps.release.outputs.minor }}
+      patch: ${{ steps.release.outputs.patch }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+  build-frontend-image:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    name: Build FAB Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push Container Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deployment/frontend/Dockerfile
+          platforms: linux/amd64,linux/arm64/v8
+          push: true
+          tags: |
+            ghcr.io/flatland-association/fab-frontend:${{ needs.release-please.outputs.tag_name }}
+  build-backend-image:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    name: Build FAB Backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push Container Image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: deployment/backend/Dockerfile
+          platforms: linux/amd64,linux/arm64/v8
+          push: true
+          tags: |
+            ghcr.io/flatland-association/fab-backend::${{ needs.release-please.outputs.tag_name }}
+  build-flatland-evaluator:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    name: Build Flatland 3 Evaluator
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push Container Image
+        uses: docker/build-push-action@v6
+        with:
+          context: evaluation/evaluator
+          file: evaluation/evaluator/Dockerfile
+          platforms: linux/amd64,linux/arm64/v8
+          push: true
+          tags: |
+            ghcr.io/flatland-association/fab-flatland-evaluator:${{ needs.release-please.outputs.tag_name }}
+  build-flatland-compute-worker:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    name: Build Flatland 3 Compute Worker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Push Container Image
+        uses: docker/build-push-action@v6
+        with:
+          context: evaluation/compute_worker
+          file: evaluation/compute_worker/Dockerfile
+          platforms: linux/amd64,linux/arm64/v8
+          push: true
+          tags: |
+            ghcr.io/flatland-association/fab-flatland-compute-worker::${{ needs.release-please.outputs.tag_name }}

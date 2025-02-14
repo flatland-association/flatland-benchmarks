@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        default: "latest"
         description: 'Image Tag'
         required: true
 
@@ -23,6 +22,9 @@ jobs:
     name: Build FAB Frontend
     runs-on: ubuntu-latest
     steps:
+      - name: Evaluate tag
+        run: |
+          echo "TAG=${{ github.event.inputs.tag || 'latest' }}" >> $GITHUB_ENV
       - uses: actions/checkout@v4
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -42,11 +44,14 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |
-            ghcr.io/flatland-association/fab-frontend:${{ github.event.inputs.tag }}
+            ghcr.io/flatland-association/fab-frontend:${{ env.TAG }}
   build-backend-image:
     name: Build FAB Backend
     runs-on: ubuntu-latest
     steps:
+      - name: Evaluate tag
+        run: |
+          echo "TAG=${{ github.event.inputs.tag || 'latest' }}" >> $GITHUB_ENV
       - uses: actions/checkout@v4
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -66,4 +71,4 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |
-            ghcr.io/flatland-association/fab-backend:${{ github.event.inputs.tag }}
+            ghcr.io/flatland-association/fab-backend:${{ env.TAG }}
