@@ -126,7 +126,7 @@ export class Logger {
     const message = Logger.jsonMessage
       ? // with JSON message enabled, output all message bits as array
         JSON.stringify(messages)
-      : // otherwise stringify only those necessary and seperate by space
+      : // otherwise stringify only those necessary and separate by space
         messages
           .map((m) => {
             return typeof m === 'object' ? JSON.stringify(m) : m
