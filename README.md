@@ -35,7 +35,7 @@ Both, FAB-internal and FAB-external evaluation, can be closed-loop or interactiv
 | External Domain-Specific Evaluation Systems | run FAB-external evaluations.                                                                                                                                                                                                                                            |
 | Algorithmic Researcher                      | requests simulation for scenario and analyses scenario outcome, either from FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation)                                                                                                 |
 | Human-in-the-Loop Researcher                | requests simulation for scenario and analyses run information or measurements,                                                                                                                                                                                           |
-| Operator                                    | interacts with HMI, issuing requests to HMI based on information or action options from HMI.                                                                                 |
+| Operator                                    | interacts with HMI, issuing requests to HMI based on information or action options from HMI.                                                                                                                                                                             |
 | Domain Expert Evaluator                     | analyses scenario outcomes, either from FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation), or uploads scenario outcomes to FAB from FAB-external evaluations. Domain Expert Evaluator may interview Operators for evaluation. |
 
 ## Building Block View
@@ -48,14 +48,25 @@ Arrows represent flow of information (and not control flow).
 
 This building block view conceptually reflects closed-loop or interactive-loop, both of FAB-internal and FAB-external evaluation (ignoring FAB system boundary, i.e. whether the domain-specific evaluation systems are managed by FAB or external).
 
-| Component            | Responsibility                                                                                                                            |
-|----------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| FAB Web+Backend      | Manage scenarios for FAB-internal evaluation. Manage validation campaigns and results for both FAB-internal and FAB-external evaluation.  |
-| Simulation Engine    | E.g. FAB Flatland 3 compute worker and or InteractiveAI Services                                                                          |
-| Digital Environment  | E.g. Flatland, Grid2Ops.                                                                                                                  |
-| AI Agent             | E.g. a Flatland 3 competition solution taking actions on the Flatland environment based on observations and rewards from the environment. |
-| Evaluation Submodule | E.g. FAB Flatland 3 evaluator.                                                                                                            |
-| UI                   | E.g. Interactive AI Frontend                                                                                                              |
+### Level 1
+
+| Component             | Responsibility                                                                                                                           | Example                                                                          |
+|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| FAB Web+Backend       | Manage scenarios for FAB-internal evaluation. Manage validation campaigns and results for both FAB-internal and FAB-external evaluation. | FAB                                                                              |
+| Prediction Module     | Step from state at time t.                                                                                                               | Flatland 3 environment                                                           |
+| Scenario Driver       | Hooks into simulation engine to provide state at time t (en lieu of production information system) for validation purposes.              |                                                                                  |
+| Scenario Evaluator    | Evaluate scenario outcome for validation purposes.                                                                                       | FAB Flatland 3 evaluator (conceptually computing metrics/KPIs on the trajectory) |
+| Evaluation Submodule  | Provide prediction for specified scenario.                                                                                               |                                                                                  |
+| Recommendation Module | Provide recommendation to HMI.                                                                                                           |                                                                                  |
+| HMI Modulde           | Provide information and action optims to Operator.                                                                                       | Interactive AI Frontend  with Flatland event services                            |
+
+### Level 2
+
+| Component           | Responsibility                                                                                     | Example                                                                 |
+|---------------------|----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| Simulation Engine   | Run simulation for state and scenario, brokering actions between AI agent and digital environment. | FAB Flatland 3 evaluator stepping the env with actions from submission. |
+| Digital Environment | Update state based on actions (step).                                                              | Flatland 3 env, Grid2Ops                                                |
+| AI Agent            | Provide actions based on observations from state                                                   | FAB Flatland 3 submission                                               |
 
 ## Data Model
 
