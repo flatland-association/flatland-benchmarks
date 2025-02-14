@@ -141,7 +141,7 @@ function prettyPrintArgDef(def: Record<string, string>) {
     // for first pair (argument), color title
     const colorStart = idx == 0 ? ansiStyles.color.blue.open : ''
     const colorEnd = idx == 0 ? ansiStyles.reset.close : ''
-    // print property defintion
+    // print property definition
     console.log(`${colorStart}${key.padStart(PRETTY_PRINT_TITLE_WIDTH)}${colorEnd}  ${textLines[0]}`)
     textLines.slice(1, -1).forEach((line) => {
       console.log(`${' '.padStart(PRETTY_PRINT_TITLE_WIDTH)}  ${line}`)
