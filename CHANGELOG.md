@@ -3,6 +3,13 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.4.3](https://github.com/flatland-association/flatland-benchmarks/compare/v0.4.2...v0.4.3) (2025-02-14)
+
+
+### Continuous Integration
+
+* inline image build jobs instead of triggering workflows from release-please workflow. ([#153](https://github.com/flatland-association/flatland-benchmarks/issues/153)) ([4b38913](https://github.com/flatland-association/flatland-benchmarks/commit/4b389137dcd9dc2e539710c23479755ef5bb0d9e))
+
 ## [0.4.2](https://github.com/flatland-association/flatland-benchmarks/compare/v0.4.1...v0.4.2) (2025-02-13)
 
 
