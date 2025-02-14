@@ -1,6 +1,6 @@
 import ansiStyles from 'ansi-styles'
+import wrapAnsi from 'wrap-ansi'
 import { Logger, LogLevel, LogLevelName } from '../logger/logger.mjs'
-import { splitStringAt } from '../utils/split-string-at.mjs'
 
 const PRETTY_PRINT_TERMINAL_WIDTH = process.stdout.columns
 const PRETTY_PRINT_TITLE_WIDTH = 24
@@ -117,33 +117,13 @@ function prettyPrintArgDef(def: Record<string, string>) {
   // minus 2 for the space between title and definition
   const maxTextWidth = Math.max(PRETTY_PRINT_TERMINAL_WIDTH - PRETTY_PRINT_TITLE_WIDTH - 2, 24)
   Object.entries(def).forEach(([key, value], idx) => {
-    const textLines: string[] = []
-    value = value.trim()
-    while (value.length > maxTextWidth) {
-      // look for breakable char before max text width
-      let wrapPos = maxTextWidth
-      for (let i = 0; i < maxTextWidth; i++) {
-        const pos = maxTextWidth - i - 1
-        const char = value[pos]
-        // char is one of the breakable ones
-        if (' .,:;-'.includes(char)) {
-          wrapPos = pos
-          break
-        }
-      }
-      // split string and remove unnecessary white space
-      const splat = splitStringAt(value, wrapPos)
-      textLines.push(splat[0].trimEnd())
-      value = splat[1].trimStart()
-    }
-    // append rest of value as-is
-    textLines.push(value)
+    const textLines = wrapAnsi(value, maxTextWidth, { hard: true }).split('\n')
     // for first pair (argument), color title
     const colorStart = idx == 0 ? ansiStyles.color.blue.open : ''
     const colorEnd = idx == 0 ? ansiStyles.reset.close : ''
     // print property definition
     console.log(`${colorStart}${key.padStart(PRETTY_PRINT_TITLE_WIDTH)}${colorEnd}  ${textLines[0]}`)
-    textLines.slice(1, -1).forEach((line) => {
+    textLines.slice(1).forEach((line) => {
       console.log(`${' '.padStart(PRETTY_PRINT_TITLE_WIDTH)}  ${line}`)
     })
   })
