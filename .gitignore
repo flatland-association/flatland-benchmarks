@@ -116,7 +116,7 @@ ENV/
 /bazel-out
 
 # Node
-/node_modules
+node_modules
 npm-debug.log
 yarn-error.log
 

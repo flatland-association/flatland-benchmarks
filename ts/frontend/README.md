@@ -88,6 +88,14 @@ For other features without provided schematics (i.e. `type`, `const`, `function`
 
 For these kinds of features, no type infix is used. This is because one file could hold a mixture of feature types, especially when circular imports couldn't be prevented otherwise.
 
+### Unit tests
+
+Unit tests are not enforced per default. Instead unit test specs are added specifically using `ngx-spec:spec` and passing the corresponding unit file path (relative to `ts/frontend/src/app`). E.g.:
+
+```bash
+ng generate ngx-spec:spec features/api/api.service.ts
+```
+
 
 ## Building
 
