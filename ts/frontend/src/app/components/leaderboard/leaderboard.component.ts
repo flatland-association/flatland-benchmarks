@@ -1,7 +1,7 @@
 import { CommonModule, DecimalPipe } from '@angular/common'
 import { Component, Input } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { SubmissionPreview } from '@common/interfaces.mjs'
+import { SubmissionPreview } from '@common/interfaces'
 
 @Component({
   selector: 'app-leaderboard',

@@ -1,5 +1,5 @@
 import type { RouteParameters } from 'express-serve-static-core'
-import { Resource } from './interfaces.mjs'
+import { Resource } from './interfaces'
 import type {
   AcceptNumberAsString,
   ConsolidatedResourceLocator,
@@ -7,7 +7,7 @@ import type {
   ResourceDir,
   ResourceLocator,
   StripDir,
-} from './utility-types.mjs'
+} from './utility-types'
 
 /**
  * Replaces the `:<key>` parts in `endpoint` with corresponding values from `params`.

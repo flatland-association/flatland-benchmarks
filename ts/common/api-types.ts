@@ -1,5 +1,5 @@
 import type { RouteParameters } from 'express-serve-static-core'
-import { ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoints } from './api-endpoints.mjs'
+import { ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoints } from './api-endpoints'
 
 export interface ApiGetOptions<E extends keyof ApiGetEndpoints> {
   params: RouteParameters<E>
