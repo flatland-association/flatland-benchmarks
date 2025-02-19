@@ -6,6 +6,29 @@ This backend is a Node.js module. The module creates a server application publis
 
 The configuration template is found at `ts/backend/src/config/config.jsonc`. It's a JSON file with comments describing the sections.
 
+Furthermore, run-time behavior can be controlled using command-line arguments when executing `main.min.mjs`:
+
+```terminal
+              --help, -h  Print this message.
+
+             --log-level  Set log output level.
+                    type  ALL | TRACE | DEBUG | INFO | WARN | ERROR | FATAL |
+                          OFF
+                 default  INFO
+
+             --log-stack  Include logging source (method and file path) in log.
+                    type  false | <any other value>
+                 default  false
+
+          --log-colorful  Enable colorful terminal output for log.
+                    type  false | <any other value>
+                 default  false
+
+         --log-stringify  Output log messages as stringified JSON.
+                    type  false | <any other value>
+                 default  false
+```
+
 ## Development server
 
 To start a local development server, run the following command in `ts/backend`:
@@ -43,4 +66,4 @@ There are no CLI code scaffolding tools for FAB Backend. Manually create `.mts` 
 * Upload `dist/backend` to web server (e.g. nginx)
 * Manually copy `config/config.jsonc` (first time only) and modify according to your needs. The template is `ts/backend/src/config/config.jsonc`. It's not copied over automatically is to ensure the config template won't overwrite the user-specified configs.
 
-* Set up your server to execute `node main.mjs` in `app/` (intentionally leaving out further instructions, since this depends on the server in use)
+* Set up your server to execute `node main.min.mjs` in `app/` (intentionally leaving out further instructions, since this depends on the server in use)
