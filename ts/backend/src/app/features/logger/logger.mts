@@ -25,6 +25,9 @@ export class Logger {
 
     // build pattern
     // stack is optional
+    // (including line:char is beneficial only if output is not minified.)
+    // (log4js' stack patterns - %s, %C etc - yield inconsistent values, use
+    // custom stack pattern instead. See comment in `log` for more info.)
     const stackPattern = this.includeStack ? ' (%X{stack})' : ''
     // colors are optional
     const datePattern = this.colorTerminal ? `${ansiStyles.gray.open}%d${ansiStyles.reset.close}` : '%d'
@@ -75,21 +78,33 @@ export class Logger {
     // update log level (can't be done in constructor because level is set at runtime)
     this.logger.level = this.logLevel ?? Logger.defaultLogLevel
 
-    // log4js' default call stack parser seems to struggle in some cases with
-    // anonymous functions.
-    // Instead of using a custom parser, create the callstack here (where the
-    // stack level won't change) and pass it to the logger as context.
+    // Node's error stack omits '<anonymous>' for awaited code or async
+    // anonymous functions (same behavior in log4js default call stack parser).
+    // To achieve a consistent log format, add '<anonymous>' where missing.
+    // There are two ways to provide a custom call stack parser to do that:
+    // - setParseCallStackFunction on the logger instance
+    // - parse call stack here and pass output as context to logger instance
+    // I chose latter, because in that case the call stack overhead is known
+    // a priori (see below).
     if (Logger.includeStack) {
-      // stack, beginning with 'Error', Logger.log and Logger.<calledMethod>
-      const stack = new Error().stack!.split('\n')
-      // relevant line of stack, either `at class.method (path/file:line:char)` or `at path/file:line:char`
-      // - Attention: path separator can be / or \ !
-      // - Can't build target class/method path if not present in stack, because some calls include internal node queue.
-      // - Printing file:line:char is beneficial only if output is not minified.
-      let src = stack[3].replace(/\s+at /, '')
+      // Stack, beginning with 'Error', Logger.log and Logger.<calledMethod>,
+      // followed by the relevant line.
+      // Relevant line of stack, either formatted
+      // - ` at Class.method (file:line:char)` [format A] or
+      // - ` at file:line:char` [format B]
+      const stackLine = new Error().stack!.split('\n')[3]
+      // Note: Don't try to derive the true source Class.method name if not
+      // present in relevant line - call stack may include internal node queue
+      // and filtering this is out of scope. Just use <anonymous> instead.
+      // remove leading whitespace and 'at '
+      let src = stackLine.replace(/\s+at /, '')
+      // unify format A and B
+      // trailing ')' = format A
       if (src.endsWith(')')) {
+        //... free file:line:char from brackets
         src = src.replace(/\((.*)\)/, '$1')
       } else {
+        //... prepend pseudo method name
         src = '<anonymous> ' + src
       }
       this.logger.addContext('stack', src)
