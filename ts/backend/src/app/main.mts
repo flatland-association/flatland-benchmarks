@@ -1,10 +1,20 @@
-import ansiStyles from 'ansi-styles'
+import { parseCommandLine } from './features/config/command-line.mjs'
 import { loadConfig } from './features/config/config.mjs'
+import { Logger } from './features/logger/logger.mjs'
 import { Server } from './features/server/server.mjs'
 import { AmpqService } from './features/services/ampq-service.mjs'
 import { AuthService } from './features/services/auth-service.mjs'
 import { SqlService } from './features/services/sql-service.mjs'
 import { Schema } from './features/setup/schema.mjs'
+
+// during boot, use defaults for logger
+Logger.setOptions({})
+
+const logger = new Logger('main')
+
+const options = parseCommandLine()
+
+Logger.setOptions(options)
 
 const config = loadConfig()
 // set up services first
@@ -18,6 +28,5 @@ Schema.setup().then(() => {
 })
 
 process.on('uncaughtException', (err: Error) => {
-  console.log(`${ansiStyles.red.open}Uncaught exception:${ansiStyles.reset.close}`)
-  console.log(err)
+  logger.error('Uncaught exception', err.name, err.message, err.stack)
 })

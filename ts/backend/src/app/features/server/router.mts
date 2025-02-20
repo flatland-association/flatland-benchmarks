@@ -7,11 +7,14 @@ import type { NextFunction, Request, Response, Router } from 'express'
 import express from 'express'
 import type { RequestHandler, RouteParameters } from 'express-serve-static-core'
 import { createClient } from 'redis'
+import { Logger } from '../logger/logger.mjs'
 import { AmpqService } from '../services/ampq-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import { Schema } from '../setup/schema.mjs'
 import { Server } from './server.mjs'
+
+const logger = new Logger('router')
 
 /**
  * Returns a short recap of requested endpoint (method + url) for logging.
@@ -234,7 +237,7 @@ export function router(_server: Server) {
 
   // Returns last message in amqp queue
   attachGet(router, '/ampq', async (req, res) => {
-    console.log(dbgRequestEndpoint(req))
+    logger.debug(dbgRequestEndpoint(req))
     const ampq = AmpqService.getInstance()
     const channel = await ampq.getChannel()
     // Using the pull API is *perfectly* fine here because this is a debug
@@ -249,7 +252,7 @@ export function router(_server: Server) {
 
   // Posts a message to amqp queue
   attachPost(router, '/ampq', async (req, res) => {
-    console.log(dbgRequestEndpoint(req))
+    logger.debug(dbgRequestEndpoint(req))
     // send message to debug queue
     const ampq = AmpqService.getInstance()
     const sent = await ampq.sendToQueue('debug', req.body)
@@ -501,7 +504,7 @@ export function router(_server: Server) {
     // try updating incomplete (no done_at) results
     if (!row.done_at) {
       const client = await createClient({ url: _server.config.redis.url })
-        .on('error', (err) => console.log('Redis Client Error', err))
+        .on('error', (err) => logger.error('Redis Client Error', err))
         .connect()
       const keys = await client.keys(`*-sub-${uuid}`)
 

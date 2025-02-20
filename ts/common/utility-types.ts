@@ -116,3 +116,20 @@ export type ResourceLocator<R extends Resource> = [R['dir'], ResourceId]
  * directory easier.
  */
 export type ConsolidatedResourceLocator<R extends Resource> = [R['dir'], ResourceId[]]
+
+/**
+ * Common type of elements in array.
+ * Array has to be defined as literal `as const` for this utility to work.
+ */
+export type ElementType<T extends readonly unknown[]> = T extends readonly (infer E)[] ? E : never
+
+/**
+ * Common property type of elements in array. Array has
+ * Array has to be defined as literal `as const` for this utility to work.
+ */
+export type ElementPropertyType<T extends readonly unknown[], P extends string> = T extends readonly Record<
+  P,
+  infer E
+>[]
+  ? E
+  : never

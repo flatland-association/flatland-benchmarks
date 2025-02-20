@@ -1,5 +1,7 @@
-import ansiStyles from 'ansi-styles'
+import { Logger } from '../logger/logger.mjs'
 import { SqlService } from '../services/sql-service.mjs'
+
+const logger = new Logger('migration')
 
 export class Schema {
   static sql: SqlService
@@ -145,31 +147,16 @@ export class Schema {
    * @see {@link SqlService.query}
    */
   private static migrate(label: string) {
-    const text = `Migrating ${label}`
     return async (strings: TemplateStringsArray, ...params: string[]) => {
-      this.log('busy', text)
+      logger.info(`Migrating "${label}" …`)
       // assume result will always be empty and can be ignored
       await this.sql.query(strings, ...params)
-      this.log(this.sql.errors ? 'error' : 'ok', text)
       if (this.sql.errors) {
         const [error] = this.sql.errors[0].message.split('\n')
-        console.log(error)
+        logger.error(`Migration "${label}" FAILED:`, error)
+      } else {
+        logger.info(`Migration "${label}" SUCCEEDED`)
       }
-    }
-  }
-
-  /**
-   * Outputs text with status indicator. Must always be ultimately used with
-   * `'ok'` or `'error'` i.o.t. proceed (line feed).
-   */
-  private static log(indicate: 'busy' | 'ok' | 'error', text: string) {
-    if (indicate === 'busy') {
-      // while busy, don't feed line
-      process.stdout.write(`${ansiStyles.blue.open}…${ansiStyles.reset.close} ${text}\r`)
-    } else if (indicate === 'ok') {
-      process.stdout.write(`${ansiStyles.green.open}✓${ansiStyles.reset.close} ${text}\n`)
-    } else {
-      process.stdout.write(`${ansiStyles.red.open}✗${ansiStyles.reset.close} ${text}\n`)
     }
   }
 }

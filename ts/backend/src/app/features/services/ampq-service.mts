@@ -1,8 +1,10 @@
 import { json } from '@common/utility-types.js'
 import amqp from 'amqplib'
-import ansiStyles from 'ansi-styles'
 import { configuration } from '../config/config.mjs'
+import { Logger } from '../logger/logger.mjs'
 import { Service } from './service.mjs'
+
+const logger = new Logger('ampq')
 
 /**
  * Service class providing common AMQP functionality.
@@ -19,9 +21,7 @@ export class AmpqService extends Service {
   }
 
   onError(err: unknown) {
-    console.log(`\n${ansiStyles.red.open}AMPQ Service error${ansiStyles.reset.close}`)
-    console.log(err)
-    console.log('\n')
+    logger.error(err as string)
     this.channel = undefined
     return undefined
   }
