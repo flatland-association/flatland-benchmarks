@@ -13,7 +13,7 @@ describe('SQL Service', () => {
     SqlService.create(config)
   })
 
-  it('SqlService is instantiated despite faulty config', () => {
+  it('is instantiated despite faulty config', () => {
     const sql = SqlService.getInstance()
     expect(sql).toBeTruthy()
   })
