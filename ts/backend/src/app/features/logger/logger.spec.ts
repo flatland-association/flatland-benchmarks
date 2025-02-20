@@ -23,7 +23,7 @@ describe('Logger', () => {
     })
   })
 
-  it('Applies --log-level', () => {
+  it('applies --log-level', () => {
     // --log-level=FATAL - only .fatal() should write to stdout
     logger.trace('noshow')
     logger.debug('noshow')
