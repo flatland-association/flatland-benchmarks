@@ -1,4 +1,4 @@
-import { json } from '@common/utility-types.mjs'
+import { json } from '@common/utility-types.js'
 import ansiStyles from 'ansi-styles'
 import log4js from 'log4js'
 import { cliOptions } from '../config/command-line.mjs'
