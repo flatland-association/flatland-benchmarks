@@ -1,79 +1,121 @@
 import { ApiRequest } from './api-request'
 import { ApiResponse } from './api-response'
 import { Benchmark, BenchmarkPreview, Result, Submission, SubmissionPreview, Test } from './interfaces'
-import { Empty, json, ResourceId, StripLocator } from './utility-types'
+import { Empty, json, NoNever, ResourceId, StripLocator } from './utility-types'
 
 /**
- * Base interface for registered API GET endpoints.
- * @param Query Type of request query. Use `Empty` to indicate absence.
- * @param Response Type of response body. Use `null` or `Empty` to indicate absence.
+ * Interface for registered enpoints. Types the request body, request query
+ * and response.
  */
-export interface ApiGetEndpoint<Query, Response> {
-  request: ApiRequest<Empty, Query>
+interface ApiEndpoint<Body = unknown, Query = unknown, Response = unknown> {
+  request: ApiRequest<Body, Query>
   response: ApiResponse<Response>
 }
 
 /**
- * Base interface for registered API POST endpoints.
- * @param Body Type of request body. Use `Empty` to indicate absence.
- * @param Response Type of response body. Use `null` or `Empty` to indicate absence.
+ * Registered endpoints per verb.
+ * Pairs of `Verb : ApiEndpoint`.
+ * @see {@link ApiEndpoint}
  */
-export interface ApiPostEndpoint<Body, Response> {
-  request: ApiRequest<Body, Empty>
-  response: ApiResponse<Response>
+interface ApiEndpointVerbs {
+  GET?: ApiEndpoint
+  POST?: ApiEndpoint
+  PATCH?: ApiEndpoint
+}
+
+// There is no way in TypeScript to enforce the types of an interfaces'
+// properties a priori - instead, give dev freedom to make mistakes and filter
+// those endpoints that actually match the `path: ApiEndpointVerbs` pattern
+// below (see ApiEndpoints below), otherwise any mistake in the definitions
+// would cause hard-to-track-down type errors in controllers.
+/**
+ * Registered API endpoints.
+ * Pairs of `path : ApiEndpointVerbs` with `path` being a string starting with
+ * `/`. Use `:<name>` syntax to set up named parameters.
+ * @see {@link ApiEndpointVerbs}
+ * @see {@link ApiEndpoint}
+ */
+interface ApiEndpointDefinitions {
+  '/mirror': {
+    GET: ApiEndpoint<Empty, Empty, string>
+    POST: ApiEndpoint<{ data: json }, Empty, { data: json }>
+  }
+  '/mirror/:id': {
+    GET: ApiEndpoint<Empty, Empty, string>
+  }
+  '/dbsetup': {
+    GET: ApiEndpoint<Empty, Empty, null>
+  }
+  '/ampq': {
+    GET: ApiEndpoint<Empty, Empty, string>
+    POST: ApiEndpoint<json, Empty, string>
+  }
+  '/whoami': {
+    GET: ApiEndpoint<Empty, Empty, json>
+  }
+  '/benchmarks': {
+    GET: ApiEndpoint<Empty, Empty, BenchmarkPreview[]>
+  }
+  '/benchmarks/:id': {
+    GET: ApiEndpoint<Empty, Empty, Benchmark[]>
+  }
+  '/tests/:id': {
+    GET: ApiEndpoint<Empty, Empty, Test[]>
+  }
+  '/submissions': {
+    GET: ApiEndpoint<Empty, { benchmark?: ResourceId; uuid?: string; submitted_by?: string }, SubmissionPreview[]>
+    POST: ApiEndpoint<StripLocator<Submission>, Empty, { uuid: string }>
+  }
+  '/submissions/:uuid': {
+    GET: ApiEndpoint<Empty, Empty, Submission[]>
+  }
+  '/submissions/:uuid/results': {
+    GET: ApiEndpoint<Empty, Empty, Result[]>
+  }
+  '/test': {
+    GET: ApiEndpoint<Empty, Empty, Test>
+  }
+  '/result': {
+    PATCH: ApiEndpoint<Partial<Result>, Empty, Result>
+  }
 }
 
 /**
- * Base interface for registered API PATCH endpoints.
- * @param Body Type of request body. Use `Empty` to indicate absence.
- * @param Response Type of response body. Use `null` or `Empty` to indicate absence.
+ * Type-saved version of `ApiEndpointDefinitions` with all non-conforming defs
+ * removed.
  */
-export interface ApiPatchEndpoint<Body, Response> {
-  request: ApiRequest<Body, Empty>
-  response: ApiResponse<Response>
-}
+export type ApiEndpoints = NoNever<{
+  [E in keyof ApiEndpointDefinitions]: ApiEndpointDefinitions[E] extends ApiEndpointVerbs
+    ? ApiEndpointDefinitions[E]
+    : never
+}>
+
+/**
+ * Registered API endpoints for given method.
+ * Extracted from `ApiEndpoints`
+ * @see {@link ApiEndpoints}
+ */
+export type ApiEndpointsOfVerb<V extends string> = NoNever<{
+  [EP in keyof ApiEndpoints]: ApiEndpoints[EP] extends Record<V, ApiEndpoint> ? ApiEndpoints[EP][V] : never
+}>
 
 /**
  * Registered API endpoints for GET method.
- * Pairs of `path : ApiGetEndpoint<Query, Response>` with `path` being a string
- * starting with `/`. Use `:<name>` syntax to set up named parameters.
- * @see {@link ApiGetEndpoint}
+ * Extracted from `ApiEndpoints`
+ * @see {@link ApiEndpoints}
  */
-// list endpoints return locators instead of full resources - dev.001
-// resource endpoints always return an array of said resource - dev.002
-export interface ApiGetEndpoints {
-  '/mirror': ApiGetEndpoint<Empty, string>
-  '/mirror/:id': ApiGetEndpoint<Empty, string>
-  '/dbsetup': ApiGetEndpoint<Empty, unknown>
-  '/ampq': ApiGetEndpoint<Empty, string>
-  '/whoami': ApiGetEndpoint<Empty, json>
-  '/benchmarks': ApiGetEndpoint<Empty, BenchmarkPreview[]>
-  '/benchmarks/:id': ApiGetEndpoint<Empty, Benchmark[]>
-  '/tests/:id': ApiGetEndpoint<Empty, Test[]>
-  '/submissions': ApiGetEndpoint<{ benchmark?: ResourceId; uuid?: string; submitted_by?: string }, SubmissionPreview[]>
-  '/submissions/:uuid': ApiGetEndpoint<Empty, Submission[]>
-  '/submissions/:uuid/results': ApiGetEndpoint<Empty, Result[]>
-  '/test': ApiGetEndpoint<Empty, Empty>
-}
+export type ApiGetEndpoints = ApiEndpointsOfVerb<'GET'>
 
 /**
  * Registered API endpoints for POST method.
- * Pairs of `path : ApiPostEndpoint<Body, Response>` with `path` being a string
- * starting with `/`. Use `:<name>` syntax to set up named parameters.
- * @see {@link ApiPostEndpoint} for syntax.
+ * Extracted from `ApiEndpoints`
+ * @see {@link ApiEndpoints}
  */
-export interface ApiPostEndpoints {
-  '/mirror': ApiPostEndpoint<{ data: unknown }, unknown>
-  '/ampq': ApiPostEndpoint<json, string>
-  '/submissions': ApiPostEndpoint<StripLocator<Submission>, { uuid: string }>
-}
+export type ApiPostEndpoints = ApiEndpointsOfVerb<'POST'>
 
 /**
  * Registered API endpoints for PATCH method.
- * Pairs of `path : ApiPatchEndpoint<Body, Response>` with `path` being a string
- * starting with `/`. Use `:<name>` syntax to set up named parameters.
- * @see {@link ApiPatchEndpoints} for syntax.
+ * Extracted from `ApiEndpoints`
+ * @see {@link ApiEndpoints}
  */
-export interface ApiPatchEndpoints {
-  '/result': ApiPatchEndpoint<Partial<Result>, Result>
-}
+export type ApiPatchEndpoints = ApiEndpointsOfVerb<'PATCH'>
