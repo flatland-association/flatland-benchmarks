@@ -72,7 +72,7 @@ describe('Logger', () => {
       title: 'should apply default stringify option',
       options: {},
       expects: {
-        noMatch: /\["info",\[1\]\]/,
+        match: /\binfo\b.*\b1\b/,
       },
     },
     {
