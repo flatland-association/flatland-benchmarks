@@ -72,19 +72,21 @@ describe('Logger', () => {
       title: 'should apply default stringify option',
       options: {},
       expects: {
-        noMatch: /\["info"/,
+        noMatch: /\["info",\[1\]\]/,
       },
     },
     {
       title: 'should apply configured --log-stringify option',
       options: { '--log-stringify': 'true' },
       expects: {
-        match: /\["info"/,
+        match: /\["info",\[1\]\]/,
       },
     },
   ])('$title', ({ options, expects }) => {
     Logger.setOptions(options)
     const logger = new Logger('logger-unit-test')
+    // pass a primitive and a non-primitive for the stringification test
+    // (it's passed always, but only checked in the stringify cases)
     logger.trace('trace', [1])
     logger.debug('debug', [1])
     logger.info('info', [1])
