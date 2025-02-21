@@ -85,7 +85,7 @@ describe('Logger', () => {
   ])('$title', ({ options, expects }) => {
     Logger.setOptions(options)
     const logger = new Logger('logger-unit-test')
-    logger.trace('trace', [options])
+    logger.trace('trace', [1])
     logger.debug('debug', [1])
     logger.info('info', [1])
     logger.warn('warn', [1])
