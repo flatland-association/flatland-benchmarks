@@ -3,6 +3,18 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.5.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.4.4...v0.5.0) (2025-02-21)
+
+
+### Features
+
+* **backend:** add configurable logger ([#147](https://github.com/flatland-association/flatland-benchmarks/issues/147)) ([e8a3b64](https://github.com/flatland-association/flatland-benchmarks/commit/e8a3b645b6e0ab52e8c06c83a82e3b62a8b0b420))
+
+
+### Bug Fixes
+
+* environment.yml for flatland-rl==4.0.4. Workaround can be removed with flatland==4.0.5. ([#163](https://github.com/flatland-association/flatland-benchmarks/issues/163)) ([69710a3](https://github.com/flatland-association/flatland-benchmarks/commit/69710a37dfeaa5263b6a2de2eeea9e6e58340b41))
+
 ## [0.4.4](https://github.com/flatland-association/flatland-benchmarks/compare/v0.4.3...v0.4.4) (2025-02-14)
 
 
