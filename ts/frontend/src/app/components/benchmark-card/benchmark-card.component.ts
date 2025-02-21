@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import { Benchmark, BenchmarkPreview } from '@common/interfaces.mjs'
+import { Benchmark, BenchmarkPreview } from '@common/interfaces'
 
 @Component({
   selector: 'app-benchmark-card',

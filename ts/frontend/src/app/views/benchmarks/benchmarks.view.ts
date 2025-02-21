@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import { BenchmarkPreview } from '@common/interfaces.mjs'
+import { BenchmarkPreview } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BenchmarkCardComponent } from '../../components/benchmark-card/benchmark-card.component'
 import { ApiService } from '../../features/api/api.service'

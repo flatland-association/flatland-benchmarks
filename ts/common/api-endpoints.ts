@@ -1,7 +1,7 @@
-import { ApiRequest } from './api-request.mjs'
-import { ApiResponse } from './api-response.mjs'
-import { Benchmark, BenchmarkPreview, Result, Submission, SubmissionPreview, Test } from './interfaces.mjs'
-import { Empty, json, ResourceId, StripLocator } from './utility-types.mjs'
+import { ApiRequest } from './api-request'
+import { ApiResponse } from './api-response'
+import { Benchmark, BenchmarkPreview, Result, Submission, SubmissionPreview, Test } from './interfaces'
+import { Empty, json, ResourceId, StripLocator } from './utility-types'
 
 /**
  * Base interface for registered API GET endpoints.

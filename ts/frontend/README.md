@@ -7,7 +7,7 @@ This project is an Angular web application. It was generated using [Angular CLI]
 To start a local development server, run the following command in `ts/frontend`:
 
 ```bash
-ng serve
+npm start
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
@@ -87,6 +87,14 @@ ng generate --help
 For other features without provided schematics (i.e. `type`, `const`, `function`), create the `.ts` file manually.
 
 For these kinds of features, no type infix is used. This is because one file could hold a mixture of feature types, especially when circular imports couldn't be prevented otherwise.
+
+### Unit tests
+
+Unit tests are not enforced per default. Instead unit test specs are added specifically using `ngx-spec:spec` and passing the corresponding unit file path (relative to `ts/frontend/src/app`). E.g.:
+
+```bash
+ng generate ngx-spec:spec features/api/api.service.ts
+```
 
 
 ## Building

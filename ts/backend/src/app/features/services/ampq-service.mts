@@ -1,4 +1,4 @@
-import { json } from '@common/utility-types.mjs'
+import { json } from '@common/utility-types.js'
 import amqp from 'amqplib'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'

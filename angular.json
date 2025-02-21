@@ -125,10 +125,16 @@
               {
                 "glob": "**/*",
                 "input": "ts/frontend/public"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/@flatland-association/flatland-ui/public",
+                "output": "ui"
               }
             ],
             "styles": [
-              "ts/frontend/src/styles.scss"
+              "ts/frontend/src/styles.scss",
+              "node_modules/@flatland-association/flatland-ui/src/styles.scss"
             ],
             "scripts": []
           }

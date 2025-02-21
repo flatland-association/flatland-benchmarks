@@ -4,7 +4,10 @@
   "description": "FAB Frontend",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build"
+    "start": "npm run private:serve & npm run private:test",
+    "build": "ng build",
+    "test": "ng test --watch=false --browsers=ChromeHeadless",
+    "private:serve": "ng serve",
+    "private:test": "ng test --browsers=ChromeHeadless"
   }
 }

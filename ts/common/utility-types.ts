@@ -1,4 +1,4 @@
-import { Resource } from './interfaces.mjs'
+import { Resource } from './interfaces'
 
 /**
  * Utility type for the empty object `{}`.

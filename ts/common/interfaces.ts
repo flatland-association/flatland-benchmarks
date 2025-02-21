@@ -1,6 +1,6 @@
 // putting everything in one file to minimize cyclic imports
 
-import { ResourceDir, ResourceId } from './utility-types.mjs'
+import { ResourceDir, ResourceId } from './utility-types'
 
 export interface Resource<Dir extends ResourceDir = ResourceDir> {
   /** Directory in which the resource lies. Identifies its type. */
