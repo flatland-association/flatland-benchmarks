@@ -31,9 +31,9 @@ describe('ApiService', () => {
     expect(service.buildUrl).toHaveBeenCalledTimes(2)
   })
 
-  it('should return a promise even in case of errors', () => {
+  it('should return a promise even in case of errors', async () => {
     // spy on buildUrl to build a 100% unreachable url
     spyOn(service, 'buildUrl').and.returnValue('http://127.0.0.1:0')
-    expect(service.get('/mirror').catch(() => undefined)).toBeInstanceOf(Promise)
+    await expectAsync(service.get('/mirror')).toBeRejected()
   })
 })
