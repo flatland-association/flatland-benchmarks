@@ -42,7 +42,7 @@ This will:
 * copy (non-overwriting) the `config.jsonc` to `out-tsc/backend/config` for your convenience
 * start the app in Node.js
 
-The server isn't live-updated. To reflect any changes made to the source code, `npm start` has to be ran again.
+The server isn't live-updated. To reflect any changes made to the source code, `npm start` has to be run again.
 
 The script will only write the output `config.jsonc` once. This allows you have a local configuration that differs from the template's. To get new template properties to your local `config.jsonc`, you'll either have to copy them manually or delete the file and let it be re-created from template by the script.
 

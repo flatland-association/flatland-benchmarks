@@ -4,7 +4,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
-    // needs configuration, see
+    // baseUrl and every common path needs configuration, see
     // https://github.com/karma-runner/karma/issues/2708
     "baseUrl": ".",
     "paths": {
