@@ -18,7 +18,7 @@ describe('SQL Service', () => {
     expect(sql).toBeTruthy()
   })
 
-  it('Does not abort query or throw error, writes to errors instead', async () => {
+  it('does not abort query or throw error, writes to errors instead', async () => {
     const sql = SqlService.getInstance()
     expect(sql.errors).toBeUndefined()
     const rows = await sql.query`SELECT * FROM tests`

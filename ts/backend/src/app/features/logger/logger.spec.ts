@@ -34,17 +34,17 @@ describe('Logger', () => {
     expect(stdoutSpy).toHaveBeenCalledTimes(1)
   })
 
-  it('Applies --log-colorful', () => {
+  it('applies --log-colorful', () => {
     // --log-colorful - check presence of ansi-styles
     expect(stdoutOutput.includes(ansiStyles.color.blue.open)).toBeTruthy()
   })
 
-  it('Applies --log-stack', () => {
+  it('applies --log-stack', () => {
     // --log-stack - expect stack format '(<caller> <file>:<line>:<char>)'
     expect(stdoutOutput.match(/\([^\s]+ .+:\d+:\d+\)/)).toBeTruthy()
   })
 
-  it('Applies --log-stringify', () => {
+  it('applies --log-stringify', () => {
     // --log-stringify - expect message to be stringified json
     expect(stdoutOutput.includes(JSON.stringify(['show']))).toBeTruthy()
   })
