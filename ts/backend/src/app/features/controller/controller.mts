@@ -123,6 +123,10 @@ export class Controller {
     this.router[verb](endpoint, async (req, res, next) => {
       try {
         await handler(req, res, next)
+        // force a server error if the handler did not respond
+        if (!res.writableEnded) {
+          next('Handler did not respond')
+        }
       } catch (error) {
         next(error)
       }
