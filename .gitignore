@@ -90,6 +90,9 @@ celerybeat-schedule
 
 # dotenv
 .env
+.env.*
+!.env.template
+!.env.*.template
 
 # virtualenv
 .venv
