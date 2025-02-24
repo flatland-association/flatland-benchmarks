@@ -23,7 +23,7 @@ interface ApiEndpointVerbs {
   PATCH?: ApiEndpoint
 }
 
-// There is no way in TypeScript to enforce the types of an interfaces'
+// There is no way in TypeScript to enforce the types of an interface's
 // properties a priori - instead, give dev freedom to make mistakes and filter
 // those endpoints that actually match the `path: ApiEndpointVerbs` pattern
 // below (see ApiEndpoints below), otherwise any mistake in the definitions
