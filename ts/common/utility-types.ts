@@ -22,6 +22,13 @@ export type BanEmpty<T> =
   }
 
 /**
+ * Utility type removing all properties with type `never`.
+ */
+export type NoNever<T> = {
+  [K in keyof T as T[K] extends never ? never : K]: T[K]
+}
+
+/**
  * Guard type checking that `T` is not a key of `R`.
  */
 export type NotKeyOf<T, R> = T extends keyof R ? never : T
