@@ -1,5 +1,5 @@
-import { ApiEndpointsOfVerb, ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoints } from '@common/api-endpoints.mjs'
-import { ApiResponse } from '@common/api-response.mjs'
+import { ApiEndpointsOfVerb, ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoints } from '@common/api-endpoints.js'
+import { ApiResponse } from '@common/api-response.js'
 import express, { NextFunction, Request, Response, Router } from 'express'
 import type { RouteParameters } from 'express-serve-static-core'
 import { configuration } from '../config/config.mjs'
