@@ -1,8 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "../../out-tsc/backend-build",
-    "rootDirs": ["./src", "../common"],
     "paths": {
       "@common/*": ["../common/*"]
     },
@@ -20,7 +18,4 @@
     "target": "ES2022",
     "module": "ES2022"
   },
-  "files": [
-    "src/app/main.mts"
-  ]
 }
