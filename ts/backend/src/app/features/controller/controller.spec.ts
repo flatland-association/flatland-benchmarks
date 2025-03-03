@@ -47,9 +47,7 @@ describe.sequential('Controller', () => {
     controller.attachGet('/test-undefined' as '/mirror', (_req, _res) => {
       /* */
     })
-  })
-
-  test('should have handlers attached', () => {
+    // test for routes presence
     const routes = getControllerRoutes(controller)
     expect(routes).toContain('/test-get')
     expect(routes).toContain('/test-request-error')
@@ -57,7 +55,8 @@ describe.sequential('Controller', () => {
     expect(routes).toContain('/test-server-error')
     expect(routes).toContain('/test-catch')
     expect(routes).toContain('/test-undefined')
-    expect(routes).not.toContain('/mirror')
+    // no more than the the explicitely attached routes should be present
+    expect(routes).toHaveLength(6)
   })
 
   test.each([
