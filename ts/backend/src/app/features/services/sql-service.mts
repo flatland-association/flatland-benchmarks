@@ -100,3 +100,15 @@ export class SqlService extends Service {
     `
   }
 }
+
+/**
+ * Returns an object based off current SqlService state.
+ * @param sql SqlService instance
+ */
+export function dbgSqlState(sql: SqlService) {
+  return {
+    notices: sql.notices,
+    errors: sql.errors,
+    statement: sql.statement,
+  }
+}

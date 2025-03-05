@@ -2,8 +2,11 @@ import cors from 'cors'
 import type { Express } from 'express'
 import express from 'express'
 import { configuration } from '../config/config.mjs'
+import { BenchmarkController } from '../controller/benchmark.controller.mjs'
+import { DebugController } from '../controller/debug.controller.mjs'
+import { SubmissionController } from '../controller/submission.controller.mjs'
+import { TestController } from '../controller/test.controller.mjs'
 import { Logger } from '../logger/logger.mjs'
-import { router } from './router.mjs'
 
 const logger = new Logger('server')
 
@@ -22,8 +25,11 @@ export class Server {
     // only communicate in JSON on public API
     this.app.use(express.json())
 
-    // use routes from router
-    this.app.use(router(this))
+    // use routes from controllers
+    this.app.use(new DebugController(this.config).router)
+    this.app.use(new BenchmarkController(this.config).router)
+    this.app.use(new TestController(this.config).router)
+    this.app.use(new SubmissionController(this.config).router)
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.app.use((err: any, _req: unknown, res: any, next: any) => {
