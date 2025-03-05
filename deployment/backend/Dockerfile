@@ -19,4 +19,4 @@ RUN mkdir -p /usr/src/app/dist/backend/config/
 
 WORKDIR /usr/src/app/dist/backend/app
 
-CMD ["node", "main.min.js"]
+CMD ["node", "main.min.mjs"]
