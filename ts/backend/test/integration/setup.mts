@@ -37,6 +37,8 @@ config.keycloak.url.replace('8081', '28081')
 
 export const testConfig = config
 
+const DOCKER_COMPOSE_TIMEOUT = 5 * 60 * 1000 // ms
+
 let environment: StartedDockerComposeEnvironment
 
 // setup function - called by vitest once for test setup
@@ -46,10 +48,12 @@ export async function setup() {
   // https://github.com/testcontainers/testcontainers-node/issues/818
   // https://github.com/nodejs/node/issues/56137
   process.env['TESTCONTAINERS_HOST_OVERRIDE'] = '127.0.0.1'
-  environment = await new DockerComposeEnvironment(composeFilePath, composeFile).up()
+  environment = await new DockerComposeEnvironment(composeFilePath, composeFile)
+    .withStartupTimeout(DOCKER_COMPOSE_TIMEOUT)
+    .up()
 }
 
 // teardown function - called by vitest once for test teardown
 export async function teardown() {
-  await environment.down()
+  await environment?.down()
 }
