@@ -11,11 +11,11 @@ and reconfigure ports and volumes, as they might conflict.
 */
 
 const composeFilePath = '../../evaluation' // relative to ts/backend
-const composeFile = 'docker-compose.yml'
+const composeFile = 'docker-compose-test.yml'
 const envFile = '.env'
 const envTestFile = '.env.test'
 
-const DOCKER_COMPOSE_TIMEOUT = 5 * 60 * 1000 // ms
+const DOCKER_COMPOSE_TIMEOUT = 1 * 60 * 1000 // ms
 
 let environment: StartedDockerComposeEnvironment
 

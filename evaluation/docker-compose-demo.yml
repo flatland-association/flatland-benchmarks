@@ -1,152 +1,38 @@
 services:
   postgres:
-    image: postgres:15
-    hostname: postgres
-    env_file: .env
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_USER}
-      - POSTGRES_DB=${POSTGRES_DB}
-    ports:
-      - ${POSTGRES_PORT}:5432
+    extends:
+      file: docker-compose-base.yml
+      service: postgres
 
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready", "-d", "${POSTGRES_DB}" ]
-      interval: 30s
-      timeout: 60s
-      retries: 5
-      start_period: 80s
-    networks:
-      - flatland-benchmarks
   redis:
-    image: redis
-    ports:
-      - ${REDIS_PORT:-6379}:6379
-    restart: unless-stopped
-    logging:
-      options:
-        max-size: "20m"
-        max-file: "5"
-    networks:
-      - flatland-benchmarks
+    extends:
+      file: docker-compose-base.yml
+      service: redis
 
   redis-monitor:
-    image: redis
-    command: redis-cli -h redis -p 6379 monitor
-    restart: unless-stopped
-    logging:
-      options:
-        max-size: "20m"
-        max-file: "5"
-    depends_on:
-      redis:
-        condition: service_started
-    networks:
-      - flatland-benchmarks
+    extends:
+      file: docker-compose-base.yml
+      service: redis-monitor
 
   rabbit:
-    build:
-      context: rabbitmq
-      dockerfile: Dockerfile
-      args:
-        - WORKER_CONNECTION_TIMEOUT=${WORKER_CONNECTION_TIMEOUT}
-    hostname: rabbit
-    env_file: .env
-    environment:
-      - http_proxy=${RABBITMQ_HTTP_PROXY}
-      - https_proxy=${RABBITMQ_HTTPS_PROXY}
-      - no_proxy=${RABBITMQ_NO_PROXY}
-    ports:
-      - ${RABBITMQ_MANAGEMENT_PORT:-15672}:15672
-      - ${RABBITMQ_PORT}:5672
-    restart: unless-stopped
-    logging:
-      options:
-        max-size: "20m"
-        max-file: "5"
-    healthcheck:
-      test: rabbitmqctl status
-      interval: 10s
-      timeout: 10s
-      retries: 30
-    networks:
-      - flatland-benchmarks
+    extends:
+      file: docker-compose-base.yml
+      service: rabbit
 
   minio:
-    hostname: minio
-    image: "minio/minio:RELEASE.2024-11-07T00-52-20Z"
-    restart: on-failure
-    ports:
-      - "${MINIO_PORT}:${MINIO_PORT}"
-      - "${MINIO_CONSOLE_PORT}:${MINIO_CONSOLE_PORT}"
-    environment:
-      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
-      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
-    healthcheck:
-      test: [ "CMD", "bash", "-c", "curl -v --fail 127.0.0.1:${MINIO_PORT}/minio/health/ready" ]
-      interval: 5s
-      timeout: 1s
-      retries: 5
-    command: server /data --address :${MINIO_PORT} --console-address :${MINIO_CONSOLE_PORT}
-    networks:
-      - flatland-benchmarks
+    extends:
+      file: docker-compose-base.yml
+      service: minio
 
   minio_setup:
-    image: minio/mc:RELEASE.2024-11-05T11-29-45Z
-    depends_on:
-      minio:
-        condition: service_healthy
-    entrypoint: [ "/bin/sh","-c" ]
-    command:
-      - |
-        set -x
-        set -e
-        /usr/bin/mc config host add myminio http://minio:${MINIO_PORT} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
+    extends:
+      file: docker-compose-base.yml
+      service: minio_setup
 
-        /usr/bin/mc mb myminio/${S3_BUCKET}
-
-        echo "createbuckets successful"
-    networks:
-      - flatland-benchmarks
   compute_worker:
-    # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
-    command: python -m celery -A tasks worker -l info -n compute-worker@%n
-    build:
-      context: ./compute_worker
-      dockerfile: Dockerfile_docker_compose
-    depends_on:
-      rabbit:
-        condition: service_healthy
-      minio_setup:
-        condition: service_completed_successfully
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./compute_worker/tasks_docker_compose.py:/app/tasks.py
-    env_file: .env
-    environment:
-      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
-      - REDIS_IP=redis://redis:6379
-      - HOST_DIRECTORY=${PWD}
-      - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
-      - S3_BUCKET=${S3_BUCKET}
-      # for backend to S3 communication, use internal docker hostname
-      - AWS_ENDPOINT_URL=http://minio:${MINIO_PORT}
-      - AWS_ACCESS_KEY_ID=${MINIO_ROOT_USER}
-      - AWS_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD}
-      # TODO remove:
-      - S3_UPLOAD_PATH_TEMPLATE=${S3_UPLOAD_PATH_TEMPLATE}
-      - S3_UPLOAD_WITH_SUBMISSION_ID=true
-      - S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=${S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}
-
-
-    logging:
-      options:
-        max-size: "20m"
-        max-file: "5"
-    healthcheck:
-      test: celery -A tasks inspect ping
-    networks:
-      - flatland-benchmarks
+    extends:
+      file: docker-compose-base.yml
+      service: compute_worker
 
   fab-backend:
     image: ghcr.io/flatland-association/fab-backend:latest
@@ -171,6 +57,6 @@ services:
         condition: service_healthy
     ports:
       - 80:80
+
 networks:
   flatland-benchmarks:
-
