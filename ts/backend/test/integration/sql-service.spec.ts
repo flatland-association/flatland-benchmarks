@@ -1,11 +1,12 @@
 import { SqlService } from '../../src/app/features/services/sql-service.mjs'
 import { Schema } from '../../src/app/features/setup/schema.mjs'
-import { testConfig } from './setup.mjs'
+import { getTestConfig } from './setup.mjs'
 
 const SETUP_TIMEOUT = 30 * 1000 // ms
 
 describe.sequential('SQL Service (with Postgres)', () => {
   beforeAll(async () => {
+    const testConfig = await getTestConfig()
     SqlService.create(testConfig)
   })
 
