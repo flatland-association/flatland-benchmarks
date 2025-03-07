@@ -21,7 +21,7 @@ services:
   redis:
     image: redis
     ports:
-      - 6379:6379
+      - ${REDIS_PORT:-6379}:6379
     restart: unless-stopped
     logging:
       options:
@@ -124,7 +124,7 @@ services:
       - ./compute_worker/tasks_docker_compose.py:/app/tasks.py
     env_file: .env
     environment:
-      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//
+      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
       - REDIS_IP=redis://redis:6379
       - HOST_DIRECTORY=${PWD}
       - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks

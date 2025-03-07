@@ -40,7 +40,7 @@ services:
   redis:
     image: redis
     ports:
-      - 6379:6379
+      - ${REDIS_PORT:-6379}:6379
     restart: unless-stopped
     logging:
       options:
@@ -144,7 +144,7 @@ services:
       - ./compute_worker/tasks_docker_compose.py:/app/tasks.py
     env_file: .env
     environment:
-      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:${RABBITMQ_PORT}//
+      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
       - REDIS_IP=redis://redis:6379
       - HOST_DIRECTORY=${PWD}
       - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
@@ -168,10 +168,10 @@ services:
 
   keycloak:
     image: quay.io/keycloak/keycloak:23.0
-    # as we need to access keycloak from backend Docker container under docker internal port, we need to start Keycloak on 8081, port forwarding in Docker run is not enough
-    command: start-dev --import-realm --http-port 8081 --hostname localhost
+    # as we need to access keycloak from backend Docker container under docker internal port, we need to start Keycloak on configured port, port forwarding in Docker run is not enough
+    command: start-dev --import-realm --http-port ${KEYCLOAK_PORT:-8081} --hostname localhost
     ports:
-      - 8081:8081
+      - ${KEYCLOAK_PORT:-8081}:${KEYCLOAK_PORT:-8081}
     volumes:
       # TODO can we avoid copying the realm config? Download in an init container from the repo....?
       - ./keycloak/netzgrafikeditor-realm.json:/opt/keycloak/data/import/netzgrafikeditor-realm.json
