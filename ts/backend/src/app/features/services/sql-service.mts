@@ -86,19 +86,6 @@ export class SqlService extends Service {
 
     this.fragment = this._query
   }
-
-  /**
-   * Sets up tables in database.
-   * @returns query result
-   */
-  setup() {
-    return this._query`
-      CREATE TABLE submissions (
-        id SERIAL PRIMARY KEY,
-        submission_image VARCHAR(256) NOT NULL
-      )
-    `
-  }
 }
 
 /**

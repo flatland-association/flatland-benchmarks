@@ -1,4 +1,4 @@
-import { SqlService } from '../../src/app/features/services/sql-service.mjs'
+import { dbgSqlState, SqlService } from '../../src/app/features/services/sql-service.mjs'
 import { Schema } from '../../src/app/features/setup/schema.mjs'
 import { getTestConfig } from './setup.mjs'
 
@@ -51,5 +51,17 @@ describe.sequential('SQL Service (with Postgres)', () => {
     `
     expect(rows).toEqual([])
     expect(sql.errors).toBeTruthy()
+  })
+
+  test('should silence notices', async () => {
+    const sql = SqlService.getInstance()
+    const rows = await sql.query`
+      DROP TABLE IF EXISTS 🥳
+    `
+    const dbg = dbgSqlState(sql)
+    expect(rows).toEqual([])
+    expect(dbg.notices?.length).toBe(1)
+    expect(dbg.notices?.at(0)?.['severity']).toBe('NOTICE')
+    expect(dbg.notices?.at(0)?.['message']).toMatch('does not exist, skipping')
   })
 })
