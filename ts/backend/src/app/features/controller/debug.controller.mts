@@ -1,8 +1,7 @@
 import { configuration } from '../config/config.mjs'
 import { AmpqService } from '../services/ampq-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
-import { Schema } from '../setup/schema.mjs'
-import { Controller, dbgRequestObject, GetHandler, PostHandler } from './controller.mjs'
+import { Controller, dbgRequestObject, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
 
 export class DebugController extends Controller {
   constructor(config: configuration) {
@@ -11,14 +10,9 @@ export class DebugController extends Controller {
     this.attachGet('/mirror', this.getMirror)
     this.attachGet('/mirror/:id', this.getMirrorById)
     this.attachPost('/mirror', this.postMirror)
+    this.attachPatch('/mirror/:id', this.patchMirrorById)
     this.attachPost('/ampq', this.postAmqp)
     this.attachGet('/whoami', this.getWhoami)
-
-    // deprecated, remove:
-    this.attachGet('/dbsetup', async (req, res) => {
-      Schema.setup()
-      this.respond(res, null)
-    })
   }
 
   getMirror: GetHandler<'/mirror'> = (req, res) => {
@@ -38,6 +32,10 @@ export class DebugController extends Controller {
     } else {
       this.respond(res, req.body, dbgRequestObject(req))
     }
+  }
+
+  patchMirrorById: PatchHandler<'/mirror/:id'> = (req, res) => {
+    this.respond(res, { data: 'This is the PATCH /mirror/:id endpoint' }, dbgRequestObject(req))
   }
 
   // Posts a message to amqp queue
