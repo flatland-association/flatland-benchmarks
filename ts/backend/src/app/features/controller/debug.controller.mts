@@ -1,5 +1,5 @@
 import { configuration } from '../config/config.mjs'
-import { AmpqService } from '../services/ampq-service.mjs'
+import { AmqpService } from '../services/amqp-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { Controller, dbgRequestObject, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
 
@@ -11,7 +11,7 @@ export class DebugController extends Controller {
     this.attachGet('/mirror/:id', this.getMirrorById)
     this.attachPost('/mirror', this.postMirror)
     this.attachPatch('/mirror/:id', this.patchMirrorById)
-    this.attachPost('/ampq', this.postAmqp)
+    this.attachPost('/amqp', this.postAmqp)
     this.attachGet('/whoami', this.getWhoami)
   }
 
@@ -39,10 +39,10 @@ export class DebugController extends Controller {
   }
 
   // Posts a message to amqp queue
-  postAmqp: PostHandler<'/ampq'> = async (req, res) => {
+  postAmqp: PostHandler<'/amqp'> = async (req, res) => {
     // send message to debug queue
-    const ampq = AmpqService.getInstance()
-    const sent = await ampq.sendToQueue('debug', req.body)
+    const amqp = AmqpService.getInstance()
+    const sent = await amqp.sendToQueue('debug', req.body)
     // report what was sent
     if (sent) {
       this.respond(res, `relayed to "debug": ${JSON.stringify(req.body)}`)

@@ -47,7 +47,7 @@ interface ApiEndpointDefinitions {
   '/dbsetup': {
     GET: ApiEndpoint<Empty, Empty, null>
   }
-  '/ampq': {
+  '/amqp': {
     GET: ApiEndpoint<Empty, Empty, string>
     POST: ApiEndpoint<json, Empty, string>
   }
