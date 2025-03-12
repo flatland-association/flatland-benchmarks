@@ -26,8 +26,10 @@ interface CommandLineArg {
   evaluator?: (val?: string) => string | undefined
 }
 
-// known command line arguments - the order here defines order of evaluation
-const commandLineArgs: CommandLineArg[] = [
+export const flagEvaluator = (val?: string) => (val === 'false' ? 'false' : 'true')
+
+// known command line arguments
+export const commandLineArgs: CommandLineArg[] = [
   {
     argument: '--help',
     alias: '-h',
@@ -57,63 +59,53 @@ const commandLineArgs: CommandLineArg[] = [
     description: 'Include logging source (method and file path) in log.',
     type: 'false | <any other value>',
     default: 'false',
-    evaluator: (val) => (val === 'false' ? 'false' : 'true'),
+    evaluator: flagEvaluator,
   },
   {
     argument: '--log-colorful',
     description: 'Enable colorful terminal output for log.',
     type: 'false | <any other value>',
     default: 'false',
-    evaluator: (val) => (val === 'false' ? 'false' : 'true'),
+    evaluator: flagEvaluator,
   },
   {
     argument: '--log-stringify',
     description: 'Output log messages as stringified JSON.',
     type: 'false | <any other value>',
     default: 'false',
-    evaluator: (val) => (val === 'false' ? 'false' : 'true'),
+    evaluator: flagEvaluator,
   },
 ] as const
 
 // read command line arguments and pass them to their respective evaluators
 export function parseCommandLine() {
-  // turn into map first i.o.t. remove duplicates and let the order be defined
-  // by consumer (that is, this file)
-  const args = new Map(
-    process.argv.slice(2).map((arg) => {
-      const [key, value] = arg.split('=')
-      return [key, value] as const
-    }),
-  )
   const options: cliOptions = {}
-  commandLineArgs.forEach((cla) => {
-    let has = false
-    let val: string | undefined
-    // check for argument (full) first
-    if (args.has(cla.argument)) {
-      has = true
-      val = args.get(cla.argument)
-    }
-    //... and only then check for alias. Otherwise de-duplicating could be circumvented.
-    else if (cla.alias && args.has(cla.alias)) {
-      has = true
-      val = args.get(cla.alias)
-    }
-    if (has) {
-      // evaluate
-      if (cla.evaluator) {
-        options[cla.argument] = cla.evaluator(val)
-      } else {
-        options[cla.argument] = val
+  const parsedArguments = new Set<string>()
+  // skip first two argvs - these are working dir and entry file
+  process.argv.slice(2).forEach((arg) => {
+    const { 0: key, 1: value } = arg.split('=')
+    // find matching arg definition
+    const cla = commandLineArgs.find((cla) => key === cla.argument || key === cla.alias)
+    // evaluate valid arguments
+    if (cla) {
+      // apply/evaluate first occurrence only
+      if (!parsedArguments.has(cla.argument)) {
+        parsedArguments.add(cla.argument)
+        if (cla.evaluator) {
+          options[cla.argument] = cla.evaluator(value)
+        } else {
+          options[cla.argument] = value
+        }
       }
-      // dispose
-      args.delete(cla.argument)
-      if (cla.alias) args.delete(cla.alias)
+      // report duplicates
+      else {
+        logger.warn('Duplicate command line argument', key)
+      }
     }
-  })
-  // if args are left (undeleted) it means undefined args were given
-  Array.from(args.keys()).forEach((key) => {
-    logger.error('Invalid command line argument', key)
+    // report invalid arguments
+    else {
+      logger.error('Invalid command line argument', key)
+    }
   })
   return options
 }
