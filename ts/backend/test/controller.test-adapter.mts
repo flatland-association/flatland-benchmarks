@@ -1,14 +1,16 @@
-import { ApiGetEndpoints } from '@common/api-endpoints'
-import { ApiGetOptions } from '@common/api-types'
+import { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints'
+import { ApiGetOptions, ApiPostOptions } from '@common/api-types'
 import { interpolateEndpoint } from '@common/endpoint-utils'
 import { BanEmpty } from '@common/utility-types'
 import type { Express } from 'express'
 import express from 'express'
+import { JwtPayload } from 'jsonwebtoken'
 import supertest from 'supertest'
 import TestAgent from 'supertest/lib/agent'
-import { expect } from 'vitest'
+import { expect, MockInstance, vi } from 'vitest'
 import { configuration } from '../src/app/features/config/config.mjs'
 import { Controller } from '../src/app/features/controller/controller.mjs'
+import { AuthService } from '../src/app/features/services/auth-service.mjs'
 
 /*
 Globally extend vitest for custom API tests.
@@ -48,8 +50,25 @@ export class ControllerTestAdapter {
   constructor(ctor: typeof Controller, config: configuration) {
     this.controller = new ctor(config)
     this.app = express()
+    this.app.use(express.json())
     this.request = supertest(this.app)
     this.app.use(this.controller.router)
+  }
+
+  // Wraps callback in a mocked authorized state
+  private async authWrap<T>(cb: () => Promise<T>, jwt: JwtPayload | null = null) {
+    // if a jwt is provided, mock AuthService to pass authorization with that
+    let authMock: MockInstance | undefined
+    if (jwt) {
+      authMock = vi.spyOn(AuthService.prototype, 'authorization').mockResolvedValue(jwt)
+    }
+    // controller callback
+    const result = await cb()
+    // undo AuthService mocking
+    if (authMock) {
+      authMock.mockReset()
+    }
+    return result
   }
 
   /**
@@ -58,12 +77,39 @@ export class ControllerTestAdapter {
   async testGet<E extends keyof ApiGetEndpoints>(
     endpoint: E,
     options: BanEmpty<ApiGetOptions<E>>,
+    jwt: JwtPayload | null = null,
   ): Promise<{
     status: number
     body: ApiGetEndpoints[E]['response']
   }> {
-    // @ts-expect-error params
-    return this.request.get(this.buildEndpoint(endpoint, options?.params))
+    return this.authWrap(() => {
+      // @ts-expect-error params
+      return this.request.get(this.buildEndpoint(endpoint, options?.params))
+    }, jwt)
+  }
+
+  /**
+   * Mocks a POST request.
+   */
+  async testPost<E extends keyof ApiPostEndpoints>(
+    endpoint: E,
+    options: BanEmpty<ApiPostOptions<E>>,
+    jwt: JwtPayload | null = null,
+  ): Promise<{
+    status: number
+    body: ApiPostEndpoints[E]['response']
+  }> {
+    return this.authWrap(() => {
+      return (
+        this.request
+          // @ts-expect-error params
+          .post(this.buildEndpoint(endpoint, options?.params))
+          // @ts-expect-error body
+          .send((options.body as object) ?? undefined)
+          .set('Content-Type', 'application/json')
+          .set('Accept', 'application/json')
+      )
+    }, jwt)
   }
 
   // Equivalent to ApiService.buildUrl except it doesn't prepend `apiBase`,
