@@ -3,7 +3,7 @@ import { defaults } from '../../src/app/features/config/defaults.mjs'
 import { AmqpService } from '../../src/app/features/services/amqp-service.mjs'
 import { getTestConfig } from './setup.mjs'
 
-describe('AMQP Service', () => {
+describe.sequential('AMQP Service', () => {
   describe('offline', () => {
     let onErrorSpy: MockInstance
 
@@ -13,6 +13,10 @@ describe('AMQP Service', () => {
       myConfig.amqp.port = 1
       AmqpService.create(myConfig)
       onErrorSpy = vi.spyOn(AmqpService.prototype, 'onError')
+    })
+
+    afterAll(() => {
+      onErrorSpy.mockReset()
     })
 
     // This does not cover the case where an established connection vanishes!
