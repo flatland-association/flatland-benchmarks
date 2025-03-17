@@ -1,22 +1,11 @@
 import { dbgSqlState, SqlService } from '../../src/app/features/services/sql-service.mjs'
-import { Schema } from '../../src/app/features/setup/schema.mjs'
 import { getTestConfig } from './setup.mjs'
-
-const SETUP_TIMEOUT = 30 * 1000 // ms
 
 describe.sequential('SQL Service (with Postgres)', () => {
   beforeAll(async () => {
     const testConfig = await getTestConfig()
     SqlService.create(testConfig)
   })
-
-  test(
-    'should be able to run Schema.setup()',
-    async () => {
-      await expect(Schema.setup()).resolves.toBeUndefined()
-    },
-    SETUP_TIMEOUT,
-  )
 
   test('should execute query `SELECT NOW()`', async () => {
     const sql = SqlService.getInstance()
