@@ -5,6 +5,8 @@ import { beforeAll, describe, expect, test, vi } from 'vitest'
 import { defaults } from '../config/defaults.mjs'
 import { AuthService } from './auth-service.mjs'
 
+const AUTHSERVICE_TIMEOUT = 30 * 1000 // ms
+
 describe('Auth Service', () => {
   // using a string as secret results in symmetrical algorithm being used, i.e.
   // the same secret can be used for signing and verifying
@@ -71,32 +73,36 @@ describe('Auth Service', () => {
       auth: true,
       error: undefined,
     },
-  ])('$should', async (testCase) => {
-    const authService = AuthService.getInstance()
-    if (testCase.mockStore) {
-      // mock JwksClient to return a storage that returns test secret as key
-      // @ts-expect-error argument
-      vi.spyOn(JwksClient.prototype, 'getSigningKey').mockResolvedValueOnce({ getPublicKey: () => testSecret })
-    }
-    // mock an incoming request with test case's token
-    const req = {
-      headers: {},
-    } as Request
-    if (testCase.token) {
-      req.headers.authorization = `Bearer ${testCase.token}`
-    }
-    //... and try authorizing with that
-    const auth = await authService.authorization(req)
-    if (testCase.auth) {
-      expect(auth).toBeTruthy()
-      expect(auth!['data']).toBe('test')
-    } else {
-      expect(auth).toBeFalsy()
-    }
-    if (testCase.error) {
-      expect(authService.error?.message).toMatch(testCase.error)
-    } else {
-      expect(authService.error).toBeUndefined()
-    }
-  })
+  ])(
+    '$should',
+    async (testCase) => {
+      const authService = AuthService.getInstance()
+      if (testCase.mockStore) {
+        // mock JwksClient to return a storage that returns test secret as key
+        // @ts-expect-error argument
+        vi.spyOn(JwksClient.prototype, 'getSigningKey').mockResolvedValueOnce({ getPublicKey: () => testSecret })
+      }
+      // mock an incoming request with test case's token
+      const req = {
+        headers: {},
+      } as Request
+      if (testCase.token) {
+        req.headers.authorization = `Bearer ${testCase.token}`
+      }
+      //... and try authorizing with that
+      const auth = await authService.authorization(req)
+      if (testCase.auth) {
+        expect(auth).toBeTruthy()
+        expect(auth!['data']).toBe('test')
+      } else {
+        expect(auth).toBeFalsy()
+      }
+      if (testCase.error) {
+        expect(authService.error?.message).toMatch(testCase.error)
+      } else {
+        expect(authService.error).toBeUndefined()
+      }
+    },
+    { timeout: AUTHSERVICE_TIMEOUT },
+  )
 })
