@@ -18,6 +18,7 @@ describe('Benchmark controller', () => {
     expect(res.status).toBe(200)
     expect(res.body).toBeApiResponse()
     // TODO: test interface equality only
+    // relies on https://github.com/flatland-association/flatland-benchmarks/issues/181
     const proto = [
       {
         dir: '/benchmarks/',
@@ -34,6 +35,7 @@ describe('Benchmark controller', () => {
     expect(res.status).toBe(200)
     expect(res.body).toBeApiResponse()
     // TODO: test interface equality only
+    // relies on https://github.com/flatland-association/flatland-benchmarks/issues/181
     const proto = [
       {
         dir: '/benchmarks/',
