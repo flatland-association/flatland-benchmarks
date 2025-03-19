@@ -25,5 +25,6 @@ export const defaults = {
   keycloak: {
     url: 'http://localhost:8081',
     realm: 'netzgrafikeditor',
+    timeout: 30000,
   },
 }

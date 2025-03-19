@@ -29,7 +29,7 @@ export class AuthService extends Service {
     // as-per-standard uri where JWT key set can be found
     const jwksUri = `${this.config.keycloak.url}/realms/${this.config.keycloak.realm}/protocol/openid-connect/certs`
     // get the public key for the JWT in question
-    const client = new JwksClient({ jwksUri })
+    const client = new JwksClient({ jwksUri, timeout: this.config.keycloak.timeout })
     client
       .getSigningKey(header.kid)
       .then((key) => {
