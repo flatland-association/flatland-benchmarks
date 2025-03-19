@@ -36,18 +36,5 @@ services:
       file: docker-compose-base.yml
       service: compute_worker
 
-  keycloak:
-    image: quay.io/keycloak/keycloak:23.0
-    # as we need to access keycloak from backend Docker container under docker internal port, we need to start Keycloak on configured port, port forwarding in Docker run is not enough
-    command: start-dev --import-realm --http-port ${KEYCLOAK_PORT:-8081} --hostname localhost
-    ports:
-      - ${KEYCLOAK_PORT:-8081}:${KEYCLOAK_PORT:-8081}
-    volumes:
-      # TODO can we avoid copying the realm config? Download in an init container from the repo....?
-      - ./keycloak/netzgrafikeditor-realm.json:/opt/keycloak/data/import/netzgrafikeditor-realm.json
-    environment:
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=netzgrafikeditor
-
 networks:
   flatland-benchmarks:
