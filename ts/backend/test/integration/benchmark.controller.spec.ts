@@ -42,7 +42,7 @@ describe('Benchmark controller', () => {
         name: 'Flatland 3',
         description: 'This is the first permanent Flatland benchmark.',
         docker_image: 'ghcr.io/flatland-association/fab-flatland-evaluator:latest',
-        tests: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+        tests: [1, 2],
       },
     ] satisfies ApiGetEndpoints['/benchmarks/:id']['response']['body']
     expect(res.body.body).toEqual(proto)

@@ -3,8 +3,6 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { DockerComposeEnvironment, StartedDockerComposeEnvironment } from 'testcontainers'
 import { defaults } from '../../src/app/features/config/defaults.mjs'
-import { SqlService } from '../../src/app/features/services/sql-service.mjs'
-import { Schema } from '../../src/app/features/setup/schema.mjs'
 
 /*
 This global setup file is used to boot a Docker environment that runs in
@@ -29,10 +27,6 @@ export async function setup() {
     .withEnvironment(env)
     .withStartupTimeout(DOCKER_COMPOSE_TIMEOUT)
     .up()
-
-  const testConfig = await getTestConfig()
-  SqlService.create(testConfig)
-  await Schema.setup()
 }
 
 // teardown function - called by vitest once for test teardown

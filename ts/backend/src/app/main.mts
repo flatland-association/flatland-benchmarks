@@ -5,7 +5,6 @@ import { Server } from './features/server/server.mjs'
 import { AmqpService } from './features/services/amqp-service.mjs'
 import { AuthService } from './features/services/auth-service.mjs'
 import { SqlService } from './features/services/sql-service.mjs'
-import { Schema } from './features/setup/schema.mjs'
 
 // during boot, use defaults for logger
 Logger.setOptions({})
@@ -22,10 +21,7 @@ SqlService.create(config)
 AmqpService.create(config)
 AuthService.create(config)
 
-Schema.setup().then(() => {
-  // once services are set up, start server
-  new Server(config)
-})
+new Server(config)
 
 process.on('uncaughtException', (err: Error) => {
   logger.error('Uncaught exception', err.name, err.message, err.stack)

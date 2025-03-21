@@ -4,6 +4,11 @@ services:
       file: docker-compose-base.yml
       service: postgres
 
+  flyway:
+    extends:
+      file: docker-compose-base.yml
+      service: flyway
+
   redis:
     extends:
       file: docker-compose-base.yml

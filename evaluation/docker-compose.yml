@@ -9,6 +9,15 @@ services:
     # volumes:
       # - ${POSTGRES_VOLUME:-./var/postgres}:/var/lib/postgresql/data:delegated
 
+  flyway:
+    extends:
+      file: docker-compose-base.yml
+      service: flyway
+    # data is not present in docker-compose-base but required for local dev
+    volumes:
+      - ./migration/schema:/flyway/sql/schema
+      - ./migration/data:/flyway/sql/data
+
   pgadmin:
     image: dpage/pgadmin4
     hostname: pgadmin
