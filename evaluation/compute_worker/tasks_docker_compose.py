@@ -5,7 +5,7 @@ import os
 import subprocess
 import time
 from io import BytesIO, TextIOWrapper
-from typing import List
+from typing import List, Optional
 
 import boto3
 import celery.exceptions
@@ -132,18 +132,30 @@ def the_task(self, docker_image: str, submission_image: str, tests: List[str] = 
     exec_with_logging(["sudo", "docker", "ps"])
     try:
       logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
-      exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{task_id}", ])
+      stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{task_id}", ], collect=True)
+      stdo = "\n".join(stdo)
+      response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_evaluator_stdout.log", Body=stdo)
+      logger.info(f"upload response {response}")
+      stde = "\n".join(stde)
+      response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_evaluator_stderr.log", Body=stde)
+      logger.info(f"upload response {response}")
       exec_with_logging(["sudo", "docker", "rm", f"flatland3-evaluator-{task_id}", ])
       logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
-    except:
-      logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
+    except Exception as e:
+      logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}", exc_info=e)
     try:
-      logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
-      exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{task_id}", ])
+      logger.info("/ Logs from container %s", f"flatland3-submission-{task_id}")
+      stdo, std = exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{task_id}", ])
+      stdo = "\n".join(stdo)
+      response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_submission_stdout.log", Body=stdo)
+      logger.info(f"upload response {response}")
+      stde = "\n".join(stde)
+      response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_submission_stderr.log", Body=stde)
+      logger.info(f"upload response {response}")
       exec_with_logging(["sudo", "docker", "rm", f"flatland3-submission-{task_id}", ])
-      logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
-    except:
-      logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
+      logger.info("\\ Logs from container %s", f"flatland3-submission-{task_id}")
+    except Exception as e:
+      logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}", exc_info=e)
     return ret
 
   except celery.exceptions.SoftTimeLimitExceeded as e:
@@ -156,32 +168,39 @@ def the_task(self, docker_image: str, submission_image: str, tests: List[str] = 
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
     try:
-      logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
+      logger.info("/ Logs from container %s", f"flatland3-submission-{task_id}")
       exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{task_id}", ])
-      logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
+      logger.info("\\ Logs from container %s", f"flatland3-submission-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
     raise e
 
 
 # https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
-def exec_with_logging(exec_args: List[str]):
+def exec_with_logging(exec_args: List[str], collect: bool = False):
   logger.debug(f"/ Start %s", exec_args)
   try:
     proc = subprocess.Popen(exec_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout, stderr = proc.communicate()
-    log_subprocess_output(TextIOWrapper(BytesIO(stdout)), level=logging.INFO, label=str(exec_args))
-    log_subprocess_output(TextIOWrapper(BytesIO(stderr)), level=logging.WARN, label=str(exec_args))
+    stdo = log_subprocess_output(TextIOWrapper(BytesIO(stdout)), level=logging.INFO, label=str(exec_args), collect=collect)
+    stde = log_subprocess_output(TextIOWrapper(BytesIO(stderr)), level=logging.WARN, label=str(exec_args), collect=collect)
+    logger.debug("\\ End %s", exec_args)
+    return stdo, stde
   except (OSError, subprocess.CalledProcessError) as exception:
     logger.error(stderr)
     raise RuntimeError(f"Failed to run {exec_args}. Stdout={stdout}. Stderr={stderr}") from exception
-  logger.debug("\\ End %s", exec_args)
 
 
 # https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
-def log_subprocess_output(pipe, level=logging.DEBUG, label=""):
+def log_subprocess_output(pipe, level=logging.DEBUG, label="", collect: bool = False) -> Optional[List[str]]:
+  s = []
   for line in pipe.readlines():
     logger.log(level, "[from subprocess %s] %s", label, line)
+    if collect:
+      s.append(line)
+  if collect:
+    return s
+  return None
 
 
 # based on https://github.com/codalab/codabench/blob/develop/compute_worker/compute_worker.py:_run_container_engine_cmd
