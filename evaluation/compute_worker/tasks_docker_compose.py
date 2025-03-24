@@ -135,23 +135,23 @@ def the_task(self, docker_image: str, submission_image: str, tests: List[str] = 
       stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{task_id}", ], collect=True)
       stdo = "\n".join(stdo)
       response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_evaluator_stdout.log", Body=stdo)
-      logger.info(f"upload response {response}")
+      logger.info("upload response %s", response)
       stde = "\n".join(stde)
       response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_evaluator_stderr.log", Body=stde)
-      logger.info(f"upload response {response}")
+      logger.info("upload response %s", response)
       exec_with_logging(["sudo", "docker", "rm", f"flatland3-evaluator-{task_id}", ])
       logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
     except Exception as e:
       logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}", exc_info=e)
     try:
       logger.info("/ Logs from container %s", f"flatland3-submission-{task_id}")
-      stdo, std = exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{task_id}", ])
+      stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{task_id}", ], collect=True)
       stdo = "\n".join(stdo)
       response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_submission_stdout.log", Body=stdo)
-      logger.info(f"upload response {response}")
+      logger.info("upload response %s", response)
       stde = "\n".join(stde)
       response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_submission_stderr.log", Body=stde)
-      logger.info(f"upload response {response}")
+      logger.info("upload response %s", response)
       exec_with_logging(["sudo", "docker", "rm", f"flatland3-submission-{task_id}", ])
       logger.info("\\ Logs from container %s", f"flatland3-submission-{task_id}")
     except Exception as e:
@@ -177,13 +177,13 @@ def the_task(self, docker_image: str, submission_image: str, tests: List[str] = 
 
 
 # https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
-def exec_with_logging(exec_args: List[str], collect: bool = False):
+def exec_with_logging(exec_args: List[str], log_level_stdout=logging.DEBUG, log_level_stderr=logging.WARN, collect: bool = False):
   logger.debug(f"/ Start %s", exec_args)
   try:
     proc = subprocess.Popen(exec_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout, stderr = proc.communicate()
-    stdo = log_subprocess_output(TextIOWrapper(BytesIO(stdout)), level=logging.INFO, label=str(exec_args), collect=collect)
-    stde = log_subprocess_output(TextIOWrapper(BytesIO(stderr)), level=logging.WARN, label=str(exec_args), collect=collect)
+    stdo = log_subprocess_output(TextIOWrapper(BytesIO(stdout)), level=log_level_stdout, label=str(exec_args), collect=collect)
+    stde = log_subprocess_output(TextIOWrapper(BytesIO(stderr)), level=log_level_stderr, label=str(exec_args), collect=collect)
     logger.debug("\\ End %s", exec_args)
     return stdo, stde
   except (OSError, subprocess.CalledProcessError) as exception:
