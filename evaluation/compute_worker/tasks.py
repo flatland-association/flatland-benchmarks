@@ -131,7 +131,6 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   if AWS_SECRET_ACCESS_KEY:
     submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": AWS_SECRET_ACCESS_KEY})
 
-
   submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
   batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
 
@@ -185,6 +184,12 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   ret["f3-evaluator"]["results.csv"] = obj['Body'].read().decode("utf-8")
   obj = s3.get_object(Bucket=S3_BUCKET, Key=s3_upload_path_template.format(task_id) + ".json")
   ret["f3-evaluator"]["results.json"] = obj['Body'].read().decode("utf-8")
+
+  logger.info("Upload logs to S3 under %s...", AWS_ENDPOINT_URL)
+  response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_evaluator.log", Body=ret["f3-evaluator"]["log"])
+  logger.debug("upload response %s", response)
+  response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_submission.log", Body=ret["f3-submission"]["log"])
+  logger.debug("upload response %s", response)
 
   all_completed = all([s == "Complete" for s in status])
   logger.info("done %s, all_completed=%s", status, all_completed)
