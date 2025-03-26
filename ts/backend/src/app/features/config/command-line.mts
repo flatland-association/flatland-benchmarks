@@ -2,11 +2,25 @@ import ansiStyles from 'ansi-styles'
 import wrapAnsi from 'wrap-ansi'
 import { Logger } from '../logger/logger.mjs'
 
+/* 
+This file provides:
+A) A unified way to define CLI options together with their shorthand aliases
+and description. It will also generate the output for the --help option from
+these definitions.
+B) A function that parses the process argvs into an workable object.
+*/
+
 const PRETTY_PRINT_TERMINAL_WIDTH = process.stdout.columns
 const PRETTY_PRINT_TITLE_WIDTH = 24
 
 const logger = new Logger('cli')
 
+// All known command line options/arguments have to be declared here first.
+// Their definitions are then listed in commandLineArgs below.
+/**
+ * Interface of the object returned by `parseCommandLine`.
+ * @see {@link parseCommandLine}
+ */
 export interface cliOptions {
   '--help'?: string
   '--log-level'?: string
@@ -26,6 +40,10 @@ interface CommandLineArg {
   evaluator?: (val?: string) => string | undefined
 }
 
+/**
+ * Evaluates `'false'` as `false` and anything else (including no value) as
+ * `true` - used for boolean flags.
+ */
 export const flagEvaluator = (val?: string) => (val === 'false' ? 'false' : 'true')
 
 // known command line arguments
@@ -78,6 +96,12 @@ export const commandLineArgs: CommandLineArg[] = [
 ] as const
 
 // read command line arguments and pass them to their respective evaluators
+/**
+ * Reads the command line arguments, passes them through their respective
+ * evaluators and writes the value to the returned options object.
+ * @returns an object of `cliOptions`
+ * @see {@link cliOptions}
+ */
 export function parseCommandLine() {
   const options: cliOptions = {}
   const parsedArguments = new Set<string>()
