@@ -42,7 +42,7 @@ describe.sequential('SQL Service (with Postgres)', () => {
     expect(sql.errors).toBeTruthy()
   })
 
-  test('should silence notices', async () => {
+  test('should write notices to debug object', async () => {
     const sql = SqlService.getInstance()
     const rows = await sql.query`
       DROP TABLE IF EXISTS 🥳
