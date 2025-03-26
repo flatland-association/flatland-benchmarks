@@ -5,18 +5,23 @@ import { beforeAll, describe, expect, test, vi } from 'vitest'
 import { defaults } from '../config/defaults.mjs'
 import { AuthService } from './auth-service.mjs'
 
-const AUTHSERVICE_TIMEOUT = 2 * 1000 // ms
-
 describe('Auth Service', () => {
-  // using a string as secret results in symmetrical algorithm being used, i.e.
-  // the same secret can be used for signing and verifying
+  // using a string as secret results in symmetric algorithm being used, i.e.
+  // the same secret can be used for signing and verifying, which is ideal for
+  // this test as it simplifies the signing/verifying process but still allows
+  // to test against forged tokens  by using another secret.
   const testSecret = 'secret'
+  const testJwtPayload = {
+    data: 'test',
+  }
 
   const getToken = (options?: { lifetime?: number; secret?: string }) => {
+    // create a jwt with test payload, extended with expiration date, and sign
+    // it with provided or testing secret
     return jwt.sign(
       {
         exp: Math.floor(Date.now() / 1000) + (options?.lifetime ?? 60),
-        data: 'test',
+        ...testJwtPayload,
       },
       options?.secret ?? testSecret,
     )
@@ -36,46 +41,46 @@ describe('Auth Service', () => {
       should: 'should reject missing token',
       mockStore: false,
       token: undefined,
-      auth: false,
-      error: undefined,
+      expectedAuth: null,
+      expectedError: undefined,
     },
     {
       should: 'should reject if service is unavailable',
       mockStore: false,
       token: getToken(),
-      auth: false,
-      error: 'error in secret or public key callback',
+      expectedAuth: null,
+      expectedError: 'error in secret or public key callback',
     },
     {
       should: 'should reject invalid token',
       mockStore: true,
       token: 'not-a-token',
-      auth: false,
-      error: 'jwt malformed',
+      expectedAuth: null,
+      expectedError: 'jwt malformed',
     },
     {
       should: 'should reject forged token',
       mockStore: true,
       token: getToken({ secret: 'not-the-test-secret' }),
-      auth: false,
-      error: 'invalid signature',
+      expectedAuth: null,
+      expectedError: 'invalid signature',
     },
     {
       should: 'should reject expired token',
       mockStore: true,
       token: getToken({ lifetime: -60 }),
-      auth: false,
-      error: 'jwt expired',
+      expectedAuth: null,
+      expectedError: 'jwt expired',
     },
     // testing this last also ensures `authService.error` gets properly reset
     {
       should: 'should accept valid token',
       mockStore: true,
       token: getToken(),
-      auth: true,
-      error: undefined,
+      expectedAuth: testJwtPayload,
+      expectedError: undefined,
     },
-  ])('$should', { timeout: AUTHSERVICE_TIMEOUT }, async (testCase) => {
+  ])('$should', async (testCase) => {
     const authService = AuthService.getInstance()
     if (testCase.mockStore) {
       // mock JwksClient to return a storage that returns test secret as key
@@ -91,14 +96,15 @@ describe('Auth Service', () => {
     }
     //... and try authorizing with that
     const auth = await authService.authorization(req)
-    if (testCase.auth) {
+    if (testCase.expectedAuth) {
       expect(auth).toBeTruthy()
-      expect(auth!['data']).toBe('test')
+      // there will be additional jwt fields - do not test those
+      expect(auth!['data']).toBe(testJwtPayload.data)
     } else {
       expect(auth).toBeFalsy()
     }
-    if (testCase.error) {
-      expect(authService.error?.message).toMatch(testCase.error)
+    if (testCase.expectedError) {
+      expect(authService.error?.message).toMatch(testCase.expectedError)
     } else {
       expect(authService.error).toBeUndefined()
     }
