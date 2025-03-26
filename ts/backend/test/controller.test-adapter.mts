@@ -7,10 +7,32 @@ import express from 'express'
 import { JwtPayload } from 'jsonwebtoken'
 import supertest from 'supertest'
 import TestAgent from 'supertest/lib/agent'
-import { expect, MockInstance, vi } from 'vitest'
+import { expect, vi } from 'vitest'
 import { configuration } from '../src/app/features/config/config.mjs'
 import { Controller } from '../src/app/features/controller/controller.mjs'
+import { AmqpService } from '../src/app/features/services/amqp-service.mjs'
 import { AuthService } from '../src/app/features/services/auth-service.mjs'
+import { SqlService } from '../src/app/features/services/sql-service.mjs'
+
+/*
+Controllers are tested using the "supertest" testing framework, where requests
+are mocked directly into the express server applet instead of being sent via
+http/https. For this to work, every controller under test has to be injected
+into a newly booted and configured express app.
+
+This file, especially the `ControllerTestAdapter` class, unifies this setup
+step.
+
+Additionally, it mocks `AuthService` to always resolve with a specified 
+authorization state. That way, controllers can be tested under different and 
+well-defined users.
+*/
+
+// common test case users (as maximally reduced jwt payload)
+export const testUserJwt: JwtPayload = {
+  sub: '00000000-0000-0000-0000-000000000001',
+  preferred_username: 'Test User',
+}
 
 /*
 Globally extend vitest for custom API tests.
@@ -56,18 +78,13 @@ export class ControllerTestAdapter {
   }
 
   // Wraps callback in a mocked authorized state
-  private async authWrap<T>(cb: () => Promise<T>, jwt: JwtPayload | null = null) {
-    // if a jwt is provided, mock AuthService to pass authorization with that
-    let authMock: MockInstance | undefined
-    if (jwt) {
-      authMock = vi.spyOn(AuthService.prototype, 'authorization').mockResolvedValue(jwt)
-    }
+  private async withMockedAuth<T>(cb: () => Promise<T>, jwt: JwtPayload | null = null) {
+    // mock AuthService to always pass authorization with provided jwt
+    const authMock = vi.spyOn(AuthService.prototype, 'authorization').mockResolvedValue(jwt)
     // controller callback
     const result = await cb()
     // undo AuthService mocking
-    if (authMock) {
-      authMock.mockReset()
-    }
+    authMock.mockReset()
     return result
   }
 
@@ -82,7 +99,7 @@ export class ControllerTestAdapter {
     status: number
     body: ApiGetEndpoints[E]['response']
   }> {
-    return this.authWrap(() => {
+    return this.withMockedAuth(() => {
       // @ts-expect-error params
       return this.request.get(this.buildEndpoint(endpoint, options?.params))
     }, jwt)
@@ -99,7 +116,7 @@ export class ControllerTestAdapter {
     status: number
     body: ApiPostEndpoints[E]['response']
   }> {
-    return this.authWrap(() => {
+    return this.withMockedAuth(() => {
       return (
         this.request
           // @ts-expect-error params
@@ -121,4 +138,13 @@ export class ControllerTestAdapter {
     }
     return endpoint
   }
+}
+
+/**
+ * Creates services used in controllers.
+ */
+export function setupControllerTestEnvironment(config: configuration) {
+  AmqpService.create(config)
+  AuthService.create(config)
+  SqlService.create(config)
 }

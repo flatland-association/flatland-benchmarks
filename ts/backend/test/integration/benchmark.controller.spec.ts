@@ -1,7 +1,6 @@
 import { ApiGetEndpoints } from '@common/api-endpoints'
 import { BenchmarkController } from '../../src/app/features/controller/benchmark.controller.mjs'
-import { SqlService } from '../../src/app/features/services/sql-service.mjs'
-import { ControllerTestAdapter } from '../controller.test-adapter.mjs'
+import { ControllerTestAdapter, setupControllerTestEnvironment } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
 
 describe('Benchmark controller', () => {
@@ -9,7 +8,7 @@ describe('Benchmark controller', () => {
 
   beforeAll(async () => {
     const testConfig = await getTestConfig()
-    SqlService.create(testConfig)
+    setupControllerTestEnvironment(testConfig)
     controller = new ControllerTestAdapter(BenchmarkController, testConfig)
   })
 
