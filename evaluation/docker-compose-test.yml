@@ -6,6 +6,15 @@ services:
       file: docker-compose-base.yml
       service: postgres
 
+  flyway:
+    extends:
+      file: docker-compose-base.yml
+      service: flyway
+    # data is not present in docker-compose-base but required for test
+    volumes:
+      - ./migration/schema:/flyway/sql/schema
+      - ./migration/data:/flyway/sql/data
+
   redis:
     extends:
       file: docker-compose-base.yml
