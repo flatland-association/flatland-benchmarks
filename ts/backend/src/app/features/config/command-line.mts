@@ -7,7 +7,7 @@ This file provides:
 A) A unified way to define CLI options together with their shorthand aliases
 and description. It will also generate the output for the --help option from
 these definitions.
-B) A function that parses the process argvs into an workable object.
+B) A function that parses the process argvs into a workable object.
 */
 
 const PRETTY_PRINT_TERMINAL_WIDTH = process.stdout.columns
@@ -15,10 +15,10 @@ const PRETTY_PRINT_TITLE_WIDTH = 24
 
 const logger = new Logger('cli')
 
-// All known command line options/arguments have to be declared here first.
-// Their definitions are then listed in commandLineArgs below.
 /**
  * Interface of the object returned by `parseCommandLine`.
+ * All known command line options/arguments have to be declared here first.
+ * Their definitions are then listed in commandLineArgs.
  * @see {@link parseCommandLine}
  */
 export interface cliOptions {
