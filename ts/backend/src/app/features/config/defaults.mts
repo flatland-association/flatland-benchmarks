@@ -1,7 +1,7 @@
 export const defaults = {
   /* Public API */
   api: {
-    host: 'localhost',
+    host: '0.0.0.0',
     port: 8000,
   },
   /* AMQP endpoint */
@@ -25,5 +25,6 @@ export const defaults = {
   keycloak: {
     url: 'http://localhost:8081',
     realm: 'netzgrafikeditor',
+    timeout: 30000,
   },
 }

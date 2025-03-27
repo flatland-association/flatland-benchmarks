@@ -42,11 +42,12 @@ interface ApiEndpointDefinitions {
   }
   '/mirror/:id': {
     GET: ApiEndpoint<Empty, Empty, string>
+    PATCH: ApiEndpoint<{ data: json }, Empty, { data: json }>
   }
   '/dbsetup': {
     GET: ApiEndpoint<Empty, Empty, null>
   }
-  '/ampq': {
+  '/amqp': {
     GET: ApiEndpoint<Empty, Empty, string>
     POST: ApiEndpoint<json, Empty, string>
   }

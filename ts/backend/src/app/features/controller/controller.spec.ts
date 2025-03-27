@@ -30,6 +30,12 @@ describe.sequential('Controller', () => {
     controller.attachGet('/test-get' as '/mirror', (req, res) => {
       controller.respond(res, '<ok>', '<debug>')
     })
+    controller.attachPost('/test-post' as '/mirror', (req, res) => {
+      controller.respond(res, { data: '<ok>' }, '<debug>')
+    })
+    controller.attachPatch('/test-patch' as '/mirror/:id', (req, res) => {
+      controller.respond(res, { data: '<ok>' }, '<debug>')
+    })
     controller.attachGet('/test-request-error' as '/mirror', (req, res) => {
       controller.requestError(res, { text: 'request error' })
     })
@@ -50,13 +56,15 @@ describe.sequential('Controller', () => {
     // test for routes presence
     const routes = getControllerRoutes(controller)
     expect(routes).toContain('/test-get')
+    expect(routes).toContain('/test-post')
+    expect(routes).toContain('/test-patch')
     expect(routes).toContain('/test-request-error')
     expect(routes).toContain('/test-auth-error')
     expect(routes).toContain('/test-server-error')
     expect(routes).toContain('/test-catch')
     expect(routes).toContain('/test-undefined')
-    // no more than the the explicitely attached routes should be present
-    expect(routes).toHaveLength(6)
+    // no more than the the explicitly attached routes should be present
+    expect(routes).toHaveLength(8)
   })
 
   test.each([
@@ -71,6 +79,10 @@ describe.sequential('Controller', () => {
     {
       route: '/test-auth-error',
       expects: { status: 401, response: { error: { text: 'auth error' } } },
+    },
+    {
+      route: '/test-no-such-route',
+      expects: { status: 404, response: {} },
     },
     {
       route: '/test-server-error',
