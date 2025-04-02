@@ -12,8 +12,8 @@ services:
       service: flyway
     # data is not present in docker-compose-base but required for test
     volumes:
-      - ./migration/schema:/flyway/sql/schema
-      - ./migration/data:/flyway/sql/data
+      - ../ts/backend/src/migration/schema:/flyway/sql/schema
+      - ../ts/backend/src/migration/data:/flyway/sql/data
 
   redis:
     extends:

@@ -22,7 +22,7 @@ services:
     image: flyway/flyway
     command: -url=jdbc:postgresql://postgres:5432/${POSTGRES_DB} -schemas=public -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} migrate  -connectRetries=60 -baselineOnMigrate=true
     volumes:
-      - ./migration/schema:/flyway/sql/schema
+      - ../ts/backend/src/migration/schema:/flyway/sql/schema
     depends_on:
       postgres:
         condition: service_healthy
