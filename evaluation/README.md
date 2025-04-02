@@ -12,7 +12,8 @@ Its starting point was an integration of
 both from a conceptual and an implementation point of view.
 
 ## Architecture
-Referring to [Information Flow](../docs/img/architecture/InformationFlow.drawio.png), it covers the components by running 7 services:
+
+Referring to [Information Flow](../docs/img/architecture/InformationFlow.drawio.png), it covers the components by 8 services:
 
 | Component           | Service                                                                                                                                                |
 |---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -23,8 +24,7 @@ Referring to [Information Flow](../docs/img/architecture/InformationFlow.drawio.
 | Result Store        | `redis` kv store used for messaging                                                                                                                    |
 | Evaluation Broker   | N.B. The same `redis` instance is used as Celery backend (`codabench`) and for communication between `agent` and `evaluator` (`flatland-starter-kit`). |
 | (Flatland API)      | `submitter` simulates submission from portal by scheduling `compute_worker` task                                                                       |
-
-
+| S3 Bucket           | `evaluator` and `compute_worker` upload results (.json/.csv) and logs, respectively, to S3 bucket on an external S3 object storage cloud service.      |
 
 ### Deployment View
 
@@ -80,7 +80,6 @@ Message sent via Celery library (`submitter.py`):
 Manual triggering via RabbitMQ web triggers `compute_worker`:
 
 ![celery_manual_publish.png](img/celery_manual_publish.png)
-
 
 ```json
 [
