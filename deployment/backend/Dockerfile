@@ -12,11 +12,22 @@ RUN npm ci && cd ts/backend && npm run build
 
 FROM node:23.5.0-alpine3.20
 
+# bash is required for flyway
+RUN apk add wget tar bash
+
+WORKDIR /flyway
+
+# started from: https://documentation.red-gate.com/flyway/reference/usage/command-line
+# changed to linux-alpine-x64.tar.gz and added --strip-components for a cleaner structure as inspired by the Dockerfile here: https://github.com/flyway/flyway-docker/blob/main/flyway-docker/dockerfiles/alpine/Dockerfile
+RUN wget -qO- https://download.red-gate.com/maven/release/com/redgate/flyway/flyway-commandline/11.5.0/flyway-commandline-11.5.0-linux-alpine-x64.tar.gz | tar -xvz --strip-components=1 && ln -s `pwd`/flyway /usr/local/bin
+
 COPY --from=builder /usr/src/app/dist/backend/app /usr/src/app/dist/backend/app
 COPY --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
+# migrations are stored in the flyway directory under sql/
+# Include schema at build time. If required, mount demo data at run time to /flyway/sql/data
+COPY --from=builder /usr/src/app/ts/backend/src/migration/schema /flyway/sql/schema
 
 RUN mkdir -p /usr/src/app/dist/backend/config/
 
-WORKDIR /usr/src/app/dist/backend/app
-
-CMD ["node", "main.min.mjs"]
+COPY deployment/backend/start.sh .
+ENTRYPOINT ["./start.sh"]
