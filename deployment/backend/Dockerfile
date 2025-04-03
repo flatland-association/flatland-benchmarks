@@ -19,7 +19,9 @@ WORKDIR /flyway
 
 # started from: https://documentation.red-gate.com/flyway/reference/usage/command-line
 # changed to linux-alpine-x64.tar.gz and added --strip-components for a cleaner structure as inspired by the Dockerfile here: https://github.com/flyway/flyway-docker/blob/main/flyway-docker/dockerfiles/alpine/Dockerfile
-RUN wget -qO- https://download.red-gate.com/maven/release/com/redgate/flyway/flyway-commandline/11.5.0/flyway-commandline-11.5.0-linux-alpine-x64.tar.gz | tar -xvz --strip-components=1 && ln -s `pwd`/flyway /usr/local/bin
+RUN wget -qO- https://download.red-gate.com/maven/release/com/redgate/flyway/flyway-commandline/11.5.0/flyway-commandline-11.5.0-linux-alpine-x64.tar.gz | tar -xvz --strip-components=1 \
+  && ln -s `pwd`/flyway /usr/local/bin \
+  && chmod a+x `pwd`/flyway
 
 COPY --from=builder /usr/src/app/dist/backend/app /usr/src/app/dist/backend/app
 COPY --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
@@ -30,4 +32,9 @@ COPY --from=builder /usr/src/app/ts/backend/src/migration/schema /flyway/sql/sch
 RUN mkdir -p /usr/src/app/dist/backend/config/
 
 COPY deployment/backend/start.sh .
+
+# make sure the script can be executed
+# https://stackoverflow.com/a/38882798/10135201
+RUN chmod a+x ./start.sh
+
 ENTRYPOINT ["./start.sh"]
