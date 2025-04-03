@@ -1,0 +1,31 @@
+{
+  /* Public API */
+  "api": {
+    "host": "0.0.0.0",
+    "port": 8000
+  },
+  /* AMQP endpoint */
+  "amqp": {
+    "host": "guest:guest@rabbit",
+    "port": 5672
+  },
+  /* Postgres DB */
+  "postgres": {
+    "host": "postgres",
+    "port": 5432,
+    "user": "benchmarks",
+    "password": "benchmarks",
+    "database": "benchmarks"
+  },
+  /* Redis endpoint */
+  "redis": {
+    "url": "redis://redis:6379"
+    // redis[s]://[[username][:password]@][host][:port][/db-number]
+  },
+  /* Keycloak endpoint */
+  "keycloak": {
+    "url": "https://keycloak.flatland.cloud:8081", // http[s]://[host][:port]
+    "realm": "netzgrafikeditor",
+    "timeout": 30000 // ms
+  }
+}
