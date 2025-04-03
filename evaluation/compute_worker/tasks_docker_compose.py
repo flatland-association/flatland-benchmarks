@@ -150,11 +150,13 @@ def the_task(self, docker_image: str,
       logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
       stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{task_id}", ], collect=True)
       stdo = "\n".join(stdo)
-      response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_evaluator_stdout.log", Body=stdo)
-      logger.info("upload response %s", response)
+      file_name = S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_evaluator_stdout.log"
+      response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stdo)
+      logger.info("upload %s got response %s", file_name, response)
       stde = "\n".join(stde)
-      response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_evaluator_stderr.log", Body=stde)
-      logger.info("upload response %s", response)
+      file_name = S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_evaluator_stderr.log"
+      response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stde)
+      logger.info("upload %s got response %s", file_name, response)
       exec_with_logging(["sudo", "docker", "rm", f"flatland3-evaluator-{task_id}", ])
       logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
     except Exception as e:
@@ -163,11 +165,13 @@ def the_task(self, docker_image: str,
       logger.info("/ Logs from container %s", f"flatland3-submission-{task_id}")
       stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{task_id}", ], collect=True)
       stdo = "\n".join(stdo)
-      response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_submission_stdout.log", Body=stdo)
-      logger.info("upload response %s", response)
+      file_name = S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_submission_stdout.log"
+      response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stdo)
+      logger.info("upload %s got response %s", file_name, response)
       stde = "\n".join(stde)
-      response = s3.put_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_submission_stderr.log", Body=stde)
-      logger.info("upload response %s", response)
+      file_name = S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_submission_stderr.log"
+      response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stde)
+      logger.info("upload %s got response %s", file_name, response)
       exec_with_logging(["sudo", "docker", "rm", f"flatland3-submission-{task_id}", ])
       logger.info("\\ Logs from container %s", f"flatland3-submission-{task_id}")
     except Exception as e:
