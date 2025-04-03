@@ -4,7 +4,7 @@ import { StripDir } from '@common/utility-types.js'
 import { createClient } from 'redis'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
-import { AmpqService } from '../services/ampq-service.mjs'
+import { AmqpService } from '../services/amqp-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import { Controller, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
@@ -83,7 +83,7 @@ export class SubmissionController extends Controller {
         `
     ).map((r) => r.name)
     // start evaluator
-    const ampq = AmpqService.getInstance()
+    const amqp = AmqpService.getInstance()
     const payload = [
       [],
       {
@@ -98,7 +98,7 @@ export class SubmissionController extends Controller {
         chord: null,
       },
     ]
-    const sent = await ampq.sendToQueue('celery', payload, {
+    const sent = await amqp.sendToQueue('celery', payload, {
       headers: {
         task: 'flatland3-evaluation',
         id: `sub-${uuid}`,

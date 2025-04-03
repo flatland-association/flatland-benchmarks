@@ -7,6 +7,12 @@ import { Service } from './service.mjs'
 export class AuthService extends Service {
   private publicKey?: string
 
+  /**
+   * `VerifyErrors` that occurred during `authorization`. Is reset to
+   * `undefined` upon invoking `authorization`.
+   */
+  error?: jwt.VerifyErrors
+
   constructor(config: configuration) {
     super(config)
   }
@@ -23,7 +29,7 @@ export class AuthService extends Service {
     // as-per-standard uri where JWT key set can be found
     const jwksUri = `${this.config.keycloak.url}/realms/${this.config.keycloak.realm}/protocol/openid-connect/certs`
     // get the public key for the JWT in question
-    const client = new JwksClient({ jwksUri })
+    const client = new JwksClient({ jwksUri, timeout: this.config.keycloak.timeout })
     client
       .getSigningKey(header.kid)
       .then((key) => {
@@ -42,17 +48,20 @@ export class AuthService extends Service {
    * @param req Request object to extract authorization header from.
    */
   async authorization(req: Request) {
+    this.error = undefined
+
     const token = req.headers.authorization?.split(' ')[1]
 
     if (!token) return null
 
-    return new Promise<JwtPayload>((resolve, reject) => {
+    return new Promise<JwtPayload | null>((resolve) => {
       const verifyCallback: VerifyCallback<JwtPayload | string> = (
         error: jwt.VerifyErrors | null,
         decoded: string | JwtPayload | undefined,
       ): void => {
         if (error) {
-          return reject(error)
+          this.error = error
+          return resolve(null)
         }
         return resolve(decoded as JwtPayload)
       }

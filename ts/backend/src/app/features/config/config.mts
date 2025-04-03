@@ -28,8 +28,8 @@ function applyDefaults(object: any, defaults: any, path = '') {
   }
 }
 
-export function loadConfig(): configuration {
-  const confPath = path.join('../config/config.jsonc')
+export function loadConfig(configFile = 'config.jsonc'): configuration {
+  const confPath = path.join('../config', configFile)
 
   let loadedConfig: Partial<configuration> = {}
 

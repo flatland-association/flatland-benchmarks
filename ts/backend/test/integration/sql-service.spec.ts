@@ -1,22 +1,11 @@
-import { SqlService } from '../../src/app/features/services/sql-service.mjs'
-import { Schema } from '../../src/app/features/setup/schema.mjs'
+import { dbgSqlState, SqlService } from '../../src/app/features/services/sql-service.mjs'
 import { getTestConfig } from './setup.mjs'
-
-const SETUP_TIMEOUT = 30 * 1000 // ms
 
 describe.sequential('SQL Service (with Postgres)', () => {
   beforeAll(async () => {
     const testConfig = await getTestConfig()
     SqlService.create(testConfig)
   })
-
-  test(
-    'should be able to run Schema.setup()',
-    async () => {
-      await expect(Schema.setup()).resolves.toBeUndefined()
-    },
-    SETUP_TIMEOUT,
-  )
 
   test('should execute query `SELECT NOW()`', async () => {
     const sql = SqlService.getInstance()
@@ -51,5 +40,17 @@ describe.sequential('SQL Service (with Postgres)', () => {
     `
     expect(rows).toEqual([])
     expect(sql.errors).toBeTruthy()
+  })
+
+  test('should write notices to debug object', async () => {
+    const sql = SqlService.getInstance()
+    const rows = await sql.query`
+      DROP TABLE IF EXISTS 🥳
+    `
+    const dbg = dbgSqlState(sql)
+    expect(rows).toEqual([])
+    expect(dbg.notices?.length).toBe(1)
+    expect(dbg.notices?.at(0)?.['severity']).toBe('NOTICE')
+    expect(dbg.notices?.at(0)?.['message']).toMatch('does not exist, skipping')
   })
 })

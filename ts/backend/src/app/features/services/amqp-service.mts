@@ -4,13 +4,13 @@ import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { Service } from './service.mjs'
 
-const logger = new Logger('ampq')
+const logger = new Logger('amqp')
 
 /**
  * Service class providing common AMQP functionality.
  */
-export class AmpqService extends Service {
-  channelPromise?: Promise<void>
+export class AmqpService extends Service {
+  channelPromise?: Promise<amqp.Channel | undefined>
   channel?: amqp.Channel
 
   constructor(config: configuration) {
@@ -23,18 +23,20 @@ export class AmpqService extends Service {
   onError(err: unknown) {
     logger.error(err as string)
     this.channel = undefined
+    this.channelPromise = undefined
     return undefined
   }
 
   /**
-   * Asynchronously returns the ampq channel.
+   * Asynchronously returns the amqp channel.
    * @see {@link https://amqp-node.github.io/amqplib/channel_api.html#channel | amqp.Channel}
    */
   async getChannel() {
     // except for weird runtime conditions, channel should be valid as long as it's truthy
     if (this.channel) return this.channel
+    if (this.channelPromise) return this.channelPromise
 
-    this.channel = await amqp
+    this.channelPromise = amqp
       .connect(`amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
       .then(async (conn) => {
         conn.on('error', (err) => {
@@ -47,16 +49,20 @@ export class AmpqService extends Service {
       })
       .catch((err) => this.onError(err))
 
-    return this.channel
+    this.channelPromise.then((c) => {
+      this.channel = c
+    })
+
+    return this.channelPromise
   }
 
   /**
-   * Sends data to ampq queue.
+   * Sends data to amqp queue.
    * @param queue Name of the queue.
    * @param data Data to send.
    * @param options Publish options.
    * @returns `true` on success.
-   * @see {@link https://amqp-node.github.io/amqplib/channel_api.html#channel_sendToQueue | ampq.Channel.sendToQueue}
+   * @see {@link https://amqp-node.github.io/amqplib/channel_api.html#channel_sendToQueue | amqp.Channel.sendToQueue}
    */
   async sendToQueue(queue: string, data: json, options?: amqp.Options.Publish) {
     await this.getChannel()

@@ -1,16 +1,21 @@
 import ansiStyles from 'ansi-styles'
-import { beforeAll, beforeEach, describe, expect, test, vi } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, expect, MockInstance, test, vi } from 'vitest'
 import { Logger } from './logger.mjs'
 
 describe('Logger', () => {
+  let stdoutMock: MockInstance
   let stdoutOutput = ''
 
   beforeAll(() => {
     // suppress actual output, store in memory instead
-    vi.spyOn(process.stdout, 'write').mockImplementation((val) => {
+    stdoutMock = vi.spyOn(process.stdout, 'write').mockImplementation((val) => {
       stdoutOutput += val as string
       return true
     })
+  })
+
+  afterAll(() => {
+    stdoutMock.mockReset()
   })
 
   beforeEach(() => {

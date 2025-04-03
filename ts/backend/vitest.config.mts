@@ -23,5 +23,11 @@ export default defineConfig({
         },
       },
     ],
+    coverage: {
+      provider: 'v8',
+      include: ['src/**/*.mts'],
+      reporter: ['text', 'html'],
+      reportsDirectory: './test/coverage',
+    },
   },
 })

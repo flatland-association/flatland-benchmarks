@@ -19,6 +19,7 @@ export interface BenchmarkPreview extends Resource<'/benchmarks/'> {
 export interface Benchmark extends Resource<'/benchmarks/'> {
   name: string
   description: string
+  docker_image: string
   tests: number[]
 }
 
