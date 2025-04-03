@@ -61,7 +61,7 @@ def test_containers_fixture():
   logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
 
 
-def run_task(task_id: str, submission_image: str, tests: List[str]):
+def run_task(task_id: str, submission_image: str, tests: List[str], **kwargs):
   start_time = time.time()
   app = Celery(
     broker="pyamqp://localhost:5672",
@@ -74,7 +74,8 @@ def run_task(task_id: str, submission_image: str, tests: List[str]):
     kwargs={
       "docker_image": "ghcr.io/flatland-association/fab-flatland-evaluator:latest",
       "submission_image": submission_image,
-      "tests": tests
+      "tests": tests,
+      **kwargs
     },
   ).get()
   logger.info(ret)
@@ -92,7 +93,9 @@ def run_task(task_id: str, submission_image: str, tests: List[str]):
 )
 def test_succesful_run(expected_total_simulation_count, tests: List[str]):
   task_id = str(uuid.uuid4())
-  ret = run_task(task_id, "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest", tests=tests)
+  config = dotenv_values(".env")
+
+  ret = run_task(task_id, "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest", tests=tests, **config)
 
   for k, v in ret.items():
     logger.log(TRACE, "Got %s", (k, v['job_status'], v['image_id'], v['log']))
@@ -157,16 +160,27 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str]):
   assert res_json["simulation_count"] == len(scenarios_run)
 
   logger.info("Download results from S3")
-  config = dotenv_values(".env")
+
+  aws_endpoint_url = config["AWS_ENDPOINT_URL"]
   s3 = boto3.client(
     's3',
     # https://docs.weka.io/additional-protocols/s3/s3-examples-using-boto3
-    endpoint_url=f'http://localhost:{config["MINIO_PORT"]}',
-    aws_access_key_id=config["MINIO_ROOT_USER"],
-    aws_secret_access_key=config["MINIO_ROOT_PASSWORD"]
+    # N.B. evaluator uploads from within docker network, we're accessing MinIO container from the host network.
+    endpoint_url=aws_endpoint_url.replace("minio", "localhost"),
+    aws_access_key_id=config["AWS_ACCESS_KEY_ID"],
+    aws_secret_access_key=config["AWS_SECRET_ACCESS_KEY"]
   )
-  objects = set([s["Key"] for s in s3.list_objects(Bucket=config["S3_BUCKET"])['Contents']])
-  assert objects.issuperset({f'results/{task_id}.csv', f'results/{task_id}.json'}), objects
+  s3_bucket = config["S3_BUCKET"]
+
+  logger.info("Get results files from S3 under %s...", aws_endpoint_url)
+  obj = s3.get_object(Bucket=s3_bucket, Key=f'results/{task_id}.csv', )
+  results_csv = obj['Body'].read().decode("utf-8")
+  df = pd.read_csv(StringIO(results_csv))
+  print(df)
+  obj = s3.get_object(Bucket=s3_bucket, Key=f'results/{task_id}.json', )
+  results_json = obj['Body'].read().decode("utf-8")
+  data = json.loads(results_json)
+  print(data)
 
 
 @pytest.mark.usefixtures("test_containers_fixture")

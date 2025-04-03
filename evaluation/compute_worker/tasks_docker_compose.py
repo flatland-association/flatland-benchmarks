@@ -5,7 +5,7 @@ import os
 import subprocess
 import time
 from io import BytesIO, TextIOWrapper
-from typing import List
+from typing import List, Optional
 
 import boto3
 import celery.exceptions
@@ -22,15 +22,9 @@ app = Celery(
 )
 
 HOST_DIRECTORY = os.environ.get("HOST_DIRECTORY", "/tmp/codabench/")
-AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
-S3_BUCKET = os.environ.get("S3_BUCKET", None)
-S3_UPLOAD_PATH_TEMPLATE = os.getenv("S3_UPLOAD_PATH_TEMPLATE", None)
-S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.getenv("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
 
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
-SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.4,4.0.3")
+SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.3,4.0.4,4.1.0")
 
 
 # https://celery.school/custom-celery-task-logger
@@ -43,13 +37,35 @@ def setup_task_logger(logger, *args, **kwargs):
 
 # N.B. name to be used by send_task
 @app.task(name="flatland3-evaluation", bind=True, soft_time_limit=10 * 60, time_limit=12 * 60)
-def the_task(self, docker_image: str, submission_image: str, tests: List[str] = None, **kwargs):
+def the_task(self, docker_image: str,
+             submission_image: str,
+             tests: List[str] = None,
+             AWS_ENDPOINT_URL=None,
+             AWS_ACCESS_KEY_ID=None,
+             AWS_SECRET_ACCESS_KEY=None,
+             S3_BUCKET=None,
+             S3_UPLOAD_PATH_TEMPLATE=None,
+             S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=None,
+             **kwargs):
   task_id = self.request.id
 
   try:
     start_time = time.time()
     logger.info(f"/ start task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}")
     assert BENCHMARKING_NETWORK is not None
+
+    if AWS_ENDPOINT_URL is None:
+      AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
+    if AWS_ACCESS_KEY_ID is None:
+      AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
+    if AWS_SECRET_ACCESS_KEY is None:
+      AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
+    if S3_BUCKET is None:
+      S3_BUCKET = os.environ.get("S3_BUCKET", None)
+    if S3_UPLOAD_PATH_TEMPLATE is None:
+      S3_UPLOAD_PATH_TEMPLATE = os.environ.get("S3_UPLOAD_PATH_TEMPLATE", None)
+    if S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID is None:
+      S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.environ.get("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
 
     loop = asyncio.get_event_loop()
     evaluator_future = loop.create_future()
@@ -132,18 +148,34 @@ def the_task(self, docker_image: str, submission_image: str, tests: List[str] = 
     exec_with_logging(["sudo", "docker", "ps"])
     try:
       logger.info("/ Logs from container %s", f"flatland3-evaluator-{task_id}")
-      exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{task_id}", ])
+      stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{task_id}", ], collect=True)
+      stdo = "\n".join(stdo)
+      file_name = S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_evaluator_stdout.log"
+      response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stdo)
+      logger.info("upload %s got response %s", file_name, response)
+      stde = "\n".join(stde)
+      file_name = S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_evaluator_stderr.log"
+      response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stde)
+      logger.info("upload %s got response %s", file_name, response)
       exec_with_logging(["sudo", "docker", "rm", f"flatland3-evaluator-{task_id}", ])
       logger.info("\\ Logs from container %s", f"flatland3-evaluator-{task_id}")
-    except:
-      logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
+    except Exception as e:
+      logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}", exc_info=e)
     try:
-      logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
-      exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{task_id}", ])
+      logger.info("/ Logs from container %s", f"flatland3-submission-{task_id}")
+      stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{task_id}", ], collect=True)
+      stdo = "\n".join(stdo)
+      file_name = S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_submission_stdout.log"
+      response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stdo)
+      logger.info("upload %s got response %s", file_name, response)
+      stde = "\n".join(stde)
+      file_name = S3_UPLOAD_PATH_TEMPLATE.format(task_id) + "_submission_stderr.log"
+      response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stde)
+      logger.info("upload %s got response %s", file_name, response)
       exec_with_logging(["sudo", "docker", "rm", f"flatland3-submission-{task_id}", ])
-      logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
-    except:
-      logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
+      logger.info("\\ Logs from container %s", f"flatland3-submission-{task_id}")
+    except Exception as e:
+      logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}", exc_info=e)
     return ret
 
   except celery.exceptions.SoftTimeLimitExceeded as e:
@@ -156,32 +188,39 @@ def the_task(self, docker_image: str, submission_image: str, tests: List[str] = 
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{task_id}")
     try:
-      logger.warning("/ Logs from container %s", f"flatland3-submission-{task_id}")
+      logger.info("/ Logs from container %s", f"flatland3-submission-{task_id}")
       exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{task_id}", ])
-      logger.warning("\\ Logs from container %s", f"flatland3-submission-{task_id}")
+      logger.info("\\ Logs from container %s", f"flatland3-submission-{task_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{task_id}")
     raise e
 
 
 # https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
-def exec_with_logging(exec_args: List[str]):
+def exec_with_logging(exec_args: List[str], log_level_stdout=logging.DEBUG, log_level_stderr=logging.WARN, collect: bool = False):
   logger.debug(f"/ Start %s", exec_args)
   try:
     proc = subprocess.Popen(exec_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout, stderr = proc.communicate()
-    log_subprocess_output(TextIOWrapper(BytesIO(stdout)), level=logging.INFO, label=str(exec_args))
-    log_subprocess_output(TextIOWrapper(BytesIO(stderr)), level=logging.WARN, label=str(exec_args))
+    stdo = log_subprocess_output(TextIOWrapper(BytesIO(stdout)), level=log_level_stdout, label=str(exec_args), collect=collect)
+    stde = log_subprocess_output(TextIOWrapper(BytesIO(stderr)), level=log_level_stderr, label=str(exec_args), collect=collect)
+    logger.debug("\\ End %s", exec_args)
+    return stdo, stde
   except (OSError, subprocess.CalledProcessError) as exception:
     logger.error(stderr)
     raise RuntimeError(f"Failed to run {exec_args}. Stdout={stdout}. Stderr={stderr}") from exception
-  logger.debug("\\ End %s", exec_args)
 
 
 # https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
-def log_subprocess_output(pipe, level=logging.DEBUG, label=""):
+def log_subprocess_output(pipe, level=logging.DEBUG, label="", collect: bool = False) -> Optional[List[str]]:
+  s = []
   for line in pipe.readlines():
     logger.log(level, "[from subprocess %s] %s", label, line)
+    if collect:
+      s.append(line)
+  if collect:
+    return s
+  return None
 
 
 # based on https://github.com/codalab/codabench/blob/develop/compute_worker/compute_worker.py:_run_container_engine_cmd
