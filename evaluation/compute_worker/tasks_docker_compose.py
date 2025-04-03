@@ -22,15 +22,9 @@ app = Celery(
 )
 
 HOST_DIRECTORY = os.environ.get("HOST_DIRECTORY", "/tmp/codabench/")
-AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
-S3_BUCKET = os.environ.get("S3_BUCKET", None)
-S3_UPLOAD_PATH_TEMPLATE = os.getenv("S3_UPLOAD_PATH_TEMPLATE", None)
-S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.getenv("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
 
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
-SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.4,4.0.3")
+SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.3,4.0.4,4.1.0")
 
 
 # https://celery.school/custom-celery-task-logger
@@ -43,13 +37,35 @@ def setup_task_logger(logger, *args, **kwargs):
 
 # N.B. name to be used by send_task
 @app.task(name="flatland3-evaluation", bind=True, soft_time_limit=10 * 60, time_limit=12 * 60)
-def the_task(self, docker_image: str, submission_image: str, tests: List[str] = None, **kwargs):
+def the_task(self, docker_image: str,
+             submission_image: str,
+             tests: List[str] = None,
+             AWS_ENDPOINT_URL=None,
+             AWS_ACCESS_KEY_ID=None,
+             AWS_SECRET_ACCESS_KEY=None,
+             S3_BUCKET=None,
+             S3_UPLOAD_PATH_TEMPLATE=None,
+             S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=None,
+             **kwargs):
   task_id = self.request.id
 
   try:
     start_time = time.time()
     logger.info(f"/ start task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}")
     assert BENCHMARKING_NETWORK is not None
+
+    if AWS_ENDPOINT_URL is None:
+      AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
+    if AWS_ACCESS_KEY_ID is None:
+      AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
+    if AWS_SECRET_ACCESS_KEY is None:
+      AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
+    if S3_BUCKET is None:
+      S3_BUCKET = os.environ.get("S3_BUCKET", None)
+    if S3_UPLOAD_PATH_TEMPLATE is None:
+      S3_UPLOAD_PATH_TEMPLATE = os.environ.get("S3_UPLOAD_PATH_TEMPLATE", None)
+    if S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID is None:
+      S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.environ.get("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
 
     loop = asyncio.get_event_loop()
     evaluator_future = loop.create_future()

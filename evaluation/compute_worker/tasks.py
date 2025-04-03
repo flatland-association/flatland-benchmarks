@@ -202,6 +202,7 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
 # TODO https://github.com/flatland-association/flatland-benchmarks/issues/82 automated integration test against deployed FAB...
 def main():
   task_id = str(uuid.uuid4())
+  print(f"task_id={task_id}")
   config.load_kube_config()
   batch_api = client.BatchV1Api()
   core_api = client.CoreV1Api()
