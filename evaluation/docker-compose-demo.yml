@@ -37,13 +37,21 @@ services:
   fab-backend:
     image: ghcr.io/flatland-association/fab-backend:latest
     pull_policy: always
+    # POSTGRES_ variables are required for flyway
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     depends_on:
       rabbit:
         condition: service_healthy
       postgres:
         condition: service_healthy
     volumes:
-      - ./config.jsonc:/usr/src/app/dist/backend/config/config.jsonc
+      - ./config-demo.jsonc:/usr/src/app/dist/backend/config/config.jsonc
+      # for demo, mount data migration
+      - ../ts/backend/src/migration/data:/flyway/sql/data
     ports:
       - 8000:8000
     networks:
