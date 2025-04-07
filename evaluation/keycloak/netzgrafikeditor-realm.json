@@ -46,7 +46,7 @@
   "roles" : {
     "realm" : [ {
       "id" : "c5c76a94-c7fd-4e2f-9048-c838464f79cd",
-      "name" : "default-roles-netzgrafikeditor",
+      "name" : "default-roles-fab",
       "description" : "${role_default-roles}",
       "composite" : true,
       "composites" : {
@@ -244,7 +244,7 @@
         "containerId" : "138fd323-0dd2-4c4b-95bc-f08ee6aa12d2",
         "attributes" : { }
       } ],
-      "netzgrafikeditor" : [ {
+      "fab" : [ {
         "id" : "65656548-9a13-4b43-8b39-5accec5edac1",
         "name" : "User",
         "description" : "",
@@ -353,7 +353,7 @@
   "groups" : [ ],
   "defaultRole" : {
     "id" : "c5c76a94-c7fd-4e2f-9048-c838464f79cd",
-    "name" : "default-roles-netzgrafikeditor",
+    "name" : "default-roles-fab",
     "description" : "${role_default-roles}",
     "composite" : true,
     "clientRole" : false,
@@ -408,9 +408,9 @@
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "default-roles-netzgrafikeditor" ],
+    "realmRoles" : [ "default-roles-fab" ],
     "clientRoles" : {
-      "netzgrafikeditor" : [ "Admin" ]
+      "fab" : [ "Admin" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
@@ -431,9 +431,9 @@
     } ],
     "disableableCredentialTypes" : [ ],
     "requiredActions" : [ ],
-    "realmRoles" : [ "default-roles-netzgrafikeditor" ],
+    "realmRoles" : [ "default-roles-fab" ],
     "clientRoles" : {
-      "netzgrafikeditor" : [ "User" ]
+      "fab" : [ "User" ]
     },
     "notBefore" : 0,
     "groups" : [ ]
@@ -575,8 +575,8 @@
     "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
   }, {
     "id" : "d584cdbd-762c-4f20-8128-21b2d589a39f",
-    "clientId" : "netzgrafikeditor",
-    "name" : "Netzgrafikeditor",
+    "clientId" : "fab",
+    "name" : "FAB",
     "description" : "",
     "rootUrl" : "",
     "adminUrl" : "",
@@ -839,7 +839,7 @@
         "access.token.claim" : "true",
         "claim.name" : "roles",
         "jsonType.label" : "String",
-        "usermodel.clientRoleMapping.clientId": "netzgrafikeditor"
+        "usermodel.clientRoleMapping.clientId": "fab"
       }
     }, {
       "id" : "5ebf07c2-284b-494b-9667-4c62b533c6b9",

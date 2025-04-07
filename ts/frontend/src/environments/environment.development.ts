@@ -5,7 +5,7 @@ import { AuthConfig } from 'angular-oauth2-oidc'
 const authConfig: AuthConfig = {
   issuer: 'http://localhost:8081/realms/netzgrafikeditor',
   // The ClientId you received from the IAM Team
-  clientId: 'netzgrafikeditor',
+  clientId: 'fab',
   // For production with Angular i18n the language code needs to be included in the redirectUri.
   // In your environment.prod.ts (or similar, but not your environment.ts) replace it with the following line:
   // redirectUri: location.origin + location.pathname.substring(0, location.pathname.indexOf('/', 1) + 1)
