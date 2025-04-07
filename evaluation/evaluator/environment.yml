@@ -1,9 +1,5 @@
 name: flatland-rl
 dependencies:
-  - python==3.10.16
+  - python==3.12
   - pip:
-      - pyyaml
-      # TODO workaround till 4.0.5 is released with fix from https://github.com/flatland-association/flatland-rl/pull/127/
-      - attrs
-      - setuptools
-      - flatland-rl==4.0.4
+      - flatland-rl==4.1.0
