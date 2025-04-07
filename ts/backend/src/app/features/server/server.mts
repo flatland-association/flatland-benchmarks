@@ -43,8 +43,13 @@ export class Server {
     })
 
     // start listening
-    this.app.listen(this.config.api.port, this.config.api.host, () => {
-      logger.info(`Server is now live on ${this.config.api.host}:${this.config.api.port}`)
+    this.app.listen(this.config.api.port, this.config.api.host, (error) => {
+      if (typeof error === 'undefined') {
+        logger.info(`Server is now live on ${this.config.api.host}:${this.config.api.port}`)
+      } else {
+        logger.fatal(`Server could not be started on ${this.config.api.host}:${this.config.api.port}`, error.message)
+        process.exit(1)
+      }
     })
   }
 }
