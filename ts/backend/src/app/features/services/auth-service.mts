@@ -66,7 +66,7 @@ export class AuthService extends Service {
         return resolve(decoded as JwtPayload)
       }
 
-      jwt.verify(token, this.getKey, verifyCallback)
+      jwt.verify(token, this.getKey, { audience: this.config.keycloak.audience }, verifyCallback)
     })
   }
 }
