@@ -12,16 +12,22 @@ describe('Auth Service', () => {
   // to test against forged tokens  by using another secret.
   const testSecret = 'secret'
   const testJwtPayload = {
+    aud: 'test-audience',
     data: 'test',
   }
 
-  const getToken = (options?: { lifetime?: number; secret?: string }) => {
+  const getToken = (options?: {
+    lifetime?: number
+    secret?: string
+    payloadOverrides?: Partial<typeof testJwtPayload>
+  }) => {
     // create a jwt with test payload, extended with expiration date, and sign
     // it with provided or testing secret
     return jwt.sign(
       {
         exp: Math.floor(Date.now() / 1000) + (options?.lifetime ?? 60),
         ...testJwtPayload,
+        ...options?.payloadOverrides,
       },
       options?.secret ?? testSecret,
     )
@@ -31,6 +37,8 @@ describe('Auth Service', () => {
     const testConfig = Object.assign({}, defaults)
     // redirect to unreachable url
     testConfig.keycloak.url = '0.0.0.0:1'
+    // make sure aud claim matches test
+    testConfig.keycloak.audience = testJwtPayload.aud
     // fail faster
     testConfig.keycloak.timeout = 1000
     AuthService.create(testConfig)
@@ -71,6 +79,13 @@ describe('Auth Service', () => {
       token: getToken({ lifetime: -60 }),
       expectedAuth: null,
       expectedError: 'jwt expired',
+    },
+    {
+      should: 'should reject token with audience mismatch',
+      mockStore: true,
+      token: getToken({ payloadOverrides: { aud: 'not-test-audience' } }),
+      expectedAuth: null,
+      expectedError: 'jwt audience invalid',
     },
     // testing this last also ensures `authService.error` gets properly reset
     {
