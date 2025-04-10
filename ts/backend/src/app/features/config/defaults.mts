@@ -19,12 +19,13 @@ export const defaults = {
   },
   /* Redis endpoint */
   redis: {
-    url: 'redis://localhost:6379',
+    url: 'redis://localhost:6379', // redis[s]://[[username][:password]@][host][:port][/db-number]
   },
   /* Keycloak endpoint */
   keycloak: {
-    url: 'http://localhost:8081',
+    url: 'http://localhost:8081', // http[s]://[host][:port]
     realm: 'netzgrafikeditor',
-    timeout: 30000,
+    audience: 'fab', // must be present in JWT's aud
+    timeout: 30000, // ms
   },
 }
