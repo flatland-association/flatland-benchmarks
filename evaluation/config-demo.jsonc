@@ -17,6 +17,16 @@
     "password": "benchmarks",
     "database": "benchmarks"
   },
+  /* MinIO / S3 */
+  "minio": {
+    "protocol": "http://",
+    "host": "minio",
+    "port": 9000,
+    "user": "minioadmin",
+    "password": "minioadmin",
+    "bucket": "fab-demo-results",
+    "path": "results"
+  },
   /* Redis endpoint */
   "redis": {
     "url": "redis://redis:6379"
