@@ -38,20 +38,25 @@ export class MinioService extends Service {
   async getFileContents(filename: string): Promise<string | undefined> {
     const path = `${this.config.minio.path}/${filename}`
     const contents = await new Promise<string | undefined>((resolve, reject) => {
-      this.minioClient.getObject(this.config.minio.bucket, path).then((stream) => {
-        let contents = ''
-        stream.setEncoding('utf8')
-        stream.on('data', (chunk) => {
-          contents += chunk
+      this.minioClient
+        .getObject(this.config.minio.bucket, path)
+        .then((stream) => {
+          let contents = ''
+          stream.setEncoding('utf8')
+          stream.on('data', (chunk) => {
+            contents += chunk
+          })
+          stream.on('end', () => {
+            resolve(contents)
+          })
+          stream.on('error', (err) => {
+            reject(err)
+          })
         })
-        stream.on('end', () => {
-          resolve(contents)
-        })
-        stream.on('error', (err) => {
+        .catch((err: Error | Minio.S3Error) => {
           reject(err)
         })
-      })
-    }).catch((err) => {
+    }).catch((err: Error | Minio.S3Error) => {
       logger.error(['getFileContents', path, err.message])
       return undefined
     })
