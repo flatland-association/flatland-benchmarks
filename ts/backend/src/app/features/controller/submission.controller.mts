@@ -204,7 +204,7 @@ export class SubmissionController extends Controller {
       ⚠ Flatland-3 specific format ⚠
       TODO: generic format, see https://github.com/flatland-association/flatland-benchmarks/issues/178
       */
-      const resultsStat = await minio.getFileStat(`sub-${uuid}.json`)
+      const resultsStat = await minio.getFileStat(`sub-${uuid}.json`, true)
       // assume if json exists csv exists too
       if (resultsStat) {
         // const resultsStat = await minio.getFileStat(`sub-${uuid}.json`)
