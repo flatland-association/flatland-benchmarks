@@ -21,6 +21,16 @@ export const defaults = {
   redis: {
     url: 'redis://localhost:6379', // redis[s]://[[username][:password]@][host][:port][/db-number]
   },
+  /* MinIO / S3 */
+  minio: {
+    protocol: 'http://',
+    host: 'localhost',
+    port: 9000,
+    user: 'minioadmin',
+    password: 'minioadmin',
+    bucket: 'fab-demo-results',
+    path: 'results',
+  },
   /* Keycloak endpoint */
   keycloak: {
     url: 'http://localhost:8081', // http[s]://[host][:port]
