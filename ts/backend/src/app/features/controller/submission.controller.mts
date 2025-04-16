@@ -1,11 +1,11 @@
 import { appendDir } from '@common/endpoint-utils.js'
 import { Result, Submission, SubmissionPreview } from '@common/interfaces.js'
 import { StripDir } from '@common/utility-types.js'
-import { createClient } from 'redis'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AmqpService } from '../services/amqp-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
+import { MinioService } from '../services/minio-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import { Controller, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
 
@@ -198,49 +198,50 @@ export class SubmissionController extends Controller {
 
     // try updating incomplete (no done_at) results
     if (!row.done_at) {
-      const client = await createClient({ url: this.config.redis.url })
-        .on('error', (err) => logger.error('Redis Client Error', err))
-        .connect()
-      const keys = await client.keys(`*-sub-${uuid}`)
+      const minio = MinioService.getInstance()
 
-      if (keys && keys.length > 0) {
-        // assume keys[0] is the one we're interested in
-        const key = keys[0]
-        const value = JSON.parse((await client.get(key)) ?? 'null')
-
-        if (value) {
-          // date_done could probably be fed directly into DB, but for response the date should be reformatted
-          row.done_at = new Date(value['date_done']).toISOString()
-          row.success = value['status'] === 'SUCCESS'
-          // save original results
-          row.results_str = JSON.stringify(value)
-          // (only) on success, try reading score
-          if (row.success) {
-            // currently hardcoded: result scheme
-            const resultScheme = 'f3-evaluator'
-            const results = {
-              'results.csv': value['result'][resultScheme]['results.csv'],
-              'results.json': value['result'][resultScheme]['results.json'],
-            }
-            const resultsJson = JSON.parse(results['results.json'])
-            const scores = resultsJson['score']
-            // extract N-scores from results
-            row.scores = [scores['score'], scores['score_secondary']]
+      /*
+      ⚠ Flatland-3 specific format ⚠
+      TODO: generic format, see https://github.com/flatland-association/flatland-benchmarks/issues/178
+      */
+      const resultsStat = await minio.getFileStat(`sub-${uuid}.json`)
+      // assume if json exists csv exists too
+      if (resultsStat) {
+        // const resultsStat = await minio.getFileStat(`sub-${uuid}.json`)
+        const resultsJSONString = await minio.getFileContents(`sub-${uuid}.json`)
+        const resultsCSVString = await minio.getFileContents(`sub-${uuid}.csv`)
+        if (resultsJSONString && resultsCSVString) {
+          // build results_str as object with same structure as pre-s3 results_str, except it's only necessary fields
+          const results = {
+            result: {
+              'f3-evaluator': {
+                'results.json': resultsJSONString,
+                'results.csv': resultsCSVString,
+              },
+            },
           }
+          // extract score from json
+          const resultsJSON = JSON.parse(resultsJSONString)
+          const score = resultsJSON['score']
+          row.scores = [score['score'], score['score_secondary']]
+          // assume success if results are present
+          row.success = true
+          // file could get modified after first fetch but db row won't be updated so last modified is a good indicator
+          row.done_at = new Date(resultsStat.lastModified).toISOString()
+          row.results_str = JSON.stringify(results)
 
           // update result in DB
           await sql.query`
-          UPDATE results
-            SET
-              done_at = ${row.done_at},
-              success = ${row.success},
-              scores = ${row.scores},
-              results_str = ${row.results_str}
-            WHERE uuid = ${row.uuid}
-        `
+            UPDATE results
+              SET
+                done_at = ${row.done_at},
+                success = ${row.success},
+                scores = ${row.scores},
+                results_str = ${row.results_str}
+              WHERE uuid = ${row.uuid}
+          `
         }
       }
-      await client.disconnect()
     }
 
     const results = appendDir('/results/', [row])
