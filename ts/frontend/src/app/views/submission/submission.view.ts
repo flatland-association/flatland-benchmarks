@@ -63,7 +63,8 @@ export class SubmissionView implements OnInit, OnDestroy {
   testScores?: { test: string; score: number }[]
   acceptEula = false
 
-  interval?: number
+  // interval?: number
+  timeout?: number
 
   constructor(
     route: ActivatedRoute,
@@ -80,62 +81,69 @@ export class SubmissionView implements OnInit, OnDestroy {
       })
     }
     // try loading result directly
-    this.loadResult()
-    // and after that, auto-refresh until results are here (check done in loadResult())
-    this.interval = window.setInterval(() => {
-      this.loadResult()
-    }, CHECK_RESULT_INTERVAL)
+    this.watchResult()
   }
 
   ngOnDestroy() {
-    if (this.interval) {
-      window.clearInterval(this.interval)
+    if (this.timeout) {
+      window.clearTimeout(this.timeout)
+    }
+  }
+
+  // tries to load the result and if its not available schedules a reload
+  // (can't work with window.setInterval as the request might take longer than the interval)
+  async watchResult() {
+    // try loading result
+    await this.loadResult()
+    // schedule next load if result is not available
+    if (!this.result || !this.result.success) {
+      this.timeout = window.setTimeout(() => {
+        this.watchResult()
+      }, CHECK_RESULT_INTERVAL)
     }
   }
 
   async loadResult() {
-    this.apiService.get('/submissions/:uuid/results', { params: { uuid: `${this.submissionUuid}` } }).then((res) => {
-      if (res.body) {
-        this.result = res.body[0]
-        if (this.result.results_str) {
-          this.resultObj = JSON.parse(this.result.results_str)
-          this.resultsJson = JSON.parse(this.resultObj?.result['f3-evaluator']?.['results.json'] ?? 'null')
-          this.resultsCsv = this.resultObj?.result['f3-evaluator']?.['results.csv']
-          // primitively parse CSV and accumulate single test scores
-          // ⚠ hard-coded last-second "solution" ⚠
-          const lines = this.resultsCsv?.split('\n').slice(1, -1)
-          this.testScores = []
-          lines?.forEach((line) => {
-            const cells = line.split(',')
-            const test = cells[1] // manually counted
-            const score = cells[17] // guessed there's no time to count
-            let testScore = this.testScores!.at(-1)
-            if (!testScore || testScore.test !== test) {
-              testScore = { test, score: 0 }
-              this.testScores!.push(testScore)
-            }
-            testScore.score += +score
-          })
-        }
-        // once result indicates success
-        if (this.result.success) {
-          //... load submissions preview from backend so it's complete
-          this.apiService
-            .get('/submissions', {
-              query: {
-                uuid: this.submissionUuid,
-              },
+    await this.apiService
+      .get('/submissions/:uuid/results', { params: { uuid: `${this.submissionUuid}` } })
+      .then(async (res) => {
+        if (res.body) {
+          this.result = res.body[0]
+          if (this.result.results_str) {
+            this.resultObj = JSON.parse(this.result.results_str)
+            this.resultsJson = JSON.parse(this.resultObj?.result['f3-evaluator']?.['results.json'] ?? 'null')
+            this.resultsCsv = this.resultObj?.result['f3-evaluator']?.['results.csv']
+            // primitively parse CSV and accumulate single test scores
+            // ⚠ hard-coded last-second "solution" ⚠
+            const lines = this.resultsCsv?.split('\n').slice(1, -1)
+            this.testScores = []
+            lines?.forEach((line) => {
+              const cells = line.split(',')
+              const test = cells[1] // manually counted
+              const score = cells[17] // guessed there's no time to count
+              let testScore = this.testScores!.at(-1)
+              if (!testScore || testScore.test !== test) {
+                testScore = { test, score: 0 }
+                this.testScores!.push(testScore)
+              }
+              testScore.score += +score
             })
-            .then((r) => {
-              this.mySubmission = r.body?.at(0)
-            })
-          //... and clear interval
-          if (this.interval) {
-            window.clearInterval(this.interval)
+          }
+          // once result indicates success
+          if (this.result.success) {
+            //... load submissions preview from backend so it's complete
+            await this.apiService
+              .get('/submissions', {
+                query: {
+                  uuid: this.submissionUuid,
+                },
+              })
+              .then((r) => {
+                this.mySubmission = r.body?.at(0)
+              })
           }
         }
-      }
-    })
+      })
   }
 
   async publishResult() {
