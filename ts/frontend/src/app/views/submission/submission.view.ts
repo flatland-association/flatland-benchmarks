@@ -63,7 +63,7 @@ export class SubmissionView implements OnInit, OnDestroy {
   testScores?: { test: string; score: number }[]
   acceptEula = false
 
-  // interval?: number
+  isLive = false
   timeout?: number
 
   constructor(
@@ -81,10 +81,12 @@ export class SubmissionView implements OnInit, OnDestroy {
       })
     }
     // try loading result directly
+    this.isLive = true
     this.watchResult()
   }
 
   ngOnDestroy() {
+    this.isLive = false
     if (this.timeout) {
       window.clearTimeout(this.timeout)
     }
@@ -95,8 +97,10 @@ export class SubmissionView implements OnInit, OnDestroy {
   async watchResult() {
     // try loading result
     await this.loadResult()
-    // schedule next load if result is not available
-    if (!this.result || !this.result.success) {
+    // schedule next load if
+    // - result is not available
+    // - component is still live (could have been destroyed during load)
+    if ((!this.result || !this.result.success) && this.isLive) {
       this.timeout = window.setTimeout(() => {
         this.watchResult()
       }, CHECK_RESULT_INTERVAL)
