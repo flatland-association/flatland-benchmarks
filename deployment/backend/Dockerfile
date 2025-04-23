@@ -17,9 +17,11 @@ RUN apk add wget tar bash
 
 WORKDIR /flyway
 
+ENV FLYWAY_VERSION=11.5.0
+
 # started from: https://documentation.red-gate.com/flyway/reference/usage/command-line
 # changed to linux-alpine-x64.tar.gz and added --strip-components for a cleaner structure as inspired by the Dockerfile here: https://github.com/flyway/flyway-docker/blob/main/flyway-docker/dockerfiles/alpine/Dockerfile
-RUN wget -qO- https://download.red-gate.com/maven/release/com/redgate/flyway/flyway-commandline/11.5.0/flyway-commandline-11.5.0-linux-alpine-x64.tar.gz | tar -xvz --strip-components=1 \
+RUN wget -qO- https://download.red-gate.com/maven/release/com/redgate/flyway/flyway-commandline/${FLYWAY_VERSION}/flyway-commandline-${FLYWAY_VERSION}-linux-alpine-x64.tar.gz | tar -xvz --strip-components=1 \
   && ln -s `pwd`/flyway /usr/local/bin \
   && chmod a+x `pwd`/flyway
 
