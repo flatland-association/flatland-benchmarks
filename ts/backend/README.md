@@ -41,6 +41,7 @@ This will:
 * compile the source code to a JavaScript module output to `out-tsc/backend/app`
 * copy (non-overwriting) the `config.jsonc` to `out-tsc/backend/config` for your convenience
 * start the app in Node.js
+* start unit tests (in watch mode) in parallel
 
 The server isn't live-updated. To reflect any changes made to the source code, `npm start` has to be run again.
 
