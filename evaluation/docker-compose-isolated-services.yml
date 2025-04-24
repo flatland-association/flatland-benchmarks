@@ -1,4 +1,5 @@
-# compose file for local dev
+# compose file for local dev with isolated backend and services container
+# (db migration is done in backend container)
 
 services:
   postgres:
@@ -8,31 +9,6 @@ services:
     # If persistent storage is required, uncomment volumes list:
     # volumes:
       # - ${POSTGRES_VOLUME:-./var/postgres}:/var/lib/postgresql/data:delegated
-
-  flyway:
-    extends:
-      file: docker-compose-base.yml
-      service: flyway
-    # data is not present in docker-compose-base but required for local dev
-    volumes:
-      - ../ts/backend/src/migration/schema:/flyway/sql/schema
-      - ../ts/backend/src/migration/data:/flyway/sql/data
-
-  pgadmin:
-    image: dpage/pgadmin4
-    hostname: pgadmin
-    env_file: .env
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
-      - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
-      - PGADMIN_LISTEN_ADDRESS=0.0.0.0
-    ports:
-      - ${PGADMIN_LISTEN_PORT}:15432
-    volumes:
-      - ${PGADMIN_VOLUME:-./var/pgadmin}:/var/lib/pgadmin:delegated
-    networks:
-      - flatland-benchmarks
 
   redis:
     extends:
@@ -66,15 +42,14 @@ services:
 
   keycloak:
     image: quay.io/keycloak/keycloak:23.0
+    hostname: keycloak
     # as we need to access keycloak from backend Docker container under docker internal port, we need to start Keycloak on configured port, port forwarding in Docker run is not enough
-    command: start-dev --import-realm --http-port ${KEYCLOAK_PORT:-8081} --hostname localhost
+    command: start-dev --import-realm --http-port ${KEYCLOAK_PORT:-8081} --hostname keycloak
     ports:
       - ${KEYCLOAK_PORT:-8081}:${KEYCLOAK_PORT:-8081}
     volumes:
       # TODO can we avoid copying the realm config? Download in an init container from the repo....?
       - ./keycloak/netzgrafikeditor-realm.json:/opt/keycloak/data/import/netzgrafikeditor-realm.json
-      # persist data, otherwise restarting the container nills JWTs
-      - ${KEYCLOAK_VOLUME:-./opt/keycloak}:/opt/keycloak/data/h2:delegated
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=netzgrafikeditor
