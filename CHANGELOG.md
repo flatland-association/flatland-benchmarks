@@ -3,6 +3,14 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.6.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.5.0...v0.6.0) (2025-04-28)
+
+
+### Features
+
+* **backend:** verify aud in jwt ([b978599](https://github.com/flatland-association/flatland-benchmarks/commit/b9785996bfe502dbba68d69c1393b4a89b661307))
+* logs to s3 instead of redis. ([#183](https://github.com/flatland-association/flatland-benchmarks/issues/183)) ([7c12357](https://github.com/flatland-association/flatland-benchmarks/commit/7c12357926d4f53158c6d009ff2dc21fe94b9566))
+
 ## [0.5.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.4.4...v0.5.0) (2025-02-21)
 
 
