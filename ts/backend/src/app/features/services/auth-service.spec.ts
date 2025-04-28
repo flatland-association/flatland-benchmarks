@@ -87,6 +87,13 @@ describe('Auth Service', () => {
       expectedAuth: null,
       expectedError: 'jwt audience invalid',
     },
+    {
+      should: 'should reject token missing audience',
+      mockStore: true,
+      token: getToken({ payloadOverrides: { aud: undefined } }),
+      expectedAuth: null,
+      expectedError: 'jwt audience invalid',
+    },
     // testing this last also ensures `authService.error` gets properly reset
     {
       should: 'should accept valid token',
