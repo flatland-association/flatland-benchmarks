@@ -1,5 +1,6 @@
 import * as Minio from 'minio'
 // https://github.com/minio/minio-js/issues/1394
+import { UploadedObjectInfo } from '../../../../../../node_modules/minio/dist/esm/internal/type.mjs'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { Service } from './service.mjs'
@@ -82,5 +83,22 @@ export class MinioService extends Service {
         return undefined
       })
     return contents
+  }
+
+  /**
+   * Uploads file contents.
+   * @param filename File name of object to create.
+   * @param contents Contents to upload.
+   * @returns `UploadedObjectInfo` or `undefined` in case of error.
+   */
+  async putFileContents(filename: string, contents: string): Promise<UploadedObjectInfo | undefined> {
+    const path = `${this.config.minio.path}/${filename}`
+    const info = await this.minioClient
+      .putObject(this.config.minio.bucket, path, contents)
+      .catch((err: Minio.S3Error) => {
+        logger.error(['putFileContents', path, err.message])
+        return undefined
+      })
+    return info
   }
 }
