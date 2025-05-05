@@ -195,44 +195,24 @@ arc42 documentation.
 
 # Context and Scope
 
-<div class="formalpara-title">
+The FAB system is supposed to support validation campaigns in two modes
 
-**Contents**
+* FAB-internal evaluation: domain-specific evaluation systems are managed and spawned by FAB
+* FAB-external evaluation: evaluation is performed externally to FAB, the results are uploaded to FAB either manually or via a technical interface by the FAB-external evaluation system.
 
-</div>
+![SystemContext.drawio.png](img/architecture/SystemContext.drawio.png)
 
-Context and scope - as the name suggests - delimits your system (i.e.
-your scope) from all its communication partners (neighboring systems and
-users, i.e. the context of your system). It thereby specifies the
-external interfaces.
+Arrows represent control flow.
+Both, FAB-internal and FAB-external evaluation, can be closed-loop or interactive-loop (see above).
 
-If necessary, differentiate the business context (domain specific inputs
-and outputs) from the technical context (channels, protocols, hardware).
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-The domain interfaces and technical interfaces to communication partners
-are among your system’s most critical aspects. Make sure that you
-completely understand them.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Various options:
-
-- Context diagrams
-
-- Lists of communication partners and their interfaces.
-
-See [Context and Scope](https://docs.arc42.org/section-3/) in the arc42
-documentation.
+| System/Role                                 | Description                                                                                                                                                                                                                                                              |
+|---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| FAB                                         | central hub for validation campaign evaluation results. Entry-point for FAB-internal evaluation.                                                                                                                                                                         |
+| External Domain-Specific Evaluation Systems | run FAB-external evaluations.                                                                                                                                                                                                                                            |
+| Algorithmic Researcher                      | requests simulation for scenario and analyses scenario outcome, either from FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation)                                                                                                 |
+| Human-in-the-Loop Researcher                | requests simulation for scenario and analyses run information or measurements,                                                                                                                                                                                           |
+| Operator                                    | interacts with HMI, issuing requests to HMI based on information or action options from HMI.                                                                                                                                                                             |
+| Domain Expert Evaluator                     | analyses scenario outcomes, either from FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation), or uploads scenario outcomes to FAB from FAB-external evaluations. Domain Expert Evaluator may interview Operators for evaluation. |
 
 ## Business Context
 
@@ -275,9 +255,7 @@ the communication partner, the inputs, and the outputs.
 
 ## Technical Context
 
-<div class="formalpara-title">
-
-**Contents**
+The following [Architecture Diagram](https://mermaid.js.org/syntax/architecture) shows the interplay of the FAB components:
 
 ```markdown
 architecture-beta
@@ -325,38 +303,32 @@ group api(cloud)[Validation Campaign Hub]
 | Evaluator Domain A    | Evaluation worker.                                                                                                | Blueprint: Python + bash + Docker |
 | Object Storage        | Raw tabular results are uploaded to object storage from evaluator and fetched by backend.                         | AWS S3 compatible object storage  |
 
-</div>
+And the following [information flow diagram](https://www.uml-diagrams.org/information-flow-diagrams.html) additionally reflects closed-loop or interactive-loop, both of FAB-internal and FAB-external evaluation (ignoring FAB system boundary, i.e. whether the domain-specific evaluation systems are managed by FAB or external).
 
-Technical interfaces (channels and transmission media) linking your
-system to its environment. In addition a mapping of domain specific
-input/output to the channels, i.e. an explanation which I/O uses which
-channel.
+![Closed_and_Interactive_Loop_Eval.drawio.png](img/architecture/Closed_and_Interactive_Loop_Eval.drawio.png)
 
-<div class="formalpara-title">
+### Level 1 Components
 
-**Motivation**
+| Component             | Responsibility                                                                                                                           | Example                                                                          |
+|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| FAB Web+Backend       | Manage scenarios for FAB-internal evaluation. Manage validation campaigns and results for both FAB-internal and FAB-external evaluation. | FAB                                                                              |
+| Prediction Module     | Step from state at time t.                                                                                                               | Flatland 3 environment                                                           |
+| Scenario Driver       | Hooks into simulation engine to provide state at time t (en lieu of production information system) for validation purposes.              |                                                                                  |
+| Scenario Evaluator    | Evaluate scenario outcome for validation purposes.                                                                                       | FAB Flatland 3 evaluator (conceptually computing metrics/KPIs on the trajectory) |
+| Evaluation Submodule  | Provide prediction for specified scenario.                                                                                               |                                                                                  |
+| Recommendation Module | Provide recommendation to HMI.                                                                                                           |                                                                                  |
+| HMI Module            | Provide information and action options to Operator.                                                                                      | Interactive AI Frontend  with Flatland event services                            |
 
-</div>
+### Level 2 Components
 
-Many stakeholders make architectural decision based on the technical
-interfaces between the system and its context. Especially infrastructure
-or hardware designers decide these technical interfaces.
+| Component           | Responsibility                                                                                     | Example                                                                 |
+|---------------------|----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| Simulation Engine   | Run simulation for state and scenario, brokering actions between AI agent and digital environment. | FAB Flatland 3 evaluator stepping the env with actions from submission. |
+| Digital Environment | Update state based on actions (step).                                                              | Flatland 3 env, Grid2Ops                                                |
+| AI Agent            | Provide actions based on observations from state                                                   | FAB Flatland 3 submission                                               |
 
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-E.g. UML deployment diagram describing channels to neighboring systems,
-together with a mapping table showing the relationships between channels
-and input/output.
-
-**\<Diagram or Table>**
-
-**\<optionally: Explanation of technical interfaces>**
-
-**\<Mapping Input/Output to Channels>**
+> [!IMPORTANT]  
+> Arrows indicate the direction of information flow and not direction of calls!
 
 # Solution Strategy
 
@@ -406,159 +378,17 @@ documentation.
 
 # Building Block View
 
-<div class="formalpara-title">
+### Level 1
 
-**Content**
-
-</div>
-
-The building block view shows the static decomposition of the system
-into building blocks (modules, components, subsystems, classes,
-interfaces, packages, libraries, frameworks, layers, partitions, tiers,
-functions, macros, operations, data structures, …) as well as their
-dependencies (relationships, associations, …)
-
-This view is mandatory for every architecture documentation. In analogy
-to a house this is the *floor plan*.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Maintain an overview of your source code by making its structure
-understandable through abstraction.
-
-This allows you to communicate with your stakeholder on an abstract
-level without disclosing implementation details.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-The building block view is a hierarchical collection of black boxes and
-white boxes (see figure below) and their descriptions.
-
-![Hierarchy of building blocks](./img/architecture/05_building_blocks-EN.png)
-
-**Level 1** is the white box description of the overall system together
-with black box descriptions of all contained building blocks.
-
-**Level 2** zooms into some building blocks of level 1. Thus it contains
-the white box description of selected building blocks of level 1,
-together with black box descriptions of their internal building blocks.
-
-**Level 3** zooms into selected building blocks of level 2, and so on.
-
-See [Building Block View](https://docs.arc42.org/section-5/) in the
-arc42 documentation.
-
-## Whitebox Overall System
-
-Here you describe the decomposition of the overall system using the
-following white box template. It contains
-
-- an overview diagram
-
-- a motivation for the decomposition
-
-- black box descriptions of the contained building blocks. For these
-  we offer you alternatives:
-
-    - use *one* table for a short and pragmatic overview of all
-      contained building blocks and their interfaces
-
-    - use a list of black box descriptions of the building blocks
-      according to the black box template (see below). Depending on
-      your choice of tool this list could be sub-chapters (in text
-      files), sub-pages (in a Wiki) or nested elements (in a modeling
-      tool).
-
-- (optional:) important interfaces, that are not explained in the
-  black box templates of a building block, but are very important for
-  understanding the white box. Since there are so many ways to specify
-  interfaces why do not provide a specific template for them. In the
-  worst case you have to specify and describe syntax, semantics,
-  protocols, error handling, restrictions, versions, qualities,
-  necessary compatibilities and many things more. In the best case you
-  will get away with examples or simple signatures.
-
-***\<Overview Diagram>***
-
-The following [UML information flow diagram](https://www.uml-diagrams.org/information-flow-diagrams.html) shows the exchange of information between system
-components at high level:
-
-> [!IMPORTANT]  
-> Arrows indicate the direction of information flow and not direction of calls!
+The following [building block view](https://docs.arc42.org/section-5/) shows the static decomposition of the system into building blocks (modules, components, subsystems, classes, interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations, data structures, …) as well as their dependencies (relationships, associations, …)
 
 ![InformationFlow.drawio.png](./img/architecture/InformationFlow.drawio.png)
 
-Motivation  
-*\<text explanation>*
+### Level 2
 
-Contained Building Blocks  
-*\<Description of contained building block (black boxes)>*
+Inspired by [LIPS](https://github.com/IRT-SystemX/LIPS), high-level data model is as follows:
 
-Important Interfaces  
-*\<Description of important interfaces>*
-
-Insert your explanations of black boxes from level 1:
-
-If you use tabular form you will only describe your black boxes with
-name and responsibility according to the following schema:
-
-| **Name**         | **Responsibility** |
-|------------------|--------------------|
-| *\<black box 1>* |  *\<Text>*         |
-| *\<black box 2>* |  *\<Text>*         |
-
-If you use a list of black box descriptions then you fill in a separate
-black box template for every important building block . Its headline is
-the name of the black box.
-
-### \<Name black box 1>
-
-Here you describe \<black box 1> according the the following black box
-template:
-
-- Purpose/Responsibility
-
-- Interface(s), when they are not extracted as separate paragraphs.
-  This interfaces may include qualities and performance
-  characteristics.
-
-- (Optional) Quality-/Performance characteristics of the black box,
-  e.g.availability, run time behavior, ….
-
-- (Optional) directory/file location
-
-- (Optional) Fulfilled requirements (if you need traceability to
-  requirements).
-
-- (Optional) Open issues/problems/risks
-
-*\<Purpose/Responsibility>*
-
-*\<Interface(s)>*
-
-*\<(Optional) Quality/Performance Characteristics>*
-
-*\<(Optional) Directory/File Location>*
-
-*\<(Optional) Fulfilled Requirements>*
-
-*\<(optional) Open Issues/Problems/Risks>*
-
-### \<Name black box 2>
-
-*\<black box template>*
-
-### \<Name black box n>
-
-*\<black box template>*
+![DataModel.drawio.png](img/architecture/DataModel.drawio.png)
 
 ### Interface 1: Benchmark definition API:
 
@@ -845,57 +675,6 @@ Test_1/Level_0.pkl,Test_1,Level_0,2,30,30,3,2,3,1,False,2,20,50,0,{1.0: 1.0},,,,
 Test_1/Level_1.pkl,Test_1,Level_1,2,30,30,3,2,3,2,False,2,20,50,300,{1.0: 1.0},,,,,,,,,,
 Test_1/Level_2.pkl,Test_1,Level_2,2,30,30,3,2,3,4,False,2,20,50,600,{1.0: 1.0},,,,,,,,,,
 ```
-
-### \<Name interface m>
-
-## Level 2
-
-Here you can specify the inner structure of (some) building blocks from
-level 1 as white boxes.
-
-You have to decide which building blocks of your system are important
-enough to justify such a detailed description. Please prefer relevance
-over completeness. Specify important, surprising, risky, complex or
-volatile building blocks. Leave out normal, simple, boring or
-standardized parts of your system
-
-### White Box *\<building block 1>*
-
-…describes the internal structure of *building block 1*.
-
-*\<white box template>*
-
-### White Box *\<building block 2>*
-
-*\<white box template>*
-
-…
-
-### White Box *\<building block m>*
-
-*\<white box template>*
-
-## Level 3
-
-Here you can specify the inner structure of (some) building blocks from
-level 2 as white boxes.
-
-When you need more detailed levels of your architecture please copy this
-part of arc42 for additional levels.
-
-### White Box \<\_building block x.1\_\>
-
-Specifies the internal structure of *building block x.1*.
-
-*\<white box template>*
-
-### White Box \<\_building block x.2\_\>
-
-*\<white box template>*
-
-### White Box \<\_building block y.1\_\>
-
-*\<white box template>*
 
 # Runtime View
 
