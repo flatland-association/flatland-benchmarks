@@ -560,7 +560,187 @@ template:
 
 *\<black box template>*
 
-### Interface 1: Rabbit
+### Interface 1: Benchmark definition API:
+
+`PUT /benchmarks/{benchmark_id}/tests` accepts JSON:
+
+```json
+{
+  "tests": [
+    {
+      "test_id": "00",
+      "fields": [
+        {
+          "name": "rewards",
+          "agg_func": "SUM",
+          "agg_field": "rewards",
+          "description": "primary score"
+        },
+        {
+          "name": "mean_done",
+          "agg_func": "MEAN_NAN",
+          "agg_field": "done",
+          "description": "mean percentage done"
+        }
+      ],
+      "scenarios": [
+        {
+          "scenario_id": "00",
+          "fields": [
+            {
+              "name": "rewards",
+              "description": "Rewards [-]"
+            },
+            {
+              "name": "runtime",
+              "description": "Runtime [s]"
+            },
+            {
+              "name": "done",
+              "description": "Percentage done [%]"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "fields": [
+    {
+      "name": "rewards",
+      "agg_func": "SUM",
+      "agg_field": "rewards",
+      "description": "primary score"
+    },
+    {
+      "name": "mean_done",
+      "agg_func": "MEAN_NAN",
+      "agg_field": "done",
+      "description": "mean percentage done"
+    }
+  ]
+}
+```
+
+Add/delete individual scenarios:
+`PUT /benchmarks/{benchmark_id}/tests/{test_id}/scenarios`
+`DELETE /benchmarks/{benchmark_id}/tests/{test_id}/scenarios/{scenario_id}`
+
+Remarks:
+
+* `{ "definition": ...}` allows for future backwards-compatible addition of optional attributes
+* `fields` defines tabular or form view of results at the hierarchy level (benchmark/test/scenario)
+* `agg_func` must be one of a pre-defined enum of values e.g. `sum`, `mean`, `nanmean` etc.
+* handling of nan-values depends on the aggregation function, similar to numpy:
+  * https://numpy.org/doc/stable/reference/generated/numpy.mean.html -> result is nan if values are missing are reported as nan
+  * https://numpy.org/doc/stable/reference/generated/numpy.nanmean.html -> result is mean of non-nan values
+* The definition must be consistent, i.e. `agg_field` must be one of the fields defined in the underlying elements.
+* Versioning: we keep `valid_from` and `valid_to` to allow to for future revert operations.
+* Note that we adhere to functional data processing paradigm: we re-process the data according to the current processing definition;
+  the raw data is kept on S3 and we could in principle re-process cached data at every level from S3 to the UI.
+
+Relational schema:
+
+```mermaid
+erDiagram
+  SCENARIO_DEFINITION {
+    string benchmark_id PK, FK
+    string test_id PK, FK
+    string scenario_id PK
+    string field
+    int order
+    date valid_from
+    date valid_to
+  }
+
+  TEST_DEFINITION {
+    string benchmark_id PK, FK
+    string test_id PK
+    string agg_func
+    string agg_field
+    string topic
+    URL s3
+    credentials s3
+    date valid_from
+    date valid_to
+  }
+
+  BENCHMARK_DEFINITION {
+    string benchmark_id PK
+    string agg_func
+    date valid_from
+    date valid_to
+  }
+```
+
+TODO multiple uploads at scenario/test level? How to handle?????? best latest....???
+TODO only fetch from S3 and process or direct JSON upload of result? both?!
+
+### Interface 2: Scores API
+
+`POST /benchmarks/{benchmark_id}/scores` accepts JSON:
+
+```json
+{
+  "data": [
+    {
+      "test_id": "00",
+      "scores": [
+        {
+          "scenario_id": 55,
+          "reward": -93,
+          "runtime": 53.35,
+          "done": 0.3
+        }
+      ]
+    }
+  ]
+}
+```
+
+`POST /benchmarks/{benchmark_id}/tests/{test_id}/scores` accepts JSON array of dicts:
+
+```json
+{
+  "data": [
+    {
+      "scenario_id": 55,
+      "reward": -93,
+      "runtime": 53.35,
+      "done": 0.3
+    }
+  ]
+}
+```
+
+Remarks:
+
+* An uploader can be a user or a group. Let's start with only users.
+* `{"data": ...}` allows for future backwards-compatible addition of optional attributes, like submitting on behalf of a group.
+
+Constraints:
+
+* all fields defined in `SCENARIO_DEFINITION` must be present
+* all scenarios defined in `SCENARIO_DEFINITION` must be present
+
+Open Questions:
+
+* only float scores allowed
+
+Relational schema:
+
+```mermaid
+erDiagram
+  SCORES {
+    string test_id PK
+    string scenario_id PK
+    string key PK
+    string uploader FK
+    string submission_id
+    float score
+  }
+```
+
+### Interface 3: RabbitMQ
 
 ```json
 {
@@ -587,7 +767,7 @@ template:
 }
 ```
 
-### Interface 2: Redis result structure
+### &dagger; Interface 2: Redis result structure
 
 There is currently no generic abstraction for the result structure.
 
