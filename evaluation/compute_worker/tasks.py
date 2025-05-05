@@ -31,7 +31,7 @@ SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.3")
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
-  backend=f"redis://{REDIS_IP}:6379",
+  backend=os.environ.get('BACKEND_URL'),
 )
 
 
