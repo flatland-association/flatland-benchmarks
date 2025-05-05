@@ -279,6 +279,52 @@ the communication partner, the inputs, and the outputs.
 
 **Contents**
 
+```markdown
+architecture-beta
+group api(cloud)[Validation Campaign Hub]
+
+    service db(database)[Database] in api
+    service frontend(server)[Frontend] in api
+    service backend(server)[Backend] in api
+    service broker(internet)[Broker] in api
+    service keycloak(server)[IAM] in api
+
+    group railway(cloud)[Railway]
+    service orchestratorailway(server)[Ochestrator] in railway
+    service evaluatorrailway(server)[Evaluator] in railway
+
+    group Cloudstorage(cloud)[Cloud Provider]
+    service s3(disk)[Object Storage] in Cloudstorage
+
+    junction junctionBackend in api
+
+
+    frontend:R -- L:backend
+    backend:B -- T:junctionBackend
+    backend:R -- L:broker
+
+    broker:R -- L:orchestratorailway
+    orchestratorailway:T -- B:evaluatorrailway
+    evaluatorrailway:L -- R:s3
+    junctionBackend:T -- B:backend
+
+    junctionBackend:R -- L:keycloak
+    junctionBackend:L -- R:db
+
+    backend:T -- B:s3
+```
+
+| Component             | Description                                                                                                       | Technical                         |
+|-----------------------|-------------------------------------------------------------------------------------------------------------------|-----------------------------------|
+| Frontend              | Web pages for managing, viewing and uploading campaign results/competition submissions                            | Node, JS, HTML                    |
+| Backend               | Campaign/competition/benchmark metadata and results                                                               | REST, Node, JS, HTML              |
+| Database              | Metadata and results store                                                                                        | PostgreSQL                        |
+| Broker                | Message queues for triggering evaluation and signalling status between backend and domain-specific orchestrators. | RabbitMQ                          |
+| IAM                   | Identity Access Management for backend services: users and groups                                                 | Keycloak                          |
+| Orchestrator Domain A | Manages pool of evaluation workers                                                                                | Blueprint: Celery                 |
+| Evaluator Domain A    | Evaluation worker.                                                                                                | Blueprint: Python + bash + Docker |
+| Object Storage        | Raw tabular results are uploaded to object storage from evaluator and fetched by backend.                         | AWS S3 compatible object storage  |
+
 </div>
 
 Technical interfaces (channels and transmission media) linking your
