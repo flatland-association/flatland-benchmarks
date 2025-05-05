@@ -65,7 +65,6 @@ def run_task(task_id: str, submission_image: str, tests: List[str], **kwargs):
   app = Celery(
     broker="pyamqp://localhost:5672",
     backend="rpc://localhost:5672",
-    # backend='redis://localhost:6379',
   )
   logger.info(f"/ Start simulate submission from portal for task_id={task_id}.....")
   ret = app.send_task(
