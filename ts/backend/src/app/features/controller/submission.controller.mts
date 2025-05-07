@@ -1,6 +1,7 @@
 import { appendDir } from '@common/endpoint-utils.js'
 import { Result, Submission, SubmissionPreview } from '@common/interfaces.js'
 import { StripDir } from '@common/utility-types.js'
+import { createClient } from 'redis'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AmqpService } from '../services/amqp-service.mjs'
@@ -198,47 +199,54 @@ export class SubmissionController extends Controller {
 
     // try updating incomplete (no done_at) results
     if (!row.done_at) {
-      const s3 = S3Service.getInstance()
+      const redis = await createClient({ url: this.config.redis.url })
+        .on('error', (err: Error) => logger.error('Redis Client Error', err.message))
+        .connect()
+      const keys = await redis.keys(`*-sub-${uuid}`)
 
-      /*
-      ⚠ Flatland-3 specific format ⚠
-      TODO: generic format, see https://github.com/flatland-association/flatland-benchmarks/issues/178
-      */
-      const resultsStat = await s3.getFileStat(`sub-${uuid}.json`, true)
-      // assume if json exists csv exists too
-      if (resultsStat) {
-        const resultsJSONString = await s3.getFileContents(`sub-${uuid}.json`)
-        const resultsCSVString = await s3.getFileContents(`sub-${uuid}.csv`)
-        if (resultsJSONString && resultsCSVString) {
-          // build results_str as object with same structure as pre-s3 results_str, except it's only necessary fields
-          const results = {
-            result: {
-              'f3-evaluator': {
-                'results.json': resultsJSONString,
-                'results.csv': resultsCSVString,
+      if (keys && keys.length > 0) {
+        const s3 = S3Service.getInstance()
+
+        /*
+        ⚠ Flatland-3 specific format ⚠
+        TODO: generic format, see https://github.com/flatland-association/flatland-benchmarks/issues/178
+        */
+        const resultsStat = await s3.getFileStat(`sub-${uuid}.json`, true)
+        // assume if json exists csv exists too
+        if (resultsStat) {
+          const resultsJSONString = await s3.getFileContents(`sub-${uuid}.json`)
+          const resultsCSVString = await s3.getFileContents(`sub-${uuid}.csv`)
+          if (resultsJSONString && resultsCSVString) {
+            // build results_str as object with same structure as pre-s3 results_str, except it's only necessary fields
+            const results = {
+              result: {
+                'f3-evaluator': {
+                  'results.json': resultsJSONString,
+                  'results.csv': resultsCSVString,
+                },
               },
-            },
-          }
-          // extract score from json
-          const resultsJSON = JSON.parse(resultsJSONString)
-          const score = resultsJSON['score']
-          row.scores = [score['score'], score['score_secondary']]
-          // assume success if results are present
-          row.success = true
-          // file could get modified after first fetch but db row won't be updated so last modified is a good indicator
-          row.done_at = resultsStat.LastModified?.toISOString() ?? null
-          row.results_str = JSON.stringify(results)
+            }
+            // extract score from json
+            const resultsJSON = JSON.parse(resultsJSONString)
+            const score = resultsJSON['score']
+            row.scores = [score['score'], score['score_secondary']]
+            // assume success if results are present
+            row.success = true
+            // file could get modified after first fetch but db row won't be updated so last modified is a good indicator
+            row.done_at = resultsStat.LastModified?.toISOString() ?? null
+            row.results_str = JSON.stringify(results)
 
-          // update result in DB
-          await sql.query`
-            UPDATE results
-              SET
-                done_at = ${row.done_at},
-                success = ${row.success},
-                scores = ${row.scores},
-                results_str = ${row.results_str}
-              WHERE uuid = ${row.uuid}
-          `
+            // update result in DB
+            await sql.query`
+              UPDATE results
+                SET
+                  done_at = ${row.done_at},
+                  success = ${row.success},
+                  scores = ${row.scores},
+                  results_str = ${row.results_str}
+                WHERE uuid = ${row.uuid}
+            `
+          }
         }
       }
     }
