@@ -117,8 +117,12 @@ export class SubmissionView implements OnInit, OnDestroy {
             this.resultObj = JSON.parse(this.result.results_str)
             this.resultsJson = JSON.parse(this.resultObj?.result['f3-evaluator']?.['results.json'] ?? 'null')
             this.resultsCsv = this.resultObj?.result['f3-evaluator']?.['results.csv']
-            // primitively parse CSV and accumulate single test scores
-            // ⚠ hard-coded last-second "solution" ⚠
+            /*
+            ⚠ Flatland-3 specific format ⚠
+            primitively parse CSV and accumulate single test scores
+            ⚠ hard-coded last-second "solution" ⚠
+            TODO: generic format, see https://github.com/flatland-association/flatland-benchmarks/issues/178
+            */
             const lines = this.resultsCsv?.split('\n').slice(1, -1)
             this.testScores = []
             lines?.forEach((line) => {
