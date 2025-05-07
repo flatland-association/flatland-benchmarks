@@ -4,7 +4,7 @@ import { Logger } from './features/logger/logger.mjs'
 import { Server } from './features/server/server.mjs'
 import { AmqpService } from './features/services/amqp-service.mjs'
 import { AuthService } from './features/services/auth-service.mjs'
-import { MinioService } from './features/services/minio-service.mjs'
+import { S3Service } from './features/services/s3-service.mjs'
 import { SqlService } from './features/services/sql-service.mjs'
 
 // during boot, use defaults for logger
@@ -21,7 +21,7 @@ const config = loadConfig()
 SqlService.create(config)
 AmqpService.create(config)
 AuthService.create(config)
-MinioService.create(config)
+S3Service.create(config)
 
 new Server(config)
 

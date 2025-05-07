@@ -21,13 +21,14 @@ export const defaults = {
   redis: {
     url: 'redis://localhost:6379', // redis[s]://[[username][:password]@][host][:port][/db-number]
   },
-  /* MinIO / S3 */
-  minio: {
+  /* S3 */
+  s3: {
     protocol: 'http://',
     host: 'localhost',
     port: 9000,
     user: 'minioadmin',
     password: 'minioadmin',
+    region: 'eu-central-2', // https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html
     bucket: 'fab-demo-results',
     path: 'results',
   },

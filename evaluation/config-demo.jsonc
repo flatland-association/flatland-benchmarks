@@ -17,13 +17,14 @@
     "password": "benchmarks",
     "database": "benchmarks"
   },
-  /* MinIO / S3 */
-  "minio": {
+  /* S3 */
+  "s3": {
     "protocol": "http://",
     "host": "minio",
     "port": 9000,
     "user": "minioadmin",
     "password": "minioadmin",
+    "region": "eu-central-2", // https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html
     "bucket": "fab-demo-results",
     "path": "results"
   },
