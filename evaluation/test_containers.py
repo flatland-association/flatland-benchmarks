@@ -60,7 +60,7 @@ def test_containers_fixture():
   logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
 
 
-def run_task(task_id: str, submission_image: str, tests: List[str], **kwargs):
+def run_task(task_id: str, submission_image: str, tests: List[str], queue: str, **kwargs):
   start_time = time.time()
   app = Celery(
     broker="pyamqp://localhost:5672",
@@ -76,6 +76,7 @@ def run_task(task_id: str, submission_image: str, tests: List[str], **kwargs):
       "tests": tests,
       **kwargs
     },
+    queue=queue
   ).get()
   logger.info(ret)
   duration = time.time() - start_time
@@ -94,7 +95,7 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str]):
   task_id = str(uuid.uuid4())
   config = dotenv_values(".env")
 
-  ret = run_task(task_id, "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest", tests=tests, **config)
+  ret = run_task(task_id, "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest", tests=tests, queue=config["BROKER_QUEUE"], **config)
 
   for k, v in ret.items():
     logger.log(TRACE, "Got %s", (k, v['job_status'], v['image_id'], v['log']))

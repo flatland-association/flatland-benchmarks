@@ -122,7 +122,7 @@ services:
 
   compute_worker:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
-    command: python -m celery -A tasks worker -l info -n compute-worker@%n
+    command: python -m celery -A tasks worker -l info -n compute-worker@%n -Q ${BROKER_QUEUE}
     build:
       context: ./compute_worker
       dockerfile: Dockerfile_docker_compose
