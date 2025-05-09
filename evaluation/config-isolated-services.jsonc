@@ -22,6 +22,17 @@
     "url": "redis://redis:6379"
     // redis[s]://[[username][:password]@][host][:port][/db-number]
   },
+  /* MinIO / S3 */
+  "minio": {
+    "protocol": "http://",
+    "host": "minio",
+    "port": 9000,
+    "user": "minioadmin",
+    "password": "minioadmin",
+    "region": "eu-central-2", // https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html
+    "bucket": "fab-demo-results",
+    "path": "results"
+  },
   /* Keycloak endpoint */
   "keycloak": {
     "url": "http://localhost:8081", // http[s]://[host][:port]
