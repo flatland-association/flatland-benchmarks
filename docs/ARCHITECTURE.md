@@ -384,13 +384,39 @@ The following [building block view](https://docs.arc42.org/section-5/) shows the
 
 ![InformationFlow.drawio.png](./img/architecture/InformationFlow.drawio.png)
 
+Implementation:
+
+* closed-loop: backend polls broker, fetches results from S3 and uploads results via SCORES API
+* interactive or offline loop: results uploaded manually via SCORES REST API
+
 ### Level 2
 
 Inspired by [LIPS](https://github.com/IRT-SystemX/LIPS), high-level data model is as follows:
 
 ![DataModel.drawio.png](img/architecture/DataModel.drawio.png)
 
-### Interface 1: Benchmark definition API:
+### API Roles
+
+- `user`: can submit and view results
+- `admin`: can define benchmarks
+- `results-uploader`: can upload results (for all benchmarks)
+
+### Setups
+
+| ↕️️ aspect / ↔️️setup                         | benchmarking                                | competition                                 | campaign                                             |
+|-----------------------------------------------|---------------------------------------------|---------------------------------------------|------------------------------------------------------|
+| loop                                          | closed-loop                                 | closed-loop                                 | closed/interactive/offline loop                      |
+| submission                                    | any number of tests                         | all tests                                   | single test                                          |
+| results uploader                              | technical user with `results-uploader` role | technical user with `results-uploader` role | technical or human user with `results-uploader` role |
+| user default roles                            | `user`                                      | `user`                                      | `user`, `results-uploader` (dedicate FAB instance)   |
+| top-level overview                            | benchmarks                                  | benchmarks                                  | campaigns                                            |
+| benchmark overview                            | rounds -> benchmark leaderboard per round   | rounds -> benchmark leaderboard per round   | ❌                                                    |
+| campaign overview                             | ❌                                           | ❌                                           | benchmarks (row=benchmark)                           |
+| leaderboard (row=submission, benchmark score) | ✅                                           | ✅                                           | ❌                                                    |
+| benchmark drilldown (row=test)                | ✅                                           | ✅                                           | ✅                                                    |
+| test drilldown (row=scenario)                 | ✅                                           | ✅                                           | ✅                                                    |
+
+### Interface 1: Benchmark definition API
 
 `PUT /benchmarks/{benchmark_id}/tests` accepts JSON:
 
@@ -502,8 +528,35 @@ erDiagram
   }
 ```
 
-TODO multiple uploads at scenario/test level? How to handle?????? best latest....???
-TODO only fetch from S3 and process or direct JSON upload of result? both?!
+### Interface 1b: Benchmark group definition API
+
+```mermaid
+erDiagram
+  BENCHMARK_GROUP {
+    UUID id PK
+    SETUP setup "BENCHMARK|COMPETITION|CAMPAIGN"
+  }
+
+  BENCHMARK_GROUP_MEMBERS {
+    UUID benchmark_group_id PK, FK
+    UUID benchmark_id PK, FK
+  }
+```
+
+Remarks:
+
+* General model grouping
+* multiple benchmarks as rounds of the same competition
+* multiple benchmarks as evaluation objects of the same validation campaign
+* different evolutions/flavours/objectives of a benchmark under the same common heading
+* The UI might be different in the different setups, but not necessarily so:
+  * tabs for different rounds of a competition or different versions of a benchmark
+  * table with different benchmarks of a validation campaign
+  * no tabs if a benchmark has only one version
+
+Open Questions:
+
+* We might implement `SETUP` without enumeration, but with a UI configuration instead.
 
 ### Interface 2: Scores API
 
@@ -523,7 +576,8 @@ TODO only fetch from S3 and process or direct JSON upload of result? both?!
         }
       ]
     }
-  ]
+  ],
+  "submission_id": "a98adsf989vaadfs9898"
 }
 ```
 
@@ -538,7 +592,8 @@ TODO only fetch from S3 and process or direct JSON upload of result? both?!
       "runtime": 53.35,
       "done": 0.3
     }
-  ]
+  ],
+  "submission_id": "a98adsf989vaadfs9898"
 }
 ```
 
@@ -546,17 +601,16 @@ Remarks:
 
 * An uploader can be a user or a group. Let's start with only users.
 * `{"data": ...}` allows for future backwards-compatible addition of optional attributes, like submitting on behalf of a group.
+* Partial results (aka. live update): Same evaluation during evaluations as afterwards: goes over benchmark/test definition and all scenarios below; missing values interpreted as nan; whether intermediate result is nan or an intermediate value depends on aggregation (e.g. `nansum` vs. `sum`).
+* Store only the raw results, do the aggregation upon GET request of the aggregated scores, either in backend (preferred) or (if implementation much simpler) in frontend
+* The campaign setup does not use the full-benchmark scores API.
 
 Constraints:
 
 * all fields defined in `SCENARIO_DEFINITION` must be present
 * all scenarios defined in `SCENARIO_DEFINITION` must be present
 
-Open Questions:
-
-* only float scores allowed
-
-Relational schema:
+Relational schema (multi-key-value based):
 
 ```mermaid
 erDiagram
@@ -564,9 +618,29 @@ erDiagram
     string test_id PK
     string scenario_id PK
     string key PK
-    string uploader FK
-    string submission_id
+    string submission_id FK
     float score
+  }
+
+  SUBMISSIONS {
+    UUID submission_id PK
+    STATUS status "SUBMITTED|RUNNING|SUCCESS|FAILURE"
+    string description
+  }
+
+
+```
+
+Future extensions:
+
+* `SUBMISSION_VERSIONS`: allows to group submissions with a version in order to re-use same description/heading for the same team/submitter:
+
+```mermaid
+erDiagram
+  SUBMISSION_VERSIONS {
+    UUID id PK
+    UUID submission_id FK
+    int version
   }
 ```
 
