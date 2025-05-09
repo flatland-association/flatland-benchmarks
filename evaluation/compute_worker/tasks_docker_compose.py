@@ -18,7 +18,7 @@ logger = get_task_logger(__name__)
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
-  backend=os.environ.get('REDIS_IP'),
+  backend=os.environ.get('BACKEND_URL'),
 )
 
 HOST_DIRECTORY = os.environ.get("HOST_DIRECTORY", "/tmp/codabench/")
