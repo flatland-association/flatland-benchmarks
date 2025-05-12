@@ -430,7 +430,7 @@ Inspired by [LIPS](https://github.com/IRT-SystemX/LIPS), high-level data model i
 Optional:
 
 * `PUT /tests/{test_id}/scenarios`: add scenario(s) under test
-* `PUT /benchmarks/{benchmark_id}/tests`: add test(s) under test
+* `PUT /benchmarks/{benchmark_id}/tests`: add test(s) under benchmark
 
 Format:
 
@@ -555,9 +555,10 @@ erDiagram
 
 ### Interface 1b: Benchmark group definition API
 
-* `PUT /benchmark_group`: create benchmark group
-* `POST /benchmark_group/{benchmark_group_id}`: create validation campaign/competition/benchmark with the list of the underlying benchmarks
-* `DELETE /benchmark_group/{benchmark_group_id}`: delete idem
+* `PUT /benchmark_groups`: create benchmark group
+* `POST /benchmark_groups/{benchmark_group_id}`: create validation campaign/competition/benchmark with the list of the underlying benchmarks
+* `DELETE /benchmark_groups/{benchmark_group_id}`: delete idem
+* `GET /benchmark_groups/{benchmark_group_id}`: retrieve list of benchmarks in this group along with metadata (type, campaign name/competition name); different UI dependening on type
 
 ```mermaid
 erDiagram
@@ -588,21 +589,25 @@ Open Questions:
 
 * We might implement `SETUP` without enumeration, but with a UI configuration instead.
 
-### Interface 2: Results and Submission APIs
+### Interface 2: Submission and results APIs
 
-* `GET /benchmarks/{benchmark_id}/submissions`:  get submissions ordered by primary score (leaderboard in competition and benchmarks settings)
-* `GET /benchmarks/{benchmark_id}/tests`: get list of tests with best submission per test (campaign overview)
-* `GET /benchmarks/{benchmark_id}/results`: by submission or by best test?
+* `PUT /submissions`: create a submission with initial status and owner
+* `GET /submissions/{submission_id}`: status and owner of a submission
+* `POST /submissions/{submission_id}/status`: update status of a submission
 
-* `GET /submission/{submission_id}/benchmarks/{benchmark_id}/results`: aggregated scores of submission for single benchmark
-* `GET /submission/{submission_id}/tests/{test_id}/results`: aggregated scores of submission for single test
-* `GET /submission/{submission_id}/scenario/{scenario_id}/results`: raw scores of submission for single scenario
-* `POST /submission/{submission_id}/tests/{test_id}/results`: live update for single scenario
-* `POST /submission/{submission_id}/tests/{scenario_id}/results`: batch upload for subset of scenarios of a single test (scenarios not included will be NaN)
-* `POST /submission/{submission_id}/benchmarks/{benchmark_id}/results`: batch upload
-* `PUT /submission/{submission_id}`: create a submission with initial status and owner
-* `GET /submission/{submission_id}`: status and owner of a submission
-* `POST /submission/{submission_id}/status`: update status of a submission
+* `GET /results/submission/{submission_id}/scenario/{scenario_id}`: raw scores of submission for single scenario
+* `POST /results/submission/{submission_id}/scenario/{scenario_id}`: live update for single scenario
+
+* `GET /results/submission/{submission_id}/tests/{test_id}`: aggregated scores of submission for single test
+* `POST /results/submission/{submission_id}/tests/{test_id}`: batch upload for subset of scenarios of a single test (scenarios not included will be NaN)
+
+* `GET /results/submission/{submission_id}/benchmarks/{benchmark_id}`: aggregated scores of submission for single benchmark
+* `POST /results/submission/{submission_id}/benchmarks/{benchmark_id}`: batch upload for subset of tests of a single benchmark
+
+* `GET /results/benchmark_group/{benchmark_group}`: get benchmarks with their best submission(s)
+* `GET /results/benchmark/{benchmark_id}`: get submissions ordered by primary benchmark score (leaderboard in competition and benchmarks settings)
+* `GET /results/test/{test_id}`: get submissions ordered by primary test score
+* `GET /results/scenario/{scenario_id}`: get submissions ordered by primary scenario score
 
 Format:
 
@@ -865,6 +870,62 @@ documentation.
 ## …
 
 ## \<Runtime Scenario n>
+
+## Runtime Scenario Closed Loop
+
+Arrow directions signify call direction.
+
+```mermaid
+sequenceDiagram
+  AlgorithmicResearcher ->> Frontend: start experiment
+  Frontend ->> Backend: PUT /submissions
+  participant BackendPoller
+  Backend ->> Broker: START {submission_id}
+  Worker ->> Broker: POLL START {submission_id}
+  Worker ->> Broker: END {submission_id}
+  BackendPoller ->> Broker: POLL END {submission_id}
+  BackendPoller ->> Backend: POST /submissions/{submission_id}/status
+  BackendPoller ->> Backend: POST /results/submission/{submission_id}/tests/{test_id}*
+  Frontend ->> Backend: GET /submission/{submission_id}
+```
+
+(*) In campaign setting, this will be one results upload at test level (corresponding to one KPI). In competition settings, the results for the whole benchmark will be uploaded (multiple calls to test API or batch call). In benchmarking setting, this can be multiple test calls.
+For live update, mutliple result uploads at scenario may also be possible.
+
+## Runtime Scenario Interactive loop
+
+Arrow directions signify call direction.
+
+```mermaid
+sequenceDiagram
+  participant HumanFactorsResearcher
+  HumanFactorsResearcher ->> Frontend: start experiment
+  Frontend ->> Backend: PUT /submissions
+  participant BackendPoller
+  Backend ->> Broker: START {submission_id}
+  Worker ->> Broker: POLL START {submission_id}
+
+  loop results per test
+    HumanFactorsResearcher ->> Frontend: upload results.json
+    Frontend ->> Backend: PUT /submissions
+    Frontend ->> Backend: POST /results/submission/{submission_id}/tests/{test_id}
+    Frontend ->> Backend: POST /submission/{submission_id}/status
+    Frontend ->> Backend: GET /test/{test_id}
+  end
+```
+
+## Runtime Scenario Offline loop
+
+Arrow directions signify call direction.
+
+```mermaid
+sequenceDiagram
+  HumanFactorsResearcher ->> Frontend: upload results.json
+  Frontend ->> Backend: PUT /submissions
+  Frontend ->> Backend: POST /results/submission/{submission_id}/tests/{test_id}
+  Frontend ->> Backend: POST /submission/{submission_id}/status
+  Frontend ->> Backend: GET /test/{test_id}
+```
 
 # Deployment View
 
