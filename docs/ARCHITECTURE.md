@@ -421,11 +421,16 @@ Inspired by [LIPS](https://github.com/IRT-SystemX/LIPS), high-level data model i
 * `PUT /benchmarks`: create benchmark (JSON does not contain IDs)
 * `DELETE /benchmarks/{benchmark_id}`: delete benchmark
 * `GET /benchmarks/{benchmark_id}`: get benchmark definition (incl. generated IDs)
-* `POST /benchmarks/{benchmark_id}`: update benchmark definition (unreferenced tests/scenarios will be removed from the benchmark and left dangling)
+* `POST /benchmarks/{benchmark_id}`: update existing benchmark definition (unreferenced tests/scenarios will be removed from the benchmark and left dangling)
 * `POST /tests/{test_id}`: same at test level
-* `POST /tests/{test_id}/scenarios/{scenario_id}`: same at scenario level
+* `POST /scenarios/{scenario_id}`: same at scenario level
 * `DELETE /tests/{test_id}/`: remove one test from the benchmark definition
-* `DELETE /tests/{test_id}/scenarios/{scenario_id}`: remove one scenario from the test definition
+* `DELETE /scenarios/{scenario_id}`: remove one scenario from the test definition
+
+Optional:
+
+* `PUT /tests/{test_id}/scenarios`: add scenario(s) under test
+* `PUT /benchmarks/{benchmark_id}/tests`: add test(s) under test
 
 Format:
 
@@ -502,14 +507,14 @@ Remarks:
   the raw data is kept on S3 and we could in principle re-process cached data at every level from S3 to the UI.
 * Scenario IDs are global IDs, not only relative to their parent benchmark/test.
 
-| Aggregation function | weights allowed | Description                                                |
-|----------------------|-----------------|------------------------------------------------------------|
-| `SUM`                | yes             | If one value is NaN, the sum will be NaN                   |
-| `NANSUM`             | yes             | Sum over all non-NaN scores, defaulting to 0.              |
-| `MEAN`               | yes             | If one value is NaN, the mean will be NaN.                 |
-| `NANMEAN`            | yes             | Mean over all non-NaN scores, defaulting to 0.             |
-| `MEDIAN`             | no              | If one value is NaN, the sum will be NaN, defaulting to 0. |
-| `NANMEDIAN`          | no              | Mean over all non-NaN scores, defaulting to 0.             |
+| Aggregation function | weights allowed | Description                                                   |
+|----------------------|-----------------|---------------------------------------------------------------|
+| `SUM`                | yes             | If one value is NaN, the sum will be NaN                      |
+| `NANSUM`             | yes             | Sum over all non-NaN scores, defaulting to 0.                 |
+| `MEAN`               | yes             | If one value is NaN, the mean will be NaN.                    |
+| `NANMEAN`            | yes             | Mean over all non-NaN scores, defaulting to 0.                |
+| `MEDIAN`             | no              | If one value is NaN, the median will be NaN, defaulting to 0. |
+| `NANMEDIAN`          | no              | Median over all non-NaN scores, defaulting to 0.              |
 
 Relational schema:
 
@@ -586,7 +591,8 @@ Open Questions:
 ### Interface 2: Results and Submission APIs
 
 * `GET /benchmarks/{benchmark_id}/submissions`:  get submissions ordered by primary score (leaderboard in competition and benchmarks settings)
-* `GET /benchmarks/{benchmark_id}/tests`: get list of tests with with best submission per test (campaign overview)
+* `GET /benchmarks/{benchmark_id}/tests`: get list of tests with best submission per test (campaign overview)
+* `GET /benchmarks/{benchmark_id}/results`: by submission or by best test?
 
 * `GET /submission/{submission_id}/benchmarks/{benchmark_id}/results`: aggregated scores of submission for single benchmark
 * `GET /submission/{submission_id}/tests/{test_id}/results`: aggregated scores of submission for single test

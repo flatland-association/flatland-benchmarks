@@ -10,10 +10,17 @@ Flatland Benchmarks (FAB) is an open-source web-based platform for running Bench
 | **Open source software**  and **open peer review** | allow for the replication and reproducibility of research as well as for the reuse of data and software in other research projects, empowering anyone to contribute to and accelerating the pace of research | participants disclose their code and the leaderboard links to papers, code and discussion                                                                              |
 | **Open community**                                 | enables collaborative formulation of problems and research questions, bringing in the expertise of various domains and fostering interdisciplinary approaches                                                | platform and problem formulations are made open and the community can contribute                                                                                       |
 
-It supports both
+It supports the following use cases:
 
-* closed-loop: the evaluation is carried out human in the loop
-* interactive-loop: the evaluation is carried by a human Operator interacting with a UI
+* competitions: submissions comprise all results of a benchmark, a leaderboard shows the best submissions per benchmark
+* long-running benchmarks: idem
+* validation campaigns: test results can come from different experiments and are aggregated to overall benchmark results; the campaign features the best results for each benchmark.
+
+Experiments are run in the following loops:
+
+* closed-loop: the evaluation is carried out human in the loop (always for competition and benchmarks, optionally in campaign setting)
+* interactive-loop: the evaluation is carried by a human Operator interacting with a UI, the results are uploaded manually
+* offline-loop: the evaluation is done completely offline, the results are uploaded manually at the end of the experiment
 
 evaluation.
 
