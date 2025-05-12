@@ -418,7 +418,16 @@ Inspired by [LIPS](https://github.com/IRT-SystemX/LIPS), high-level data model i
 
 ### Interface 1: Benchmark definition API
 
-`PUT /benchmarks/{benchmark_id}/tests` accepts JSON:
+* `PUT /benchmarks`: create benchmark (JSON does not contain IDs)
+* `DELETE /benchmarks/{benchmark_id}`: delete benchmark
+* `GET /benchmarks/{benchmark_id}`: get benchmark definition (incl. generated IDs)
+* `POST /benchmarks/{benchmark_id}`: update benchmark definition (unreferenced tests/scenarios will be removed from the benchmark and left dangling)
+* `POST /tests/{test_id}`: same at test level
+* `POST /tests/{test_id}/scenarios/{scenario_id}`: same at scenario level
+* `DELETE /tests/{test_id}/`: remove one test from the benchmark definition
+* `DELETE /tests/{test_id}/scenarios/{scenario_id}`: remove one scenario from the test definition
+
+Format:
 
 ```json
 {
@@ -478,8 +487,6 @@ Inspired by [LIPS](https://github.com/IRT-SystemX/LIPS), high-level data model i
 ```
 
 Add/delete individual scenarios:
-`PUT /benchmarks/{benchmark_id}/tests/{test_id}/scenarios`
-`DELETE /benchmarks/{benchmark_id}/tests/{test_id}/scenarios/{scenario_id}`
 
 Remarks:
 
@@ -493,6 +500,16 @@ Remarks:
 * Versioning: we keep `valid_from` and `valid_to` to allow to for future revert operations.
 * Note that we adhere to functional data processing paradigm: we re-process the data according to the current processing definition;
   the raw data is kept on S3 and we could in principle re-process cached data at every level from S3 to the UI.
+* Scenario IDs are global IDs, not only relative to their parent benchmark/test.
+
+| Aggregation function | weights allowed | Description                                                |
+|----------------------|-----------------|------------------------------------------------------------|
+| `SUM`                | yes             | If one value is NaN, the sum will be NaN                   |
+| `NANSUM`             | yes             | Sum over all non-NaN scores, defaulting to 0.              |
+| `MEAN`               | yes             | If one value is NaN, the mean will be NaN.                 |
+| `NANMEAN`            | yes             | Mean over all non-NaN scores, defaulting to 0.             |
+| `MEDIAN`             | no              | If one value is NaN, the sum will be NaN, defaulting to 0. |
+| `NANMEDIAN`          | no              | Mean over all non-NaN scores, defaulting to 0.             |
 
 Relational schema:
 
@@ -512,7 +529,8 @@ erDiagram
     string benchmark_id PK, FK
     string test_id PK
     string agg_func
-    string agg_field
+    string[] agg_field
+    float[] weights
     string topic
     URL s3
     credentials s3
@@ -523,12 +541,18 @@ erDiagram
   BENCHMARK_DEFINITION {
     string benchmark_id PK
     string agg_func
+    string[] agg_field
+    float[] weights
     date valid_from
     date valid_to
   }
 ```
 
 ### Interface 1b: Benchmark group definition API
+
+* `PUT /benchmark_group`: create benchmark group
+* `POST /benchmark_group/{benchmark_group_id}`: create validation campaign/competition/benchmark with the list of the underlying benchmarks
+* `DELETE /benchmark_group/{benchmark_group_id}`: delete idem
 
 ```mermaid
 erDiagram
@@ -553,14 +577,28 @@ Remarks:
   * tabs for different rounds of a competition or different versions of a benchmark
   * table with different benchmarks of a validation campaign
   * no tabs if a benchmark has only one version
+* If a definition is updated, we lazily assume results already uploaded still comply with the updated definition - upon aggregation, the UI might display NaN where data is missing. We assume the definition is validated at the begin of a campaign.
 
 Open Questions:
 
 * We might implement `SETUP` without enumeration, but with a UI configuration instead.
 
-### Interface 2: Scores API
+### Interface 2: Results and Submission APIs
 
-`POST /benchmarks/{benchmark_id}/scores` accepts JSON:
+* `GET /benchmarks/{benchmark_id}/submissions`:  get submissions ordered by primary score (leaderboard in competition and benchmarks settings)
+* `GET /benchmarks/{benchmark_id}/tests`: get list of tests with with best submission per test (campaign overview)
+
+* `GET /submission/{submission_id}/benchmarks/{benchmark_id}/results`: aggregated scores of submission for single benchmark
+* `GET /submission/{submission_id}/tests/{test_id}/results`: aggregated scores of submission for single test
+* `GET /submission/{submission_id}/scenario/{scenario_id}/results`: raw scores of submission for single scenario
+* `POST /submission/{submission_id}/tests/{test_id}/results`: live update for single scenario
+* `POST /submission/{submission_id}/tests/{scenario_id}/results`: batch upload for subset of scenarios of a single test (scenarios not included will be NaN)
+* `POST /submission/{submission_id}/benchmarks/{benchmark_id}/results`: batch upload
+* `PUT /submission/{submission_id}`: create a submission with initial status and owner
+* `GET /submission/{submission_id}`: status and owner of a submission
+* `POST /submission/{submission_id}/status`: update status of a submission
+
+Format:
 
 ```json
 {
@@ -580,8 +618,6 @@ Open Questions:
   "submission_id": "a98adsf989vaadfs9898"
 }
 ```
-
-`POST /benchmarks/{benchmark_id}/tests/{test_id}/scores` accepts JSON array of dicts:
 
 ```json
 {
