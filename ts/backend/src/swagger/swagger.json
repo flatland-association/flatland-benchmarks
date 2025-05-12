@@ -1,0 +1,86 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "FAB backend",
+    "version": "0.0.0",
+    "description": "FAB backend API"
+  },
+  "paths": {
+    "/tests/{ids}": {
+      "get": {
+        "description": "Returns tests with ID in `ids`.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ids",
+            "description": "Comma-separated list of IDs.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requested tests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "dir": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiResponse": {
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}

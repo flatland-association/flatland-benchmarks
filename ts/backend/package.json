@@ -6,6 +6,7 @@
     "start": "concurrently --kill-others 'npm run private:serve' 'npm run private:test'",
     "build": "npm run private:build && mkdir -p ../../dist/backend/config && mkdir -p ../../dist/backend/app && cp ../../out-tsc/backend/main.min.mjs ../../dist/backend/app",
     "test": "vitest run --coverage",
+    "swagger": "swagger-jsdoc -d swagger.config.cjs -o src/swagger/swagger.json src/app/**/*.mts src/swagger/components.yml",
     "private:serve": "npm run private:build && cd ../../out-tsc && mkdir -p backend-serve/app && cp backend/main.min.mjs backend-serve/app && mkdir -p backend-serve/config && cp -n ../ts/backend/src/config/config.jsonc \"$_\" && cd backend-serve/app && node main.min.mjs --help --log-level=ALL --log-colorful --log-stringify",
     "private:build": "node esbuild.mjs",
     "private:test": "vitest watch --project=unit"

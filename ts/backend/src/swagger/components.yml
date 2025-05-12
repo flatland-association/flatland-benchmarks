@@ -1,0 +1,9 @@
+components:
+  schemas:
+    ApiResponse:
+      properties:
+        error:
+          type: object
+          properties:
+            text:
+              type: string
