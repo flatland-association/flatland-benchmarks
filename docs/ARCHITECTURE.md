@@ -195,6 +195,7 @@ arc42 documentation.
 
 # Context and Scope
 
+> [!NOTE]  Context and scope - as the name suggests - delimits your system (i.e. your scope) from all its communication partners (neighboring systems and your scope) from all its communication partners (neighboring systems and users, i.e. the context of your system). It thereby specifies the external interfaces.
 The FAB system is supposed to support validation campaigns in two modes
 
 * FAB-internal evaluation: domain-specific evaluation systems are managed and spawned by FAB
@@ -203,7 +204,7 @@ The FAB system is supposed to support validation campaigns in two modes
 ![SystemContext.drawio.png](img/architecture/SystemContext.drawio.png)
 
 Arrows represent control flow.
-Both, FAB-internal and FAB-external evaluation, can be closed-loop or interactive-loop (see above).
+Both, FAB-internal and FAB-external evaluation, can be closed-loop or interactive-loop (see above). Offline-loop is always FAB-external.
 
 | System/Role                                 | Description                                                                                                                                                                                                                                                              |
 |---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -681,7 +682,7 @@ Open Questions:
 * `GET /results/submission/{submission_id}/benchmarks/{benchmark_id}`: aggregated scores of submission for single benchmark
 * `POST /results/submission/{submission_id}/benchmarks/{benchmark_id}`: batch upload for subset of tests of a single benchmark
 
-* `GET /results/benchmark_group/{benchmark_group}`: get benchmarks with their best submission(s)
+* `GET /results/benchmark_group/{benchmark_group}?num_submissions`: get benchmarks with their num_submissions best submission(s)
 * `GET /results/benchmark/{benchmark_id}`: get submissions ordered by primary benchmark score (leaderboard in competition and benchmarks settings)
 * `GET /results/test/{test_id}`: get submissions ordered by primary test score
 * `GET /results/scenario/{scenario_id}`: get submissions ordered by primary scenario score
@@ -734,7 +735,7 @@ Constraints:
 * all fields defined in `SCENARIO_DEFINITION` must be present
 * all scenarios defined in `SCENARIO_DEFINITION` must be present
 
-Relational schema (multi-key-value based):
+Relational schema (multi-key-value based, i.e. multiple "raw" scores per scenario possible):
 
 ```mermaid
 erDiagram
