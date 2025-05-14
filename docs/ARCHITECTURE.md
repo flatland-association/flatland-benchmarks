@@ -579,48 +579,50 @@ Relational schema:
 ```mermaid
 erDiagram
   SCENARIO_DEFINITION {
-    string benchmark_id PK, FK
-    string test_id PK, FK
-    string scenario_id PK
-    string field
-    int order
+    uuid benchmark_id PK, FK
+    uuid test_id PK, FK
+    uuid scenario_id PK
     date valid_from
     date valid_to
+    string[] view_field
   }
 ```
 
 ```mermaid
 erDiagram
   TEST_DEFINITION {
-    string benchmark_id PK, FK
-    string test_id PK
-    string agg_func
+    uuid benchmark_id PK, FK
+    uuid test_id PK
+    string agg_func FK
     string agg_field
     Optional[float[]] weights
-    string topic
-    URL s3
-    credentials s3
     date valid_from
     date valid_to
+    string[] view_agg_func
+    string[] view_agg_field
+    Optional[float[]][] view_weights
   }
 ```
 
 ```mermaid
 erDiagram
   BENCHMARK_DEFINITION {
-    string benchmark_id PK
-    string agg_func
+    uuid benchmark_id PK
+    string agg_func FK
     string agg_field
     Optional[float[]] weights
     date valid_from
     date valid_to
+    string[] view_agg_func
+    string[] view_agg_field
+    Optional[float[]][] view_weights
   }
 ```
 
 Note:
 
 * We assume the `agg_field` to be the same for all children.
-*
+* Additional view fields can be defined together with their aggregation function
 
 ### Interface 1b: Benchmark group definition API
 
