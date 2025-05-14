@@ -196,7 +196,7 @@ arc42 documentation.
 # Context and Scope
 
 > [!NOTE]  Context and scope - as the name suggests - delimits your system (i.e. your scope) from all its communication partners (neighboring systems and your scope) from all its communication partners (neighboring systems and users, i.e. the context of your system). It thereby specifies the external interfaces.
-The FAB system is supposed to support validation campaigns in two modes
+> The FAB system is supposed to support validation campaigns in two modes
 
 * FAB-internal evaluation: domain-specific evaluation systems are managed and spawned by FAB
 * FAB-external evaluation: evaluation is performed externally to FAB, the results are uploaded to FAB either manually or via a technical interface by the FAB-external evaluation system.
@@ -671,7 +671,7 @@ Open Questions:
 
 * `PUT /submissions`: create a submission with initial status and owner
 * `GET /submissions/{submission_id}`: status and owner of a submission
-* `POST /submissions/{submission_id}/status`: update status of a submission
+* `POST /submissions/{submission_id}/status`: update status or make public of a submission
 
 * `GET /results/submission/{submission_id}/scenario/{scenario_id}`: raw scores of submission for single scenario
 * `POST /results/submission/{submission_id}/scenario/{scenario_id}`: live update for single scenario
@@ -754,6 +754,7 @@ erDiagram
     STATUS status "SUBMITTED|RUNNING|SUCCESS|FAILURE"
     UUID benchmark_id FK
     string description
+    boolean published
   }
 ```
 
