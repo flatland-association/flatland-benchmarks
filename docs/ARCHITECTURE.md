@@ -584,7 +584,10 @@ erDiagram
     date valid_from
     date valid_to
   }
+```
 
+```mermaid
+erDiagram
   TEST_DEFINITION {
     string benchmark_id PK, FK
     string test_id PK
@@ -597,7 +600,10 @@ erDiagram
     date valid_from
     date valid_to
   }
+```
 
+```mermaid
+erDiagram
   BENCHMARK_DEFINITION {
     string benchmark_id PK
     string agg_func
@@ -619,13 +625,25 @@ erDiagram
 erDiagram
   BENCHMARK_GROUP {
     UUID id PK
-    SETUP setup "BENCHMARK|COMPETITION|CAMPAIGN"
+    UUID setup FK
   }
+```
 
+```mermaid
+erDiagram
+  BENCHMARK_SETUPS {
+    UUID id PK
+    string description "BENCHMARK|COMPETITION|CAMPAIGN"
+  }
+```
+
+```mermaid
+erDiagram
   BENCHMARK_GROUP_MEMBERS {
     UUID benchmark_group_id PK, FK
     UUID benchmark_id PK, FK
   }
+
 ```
 
 Remarks:
@@ -716,21 +734,22 @@ Relational schema (multi-key-value based):
 
 ```mermaid
 erDiagram
-  SCORES {
-    string test_id PK
-    string scenario_id PK
+  RESULTS {
+    UUID scenario_id PK, FK
+    UUID submission_id PK, FK
     string key PK
-    string submission_id FK
     float score
   }
+```
 
+```mermaid
+erDiagram
   SUBMISSIONS {
     UUID submission_id PK
     STATUS status "SUBMITTED|RUNNING|SUCCESS|FAILURE"
+    UUID benchmark_id FK
     string description
   }
-
-
 ```
 
 Future extensions:
