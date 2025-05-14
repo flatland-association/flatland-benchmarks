@@ -415,7 +415,7 @@ stateDiagram-v2
   state c1 <<join>>
   s1 --> t1: <code>f_t1</code>
   note left of s1
-    s1 scenario results:
+    s1 scenario results: SELECT <code>f_t1</code> FROM s1 // submission_id unique key
     schema: | <code>f_t1</code> | submission_id |
   end note
   s2 --> t1: <code>f_t1</code>
