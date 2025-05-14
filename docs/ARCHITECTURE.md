@@ -381,7 +381,10 @@ documentation.
 
 ### Level 1
 
-The following [building block view](https://docs.arc42.org/section-5/) shows the static decomposition of the system into building blocks (modules, components, subsystems, classes, interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations, data structures, …) as well as their dependencies (relationships, associations, …)
+> [!NOTE]
+> [building block view](https://docs.arc42.org/section-5/) shows the static decomposition of the system into building blocks (modules, components, subsystems, classes, interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations, data structures, …) as well as their dependencies (relationships, associations, …)
+
+The following diagram shows the building blocks in the Flatland 3 benchmarking closed loop:
 
 ![InformationFlow.drawio.png](./img/architecture/InformationFlow.drawio.png)
 
