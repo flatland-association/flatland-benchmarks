@@ -981,7 +981,10 @@ sequenceDiagram
 
   loop results per test
     HumanFactorsResearcher ->> Frontend: upload results.json
-    Frontend ->> Backend: PUT /submissions
+    alt no submission_id yet
+      Frontend ->> Backend: PUT /submissions
+    end
+
     Frontend ->> Backend: POST /results/submission/{submission_id}/tests/{test_id}
     Frontend ->> Backend: POST /submission/{submission_id}/status
     Frontend ->> Backend: GET /test/{test_id}
