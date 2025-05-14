@@ -6,6 +6,84 @@
     "description": "FAB backend API"
   },
   "paths": {
+    "/submissions": {
+      "post": {
+        "description": "Inserts new submission.",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Display name of submission."
+                  },
+                  "benchmark": {
+                    "type": "number",
+                    "description": "ID of benchmark this submission belongs to."
+                  },
+                  "submission_image": {
+                    "type": "string",
+                    "description": "URL of submission executable image."
+                  },
+                  "code_repository": {
+                    "type": "string",
+                    "description": "URL of submission code repository."
+                  },
+                  "tests": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "description": "IDs of tests to run."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "uuid": {
+                                "type": "string",
+                                "description": "UUID of submission."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tests/{ids}": {
       "get": {
         "description": "Returns tests with ID in `ids`.",
@@ -64,6 +142,11 @@
           }
         }
       }
+    },
+    "security": {
+      "0": {
+        "oauth2": []
+      }
     }
   },
   "components": {
@@ -77,6 +160,18 @@
                 "type": "string"
               }
             }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/auth",
+            "tokenUrl": "http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/token",
+            "scopes": []
           }
         }
       }
