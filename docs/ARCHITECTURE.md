@@ -400,10 +400,9 @@ Here's an overview of the aggregation in Pseudo-SQL style. More details below in
 * A submission is always with respect to a benchmark.
 * Raw result data is always with respect to submission and scenario.
 * Benchmark definition contains
-  * `f_t1`, `agg_t_1`, `agg_field_t1`: field `f_t1` of scenarios s1,..,s3 is aggregated by function `agg_t_1` into field `agg_field_t1`
-  * `f_b1`, `agg_b_1`, `agg_field_b1`: field `f_b1` of tests t1,t2 is aggregated by function `agg_t_1` into field `agg_field_t1`
-  * `f_b1` = `agg_field_t1`, `agg_field_t2`, ...
-* Available aggregation functions: `SUM`, `NANSUM`, `MEAN`, `NANMEDIAN`, `MEDIAN`, `NANMEDIAN`
+  * `f_t1`, `agg_t_1`: field `f_t1` of scenarios s1,..,s3 is aggregated by function `agg_t_1` into field `agg_field_t1`
+  * `f_b1`, `agg_b_1`: field `f_b1` of tests t1,t2 is aggregated by function `agg_b_1` into field `agg_field_b1`
+* Available aggregation functions: `SUM`, `NANSUM`, (weighted or equal weights if undefined) `MEAN`, (weighted or equal weights if undefined) `NANMEDIAN`, `MEDIAN`, `NANMEDIAN`
 
 ```mermaid
 stateDiagram-v2
@@ -428,7 +427,7 @@ stateDiagram-v2
   t2 --> b1: <code>f_b1</code>
   t3 --> b1: <code>f_b1</code>
   note right of t1
-    t1 test aggregation: SELECT <code>agg_t1</code>(f_t1) FROM s1,s2,s3 AS <agg_field_t1> GROUP BY submission_id
+    t1 test aggregation: SELECT <code>agg_t1</code>(agg_field_t1) FROM s1,s2,s3 AS <code>agg_field_t1</code> GROUP BY submission_id
     schema: | <code>agg_field_t1</code> | submission_id |
   end note
   note left of t2
@@ -438,14 +437,14 @@ stateDiagram-v2
     t3
   end note
   note right of b1
-    b1 benchmark aggregation: SELECT <code>agg_b1</code>(<code>f_b1</code>) FROM t1,t2,t3 AS <code>agg_field_b1</code> GROUP BY submission_id
+    b1 benchmark aggregation: SELECT <code>agg_field_b1</code>(<code>f_b1</code>) AS <code>agg_field_b1</code> FROM t1,t2,t3 GROUP BY submission_id
     schema: | <code>agg_field_b1</code> | submission_id |
     b1 benchmark leaderboard: SELECT <code>agg_field_b1</code>, submission_id FROM b1 ORDER BY <code>agg_field_b1</code> ASCENDING
   end note
   b1 --> c1: <code>agg_field_b1</code>
   b2 --> c1: <code>agg_field_b2</code>
   note right of c1
-    c1 campaign overview: SELECT MAX(<code>agg_field_b1</code>) FROM b1 AS value GROUP BY submission_id UNION SELECT MAX(<code>agg_field_b2</code>) FROM b2 AS value GROUP BY submission_id
+    c1 campaign overview: SELECT MAX(<code>agg_field_b1</code>) AS value FROM b1 GROUP BY submission_id UNION SELECT MAX(<code>agg_field_b2</code>) AS value FROM b2 GROUP BY submission_id
     schema: | benchmark_id | value | value description |
   end note
 ```
@@ -562,14 +561,14 @@ Remarks:
   the raw data is kept on S3 and we could in principle re-process cached data at every level from S3 to the UI.
 * Scenario IDs are global IDs, not only relative to their parent benchmark/test.
 
-| Aggregation function | weights allowed | Description                                                                                   |
-|----------------------|-----------------|-----------------------------------------------------------------------------------------------|
-| `SUM`                | yes             | If one value is NaN, the sum will be NaN. Empty sum defaulting to 0.                          |
-| `NANSUM`             | yes             | Sum over all non-NaN scores. Empty sum defaulting to 0.                                       |
-| `MEAN`               | yes             | If one value is NaN, the mean will be NaN. Empty mean defaulting to NaN.                      |
-| `NANMEAN`            | yes             | Mean over all non-NaN scores, defaulting to 0.  Empty nanmean defaulting to NaN.              |
-| `MEDIAN`             | no              | If one value is NaN, the median will be NaN, defaulting to 0. Empty median defaulting to NaN. |
-| `NANMEDIAN`          | no              | Median over all non-NaN scores, defaulting to 0. Empty nanmedian defaulting to NaN.           |
+| Aggregation function | weights allowed | Description                                                                                                                              |
+|----------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `SUM`                | yes             | If one value is NaN, the sum will be NaN. Empty sum defaulting to 0.                                                                     |
+| `NANSUM`             | yes             | Sum over all non-NaN scores. Empty sum defaulting to 0.                                                                                  |
+| `MEAN`               | yes             | If one value is NaN, the mean will be NaN. Empty mean defaulting to NaN. If weights are present, then the mean is weighted mean.         |
+| `NANMEAN`            | yes             | Mean over all non-NaN scores, defaulting to 0.  Empty nanmean defaulting to NaN. If weights are present, then the mean is weighted mean. |
+| `MEDIAN`             | no              | If one value is NaN, the median will be NaN, defaulting to 0. Empty median defaulting to NaN.                                            |
+| `NANMEDIAN`          | no              | Median over all non-NaN scores, defaulting to 0. Empty nanmedian defaulting to NaN.                                                      |
 
 Relational schema:
 
@@ -592,8 +591,8 @@ erDiagram
     string benchmark_id PK, FK
     string test_id PK
     string agg_func
-    string[] agg_field
-    float[] weights
+    string agg_field
+    Optional[float[]] weights
     string topic
     URL s3
     credentials s3
@@ -607,12 +606,17 @@ erDiagram
   BENCHMARK_DEFINITION {
     string benchmark_id PK
     string agg_func
-    string[] agg_field
-    float[] weights
+    string agg_field
+    Optional[float[]] weights
     date valid_from
     date valid_to
   }
 ```
+
+Note:
+
+* We assume the `agg_field` to be the same for all children.
+*
 
 ### Interface 1b: Benchmark group definition API
 
