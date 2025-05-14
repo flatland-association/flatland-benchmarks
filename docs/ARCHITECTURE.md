@@ -257,39 +257,39 @@ the communication partner, the inputs, and the outputs.
 
 The following [Architecture Diagram](https://mermaid.js.org/syntax/architecture) shows the interplay of the FAB components:
 
-```markdown
+```mermaid
 architecture-beta
 group api(cloud)[Validation Campaign Hub]
 
-    service db(database)[Database] in api
-    service frontend(server)[Frontend] in api
-    service backend(server)[Backend] in api
-    service broker(internet)[Broker] in api
-    service keycloak(server)[IAM] in api
+service db(database)[Database] in api
+service frontend(server)[Frontend] in api
+service backend(server)[Backend] in api
+service broker(internet)[Broker] in api
+service keycloak(server)[IAM] in api
 
-    group railway(cloud)[Railway]
-    service orchestratorailway(server)[Ochestrator] in railway
-    service evaluatorrailway(server)[Evaluator] in railway
+group railway(cloud)[Railway]
+service orchestratorailway(server)[Ochestrator] in railway
+service evaluatorrailway(server)[Evaluator] in railway
 
-    group Cloudstorage(cloud)[Cloud Provider]
-    service s3(disk)[Object Storage] in Cloudstorage
+group Cloudstorage(cloud)[Cloud Provider]
+service s3(disk)[Object Storage] in Cloudstorage
 
-    junction junctionBackend in api
+junction junctionBackend in api
 
 
-    frontend:R -- L:backend
-    backend:B -- T:junctionBackend
-    backend:R -- L:broker
+frontend:R -- L:backend
+backend:B -- T:junctionBackend
+backend:R -- L:broker
 
-    broker:R -- L:orchestratorailway
-    orchestratorailway:T -- B:evaluatorrailway
-    evaluatorrailway:L -- R:s3
-    junctionBackend:T -- B:backend
+broker:R -- L:orchestratorailway
+orchestratorailway:T -- B:evaluatorrailway
+evaluatorrailway:L -- R:s3
+junctionBackend:T -- B:backend
 
-    junctionBackend:R -- L:keycloak
-    junctionBackend:L -- R:db
+junctionBackend:R -- L:keycloak
+junctionBackend:L -- R:db
 
-    backend:T -- B:s3
+backend:T -- B:s3
 ```
 
 | Component             | Description                                                                                                       | Technical                         |
