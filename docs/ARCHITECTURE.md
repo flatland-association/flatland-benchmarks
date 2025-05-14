@@ -395,10 +395,15 @@ Inspired by [LIPS](https://github.com/IRT-SystemX/LIPS), high-level data model i
 
 ![DataModel.drawio.png](img/architecture/DataModel.drawio.png)
 
-Here's an overview of the aggregation. More details below in API description.
+Here's an overview of the aggregation in Pseudo-SQL style. More details below in API description.
 
 * A submission is always with respect to a benchmark.
 * Raw result data is always with respect to submission and scenario.
+* Benchmark definition contains
+  * `f_t1`, `agg_t_1`, `agg_field_t1`: field `f_t1` of scenarios s1,..,s3 is aggregated by function `agg_t_1` into field `agg_field_t1`
+  * `f_b1`, `agg_b_1`, `agg_field_b1`: field `f_b1` of tests t1,t2 is aggregated by function `agg_t_1` into field `agg_field_t1`
+  * `f_b1` = `agg_field_t1`, `agg_field_t2`, ...
+* Available aggregation functions: `SUM`, `NANSUM`, `MEAN`, `NANMEDIAN`, `MEDIAN`, `NANMEDIAN`
 
 ```mermaid
 stateDiagram-v2
@@ -408,39 +413,41 @@ stateDiagram-v2
   state b1 <<join>>
   state b2 <<join>>
   state c1 <<join>>
-  s1 --> t1: F_T1
+  s1 --> t1: <code>f_t1</code>
   note left of s1
-    S1 Scenario results:
-    schema: | F_T1 | submission_id |
+    s1 scenario results:
+    schema: | <code>f_t1</code> | submission_id |
   end note
-  s2 --> t1: F_T1
-  s3 --> t1: F_T1
-  s4 --> t2: F_T2
-  s5 --> t2: F_T2
-  s6 --> t3: F_T3
-  s7 --> t3: F_T3
-  t1 --> b1: F_B1
-  t2 --> b1: F_B1
-  t3 --> b1: F_B1
+  s2 --> t1: <code>f_t1</code>
+  s3 --> t1: <code>f_t1</code>
+  s4 --> t2: <code>f_t2</code>
+  s5 --> t2: <code>f_t2</code>
+  s6 --> t3: <code>f_t3</code>
+  s7 --> t3: <code>f_t3</code>
+  t1 --> b1: <code>f_b1</code>
+  t2 --> b1: <code>f_b1</code>
+  t3 --> b1: <code>f_b1</code>
   note right of t1
-    T1 Test aggregation:
-    T1: select AGG_T1(F_T1) as AGG_FIELD_T1 group by submission_id
-    schema: | AGG_FIELD_T1 | submission_id |
+    t1 test aggregation: SELECT <code>agg_t1</code>(f_t1) FROM s1,s2,s3 AS <agg_field_t1> GROUP BY submission_id
+    schema: | <code>agg_field_t1</code> | submission_id |
+  end note
+  note left of t2
+    t2
+  end note
+  note left of t3
+    t3
   end note
   note right of b1
-    B1 Benchmark aggregation:
-    B1: select AGG_B1(F_B1) as AGG_FIELD_B1 group by submission_id
-    schema: | AGG_FIELD_B1 | submission_id |
+    b1 benchmark aggregation: SELECT <code>agg_b1</code>(<code>f_b1</code>) FROM t1,t2,t3 AS <code>agg_field_b1</code> GROUP BY submission_id
+    schema: | <code>agg_field_b1</code> | submission_id |
+    b1 benchmark leaderboard: SELECT <code>agg_field_b1</code>, submission_id FROM b1 ORDER BY <code>agg_field_b1</code> ASCENDING
   end note
-  b1 --> c1: F_C1
+  b1 --> c1: <code>agg_field_b1</code>
+  b2 --> c1: <code>agg_field_b2</code>
   note right of c1
-    C1 Campaign or Competition aggregation:
-    1) Campaign overview: select max(F_AGG_FIELD_B1) as AGG_FIELD_B1 group by submission_id
-    schema: | BENCHMARK_ID | AGG_FIELD_B1 |
-    2) Leaderboard: select F_AGG_FIELD_B1, submission_id order by F_AGG_FIELD_B1 ascending
-    schema: | BENCHMARK_ID | AGG_FIELD_B1 | submission_id |
+    c1 campaign overview: SELECT MAX(<code>agg_field_b1</code>) FROM b1 AS value GROUP BY submission_id UNION SELECT MAX(<code>agg_field_b2</code>) FROM b2 AS value GROUP BY submission_id
+    schema: | benchmark_id | value | value description |
   end note
-  b2 --> c1: F_C1
 ```
 
 ### API Roles
