@@ -395,6 +395,54 @@ Inspired by [LIPS](https://github.com/IRT-SystemX/LIPS), high-level data model i
 
 ![DataModel.drawio.png](img/architecture/DataModel.drawio.png)
 
+Here's an overview of the aggregation. More details below in API description.
+
+* A submission is always with respect to a benchmark.
+* Raw result data is always with respect to submission and scenario.
+
+```mermaid
+stateDiagram-v2
+  state t1 <<join>>
+  state t2 <<join>>
+  state t3 <<join>>
+  state b1 <<join>>
+  state b2 <<join>>
+  state c1 <<join>>
+  s1 --> t1: F_T1
+  note left of s1
+    S1 Scenario results:
+    schema: | F_T1 | submission_id |
+  end note
+  s2 --> t1: F_T1
+  s3 --> t1: F_T1
+  s4 --> t2: F_T2
+  s5 --> t2: F_T2
+  s6 --> t3: F_T3
+  s7 --> t3: F_T3
+  t1 --> b1: F_B1
+  t2 --> b1: F_B1
+  t3 --> b1: F_B1
+  note right of t1
+    T1 Test aggregation:
+    T1: select AGG_T1(F_T1) as AGG_FIELD_T1 group by submission_id
+    schema: | AGG_FIELD_T1 | submission_id |
+  end note
+  note right of b1
+    B1 Benchmark aggregation:
+    B1: select AGG_B1(F_B1) as AGG_FIELD_B1 group by submission_id
+    schema: | AGG_FIELD_B1 | submission_id |
+  end note
+  b1 --> c1: F_C1
+  note right of c1
+    C1 Campaign or Competition aggregation:
+    1) Campaign overview: select max(F_AGG_FIELD_B1) as AGG_FIELD_B1 group by submission_id
+    schema: | BENCHMARK_ID | AGG_FIELD_B1 |
+    2) Leaderboard: select F_AGG_FIELD_B1, submission_id order by F_AGG_FIELD_B1 ascending
+    schema: | BENCHMARK_ID | AGG_FIELD_B1 | submission_id |
+  end note
+  b2 --> c1: F_C1
+```
+
 ### API Roles
 
 - `user`: can submit and view results
@@ -507,14 +555,14 @@ Remarks:
   the raw data is kept on S3 and we could in principle re-process cached data at every level from S3 to the UI.
 * Scenario IDs are global IDs, not only relative to their parent benchmark/test.
 
-| Aggregation function | weights allowed | Description                                                   |
-|----------------------|-----------------|---------------------------------------------------------------|
-| `SUM`                | yes             | If one value is NaN, the sum will be NaN. Empty sum defaulting to 0.                      |
-| `NANSUM`             | yes             | Sum over all non-NaN scores. Empty sum defaulting to 0.               |
-| `MEAN`               | yes             | If one value is NaN, the mean will be NaN. Empty mean defaulting to NaN.                   |
+| Aggregation function | weights allowed | Description                                                                                   |
+|----------------------|-----------------|-----------------------------------------------------------------------------------------------|
+| `SUM`                | yes             | If one value is NaN, the sum will be NaN. Empty sum defaulting to 0.                          |
+| `NANSUM`             | yes             | Sum over all non-NaN scores. Empty sum defaulting to 0.                                       |
+| `MEAN`               | yes             | If one value is NaN, the mean will be NaN. Empty mean defaulting to NaN.                      |
 | `NANMEAN`            | yes             | Mean over all non-NaN scores, defaulting to 0.  Empty nanmean defaulting to NaN.              |
 | `MEDIAN`             | no              | If one value is NaN, the median will be NaN, defaulting to 0. Empty median defaulting to NaN. |
-| `NANMEDIAN`          | no              | Median over all non-NaN scores, defaulting to 0. Empty nanmedian defaulting to NaN.              |
+| `NANMEDIAN`          | no              | Median over all non-NaN scores, defaulting to 0. Empty nanmedian defaulting to NaN.           |
 
 Relational schema:
 
