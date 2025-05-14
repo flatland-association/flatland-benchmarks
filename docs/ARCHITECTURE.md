@@ -509,12 +509,12 @@ Remarks:
 
 | Aggregation function | weights allowed | Description                                                   |
 |----------------------|-----------------|---------------------------------------------------------------|
-| `SUM`                | yes             | If one value is NaN, the sum will be NaN                      |
-| `NANSUM`             | yes             | Sum over all non-NaN scores, defaulting to 0.                 |
-| `MEAN`               | yes             | If one value is NaN, the mean will be NaN.                    |
-| `NANMEAN`            | yes             | Mean over all non-NaN scores, defaulting to 0.                |
-| `MEDIAN`             | no              | If one value is NaN, the median will be NaN, defaulting to 0. |
-| `NANMEDIAN`          | no              | Median over all non-NaN scores, defaulting to 0.              |
+| `SUM`                | yes             | If one value is NaN, the sum will be NaN. Empty sum defaulting to 0.                      |
+| `NANSUM`             | yes             | Sum over all non-NaN scores. Empty sum defaulting to 0.               |
+| `MEAN`               | yes             | If one value is NaN, the mean will be NaN. Empty mean defaulting to NaN.                   |
+| `NANMEAN`            | yes             | Mean over all non-NaN scores, defaulting to 0.  Empty nanmean defaulting to NaN.              |
+| `MEDIAN`             | no              | If one value is NaN, the median will be NaN, defaulting to 0. Empty median defaulting to NaN. |
+| `NANMEDIAN`          | no              | Median over all non-NaN scores, defaulting to 0. Empty nanmedian defaulting to NaN.              |
 
 Relational schema:
 
