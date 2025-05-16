@@ -23,6 +23,57 @@ export class SubmissionController extends Controller {
     this.attachPatch('/result', this.patchResult)
   }
 
+  /**
+   * @swagger
+   * /submissions:
+   *  post:
+   *    description: Inserts new submission.
+   *    security:
+   *      - oauth2: []
+   *    requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *              name:
+   *                type: string
+   *                description: Display name of submission.
+   *              benchmark:
+   *                type: number
+   *                description: ID of benchmark this submission belongs to.
+   *              submission_image:
+   *                type: string
+   *                description: URL of submission executable image.
+   *              code_repository:
+   *                type: string
+   *                description: URL of submission code repository.
+   *              tests:
+   *                type: array
+   *                items:
+   *                  type: number
+   *                description: IDs of tests to run.
+   *    responses:
+   *      200:
+   *        description: Created.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          uuid:
+   *                            type: string
+   *                            format: uuid
+   *                            description: UUID of submission.
+   */
   postSubmission: PostHandler<'/submissions'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)

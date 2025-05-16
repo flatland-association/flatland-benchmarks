@@ -173,3 +173,6 @@ images
 
 # private files (require local changes to work properly)
 /evaluation/.env.cvolumes
+
+# Generated Swagger definitions
+swagger.json
