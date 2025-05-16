@@ -12,8 +12,8 @@ components:
       type: oauth2
       flows:
         authorizationCode:
-          authorizationUrl: https://keycloak.flatland.cloud/realms/netzgrafikeditor/protocol/openid-connect/auth
-          tokenUrl: https://keycloak.flatland.cloud/realms/netzgrafikeditor/protocol/openid-connect/token
+          authorizationUrl: http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/auth
+          tokenUrl: http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/token
           scopes: []
 
 security:
