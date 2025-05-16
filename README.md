@@ -46,6 +46,8 @@ More details, see [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 To participate, or even organize your own benchmarks or competitions, you don't need to install anything, you just need to sign in an instance of the platform (e.g. this one). If you wish to configure your own instance of the platform, here are the instructions:
 
 ```shell
+cd evaluation
+docker compose  -f docker-compose-demo.yml up -d
 
 ```
 
