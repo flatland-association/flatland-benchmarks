@@ -71,6 +71,7 @@ export class SubmissionController extends Controller {
    *                        properties:
    *                          uuid:
    *                            type: string
+   *                            format: uuid
    *                            description: UUID of submission.
    */
   postSubmission: PostHandler<'/submissions'> = async (req, res) => {
