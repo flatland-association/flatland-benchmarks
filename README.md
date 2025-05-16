@@ -18,8 +18,8 @@ It supports the following use cases:
 
 Experiments are run in the following loops:
 
-* closed-loop: the evaluation is carried without human in the loop (always for competition and benchmarks, optionally in campaign setting)
-* interactive-loop: the evaluation is carried by a human Operator interacting with a UI, the results are uploaded automatically or/and manually
+* closed-loop: the evaluation is carried out without human in the loop (always for competition and benchmarks, optionally in campaign setting)
+* interactive-loop: the evaluation is carried out by a human Operator interacting with a UI, the results are uploaded automatically or/and manually
 * offline-loop: the evaluation is done completely offline, the results are uploaded manually at the end of the experiment
 
 
