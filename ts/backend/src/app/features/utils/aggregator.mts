@@ -21,6 +21,12 @@ export interface TestDefinition {
   // - aggregators: json[] - how fields are aggregated, object of
   //   - field: string - name of field from scenario
   //   - func: string - name of aggregation function
+  // REMARK: or maybe just one field:
+  // - fields: json[] - fields definition:
+  //   - field: string - name of field
+  //   - aggregation: json[]
+  //     - field: string - name of field from scenario
+  //     - func: string - name of aggregation function
   // REMARK: can aggregation also happen horizontally? I.e. the primary
   // score of a test is the weighted sum of its secondary scores...
 }
@@ -51,7 +57,7 @@ export interface Submission {
 }
 
 // REMARK: For a first iteration, work with a tabular structure instead of a
-// tree. It's more memory intense, but filtering is more straight-forward.
+// tree. This makes filtering more straight-forward.
 
 export interface TabularDefinitionRow {
   benchmark: BenchmarkDefinition
