@@ -12,6 +12,43 @@ export class TestController extends Controller {
     this.attachGet('/tests/:id', this.getTestById)
   }
 
+  /**
+   * @swagger
+   * /tests/{ids}:
+   *  get:
+   *    description: Returns tests with ID in `ids`.
+   *    parameters:
+   *      - in: path
+   *        name: ids
+   *        description: Comma-separated list of IDs.
+   *        schema:
+   *          type: array
+   *          items:
+   *            type: integer
+   *    responses:
+   *      200:
+   *        description: Requested tests.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          dir:
+   *                            type: string
+   *                          id:
+   *                            type: number
+   *                          name:
+   *                            type: string
+   *                          description:
+   *                            type: string
+   */
   getTestById: GetHandler<'/tests/:id'> = async (req, res) => {
     const ids = req.params.id.split(',').map((s) => +s)
     const sql = SqlService.getInstance()

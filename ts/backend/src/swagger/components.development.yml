@@ -1,0 +1,20 @@
+components:
+  schemas:
+    ApiResponse:
+      properties:
+        error:
+          type: object
+          properties:
+            text:
+              type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/auth
+          tokenUrl: http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/token
+          scopes: []
+
+security:
+  - oauth2: []
