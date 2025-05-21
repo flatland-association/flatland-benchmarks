@@ -17,5 +17,12 @@ export class HomeView implements OnInit {
 
   async ngOnInit() {
     this.benchmarks = (await this.apiService.get('/benchmarks')).body
+    this.benchmarks?.push({
+      dir: '/benchmarks/',
+      id: 'neurips_competition_2025',
+      name: 'NeurIPS Competition 2025',
+      description:
+        'Towards Real-Time Train Rescheduling: Multi-Agent Reinforcement Learning and Operations Research for Dynamic Train Rescheduling under Stochastic Perturbations',
+    })
   }
 }

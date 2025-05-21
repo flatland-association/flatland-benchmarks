@@ -2,6 +2,7 @@ import { Routes } from '@angular/router'
 import { ImpressumView, NotFoundView, PrivacyView } from '@flatland-association/flatland-ui'
 import { AuthGuard } from './guards/auth.guard'
 import { BenchmarksDetailView } from './views/benchmarks-detail/benchmarks-detail.view'
+import { CompetitionsDetailView } from './views/competitions-detail/competitions-detail.view'
 import { HomeView } from './views/home/home.view'
 import { NewSubmissionView } from './views/new-submission/new-submission.view'
 import { ParticipateView } from './views/participate/participate.view'
@@ -25,6 +26,8 @@ export const routes: Routes = [
       return 'home'
     },
   },
+  // That link was shared in AI4REALNET_Railway_Competition_2025_NeurIPS_Proposal.pdf
+  { path: 'benchmarks/neurips_competition_2025', redirectTo: 'competitions/neurips_2025' },
   { path: 'benchmarks/:id', component: BenchmarksDetailView },
   {
     path: 'benchmarks/:id/participate',
@@ -46,6 +49,7 @@ export const routes: Routes = [
     component: SubmissionView,
     canActivate: [AuthGuard],
   },
+  { path: 'competitions/:id', component: CompetitionsDetailView },
   { path: 'impressum', component: ImpressumView },
   { path: 'privacy', component: PrivacyView },
   { path: '**', component: NotFoundView },

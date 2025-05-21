@@ -1,0 +1,113 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<lib-content>
+  <h2 class="pb-8 text-2xl font-bold text-neutral-500">{{ benchmark?.name }}</h2>
+
+  <p class="pb-8">
+    Towards Real-Time Train Rescheduling: Multi-Agent Reinforcement Learning and Operations Research for Dynamic Train Rescheduling under Stochastic Perturbations
+  </p>
+</lib-content>
+
+<lib-content>
+  <h3 class="pb-8 text-xl font-bold">Competition</h3>
+  <lib-section class="pb-8">
+    <p class="font-bold">
+      How to efficiently manage dense traffic on a complex railway network with unforeseen events? 
+    </p>
+    <p>
+      This competition tackles a real-world problem faced by many transportation companies around the world: the vehicle rescheduling problem (VRSP). It aims to identify novel solutions and advance existing approaches for dynamic railway rescheduling to take a step towards real-time rescheduling demands of future railway networks. Your contribution to this challenge might influence how modern traffic management systems are implemented.
+    </p>
+    <p>
+      Are you up for the challenge?
+    </p>
+    <p>
+      This competition is part of the <a href="https://neurips.cc/">NeurIPS conference</a> competition track. The conference takes place from December 2<sup>nd</sup> to December 7<sup>th</sup>, 2025 at the San Diego Convention Center. 
+    </p>
+    <p>
+      The competition builds on the <a href="https://www.aicrowd.com/challenges/flatland-3">Flatland competition</a> held at NeurIPS in 2020. Recent extensions of the Flatland framework brought it a big step closer to real-world settings for rescheduling tasks. We offer two tracks in this competition, one for purely Reinforcement Learning (RL) solutions and one that is open for all approaches, especially Operations Research (OR). 
+    </p>
+    <p>
+      This competition is proposed by a team of researchers from the <a href="https://ai4realnet.eu/">AI4REALNET</a> project. 
+    </p>
+  </lib-section>
+  <h4 class="pb-8 text-l font-bold">What is Flatland?</h4>
+  <lib-section class="pb-8">
+    <p>
+      Flatland is an <a href="https://github.com/flatland-association/flatland-rl">open-source toolkit</a> for developing and comparing Multi-Agent Reinforcement Learning algorithms in little (or ridiculously large!) gridworlds. Check out the extensive <a href="https://flatland-association.github.io/flatland-book/intro.html">documentation on GitHub</a> or the <a href="https://arxiv.org/abs/2012.05893">paper on arXiv</a>.
+    </p>
+  </lib-section>
+  <h4 class="pb-8 text-l font-bold">Competition Procedure</h4>
+  <lib-section class="pb-8">
+    <p>
+      The competition consists of a warm-up round for participants to familiarize themselves with the Flatland environment and the competition setup. After that, there are two rounds (see below) with a cut in between. This means, that only the XX best solutions of each track are admitted to round two. This measure allows for a more adequate support in the final round and lets us provide more computational resources for participants. 
+    </p>
+  </lib-section>
+  <h4 class="pb-8 text-l font-bold">Round overview</h4>
+  <p class="pb-8">
+    <span class="font-bold">Warm-up round:</span> July 15<sup>th</sup>, 2025 - August 4<sup>th</sup>, 2025<br>
+    <span class="font-bold">Round 1:</span> August 5<sup>th</sup>, 2025 - September 15<sup>th</sup>, 2025<br>
+    <span class="font-bold">Round 2:</span> September 16<sup>th</sup>, 2025 - October 31<sup>st</sup>, 2025<br>
+  </p>
+  <h4 class="pb-8 text-l font-bold">Prizes</h4>
+  <p>
+    Prizes will be announced before the start of the warm-up round.
+  </p>
+</lib-content>
+
+
+<lib-content>
+  <h3 class="pb-8 text-xl font-bold">Leaderboard</h3>
+  @if(submissions) {
+    <app-leaderboard [submissions]="submissions"></app-leaderboard>
+  }
+</lib-content>
+
+<lib-content>
+  <h3 class="pb-8 text-xl font-bold">Participate</h3>
+  <p class="pb-8">
+    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'participate'">Participate</button>
+  </p>
+  <h4 class="pb-8 text-l font-bold">Submissions</h4>
+  <p class="pb-8">
+    Submit your solution to the competition here. You can create an account here.
+  </p>
+  <h4 class="pb-8 text-l font-bold">Get started</h4>
+  <p class="pb-8">
+    To get started with Flatland, check out the starter kit: (link will be here soon)
+  </p>
+</lib-content>
+
+<lib-content>
+  <h3 class="pb-8 text-xl font-bold">Rules</h3>
+  <lib-section class="pb-8">
+    <p>
+      <b>General:</b> In the following, Participant refers to a single person or a participating team. By signing up for this competition, Participants agree to the rules of the competition. Anyone registered as Participant has the right to participate in the competition and participants are allowed to form teams.
+    </p>
+    <p>
+      <b>Daily Submission Cap:</b> Each Participant may submit up to 5 solutions per day.
+    </p>
+    <p>
+      <b>Runtime Limitation:</b> The evaluation of a solution will be stopped if double the timesteps of the latest scheduled arrival elapsed during a scenario, or if the evaluation lasts longer than 4 hours. The scores for all completed scenarios up to that point will be counted toward to competition.
+    </p>
+    <p>
+      <b>Open Source:</b> Participants must open source their submissions in order to qualify for prizes.
+    </p>
+    <p>
+      <b>Track Specificity:</b> For the Reinforcement Learning (RL) track, submissions must demonstrably utilize RL algorithms. The organizers will verify compliance during the review process after round 2. The decision for a solution to qualify for the RL track lays solely with the organizers. Submissions not accepted for the RL track will compete in the open track.
+    </p>
+    <p>
+      <b>Evaluation Procedure:</b> Submissions are initially scored automatically and shown on the leaderboard. Top-performing entries are subjected to a secondary human review after round 2 to resolve any ties and ensure robustness of the scoring methodology.
+    </p>
+  </lib-section>
+</lib-content>
+
+<lib-content>
+  <h3 class="pb-8 text-xl font-bold">FAQ</h3>
+  <p>Find all questions and further communication on our Revolt server: tba</p>
+</lib-content>
+
+<lib-content>
+  <h3 class="pb-8 text-xl font-bold">Contact</h3>
+  <p>Join the competition on our Revolt server: tba </p>
+  <p>Get in touch with us: <a href="mailto:competition@flatland-association.org">competition&#64;flatland-association.org</a></p>
+</lib-content>
