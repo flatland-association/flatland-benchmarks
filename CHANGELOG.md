@@ -3,6 +3,14 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.7.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.6.0...v0.7.0) (2025-05-26)
+
+
+### Features
+
+* **backend:** Bootstrap Swagger UI ([#212](https://github.com/flatland-association/flatland-benchmarks/issues/212)) ([0e94bdc](https://github.com/flatland-association/flatland-benchmarks/commit/0e94bdc1a08ae6986f73e3b8ffa759dfc4f7d576))
+* **backend:** fetch results from s3 ([#199](https://github.com/flatland-association/flatland-benchmarks/issues/199)) ([7839d98](https://github.com/flatland-association/flatland-benchmarks/commit/7839d982f327e0ff3d9d32c5c4a6c8d382daba6c))
+
 ## [0.6.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.5.0...v0.6.0) (2025-04-28)
 
 
