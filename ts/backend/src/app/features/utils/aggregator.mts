@@ -103,35 +103,45 @@ export interface Submission {
   tests: string[]
 }
 
-export type Scores = Record<string, number | null>
+export interface Scoring {
+  score: number | null
+  rank?: number
+  top?: number // REMARK: it's my full intention repeating the top score in every scoring. That way, submissions/tests can be filtered without losing this information.
+}
+
+export type Scorings = Record<string, Scoring | null>
 
 export interface ScenarioScored {
   definition: ScenarioDefinition
-  scores: Scores
+  scorings: Scorings
 }
 
 export interface TestScored {
   definition: TestDefinition
-  scores: Scores
+  scorings: Scorings
   scenarios: ScenarioScored[]
 }
 
 export interface SubmissionScored {
   definition: SubmissionDefinition
   submission: Submission
-  scores: Scores
+  scorings: Scorings
   tests: TestScored[]
 }
 
 export interface BenchmarkScored {
   definition: BenchmarkDefinition
-  scores: Scores
+  scorings: Scorings
   submissions: SubmissionScored[]
 }
 
 export interface BenchmarkGroupScored {
-  scores: Scores
   benchmarks: BenchmarkScored[]
+}
+
+interface ScoringHost {
+  level: 'benchmark' | 'submission' | 'test' | 'scenario'
+  id?: string
 }
 
 export class Aggregator {
@@ -156,12 +166,13 @@ export class Aggregator {
           results,
         ),
       ),
-      scores: {},
     }
     return groupScored
   }
 
-  static getBenchmarkScored(
+  // REMARK: these are private since calling them bypassing
+  // `getBenchmarkGroupScored` also bypasses ranking...
+  private static getBenchmarkScored(
     benchmarkDef: BenchmarkDefinition,
     // submissionDefs: SubmissionDefinition[],
     testDefs: TestDefinition[],
@@ -184,19 +195,21 @@ export class Aggregator {
             results.filter((result) => result.submission_id === submission.id),
           ),
         ),
-      scores: {},
+      scorings: {},
     }
     // once children are appended and scored, it's safe to aggregate score
     benchmarkDef.fields.forEach((field) => {
-      this.aggregateScore(benchmarkScored.scores, field, benchmarkScored.submissions, results)
+      this.aggregateScore(benchmarkScored.scorings, field, benchmarkScored.submissions, results)
     })
+    // once everything is scored, it's safe to rank
+    this.rankBenchmark(benchmarkScored, 'scenario')
     return benchmarkScored
   }
 
   /**
    * **NOTE:** It's the callers responsibility to filter results for submission.
    */
-  static getSubmissionScored(
+  private static getSubmissionScored(
     submissionDef: SubmissionDefinition,
     testDefs: TestDefinition[],
     scenarioDefs: ScenarioDefinition[],
@@ -210,11 +223,11 @@ export class Aggregator {
       tests: testDefs
         .filter((test) => submission.tests.includes(test.id))
         .map((test) => this.getTestScored(test, scenarioDefs, results)),
-      scores: {},
+      scorings: {},
     }
     // once children are appended and scored, it's safe to aggregate score
     submissionDef.fields.forEach((field) => {
-      this.aggregateScore(submissionScored.scores, field, submissionScored.tests, results)
+      this.aggregateScore(submissionScored.scorings, field, submissionScored.tests, results)
     })
     return submissionScored
   }
@@ -222,7 +235,7 @@ export class Aggregator {
   /**
    * **NOTE:** It's the callers responsibility to filter results for submission.
    */
-  static getTestScored(test: TestDefinition, scenarios: ScenarioDefinition[], results: Result[]): TestScored {
+  private static getTestScored(test: TestDefinition, scenarios: ScenarioDefinition[], results: Result[]): TestScored {
     // build tree structure
     const testScored: TestScored = {
       definition: test,
@@ -234,11 +247,11 @@ export class Aggregator {
             results.filter((result) => result.scenario_id === scenario.id),
           ),
         ),
-      scores: {},
+      scorings: {},
     }
     // once children are appended and scored, it's safe to aggregate score
     test.fields.forEach((field) => {
-      this.aggregateScore(testScored.scores, field, testScored.scenarios, results)
+      this.aggregateScore(testScored.scorings, field, testScored.scenarios, results)
     })
     return testScored
   }
@@ -246,15 +259,15 @@ export class Aggregator {
   /**
    * **NOTE:** It's the callers responsibility to filter results for scenario.
    */
-  static getScenarioScored(scenario: ScenarioDefinition, results: Result[]): ScenarioScored {
+  private static getScenarioScored(scenario: ScenarioDefinition, results: Result[]): ScenarioScored {
     // build leaf
     const scenarioScored: ScenarioScored = {
       definition: scenario,
-      scores: {},
+      scorings: {},
     }
     // once tree is built, it's safe to aggregate score
     scenario.fields.forEach((field) => {
-      this.aggregateScore(scenarioScored.scores, field, [], results)
+      this.aggregateScore(scenarioScored.scorings, field, [], results)
     })
     return scenarioScored
   }
@@ -262,11 +275,18 @@ export class Aggregator {
   /**
    * **NOTE:** It's the callers responsibility to filter results.
    */
-  static aggregateScore(scores: Scores, field: FieldDefinition, children: { scores?: Scores }[], results: Result[]) {
+  static aggregateScore(
+    scorings: Scorings,
+    field: FieldDefinition,
+    children: { scorings?: Scorings }[],
+    results: Result[],
+  ) {
     // if agg_func is undefined, take first match from results
     if (typeof field.agg_func === 'undefined') {
       const fieldName = this.getInFieldName(field, 0)
-      scores[field.out_field] = results.find((result) => result.key === fieldName)?.score ?? null
+      scorings[field.out_field] = {
+        score: results.find((result) => result.key === fieldName)?.score ?? null,
+      }
     }
     // otherwise, aggregate accordingly
     else {
@@ -276,7 +296,7 @@ export class Aggregator {
         // REMARK: error when number of fields doesn't match number of scores?
         values = children.map((child, index) => {
           const fieldName = this.getInFieldName(field, index)
-          return fieldName ? (child.scores?.[fieldName] ?? null) : null
+          return fieldName ? (child.scorings?.[fieldName]?.score ?? null) : null
         })
       }
       // collect scores from collected scores matching in_field
@@ -284,11 +304,13 @@ export class Aggregator {
         values = []
         for (let index = 0; index < (Array.isArray(field.in_fields) ? field.in_fields.length : 1); index++) {
           const fieldName = this.getInFieldName(field, index)
-          values.push(fieldName ? (scores[fieldName] ?? null) : null)
+          values.push(fieldName ? (scorings[fieldName]?.score ?? null) : null)
         }
       }
       // aggregate values
-      scores[field.out_field] = this.runAggregation(values, field.agg_func)
+      scorings[field.out_field] = {
+        score: this.runAggregation(values, field.agg_func),
+      }
     }
   }
 
@@ -365,5 +387,114 @@ export class Aggregator {
       sum += value
     }
     return sum
+  }
+
+  // Level of detail has no upper bound because i.o.t. rank, the whole
+  // benchmark has to be considered anyways.
+  static rankBenchmark(benchmark: BenchmarkScored, lod?: 'test' | 'scenario') {
+    // find rank-able/relevant fields
+    const rankables: { field: string; from: ScoringHost }[] = []
+    // always include top level scorings (top level rank-able is submission)
+    benchmark.definition.submission_fields.forEach((field) => {
+      rankables.push({
+        field: field.out_field,
+        from: { level: 'submission' },
+      })
+    })
+    // REMARK: gathering tests and scenarios traverses the tree multiple times,
+    // maybe instead pre-build a definitions tree
+    if (lod === 'test' || lod === 'scenario') {
+      // find fields from test
+      // REMARK: this skips tests that weren't selected in submissions (is this an issue?)
+      const tests = new Set<TestScored>()
+      benchmark.submissions.forEach((submission) => {
+        submission.tests.forEach((test) => tests.add(test))
+      })
+      tests.forEach((test) => {
+        test.definition.fields.forEach((field) => {
+          rankables.push({
+            field: field.out_field,
+            from: { level: 'test', id: test.definition.id },
+          })
+        })
+      })
+      if (lod === 'scenario') {
+        // find fields from scenarios
+        const scenarios = new Set<ScenarioScored>()
+        tests.forEach((test) => {
+          test.scenarios.forEach((scenario) => scenarios.add(scenario))
+        })
+        scenarios.forEach((scenario) => {
+          scenario.definition.fields.forEach((field) => {
+            rankables.push({
+              field: field.out_field,
+              from: { level: 'scenario', id: scenario.definition.id },
+            })
+          })
+        })
+      }
+    }
+    // rank those fields
+    rankables.forEach((rankable) => {
+      this.rankField(benchmark.submissions, rankable.field, rankable.from)
+    })
+  }
+
+  // it's always submissions being ranked, but the field differs
+  // REMARK: probably noticeable performance bottleneck (tree gets scanned multiple times)
+  // TODO: check if optimization is necessary (maybe put tests in an object instead of array for direct access..?)
+  static rankField(submissions: SubmissionScored[], field: string, from: ScoringHost) {
+    // can't rank benchmarks
+    if (from.level === 'benchmark') return
+    const getScorings = (submission: SubmissionScored, from: ScoringHost) => {
+      // if no from is specified, take aggregated score from level submission
+      if (from.level === 'submission') {
+        return submission.scorings
+      } else if (from.level === 'test') {
+        return submission.tests.find((test) => test.definition.id === from.id)?.scorings ?? null
+      } else if (from.level === 'scenario') {
+        for (const test of submission.tests) {
+          const scenario = test.scenarios.find((scenario) => scenario.definition.id === from.id)
+          if (scenario) return scenario.scorings
+        }
+      }
+      return null
+    }
+    // sort submissions by relevant field
+    submissions = submissions.sort((a, b) => {
+      const sourceA = getScorings(a, from)
+      const sourceB = getScorings(b, from)
+      // for comparison, treat null like -inf
+      const scoreA = sourceA?.[field]?.score ?? Number.NEGATIVE_INFINITY
+      const scoreB = sourceB?.[field]?.score ?? Number.NEGATIVE_INFINITY
+      // desc sort (b before a)
+      return scoreB - scoreA
+    })
+    // During sort, absent scores are treated as -inf, during ranking absent
+    // scores lead to submissions being skipped. This shouldn't be an issue,
+    // as -inf scored submissions are put to the very end, where skipping
+    // doesn't matter.
+    let best = 0
+    let prevScore = Number.POSITIVE_INFINITY
+    let rank = 0
+    // rank - after sorting, index almost equals rank
+    // (except where score is equal to prev rank)
+    for (let index = 0; index < submissions.length; index++) {
+      const submission = submissions[index]
+      const scoring = getScorings(submission, from)?.[field]
+      if (scoring) {
+        const score = scoring.score ?? Number.NEGATIVE_INFINITY
+        // count rank up when score decreased
+        if (score < prevScore) {
+          rank = index + 1
+          prevScore = score
+          if (score > best) {
+            best = score
+          }
+        }
+        scoring.rank = rank
+        scoring.top = best
+      }
+    }
   }
 }
