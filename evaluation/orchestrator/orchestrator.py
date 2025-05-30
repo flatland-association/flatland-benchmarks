@@ -1,4 +1,4 @@
-# based on https://github.com/codalab/codabench/blob/develop/compute_worker/compute_worker.py
+# based on https://github.com/codalab/codabench/blob/develop/orchestrator/orchestrator.py
 import json
 import logging
 import os

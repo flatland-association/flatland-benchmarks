@@ -102,7 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 * [Fixed] Fix invalid checks.yaml. by @chenkins in https://github.com/flatland-association/flatland-benchmarks/pull/79
 * [Fixed] #49 Fix path, failing in gh by @chenkins in https://github.com/flatland-association/flatland-benchmarks/pull/80
 * [Added] 59 Update interface documentation by @chenkins in https://github.com/flatland-association/flatland-benchmarks/pull/84
-* [Added] #65 Pass `output.csv` and `output.json`: `evaluator` -> `compute_worker` -> `redis` (-> `backend`) by @chenkins in https://github.com/flatland-association/flatland-benchmarks/pull/68
+* [Added] #65 Pass `output.csv` and `output.json`: `evaluator` -> `orchestrator` -> `redis` (-> `backend`) by @chenkins in https://github.com/flatland-association/flatland-benchmarks/pull/68
 * [Added] #40 k8s compute worker implementation by @chenkins in https://github.com/flatland-association/flatland-benchmarks/pull/83
 * [Changed] Use gh releases for changelog keeping. by @chenkins in https://github.com/flatland-association/flatland-benchmarks/pull/85
 * [Changed] #46 Use non-super-user to run compute worker. by @chenkins in https://github.com/flatland-association/flatland-benchmarks/pull/72

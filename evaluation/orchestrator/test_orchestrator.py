@@ -4,7 +4,7 @@ from os import urandom
 import mockito
 import pytest
 from kubernetes.client import V1JobList, V1Job, V1JobStatus, V1JobCondition, V1ObjectMeta, BatchV1Api, CoreV1Api, V1PodList, V1Pod, V1PodStatus, V1PodCondition, \
-  V1ContainerStatus
+    V1ContainerStatus
 from mockito import mock
 from mockito import verify
 from mockito import when

@@ -1,4 +1,4 @@
-# based on https://github.com/codalab/codabench/blob/develop/compute_worker/compute_worker.py
+# based on https://github.com/codalab/codabench/blob/develop/orchestrator/orchestrator.py
 import asyncio
 import logging
 import os
@@ -230,7 +230,7 @@ def log_subprocess_output(pipe, level=logging.DEBUG, label="", collect: bool = F
   return None
 
 
-# based on https://github.com/codalab/codabench/blob/develop/compute_worker/compute_worker.py:_run_container_engine_cmd
+# based on https://github.com/codalab/codabench/blob/develop/orchestrator/orchestrator.py:_run_container_engine_cmd
 # no live WebSocket communication
 async def run_async_and_catch_output(future, exec_args):
   logger.info(f"/ Start run async %s", exec_args)

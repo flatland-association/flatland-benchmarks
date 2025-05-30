@@ -29,10 +29,10 @@ services:
       file: docker-compose-base.yml
       service: minio_setup
 
-  compute_worker:
+  orchestrator:
     extends:
       file: docker-compose-base.yml
-      service: compute_worker
+      service: orchestrator
 
   fab-backend:
     image: ghcr.io/flatland-association/fab-backend:latest

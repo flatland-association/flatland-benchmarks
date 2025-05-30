@@ -26,7 +26,7 @@ body:
         What software is involved? Please provide version numbers as well.
       value: |
         - frontend/backend: [Version]
-        - compute_worker: [Version]
+        - orchestrator: [Version]
         - evaluator: [Version]
           - …
       render: markdown
