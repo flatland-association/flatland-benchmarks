@@ -18,7 +18,7 @@ Referring to [Information Flow](../docs/img/architecture/InformationFlow.drawio.
 | Component           | Service                                                                                                                                                |
 |---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Evaluation Queue    | `rabbitmq` send tasks to worker                                                                                                                        |
-| Compute Worker Pool | `orchestrator` Celery worker, receives task and runs two containers `evaluator` and `agent`                                                            | 
+| Orchestrator | `orchestrator` Celery worker pool (concurrency), receives task and runs two containers `evaluator` and `agent`                                                            | 
 | Evaluator           | `evaluator` waits for messages from agent                                                                                                              |
 | Agent               | `agent` runs environments and sends messages to evaluator                                                                                              |
 | Result Store        | `redis` kv store used for messaging                                                                                                                    |
