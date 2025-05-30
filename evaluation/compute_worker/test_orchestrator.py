@@ -8,7 +8,8 @@ from kubernetes.client import V1JobList, V1Job, V1JobStatus, V1JobCondition, V1O
 from mockito import mock
 from mockito import verify
 from mockito import when
-from tasks import run_evaluation, TaskExecutionError
+
+from orchestrator import run_evaluation, TaskExecutionError
 
 
 def test_tasks_successful():
