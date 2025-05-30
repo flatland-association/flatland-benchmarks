@@ -120,11 +120,12 @@ services:
     networks:
       - flatland-benchmarks
 
-  compute_worker:
+  orchestrator:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
-    command: python -m celery -A tasks worker -l info -n compute-worker@%n
+    # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
+    command: python -m celery -A orchestrator worker -l info -n orchestrator@%n  -Q ${BROKER_QUEUE}
     build:
-      context: ./compute_worker
+      context: ./orchestrator
       dockerfile: Dockerfile_docker_compose
     depends_on:
       rabbit:
@@ -133,11 +134,11 @@ services:
         condition: service_completed_successfully
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
-      - ./compute_worker/tasks_docker_compose.py:/app/tasks.py
+      - ./orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
     env_file: .env
     environment:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
-      - REDIS_IP=redis://redis:6379
+      - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
       - HOST_DIRECTORY=${PWD}
       - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
       - S3_BUCKET=${S3_BUCKET}
@@ -155,7 +156,7 @@ services:
         max-size: "20m"
         max-file: "5"
     healthcheck:
-      test: celery -A tasks inspect ping
+      test: celery -A orchestrator inspect ping
     networks:
       - flatland-benchmarks
 

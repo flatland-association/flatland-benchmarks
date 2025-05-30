@@ -67,8 +67,8 @@ jobs:
       - name: Build and Push Container Image
         uses: docker/build-push-action@v6
         with:
-          context: evaluation/compute_worker
-          file: evaluation/compute_worker/Dockerfile
+          context: evaluation/orchestrator
+          file: evaluation/orchestrator/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |

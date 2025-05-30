@@ -24,7 +24,7 @@ Our compute worker is responsible for handling submissions.
 
 ### FAB Benchmark Administrators' User Guide
 
-This describes the default `evaluation/compute_worker` used with a different evaluator:
+This describes the default `evaluation/orchestrator` used with a different evaluator:
 
 * Your evaluator Docker image must ship with an entrypoint, so we can run the container without an entrypoint/command.
 * We set one environment variables:

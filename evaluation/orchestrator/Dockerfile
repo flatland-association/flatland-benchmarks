@@ -10,7 +10,7 @@ RUN apt-get update && curl -fsSL https://get.docker.com | sh
 RUN addgroup runner && adduser --system --disabled-password --home /app --ingroup runner runner
 WORKDIR /app
 
-ADD ./tasks.py ./tasks.py
+ADD ./orchestrator.py ./orchestrator.py
 ADD ./requirements.txt ./requirements.txt
 
 RUN python -m pip install -U -r requirements.txt
@@ -20,22 +20,3 @@ ADD ./submission_job.yaml ./submission_job.yaml
 
 # configure runner
 USER runner
-
-
-# TODO drop above once built and we can inherit:
-# FROM ghcr.io/flatland-association/fab-flatland-compute-worker:latest
-
-# switch to root again
-USER root
-
-RUN apt-get update \
- && apt-get install -y sudo
-
-RUN usermod -a -G sudo runner
-
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-# configure runner
-USER runner
-
-RUN sudo ls /tmp
