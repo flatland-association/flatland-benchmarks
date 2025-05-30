@@ -60,7 +60,7 @@ def test_containers_fixture():
   logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
 
 
-def run_task(task_id: str, submission_image: str, tests: List[str], queue: str, **kwargs):
+def run_task(task_id: str, submission_data_url: str, tests: List[str], queue: str, **kwargs):
   start_time = time.time()
   app = Celery(
     broker="pyamqp://localhost:5672",
@@ -71,8 +71,7 @@ def run_task(task_id: str, submission_image: str, tests: List[str], queue: str, 
     'flatland3-evaluation',
     task_id=task_id,
     kwargs={
-      "docker_image": "ghcr.io/flatland-association/fab-flatland-evaluator:latest",
-      "submission_image": submission_image,
+      "submission_data_url": submission_data_url,
       "tests": tests,
       **kwargs
     },
@@ -92,10 +91,11 @@ def run_task(task_id: str, submission_image: str, tests: List[str], queue: str, 
   ids=["all", "Test_0,Test_1", "Test0", "Test1"]
 )
 def test_succesful_run(expected_total_simulation_count, tests: List[str]):
-  task_id = str(uuid.uuid4())
+  submission_id = str(uuid.uuid4())
   config = dotenv_values(".env")
 
-  ret = run_task(task_id, "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest", tests=tests, queue=config["BROKER_QUEUE"], **config)
+  ret = run_task(submission_id, submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest", tests=tests,
+                 queue=config["BROKER_QUEUE"], **config)
 
   for k, v in ret.items():
     logger.log(TRACE, "Got %s", (k, v['job_status'], v['image_id'], v['log']))
@@ -143,11 +143,11 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str]):
   s3_bucket = config["S3_BUCKET"]
 
   logger.info("Get results files from S3 under %s...", aws_endpoint_url)
-  obj = s3.get_object(Bucket=s3_bucket, Key=f'results/{task_id}.csv', )
+  obj = s3.get_object(Bucket=s3_bucket, Key=f'results/{submission_id}.csv', )
   results_csv = obj['Body'].read().decode("utf-8")
   df = pd.read_csv(StringIO(results_csv))
   print(df)
-  obj = s3.get_object(Bucket=s3_bucket, Key=f'results/{task_id}.json', )
+  obj = s3.get_object(Bucket=s3_bucket, Key=f'results/{submission_id}.json', )
   results_json = obj['Body'].read().decode("utf-8")
   data = json.loads(results_json)
   print(data)
@@ -155,7 +155,7 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str]):
 
 @pytest.mark.usefixtures("test_containers_fixture")
 def test_failing_run():
-  task_id = str(uuid.uuid4())
+  submission_id = str(uuid.uuid4())
   with pytest.raises(Exception) as exc_info:
-    run_task(task_id, "asdfasdf")
-    assert str(exc_info.value).startswith(f"Failed execution ['sudo', 'docker', 'run', '--name', 'flatland3-submission-{task_id}'")
+    run_task(submission_id, "asdfasdf")
+    assert str(exc_info.value).startswith(f"Failed execution ['sudo', 'docker', 'run', '--name', 'flatland3-submission-{submission_id}'")

@@ -10,7 +10,7 @@ RUN apt-get update && curl -fsSL https://get.docker.com | sh
 RUN addgroup runner && adduser --system --disabled-password --home /app --ingroup runner runner
 WORKDIR /app
 
-ADD ./tasks.py ./tasks.py
+ADD ./orchestrator.py ./orchestrator.py
 ADD ./requirements.txt ./requirements.txt
 
 RUN python -m pip install -U -r requirements.txt

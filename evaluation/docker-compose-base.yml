@@ -122,7 +122,8 @@ services:
 
   compute_worker:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
-    command: python -m celery -A tasks worker -l info -n compute-worker@%n -Q ${BROKER_QUEUE}
+    # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
+    command: python -m celery -A orchestrator worker -l info -n orchestrator@%n  -Q ${BROKER_QUEUE}
     build:
       context: ./compute_worker
       dockerfile: Dockerfile_docker_compose
@@ -133,7 +134,7 @@ services:
         condition: service_completed_successfully
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
-      - ./compute_worker/tasks_docker_compose.py:/app/tasks.py
+      - ./compute_worker/orchestrator_docker_compose.py:/app/orchestrator.py
     env_file: .env
     environment:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
@@ -155,7 +156,7 @@ services:
         max-size: "20m"
         max-file: "5"
     healthcheck:
-      test: celery -A tasks inspect ping
+      test: celery -A orchestrator inspect ping
     networks:
       - flatland-benchmarks
 

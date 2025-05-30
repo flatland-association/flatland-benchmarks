@@ -37,22 +37,21 @@ def setup_task_logger(logger, *args, **kwargs):
 
 # N.B. name to be used by send_task
 @app.task(name="flatland3-evaluation", bind=True, soft_time_limit=10 * 60, time_limit=12 * 60)
-def the_task(self, docker_image: str,
-             submission_image: str,
-             tests: List[str] = None,
-             AWS_ENDPOINT_URL=None,
-             AWS_ACCESS_KEY_ID=None,
-             AWS_SECRET_ACCESS_KEY=None,
-             S3_BUCKET=None,
-             S3_UPLOAD_PATH_TEMPLATE=None,
-             S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=None,
-             **kwargs):
+def orchestrator(self,
+                 submission_data_url: str,
+                 tests: List[str] = None,
+                 TEST_RUNNER_EVALUATOR_IMAGE="ghcr.io/flatland-association/fab-flatland-evaluator:latest",
+                 AWS_ENDPOINT_URL=None,
+                 AWS_ACCESS_KEY_ID=None,
+                 AWS_SECRET_ACCESS_KEY=None,
+                 S3_BUCKET=None,
+                 S3_UPLOAD_PATH_TEMPLATE=None,
+                 S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=None,
+                 **kwargs):
   task_id = self.request.id
 
   try:
     start_time = time.time()
-    logger.info(f"/ start task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}")
-    assert BENCHMARKING_NETWORK is not None
 
     if AWS_ENDPOINT_URL is None:
       AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
@@ -66,6 +65,14 @@ def the_task(self, docker_image: str,
       S3_UPLOAD_PATH_TEMPLATE = os.environ.get("S3_UPLOAD_PATH_TEMPLATE", None)
     if S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID is None:
       S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.environ.get("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
+    if TEST_RUNNER_EVALUATOR_IMAGE is None:
+      os.environ.get("TEST_RUNNER_EVALUATOR_IMAGE", None)
+
+    docker_image = TEST_RUNNER_EVALUATOR_IMAGE
+    logger.info(f"/ start task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_data_url}")
+
+    assert BENCHMARKING_NETWORK is not None
+    assert docker_image is not None
 
     loop = asyncio.get_event_loop()
     evaluator_future = loop.create_future()
@@ -102,7 +109,7 @@ def the_task(self, docker_image: str,
     ])
 
     exec_with_logging(["sudo", "docker", "pull", docker_image])
-    exec_with_logging(["sudo", "docker", "pull", submission_image])
+    exec_with_logging(["sudo", "docker", "pull", submission_data_url])
 
     gathered_tasks = asyncio.gather(
       run_async_and_catch_output(evaluator_future, exec_args=evaluator_exec_args),
@@ -114,17 +121,17 @@ def the_task(self, docker_image: str,
         "-e", f"AICROWD_SUBMISSION_ID={task_id}",
         "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/environments/",
         "--network", BENCHMARKING_NETWORK,
-        submission_image,
+        submission_data_url,
       ])
     )
     loop.run_until_complete(gathered_tasks)
     duration = time.time() - start_time
-    logger.info(f"\\ end task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration:.2f} seconds.")
+    logger.info(f"\\ end task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_data_url}. Took {duration:.2f} seconds.")
 
     ret_evaluator = evaluator_future.result()
     ret_evaluator["image_id"] = docker_image
     ret_submission = submission_future.result()
-    ret_submission["image_id"] = submission_image
+    ret_submission["image_id"] = submission_data_url
     ret = {"f3-evaluator": ret_evaluator, "f3-submission": ret_submission}
     logger.debug("Task with task_id=%s got results from docker run: %s.", task_id, ret)
 
