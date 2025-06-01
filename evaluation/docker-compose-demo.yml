@@ -33,38 +33,55 @@ services:
     extends:
       file: docker-compose-base.yml
       service: orchestrator
+  flyway:
+    extends:
+      file: docker-compose-base.yml
+      service: flyway
+    # data is not present in docker-compose-base but required for test
+    volumes:
+      - ../ts/backend/src/migration/schema:/flyway/sql/schema
+      - ../ts/backend/src/migration/data:/flyway/sql/data
 
   fab-backend:
-    image: ghcr.io/flatland-association/fab-backend:latest
-    pull_policy: always
-    # POSTGRES_ variables are required for flyway
-    env_file: .env
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-    depends_on:
-      rabbit:
-        condition: service_healthy
-      postgres:
-        condition: service_healthy
+    profiles: [ local ]
+    extends:
+      file: docker-compose-base.yml
+      service: fab-backend
+
     volumes:
-      - ./config-demo.jsonc:/usr/src/app/dist/backend/config/config.jsonc
-      # for demo, mount data migration
-      - ../ts/backend/src/migration/data:/flyway/sql/data
-    ports:
-      - 8000:8000
-    networks:
-      - flatland-benchmarks
+      - ../dist/backend/app:/usr/src/app/dist/backend/app
+      - ../node_modules:/usr/src/app/node_modules
+      # reverse proxy to access keycloak via localhost:8081 in backend container
+      - ../deployment/backend/nginx.conf:/etc/nginx/http.d/default.conf
+      - ../deployment/backend/start_reverseproxy.sh:/flyway/start.sh
+    entrypoint: bash
+    command:
+      - /flyway/start.sh
 
   fab-frontend:
-    image: ghcr.io/flatland-association/fab-frontend:latest
-    pull_policy: always
-    depends_on:
-      rabbit:
-        condition: service_healthy
-    ports:
-      - 80:80
+    profiles: [ local ]
+    extends:
+      file: docker-compose-base.yml
+      service: fab-frontend
+    # TODO use npm run build --configuration=development for local development - does not work? issuer not replaced?
+    volumes:
+      - ../dist/frontend/browser:/usr/share/nginx/html
 
+  keycloak:
+    profiles: [ local ]
+    image: quay.io/keycloak/keycloak:23.0
+    hostname: keycloak
+    # as we need to access keycloak from backend Docker container under docker internal port, we need to start Keycloak on configured port, port forwarding in Docker run is not enough
+    command: start-dev --import-realm --http-port ${KEYCLOAK_PORT:-8081} --hostname localhost
+    ports:
+      - ${KEYCLOAK_PORT:-8081}:${KEYCLOAK_PORT:-8081}
+    volumes:
+      # TODO can we avoid copying the realm config? Download in an init container from the repo....?
+      - ./keycloak/netzgrafikeditor-realm.json:/opt/keycloak/data/import/netzgrafikeditor-realm.json
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=netzgrafikeditor
+    networks:
+      - flatland-benchmarks
 networks:
   flatland-benchmarks:

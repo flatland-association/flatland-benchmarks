@@ -160,6 +160,44 @@ services:
     networks:
       - flatland-benchmarks
 
+  fab-backend:
+    #image: ghcr.io/flatland-association/fab-backend:latest
+    #pull_policy: always
+    build:
+      context: ../
+      dockerfile: deployment/backend/Dockerfile
+    # POSTGRES_ variables are required for flyway
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./config-demo.jsonc:/usr/src/app/dist/backend/config/config.jsonc
+    ports:
+      - 8000:8000
+    networks:
+      - flatland-benchmarks
+
+  fab-frontend:
+    #image: ghcr.io/flatland-association/fab-frontend:latest
+    #pull_policy: always
+    build:
+      context: ../
+      dockerfile: deployment/frontend/Dockerfile
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    ports:
+      - 80:80
+    networks:
+      - flatland-benchmarks
+
 networks:
   flatland-benchmarks:
 
