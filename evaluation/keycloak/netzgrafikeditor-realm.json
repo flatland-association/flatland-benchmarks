@@ -584,7 +584,8 @@
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
-    "clientAuthenticatorType" : "client-secret",
+    "clientAuthenticatorType": "client-secret",
+    "secret": "top-secret",
     "redirectUris": [
       "http://localhost:4200/*",
       "http://localhost/*"
@@ -599,8 +600,8 @@
     "standardFlowEnabled" : true,
     "implicitFlowEnabled" : false,
     "directAccessGrantsEnabled" : true,
-    "serviceAccountsEnabled" : false,
-    "publicClient" : true,
+    "serviceAccountsEnabled": true,
+    "publicClient": false,
     "frontchannelLogout" : false,
     "protocol" : "openid-connect",
     "attributes" : {
