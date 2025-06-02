@@ -11,6 +11,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import datetime
 import decimal
 import json
@@ -34,7 +35,6 @@ from fab_clientlib.exceptions import (
 from pydantic import SecretStr
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
-
 
 class ApiClient:
   """Generic API client for OpenAPI client library builds.

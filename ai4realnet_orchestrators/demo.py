@@ -7,10 +7,11 @@ from fab_oauth_utils import backend_application_flow
 
 def main():
   token = backend_application_flow(
-    client_id='fab',
+    client_id='fab-client-credentials',
     client_secret='top-secret',
-    token_url='http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/token'
+    token_url='http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/token',
   )
+  print(token)
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
   result = fab.submissions_post(SubmissionsPostRequest(
     name="fancy",

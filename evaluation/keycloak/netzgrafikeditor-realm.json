@@ -393,27 +393,6 @@
   "webAuthnPolicyPasswordlessExtraOrigins" : [ ],
   "users": [
     {
-      "id": "3d726d4a-8b9d-474b-b1f3-46899bcd8fe6",
-      "username": "service-account-fab",
-      "emailVerified": false,
-      "createdTimestamp": 1748866311804,
-      "enabled": true,
-      "totp": false,
-      "serviceAccountClientId": "fab",
-      "disableableCredentialTypes": [],
-      "requiredActions": [],
-      "realmRoles": [
-        "default-roles-fab"
-      ],
-      "clientRoles": {
-        "fab": [
-          "Admin"
-        ]
-      },
-      "notBefore": 0,
-      "groups": []
-    },
-    {
     "id" : "be0080ff-3534-457a-8aff-d6bf8bf674bf",
     "createdTimestamp" : 1707317487826,
     "username" : "admin",
@@ -470,7 +449,83 @@
       "roles" : [ "manage-account", "view-groups" ]
     } ]
   },
-  "clients" : [ {
+  "clients": [
+    {
+      "clientId": "fab-client-credentials",
+      "name": "",
+      "description": "",
+      "rootUrl": "",
+      "adminUrl": "",
+      "baseUrl": "",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "top-secret",
+      "redirectUris": [
+        "/*"
+      ],
+      "webOrigins": [
+        "/*"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "publicClient": false,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "realm_client": "false",
+        "oidc.ciba.grant.enabled": "false",
+        "client.secret.creation.time": "1748879594",
+        "backchannel.logout.session.required": "true",
+        "standard.token.exchange.enabled": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "protocolMappers": [
+        {
+          "name": "fab",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "id.token.claim": "false",
+            "lightweight.claim": "false",
+            "access.token.claim": "true",
+            "introspection.token.claim": "true"
+          }
+        }
+      ],
+      "defaultClientScopes": [
+        "web-origins",
+        "service_account",
+        "acr",
+        "roles",
+        "profile",
+        "basic",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ],
+      "access": {
+        "view": true,
+        "configure": true,
+        "manage": true
+      }
+    },
+    {
     "id" : "c97ede4d-a1db-4ecc-835a-c402b8c72aef",
     "clientId" : "account",
     "name" : "${client_account}",
@@ -607,7 +662,6 @@
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType": "client-secret",
-    "secret": "top-secret",
     "redirectUris": [
       "http://localhost:4200/*",
       "http://localhost/*"
@@ -622,8 +676,8 @@
     "standardFlowEnabled" : true,
     "implicitFlowEnabled" : false,
     "directAccessGrantsEnabled" : true,
-    "serviceAccountsEnabled": true,
-    "publicClient": false,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
     "frontchannelLogout" : false,
     "protocol" : "openid-connect",
     "attributes" : {

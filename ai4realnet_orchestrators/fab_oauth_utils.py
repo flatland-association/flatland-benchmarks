@@ -27,7 +27,7 @@ if __name__ == '__main__':
   # InsecureTransportError: (insecure_transport) OAuth 2 MUST utilize https.
   # https://stackoverflow.com/questions/51209475/set-a-secure-https-connection-for-oauth2-on-python#54215305
   token = backend_application_flow(
-    client_id='fab',
+    client_id='fab-client-credentials',
     client_secret='top-secret',
     token_url='http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/token',
   )
