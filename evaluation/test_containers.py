@@ -94,8 +94,7 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str]):
   submission_id = str(uuid.uuid4())
   config = dotenv_values(".env")
 
-  ret = run_task(submission_id, submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest", tests=tests,
-                 queue=config["BROKER_QUEUE"], **config)
+  ret = run_task(submission_id, submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest", tests=tests, **config)
 
   for k, v in ret.items():
     logger.log(TRACE, "Got %s", (k, v['job_status'], v['image_id'], v['log']))
