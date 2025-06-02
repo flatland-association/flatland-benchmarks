@@ -175,8 +175,8 @@ services:
     depends_on:
       rabbit:
         condition: service_healthy
-      postgres:
-        condition: service_healthy
+      flyway:
+        condition: service_completed_successfully
     volumes:
       - ./config-demo.jsonc:/usr/src/app/dist/backend/config/config.jsonc
     ports:
@@ -191,7 +191,7 @@ services:
       context: ../
       dockerfile: deployment/frontend/Dockerfile
     depends_on:
-      rabbit:
+      fab-backend:
         condition: service_healthy
     ports:
       - 80:80

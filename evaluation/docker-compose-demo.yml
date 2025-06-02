@@ -4,6 +4,16 @@ services:
       file: docker-compose-base.yml
       service: postgres
 
+    # temporarily comment out flyway - docker compose has it still Waiting although exits with 0....?
+    #  flyway:
+    #    extends:
+    #      file: docker-compose-base.yml
+    #      service: flyway
+    # data is not present in docker-compose-base but required for test
+  #    volumes:
+  #      - ../ts/backend/src/migration/schema:/flyway/sql/schema
+  #      - ../ts/backend/src/migration/data:/flyway/sql/data
+
   redis:
     extends:
       file: docker-compose-base.yml
@@ -33,14 +43,7 @@ services:
     extends:
       file: docker-compose-base.yml
       service: orchestrator
-  flyway:
-    extends:
-      file: docker-compose-base.yml
-      service: flyway
-    # data is not present in docker-compose-base but required for test
-    volumes:
-      - ../ts/backend/src/migration/schema:/flyway/sql/schema
-      - ../ts/backend/src/migration/data:/flyway/sql/data
+
 
   fab-backend:
     profiles: [ local ]
@@ -66,6 +69,9 @@ services:
     # TODO use npm run build --configuration=development for local development - does not work? issuer not replaced?
     volumes:
       - ../dist/frontend/browser:/usr/share/nginx/html
+    depends_on:
+      keycloak:
+        condition: service_healthy
 
   keycloak:
     profiles: [ local ]
@@ -83,5 +89,10 @@ services:
       - KEYCLOAK_ADMIN_PASSWORD=netzgrafikeditor
     networks:
       - flatland-benchmarks
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "curl -v --fail http://127.0.0.1:${KEYCLOAK_PORT:-8081}/realms/netzgrafikeditor/.well-known/openid-configuration" ]
+      interval: 5s
+      timeout: 10s
+      retries: 15
 networks:
   flatland-benchmarks:
