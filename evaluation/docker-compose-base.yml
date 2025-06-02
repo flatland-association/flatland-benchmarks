@@ -175,12 +175,17 @@ services:
     depends_on:
       rabbit:
         condition: service_healthy
-      flyway:
-        condition: service_completed_successfully
+      postgres:
+        condition: service_healthy
     volumes:
       - ./config-demo.jsonc:/usr/src/app/dist/backend/config/config.jsonc
     ports:
       - 8000:8000
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "wget -qq 127.0.0.1:8000/submissions" ]
+      interval: 5s
+      timeout: 1s
+      retries: 5
     networks:
       - flatland-benchmarks
 

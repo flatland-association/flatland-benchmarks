@@ -4,15 +4,15 @@ services:
       file: docker-compose-base.yml
       service: postgres
 
-    # temporarily comment out flyway - docker compose has it still Waiting although exits with 0....?
-    #  flyway:
-    #    extends:
-    #      file: docker-compose-base.yml
-    #      service: flyway
+  # TODO flyway in backend container seems not to work on MacOS at least... use one or the other
+  flyway:
+    extends:
+      file: docker-compose-base.yml
+      service: flyway
     # data is not present in docker-compose-base but required for test
-  #    volumes:
-  #      - ../ts/backend/src/migration/schema:/flyway/sql/schema
-  #      - ../ts/backend/src/migration/data:/flyway/sql/data
+    volumes:
+      - ../ts/backend/src/migration/schema:/flyway/sql/schema
+      - ../ts/backend/src/migration/data:/flyway/sql/data
 
   redis:
     extends:
@@ -50,10 +50,11 @@ services:
     extends:
       file: docker-compose-base.yml
       service: fab-backend
-
     volumes:
       - ../dist/backend/app:/usr/src/app/dist/backend/app
       - ../node_modules:/usr/src/app/node_modules
+      #- ../ts/backend/src/migration/schema:/flyway/sql/schema
+      #- ../ts/backend/src/migration/data:/flyway/sql/data
       # reverse proxy to access keycloak via localhost:8081 in backend container
       - ../deployment/backend/nginx.conf:/etc/nginx/http.d/default.conf
       - ../deployment/backend/start_reverseproxy.sh:/flyway/start.sh
@@ -70,15 +71,18 @@ services:
     volumes:
       - ../dist/frontend/browser:/usr/share/nginx/html
     depends_on:
-      keycloak:
-        condition: service_healthy
+      # workaround for docker compose waithing for flyway although exited with 0 https://forums.docker.com/t/behavior-of-up-wait-changed/147699/4
+      flyway:
+        condition: service_completed_successfully
 
   keycloak:
     profiles: [ local ]
-    image: quay.io/keycloak/keycloak:23.0
+    build:
+      context: ../deployment/keycloak
     hostname: keycloak
     # as we need to access keycloak from backend Docker container under docker internal port, we need to start Keycloak on configured port, port forwarding in Docker run is not enough
-    command: start-dev --import-realm --http-port ${KEYCLOAK_PORT:-8081} --hostname localhost
+    command:
+      start-dev --import-realm --http-port ${KEYCLOAK_PORT:-8081} --hostname localhost
     ports:
       - ${KEYCLOAK_PORT:-8081}:${KEYCLOAK_PORT:-8081}
     volumes:
