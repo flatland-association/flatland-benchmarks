@@ -66,13 +66,20 @@ sequenceDiagram
 
 ## TL;DR;
 
+### First Demo
+
+Make a submission:
+
+```shell
+python -m pip install -r requirements.txt
+python demo.py
+```
+
 ### Start Domain-Specific Orchestrator for Interactive-Loop and Closed-Loop Experiments
 
 In your domain-specific infrastructure:
 
 The following command loads the `orchestrator` module from `orchestrator.py` and starts a worker pool of size 5 (`concurrency` option):
-TODO requirement.txt
-TODO extract to repo
 
 ```shell
 export BROKER_URL
@@ -81,6 +88,7 @@ python -m celery -A orchestrator worker -l info -n orchestrator@%n --soft-time-l
 ```
 
 See https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker for the available options to start a Celery worker.
+
 ### Upload your Results to Campaign Hub with Python FAB Client Lib
 
 ```shell
@@ -88,3 +96,17 @@ cat results.json
 
 curl -X PUT .... 
 ```
+
+Generate FAB Clientlib from OpenAPI Specification
+--------------------------------------------------
+
+[OpenAPI Generator CLI](https://pypi.org/project/openapi-generator-cli/) is used to generate API client libraries:
+
+1. Copy `swagger.json` from `ts/backend/src/swagger/swagger.json`.
+2. Run
+
+```
+python -m pip install openapi-generator-cli
+openapi-generator-cli generate -i swagger.json -g python --package-name fab_clientlib --skip-validate-spec
+```
+

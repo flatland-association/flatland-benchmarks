@@ -7,7 +7,7 @@ from typing import List
 
 from celery import Celery
 
-from ai4realnet_orchestrators._blueprint.test_runner_evaluator import test_runner_evaluator
+from ai4realnet_orchestrators.blueprint.test_runner_evaluator import test_runner_evaluator
 
 logger = logging.getLogger(__name__)
 

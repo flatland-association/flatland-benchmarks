@@ -1,0 +1,17 @@
+# Don't generate supporting code
+*.ts
+*.json
+*.sh
+*.md
+*.tox
+.travis.yml
+.gitlab-ci.yml
+.gitignore
+pyproject.toml
+*.txt
+*.cfg
+setup.py
+*.ini
+.github/
+docs/
+test/

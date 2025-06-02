@@ -391,7 +391,29 @@
   "webAuthnPolicyPasswordlessAvoidSameAuthenticatorRegister" : false,
   "webAuthnPolicyPasswordlessAcceptableAaguids" : [ ],
   "webAuthnPolicyPasswordlessExtraOrigins" : [ ],
-  "users" : [ {
+  "users": [
+    {
+      "id": "3d726d4a-8b9d-474b-b1f3-46899bcd8fe6",
+      "username": "service-account-fab",
+      "emailVerified": false,
+      "createdTimestamp": 1748866311804,
+      "enabled": true,
+      "totp": false,
+      "serviceAccountClientId": "fab",
+      "disableableCredentialTypes": [],
+      "requiredActions": [],
+      "realmRoles": [
+        "default-roles-fab"
+      ],
+      "clientRoles": {
+        "fab": [
+          "Admin"
+        ]
+      },
+      "notBefore": 0,
+      "groups": []
+    },
+    {
     "id" : "be0080ff-3534-457a-8aff-d6bf8bf674bf",
     "createdTimestamp" : 1707317487826,
     "username" : "admin",

@@ -1,0 +1,179 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "FAB backend",
+    "version": "0.0.0",
+    "description": "FAB backend API"
+  },
+  "paths": {
+    "/submissions": {
+      "post": {
+        "description": "Inserts new submission.",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Display name of submission."
+                  },
+                  "benchmark": {
+                    "type": "number",
+                    "description": "ID of benchmark this submission belongs to."
+                  },
+                  "submission_image": {
+                    "type": "string",
+                    "description": "URL of submission executable image."
+                  },
+                  "code_repository": {
+                    "type": "string",
+                    "description": "URL of submission code repository."
+                  },
+                  "tests": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "description": "IDs of tests to run."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "object",
+                          "properties": {
+                            "uuid": {
+                              "type": "string",
+                              "format": "uuid",
+                              "description": "UUID of submission."
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tests/{ids}": {
+      "get": {
+        "description": "Returns tests with ID in `ids`.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ids",
+            "description": "Comma-separated list of IDs.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requested tests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "dir": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "number"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "security": {
+      "0": {
+        "oauth2": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiResponse": {
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://keycloak.flatland.cloud/realms/netzgrafikeditor/protocol/openid-connect/auth",
+            "tokenUrl": "https://keycloak.flatland.cloud/realms/netzgrafikeditor/protocol/openid-connect/token",
+            "scopes": []
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}

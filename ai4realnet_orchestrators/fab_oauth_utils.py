@@ -29,6 +29,6 @@ if __name__ == '__main__':
   token = backend_application_flow(
     client_id='fab',
     client_secret='top-secret',
-    token_url='http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/token'
+    token_url='http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/token',
   )
   print(token)

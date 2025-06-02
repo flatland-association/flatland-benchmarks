@@ -176,3 +176,4 @@ images
 
 # Generated Swagger definitions
 swagger.json
+/ai4realnet_orchestrators/.openapi-generator/
