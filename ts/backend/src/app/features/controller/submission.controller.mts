@@ -137,8 +137,7 @@ export class SubmissionController extends Controller {
     const payload = [
       [],
       {
-        docker_image: dockerImage,
-        submission_image: req.body.submission_image,
+        submission_data_url: req.body.submission_image,
         tests: tests,
       },
       {

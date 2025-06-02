@@ -16,9 +16,9 @@ def main():
   result = fab.submissions_post(SubmissionsPostRequest(
     name="fancy",
     benchmark=1,  # TODO uuid
-    submission_image="https://you-name-it.org",
+    submission_image="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
     code_repository="https://github.com/you-name-it",
-    tests=[],  # TODO mandatory despite optional in swagger.json
+    tests=[1, 2],  # TODO mandatory despite optional in swagger.json
     # https://github.com/OpenAPITools/openapi-generator/issues/19485
     # https://github.com/openAPITools/openapi-generator-pip
   ))

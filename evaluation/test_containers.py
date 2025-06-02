@@ -60,7 +60,7 @@ def test_containers_fixture():
   logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
 
 
-def run_task(task_id: str, submission_data_url: str, tests: List[str], queue: str, **kwargs):
+def run_task(task_id: str, submission_data_url: str, tests: List[str], **kwargs):
   start_time = time.time()
   app = Celery(
     broker="pyamqp://localhost:5672",
@@ -75,7 +75,6 @@ def run_task(task_id: str, submission_data_url: str, tests: List[str], queue: st
       "tests": tests,
       **kwargs
     },
-    queue=queue
   ).get()
   logger.info(ret)
   duration = time.time() - start_time
