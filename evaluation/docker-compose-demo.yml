@@ -4,16 +4,6 @@ services:
       file: docker-compose-base.yml
       service: postgres
 
-  # TODO flyway in backend container seems not to work on MacOS at least... use one or the other
-  flyway:
-    extends:
-      file: docker-compose-base.yml
-      service: flyway
-    # data is not present in docker-compose-base but required for test
-    volumes:
-      - ../ts/backend/src/migration/schema:/flyway/sql/schema
-      - ../ts/backend/src/migration/data:/flyway/sql/data
-
   redis:
     extends:
       file: docker-compose-base.yml
@@ -44,6 +34,16 @@ services:
       file: docker-compose-base.yml
       service: orchestrator
 
+  # TODO flyway in backend container seems not to work on MacOS at least... use one or the other
+  flyway:
+    profiles: [ local ]
+    extends:
+      file: docker-compose-base.yml
+      service: flyway
+    # data is not present in docker-compose-base but required for test
+    volumes:
+      - ../ts/backend/src/migration/schema:/flyway/sql/schema
+      - ../ts/backend/src/migration/data:/flyway/sql/data
 
   fab-backend:
     profiles: [ local ]
@@ -61,6 +61,10 @@ services:
     entrypoint: bash
     command:
       - /flyway/start.sh
+    depends_on:
+      # workaround for docker compose waithing for flyway although exited with 0 https://forums.docker.com/t/behavior-of-up-wait-changed/147699/4
+      flyway:
+        condition: service_completed_successfully
 
   fab-frontend:
     profiles: [ local ]
