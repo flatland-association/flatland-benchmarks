@@ -59,7 +59,8 @@ def test_containers_fixture():
     basic.stop()
     duration = time.time() - start_time
     logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
-  except:
+  except BaseException as e:
+    print(e)
     stdout, stderr = basic.get_logs()
     print(stdout)
     print(stderr)
