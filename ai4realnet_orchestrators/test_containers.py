@@ -27,7 +27,7 @@ def test_containers_fixture():
   global basic
 
   start_time = time.time()
-  basic = DockerCompose(context=".", compose_file_name="../evaluation/docker-compose-demo.yml", profiles=["local"])
+  basic = DockerCompose(context=".", compose_file_name="../evaluation/docker-compose-demo.yml", profiles=["local"], build=True)
   logger.info("/ start docker compose down")
   basic.stop()
   duration = time.time() - start_time
@@ -81,7 +81,7 @@ def test_start_submission():
   result = fab.submissions_post(SubmissionsPostRequest(
     name="fancy",
     benchmark=1,  # TODO uuid
-    submission_image="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
+    submission_image="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",  # TODO use submission_data_url
     code_repository="https://github.com/you-name-it",
     tests=[1, 2],  # TODO mandatory despite optional in swagger.json
     # https://github.com/OpenAPITools/openapi-generator/issues/19485
