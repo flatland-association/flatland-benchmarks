@@ -60,10 +60,13 @@ def test_containers_fixture():
     basic.stop()
     duration = time.time() - start_time
     logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
-  except:
+  except Exception as e:
+    print("An exception occurred during running docker compose:")
+    print(e)
     stdout, stderr = basic.get_logs()
     print(stdout)
     print(stderr)
+    raise e
 
 
 @pytest.mark.usefixtures("test_containers_fixture")
