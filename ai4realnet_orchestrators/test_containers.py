@@ -34,29 +34,36 @@ def test_containers_fixture():
   logger.info(f"\\ end docker compose down. Took {duration:.2f} seconds.")
   start_time = time.time()
   logger.info("/ start docker compose up")
-  basic.start()
-  duration = time.time() - start_time
-  logger.info(f"\\ end docker compose up. Took {duration:.2f} seconds.")
+  try:
+    basic.start()
+    duration = time.time() - start_time
+    logger.info(f"\\ end docker compose up. Took {duration:.2f} seconds.")
 
-  task_id = str(uuid.uuid4())
-  yield task_id
+    task_id = str(uuid.uuid4())
+    yield task_id
 
-  # TODO workaround for testcontainers not supporting streaming to logger
-  start_time = time.time()
-  logger.info("/ start get docker compose logs")
-  stdout, stderr = basic.get_logs()
-  logger.info("stdout from docker compose")
-  logger.info(stdout)
-  logger.warning("stderr from docker compose")
-  logger.warning(stderr)
-  duration = time.time() - start_time
-  logger.info(f"\\ end get docker compose logs. Took {duration:.2f} seconds.")
+    # TODO workaround for testcontainers not supporting streaming to logger
+    start_time = time.time()
+    logger.info("/ start get docker compose logs")
+    stdout, stderr = basic.get_logs()
+    logger.info("stdout from docker compose")
+    logger.info(stdout)
+    print(stdout)
+    logger.warning("stderr from docker compose")
+    logger.warning(stderr)
+    print(stderr)
+    duration = time.time() - start_time
+    logger.info(f"\\ end get docker compose logs. Took {duration:.2f} seconds.")
 
-  start_time = time.time()
-  logger.info("/ start docker compose down")
-  basic.stop()
-  duration = time.time() - start_time
-  logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
+    start_time = time.time()
+    logger.info("/ start docker compose down")
+    basic.stop()
+    duration = time.time() - start_time
+    logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
+  except:
+    stdout, stderr = basic.get_logs()
+    print(stdout)
+    print(stderr)
 
 
 @pytest.mark.usefixtures("test_containers_fixture")
