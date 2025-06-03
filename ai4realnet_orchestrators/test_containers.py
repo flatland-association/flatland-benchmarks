@@ -80,8 +80,8 @@ def test_start_submission():
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
   result = fab.submissions_post(SubmissionsPostRequest(
     name="fancy",
-    benchmark=1,  # TODO uuid
-    submission_image="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",  # TODO use submission_data_url
+    benchmark='1',  # TODO uuid
+    submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",  # TODO use submission_data_url
     code_repository="https://github.com/you-name-it",
     tests=[1, 2],  # TODO mandatory despite optional in swagger.json
     # https://github.com/OpenAPITools/openapi-generator/issues/19485
@@ -90,3 +90,11 @@ def test_start_submission():
   print(result)
 
   # TODO get submissions
+  # TODO extract to repo,
+  # TODO post results ?
+  #  - integration celery task -> orchestrator -> test -> assert on log or on post?
+
+  # TODO interface flatland with TrajectoryAPI
+  # TODO split test runner and test evaluator
+
+  # TODO extract orchestrator interface, possibly als test runner and test evaluator? and add UT

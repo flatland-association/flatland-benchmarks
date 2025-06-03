@@ -51,25 +51,7 @@ services:
       file: docker-compose-base.yml
       service: fab-backend
     volumes:
-      #- ../ts/backend/src/migration/schema:/flyway/sql/schema
-      #- ../ts/backend/src/migration/data:/flyway/sql/data
-      # reverse proxy to access keycloak via localhost:8081 in backend container
-      - ../deployment/backend/nginx.conf:/etc/nginx/http.d/default.conf
-      - ../deployment/backend/start_reverseproxy.sh:/flyway/start.sh
-    entrypoint: bash
-    command:
-      - /flyway/start.sh
-    depends_on:
-      # workaround for docker compose waithing for flyway although exited with 0 https://forums.docker.com/t/behavior-of-up-wait-changed/147699/4
-      flyway:
-        condition: service_completed_successfully
-
-  fab-backend-local:
-    profiles: [ localbuild ]
-    extends:
-      file: docker-compose-base.yml
-      service: fab-backend
-    volumes:
+      # comment out for local development
       - ../dist/backend/app:/usr/src/app/dist/backend/app
       - ../node_modules:/usr/src/app/node_modules
       #- ../ts/backend/src/migration/schema:/flyway/sql/schema
@@ -90,17 +72,6 @@ services:
     extends:
       file: docker-compose-base.yml
       service: fab-frontend
-    depends_on:
-      # workaround for docker compose waithing for flyway although exited with 0 https://forums.docker.com/t/behavior-of-up-wait-changed/147699/4
-      flyway:
-        condition: service_completed_successfully
-
-  fab-frontend-localbuild:
-    profiles: [ localbuild ]
-    extends:
-      file: docker-compose-base.yml
-      service: fab-frontend
-    # TODO use npm run build --configuration=development for local development - does not work? issuer not replaced?
     volumes:
       - ../dist/frontend/browser:/usr/share/nginx/html
     depends_on:
@@ -109,7 +80,7 @@ services:
         condition: service_completed_successfully
 
   keycloak:
-    profiles: [ full, localbuild ]
+    profiles: [ full ]
     build:
       context: ../deployment/keycloak
     hostname: keycloak

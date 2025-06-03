@@ -40,7 +40,6 @@ class DefaultApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-
     @validate_call
     def submissions_post(
             self,
@@ -106,7 +105,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
 
     @validate_call
     def submissions_post_with_http_info(
@@ -174,7 +172,6 @@ class DefaultApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     def submissions_post_without_preload_content(
             self,
@@ -237,7 +234,6 @@ class DefaultApi:
         )
         return response_data.response
 
-
     def _submissions_post_serialize(
             self,
             submissions_post_request,
@@ -268,7 +264,6 @@ class DefaultApi:
         # process the body parameter
         if submissions_post_request is not None:
             _body_params = submissions_post_request
-
 
         # set the HTTP header `Accept`
         if 'Accept' not in _header_params:
@@ -377,7 +372,6 @@ class DefaultApi:
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
 
     @validate_call
     def tests_ids_get_with_http_info(

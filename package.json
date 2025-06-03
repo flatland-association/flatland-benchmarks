@@ -37,6 +37,7 @@
     "amqplib": "^0.10.7",
     "angular-oauth2-oidc": "^19.0.0",
     "ansi-styles": "^6.2.1",
+    "celery-node": "^0.5.9",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "json5": "^2.2.3",

@@ -26,10 +26,11 @@
                     "description": "Display name of submission."
                   },
                   "benchmark": {
-                    "type": "number",
+                    "type": "string",
+                    "format": "uuid",
                     "description": "ID of benchmark this submission belongs to."
                   },
-                  "submission_image": {
+                  "submission_data_url": {
                     "type": "string",
                     "description": "URL of submission executable image."
                   },

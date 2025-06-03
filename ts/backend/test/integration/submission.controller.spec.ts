@@ -7,7 +7,7 @@ import { getTestConfig } from './setup.mjs'
 const testSubmission: StripLocator<Submission> = {
   name: 'test',
   benchmark: 1,
-  submission_image: 'none',
+  submission_data_url: 'none',
   code_repository: 'none',
   tests: [1, 2],
 }

@@ -41,9 +41,10 @@ export class SubmissionController extends Controller {
    *                type: string
    *                description: Display name of submission.
    *              benchmark:
-   *                type: number
+   *                type: string
+   *                format: uuid
    *                description: ID of benchmark this submission belongs to.
-   *              submission_image:
+   *              submission_data_url:
    *                type: string
    *                description: URL of submission executable image.
    *              code_repository:
@@ -94,7 +95,7 @@ export class SubmissionController extends Controller {
         ) VALUES (
           ${req.body.name},
           ${req.body.benchmark},
-          ${req.body.submission_image},
+          ${req.body.submission_data_url},
           ${req.body.code_repository},
           ${req.body.tests},
           current_timestamp,
@@ -133,32 +134,19 @@ export class SubmissionController extends Controller {
         `
     ).map((r) => r.name)
     // start evaluator
-    const amqp = AmqpService.getInstance()
-    const payload = [
-      [],
-      {
-        submission_data_url: req.body.submission_image,
-        tests: tests,
-      },
-      {
-        callbacks: null,
-        errbacks: null,
-        chain: null,
-        chord: null,
-      },
-    ]
-    const sent = await amqp.sendToQueue('celery', payload, {
-      headers: {
-        task: 'flatland3-evaluation',
-        id: `sub-${uuid}`,
-      },
-      contentType: 'application/json',
-      persistent: true,
-    })
+    const celery = AmqpService.getInstance()
+    const payload = {
+      submission_data_url: req.body.submission_image,
+      tests: tests,
+    }
+    // TODO config benchmarkId instead of taskname?
+    logger.info(payload)
+    const sent = await celery.sendToQueue(payload, uuid)
+    logger.info(sent)
     if (sent) {
       this.respond(res, { uuid }, payload)
     } else {
-      this.respond(res, { uuid }, 'Could not send message to AMQP service. Check backend log.')
+      this.respond(res, { uuid }, 'Could not send message to broker. Check backend log.')
     }
   }
 

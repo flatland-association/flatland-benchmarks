@@ -29,6 +29,7 @@ S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.getenv("S3_UPLOAD_PATH_TEMPLATE_U
 ACTIVE_DEADLINE_SECONDS = os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)
 SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.3")
 TEST_RUNNER_EVALUATOR_IMAGE = os.environ.get("EVALUATOR_IMAGE", "ghcr.io/flatland-association/fab-flatland-evaluator:latest")
+BENCHMARK_ID = os.environ.get("BENCHMARK_ID", "flatland3-evaluation")
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
@@ -44,7 +45,7 @@ class TaskExecutionError(Exception):
 
 
 # N.B. name to be used by send_task
-@app.task(name="flatland3-evaluation", bind=True)
+@app.task(name=BENCHMARK_ID, bind=True)
 def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwargs):
   task_id = self.request.id
   config.load_incluster_config()
