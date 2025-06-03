@@ -60,10 +60,12 @@ def test_containers_fixture():
     duration = time.time() - start_time
     logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
   except BaseException as e:
+    print("An exception occurred during running docker compose:")
     print(e)
     stdout, stderr = basic.get_logs()
     print(stdout)
     print(stderr)
+    raise e
 
 
 def run_task(task_id: str, submission_data_url: str, tests: List[str], **kwargs):
