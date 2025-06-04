@@ -114,7 +114,8 @@ services:
         set -e
         /usr/bin/mc config host add myminio http://minio:${MINIO_PORT} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
 
-        /usr/bin/mc mb myminio/${S3_BUCKET}
+        # do not fail if bucket already exists:
+        /usr/bin/mc mb myminio/${S3_BUCKET} || true
 
         echo "createbuckets successful"
     networks:
