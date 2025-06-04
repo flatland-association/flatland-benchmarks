@@ -19,7 +19,7 @@ export class ResultsController extends Controller {
    * @swagger
    * /results/submission/{submission_id}/tests/{test_id}:
    *  get:
-   *    description: Inserts test results
+   *    description: Get submission results aggregated by test.
    *    security:
    *      - oauth2: [user]
    *    parameters:
