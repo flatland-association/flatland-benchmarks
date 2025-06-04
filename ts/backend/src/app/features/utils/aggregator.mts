@@ -15,11 +15,18 @@ BenchmarkGroupDefinition - a group of benchmark definitions
 
 Aggregated/scored structure is like this:
 
-In challenge setting:
-BenchmarkScored - a group of scored submissions (no own score)
-└ SubmissionScored[] - scored submissions (aggregated from tests)
+In competition setting:
+Leaderboard -  i.e. a list of scored submissions
+└ SubmissionScored[] - scored submissions (aggregated at benchmark level from tests), a submission refers to exactly one benchmark by definition
   └ TestScored[] - scored tests (aggregated from scenarios)
     └ ScenarioScored[] - scored scenarios
+    
+In campaign setting:
+Campaign Overview: list of CampaignItems
+└ CampaignItem -  a benchmark scored by aggregation of the best test score; the best test from all SubmissionScored
+  └ SubmissionScored[] - scored submissions (aggregated at benchmark level ignored)
+    └ TestScored[] - idem
+      └ ScenarioScored[] - idem
 
 N.B. the scored tree knows a level between benchmarks and tests (submissions).
 
