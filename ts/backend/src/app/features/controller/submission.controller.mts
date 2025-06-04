@@ -181,9 +181,8 @@ export class SubmissionController extends Controller {
       submission_data_url: req.body.submission_image,
       tests: tests,
     }
-    // TODO config benchmarkId instead of taskname?
     logger.info(payload)
-    const sent = await celery.sendToQueue(payload, uuid)
+    const sent = await celery.sendToQueue(req.body.benchmark, payload, uuid)
     logger.info(sent)
     if (sent) {
       this.respond(res, { uuid }, payload)

@@ -10,7 +10,7 @@ describe.sequential('AMQP Service', () => {
 
     test('should queue a message', async () => {
       const amqp = AmqpService.getInstance()
-      const result = await amqp.sendToQueue({ text: 'test' })
+      const result = await amqp.sendToQueue('queue', { text: 'test' }, 'submissionUUID')
       expect(result).toBeTruthy()
     })
   })
