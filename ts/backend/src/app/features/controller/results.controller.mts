@@ -98,17 +98,19 @@ export class ResultsController extends Controller {
    *                    type: number
    *    responses:
    *      200:
-   *        description: Response.
+   *        description: All results inserted.
    *        content:
    *          application/json:
    *            schema:
    *              allOf:
    *                - $ref: "#/components/schemas/ApiResponse"
-   *                - type: object
-   *                  properties:
-   *                    body:
-   *                      type: boolean
-   *                      description: Whether results were stored.
+   *      400:
+   *        description: Some results could not be inserted, transaction aborted.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
    */
   postTestResults: PostHandler<'/results/submission/:submission_id/tests/:test_id'> = async (req, res) => {
     const authService = AuthService.getInstance()
@@ -138,13 +140,17 @@ export class ResultsController extends Controller {
     // TODO: check that all defined fields are present
     // save in db
     const sql = SqlService.getInstance()
+    // TODO: abstract transaction as `sql.transactionQuery` or similar...
+    await sql.query`BEGIN`
     await sql.query`
       INSERT INTO results ${sql.fragment(resultRows)}
     `
-    // REMARK: without sql.fragment, SQL throws a syntax error:
-    // await sql.query`
-    //   INSERT INTO results ${resultRows}
-    // `
-    this.respond(res, !sql.errors)
+    const ok = !sql.errors
+    if (ok) {
+      await sql.query`COMMIT`
+      this.respond(res, {})
+    } else {
+      this.requestError(res, { text: 'Some results could not be inserted, transaction aborted.' })
+    }
   }
 }

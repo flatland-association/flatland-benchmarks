@@ -89,7 +89,7 @@ interface ApiEndpointDefinitions {
   }
   '/results/submission/:submission_id/tests/:test_id': {
     GET: ApiEndpoint<Empty, Empty, json>
-    POST: ApiEndpoint<PostTestResultsBody, Empty, boolean>
+    POST: ApiEndpoint<PostTestResultsBody, Empty, Empty>
   }
 }
 
