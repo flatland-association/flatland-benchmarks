@@ -15,7 +15,7 @@ TRACE = 5
 logger = logging.getLogger(__name__)
 
 # set to True if docker-compose-demo.yml is already up and running
-ATTENDED = True
+ATTENDED = False
 
 
 @pytest.fixture(scope="module")
