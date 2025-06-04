@@ -11,6 +11,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import copy
 import http.client as httplib
 import logging
@@ -21,6 +22,7 @@ from typing import Any, ClassVar, Dict, List, Literal, Optional, TypedDict, Unio
 from typing_extensions import NotRequired, Self
 
 import urllib3
+
 
 JSON_SCHEMA_VALIDATION_KEYWORDS = {
   'multipleOf', 'maximum', 'exclusiveMaximum',
@@ -40,6 +42,7 @@ GenericAuthSetting = TypedDict(
   },
 )
 
+
 OAuth2AuthSetting = TypedDict(
   "OAuth2AuthSetting",
   {
@@ -49,6 +52,7 @@ OAuth2AuthSetting = TypedDict(
     "value": str,
   },
 )
+
 
 APIKeyAuthSetting = TypedDict(
   "APIKeyAuthSetting",
@@ -60,6 +64,7 @@ APIKeyAuthSetting = TypedDict(
   },
 )
 
+
 BasicAuthSetting = TypedDict(
   "BasicAuthSetting",
   {
@@ -69,6 +74,7 @@ BasicAuthSetting = TypedDict(
     "value": Optional[str],
   },
 )
+
 
 BearerFormatAuthSetting = TypedDict(
   "BearerFormatAuthSetting",
@@ -81,6 +87,7 @@ BearerFormatAuthSetting = TypedDict(
   },
 )
 
+
 BearerAuthSetting = TypedDict(
   "BearerAuthSetting",
   {
@@ -91,6 +98,7 @@ BearerAuthSetting = TypedDict(
   },
 )
 
+
 HTTPSignatureAuthSetting = TypedDict(
   "HTTPSignatureAuthSetting",
   {
@@ -100,6 +108,7 @@ HTTPSignatureAuthSetting = TypedDict(
     "value": None,
   },
 )
+
 
 AuthSettings = TypedDict(
   "AuthSettings",

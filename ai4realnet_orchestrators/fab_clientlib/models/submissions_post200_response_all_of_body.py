@@ -11,6 +11,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -20,7 +21,6 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
-
 
 class SubmissionsPost200ResponseAllOfBody(BaseModel):
   """

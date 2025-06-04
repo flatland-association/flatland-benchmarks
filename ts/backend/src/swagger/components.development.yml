@@ -14,7 +14,4 @@ components:
         authorizationCode:
           authorizationUrl: http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/auth
           tokenUrl: http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/token
-          scopes: []
-
-security:
-  - oauth2: []
+          scopes: { }

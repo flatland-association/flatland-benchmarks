@@ -99,14 +99,18 @@ curl -X PUT ....
 
 Generate FAB Clientlib from OpenAPI Specification
 --------------------------------------------------
+[OpenAPI Specification](https://swagger.io/docs/specification/v3_0/) (formerly Swagger Specification) is an API description format for REST APIs.
+An OpenAPI file allows you to describe your entire API, including available endpoints, operation parameters Input and output for each operation authentication methods, contact information, license, terms of use, and other information.
+API specifications can be written in YAML or JSON. The complete OpenAPI Specification can be found on:
+[OpenAPI 3.0 Specification](https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.4.md)
 
-[OpenAPI Generator CLI](https://pypi.org/project/openapi-generator-cli/) is used to generate API client libraries:
+[OpenAPI Generator CLI](https://pypi.org/project/openapi-generator-cli/) is used to generate FAB API client libraries:
 
-1. Copy `swagger.json` from `ts/backend/src/swagger/swagger.json`.
+1. Copy `swagger.json` from `ts/backend/src/swagger/swagger.json` from a FAB backend build.
 2. Run
 
 ```
 python -m pip install openapi-generator-cli
-openapi-generator-cli generate -i swagger.json -g python --package-name fab_clientlib --skip-validate-spec
+openapi-generator-cli generate -i swagger.json -g python --package-name fab_clientlib
 ```
 

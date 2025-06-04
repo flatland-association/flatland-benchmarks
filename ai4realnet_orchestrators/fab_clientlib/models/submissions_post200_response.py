@@ -11,6 +11,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -22,7 +23,6 @@ from fab_clientlib.models.api_response_error import ApiResponseError
 from fab_clientlib.models.submissions_post200_response_all_of_body import SubmissionsPost200ResponseAllOfBody
 from typing import Optional, Set
 from typing_extensions import Self
-
 
 class SubmissionsPost200Response(BaseModel):
     """

@@ -11,6 +11,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import datetime
 from dateutil.parser import parse
 from enum import Enum
@@ -40,7 +41,6 @@ from fab_clientlib.exceptions import (
 )
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
-
 
 class ApiClient:
   """Generic API client for OpenAPI client library builds.

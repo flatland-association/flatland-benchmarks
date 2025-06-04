@@ -29,7 +29,7 @@ export class SubmissionController extends Controller {
    *  post:
    *    description: Inserts new submission.
    *    security:
-   *      - oauth2: []
+   *      - oauth2: [user]
    *    requestBody:
    *      required: true
    *      content:
@@ -72,6 +72,48 @@ export class SubmissionController extends Controller {
    *                            type: string
    *                            format: uuid
    *                            description: UUID of submission.
+   *  get:
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: query
+   *        name: benchmark
+   *        schema:
+   *          type: string
+   *        description: The number of items to skip before starting to collect the result set
+   *    responses:
+   *      200:
+   *        description: Requested tests.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                          uuid:
+   *                            type: number
+   *                          name:
+   *                            type: string
+   *                          benchmark:
+   *                            type: string
+   *                          submitted_at:
+   *                            type: string
+   *                          submitted_by_username:
+   *                            type: string
+   *                          public:
+   *                            type: string
+   *                          scores:
+   *                            type: string
+   *                          rank:
+   *                            type: string
    */
   postSubmission: PostHandler<'/submissions'> = async (req, res) => {
     const authService = AuthService.getInstance()
@@ -152,31 +194,37 @@ export class SubmissionController extends Controller {
 
   // returns scored and public submissions as preview
   getSubmissions: GetHandler<'/submissions'> = async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth) {
+      this.unauthorizedError(res, { text: 'Not authorized' })
+      return
+    }
     const benchmarkId = req.query['benchmark'] as string | undefined
     const submissionUuids = (req.query['uuid'] as string | undefined)?.split(',')
     const submittedBy = req.query['submitted_by'] as string | undefined
 
     const sql = SqlService.getInstance()
 
-    let whereScores = sql.fragment`scores IS NOT NULL`
-    let wherePublic = sql.fragment`public = true`
-    const whereBenchmark = benchmarkId ? sql.fragment`benchmark=${benchmarkId}` : sql.fragment`1=1`
-    let whereSubmission = sql.fragment`1=1`
-    let whereSubmittedBy = sql.fragment`1=1`
-    let limit = sql.fragment`LIMIT 3`
+    let whereScores = `scores IS NOT NULL`
+    let wherePublic = `public = true`
+    const whereBenchmark = benchmarkId ? `benchmark=${benchmarkId}` : `1=1`
+    let whereSubmission = `1=1`
+    let whereSubmittedBy = `1=1`
+    let limit = `LIMIT 3`
     if (submissionUuids) {
       // turn off scores and public requirements if id is given
-      whereScores = sql.fragment`1=1`
-      wherePublic = sql.fragment`1=1`
-      whereSubmission = sql.fragment`submissions.uuid=ANY(${submissionUuids})`
-      limit = sql.fragment`LIMIT ${submissionUuids.length}`
+      whereScores = `1=1`
+      wherePublic = `1=1`
+      whereSubmission = `submissions.uuid=ANY(${submissionUuids})`
+      limit = `LIMIT ${submissionUuids.length}`
     }
     if (submittedBy) {
       // turn off limit, scores and public requirements if submitter is given
-      whereScores = sql.fragment`1=1`
-      wherePublic = sql.fragment`1=1`
-      whereSubmittedBy = sql.fragment`submitted_by=${submittedBy}`
-      limit = sql.fragment``
+      whereScores = `1=1`
+      wherePublic = `1=1`
+      whereSubmittedBy = `submitted_by=${submittedBy}`
+      limit = ``
     }
 
     const rows = await sql.query<StripDir<SubmissionPreview>>`
@@ -198,7 +246,49 @@ export class SubmissionController extends Controller {
     const resources = appendDir('/submissions/', rows)
     this.respond(res, resources)
   }
-
+  /**
+   * @swagger
+   * /submissions/{uuid}:
+   *  get:
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: uuid
+   *        required: true
+   *        schema:
+   *          type: string
+   *        description: The submission ID
+   *    responses:
+   *      200:
+   *        description: Requested submissions.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: number
+   *                          benchmark:
+   *                            type: number
+   *                          submitted_at:
+   *                            type: string
+   *                          submitted_by_username:
+   *                            type: string
+   *                          public:
+   *                            type: string
+   *                          scores:
+   *                            type: string
+   *                          rank:
+   *                            type: string
+   */
   getSubmissionByUuid: GetHandler<'/submissions/:uuid'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
@@ -306,7 +396,7 @@ export class SubmissionController extends Controller {
     }
     const sql = SqlService.getInstance()
     const [row] = await sql.query<StripDir<Result>>`
-      UPDATE results SET ${sql.fragment(patch, 'public')}
+      UPDATE results SET ${(patch, 'public')}
         WHERE uuid=${uuid}
         RETURNING *
     `

@@ -15,7 +15,7 @@ TRACE = 5
 logger = logging.getLogger(__name__)
 
 # set to True if docker-compose-demo.yml is already up and running
-ATTENDED = False
+ATTENDED = True
 
 
 @pytest.fixture(scope="module")
@@ -78,7 +78,7 @@ def test_start_submission():
   )
   print(token)
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
-  result = fab.submissions_post(SubmissionsPostRequest(
+  posted_submission = fab.submissions_post(SubmissionsPostRequest(
     name="fancy",
     benchmark='1',  # TODO uuid
     submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",  # TODO use submission_data_url
@@ -87,12 +87,16 @@ def test_start_submission():
     # https://github.com/OpenAPITools/openapi-generator/issues/19485
     # https://github.com/openAPITools/openapi-generator-pip
   ))
-  print(result)
+  print(posted_submission)
+  submissions = fab.submissions_uuid_get(uuid=posted_submission.body.uuid)
+  print(submissions)
+  assert submissions.body[0].benchmark == 1
+  assert submissions.body[0].submitted_by_username == "service-account-fab-client-credentials"
 
-  # TODO get submissions
   # TODO extract to repo,
   # TODO post results ?
   #  - integration celery task -> orchestrator -> test -> assert on log or on post?
+  #  - own docker compose
 
   # TODO interface flatland with TrajectoryAPI
   # TODO split test runner and test evaluator

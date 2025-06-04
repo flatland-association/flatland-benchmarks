@@ -52,8 +52,8 @@ services:
       service: fab-backend
     volumes:
       # comment out for local development
-      #      - ../dist/backend/app:/usr/src/app/dist/backend/app
-      #      - ../node_modules:/usr/src/app/node_modules
+      - ../dist/backend/app:/usr/src/app/dist/backend/app
+      - ../node_modules:/usr/src/app/node_modules
       #- ../ts/backend/src/migration/schema:/flyway/sql/schema
       #- ../ts/backend/src/migration/data:/flyway/sql/data
       # reverse proxy to access keycloak via localhost:8081 in backend container
@@ -73,8 +73,8 @@ services:
       file: docker-compose-base.yml
       service: fab-frontend
       # comment out for local development:
-      #    volumes:
-      #      - ../dist/frontend/browser:/usr/share/nginx/html
+    volumes:
+      - ../dist/frontend/browser:/usr/share/nginx/html
     depends_on:
       # workaround for docker compose waithing for flyway although exited with 0 https://forums.docker.com/t/behavior-of-up-wait-changed/147699/4
       flyway:

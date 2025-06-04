@@ -11,6 +11,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -22,7 +23,6 @@ from fab_clientlib.models.api_response_error import ApiResponseError
 from fab_clientlib.models.tests_ids_get200_response_all_of_body_inner import TestsIdsGet200ResponseAllOfBodyInner
 from typing import Optional, Set
 from typing_extensions import Self
-
 
 class TestsIdsGet200Response(BaseModel):
     """

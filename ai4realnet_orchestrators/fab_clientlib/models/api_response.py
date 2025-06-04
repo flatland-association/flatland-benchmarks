@@ -11,6 +11,7 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
@@ -21,7 +22,6 @@ from typing import Any, ClassVar, Dict, List, Optional
 from fab_clientlib.models.api_response_error import ApiResponseError
 from typing import Optional, Set
 from typing_extensions import Self
-
 
 class ApiResponse(BaseModel):
   """
