@@ -27,7 +27,7 @@ def test_containers_fixture():
   global basic
 
   start_time = time.time()
-  basic = DockerCompose(context=".", compose_file_name="../evaluation/docker-compose-demo.yml", profiles=["full"], build=True)
+  basic = DockerCompose(context=".", compose_file_name="../docker-compose-demo.yml", profiles=["full"], build=True)
   logger.info("/ start docker compose down")
   basic.stop()
   duration = time.time() - start_time
@@ -93,12 +93,12 @@ def test_start_submission():
   assert submissions.body[0].benchmark == 1
   assert submissions.body[0].submitted_by_username == "service-account-fab-client-credentials"
 
-  # TODO extract to repo,
-  # TODO post results ?
-  #  - integration celery task -> orchestrator -> test -> assert on log or on post?
-  #  - own docker compose
-
   # TODO interface flatland with TrajectoryAPI
   # TODO split test runner and test evaluator
 
   # TODO extract orchestrator interface, possibly als test runner and test evaluator? and add UT
+
+# TODO extract to repo,
+# TODO post results ?
+#  - integration celery task -> orchestrator -> test -> assert on log or on post?
+#  - own docker compose

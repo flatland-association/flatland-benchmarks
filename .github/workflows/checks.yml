@@ -60,9 +60,9 @@ jobs:
       - name: Install pytest
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r ai4realnet_orchestrators/requirements.txt -r ai4realnet_orchestrators/requirements-dev.txt
+          python -m pip install -r evaluation/ai4realnet_orchestrators/requirements.txt -r evaluation/ai4realnet_orchestrators/requirements-dev.txt
       - name: Run tests
-        working-directory: ./ai4realnet_orchestrators
+        working-directory: ./evaluation/ai4realnet_orchestrators
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
           pytest -s test_containers.py
