@@ -69,7 +69,7 @@ def test_containers_fixture():
 
 
 # TODO extract to dev utils
-def run_task(benchmark_id, task_id: str, submission_data_url: str, tests: List[str], **kwargs):
+def run_task(benchmark_id: str, task_id: str, submission_data_url: str, tests: List[str], **kwargs):
   start_time = time.time()
   app = Celery(
     broker="pyamqp://localhost:5672",
@@ -85,6 +85,7 @@ def run_task(benchmark_id, task_id: str, submission_data_url: str, tests: List[s
       "tests": tests,
       **kwargs
     },
+    queue=benchmark_id,
   ).get()
   logger.info(ret)
   duration = time.time() - start_time
@@ -170,9 +171,3 @@ def test_failing_run():
   with pytest.raises(Exception) as exc_info:
     run_task('flatland3-evaluation', submission_id, "asdfasdf")
     assert str(exc_info.value).startswith(f"Failed execution ['sudo', 'docker', 'run', '--name', 'flatland3-submission-{submission_id}'")
-
-
-@pytest.mark.usefixtures("test_containers_fixture")
-def test_railway():
-  submission_id = str(uuid.uuid4())
-  run_task('1', submission_id, "asdfasdf", tests=[])

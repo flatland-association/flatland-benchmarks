@@ -82,9 +82,12 @@ In your domain-specific infrastructure:
 The following command loads the `orchestrator` module from `orchestrator.py` and starts a worker pool of size 5 (`concurrency` option):
 
 ```shell
-export BROKER_URL
-export BACKEND_URL
-python -m celery -A orchestrator worker -l info -n orchestrator@%n --soft-time-limit  600 --time-limit 720 --concurrency 5
+export BENCHMARK_ID=
+export BROKER_URL=
+export BACKEND_URL=
+export CLIENT_SECRET=
+export TOKEN_URL=
+python -m celery -A orchestrator worker -l info -n orchestrator@%n --soft-time-limit  600 --time-limit 720 --concurrency 5 -Q ${BENCHMARK_ID}
 ```
 
 See https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker for the available options to start a Celery worker.

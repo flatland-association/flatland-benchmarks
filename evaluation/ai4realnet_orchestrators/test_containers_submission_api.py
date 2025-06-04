@@ -81,9 +81,9 @@ def test_start_submission():
   posted_submission = fab.submissions_post(SubmissionsPostRequest(
     name="fancy",
     benchmark='1',  # TODO uuid
-    submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",  # TODO use submission_data_url
+    submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
     code_repository="https://github.com/you-name-it",
-    tests=[1, 2],  # TODO mandatory despite optional in swagger.json
+    tests=[1, 2],  # TODO mandatory despite optional in swagger.json, use UUIDs
     # https://github.com/OpenAPITools/openapi-generator/issues/19485
     # https://github.com/openAPITools/openapi-generator-pip
   ))
@@ -93,8 +93,13 @@ def test_start_submission():
   assert submissions.body[0].benchmark == 1
   assert submissions.body[0].submitted_by_username == "service-account-fab-client-credentials"
 
+  # TODO update readme
+  # TODO list of live demos/hackings:
+  # -
   # TODO interface flatland with TrajectoryAPI
-  # TODO split test runner and test evaluator
+
+  # TODO merge main with results API and upload results from test evaluator?
+
 
   # TODO extract orchestrator interface, possibly als test runner and test evaluator? and add UT
 

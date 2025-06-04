@@ -41,8 +41,8 @@ services:
     command:
       - |
         set -euxo pipefail
-        cd ai4realnet_orchestrators/domain_orchestrators/railway
-        python -m celery -A orchestrator worker -l info -n orchestrator@%n
+        cd ai4realnet_orchestrators
+        python -m celery -A domain_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q 1
     build:
       context: .
       dockerfile: Dockerfile_railway
@@ -60,12 +60,15 @@ services:
       - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
       - HOST_DIRECTORY=${PWD}
       - BENCHMARK_ID=1
+      - CLIENT_SECRET=top-secret
+      - TOKEN_URL=http://keycloak:8081/realms/netzgrafikeditor/protocol/openid-connect/token
+      - OAUTHLIB_INSECURE_TRANSPORT=1
     logging:
       options:
         max-size: "20m"
         max-file: "5"
     healthcheck:
-      test: cd ai4realnet_orchestrators/domain_orchestrators/railway && python -m celery -A orchestrator inspect ping
+      test: cd ai4realnet_orchestrators && python -m celery -A domain_orchestrators.railway.orchestrator inspect ping
     networks:
       - flatland-benchmarks
 

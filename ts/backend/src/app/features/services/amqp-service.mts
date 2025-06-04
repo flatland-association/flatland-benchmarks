@@ -30,6 +30,7 @@ export class AmqpService extends Service {
     const client = celery.createClient(
       `amqp://${this.config.amqp.host}:${this.config.amqp.port}`,
       `amqp://${this.config.amqp.host}:${this.config.amqp.port}`,
+      benchmarkId,
     )
     const result = client.sendTask(benchmarkId, [], payload, `sub-${uuid}`)
     logger.info(result)

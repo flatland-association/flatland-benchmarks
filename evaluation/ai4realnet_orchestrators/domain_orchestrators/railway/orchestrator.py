@@ -8,13 +8,14 @@ from uuid import uuid4
 
 from celery import Celery
 
-import test_runner_evaluator
+from fab_oauth_utils import backend_application_flow
 
 logger = logging.getLogger(__name__)
 
 app = Celery(
     broker=os.environ.get('BROKER_URL'),
     backend=os.environ.get('BACKEND_URL'),
+    queue=os.environ.get("BENCHMARK_ID"),
 )
 
 
@@ -31,13 +32,13 @@ class TaskExecutionError(Exception):
 def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwargs):
     # we use the submission_id as the unique id of the executing task.
     submission_id = self.request.id
-    # we use the benchmark_id as the task's name (i.e. one task per benchmark). This ensures the Celery task is routed to the responsible orchestrator
+    # we use the benchmark_id as the task's name and queue name (i.e. one task per benchmark). This ensures the Celery task is routed to the responsible orchestrator
     benchmark_id = orchestrator.name
     for test_id in tests:
-        if test_id == "":
+        if test_id == "1":
             filename = Path(f"{test_id}_{submission_id}.json")
-            test_runner_evaluator(submission_id=submission_id, test_id=test_id, submission_data_url=submission_data_url, filename=filename)
-            upload(submission_id=submission_id, test_id=test_id, filename=filename)
+            test_runner(submission_id=submission_id, test_id=test_id, submission_data_url=submission_data_url, filename=filename)
+            test_evaluator(submission_id=submission_id, test_id=test_id, filename=filename)
         elif test_id == "[INSERT HERE: @TestId]":
             pass
         else:
@@ -49,7 +50,43 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
     }
 
 
-def upload(submission_id: str, test_id: str, filename: Path):
-    # TODO authentication/authorization
-    # TODO call REST api
+def test_runner(submission_id: str, test_id: str, submission_data_url: str, filename: Path):
+    """
+    Run a test and write output to a file "@SubmissionId_@TestId.json".
+
+    Parameters
+    ----------
+    submission_id
+    test_id
+    submission_data_url
+    filename
+
+    """
+    # run your experiment here and write results to "@TestId.json"
+    pass
+
+
+def test_evaluator(submission_id: str, test_id: str, filename: Path):
+    """
+    Load test output from file "@SubmissionId_@TestId.json", evaluate and upload to hub.
+
+    Parameters
+    ----------
+    submission_id
+    test_id
+    filename
+
+    Returns
+    -------
+
+    """
+
+    client_id = os.environ.get("CLIENT_ID", 'fab-client-credentials')
+    client_secret = os.environ.get("CLIENT_SECRET")
+    token_url = os.environ.get("TOKEN_URL",
+                               "https://keycloak.flatland.cloud/realms/netzgrafikeditor/protocol/openid-connect/token")  # TODO change to flatland realm
+    token = backend_application_flow(client_id, client_secret, token_url)
+    print(token)
+
+    # run your experiment here and write results to "@TestId.json"
     pass
