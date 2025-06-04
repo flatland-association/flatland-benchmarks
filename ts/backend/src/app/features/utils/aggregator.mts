@@ -145,8 +145,6 @@ interface ScoringHost {
   id?: string
 }
 
-export type BenchmarkContext = 'campaign' | 'competition'
-
 export class Aggregator {
   /**
    * Leaderboard: list of scored submissions (LeaderboardItems) for benchmark.
@@ -190,10 +188,10 @@ export class Aggregator {
     submissions: Submission[],
     results: Result[],
   ): CampaignItem[] {
-    // TODO: either rank by test or ensure submission total equals test total in this case
     // build leaderboard first (might not contain rows for each test)
+    // TODO: either skip submission ranking or ensure submission total equals test total in campaign case
     const leaderboard = this.getLeaderboard(benchmarkDef, submissions, results)
-    // remap to campaign (exactly one row per test, containing top submission)
+    // remap to campaign (exactly one row per test, containing top submission of that test)
     const campaign = benchmarkDef.test_definitions.map((testDef) => {
       const top = leaderboard.items.find(
         (item) =>
