@@ -77,7 +77,7 @@ services:
         max-file: "5"
     healthcheck:
       test: rabbitmqctl status
-      interval: 10s
+      interval: 20s
       timeout: 10s
       retries: 30
     networks:
@@ -161,6 +161,7 @@ services:
       - flatland-benchmarks
 
   fab-backend:
+    # TODO add switch to use pre-built image or local build
     #image: ghcr.io/flatland-association/fab-backend:latest
     #pull_policy: always
     build:
@@ -182,7 +183,7 @@ services:
     ports:
       - 8000:8000
     healthcheck:
-      test: [ "CMD", "bash", "-c", "wget -qq 127.0.0.1:8000/submissions" ]
+      test: [ "CMD", "bash", "-c", "wget -qq 127.0.0.1:8000/api-docs" ]
       interval: 5s
       timeout: 1s
       retries: 5
@@ -190,6 +191,7 @@ services:
       - flatland-benchmarks
 
   fab-frontend:
+    # TODO add switch to use pre-built image or local build
     #image: ghcr.io/flatland-association/fab-frontend:latest
     #pull_policy: always
     build:
