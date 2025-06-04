@@ -1,6 +1,14 @@
 import { ApiRequest } from './api-request'
 import { ApiResponse } from './api-response'
-import { Benchmark, BenchmarkPreview, Result, Submission, SubmissionPreview, Test } from './interfaces'
+import {
+  Benchmark,
+  BenchmarkPreview,
+  PostTestResultsBody,
+  Result,
+  Submission,
+  SubmissionPreview,
+  Test,
+} from './interfaces'
 import { Empty, json, NoNever, ResourceId, StripLocator } from './utility-types'
 
 /**
@@ -78,6 +86,10 @@ interface ApiEndpointDefinitions {
   }
   '/result': {
     PATCH: ApiEndpoint<Partial<Result>, Empty, Result>
+  }
+  '/results/submission/:submission_id/tests/:test_id': {
+    GET: ApiEndpoint<Empty, Empty, json>
+    POST: ApiEndpoint<PostTestResultsBody, Empty, boolean>
   }
 }
 

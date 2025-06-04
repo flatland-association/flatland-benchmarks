@@ -114,10 +114,11 @@ DROP TABLE results;
 
 CREATE TABLE results (
   scenario_definition_id uuid NOT NULL,
+  test_definition_id uuid NOT NULL,
   submission_id uuid NOT NULL,
   key varchar(32) NOT NULL,
   value double precision
 );
 
 ALTER TABLE results
-  ADD PRIMARY KEY (scenario_definition_id, submission_id);
+  ADD PRIMARY KEY (scenario_definition_id, test_definition_id, submission_id, key);

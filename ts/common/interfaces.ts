@@ -54,3 +54,20 @@ export interface Result extends Resource<'/results/'> {
   results_str: string | null
   public: boolean | null
 }
+
+// TODO: merge/reduce number of interfaces, find a way to use same interface for transport as for computation
+
+export interface ResultRow {
+  scenario_definition_id: string
+  test_definition_id: string
+  submission_id: string
+  key: string
+  value: number
+}
+
+// TODO: merge with resource pattern, find a way to use same interface for transport as for computation
+export interface PostTestResultsBody {
+  data: ({
+    scenario_id: string
+  } & Record<string, number>)[]
+}
