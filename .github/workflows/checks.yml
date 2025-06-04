@@ -39,7 +39,7 @@ jobs:
           python -m pip install -r evaluation/ai4realnet_orchestrators/requirements.txt -r evaluation/ai4realnet_orchestrators/requirements-dev.txt
       - name: Run tests
         working-directory: ./evaluation/
-        run: pytest -s
+        run: pytest -s --ignore ai4realnet_orchestrators
 
   tests-orchestrator-e2e:
     runs-on: ubuntu-22.04
