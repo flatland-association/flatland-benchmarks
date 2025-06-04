@@ -101,7 +101,7 @@ services:
     healthcheck:
       test: [ "CMD", "bash", "-c", "curl -v --fail http://127.0.0.1:${KEYCLOAK_PORT:-8081}/realms/netzgrafikeditor/.well-known/openid-configuration" ]
       interval: 5s
-      timeout: 10s
-      retries: 30
+      timeout: 20s
+      retries: 50
 networks:
   flatland-benchmarks:
