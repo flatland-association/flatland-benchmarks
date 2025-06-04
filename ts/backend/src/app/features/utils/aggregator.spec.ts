@@ -153,7 +153,10 @@ const ResourceAndScoreReplacer = (key: string, value: any) => {
 }
 
 describe('Aggregator', () => {
-  // TODO: test agg functions
+  // TODO: add functional testing values aggregation func,level, case
+  // - for func in SUM, NANSUM etc.
+  // - for levels in {scenario->test, test->leadeboard, test->campaign}
+  // - for case in with/without nan values
 
   it('should aggregate scores for a given submission', () => {
     const submission = dummySubmissions.s1
