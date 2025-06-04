@@ -5,8 +5,8 @@ import {
   BenchmarkPreview,
   PostTestResultsBody,
   Result,
-  Submission,
   SubmissionPreview,
+  SubmissionRow,
   Test,
 } from './interfaces'
 import { Empty, json, NoNever, ResourceId, StripLocator } from './utility-types'
@@ -73,10 +73,10 @@ interface ApiEndpointDefinitions {
   }
   '/submissions': {
     GET: ApiEndpoint<Empty, { benchmark?: ResourceId; uuid?: string; submitted_by?: string }, SubmissionPreview[]>
-    POST: ApiEndpoint<StripLocator<Submission>, Empty, { uuid: string }>
+    POST: ApiEndpoint<StripLocator<SubmissionRow>, Empty, { id: string }>
   }
   '/submissions/:uuid': {
-    GET: ApiEndpoint<Empty, Empty, Submission[]>
+    GET: ApiEndpoint<Empty, Empty, SubmissionRow[]>
   }
   '/submissions/:uuid/results': {
     GET: ApiEndpoint<Empty, Empty, Result[]>

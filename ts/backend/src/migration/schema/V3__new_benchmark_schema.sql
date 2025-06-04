@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS benchmark_definitions (
   description text NOT NULL,
   field_definition_ids uuid[] NOT NULL DEFAULT array[]::uuid[],
   test_definition_ids uuid[] NOT NULL DEFAULT array[]::uuid[],
+  docker_image varchar(2048),
   evaluator_data json
 );
 
@@ -98,7 +99,7 @@ CREATE TABLE submissions (
   test_definition_ids uuid[] NOT NULL,
   name varchar(64) NOT NULL,
   description text,
-  submission_url varchar(2048) NOT NULL,
+  submission_data_url varchar(2048) NOT NULL,
   code_repository varchar(2048),
   submitted_at timestamp without time zone,
   submitted_by uuid,

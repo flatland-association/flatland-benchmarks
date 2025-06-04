@@ -1,5 +1,5 @@
 import { appendDir } from '@common/endpoint-utils.js'
-import { Result, Submission, SubmissionPreview } from '@common/interfaces.js'
+import { Result, SubmissionPreview, SubmissionRow } from '@common/interfaces.js'
 import { StripDir } from '@common/utility-types.js'
 import { createClient } from 'redis'
 import { configuration } from '../config/config.mjs'
@@ -52,7 +52,8 @@ export class SubmissionController extends Controller {
    *              tests:
    *                type: array
    *                items:
-   *                  type: number
+   *                  type: string
+   *                  format: uuid
    *                description: IDs of tests to run.
    *    responses:
    *      200:
@@ -85,53 +86,43 @@ export class SubmissionController extends Controller {
     const sql = SqlService.getInstance()
     const idRow = await sql.query`
         INSERT INTO submissions (
+          benchmark_definition_id,
+          test_definition_ids,
           name,
-          benchmark,
-          submission_image,
+          submission_data_url,
           code_repository,
-          tests,
           submitted_at,
           submitted_by,
           submitted_by_username
         ) VALUES (
+          ${req.body.benchmark_definition_id},
+          ${req.body.test_definition_ids},
           ${req.body.name},
-          ${req.body.benchmark},
-          ${req.body.submission_image},
-          ${req.body.code_repository},
-          ${req.body.tests},
+          ${req.body.submission_data_url},
+          ${req.body.code_repository ?? null},
           current_timestamp,
           ${auth.sub ?? null},
           ${auth['preferred_username'] ?? null}
         )
-        RETURNING id, uuid
+        RETURNING id
       `
-    const id: number | undefined = idRow.at(0)?.['id']
-    const uuid: string | undefined = idRow.at(0)?.['uuid']
-    if (!id || !uuid) {
-      this.serverError(res, { text: `could not insert submission` }, { id, uuid })
+    const id: string | undefined = idRow.at(0)?.['id']
+    if (!id) {
+      this.serverError(res, { text: `could not insert submission` }, { id })
       return
     }
-    // prepare results entry
-    await sql.query`
-        INSERT INTO results (
-          submission,
-          submission_uuid
-        ) VALUES (
-          ${id},
-          ${uuid}
-        )
-      `
     // get benchmark docker image
-    const [{ docker_image: dockerImage }] = await sql.query`
-        SELECT docker_image FROM benchmarks
-        WHERE id=${req.body.benchmark}
+    const benchmarkRow = await sql.query`
+        SELECT docker_image FROM benchmark_definitions
+        WHERE id=${req.body.benchmark_definition_id}
       `
+    const dockerImage = benchmarkRow.at(0)?.['docker_image']
     // get test names
     const tests = (
       await sql.query<{ name: string }>`
-          SELECT name FROM tests
-          WHERE id=ANY(${req.body.tests})
-          LIMIT ${req.body.tests.length}
+          SELECT name FROM test_definitions
+          WHERE id=ANY(${req.body.test_definition_ids})
+          LIMIT ${req.body.test_definition_ids!.length}
         `
     ).map((r) => r.name)
     // start evaluator
@@ -140,7 +131,7 @@ export class SubmissionController extends Controller {
       [],
       {
         docker_image: dockerImage,
-        submission_image: req.body.submission_image,
+        submission_image: req.body.submission_data_url,
         tests: tests,
       },
       {
@@ -153,23 +144,23 @@ export class SubmissionController extends Controller {
     const sent = await amqp.sendToQueue('celery', payload, {
       headers: {
         task: 'flatland3-evaluation',
-        id: `sub-${uuid}`,
+        id: `sub-${id}`,
       },
       contentType: 'application/json',
       persistent: true,
     })
     if (sent) {
-      this.respond(res, { uuid }, payload)
+      this.respond(res, { id }, payload)
     } else {
-      this.respond(res, { uuid }, 'Could not send message to AMQP service. Check backend log.')
+      this.respond(res, { id }, 'Could not send message to AMQP service. Check backend log.')
     }
   }
 
   // returns scored and public submissions as preview
   getSubmissions: GetHandler<'/submissions'> = async (req, res) => {
-    const benchmarkId = req.query['benchmark'] as string | undefined
-    const submissionUuids = (req.query['uuid'] as string | undefined)?.split(',')
-    const submittedBy = req.query['submitted_by'] as string | undefined
+    const benchmarkId = req.query['benchmark']
+    const submissionIds = req.query['uuid']?.split(',')
+    const submittedBy = req.query['submitted_by']
 
     const sql = SqlService.getInstance()
 
@@ -179,12 +170,12 @@ export class SubmissionController extends Controller {
     let whereSubmission = sql.fragment`1=1`
     let whereSubmittedBy = sql.fragment`1=1`
     let limit = sql.fragment`LIMIT 3`
-    if (submissionUuids) {
+    if (submissionIds) {
       // turn off scores and public requirements if id is given
       whereScores = sql.fragment`1=1`
       wherePublic = sql.fragment`1=1`
-      whereSubmission = sql.fragment`submissions.uuid=ANY(${submissionUuids})`
-      limit = sql.fragment`LIMIT ${submissionUuids.length}`
+      whereSubmission = sql.fragment`submissions.uuid=ANY(${submissionIds})`
+      limit = sql.fragment`LIMIT ${submissionIds.length}`
     }
     if (submittedBy) {
       // turn off limit, scores and public requirements if submitter is given
@@ -224,9 +215,9 @@ export class SubmissionController extends Controller {
     const uuids = req.params.uuid.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
-    const rows = await sql.query<StripDir<Submission>>`
+    const rows = await sql.query<StripDir<SubmissionRow>>`
         SELECT * FROM submissions
-        WHERE uuid=ANY(${uuids})
+        WHERE id=ANY(${uuids})
         LIMIT ${uuids.length}
       `
     const submissions = appendDir('/submissions/', rows)
