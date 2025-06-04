@@ -68,15 +68,17 @@ def test_containers_fixture():
     raise e
 
 
-def run_task(task_id: str, submission_data_url: str, tests: List[str], **kwargs):
+# TODO extract to dev utils
+def run_task(benchmark_id, task_id: str, submission_data_url: str, tests: List[str], **kwargs):
   start_time = time.time()
   app = Celery(
     broker="pyamqp://localhost:5672",
     backend="rpc://localhost:5672",
   )
   logger.info(f"/ Start simulate submission from portal for task_id={task_id}.....")
+
   ret = app.send_task(
-    'flatland3-evaluation',
+    benchmark_id,
     task_id=task_id,
     kwargs={
       "submission_data_url": submission_data_url,
@@ -87,7 +89,7 @@ def run_task(task_id: str, submission_data_url: str, tests: List[str], **kwargs)
   logger.info(ret)
   duration = time.time() - start_time
   logger.info(
-    f"\\ End simulate submission from portal for task_id={task_id}. Took {duration} seconds: {[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
+    f"\\ End simulate submission from portal for task_id={task_id}. Took {duration} seconds.")
   return ret
 
 
@@ -101,7 +103,10 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str]):
   submission_id = str(uuid.uuid4())
   config = dotenv_values(".env")
 
-  ret = run_task(submission_id, submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest", tests=tests, **config)
+  ret = run_task('flatland3-evaluation', submission_id, submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
+                 tests=tests, **config)
+
+  logger.info(f"{[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
 
   for k, v in ret.items():
     logger.log(TRACE, "Got %s", (k, v['job_status'], v['image_id'], v['log']))
@@ -163,5 +168,11 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str]):
 def test_failing_run():
   submission_id = str(uuid.uuid4())
   with pytest.raises(Exception) as exc_info:
-    run_task(submission_id, "asdfasdf")
+    run_task('flatland3-evaluation', submission_id, "asdfasdf")
     assert str(exc_info.value).startswith(f"Failed execution ['sudo', 'docker', 'run', '--name', 'flatland3-submission-{submission_id}'")
+
+
+@pytest.mark.usefixtures("test_containers_fixture")
+def test_railway():
+  submission_id = str(uuid.uuid4())
+  run_task('1', submission_id, "asdfasdf", tests=[])

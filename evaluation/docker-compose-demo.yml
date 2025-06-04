@@ -34,6 +34,41 @@ services:
       file: docker-compose-base.yml
       service: orchestrator
 
+  orchestrator-railway:
+    # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
+    # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
+    entrypoint: [ "/bin/bash","-c" ]
+    command:
+      - |
+        set -euxo pipefail
+        cd ai4realnet_orchestrators/domain_orchestrators/railway
+        python -m celery -A orchestrator worker -l info -n orchestrator@%n
+    build:
+      context: .
+      dockerfile: Dockerfile_railway
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      minio_setup:
+        condition: service_completed_successfully
+    volumes:
+      - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
+    #      - ./ai4realnet_orchestrators/domain_orchestrators/railway/orchestrator.py:/app/orchestrator.py
+    env_file: .env
+    environment:
+      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
+      - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
+      - HOST_DIRECTORY=${PWD}
+      - BENCHMARK_ID=1
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: cd ai4realnet_orchestrators/domain_orchestrators/railway && python -m celery -A orchestrator inspect ping
+    networks:
+      - flatland-benchmarks
+
   # TODO flyway in backend container seems not to work on MacOS at least... use one or the other
   flyway:
     profiles: [ full, localbuild ]
