@@ -93,17 +93,16 @@ def test_start_submission():
   assert submissions.body[0].benchmark == 1
   assert submissions.body[0].submitted_by_username == "service-account-fab-client-credentials"
 
-  # TODO update readme
-  # TODO list of live demos/hackings:
-  # -
-  # TODO interface flatland with TrajectoryAPI
-
   # TODO merge main with results API and upload results from test evaluator?
+  # TODO finalize flatland-orchestrator incl. submission ->
 
+  # TODO merge my pr in fab? what does it need?
+  # TODO FAB deployment
 
   # TODO extract orchestrator interface, possibly als test runner and test evaluator? and add UT
 
-# TODO extract to repo,
-# TODO post results ?
-#  - integration celery task -> orchestrator -> test -> assert on log or on post?
-#  - own docker compose
+  # TODO extract to repo,
+  # TODO post results ?
+  #  - integration celery task -> orchestrator -> test -> assert on log or on post?
+  #  - own docker compose
+  # TODO add integration test

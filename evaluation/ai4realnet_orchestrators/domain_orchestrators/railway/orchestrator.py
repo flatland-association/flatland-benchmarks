@@ -6,6 +6,7 @@ from typing import Dict
 from typing import List
 from uuid import uuid4
 
+import pandas as pd
 from celery import Celery
 
 from fab_oauth_utils import backend_application_flow
@@ -63,6 +64,7 @@ def test_runner(submission_id: str, test_id: str, submission_data_url: str, file
 
     """
     # run your experiment here and write results to "@TestId.json"
+    # TODO docker run -v ./data:/tmp -v ./entrypoint.sh:/home/conda/run.sh ghcr.io/flatland-association/flatland-baselines:latest --data-dir /tmp --policy-pkg flatland_baselines.deadlock_avoidance_heuristic.policy.deadlock_avoidance_policy --policy-cls DeadLockAvoidancePolicy --obs-builder-pkg flatland_baselines.deadlock_avoidance_heuristic.observation.full_env_observation --obs-builder-cls FullEnvObservation --ep-id ABCD
     pass
 
 
@@ -89,4 +91,9 @@ def test_evaluator(submission_id: str, test_id: str, filename: Path):
     print(token)
 
     # run your experiment here and write results to "@TestId.json"
-    pass
+    if False:
+        df = pd.read_csv("./data/event_logs/TrainMovementEvents.trains_arrived.tsv", sep="\t")
+        assert len(df) == 1
+        print(df.iloc[0])
+        success_rate = df.iloc[0]["success_rate"]
+        print(success_rate)
