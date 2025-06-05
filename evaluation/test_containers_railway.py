@@ -8,4 +8,4 @@ from test_containers_flatland_benchmarks import run_task, test_containers_fixtur
 @pytest.mark.usefixtures("test_containers_fixture")
 def test_railway():
   submission_id = str(uuid.uuid4())
-  run_task('1', submission_id, "asdfasdf", tests=["1"])
+  run_task('20ccc7c1-034c-4880-8946-bffc3fed1359', submission_id, "asdfasdf", tests=["1"])
