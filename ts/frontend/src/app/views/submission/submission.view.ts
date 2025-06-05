@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { Component, OnDestroy, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { Result, Submission, SubmissionPreview } from '@common/interfaces'
+import { Result, SubmissionPreview, SubmissionRow } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { LeaderboardComponent } from '../../components/leaderboard/leaderboard.component'
@@ -53,7 +53,7 @@ interface F3EvaluatorResult {
 export class SubmissionView implements OnInit, OnDestroy {
   submissionUuid?: string
 
-  submission?: Submission
+  submission?: SubmissionRow
   mySubmission?: SubmissionPreview
 
   result?: Result

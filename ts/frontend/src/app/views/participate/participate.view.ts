@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { Benchmark, SubmissionPreview } from '@common/interfaces'
+import { BenchmarkDefinitionRow, SubmissionPreview } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { LeaderboardComponent } from '../../components/leaderboard/leaderboard.component'
@@ -15,7 +15,7 @@ import { AuthService } from '../../features/auth/auth.service'
 })
 export class ParticipateView implements OnInit {
   id: string
-  benchmark?: Benchmark
+  benchmark?: BenchmarkDefinitionRow
   submissions?: SubmissionPreview[]
   mySubmissions?: SubmissionPreview[]
 
