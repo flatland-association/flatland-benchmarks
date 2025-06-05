@@ -25,7 +25,7 @@ export class ResultsController extends Controller {
    *    parameters:
    *      - in: path
    *        name: submission_id
-   *        description: Submission UUID.
+   *        description: Submission ID.
    *        required: true
    *        schema:
    *          type: string
