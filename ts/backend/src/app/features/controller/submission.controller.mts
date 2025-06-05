@@ -257,6 +257,7 @@ export class SubmissionController extends Controller {
    *        required: true
    *        schema:
    *          type: string
+   *          format: uuid
    *        description: The submission ID
    *    responses:
    *      200:
