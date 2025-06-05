@@ -72,7 +72,7 @@ export class ResultsController extends Controller {
    *          format: uuid
    *      - in: path
    *        name: test_id
-   *        description: Test UUID.
+   *        description: Test ID.
    *        required: true
    *        schema:
    *          type: string
