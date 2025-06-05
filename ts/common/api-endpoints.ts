@@ -87,6 +87,9 @@ interface ApiEndpointDefinitions {
   '/result': {
     PATCH: ApiEndpoint<Partial<Result>, Empty, Result>
   }
+  '/results/submission/:submission_id': {
+    GET: ApiEndpoint<Empty, Empty, json>
+  }
   '/results/submission/:submission_id/tests/:test_id': {
     GET: ApiEndpoint<Empty, Empty, json>
     POST: ApiEndpoint<PostTestResultsBody, Empty, Empty>

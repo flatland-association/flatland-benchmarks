@@ -91,15 +91,77 @@ export interface BenchmarkDefinition
    * - competition; to submission overall score
    * - campaign; to benchmark overall score
    */
-  field_definitions: FieldDefinitionRow[]
-  test_definitions: TestDefinition[]
+  field_definitions: (FieldDefinitionRow | null)[]
+  test_definitions: (TestDefinition | null)[]
+}
+
+export function upcastBenchmarkDefinitionRow(
+  row: BenchmarkDefinitionRow,
+  fieldDefinitionCandidates: FieldDefinitionRow[],
+  scenarioDefinitionCandidates: ScenarioDefinitionRow[],
+  testDefinitionCandidates: TestDefinitionRow[],
+): BenchmarkDefinition {
+  return {
+    dir: row.dir,
+    id: row.id,
+    name: row.name,
+    description: row.description,
+    field_definitions: row.field_definition_ids.map((id) => fieldDefinitionCandidates.find((c) => c.id === id) ?? null),
+    test_definitions: row.test_definition_ids.map((id) => {
+      const test = testDefinitionCandidates.find((c) => c.id === id) ?? null
+      if (test) {
+        return upcastTestDefinitionRow(test, fieldDefinitionCandidates, scenarioDefinitionCandidates)
+      } else {
+        return null
+      }
+    }),
+  }
 }
 
 // TODO: Benchmark Groups
 
 export interface Submission extends Omit<SubmissionRow, 'benchmark_definition_id' | 'test_definition_ids'> {
-  benchmark_definition: BenchmarkDefinition
-  test_definitions: TestDefinition[]
+  benchmark_definition: BenchmarkDefinition | null
+  test_definitions: (TestDefinition | null)[]
+}
+
+export function upcastSubmissionRow(
+  row: SubmissionRow,
+  fieldDefinitionCandidates: FieldDefinitionRow[],
+  scenarioDefinitionCandidates: ScenarioDefinitionRow[],
+  testDefinitionCandidates: TestDefinitionRow[],
+  benchmarkDefinitionCandidates: BenchmarkDefinitionRow[],
+): Submission {
+  const benchmarkDef = benchmarkDefinitionCandidates.find((c) => c.id === row.benchmark_definition_id) ?? null
+  return {
+    dir: row.dir,
+    id: row.id,
+    benchmark_definition: benchmarkDef
+      ? upcastBenchmarkDefinitionRow(
+          benchmarkDef,
+          fieldDefinitionCandidates,
+          scenarioDefinitionCandidates,
+          testDefinitionCandidates,
+        )
+      : null,
+    test_definitions: row.test_definition_ids.map((id) => {
+      const test = testDefinitionCandidates.find((c) => c.id === id) ?? null
+      if (test) {
+        return upcastTestDefinitionRow(test, fieldDefinitionCandidates, scenarioDefinitionCandidates)
+      } else {
+        return null
+      }
+    }),
+    name: row.name,
+    description: row.description,
+    submission_data_url: row.submission_data_url,
+    code_repository: row.code_repository,
+    submitted_at: row.submitted_at,
+    submitted_by: row.submitted_by,
+    submitted_by_username: row.submitted_by_username,
+    status: row.status,
+    published: row.published,
+  }
 }
 
 export interface Scoring {
@@ -202,18 +264,20 @@ export class Aggregator {
     // TODO: either skip submission ranking or ensure submission total equals test total in campaign case
     const leaderboard = this.getLeaderboard(benchmarkDef, submissions, results)
     // remap to campaign (exactly one row per test, containing top submission of that test)
-    const campaign = benchmarkDef.test_definitions.map((testDef) => {
-      const top = leaderboard.items.find(
-        (item) =>
-          item.tests[0].definition === testDef &&
-          this.getPrimaryScoring(item.scorings, benchmarkDef.field_definitions)?.rank === 1,
-      )
-      return {
-        benchmark: benchmarkDef,
-        test: testDef,
-        item: top,
-      } satisfies CampaignItem
-    })
+    const campaign = benchmarkDef.test_definitions
+      .filter((t) => !!t)
+      .map((testDef) => {
+        const top = leaderboard.items.find(
+          (item) =>
+            item.tests[0].definition === testDef &&
+            this.getPrimaryScoring(item.scorings, benchmarkDef.field_definitions)?.rank === 1,
+        )
+        return {
+          benchmark: benchmarkDef,
+          test: testDef,
+          item: top,
+        } satisfies CampaignItem
+      })
     return campaign
   }
 
@@ -232,13 +296,15 @@ export class Aggregator {
     // prepare tree structure (containing scored tests)
     const item: LeaderboardItem = {
       submission,
-      tests: submission.test_definitions.map((test) => this.getTestScored(test, results)),
+      tests: submission.test_definitions.filter((f) => !!f).map((test) => this.getTestScored(test, results)),
       scorings: {},
     }
     // second (once children are scored), aggregate own score
-    benchmarkDef.field_definitions.forEach((field) => {
-      this.aggregateScore(item.scorings, field, item.tests)
-    })
+    benchmarkDef.field_definitions
+      .filter((f) => !!f)
+      .forEach((field) => {
+        this.aggregateScore(item.scorings, field, item.tests)
+      })
     return item
   }
 
@@ -411,7 +477,8 @@ export class Aggregator {
    * Returns the primary scoring, assuming the first field definition is always
    * the primary score.
    */
-  static getPrimaryScoring(scorings: Scorings, fieldDefs: FieldDefinitionRow[]) {
+  static getPrimaryScoring(scorings: Scorings, fieldDefs: (FieldDefinitionRow | null)[]) {
+    if (!fieldDefs || !fieldDefs[0]) return null
     const key = fieldDefs[0].key
     return scorings[key]
   }
@@ -422,38 +489,44 @@ export class Aggregator {
     // find rank-able/relevant fields
     const rankables: { field: string; from: ScoringHost }[] = []
     // always include top level scorings (top level rank-able is submission)
-    leaderboard.benchmark.field_definitions.forEach((field) => {
-      rankables.push({
-        field: field.key,
-        from: { level: 'submission' },
+    leaderboard.benchmark.field_definitions
+      .filter((f) => !!f)
+      .forEach((field) => {
+        rankables.push({
+          field: field.key,
+          from: { level: 'submission' },
+        })
       })
-    })
     if (lod === 'test' || lod === 'scenario') {
-      leaderboard.benchmark.test_definitions.forEach((test) => {
-        test.field_definitions
-          .filter((f) => !!f)
-          .forEach((field) => {
-            rankables.push({
-              field: field.key,
-              from: { level: 'test', id: test.id },
-            })
-          })
-      })
-      if (lod === 'scenario') {
-        leaderboard.benchmark.test_definitions.forEach((test) => {
-          test.scenario_definitions
-            .filter((s) => !!s)
-            .forEach((scenario) => {
-              scenario.field_definitions
-                .filter((f) => !!f)
-                .forEach((field) => {
-                  rankables.push({
-                    field: field.key,
-                    from: { level: 'scenario', id: scenario.id },
-                  })
-                })
+      leaderboard.benchmark.test_definitions
+        .filter((t) => !!t)
+        .forEach((test) => {
+          test.field_definitions
+            .filter((f) => !!f)
+            .forEach((field) => {
+              rankables.push({
+                field: field.key,
+                from: { level: 'test', id: test.id },
+              })
             })
         })
+      if (lod === 'scenario') {
+        leaderboard.benchmark.test_definitions
+          .filter((t) => !!t)
+          .forEach((test) => {
+            test.scenario_definitions
+              .filter((s) => !!s)
+              .forEach((scenario) => {
+                scenario.field_definitions
+                  .filter((f) => !!f)
+                  .forEach((field) => {
+                    rankables.push({
+                      field: field.key,
+                      from: { level: 'scenario', id: scenario.id },
+                    })
+                  })
+              })
+          })
       }
     }
     // rank those fields

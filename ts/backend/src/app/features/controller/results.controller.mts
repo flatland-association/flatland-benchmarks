@@ -1,10 +1,22 @@
-import { FieldDefinitionRow, ResultRow, ScenarioDefinitionRow, TestDefinitionRow } from '@common/interfaces'
+import {
+  BenchmarkDefinitionRow,
+  FieldDefinitionRow,
+  ResultRow,
+  ScenarioDefinitionRow,
+  SubmissionRow,
+  TestDefinitionRow,
+} from '@common/interfaces'
 import { json } from '@common/utility-types'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
-import { Aggregator, upcastScenarioDefinitionRow, upcastTestDefinitionRow } from '../utils/aggregator.mjs'
+import {
+  Aggregator,
+  upcastScenarioDefinitionRow,
+  upcastSubmissionRow,
+  upcastTestDefinitionRow,
+} from '../utils/aggregator.mjs'
 import { Controller, GetHandler, PostHandler } from './controller.mjs'
 
 const logger = new Logger('results-controller')
@@ -13,9 +25,105 @@ export class ResultsController extends Controller {
   constructor(config: configuration) {
     super(config)
 
+    this.attachGet('/results/submission/:submission_id', this.getSubmissionResults)
     this.attachGet('/results/submission/:submission_id/tests/:test_id', this.getTestResults)
     this.attachPost('/results/submission/:submission_id/tests/:test_id', this.postTestResults)
     this.attachGet('/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id', this.getScenarioResults)
+  }
+
+  /**
+   * @swagger
+   * /results/submission/{submission_id}:
+   *  get:
+   *    description: Get aggregated submission overall results.
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: submission_id
+   *        description: Submission ID.
+   *        required: true
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *    responses:
+   *      200:
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          submission_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of submission.
+   *                          scorings:
+   *                            type: object
+   *                            description: Dictionary of submission scores.
+   *                          test_scorings:
+   *                            type: array
+   *                            items:
+   *                              type: object
+   *                              properties:
+   *                                test_id:
+   *                                  type: string
+   *                                  format: uuid
+   *                                  description: ID of test.
+   *                                scorings:
+   *                                  type: object
+   *                                  description: Dictionary of test scores.
+   *                                scenario_scorings:
+   *                                  type: array
+   *                                  items:
+   *                                    type: object
+   *                                    properties:
+   *                                      scenario_id:
+   *                                        type: string
+   *                                        format: uuid
+   *                                        description: ID of scenario.
+   *                                      scorings:
+   *                                        type: object
+   *                                        description: Dictionary of scores.
+   */
+  getSubmissionResults: GetHandler<'/results/submission/:submission_id'> = async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth) {
+      this.unauthorizedError(res, { text: 'Not authorized' })
+      return
+    }
+    const submissionId = req.params.submission_id
+    const submissionScored = await this.aggregateSubmissionScore(submissionId)
+    if (!submissionScored) {
+      this.requestError(res, { text: 'Score could not be aggregated' })
+      return
+    }
+    // transform for transmission
+    // TODO: properly define data format of results for transmission
+    const result = {
+      submission_id: submissionScored.submission.id,
+      scorings: submissionScored.scorings,
+      test_scorings: submissionScored.tests.map((test) => {
+        return {
+          test_id: test.definition.id,
+          scorings: test.scorings,
+          scenario_scorings: test.scenarios.map((scenario) => {
+            return {
+              scenario_id: scenario.definition.id,
+              scorings: scenario.scorings,
+            }
+          }),
+        }
+      }),
+    }
+    this.respond(res, result as json)
   }
 
   /**
@@ -311,5 +419,39 @@ export class ResultsController extends Controller {
       SELECT * FROM results WHERE submission_id=${submissionId} AND test_definition_id=${testId}
     `
     return Aggregator.getTestScored(testDef, resultRows)
+  }
+
+  async aggregateSubmissionScore(submissionId: string) {
+    const sql = SqlService.getInstance()
+    // load required definitions
+    const [submissionRow] = await sql.query<SubmissionRow>`
+      SELECT * FROM submissions WHERE id=${submissionId}
+    `
+    const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
+      SELECT * FROM benchmark_definitions WHERE id=${submissionRow.benchmark_definition_id}
+    `
+    // load required candidates for referenced fields (used in upcast) and upcast
+    const fieldDefCandidates = await sql.query<FieldDefinitionRow>`
+      SELECT * FROM field_definitions
+    `
+    const scenarioDefCandidates = await sql.query<ScenarioDefinitionRow>`
+      SELECT * FROM scenario_definitions
+    `
+    const testDefCandidates = await sql.query<TestDefinitionRow>`
+      SELECT * FROM test_definitions
+    `
+    const submission = upcastSubmissionRow(
+      submissionRow,
+      fieldDefCandidates,
+      scenarioDefCandidates,
+      testDefCandidates,
+      [benchmarkDefRow],
+    )
+    // load results
+    const resultRows: ResultRow[] = await sql.query<ResultRow>`
+      SELECT * FROM results WHERE submission_id=${submissionId}
+    `
+    if (!submission.benchmark_definition) return null
+    return Aggregator.getSubmissionScored(submission.benchmark_definition, submission, resultRows)
   }
 }
