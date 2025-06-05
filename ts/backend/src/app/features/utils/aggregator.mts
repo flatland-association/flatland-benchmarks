@@ -1,6 +1,13 @@
 // TODO: move interfaces to common and merge with common interfaces
 
-import { json } from '@common/utility-types'
+import {
+  BenchmarkDefinitionRow,
+  FieldDefinitionRow,
+  ResultRow,
+  ScenarioDefinitionRow,
+  SubmissionRow,
+  TestDefinitionRow,
+} from '@common/interfaces'
 
 /*
 REMARK:
@@ -32,75 +39,67 @@ N.B. the scored tree knows a level between benchmarks and tests (submissions).
 
 */
 
-export type AggFunction = 'SUM' | 'NANSUM' | 'MEAN' | 'NANMEAN' | 'MEADIAN' | 'NANMEDIAN'
-
-export interface FieldDefinition {
-  /** Identifier of field, how it's accessed in aggregation. */
-  key: string
-  /** Description of field, used in UI. */
-  description: string
-  /**
-   * Aggregation function to use for aggregated fields (optional, if undefined
-   * the field score is taken from the table directly)
-   */
-  agg_func?: AggFunction
-  agg_fields?: string | string[]
-  agg_weights?: number[]
-  agg_lateral?: boolean
+// TODO: find a generic way to do all this (the interfaces for definition objects and the upcast row -> object)
+export interface ScenarioDefinition extends Omit<ScenarioDefinitionRow, 'field_definition_ids'> {
+  field_definitions: (FieldDefinitionRow | null)[]
 }
 
-export interface ScenarioDefinition {
-  id: string
-  name: string
-  description: string
-  field_definitions: FieldDefinition[]
+export function upcastScenarioDefinitionRow(
+  row: ScenarioDefinitionRow,
+  fieldDefinitionCandidates: FieldDefinitionRow[],
+): ScenarioDefinition {
+  return {
+    dir: row.dir,
+    id: row.id,
+    name: row.name,
+    description: row.description,
+    field_definitions: row.field_definition_ids.map((id) => fieldDefinitionCandidates.find((c) => c.id === id) ?? null),
+  }
 }
 
-export interface TestDefinition {
-  id: string
-  name: string
-  description: string
-  field_definitions: FieldDefinition[]
-  scenario_definitions: ScenarioDefinition[]
+export interface TestDefinition extends Omit<TestDefinitionRow, 'field_definition_ids' | 'scenario_definition_ids'> {
+  field_definitions: (FieldDefinitionRow | null)[]
+  scenario_definitions: (ScenarioDefinition | null)[]
 }
 
-export interface BenchmarkDefinition {
-  id: string
-  name: string
-  description: string
+export function upcastTestDefinitionRow(
+  row: TestDefinitionRow,
+  fieldDefinitionCandidates: FieldDefinitionRow[],
+  scenarioDefinitionCandidates: ScenarioDefinitionRow[],
+): TestDefinition {
+  return {
+    dir: row.dir,
+    id: row.id,
+    name: row.name,
+    description: row.description,
+    field_definitions: row.field_definition_ids.map((id) => fieldDefinitionCandidates.find((c) => c.id === id) ?? null),
+    scenario_definitions: row.scenario_definition_ids.map((id) => {
+      const scenario = scenarioDefinitionCandidates.find((c) => c.id === id) ?? null
+      if (scenario) {
+        return upcastScenarioDefinitionRow(scenario, fieldDefinitionCandidates)
+      } else {
+        return null
+      }
+    }),
+  }
+}
+
+export interface BenchmarkDefinition
+  extends Omit<BenchmarkDefinitionRow, 'field_definition_ids' | 'test_definition_ids'> {
   /**
    * Defines aggregation of test scores in context:
    * - competition; to submission overall score
    * - campaign; to benchmark overall score
    */
-  field_definitions: FieldDefinition[]
+  field_definitions: FieldDefinitionRow[]
   test_definitions: TestDefinition[]
-  evaluator_data: json
 }
 
 // TODO: Benchmark Groups
 
-export type SubmissionStatus = 'SUBMITTED' | 'RUNNING' | 'SUCCESS' | 'FAILURE'
-
-export interface Submission {
-  id: string
+export interface Submission extends Omit<SubmissionRow, 'benchmark_definition_id' | 'test_definition_ids'> {
   benchmark_definition: BenchmarkDefinition
   test_definitions: TestDefinition[]
-  name: string
-  description: string
-  submission_url: string
-  code_repository: string | null
-  submitted_at: string
-  submitted_by_username: string
-  submission_status: SubmissionStatus
-  published: boolean
-}
-
-export interface Result {
-  scenario_definition: ScenarioDefinition
-  submission: Submission
-  key: string
-  value: number
 }
 
 export interface Scoring {
@@ -161,7 +160,11 @@ export class Aggregator {
    * @param submissions
    * @param results
    */
-  static getLeaderboard(benchmarkDef: BenchmarkDefinition, submissions: Submission[], results: Result[]): Leaderboard {
+  static getLeaderboard(
+    benchmarkDef: BenchmarkDefinition,
+    submissions: Submission[],
+    results: ResultRow[],
+  ): Leaderboard {
     // prepare tree structure (containing submissions as items)
     const leaderboard: Leaderboard = {
       benchmark: benchmarkDef,
@@ -173,7 +176,7 @@ export class Aggregator {
           this.getSubmissionScored(
             benchmarkDef,
             submission,
-            results.filter((result) => result.submission === submission),
+            results.filter((result) => result.submission_id === submission.id),
           ),
         ),
     }
@@ -193,7 +196,7 @@ export class Aggregator {
   static getCampaignItemScored(
     benchmarkDef: BenchmarkDefinition,
     submissions: Submission[],
-    results: Result[],
+    results: ResultRow[],
   ): CampaignItem[] {
     // build leaderboard first (might not contain rows for each test)
     // TODO: either skip submission ranking or ensure submission total equals test total in campaign case
@@ -224,7 +227,7 @@ export class Aggregator {
   static getSubmissionScored(
     benchmarkDef: BenchmarkDefinition,
     submission: Submission,
-    results: Result[],
+    results: ResultRow[],
   ): LeaderboardItem {
     // prepare tree structure (containing scored tests)
     const item: LeaderboardItem = {
@@ -245,22 +248,26 @@ export class Aggregator {
    * @param results Results filtered by submission.
    * @returns TestScored with scoring, but not yet ranked.
    */
-  static getTestScored(test: TestDefinition, results: Result[]): TestScored {
+  static getTestScored(test: TestDefinition, results: ResultRow[]): TestScored {
     // prepare tree structure (containing scored scenarios)
     const testScored: TestScored = {
       definition: test,
-      scenarios: test.scenario_definitions.map((scenario) =>
-        this.getScenarioScored(
-          scenario,
-          results.filter((result) => result.scenario_definition === scenario),
+      scenarios: test.scenario_definitions
+        .filter((s) => !!s)
+        .map((scenario) =>
+          this.getScenarioScored(
+            scenario,
+            results.filter((result) => result.scenario_definition_id === scenario.id),
+          ),
         ),
-      ),
       scorings: {},
     }
     // once children are appended and scored, it's safe to aggregate score
-    test.field_definitions.forEach((field) => {
-      this.aggregateScore(testScored.scorings, field, testScored.scenarios)
-    })
+    test.field_definitions
+      .filter((f) => !!f)
+      .forEach((field) => {
+        this.aggregateScore(testScored.scorings, field, testScored.scenarios)
+      })
     return testScored
   }
 
@@ -270,27 +277,29 @@ export class Aggregator {
    * @param results Results filtered by submission and scenario.
    * @returns ScenarioScored with scoring, but not yet ranked.
    */
-  private static getScenarioScored(scenario: ScenarioDefinition, results: Result[]): ScenarioScored {
+  static getScenarioScored(scenario: ScenarioDefinition, results: ResultRow[]): ScenarioScored {
     // build leaf
     const scenarioScored: ScenarioScored = {
       definition: scenario,
       scorings: {},
     }
     // once tree is built, it's safe to aggregate score
-    scenario.field_definitions.forEach((field) => {
-      this.aggregateScore(scenarioScored.scorings, field, [], results)
-    })
+    scenario.field_definitions
+      .filter((f) => !!f)
+      .forEach((field) => {
+        this.aggregateScore(scenarioScored.scorings, field, [], results)
+      })
     return scenarioScored
   }
 
   static aggregateScore(
     scorings: Scorings,
-    field: FieldDefinition,
+    field: FieldDefinitionRow,
     children: { scorings?: Scorings }[],
-    results: Result[] = [],
+    results: ResultRow[] = [],
   ) {
-    // if agg_func is undefined, take first match from results
-    if (typeof field.agg_func === 'undefined') {
+    // if agg_func is nullish, take first match from results
+    if (!field.agg_func) {
       const fieldName = this.getInFieldName(field, 0)
       scorings[field.key] = {
         score: results.find((result) => result.key === fieldName)?.value ?? null,
@@ -322,8 +331,9 @@ export class Aggregator {
     }
   }
 
-  static getInFieldName(field: FieldDefinition, index: number): string | undefined {
-    if (typeof field.agg_fields === 'undefined') {
+  static getInFieldName(field: FieldDefinitionRow, index: number): string | undefined {
+    // if agg_fields is nullish, return field key
+    if (!field.agg_fields) {
       return field.key
     } else if (typeof field.agg_fields === 'string') {
       return field.agg_fields
@@ -401,7 +411,7 @@ export class Aggregator {
    * Returns the primary scoring, assuming the first field definition is always
    * the primary score.
    */
-  static getPrimaryScoring(scorings: Scorings, fieldDefs: FieldDefinition[]) {
+  static getPrimaryScoring(scorings: Scorings, fieldDefs: FieldDefinitionRow[]) {
     const key = fieldDefs[0].key
     return scorings[key]
   }
@@ -420,23 +430,29 @@ export class Aggregator {
     })
     if (lod === 'test' || lod === 'scenario') {
       leaderboard.benchmark.test_definitions.forEach((test) => {
-        test.field_definitions.forEach((field) => {
-          rankables.push({
-            field: field.key,
-            from: { level: 'test', id: test.id },
+        test.field_definitions
+          .filter((f) => !!f)
+          .forEach((field) => {
+            rankables.push({
+              field: field.key,
+              from: { level: 'test', id: test.id },
+            })
           })
-        })
       })
       if (lod === 'scenario') {
         leaderboard.benchmark.test_definitions.forEach((test) => {
-          test.scenario_definitions.forEach((scenario) => {
-            scenario.field_definitions.forEach((field) => {
-              rankables.push({
-                field: field.key,
-                from: { level: 'scenario', id: scenario.id },
-              })
+          test.scenario_definitions
+            .filter((s) => !!s)
+            .forEach((scenario) => {
+              scenario.field_definitions
+                .filter((f) => !!f)
+                .forEach((field) => {
+                  rankables.push({
+                    field: field.key,
+                    from: { level: 'scenario', id: scenario.id },
+                  })
+                })
             })
-          })
         })
       }
     }

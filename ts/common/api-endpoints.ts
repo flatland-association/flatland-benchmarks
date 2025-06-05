@@ -91,6 +91,9 @@ interface ApiEndpointDefinitions {
     GET: ApiEndpoint<Empty, Empty, json>
     POST: ApiEndpoint<PostTestResultsBody, Empty, Empty>
   }
+  '/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id': {
+    GET: ApiEndpoint<Empty, Empty, json>
+  }
 }
 
 /**
