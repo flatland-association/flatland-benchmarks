@@ -24,7 +24,7 @@ Leaderboard -  i.e. a list of scored submissions
 In campaign setting:
 Campaign Overview: list of CampaignItems
 └ CampaignItem -  a benchmark scored by aggregation of the best test score; the best test from all SubmissionScored
-  └ SubmissionScored[] - scored submissions (aggregated at benchmark level ignored)
+  └ SubmissionScored[] - scored submissions (aggregated per test, aggregation at benchmark level ignored)
     └ TestScored[] - idem
       └ ScenarioScored[] - idem
 
