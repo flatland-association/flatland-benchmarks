@@ -17,10 +17,13 @@ export class TestController extends Controller {
    * /tests/{ids}:
    *  get:
    *    description: Returns tests with ID in `ids`.
+   *    security:
+   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: ids
    *        description: Comma-separated list of IDs.
+   *        required: true
    *        schema:
    *          type: array
    *          items:

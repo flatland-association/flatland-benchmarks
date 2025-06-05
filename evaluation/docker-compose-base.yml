@@ -77,7 +77,7 @@ services:
         max-file: "5"
     healthcheck:
       test: rabbitmqctl status
-      interval: 10s
+      interval: 20s
       timeout: 10s
       retries: 30
     networks:
@@ -114,17 +114,19 @@ services:
         set -e
         /usr/bin/mc config host add myminio http://minio:${MINIO_PORT} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
 
-        /usr/bin/mc mb myminio/${S3_BUCKET}
+        # do not fail if bucket already exists:
+        /usr/bin/mc mb myminio/${S3_BUCKET} || true
 
         echo "createbuckets successful"
     networks:
       - flatland-benchmarks
 
-  compute_worker:
+  orchestrator:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
-    command: python -m celery -A tasks worker -l info -n compute-worker@%n
+    # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
+    command: python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q flatland3-evaluation
     build:
-      context: ./compute_worker
+      context: ./orchestrator
       dockerfile: Dockerfile_docker_compose
     depends_on:
       rabbit:
@@ -133,11 +135,11 @@ services:
         condition: service_completed_successfully
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
-      - ./compute_worker/tasks_docker_compose.py:/app/tasks.py
+      - ./orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
     env_file: .env
     environment:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
-      - REDIS_IP=redis://redis:6379
+      - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
       - HOST_DIRECTORY=${PWD}
       - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
       - S3_BUCKET=${S3_BUCKET}
@@ -155,7 +157,52 @@ services:
         max-size: "20m"
         max-file: "5"
     healthcheck:
-      test: celery -A tasks inspect ping
+      test: celery -A orchestrator inspect ping
+    networks:
+      - flatland-benchmarks
+
+  fab-backend:
+    # TODO add switch to use pre-built image or local build
+    #image: ghcr.io/flatland-association/fab-backend:latest
+    #pull_policy: always
+    build:
+      context: ../
+      dockerfile: deployment/backend/Dockerfile
+    # POSTGRES_ variables are required for flyway
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./config-demo.jsonc:/usr/src/app/dist/backend/config/config.jsonc
+    ports:
+      - 8000:8000
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "wget -qq 127.0.0.1:8000/api-docs" ]
+      interval: 5s
+      timeout: 1s
+      retries: 5
+    networks:
+      - flatland-benchmarks
+
+  fab-frontend:
+    # TODO add switch to use pre-built image or local build
+    #image: ghcr.io/flatland-association/fab-frontend:latest
+    #pull_policy: always
+    build:
+      context: ../
+      dockerfile: deployment/frontend/Dockerfile
+    depends_on:
+      fab-backend:
+        condition: service_healthy
+    ports:
+      - 80:80
     networks:
       - flatland-benchmarks
 

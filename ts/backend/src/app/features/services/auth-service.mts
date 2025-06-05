@@ -2,7 +2,10 @@ import type { Request } from 'express'
 import jwt, { JwtPayload, VerifyCallback } from 'jsonwebtoken'
 import { JwksClient } from 'jwks-rsa'
 import { configuration } from '../config/config.mjs'
+import { Logger } from '../logger/logger.mjs'
 import { Service } from './service.mjs'
+
+const logger = new Logger('auth-service')
 
 export class AuthService extends Service {
   private publicKey?: string
@@ -49,6 +52,7 @@ export class AuthService extends Service {
    */
   async authorization(req: Request) {
     this.error = undefined
+    logger.info('authorization')
 
     const token = req.headers.authorization?.split(' ')[1]
 
@@ -65,7 +69,6 @@ export class AuthService extends Service {
         }
         return resolve(decoded as JwtPayload)
       }
-
       jwt.verify(token, this.getKey, { audience: this.config.keycloak.audience }, verifyCallback)
     })
   }

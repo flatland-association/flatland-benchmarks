@@ -29,7 +29,7 @@ export class SubmissionController extends Controller {
    *  post:
    *    description: Inserts new submission.
    *    security:
-   *      - oauth2: []
+   *      - oauth2: [user]
    *    requestBody:
    *      required: true
    *      content:
@@ -40,16 +40,17 @@ export class SubmissionController extends Controller {
    *              name:
    *                type: string
    *                description: Display name of submission.
-   *              benchmark:
-   *                type: number
+   *              benchmark_definition_id:
+   *                type: string
+   *                format: uuid
    *                description: ID of benchmark this submission belongs to.
-   *              submission_image:
+   *              submission_data_url:
    *                type: string
    *                description: URL of submission executable image.
    *              code_repository:
    *                type: string
    *                description: URL of submission code repository.
-   *              tests:
+   *              test_definition_ids:
    *                type: array
    *                items:
    *                  type: string
@@ -66,14 +67,55 @@ export class SubmissionController extends Controller {
    *                - type: object
    *                  properties:
    *                    body:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of submission.
+   *  get:
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: query
+   *        name: benchmark
+   *        schema:
+   *          type: string
+   *        description: The number of items to skip before starting to collect the result set
+   *    responses:
+   *      200:
+   *        description: Requested tests.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
    *                      type: array
    *                      items:
    *                        type: object
    *                        properties:
+   *                          id:
+   *                            type: string
    *                          uuid:
    *                            type: string
    *                            format: uuid
-   *                            description: UUID of submission.
+   *                          name:
+   *                            type: string
+   *                          benchmark:
+   *                            type: string
+   *                          submitted_at:
+   *                            type: string
+   *                          submitted_by_username:
+   *                            type: string
+   *                          public:
+   *                            type: string
+   *                          scores:
+   *                            type: string
+   *                          rank:
+   *                            type: string
    */
   postSubmission: PostHandler<'/submissions'> = async (req, res) => {
     const authService = AuthService.getInstance()
@@ -111,12 +153,6 @@ export class SubmissionController extends Controller {
       this.serverError(res, { text: `could not insert submission` }, { id })
       return
     }
-    // get benchmark docker image
-    const benchmarkRow = await sql.query`
-        SELECT docker_image FROM benchmark_definitions
-        WHERE id=${req.body.benchmark_definition_id}
-      `
-    const dockerImage = benchmarkRow.at(0)?.['docker_image']
     // get test names
     const tests = (
       await sql.query<{ name: string }>`
@@ -126,38 +162,31 @@ export class SubmissionController extends Controller {
         `
     ).map((r) => r.name)
     // start evaluator
-    const amqp = AmqpService.getInstance()
-    const payload = [
-      [],
-      {
-        docker_image: dockerImage,
-        submission_image: req.body.submission_data_url,
-        tests: tests,
-      },
-      {
-        callbacks: null,
-        errbacks: null,
-        chain: null,
-        chord: null,
-      },
-    ]
-    const sent = await amqp.sendToQueue('celery', payload, {
-      headers: {
-        task: 'flatland3-evaluation',
-        id: `sub-${id}`,
-      },
-      contentType: 'application/json',
-      persistent: true,
-    })
+    const celery = AmqpService.getInstance()
+    const payload = {
+      submission_data_url: req.body.submission_data_url,
+      tests: tests,
+    }
+    logger.info(payload)
+    const sent = await celery.sendToQueue(req.body.benchmark_definition_id as string, payload, id)
+    logger.info(sent)
+
     if (sent) {
       this.respond(res, { id }, payload)
     } else {
-      this.respond(res, { id }, 'Could not send message to AMQP service. Check backend log.')
+      this.respond(res, { id }, 'Could not send message to broker. Check backend log.')
     }
   }
 
   // returns scored and public submissions as preview
   getSubmissions: GetHandler<'/submissions'> = async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth) {
+      this.unauthorizedError(res, { text: 'Not authorized' })
+      return
+    }
+
     const benchmarkId = req.query['benchmark']
     const submissionIds = req.query['uuid']?.split(',')
     const submittedBy = req.query['submitted_by']
@@ -204,7 +233,52 @@ export class SubmissionController extends Controller {
     const resources = appendDir('/submissions/', rows)
     this.respond(res, resources)
   }
-
+  /**
+   * @swagger
+   * /submissions/{uuid}:
+   *  get:
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: uuid
+   *        required: true
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *        description: The submission ID
+   *    responses:
+   *      200:
+   *        description: Requested submissions.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                          benchmark_definition_id:
+   *                            type: string
+   *                            format: uuid
+   *                          submitted_at:
+   *                            type: string
+   *                          submitted_by_username:
+   *                            type: string
+   *                          public:
+   *                            type: string
+   *                          scores:
+   *                            type: string
+   *                          rank:
+   *                            type: string
+   */
   getSubmissionByUuid: GetHandler<'/submissions/:uuid'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)

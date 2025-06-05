@@ -18,13 +18,13 @@ Referring to [Information Flow](../docs/img/architecture/InformationFlow.drawio.
 | Component           | Service                                                                                                                                                |
 |---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Evaluation Queue    | `rabbitmq` send tasks to worker                                                                                                                        |
-| Compute Worker Pool | `compute_worker` Celery worker, receives task and runs two containers `evaluator` and `agent`                                                          | 
+| Orchestrator | `orchestrator` Celery worker pool (concurrency), receives task and runs two containers `evaluator` and `agent`                                                            | 
 | Evaluator           | `evaluator` waits for messages from agent                                                                                                              |
 | Agent               | `agent` runs environments and sends messages to evaluator                                                                                              |
 | Result Store        | `redis` kv store used for messaging                                                                                                                    |
 | Evaluation Broker   | N.B. The same `redis` instance is used as Celery backend (`codabench`) and for communication between `agent` and `evaluator` (`flatland-starter-kit`). |
-| (Flatland API)      | `submitter` simulates submission from portal by scheduling `compute_worker` task                                                                       |
-| S3 Bucket           | `evaluator` and `compute_worker` upload results (.json/.csv) and logs, respectively, to S3 bucket on an external S3 object storage cloud service.      |
+| (Flatland API)      | `submitter` simulates submission from portal by scheduling `orchestrator` task                                                                         |
+| S3 Bucket           | `evaluator` and `orchestrator` upload results (.json/.csv) and logs, respectively, to S3 bucket on an external S3 object storage cloud service.        |
 
 ### Deployment View
 
@@ -77,7 +77,7 @@ Message sent via Celery library (`submitter.py`):
 
 ![celery_queue.png](img/celery_queue.png)
 
-Manual triggering via RabbitMQ web triggers `compute_worker`:
+Manual triggering via RabbitMQ web triggers `orchestrator`:
 
 ![celery_manual_publish.png](img/celery_manual_publish.png)
 
