@@ -152,12 +152,6 @@ export class SubmissionController extends Controller {
       this.serverError(res, { text: `could not insert submission` }, { id })
       return
     }
-    // get benchmark docker image
-    const benchmarkRow = await sql.query`
-        SELECT docker_image FROM benchmark_definitions
-        WHERE id=${req.body.benchmark_definition_id}
-      `
-    const dockerImage = benchmarkRow.at(0)?.['docker_image']
     // get test names
     const tests = (
       await sql.query<{ name: string }>`
@@ -173,7 +167,7 @@ export class SubmissionController extends Controller {
       tests: tests,
     }
     logger.info(payload)
-    const sent = await celery.sendToQueue(req.body.benchmark, payload, uuid)
+    const sent = await celery.sendToQueue(req.body.benchmark_definition_id as string, payload, id)
     logger.info(sent)
 
     if (sent) {

@@ -9,7 +9,7 @@ import {
   SubmissionRow,
   Test,
 } from './interfaces'
-import { Empty, json, NoNever, ResourceId, StripLocator } from './utility-types'
+import { Empty, json, NoNever, StripLocator } from './utility-types'
 
 /**
  * Interface for registered enpoints. Types the request body, request query
@@ -72,7 +72,7 @@ interface ApiEndpointDefinitions {
     GET: ApiEndpoint<Empty, Empty, Test[]>
   }
   '/submissions': {
-    GET: ApiEndpoint<Empty, { benchmark?: ResourceId; uuid?: string; submitted_by?: string }, SubmissionPreview[]>
+    GET: ApiEndpoint<Empty, { benchmark?: string; uuid?: string; submitted_by?: string }, SubmissionPreview[]>
     POST: ApiEndpoint<StripLocator<SubmissionRow>, Empty, { id: string }>
   }
   '/submissions/:uuid': {
