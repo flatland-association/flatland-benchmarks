@@ -97,6 +97,9 @@ interface ApiEndpointDefinitions {
   '/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id': {
     GET: ApiEndpoint<Empty, Empty, json>
   }
+  '/results/benchmark/:benchmark_id': {
+    GET: ApiEndpoint<Empty, Empty, json>
+  }
 }
 
 /**

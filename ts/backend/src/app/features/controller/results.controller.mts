@@ -29,6 +29,7 @@ export class ResultsController extends Controller {
     this.attachGet('/results/submission/:submission_id/tests/:test_id', this.getTestResults)
     this.attachPost('/results/submission/:submission_id/tests/:test_id', this.postTestResults)
     this.attachGet('/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id', this.getScenarioResults)
+    this.attachGet('/results/benchmark/:benchmark_id', this.getLeaderboard)
   }
 
   /**
@@ -380,6 +381,115 @@ export class ResultsController extends Controller {
     this.respond(res, result as json)
   }
 
+  /**
+   * @swagger
+   * /results/benchmark/{benchmark_id}:
+   *  get:
+   *    description: Get benchmark leaderboard.
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: benchmark_id
+   *        description: Benchmark ID.
+   *        required: true
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *    responses:
+   *      200:
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          benchmark_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of benchmark.
+   *                          items:
+   *                            type: array
+   *                            items:
+   *                              type: object
+   *                              properties:
+   *                                submission_id:
+   *                                  type: string
+   *                                  format: uuid
+   *                                  description: ID of submission.
+   *                                scorings:
+   *                                  type: object
+   *                                  description: Dictionary of submission scores.
+   *                                test_scorings:
+   *                                  type: array
+   *                                  items:
+   *                                    type: object
+   *                                    properties:
+   *                                      test_id:
+   *                                        type: string
+   *                                        format: uuid
+   *                                        description: ID of test.
+   *                                      scorings:
+   *                                        type: object
+   *                                        description: Dictionary of test scores.
+   *                                      scenario_scorings:
+   *                                        type: array
+   *                                        items:
+   *                                          type: object
+   *                                          properties:
+   *                                            scenario_id:
+   *                                              type: string
+   *                                              format: uuid
+   *                                              description: ID of scenario.
+   *                                            scorings:
+   *                                              type: object
+   *                                              description: Dictionary of scores.
+   */
+  getLeaderboard: GetHandler<'/results/benchmark/:benchmark_id'> = async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth) {
+      this.unauthorizedError(res, { text: 'Not authorized' })
+      return
+    }
+    const benchmarkId = req.params.benchmark_id
+    const leaderboard = await this.aggregateLeaderboard(benchmarkId)
+    if (!leaderboard) {
+      this.requestError(res, { text: 'Leaderboard could not be aggregated' })
+      return
+    }
+    // transform for transmission
+    // TODO: properly define data format of results for transmission
+    const result = {
+      benchmark_id: leaderboard.benchmark.id,
+      items: leaderboard.items.map((item) => {
+        return {
+          submission_id: item.submission.id,
+          scorings: item.scorings,
+          test_scorings: item.tests.map((test) => {
+            return {
+              test_id: test.definition.id,
+              scorings: test.scorings,
+              scenario_scorings: test.scenarios.map((scenario) => {
+                return {
+                  scenario_id: scenario.definition.id,
+                  scorings: scenario.scorings,
+                }
+              }),
+            }
+          }),
+        }
+      }),
+    }
+    this.respond(res, result as json)
+  }
+
   // TODO: generalize the below:
 
   async aggregateScenarioScore(submissionId: string, testId: string, scenarioId: string) {
@@ -453,5 +563,38 @@ export class ResultsController extends Controller {
     `
     if (!submission.benchmark_definition) return null
     return Aggregator.getSubmissionScored(submission.benchmark_definition, submission, resultRows)
+  }
+
+  async aggregateLeaderboard(benchmarkId: string) {
+    const sql = SqlService.getInstance()
+    // load required definitions
+    const submissionRows = await sql.query<SubmissionRow>`
+      SELECT * FROM submissions WHERE benchmark_definition_id=${benchmarkId}
+    `
+    const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
+      SELECT * FROM benchmark_definitions WHERE id=${benchmarkId}
+    `
+    // load required candidates for referenced fields (used in upcast) and upcast
+    const fieldDefCandidates = await sql.query<FieldDefinitionRow>`
+      SELECT * FROM field_definitions
+    `
+    const scenarioDefCandidates = await sql.query<ScenarioDefinitionRow>`
+      SELECT * FROM scenario_definitions
+    `
+    const testDefCandidates = await sql.query<TestDefinitionRow>`
+      SELECT * FROM test_definitions
+    `
+    const submissions = submissionRows.map((submissionRow) =>
+      upcastSubmissionRow(submissionRow, fieldDefCandidates, scenarioDefCandidates, testDefCandidates, [
+        benchmarkDefRow,
+      ]),
+    )
+    // load results
+    const resultRows: ResultRow[] = await sql.query<ResultRow>`
+      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_definition_id=${benchmarkId}
+    `
+    const benchmarkDef = submissions.at(0)?.benchmark_definition
+    if (!benchmarkDef) return null
+    return Aggregator.getLeaderboard(benchmarkDef, submissions, resultRows)
   }
 }
