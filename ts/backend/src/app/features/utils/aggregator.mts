@@ -17,7 +17,7 @@ Aggregated/scored structure is like this:
 
 In competition setting:
 Leaderboard -  i.e. a list of scored submissions
-└ SubmissionScored[] - scored submissions (aggregated at benchmark level from tests), a submission refers to exactly one benchmark by definition
+└ SubmissionScored[] - scored submissions (scores aggregated at test level and aggregated at benchmark level from tests), a submission refers to exactly one benchmark by definition
   └ TestScored[] - scored tests (aggregated from scenarios)
     └ ScenarioScored[] - scored scenarios
     
