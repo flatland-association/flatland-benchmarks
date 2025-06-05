@@ -37,6 +37,21 @@ export class ResultsController extends Controller {
    *        schema:
    *          type: string
    *          format: uuid
+   *    responses:
+   *      200:
+   *        description: All results inserted.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *      400:
+   *        description: Some results could not be inserted, transaction aborted.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
    */
   getTestResults: GetHandler<'/results/submission/:submission_id/tests/:test_id'> = async (req, res) => {
     const authService = AuthService.getInstance()

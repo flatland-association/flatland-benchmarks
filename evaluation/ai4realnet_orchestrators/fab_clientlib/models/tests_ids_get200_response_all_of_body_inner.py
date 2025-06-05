@@ -17,8 +17,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,10 +27,11 @@ class TestsIdsGet200ResponseAllOfBodyInner(BaseModel):
   TestsIdsGet200ResponseAllOfBodyInner
   """  # noqa: E501
   dir: Optional[StrictStr] = None
-  id: Optional[Union[StrictFloat, StrictInt]] = None
+  id: Optional[StrictStr] = None
   name: Optional[StrictStr] = None
   description: Optional[StrictStr] = None
-  __properties: ClassVar[List[str]] = ["dir", "id", "name", "description"]
+  scenario_definition_ids: Optional[List[StrictStr]] = None
+  __properties: ClassVar[List[str]] = ["dir", "id", "name", "description", "scenario_definition_ids"]
 
   model_config = ConfigDict(
     populate_by_name=True,
@@ -85,6 +86,7 @@ class TestsIdsGet200ResponseAllOfBodyInner(BaseModel):
       "dir": obj.get("dir"),
       "id": obj.get("id"),
       "name": obj.get("name"),
-      "description": obj.get("description")
+      "description": obj.get("description"),
+      "scenario_definition_ids": obj.get("scenario_definition_ids")
     })
     return _obj

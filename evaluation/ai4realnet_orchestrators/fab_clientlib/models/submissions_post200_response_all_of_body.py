@@ -26,8 +26,8 @@ class SubmissionsPost200ResponseAllOfBody(BaseModel):
   """
   SubmissionsPost200ResponseAllOfBody
   """  # noqa: E501
-  uuid: Optional[StrictStr] = Field(default=None, description="UUID of submission.")
-  __properties: ClassVar[List[str]] = ["uuid"]
+  id: Optional[StrictStr] = Field(default=None, description="ID of submission.")
+  __properties: ClassVar[List[str]] = ["id"]
 
   model_config = ConfigDict(
     populate_by_name=True,
@@ -79,6 +79,6 @@ class SubmissionsPost200ResponseAllOfBody(BaseModel):
       return cls.model_validate(obj)
 
     _obj = cls.model_validate({
-      "uuid": obj.get("uuid")
+      "id": obj.get("id")
     })
     return _obj

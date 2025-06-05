@@ -15,3 +15,5 @@ setup.py
 .github/
 docs/
 test/
+README.md
+py.typed

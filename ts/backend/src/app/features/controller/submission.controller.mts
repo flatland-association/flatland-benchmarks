@@ -40,7 +40,7 @@ export class SubmissionController extends Controller {
    *              name:
    *                type: string
    *                description: Display name of submission.
-   *              benchmark:
+   *              benchmark_definition_id:
    *                type: string
    *                format: uuid
    *                description: ID of benchmark this submission belongs to.
@@ -50,7 +50,7 @@ export class SubmissionController extends Controller {
    *              code_repository:
    *                type: string
    *                description: URL of submission code repository.
-   *              tests:
+   *              test_definition_ids:
    *                type: array
    *                items:
    *                  type: string
@@ -69,10 +69,10 @@ export class SubmissionController extends Controller {
    *                    body:
    *                        type: object
    *                        properties:
-   *                          uuid:
+   *                          id:
    *                            type: string
    *                            format: uuid
-   *                            description: UUID of submission.
+   *                            description: ID of submission.
    *  get:
    *    security:
    *      - oauth2: [user]
@@ -100,7 +100,8 @@ export class SubmissionController extends Controller {
    *                          id:
    *                            type: string
    *                          uuid:
-   *                            type: number
+   *                            type: string
+   *                            format: uuid
    *                          name:
    *                            type: string
    *                          benchmark:
@@ -262,9 +263,11 @@ export class SubmissionController extends Controller {
    *                        type: object
    *                        properties:
    *                          id:
-   *                            type: number
-   *                          benchmark:
-   *                            type: number
+   *                            type: string
+   *                            format: uuid
+   *                          benchmark_definition_id:
+   *                            type: string
+   *                            format: uuid
    *                          submitted_at:
    *                            type: string
    *                          submitted_by_username:

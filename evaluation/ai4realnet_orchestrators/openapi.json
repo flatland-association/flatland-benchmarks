@@ -6,6 +6,161 @@
     "description": "FAB backend API"
   },
   "paths": {
+    "/results/submission/{submission_id}/tests/{test_id}": {
+      "get": {
+        "description": "Get submission results aggregated by test.",
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "submission_id",
+            "description": "Submission ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "test_id",
+            "description": "Test ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All results inserted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some results could not be inserted, transaction aborted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Inserts test results",
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "submission_id",
+            "description": "Submission ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "test_id",
+            "description": "Test ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "data": {
+                    "type": "array",
+                    "description": "Results.",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "scenario_id": {
+                          "type": "string",
+                          "format": "uuid",
+                          "description": "ID of scenario"
+                        }
+                      },
+                      "additionalProperties": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "All results inserted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Some results could not be inserted, transaction aborted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/submissions": {
       "post": {
         "description": "Inserts new submission.",
@@ -27,7 +182,7 @@
                     "type": "string",
                     "description": "Display name of submission."
                   },
-                  "benchmark": {
+                  "benchmark_definition_id": {
                     "type": "string",
                     "format": "uuid",
                     "description": "ID of benchmark this submission belongs to."
@@ -40,10 +195,11 @@
                     "type": "string",
                     "description": "URL of submission code repository."
                   },
-                  "tests": {
+                  "test_definition_ids": {
                     "type": "array",
                     "items": {
-                      "type": "number"
+                      "type": "string",
+                      "format": "uuid"
                     },
                     "description": "IDs of tests to run."
                   }
@@ -68,10 +224,10 @@
                         "body": {
                           "type": "object",
                           "properties": {
-                            "uuid": {
+                            "id": {
                               "type": "string",
                               "format": "uuid",
-                              "description": "UUID of submission."
+                              "description": "ID of submission."
                             }
                           }
                         }
@@ -124,7 +280,8 @@
                                 "type": "string"
                               },
                               "uuid": {
-                                "type": "number"
+                                "type": "string",
+                                "format": "uuid"
                               },
                               "name": {
                                 "type": "string"
@@ -175,7 +332,8 @@
             "name": "uuid",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "The submission ID"
           }
@@ -199,10 +357,12 @@
                             "type": "object",
                             "properties": {
                               "id": {
-                                "type": "number"
+                                "type": "string",
+                                "format": "uuid"
                               },
-                              "benchmark": {
-                                "type": "number"
+                              "benchmark_definition_id": {
+                                "type": "string",
+                                "format": "uuid"
                               },
                               "submitted_at": {
                                 "type": "string"
@@ -278,13 +438,21 @@
                                 "type": "string"
                               },
                               "id": {
-                                "type": "number"
+                                "type": "string",
+                                "format": "uuid"
                               },
                               "name": {
                                 "type": "string"
                               },
                               "description": {
                                 "type": "string"
+                              },
+                              "scenario_definition_ids": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
                               }
                             }
                           }

@@ -11,29 +11,29 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
-
 
 class SubmissionsUuidGet200ResponseAllOfBodyInner(BaseModel):
   """
   SubmissionsUuidGet200ResponseAllOfBodyInner
   """  # noqa: E501
-  id: Optional[Union[StrictFloat, StrictInt]] = None
-  benchmark: Optional[Union[StrictFloat, StrictInt]] = None
+  id: Optional[StrictStr] = None
+  benchmark_definition_id: Optional[StrictStr] = None
   submitted_at: Optional[StrictStr] = None
   submitted_by_username: Optional[StrictStr] = None
   public: Optional[StrictStr] = None
   scores: Optional[StrictStr] = None
   rank: Optional[StrictStr] = None
-  __properties: ClassVar[List[str]] = ["id", "benchmark", "submitted_at", "submitted_by_username", "public", "scores", "rank"]
+  __properties: ClassVar[List[str]] = ["id", "benchmark_definition_id", "submitted_at", "submitted_by_username", "public", "scores", "rank"]
 
   model_config = ConfigDict(
     populate_by_name=True,
@@ -86,7 +86,7 @@ class SubmissionsUuidGet200ResponseAllOfBodyInner(BaseModel):
 
     _obj = cls.model_validate({
       "id": obj.get("id"),
-      "benchmark": obj.get("benchmark"),
+      "benchmark_definition_id": obj.get("benchmark_definition_id"),
       "submitted_at": obj.get("submitted_at"),
       "submitted_by_username": obj.get("submitted_by_username"),
       "public": obj.get("public"),

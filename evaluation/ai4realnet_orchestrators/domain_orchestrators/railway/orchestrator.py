@@ -36,7 +36,7 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
     # we use the benchmark_id as the task's name and queue name (i.e. one task per benchmark). This ensures the Celery task is routed to the responsible orchestrator
     benchmark_id = orchestrator.name
     for test_id in tests:
-        if test_id == "1":
+        if test_id == "557d9a00-7e6d-410b-9bca-a017ca7fe3aa":
             filename = Path(f"{test_id}_{submission_id}.json")
             test_runner(submission_id=submission_id, test_id=test_id, submission_data_url=submission_data_url, filename=filename)
             test_evaluator(submission_id=submission_id, test_id=test_id, filename=filename)

@@ -80,20 +80,20 @@ def test_start_submission():
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
   posted_submission = fab.submissions_post(SubmissionsPostRequest(
     name="fancy",
-    benchmark='1',  # TODO uuid
+    benchmark_definition_id='20ccc7c1-034c-4880-8946-bffc3fed1359',
     submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
     code_repository="https://github.com/you-name-it",
-    tests=[1, 2],  # TODO mandatory despite optional in swagger.json, use UUIDs
+    test_definition_ids=['557d9a00-7e6d-410b-9bca-a017ca7fe3aa'],  # TODO mandatory despite optional in swagger.json, use UUIDs
     # https://github.com/OpenAPITools/openapi-generator/issues/19485
     # https://github.com/openAPITools/openapi-generator-pip
   ))
   print(posted_submission)
-  submissions = fab.submissions_uuid_get(uuid=posted_submission.body.uuid)
+  submissions = fab.submissions_uuid_get(uuid=posted_submission.body.id)
   print(submissions)
-  assert submissions.body[0].benchmark == 1
+  assert submissions.body[0].id == posted_submission.body.id
+  assert submissions.body[0].benchmark_definition_id == '20ccc7c1-034c-4880-8946-bffc3fed1359'
   assert submissions.body[0].submitted_by_username == "service-account-fab-client-credentials"
 
-  # TODO merge main with results API and upload results from test evaluator?
   # TODO finalize flatland-orchestrator incl. submission ->
 
   # TODO merge my pr in fab? what does it need?

@@ -11,23 +11,23 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 from __future__ import annotations
 import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
+from pydantic import BaseModel, ConfigDict, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
-
 
 class SubmissionsGet200ResponseAllOfBodyInner(BaseModel):
   """
   SubmissionsGet200ResponseAllOfBodyInner
   """  # noqa: E501
   id: Optional[StrictStr] = None
-  uuid: Optional[Union[StrictFloat, StrictInt]] = None
+  uuid: Optional[StrictStr] = None
   name: Optional[StrictStr] = None
   benchmark: Optional[StrictStr] = None
   submitted_at: Optional[StrictStr] = None
