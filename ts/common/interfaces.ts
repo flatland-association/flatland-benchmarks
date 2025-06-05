@@ -57,6 +57,28 @@ export interface Result extends Resource<'/results/'> {
 
 // TODO: merge/reduce number of interfaces, find a way to use same interface for transport as for computation
 
+export interface ScenarioDefinitionRow extends Resource<'/scenarios/'> {
+  id: string
+  name: string
+  description: string
+  field_definitions_ids: string[]
+}
+
+export interface TestDefinitionRow extends Resource<'/tests/'> {
+  id: string
+  name: string
+  description: string
+  field_definition_ids: string[]
+  scenario_definition_ids: string[]
+}
+
+export interface BenchmarkDefinitionRow extends Resource<'/benchmarks/'> {
+  name: string
+  description: string
+  field_definition_ids: string[]
+  test_definition_ids: string[]
+}
+
 export type SubmissionStatus = 'SUBMITTED' | 'RUNNING' | 'SUCCESS' | 'FAILURE'
 
 export interface SubmissionRow extends Resource<'/submissions/'> {

@@ -1,13 +1,13 @@
 import { ApiRequest } from './api-request'
 import { ApiResponse } from './api-response'
 import {
-  Benchmark,
-  BenchmarkPreview,
+  BenchmarkDefinitionRow,
   PostTestResultsBody,
   Result,
   SubmissionPreview,
   SubmissionRow,
   Test,
+  TestDefinitionRow,
 } from './interfaces'
 import { Empty, json, NoNever, ResourceId, StripLocator } from './utility-types'
 
@@ -63,13 +63,13 @@ interface ApiEndpointDefinitions {
     GET: ApiEndpoint<Empty, Empty, json>
   }
   '/benchmarks': {
-    GET: ApiEndpoint<Empty, Empty, BenchmarkPreview[]>
+    GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
   }
   '/benchmarks/:id': {
-    GET: ApiEndpoint<Empty, Empty, Benchmark[]>
+    GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
   }
   '/tests/:id': {
-    GET: ApiEndpoint<Empty, Empty, Test[]>
+    GET: ApiEndpoint<Empty, Empty, TestDefinitionRow[]>
   }
   '/submissions': {
     GET: ApiEndpoint<Empty, { benchmark?: ResourceId; uuid?: string; submitted_by?: string }, SubmissionPreview[]>
