@@ -54,3 +54,36 @@ export interface Result extends Resource<'/results/'> {
   results_str: string | null
   public: boolean | null
 }
+
+// TODO: merge/reduce number of interfaces, find a way to use same interface for transport as for computation
+
+export type SubmissionStatus = 'SUBMITTED' | 'RUNNING' | 'SUCCESS' | 'FAILURE'
+
+export interface SubmissionRow extends Resource<'/submissions/'> {
+  benchmark_definition_id: ResourceId
+  test_definition_ids: ResourceId[]
+  name: string
+  description?: string | null
+  submission_data_url: string
+  code_repository?: string | null
+  submitted_at?: string | null
+  submitted_by?: string | null
+  submitted_by_username?: string | null
+  status?: SubmissionStatus
+  published?: boolean
+}
+
+export interface ResultRow {
+  scenario_definition_id: string
+  test_definition_id: string
+  submission_id: string
+  key: string
+  value: number
+}
+
+// TODO: merge with resource pattern, find a way to use same interface for transport as for computation
+export interface PostTestResultsBody {
+  data: ({
+    scenario_id: string
+  } & Record<string, number>)[]
+}
