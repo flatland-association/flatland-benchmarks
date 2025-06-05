@@ -93,7 +93,7 @@ export class ResultsController extends Controller {
    *                    scenario_id:
    *                      type: string
    *                      format: uuid
-   *                      description: UUID of scenario
+   *                      description: ID of scenario
    *                  additionalProperties:
    *                    type: number
    *    responses:
