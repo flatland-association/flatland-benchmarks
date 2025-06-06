@@ -53,8 +53,10 @@ services:
         condition: service_completed_successfully
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
-      #- ./ai4realnet_orchestrators/domain_orchestrators/railway/orchestrator.py:/app/ai4realnet_orchestrators/domain_orchestrators/railway/orchestrator.py
-      #- ./ai4realnet_orchestrators/domain_orchestrators/railway/test_runner_evaluator_557d9a00.py:/app/ai4realnet_orchestrators/domain_orchestrators/railway/test_runner_evaluator_557d9a00.py
+      - ./data/:/app/data/
+      #      - ./ai4realnet_orchestrators/domain_orchestrators/railway/orchestrator.py:/app/ai4realnet_orchestrators/domain_orchestrators/railway/orchestrator.py
+      #      - ./ai4realnet_orchestrators/domain_orchestrators/railway/test_runner_evaluator_557d9a00.py:/app/ai4realnet_orchestrators/domain_orchestrators/railway/test_runner_evaluator_557d9a00.py
+      - ./ai4realnet_orchestrators/:/app/ai4realnet_orchestrators/
     env_file: .env
     environment:
       # required for flyway start.sh
