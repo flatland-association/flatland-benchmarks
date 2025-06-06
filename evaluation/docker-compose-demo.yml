@@ -46,6 +46,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_railway
+    privileged: true
     depends_on:
       rabbit:
         condition: service_healthy
