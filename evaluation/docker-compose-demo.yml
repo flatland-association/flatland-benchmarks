@@ -41,6 +41,9 @@ services:
     command:
       - |
         set -euxo pipefail
+        ls -al /app/data
+        mkdir -p /app/data/1234/
+        touch /app/data/1234/nix.txt
         cd ai4realnet_orchestrators
         python -m celery -A domain_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${BENCHMARK_ID}
     build:
