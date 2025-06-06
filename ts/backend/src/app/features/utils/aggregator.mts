@@ -267,9 +267,11 @@ export class Aggregator {
     const campaign = benchmarkDef.test_definitions
       .filter((t) => !!t)
       .map((testDef) => {
+        // REMARK: Comparing by object equality does not work in application,
+        // looks like upcast from rows does not create unique copies...
         const top = leaderboard.items.find(
           (item) =>
-            item.tests[0].definition === testDef &&
+            item.tests[0].definition.id === testDef.id &&
             this.getPrimaryScoring(item.scorings, benchmarkDef.field_definitions)?.rank === 1,
         )
         return {
