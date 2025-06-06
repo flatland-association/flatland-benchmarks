@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 import uuid
 
@@ -14,13 +15,12 @@ from fab_oauth_utils import backend_application_flow
 TRACE = 5
 logger = logging.getLogger(__name__)
 
-# set to True if docker-compose-demo.yml is already up and running
-ATTENDED = False
 
 
 @pytest.fixture(scope="module")
 def test_containers_fixture():
-  if ATTENDED:
+  # set env var ATTENDED to True if docker-compose-demo.yml is already up and running
+  if os.environ.get("ATTENDED", False):
     yield
     return
 
@@ -93,13 +93,6 @@ def test_start_submission():
   assert submissions.body[0].id == posted_submission.body.id
   assert submissions.body[0].benchmark_definition_id == '20ccc7c1-034c-4880-8946-bffc3fed1359'
   assert submissions.body[0].submitted_by_username == "service-account-fab-client-credentials"
-
-  # TODO finalize flatland-orchestrator incl. submission ->
-
-  # TODO merge my pr in fab? what does it need?
-  # TODO FAB deployment
-
-  # TODO extract orchestrator interface, possibly als test runner and test evaluator? and add UT
 
   # TODO extract to repo,
   # TODO post results ?
