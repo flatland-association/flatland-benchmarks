@@ -28,7 +28,7 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
 
     exec_with_logging([
         # sudo required - otherwise, we get "permission denied while trying to connect to the Docker daemon socket"
-        "docker", "run",
+        "sudo", "docker", "run",
         "--rm",
         "-v", f"{DATA_VOLUME}:/app/data",
         "-v", f"{HOST_DIRECTORY}/ai4realnet_orchestrators/domain_orchestrators/railway/entrypoint.sh:/home/conda/run.sh",
