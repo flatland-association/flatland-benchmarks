@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import time
 import uuid
 from io import StringIO
@@ -15,13 +16,12 @@ from testcontainers.compose import DockerCompose
 TRACE = 5
 logger = logging.getLogger(__name__)
 
-# set to True if docker-compose-demo.yml is already up and running
-ATTENDED = False
 
 
 @pytest.fixture(scope="module")
 def test_containers_fixture():
-    if ATTENDED:
+    # set env var ATTENDED to True if docker-compose-demo.yml is already up and running
+    if os.environ.get("Attended", False):
         yield
         return
 
