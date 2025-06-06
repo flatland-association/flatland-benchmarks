@@ -268,29 +268,36 @@ service backend(server)[Backend] in api
 service broker(internet)[Broker] in api
 service keycloak(server)[IAM] in api
 
+
 group railway(cloud)[Railway]
 service orchestratorailway(server)[Ochestrator] in railway
-service evaluatorrailway(server)[Evaluator] in railway
+service evaluatorrailway(server)[Test Runner and Test Evaluator] in railway
 
 group Cloudstorage(cloud)[Cloud Provider]
-service s3(disk)[Object Storage] in Cloudstorage
+service s3(disk)[S3 Object Storage] in Cloudstorage
+
+group gh(cloud)[GitHub]
+service ghcr(disk)[ghcr] in gh
+
 
 junction junctionBackend in api
 
 
 frontend:R -- L:backend
 backend:B -- T:junctionBackend
-backend:R -- L:broker
+backend:T -- B:broker
 
 broker:R -- L:orchestratorailway
-orchestratorailway:T -- B:evaluatorrailway
-evaluatorrailway:L -- R:s3
+orchestratorailway:B -- T:evaluatorrailway
+evaluatorrailway:L -- R:backend
 junctionBackend:T -- B:backend
 
 junctionBackend:R -- L:keycloak
 junctionBackend:L -- R:db
 
-backend:T -- B:s3
+
+evaluatorrailway:R -- L:s3
+evaluatorrailway:B -- L:ghcr
 ```
 
 | Component             | Description                                                                                                       | Technical                         |
