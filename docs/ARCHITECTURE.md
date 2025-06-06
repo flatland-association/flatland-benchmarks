@@ -965,13 +965,12 @@ Arrow directions signify call direction.
 sequenceDiagram
   AlgorithmicResearcher ->> Frontend: start experiment
   Frontend ->> Backend: PUT /submissions
-  participant BackendPoller
-  Backend ->> Broker: START {submission_id}
-  Worker ->> Broker: POLL START {submission_id}
-  Worker ->> Broker: END {submission_id}
-  BackendPoller ->> Broker: POLL END {submission_id}
-  BackendPoller ->> Backend: POST /submissions/{submission_id}/status
-  BackendPoller ->> Backend: POST /results/submission/{submission_id}/tests/{test_id}*
+  Backend ->> Broker: START {test_id} {submission_id} {submission_data_url}
+  Orchestrator ->> Broker: POLL START {test_id} {submission_id} {submission_data_url}
+  Orchestrator ->> TestRunnerEvaluator: run {test_id} with their data using prediction module from {submission_data_url} and upload results for {submission_id},{test_id}
+  TestRunnerEvaluator ->> Backend: POST /results/submission/{submission_id}/tests/{test_id}*
+  TestRunnerEvaluator ->> Backend: POST /submissions/{submission_id}/status
+  Orchestrator ->> Broker: END {submission_id}
   Frontend ->> Backend: GET /submission/{submission_id}
 ```
 
