@@ -48,7 +48,7 @@ services:
         python -m celery -A domain_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${BENCHMARK_ID}
     build:
       context: .
-      dockerfile: Dockerfile_railway
+      dockerfile: Dockerfile_railway_orchestrator
     depends_on:
       rabbit:
         condition: service_healthy
