@@ -27,10 +27,15 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
     Path(data_dir).chmod(0o777)
 
     exec_with_logging([
-        "sudo", "docker", "run",
+        # sudo required - otherwise, we get "permission denied while trying to connect to the Docker daemon socket"
+        "docker", "run",
         "--rm",
         "-v", f"{DATA_VOLUME}:/app/data",
         "-v", f"{HOST_DIRECTORY}/ai4realnet_orchestrators/domain_orchestrators/railway/entrypoint.sh:/home/conda/run.sh",
+        # Don't allow subprocesses to raise privileges, see https://github.com/codalab/codabench/blob/43e01d4bc3de26e8339ddb1463eef7d960ddb3af/compute_worker/compute_worker.py#L520
+        "--security-opt=no-new-privileges",
+        # Don't buffer python output, so we don't lose any
+        "-e", "PYTHONUNBUFFERED=1",
         "ghcr.io/flatland-association/flatland-baselines:latest",
         "--data-dir", data_dir,
         "--policy-pkg", "flatland_baselines.deadlock_avoidance_heuristic.policy.deadlock_avoidance_policy", "--policy-cls", "DeadLockAvoidancePolicy",
