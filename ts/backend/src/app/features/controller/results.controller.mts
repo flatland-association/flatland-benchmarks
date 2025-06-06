@@ -1,12 +1,16 @@
 import {
   BenchmarkDefinitionRow,
+  CampaignItem,
   FieldDefinitionRow,
+  Leaderboard,
+  LeaderboardItem,
   ResultRow,
   ScenarioDefinitionRow,
+  ScenarioScored,
   SubmissionRow,
   TestDefinitionRow,
+  TestScored,
 } from '@common/interfaces'
-import { json } from '@common/utility-types'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AuthService } from '../services/auth-service.mjs'
@@ -110,7 +114,7 @@ export class ResultsController extends Controller {
     }
     // transform for transmission
     // TODO: properly define data format of results for transmission
-    const result = {
+    const result: LeaderboardItem = {
       submission_id: submissionScored.submission.id,
       scorings: submissionScored.scorings,
       test_scorings: submissionScored.tests.map((test) => {
@@ -126,7 +130,7 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(res, result as json)
+    this.respond(res, [result])
   }
 
   /**
@@ -198,7 +202,7 @@ export class ResultsController extends Controller {
     const testScored = await this.aggregateTestScore(submissionId, testId)
     // transform for transmission
     // TODO: properly define data format of results for transmission
-    const result = {
+    const result: TestScored = {
       test_id: testScored.definition.id,
       scorings: testScored.scorings,
       scenario_scorings: testScored.scenarios.map((scenario) => {
@@ -208,7 +212,7 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(res, result as json)
+    this.respond(res, [result])
   }
 
   /**
@@ -378,11 +382,11 @@ export class ResultsController extends Controller {
     const scenarioScored = await this.aggregateScenarioScore(submissionId, testId, scenarioId)
     // transform for transmission
     // TODO: properly define data format of results for transmission
-    const result = {
+    const result: ScenarioScored = {
       scenario_id: scenarioScored.definition.id,
       scorings: scenarioScored.scorings,
     }
-    this.respond(res, result as json)
+    this.respond(res, [result])
   }
 
   /**
@@ -471,7 +475,7 @@ export class ResultsController extends Controller {
     }
     // transform for transmission
     // TODO: properly define data format of results for transmission
-    const result = {
+    const result: Leaderboard = {
       benchmark_id: leaderboard.benchmark.id,
       items: leaderboard.items.map((item) => {
         return {
@@ -492,7 +496,7 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(res, result as json)
+    this.respond(res, [result])
   }
 
   /**
@@ -561,7 +565,7 @@ export class ResultsController extends Controller {
     }
     // transform for transmission
     // TODO: properly define data format of results for transmission
-    const result = {
+    const result: CampaignItem = {
       benchmark_id: benchmarkId,
       items: leaderboard.map((item) => {
         return {
@@ -571,7 +575,7 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(res, result as json)
+    this.respond(res, [result])
   }
 
   // TODO: generalize the below:
