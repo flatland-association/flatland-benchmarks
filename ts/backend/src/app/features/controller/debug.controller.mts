@@ -42,7 +42,7 @@ export class DebugController extends Controller {
   postAmqp: PostHandler<'/amqp'> = async (req, res) => {
     // send message to debug queue
     const amqp = AmqpService.getInstance()
-    const sent = await amqp.sendToQueue('debug', req.body)
+    const sent = await amqp.sendToQueue('debug', req.body, 'submissionID')
     // report what was sent
     if (sent) {
       this.respond(res, `relayed to "debug": ${JSON.stringify(req.body)}`)
