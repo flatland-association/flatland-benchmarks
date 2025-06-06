@@ -998,7 +998,6 @@ sequenceDiagram
 
     Frontend ->> Backend: POST /results/submission/{submission_id}/tests/{test_id}
     Frontend ->> Backend: POST /submission/{submission_id}/status
-    Frontend ->> Backend: GET /test/{test_id}
   end
 ```
 
@@ -1012,7 +1011,6 @@ sequenceDiagram
   Frontend ->> Backend: PUT /submissions
   Frontend ->> Backend: POST /results/submission/{submission_id}/tests/{test_id}
   Frontend ->> Backend: POST /submission/{submission_id}/status
-  Frontend ->> Backend: GET /test/{test_id}
 ```
 
 # Deployment View
