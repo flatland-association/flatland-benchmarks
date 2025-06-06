@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { Benchmark, SubmissionPreview } from '@common/interfaces'
+import { BenchmarkDefinitionRow, SubmissionPreview } from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { LeaderboardComponent } from '../../components/leaderboard/leaderboard.component'
@@ -24,7 +24,7 @@ import { ApiService } from '../../features/api/api.service'
 })
 export class BenchmarksDetailView implements OnInit {
   id: string
-  benchmark?: Benchmark
+  benchmark?: BenchmarkDefinitionRow
   submissions?: SubmissionPreview[]
 
   constructor(
@@ -36,6 +36,8 @@ export class BenchmarksDetailView implements OnInit {
 
   async ngOnInit() {
     this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
-    this.submissions = (await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id } })).body
+    this.submissions = (
+      await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id as string } })
+    ).body
   }
 }

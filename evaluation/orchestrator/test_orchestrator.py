@@ -4,12 +4,12 @@ from os import urandom
 import mockito
 import pytest
 from kubernetes.client import V1JobList, V1Job, V1JobStatus, V1JobCondition, V1ObjectMeta, BatchV1Api, CoreV1Api, V1PodList, V1Pod, V1PodStatus, V1PodCondition, \
-  V1ContainerStatus
+    V1ContainerStatus
 from mockito import mock
 from mockito import verify
 from mockito import when
 
-from tasks import run_evaluation, TaskExecutionError
+from orchestrator import run_evaluation, TaskExecutionError
 
 
 def test_tasks_successful():
@@ -45,7 +45,7 @@ def test_tasks_successful():
   when(m).read().thenReturn(results_csv_bytes, results_json_bytes)
   when(s3).get_object(Bucket=mockito.any(), Key=mockito.any()).thenReturn({"Body": m})
 
-  ret = run_evaluation(task_id="1234", docker_image="fancy", submission_image="pancy", batch_api=batch_api, core_api=core_api, s3=s3,
+  ret = run_evaluation(task_id="1234", test_runner_evaluator_image="fancy", submission_image="pancy", batch_api=batch_api, core_api=core_api, s3=s3,
                        s3_upload_path_template="results/{}")
 
   verify(batch_api, times=1).list_namespaced_job(...)
@@ -108,7 +108,7 @@ def test_tasks_failing():
   when(core_api).read_namespaced_pod_log("subi", namespace="fab-int").thenReturn("abcd")
 
   with pytest.raises(TaskExecutionError) as exc_info:
-    run_evaluation(task_id="1234", docker_image="fancy", submission_image="pancy", batch_api=batch_api, core_api=core_api, s3=s3,
+    run_evaluation(task_id="1234", test_runner_evaluator_image="fancy", submission_image="pancy", batch_api=batch_api, core_api=core_api, s3=s3,
                    s3_upload_path_template="results/{}")
 
   assert exc_info.value.message.startswith(f"Failed task with task_id=1234 with docker_image=fancy and submission_image=pancy")

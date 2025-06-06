@@ -1,7 +1,15 @@
 import { ApiRequest } from './api-request'
 import { ApiResponse } from './api-response'
-import { Benchmark, BenchmarkPreview, Result, Submission, SubmissionPreview, Test } from './interfaces'
-import { Empty, json, NoNever, ResourceId, StripLocator } from './utility-types'
+import {
+  BenchmarkDefinitionRow,
+  PostTestResultsBody,
+  Result,
+  SubmissionPreview,
+  SubmissionRow,
+  Test,
+  TestDefinitionRow,
+} from './interfaces'
+import { Empty, json, NoNever, StripLocator } from './utility-types'
 
 /**
  * Interface for registered enpoints. Types the request body, request query
@@ -55,20 +63,20 @@ interface ApiEndpointDefinitions {
     GET: ApiEndpoint<Empty, Empty, json>
   }
   '/benchmarks': {
-    GET: ApiEndpoint<Empty, Empty, BenchmarkPreview[]>
+    GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
   }
   '/benchmarks/:id': {
-    GET: ApiEndpoint<Empty, Empty, Benchmark[]>
+    GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
   }
   '/tests/:id': {
-    GET: ApiEndpoint<Empty, Empty, Test[]>
+    GET: ApiEndpoint<Empty, Empty, TestDefinitionRow[]>
   }
   '/submissions': {
-    GET: ApiEndpoint<Empty, { benchmark?: ResourceId; uuid?: string; submitted_by?: string }, SubmissionPreview[]>
-    POST: ApiEndpoint<StripLocator<Submission>, Empty, { uuid: string }>
+    GET: ApiEndpoint<Empty, { benchmark?: string; uuid?: string; submitted_by?: string }, SubmissionPreview[]>
+    POST: ApiEndpoint<StripLocator<SubmissionRow>, Empty, { id: string }>
   }
   '/submissions/:uuid': {
-    GET: ApiEndpoint<Empty, Empty, Submission[]>
+    GET: ApiEndpoint<Empty, Empty, SubmissionRow[]>
   }
   '/submissions/:uuid/results': {
     GET: ApiEndpoint<Empty, Empty, Result[]>
@@ -78,6 +86,24 @@ interface ApiEndpointDefinitions {
   }
   '/result': {
     PATCH: ApiEndpoint<Partial<Result>, Empty, Result>
+  }
+  '/results/submission/:submission_id': {
+    GET: ApiEndpoint<Empty, Empty, json>
+  }
+  '/results/submission/:submission_id/tests/:test_id': {
+    GET: ApiEndpoint<Empty, Empty, json>
+    POST: ApiEndpoint<PostTestResultsBody, Empty, Empty>
+  }
+  '/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id': {
+    GET: ApiEndpoint<Empty, Empty, json>
+  }
+  // TODO: maybe rename to /results/leaderboard/:benchmark_id ?
+  '/results/benchmark/:benchmark_id': {
+    GET: ApiEndpoint<Empty, Empty, json>
+  }
+  // TODO: maybe rename (strive for consistency)
+  '/results/campaign-item/:benchmark_id': {
+    GET: ApiEndpoint<Empty, Empty, json>
   }
 }
 

@@ -1,5 +1,5 @@
 import { appendDir } from '@common/endpoint-utils.js'
-import { Result, Submission, SubmissionPreview } from '@common/interfaces.js'
+import { Result, SubmissionPreview, SubmissionRow } from '@common/interfaces.js'
 import { StripDir } from '@common/utility-types.js'
 import { createClient } from 'redis'
 import { configuration } from '../config/config.mjs'
@@ -23,6 +23,100 @@ export class SubmissionController extends Controller {
     this.attachPatch('/result', this.patchResult)
   }
 
+  /**
+   * @swagger
+   * /submissions:
+   *  post:
+   *    description: Inserts new submission.
+   *    security:
+   *      - oauth2: [user]
+   *    requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *              name:
+   *                type: string
+   *                description: Display name of submission.
+   *              benchmark_definition_id:
+   *                type: string
+   *                format: uuid
+   *                description: ID of benchmark this submission belongs to.
+   *              submission_data_url:
+   *                type: string
+   *                description: URL of submission executable image.
+   *              code_repository:
+   *                type: string
+   *                description: URL of submission code repository.
+   *              test_definition_ids:
+   *                type: array
+   *                items:
+   *                  type: string
+   *                  format: uuid
+   *                description: IDs of tests to run.
+   *    responses:
+   *      200:
+   *        description: Created.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of submission.
+   *  get:
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: query
+   *        name: benchmark
+   *        schema:
+   *          type: string
+   *        description: The number of items to skip before starting to collect the result set
+   *    responses:
+   *      200:
+   *        description: Requested tests.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                          uuid:
+   *                            type: string
+   *                            format: uuid
+   *                          name:
+   *                            type: string
+   *                          benchmark:
+   *                            type: string
+   *                          submitted_at:
+   *                            type: string
+   *                          submitted_by_username:
+   *                            type: string
+   *                          public:
+   *                            type: string
+   *                          scores:
+   *                            type: string
+   *                          rank:
+   *                            type: string
+   */
   postSubmission: PostHandler<'/submissions'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
@@ -34,91 +128,68 @@ export class SubmissionController extends Controller {
     const sql = SqlService.getInstance()
     const idRow = await sql.query`
         INSERT INTO submissions (
+          benchmark_definition_id,
+          test_definition_ids,
           name,
-          benchmark,
-          submission_image,
+          submission_data_url,
           code_repository,
-          tests,
           submitted_at,
           submitted_by,
           submitted_by_username
         ) VALUES (
+          ${req.body.benchmark_definition_id},
+          ${req.body.test_definition_ids},
           ${req.body.name},
-          ${req.body.benchmark},
-          ${req.body.submission_image},
-          ${req.body.code_repository},
-          ${req.body.tests},
+          ${req.body.submission_data_url},
+          ${req.body.code_repository ?? null},
           current_timestamp,
           ${auth.sub ?? null},
           ${auth['preferred_username'] ?? null}
         )
-        RETURNING id, uuid
+        RETURNING id
       `
-    const id: number | undefined = idRow.at(0)?.['id']
-    const uuid: string | undefined = idRow.at(0)?.['uuid']
-    if (!id || !uuid) {
-      this.serverError(res, { text: `could not insert submission` }, { id, uuid })
+    const id: string | undefined = idRow.at(0)?.['id']
+    if (!id) {
+      this.serverError(res, { text: `could not insert submission` }, { id })
       return
     }
-    // prepare results entry
-    await sql.query`
-        INSERT INTO results (
-          submission,
-          submission_uuid
-        ) VALUES (
-          ${id},
-          ${uuid}
-        )
-      `
-    // get benchmark docker image
-    const [{ docker_image: dockerImage }] = await sql.query`
-        SELECT docker_image FROM benchmarks
-        WHERE id=${req.body.benchmark}
-      `
     // get test names
     const tests = (
       await sql.query<{ name: string }>`
-          SELECT name FROM tests
-          WHERE id=ANY(${req.body.tests})
-          LIMIT ${req.body.tests.length}
+          SELECT name FROM test_definitions
+          WHERE id=ANY(${req.body.test_definition_ids})
+          LIMIT ${req.body.test_definition_ids!.length}
         `
     ).map((r) => r.name)
     // start evaluator
-    const amqp = AmqpService.getInstance()
-    const payload = [
-      [],
-      {
-        docker_image: dockerImage,
-        submission_image: req.body.submission_image,
-        tests: tests,
-      },
-      {
-        callbacks: null,
-        errbacks: null,
-        chain: null,
-        chord: null,
-      },
-    ]
-    const sent = await amqp.sendToQueue('celery', payload, {
-      headers: {
-        task: 'flatland3-evaluation',
-        id: `sub-${uuid}`,
-      },
-      contentType: 'application/json',
-      persistent: true,
-    })
+    const celery = AmqpService.getInstance()
+    const payload = {
+      submission_data_url: req.body.submission_data_url,
+      tests: tests,
+    }
+    logger.info(payload)
+    const sent = await celery.sendToQueue(req.body.benchmark_definition_id as string, payload, id)
+    logger.info(sent)
+
     if (sent) {
-      this.respond(res, { uuid }, payload)
+      this.respond(res, { id }, payload)
     } else {
-      this.respond(res, { uuid }, 'Could not send message to AMQP service. Check backend log.')
+      this.respond(res, { id }, 'Could not send message to broker. Check backend log.')
     }
   }
 
   // returns scored and public submissions as preview
   getSubmissions: GetHandler<'/submissions'> = async (req, res) => {
-    const benchmarkId = req.query['benchmark'] as string | undefined
-    const submissionUuids = (req.query['uuid'] as string | undefined)?.split(',')
-    const submittedBy = req.query['submitted_by'] as string | undefined
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth) {
+      this.unauthorizedError(res, { text: 'Not authorized' })
+      return
+    }
+
+    const benchmarkId = req.query['benchmark']
+    const submissionIds = req.query['uuid']?.split(',')
+    const submittedBy = req.query['submitted_by']
 
     const sql = SqlService.getInstance()
 
@@ -128,12 +199,12 @@ export class SubmissionController extends Controller {
     let whereSubmission = sql.fragment`1=1`
     let whereSubmittedBy = sql.fragment`1=1`
     let limit = sql.fragment`LIMIT 3`
-    if (submissionUuids) {
+    if (submissionIds) {
       // turn off scores and public requirements if id is given
       whereScores = sql.fragment`1=1`
       wherePublic = sql.fragment`1=1`
-      whereSubmission = sql.fragment`submissions.uuid=ANY(${submissionUuids})`
-      limit = sql.fragment`LIMIT ${submissionUuids.length}`
+      whereSubmission = sql.fragment`submissions.uuid=ANY(${submissionIds})`
+      limit = sql.fragment`LIMIT ${submissionIds.length}`
     }
     if (submittedBy) {
       // turn off limit, scores and public requirements if submitter is given
@@ -162,7 +233,52 @@ export class SubmissionController extends Controller {
     const resources = appendDir('/submissions/', rows)
     this.respond(res, resources)
   }
-
+  /**
+   * @swagger
+   * /submissions/{uuid}:
+   *  get:
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: uuid
+   *        required: true
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *        description: The submission ID
+   *    responses:
+   *      200:
+   *        description: Requested submissions.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                          benchmark_definition_id:
+   *                            type: string
+   *                            format: uuid
+   *                          submitted_at:
+   *                            type: string
+   *                          submitted_by_username:
+   *                            type: string
+   *                          public:
+   *                            type: string
+   *                          scores:
+   *                            type: string
+   *                          rank:
+   *                            type: string
+   */
   getSubmissionByUuid: GetHandler<'/submissions/:uuid'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
@@ -173,9 +289,9 @@ export class SubmissionController extends Controller {
     const uuids = req.params.uuid.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
-    const rows = await sql.query<StripDir<Submission>>`
+    const rows = await sql.query<StripDir<SubmissionRow>>`
         SELECT * FROM submissions
-        WHERE uuid=ANY(${uuids})
+        WHERE id=ANY(${uuids})
         LIMIT ${uuids.length}
       `
     const submissions = appendDir('/submissions/', rows)

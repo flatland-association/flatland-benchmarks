@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { Benchmark, Test } from '@common/interfaces'
+import { BenchmarkDefinitionRow, TestDefinitionRow } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { ApiService } from '../../features/api/api.service'
@@ -15,8 +15,8 @@ import { ApiService } from '../../features/api/api.service'
 })
 export class NewSubmissionView implements OnInit {
   id: string
-  benchmark?: Benchmark
-  tests?: Test[]
+  benchmark?: BenchmarkDefinitionRow
+  tests?: TestDefinitionRow[]
 
   submissionImageUrl = ''
   codeRepositoryUrl = ''
@@ -33,11 +33,12 @@ export class NewSubmissionView implements OnInit {
 
   async ngOnInit() {
     this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
+    console.log(this.benchmark)
     // load all the available tests
     this.tests = (
       await this.apiService.get('/tests/:id', {
         params: {
-          id: this.benchmark!.tests.join(','),
+          id: this.benchmark!.test_definition_ids.join(','),
         },
       })
     ).body
@@ -58,15 +59,15 @@ export class NewSubmissionView implements OnInit {
     const response = await this.apiService.post('/submissions', {
       body: {
         name: this.submissionName,
-        benchmark: this.benchmark?.id ?? 0,
-        submission_image: this.submissionImageUrl,
+        benchmark_definition_id: this.benchmark?.id ?? 0,
+        submission_data_url: this.submissionImageUrl,
         code_repository: this.codeRepositoryUrl,
-        tests: this.tests?.filter((t, i) => this.testsSelection[i]).map((t) => t.id) ?? [],
+        test_definition_ids: this.tests?.filter((t, i) => this.testsSelection[i]).map((t) => t.id) ?? [],
       },
     })
-    if (response.body?.uuid) {
+    if (response.body?.id) {
       // navigate to that submissions' detail view
-      this.router.navigateByUrl(`benchmarks/${this.benchmark?.id ?? 0}/participate/submissions/${response.body.uuid}`)
+      this.router.navigateByUrl(`benchmarks/${this.benchmark?.id ?? 0}/participate/submissions/${response.body.id}`)
     }
   }
 }

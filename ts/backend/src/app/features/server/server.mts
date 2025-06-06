@@ -1,9 +1,12 @@
 import cors from 'cors'
 import type { Express } from 'express'
 import express from 'express'
+import * as swaggerUi from 'swagger-ui-express'
+import swaggerDocument from '../../../swagger/swagger.json'
 import { configuration } from '../config/config.mjs'
 import { BenchmarkController } from '../controller/benchmark.controller.mjs'
 import { DebugController } from '../controller/debug.controller.mjs'
+import { ResultsController } from '../controller/results.controller.mjs'
 import { SubmissionController } from '../controller/submission.controller.mjs'
 import { TestController } from '../controller/test.controller.mjs'
 import { Logger } from '../logger/logger.mjs'
@@ -30,6 +33,10 @@ export class Server {
     this.app.use(new BenchmarkController(this.config).router)
     this.app.use(new TestController(this.config).router)
     this.app.use(new SubmissionController(this.config).router)
+    this.app.use(new ResultsController(this.config).router)
+
+    // use swagger as apidoc
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.app.use((err: any, _req: unknown, res: any, next: any) => {

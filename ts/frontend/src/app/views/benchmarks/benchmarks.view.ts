@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import { BenchmarkPreview } from '@common/interfaces'
+import { BenchmarkDefinitionRow } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BenchmarkCardComponent } from '../../components/benchmark-card/benchmark-card.component'
 import { ApiService } from '../../features/api/api.service'
@@ -12,7 +12,7 @@ import { ApiService } from '../../features/api/api.service'
   styleUrl: './benchmarks.view.scss',
 })
 export class BenchmarkView implements OnInit {
-  benchmarks?: BenchmarkPreview[]
+  benchmarks?: BenchmarkDefinitionRow[]
 
   constructor(public apiService: ApiService) {}
 

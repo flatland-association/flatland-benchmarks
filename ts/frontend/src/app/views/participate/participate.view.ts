@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { Benchmark, SubmissionPreview } from '@common/interfaces'
+import { BenchmarkDefinitionRow, SubmissionPreview } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { LeaderboardComponent } from '../../components/leaderboard/leaderboard.component'
@@ -15,7 +15,7 @@ import { AuthService } from '../../features/auth/auth.service'
 })
 export class ParticipateView implements OnInit {
   id: string
-  benchmark?: Benchmark
+  benchmark?: BenchmarkDefinitionRow
   submissions?: SubmissionPreview[]
   mySubmissions?: SubmissionPreview[]
 
@@ -30,9 +30,13 @@ export class ParticipateView implements OnInit {
   async ngOnInit() {
     const myUuid = this.authService.userUuid
     this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
-    this.submissions = (await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id } })).body
+    this.submissions = (
+      await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id as string } })
+    ).body
     this.mySubmissions = (
-      await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id, submitted_by: myUuid } })
+      await this.apiService.get('/submissions', {
+        query: { benchmark: this.benchmark?.id as string, submitted_by: myUuid },
+      })
     ).body
   }
 }

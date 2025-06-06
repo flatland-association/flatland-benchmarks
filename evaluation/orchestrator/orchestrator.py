@@ -1,4 +1,4 @@
-# based on https://github.com/codalab/codabench/blob/develop/compute_worker/compute_worker.py
+# based on https://github.com/codalab/codabench/blob/develop/orchestrator/orchestrator.py
 import json
 import logging
 import os
@@ -28,10 +28,12 @@ S3_UPLOAD_PATH_TEMPLATE = os.getenv("S3_UPLOAD_PATH_TEMPLATE", None)
 S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.getenv("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
 ACTIVE_DEADLINE_SECONDS = os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)
 SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.3")
+TEST_RUNNER_EVALUATOR_IMAGE = os.environ.get("EVALUATOR_IMAGE", "ghcr.io/flatland-association/fab-flatland-evaluator:latest")
+BENCHMARK_ID = os.environ.get("BENCHMARK_ID", "flatland3-evaluation")
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
-  backend=f"redis://{REDIS_IP}:6379",
+  backend=os.environ.get('BACKEND_URL'),
 )
 
 
@@ -42,10 +44,9 @@ class TaskExecutionError(Exception):
     self.status = status
 
 
-# TODO https://github.com/flatland-association/flatland-benchmarks/issues/27 start own redis for evaluator <-> submission communication? Split in flatland-repo?
 # N.B. name to be used by send_task
-@app.task(name="flatland3-evaluation", bind=True)
-def the_task(self, docker_image: str, submission_image: str, tests: List[str] = None, **kwargs):
+@app.task(name=BENCHMARK_ID, bind=True)
+def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwargs):
   task_id = self.request.id
   config.load_incluster_config()
   # https://github.com/kubernetes-client/python/
@@ -53,17 +54,19 @@ def the_task(self, docker_image: str, submission_image: str, tests: List[str] = 
   batch_api = client.BatchV1Api()
   core_api = client.CoreV1Api()
   if not AWS_ENDPOINT_URL:
-    return RuntimeError("Misconfiguration: AWS_ENDPOINT_URL must be set in the compute worker")
+    raise RuntimeError("Misconfiguration: AWS_ENDPOINT_URL must be set in the orchestrator")
   if not AWS_ACCESS_KEY_ID:
-    return RuntimeError("Misconfiguration: AWS_ACCESS_KEY_ID must be set in the compute worker")
+    raise RuntimeError("Misconfiguration: AWS_ACCESS_KEY_ID must be set in the orchestrator")
   if not AWS_SECRET_ACCESS_KEY:
-    return RuntimeError("Misconfiguration: AWS_SECRET_ACCESS_KEY must be set in the compute worker")
+    raise RuntimeError("Misconfiguration: AWS_SECRET_ACCESS_KEY must be set in the orchestrator")
   if not S3_BUCKET:
-    return RuntimeError("Misconfiguration: S3_BUCKET must be set in the compute worker")
+    raise RuntimeError("Misconfiguration: S3_BUCKET must be set in the orchestrator")
   if not S3_UPLOAD_PATH_TEMPLATE:
-    return RuntimeError("Misconfiguration: S3_UPLOAD_PATH_TEMPLATE must be set in the compute worker")
+    raise RuntimeError("Misconfiguration: S3_UPLOAD_PATH_TEMPLATE must be set in the orchestrator")
   if not S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID:
-    return RuntimeError("Misconfiguration: S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID must be set to true in the compute worker")
+    raise RuntimeError("Misconfiguration: S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID must be set to true in the orchestrator")
+  if not TEST_RUNNER_EVALUATOR_IMAGE:
+    raise RuntimeError("Misconfiguration: EVALUATOR_IMAGE must be set to true in the orchestrator")
   s3 = boto3.client(
     's3',
     # https://docs.weka.io/additional-protocols/s3/s3-examples-using-boto3
@@ -71,20 +74,22 @@ def the_task(self, docker_image: str, submission_image: str, tests: List[str] = 
     aws_access_key_id=AWS_ACCESS_KEY_ID,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY
   )
-  return run_evaluation(task_id=task_id, docker_image=docker_image, submission_image=submission_image, batch_api=batch_api, core_api=core_api, s3=s3,
+  return run_evaluation(task_id=task_id, test_runner_evaluator_image=TEST_RUNNER_EVALUATOR_IMAGE, submission_image=submission_data_url, batch_api=batch_api,
+                        core_api=core_api, s3=s3,
                         s3_upload_path_template=S3_UPLOAD_PATH_TEMPLATE, tests=tests)
 
 
-def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch_api: BatchV1Api, core_api: CoreV1Api, s3, s3_upload_path_template: str,
+def run_evaluation(task_id: str, test_runner_evaluator_image: str, submission_image: str, batch_api: BatchV1Api, core_api: CoreV1Api, s3,
+                   s3_upload_path_template: str,
                    tests: List[str] = None):
   start_time = time.time()
-  logger.info(f"/ start task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}")
+  logger.info(f"/ start task with task_id={task_id} with docker_image={test_runner_evaluator_image} and submission_image={submission_image}")
 
   evaluator_definition = yaml.safe_load(open(Path(__file__).parent / "evaluator_job.yaml"))
   evaluator_definition["metadata"]["name"] = f"{evaluator_definition['metadata']['name']}-{task_id}"
   evaluator_definition["metadata"]["labels"]["task_id"] = task_id
   evaluator_container_definition = evaluator_definition["spec"]["template"]["spec"]["containers"][0]
-  evaluator_container_definition["image"] = docker_image
+  evaluator_container_definition["image"] = test_runner_evaluator_image
   evaluator_container_definition["env"].append({"name": "AICROWD_SUBMISSION_ID", "value": task_id})
   evaluator_container_definition["env"].append({"name": "redis_ip", "value": REDIS_IP})
   evaluator_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = ACTIVE_DEADLINE_SECONDS
@@ -175,7 +180,8 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   if any_failed:
     duration = time.time() - start_time
     raise TaskExecutionError(
-      f"Failed task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.", ret)
+      f"Failed task with task_id={task_id} with docker_image={test_runner_evaluator_image} and submission_image={submission_image}. Took {duration} seconds.",
+      ret)
 
   logger.debug("Task with task_id=%s got results from k8s: %s.", task_id, ret)
 
@@ -195,7 +201,8 @@ def run_evaluation(task_id: str, docker_image: str, submission_image: str, batch
   logger.info("done %s, all_completed=%s", status, all_completed)
   duration = time.time() - start_time
   logger.debug(ret)
-  logger.info(f"\\ end task with task_id={task_id} with docker_image={docker_image} and submission_image={submission_image}. Took {duration} seconds.")
+  logger.info(
+    f"\\ end task with task_id={task_id} with docker_image={test_runner_evaluator_image} and submission_image={submission_image}. Took {duration} seconds.")
   return ret
 
 
@@ -218,7 +225,7 @@ def main():
     core_api=core_api,
     task_id=task_id,
     submission_image="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
-    docker_image="ghcr.io/flatland-association/fab-flatland-evaluator:latest",
+    test_runner_evaluator_image="ghcr.io/flatland-association/fab-flatland-evaluator:latest",
     s3_upload_path_template="results/{}",
     s3=s3
   )

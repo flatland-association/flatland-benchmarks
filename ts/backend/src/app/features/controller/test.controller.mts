@@ -1,5 +1,5 @@
 import { appendDir } from '@common/endpoint-utils.js'
-import { Test } from '@common/interfaces.js'
+import { TestDefinitionRow } from '@common/interfaces.js'
 import { StripDir } from '@common/utility-types.js'
 import { configuration } from '../config/config.mjs'
 import { SqlService } from '../services/sql-service.mjs'
@@ -12,12 +12,58 @@ export class TestController extends Controller {
     this.attachGet('/tests/:id', this.getTestById)
   }
 
+  /**
+   * @swagger
+   * /tests/{ids}:
+   *  get:
+   *    description: Returns tests with ID in `ids`.
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: ids
+   *        description: Comma-separated list of IDs.
+   *        required: true
+   *        schema:
+   *          type: array
+   *          items:
+   *            type: integer
+   *    responses:
+   *      200:
+   *        description: Requested tests.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          dir:
+   *                            type: string
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                          name:
+   *                            type: string
+   *                          description:
+   *                            type: string
+   *                          scenario_definition_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   */
   getTestById: GetHandler<'/tests/:id'> = async (req, res) => {
-    const ids = req.params.id.split(',').map((s) => +s)
+    const ids = req.params.id.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
-    const rows = await sql.query<StripDir<Test>>`
-        SELECT * FROM tests
+    const rows = await sql.query<StripDir<TestDefinitionRow>>`
+        SELECT * FROM test_definitions
         WHERE id=ANY(${ids})
         LIMIT ${ids.length}
       `
