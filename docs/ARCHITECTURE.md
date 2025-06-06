@@ -1007,7 +1007,7 @@ Arrow directions signify call direction.
 
 ```mermaid
 sequenceDiagram
-  HumanFactorsResearcher ->> Frontend: upload results.json
+  Researcher ->> Frontend: upload results.json
   Frontend ->> Backend: PUT /submissions
   Frontend ->> Backend: POST /results/submission/{submission_id}/tests/{test_id}
   Frontend ->> Backend: POST /submission/{submission_id}/status
