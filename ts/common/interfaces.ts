@@ -92,6 +92,7 @@ export interface TestDefinitionRow extends Resource<'/tests/'> {
 }
 
 export interface BenchmarkDefinitionRow extends Resource<'/benchmarks/'> {
+  id: string
   name: string
   description: string
   field_definition_ids: string[]
@@ -101,8 +102,9 @@ export interface BenchmarkDefinitionRow extends Resource<'/benchmarks/'> {
 export type SubmissionStatus = 'SUBMITTED' | 'RUNNING' | 'SUCCESS' | 'FAILURE'
 
 export interface SubmissionRow extends Resource<'/submissions/'> {
-  benchmark_definition_id: ResourceId
-  test_definition_ids: ResourceId[]
+  id: string
+  benchmark_definition_id: string
+  test_definition_ids: string[]
   name: string
   description?: string | null
   submission_data_url: string
@@ -138,4 +140,40 @@ export interface Scoring {
   // scoring ensures it never gets lost, even when filtering rigorously.
   highest?: number
   lowest?: number
+}
+
+// TODO: naming?
+export type Scorings = Record<string, Scoring | null>
+
+export interface ScenarioScored {
+  scenario_id: string
+  scorings: Scorings
+}
+
+export interface TestScored {
+  test_id: string
+  scorings: Scorings
+  scenario_scorings: ScenarioScored[]
+}
+
+export interface LeaderboardItem {
+  submission_id: string
+  scorings: Scorings
+  test_scorings: TestScored[]
+}
+
+export interface Leaderboard {
+  benchmark_id: string
+  items: LeaderboardItem[]
+}
+
+export interface CampaignItemItem {
+  test_id: string
+  scorings: Scorings | null
+  submission_id: string | null
+}
+
+export interface CampaignItem {
+  benchmark_id: string
+  items: CampaignItemItem[]
 }

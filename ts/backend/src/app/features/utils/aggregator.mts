@@ -5,6 +5,7 @@ import {
   FieldDefinitionRow,
   ResultRow,
   ScenarioDefinitionRow,
+  Scorings,
   SubmissionRow,
   TestDefinitionRow,
 } from '@common/interfaces'
@@ -164,48 +165,34 @@ export function upcastSubmissionRow(
   }
 }
 
-export interface Scoring {
-  score: number | null
-  // rank, highest and lowest score will only be populated after scoring,
-  // on demand, when it's possible to compare submissions/scoring.
-  rank?: number
-  // Highest and lowest score are required for UI. Repeating them in every
-  // scoring ensures it never gets lost, even when filtering rigorously.
-  highest?: number
-  lowest?: number
-}
-
-// TODO: naming?
-export type Scorings = Record<string, Scoring | null>
-
-export interface ScenarioScored {
+export interface ScenarioScoredEx {
   definition: ScenarioDefinition
   scorings: Scorings
 }
 
-export interface TestScored {
+export interface TestScoredEx {
   definition: TestDefinition
   scorings: Scorings
-  scenarios: ScenarioScored[]
+  scenarios: ScenarioScoredEx[]
 }
 
 // required in competition context
-export interface LeaderboardItem {
+export interface LeaderboardItemEx {
   submission: Submission
-  tests: TestScored[]
+  tests: TestScoredEx[]
   scorings: Scorings
 }
 
-export interface Leaderboard {
+export interface LeaderboardEx {
   benchmark: BenchmarkDefinition
-  items: LeaderboardItem[]
+  items: LeaderboardItemEx[]
 }
 
 // required in campaign context
-export interface CampaignItem {
+export interface CampaignItemEx {
   benchmark: BenchmarkDefinition
   test: TestDefinition
-  item: LeaderboardItem | undefined
+  item: LeaderboardItemEx | undefined
 }
 
 interface ScoringHost {
@@ -226,9 +213,9 @@ export class Aggregator {
     benchmarkDef: BenchmarkDefinition,
     submissions: Submission[],
     results: ResultRow[],
-  ): Leaderboard {
+  ): LeaderboardEx {
     // prepare tree structure (containing submissions as items)
-    const leaderboard: Leaderboard = {
+    const leaderboard: LeaderboardEx = {
       benchmark: benchmarkDef,
       // only consider submissions made for requested benchmark, otherwise
       // ranking could show unexpected results
@@ -259,7 +246,7 @@ export class Aggregator {
     benchmarkDef: BenchmarkDefinition,
     submissions: Submission[],
     results: ResultRow[],
-  ): CampaignItem[] {
+  ): CampaignItemEx[] {
     // build leaderboard first (might not contain rows for each test)
     // TODO: either skip submission ranking or ensure submission total equals test total in campaign case
     const leaderboard = this.getLeaderboard(benchmarkDef, submissions, results)
@@ -278,7 +265,7 @@ export class Aggregator {
           benchmark: benchmarkDef,
           test: testDef,
           item: top,
-        } satisfies CampaignItem
+        } satisfies CampaignItemEx
       })
     return campaign
   }
@@ -294,9 +281,9 @@ export class Aggregator {
     benchmarkDef: BenchmarkDefinition,
     submission: Submission,
     results: ResultRow[],
-  ): LeaderboardItem {
+  ): LeaderboardItemEx {
     // prepare tree structure (containing scored tests)
-    const item: LeaderboardItem = {
+    const item: LeaderboardItemEx = {
       submission,
       tests: submission.test_definitions.filter((f) => !!f).map((test) => this.getTestScored(test, results)),
       scorings: {},
@@ -316,9 +303,9 @@ export class Aggregator {
    * @param results Results filtered by submission.
    * @returns TestScored with scoring, but not yet ranked.
    */
-  static getTestScored(test: TestDefinition, results: ResultRow[]): TestScored {
+  static getTestScored(test: TestDefinition, results: ResultRow[]): TestScoredEx {
     // prepare tree structure (containing scored scenarios)
-    const testScored: TestScored = {
+    const testScored: TestScoredEx = {
       definition: test,
       scenarios: test.scenario_definitions
         .filter((s) => !!s)
@@ -345,9 +332,9 @@ export class Aggregator {
    * @param results Results filtered by submission and scenario.
    * @returns ScenarioScored with scoring, but not yet ranked.
    */
-  static getScenarioScored(scenario: ScenarioDefinition, results: ResultRow[]): ScenarioScored {
+  static getScenarioScored(scenario: ScenarioDefinition, results: ResultRow[]): ScenarioScoredEx {
     // build leaf
-    const scenarioScored: ScenarioScored = {
+    const scenarioScored: ScenarioScoredEx = {
       definition: scenario,
       scorings: {},
     }
@@ -487,7 +474,7 @@ export class Aggregator {
 
   // Level of detail has no upper bound because i.o.t. rank, the whole
   // benchmark has to be considered anyways.
-  static rankLeaderboard(leaderboard: Leaderboard, lod?: 'test' | 'scenario') {
+  static rankLeaderboard(leaderboard: LeaderboardEx, lod?: 'test' | 'scenario') {
     // find rank-able/relevant fields
     const rankables: { field: string; from: ScoringHost }[] = []
     // always include top level scorings (top level rank-able is submission)
@@ -547,10 +534,10 @@ export class Aggregator {
    * @param field Key of field to rank by.
    * @param from Where said field can be found (submission, specific test or specific scenario).
    */
-  static rankField(items: LeaderboardItem[], field: string, from: ScoringHost) {
+  static rankField(items: LeaderboardItemEx[], field: string, from: ScoringHost) {
     // can't rank benchmarks
     if (from.level === 'benchmark') return
-    const getScorings = (submission: LeaderboardItem, from: ScoringHost) => {
+    const getScorings = (submission: LeaderboardItemEx, from: ScoringHost) => {
       if (from.level === 'submission') {
         return submission.scorings
       } else if (from.level === 'test') {
