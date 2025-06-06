@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 @pytest.fixture(scope="module")
 def test_containers_fixture():
     # set env var ATTENDED to True if docker-compose-demo.yml is already up and running
-    if os.environ.get("Attended", False):
+    if os.environ.get("ATTENDED", False):
         yield
         return
 
