@@ -9,6 +9,8 @@ conda activate flatland-rl
 sed -i "s/type=click.Path(exists=True),/type=click.Path(exists=True, path_type=Path),/g" /opt/conda/envs/flatland-rl/lib/python3.12/site-packages/flatland/trajectories/trajectories.py
 
 export PYTHONPATH=$PWD
+mkdir -p /app/data/nix
+touch /app/data/nix/blup.txt
 
 flatland-trajectory-generate-from-policy $@
 
