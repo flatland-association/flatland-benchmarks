@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { first } from 'rxjs/operators'
@@ -8,14 +8,14 @@ import { environment } from '../../../environments/environment'
   providedIn: 'root',
 })
 export class AuthService {
+  oauthService = inject(OAuthService)
+  private router = inject(Router)
+
   // Promise that resolves once the login has been successful.
   // This only works for forceful logins.
   readonly initialized?: Promise<unknown>
 
-  constructor(
-    public oauthService: OAuthService,
-    private router: Router,
-  ) {
+  constructor() {
     // expose service for debugging purposes
     //@ts-expect-error any
     window['authService'] = this

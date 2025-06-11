@@ -1,5 +1,5 @@
 import { CommonModule, DecimalPipe } from '@angular/common'
-import { Component, Input } from '@angular/core'
+import { Component, Input, inject } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { SubmissionPreview } from '@common/interfaces'
 
@@ -10,13 +10,11 @@ import { SubmissionPreview } from '@common/interfaces'
   styleUrl: './leaderboard.component.scss',
 })
 export class LeaderboardComponent {
+  private router = inject(Router)
+  private route = inject(ActivatedRoute)
+
   @Input() submissions: SubmissionPreview[] = []
   @Input() navigates = false
-
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {}
 
   click(submission: SubmissionPreview) {
     if (this.navigates) {

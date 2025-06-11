@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { ActivatedRouteSnapshot, CanActivate, GuardResult, RouterStateSnapshot } from '@angular/router'
 import { AuthService } from '../features/auth/auth.service'
 
@@ -9,7 +9,7 @@ import { AuthService } from '../features/auth/auth.service'
  * Class providing guard functions to be used in routes.
  */
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService) {}
+  private authService = inject(AuthService)
 
   /**
    * The default `CanActivateFn`, checks if current user is logged in. If the

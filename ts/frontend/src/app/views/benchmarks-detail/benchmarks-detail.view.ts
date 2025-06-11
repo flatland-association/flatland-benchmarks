@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { BenchmarkDefinitionRow, SubmissionPreview } from '@common/interfaces'
@@ -14,14 +14,15 @@ import { ApiService } from '../../features/api/api.service'
   styleUrl: './benchmarks-detail.view.scss',
 })
 export class BenchmarksDetailView implements OnInit {
+  apiService = inject(ApiService)
+
   id: string
   benchmark?: BenchmarkDefinitionRow
   submissions?: SubmissionPreview[]
 
-  constructor(
-    route: ActivatedRoute,
-    public apiService: ApiService,
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute)
+
     this.id = route.snapshot.params['id']
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { BenchmarkDefinitionRow, SubmissionPreview } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
@@ -14,16 +14,17 @@ import { AuthService } from '../../features/auth/auth.service'
   styleUrl: './participate.view.scss',
 })
 export class ParticipateView implements OnInit {
+  apiService = inject(ApiService)
+  private authService = inject(AuthService)
+
   id: string
   benchmark?: BenchmarkDefinitionRow
   submissions?: SubmissionPreview[]
   mySubmissions?: SubmissionPreview[]
 
-  constructor(
-    route: ActivatedRoute,
-    public apiService: ApiService,
-    private authService: AuthService,
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute)
+
     this.id = route.snapshot.params['id']
   }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { BenchmarkDefinitionRow, TestDefinitionRow } from '@common/interfaces'
@@ -13,6 +13,9 @@ import { ApiService } from '../../features/api/api.service'
   styleUrl: './new-submission.view.scss',
 })
 export class NewSubmissionView implements OnInit {
+  apiService = inject(ApiService)
+  private router = inject(Router)
+
   id: string
   benchmark?: BenchmarkDefinitionRow
   tests?: TestDefinitionRow[]
@@ -22,11 +25,9 @@ export class NewSubmissionView implements OnInit {
   submissionName = ''
   testsSelection: boolean[] = []
 
-  constructor(
-    route: ActivatedRoute,
-    public apiService: ApiService,
-    private router: Router,
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute)
+
     this.id = route.snapshot.params['id']
   }
 
