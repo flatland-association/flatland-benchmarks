@@ -1,5 +1,5 @@
 import { configuration } from '../config/config.mjs'
-import { AmqpService } from '../services/amqp-service.mjs'
+import { CeleryService } from '../services/celery-client-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { Controller, dbgRequestObject, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
 
@@ -41,7 +41,7 @@ export class DebugController extends Controller {
   // Posts a message to amqp queue
   postAmqp: PostHandler<'/amqp'> = async (req, res) => {
     // send message to debug queue
-    const amqp = AmqpService.getInstance()
+    const amqp = CeleryService.getInstance()
     const sent = await amqp.sendToQueue('debug', req.body, 'submissionID')
     // report what was sent
     if (sent) {

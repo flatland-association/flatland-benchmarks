@@ -9,7 +9,7 @@ const logger = new Logger('amqp')
 /**
  * Service class providing common AMQP functionality.
  */
-export class AmqpService extends Service {
+export class CeleryService extends Service {
   constructor(config: configuration) {
     super(config)
   }
