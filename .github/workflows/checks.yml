@@ -116,6 +116,7 @@ jobs:
       - name: validate swagger.json
         run: |
           python -m pip install openapi-generator-cli
+          # workaround for validate always returning 0
           openapi-generator-cli validate -i ts/backend/src/swagger/swagger.json  2> fail.txt
           cat fail.txt
           exit $(cat fail.txt | wc -l)

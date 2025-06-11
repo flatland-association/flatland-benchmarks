@@ -50,6 +50,7 @@ export class ResultsController extends Controller {
    *          format: uuid
    *    responses:
    *      200:
+   *        description: Aggregated submission overall results.
    *        content:
    *          application/json:
    *            schema:
@@ -152,6 +153,7 @@ export class ResultsController extends Controller {
    *          format: uuid
    *    responses:
    *      200:
+   *        description: Submission results aggregated by test.
    *        content:
    *          application/json:
    *            schema:
@@ -339,6 +341,7 @@ export class ResultsController extends Controller {
    *          format: uuid
    *    responses:
    *      200:
+   *        description: Submission results for specific scenario.
    *        content:
    *          application/json:
    *            schema:
@@ -399,6 +402,7 @@ export class ResultsController extends Controller {
    *          format: uuid
    *    responses:
    *      200:
+   *        description: Benchmark leaderboard.
    *        content:
    *          application/json:
    *            schema:
@@ -508,6 +512,7 @@ export class ResultsController extends Controller {
    *          format: uuid
    *    responses:
    *      200:
+   *        description: Campaign item leaderboard.
    *        content:
    *          application/json:
    *            schema:
