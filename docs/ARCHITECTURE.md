@@ -430,7 +430,6 @@ stateDiagram-v2
   note left of s1
     s1 scenario results: SELECT <code>f_t1</code> FROM s1 // submission_id unique key
   end note
-  
   s2 --> t1: <code>f_t1</code>
   s3 --> t1: <code>f_t1</code>
   s4 --> t2: <code>f_t2</code>
@@ -700,41 +699,6 @@ Open Questions:
 * `GET /results/test/{test_id}`: get submissions ordered by primary test score
 * `GET /results/scenario/{scenario_id}`: get submissions ordered by primary scenario score
 
-Format:
-
-```json
-{
-  "data": [
-    {
-      "test_id": "00",
-      "scores": [
-        {
-          "scenario_id": 55,
-          "reward": -93,
-          "runtime": 53.35,
-          "done": 0.3
-        }
-      ]
-    }
-  ],
-  "submission_id": "a98adsf989vaadfs9898"
-}
-```
-
-```json
-{
-  "data": [
-    {
-      "scenario_id": 55,
-      "reward": -93,
-      "runtime": 53.35,
-      "done": 0.3
-    }
-  ],
-  "submission_id": "a98adsf989vaadfs9898"
-}
-```
-
 Remarks:
 
 * An uploader can be a user or a group. Let's start with only users.
@@ -784,110 +748,22 @@ erDiagram
   }
 ```
 
-### Interface 3: RabbitMQ
+### Interface 3: Orchestrator
+
+We use Celery with the following configuration:
+
+* Broker and backend is RabbitMQ
+* Queue name: Benchmark ID (UUID)
+* Task name: Benchmark ID (UUD)
+* Payload:
 
 ```json
 {
-  "benchmark": 1,
-  "submission_image": "ghcr.io/flatland-association/fab-flatland-submission-template:latest",
-  "code_repository": "",
+  "submission_data_url": "ghcr.io/flatland-association/fab-flatland-submission-template:latest",
   "tests": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15
+    "557d9a00-7e6d-410b-9bca-a017ca7fe3aa"
   ]
 }
-```
-
-### &dagger; Interface 2: Redis result structure
-
-There is currently no generic abstraction for the result structure.
-
-The redis result for Flatland 3 has the following JSON structure:
-
-```json
-{
-  "f3-evaluator": {
-    "job_status": "Complete",
-    "image_id": "ghcr.io/flatland-association/fab-flatland-evaluator@sha256:035327826cdad082bdcc072ca484639123545c332c447c57de4376e3fe77dd26",
-    "log": "<plaintext log from pod run>",
-    "job": {
-      "@see": "https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/"
-    },
-    "pod": {
-      "@see": "https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/"
-    },
-    "results.csv": "filename,test_id,env_id,n_agents,x_dim,y_dim,n_cities,max_rail_pairs_in_city,n_envs_run,seed,grid_mode,max_rails_between_cities,malfunction_duration_min,malfunction_duration_max,malfunction_interval,speed_ratios,reward,normalized_reward,percentage_complete,steps,simulation_time,nb_malfunctioning_trains,nb_deadlocked_trains,controller_inference_time_min,controller_inference_time_mean,controller_inference_time_max\nTest_0/Level_0.pkl,Test_0,Level_0,5,25,25,2,2,2,1,False,2,20,50,0,{1.0: 1.0},-140.0,0.4285714285714286,0.0,49.0,0.12987303733825684,0.0,0.0,3.314018249511719e-05,4.022462027413505e-05,6.794929504394531e-05\nTest_0/Level_1.pkl,Test_0,Level_1,5,25,25,2,2,2,2,False,2,20,50,250,{1.0: 1.0},-104.0,0.48,0.0,40.0,0.33571386337280273,0.0,2.0,3.314018249511719e-05,4.0233804938498525e-05,6.794929504394531e-05\nTest_1/Level_0.pkl,Test_1,Level_0,2,30,30,3,2,3,1,False,2,20,50,0,{1.0: 1.0},,,,,,,,,,\nTest_1/Level_1.pkl,Test_1,Level_1,2,30,30,3,2,3,2,False,2,20,50,300,{1.0: 1.0},,,,,,,,,,\nTest_1/Level_2.pkl,Test_1,Level_2,2,30,30,3,2,3,4,False,2,20,50,600,{1.0: 1.0},,,,,,,,,,\n",
-    "results.json": "{\"state\": \"FINISHED\", \"progress\": 1.0, \"simulation_count\": 2, \"total_simulation_count\": 5, \"score\": {\"score\": 0.9085714285714286, \"score_secondary\": 0.0}, \"meta\": {\"normalized_reward\": 0.45429, \"termination_cause\": \"The mean percentage of done agents during the last Test (2 environments) was too low: 0.000 < 0.25\", \"reward\": -122.0, \"percentage_complete\": 0.0}}"
-  },
-  "f3-submission": {
-    "job_status": "Complete",
-    "image_id": "ghcr.io/flatland-association/fab-flatland-submission-template@sha256:e32d331729c16a871287ef8862c5d77de5028e50971e91bad754b6ed63f0806b",
-    "log": "<plaintext log from pod run>",
-    "job": {
-      "@see": "https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/"
-    },
-    "pod": {
-      "@see": "https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/"
-    }
-  }
-}
-```
-
-The two sub-JSONs for `f3-evaluator` and `f3-submission` have the following attributes:
-
-| field          | description                            | data type                                                                                                                                                      |
-|----------------|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `job_status`   | status of the container/workload       | see [k8s job-v1/#JobStatus](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobStatus)                                          |
-| `image_id`     | image ID of the container/workload     | URL                                                                                                                                                            |
-| `log`          | log of the container/workload          | plaintext                                                                                                                                                      |
-| `job`          |                                        | see [k8s job-v1/#Job](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#Job)                                                      |
-| `pod`          |                                        | see [k8s pod-v1/#Pod](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Pod)                                                      |
-| `results.csv`  | results (`f3-evaluator` only)          | string-exported csv results, see [`self.evaluation_metadata_df`](https://github.com/flatland-association/flatland-rl/blob/main/flatland/evaluators/service.py) |
-| `results.json` | evaluation state (`f3-evaluator` only) | string-`dump`ed json results, see [`self.evaluation_state`](https://github.com/flatland-association/flatland-rl/blob/main/flatland/evaluators/service.py)      |
-
-Here's an example of the `load`ed JSON from `results.json`:
-
-```json
-{
-  "state": "FINISHED",
-  "progress": 1.0,
-  "simulation_count": 2,
-  "total_simulation_count": 5,
-  "score": {
-    "score": 0.7117346938775511,
-    "score_secondary": 0.2
-  },
-  "meta": {
-    "normalized_reward": 0.35587,
-    "termination_cause": "The mean percentage of done agents during the last Test (2 environments) was too low: 0.200 < 0.25",
-    "reward": -141.5,
-    "percentage_complete": 0.2
-  }
-}
-```
-
-Here's an example of the string-imported csv from `results.csv`:
-
-```csv
-filename,test_id,env_id,n_agents,x_dim,y_dim,n_cities,max_rail_pairs_in_city,n_envs_run,seed,grid_mode,max_rails_between_cities,malfunction_duration_min,malfunction_duration_max,malfunction_interval,speed_ratios,reward,normalized_reward,percentage_complete,steps,simulation_time,nb_malfunctioning_trains,nb_deadlocked_trains,controller_inference_time_min,controller_inference_time_mean,controller_inference_time_max
-Test_0/Level_0.pkl,Test_0,Level_0,5,25,25,2,2,2,1,False,2,20,50,0,{1.0: 1.0},-138.0,0.43673469387755104,0.4,49.0,0.11057591438293457,0.0,0.0,3.409385681152344e-05,4.0399784944495365e-05,5.841255187988281e-05
-Test_0/Level_1.pkl,Test_0,Level_1,5,25,25,2,2,2,2,False,2,20,50,250,{1.0: 1.0},-145.0,0.275,0.0,40.0,0.08973836898803711,0.0,0.0,3.409385681152344e-05,3.86907813254367e-05,5.841255187988281e-05
-Test_1/Level_0.pkl,Test_1,Level_0,2,30,30,3,2,3,1,False,2,20,50,0,{1.0: 1.0},,,,,,,,,,
-Test_1/Level_1.pkl,Test_1,Level_1,2,30,30,3,2,3,2,False,2,20,50,300,{1.0: 1.0},,,,,,,,,,
-Test_1/Level_2.pkl,Test_1,Level_2,2,30,30,3,2,3,4,False,2,20,50,600,{1.0: 1.0},,,,,,,,,,
 ```
 
 # Runtime View
