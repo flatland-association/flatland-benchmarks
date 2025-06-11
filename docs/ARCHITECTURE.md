@@ -424,8 +424,9 @@ stateDiagram-v2
   state b2 <<join>>
   state c1 <<join>>
   state "| <code>f_t1</code> | submission_id |" as s1
-  state "| <code>agg_field_t1</code> | submission_id |" as t1
-  state "| <code>agg_field_b1</code> | submission_id |" as b1
+  state "| <code>agg_field_t1</code> | <code>submission_id</code> |" as t1
+  state "| <code>agg_field_b1</code> | <code>submission_id</code> |" as b1
+  state "| <code>agg_field_b1</code> |" as c1
   s1 --> t1: <code>f_t1</code>
   note left of s1
     s1 scenario results: SELECT <code>f_t1</code> FROM s1 // submission_id unique key
@@ -440,7 +441,7 @@ stateDiagram-v2
   t2 --> b1: <code>f_b1</code>
   t3 --> b1: <code>f_b1</code>
   note right of t1
-    t1 test aggregation: SELECT <code>agg_t1</code>(agg_field_t1) FROM s1,s2,s3 AS <code>agg_field_t1</code> GROUP BY submission_id
+    t1 (test aggregation): <br/>SELECT <code>agg_t1</code>(agg_field_t1) FROM s1,s2,s3 AS <code>agg_field_t1</code> GROUP BY submission_id
   end note
   note left of t2
     t2
@@ -449,14 +450,12 @@ stateDiagram-v2
     t3
   end note
   note right of b1
-    b1 benchmark aggregation: SELECT <code>agg_field_b1</code>(<code>f_b1</code>) AS <code>agg_field_b1</code> FROM t1,t2,t3 GROUP BY submission_id
-    b1 benchmark leaderboard: SELECT <code>agg_field_b1</code>, submission_id FROM b1 ORDER BY <code>agg_field_b1</code> ASCENDING
+    b1 (benchmark aggregation - leaderboard): <br/>SELECT <code>agg_field_b1</code>(<code>f_b1</code>) AS <code>agg_field_b1</code> FROM t1,t2,t3 GROUP BY submission_id ORDER BY <code>agg_field_b1</code> ASCENDING
   end note
-  b1 --> c1: <code>agg_field_b1</code>
-  b2 --> c1: <code>agg_field_b2</code>
+  t1 --> c1: <code>agg_field_b1</code>
+  t2 --> c1: <code>agg_field_b2</code>
   note right of c1
-    c1 campaign overview: SELECT MAX(<code>agg_field_b1</code>) AS value FROM b1 GROUP BY submission_id UNION SELECT MAX(<code>agg_field_b2</code>) AS value FROM b2 GROUP BY submission_id
-    schema: | benchmark_id | value | value description |
+    c1 (campaign overview): <br/>SELECT <code>agg_field_b1</code>(<code>agg_field_t1_max</code>,...) AS <code>agg_field_b1</code> <br/>FROM <br/>[ SELECT MAX(<code>agg_field_t1</code>) AS <code>agg_field_t1_max</code>,... FROM t1,...]
   end note
 ```
 
