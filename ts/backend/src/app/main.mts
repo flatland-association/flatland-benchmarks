@@ -2,7 +2,7 @@ import { parseCommandLine } from './features/config/command-line.mjs'
 import { loadConfig } from './features/config/config.mjs'
 import { Logger } from './features/logger/logger.mjs'
 import { Server } from './features/server/server.mjs'
-import { AmqpService } from './features/services/amqp-service.mjs'
+import { CeleryService } from './features/services/celery-client-service.mjs'
 import { AuthService } from './features/services/auth-service.mjs'
 import { S3Service } from './features/services/s3-service.mjs'
 import { SqlService } from './features/services/sql-service.mjs'
@@ -19,7 +19,7 @@ Logger.setOptions(options)
 const config = loadConfig()
 // set up services first
 SqlService.create(config)
-AmqpService.create(config)
+CeleryService.create(config)
 AuthService.create(config)
 S3Service.create(config)
 

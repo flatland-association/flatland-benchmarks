@@ -10,7 +10,7 @@ import TestAgent from 'supertest/lib/agent'
 import { expect, vi } from 'vitest'
 import { configuration } from '../src/app/features/config/config.mjs'
 import { Controller } from '../src/app/features/controller/controller.mjs'
-import { AmqpService } from '../src/app/features/services/amqp-service.mjs'
+import { CeleryService } from '../src/app/features/services/celery-client-service.mjs'
 import { AuthService } from '../src/app/features/services/auth-service.mjs'
 import { SqlService } from '../src/app/features/services/sql-service.mjs'
 
@@ -23,8 +23,8 @@ into a newly booted and configured express app.
 This file, especially the `ControllerTestAdapter` class, unifies this setup
 step.
 
-Additionally, it mocks `AuthService` to always resolve with a specified 
-authorization state. That way, controllers can be tested under different and 
+Additionally, it mocks `AuthService` to always resolve with a specified
+authorization state. That way, controllers can be tested under different and
 well-defined users.
 */
 
@@ -144,7 +144,7 @@ export class ControllerTestAdapter {
  * Creates services used in controllers.
  */
 export function setupControllerTestEnvironment(config: configuration) {
-  AmqpService.create(config)
+  CeleryService.create(config)
   AuthService.create(config)
   SqlService.create(config)
 }
