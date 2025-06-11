@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
@@ -9,7 +8,7 @@ import { ApiService } from '../../features/api/api.service'
 
 @Component({
   selector: 'view-new-submission',
-  imports: [CommonModule, FormsModule, ContentComponent, BreadcrumbsComponent],
+  imports: [FormsModule, ContentComponent, BreadcrumbsComponent],
   templateUrl: './new-submission.view.html',
   styleUrl: './new-submission.view.scss',
 })

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'
 import { Component, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, RouterModule } from '@angular/router'
@@ -10,15 +9,7 @@ import { ApiService } from '../../features/api/api.service'
 
 @Component({
   selector: 'view-benchmarks-detail',
-  imports: [
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    ContentComponent,
-    SectionComponent,
-    BreadcrumbsComponent,
-    LeaderboardComponent,
-  ],
+  imports: [FormsModule, RouterModule, ContentComponent, SectionComponent, BreadcrumbsComponent, LeaderboardComponent],
   templateUrl: './benchmarks-detail.view.html',
   styleUrl: './benchmarks-detail.view.scss',
 })
