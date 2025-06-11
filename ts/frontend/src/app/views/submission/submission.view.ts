@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import { Result, SubmissionPreview, SubmissionRow } from '@common/interfaces'
@@ -51,6 +51,8 @@ interface F3EvaluatorResult {
   styleUrl: './submission.view.scss',
 })
 export class SubmissionView implements OnInit, OnDestroy {
+  apiService = inject(ApiService)
+
   submissionUuid?: string
 
   submission?: SubmissionRow
@@ -66,10 +68,9 @@ export class SubmissionView implements OnInit, OnDestroy {
   isLive = false
   timeout?: number
 
-  constructor(
-    route: ActivatedRoute,
-    public apiService: ApiService,
-  ) {
+  constructor() {
+    const route = inject(ActivatedRoute)
+
     this.submissionUuid = route.snapshot.params['submission']
   }
 

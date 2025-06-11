@@ -5,7 +5,7 @@ export default defineConfig({
   // tsconfigPaths is required to resolve path aliases ("paths") from tsconfig
   plugins: [tsconfigPaths()],
   test: {
-    workspace: [
+    projects: [
       {
         extends: true,
         test: {

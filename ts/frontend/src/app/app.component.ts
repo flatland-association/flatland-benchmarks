@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { RouterOutlet } from '@angular/router'
 import { FooterNavLink, HeaderNavLink, LayoutComponent } from '@flatland-association/flatland-ui'
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
@@ -13,6 +13,9 @@ import { AuthService } from './features/auth/auth.service'
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
+  private _apiService = inject(ApiService)
+  private authService = inject(AuthService)
+
   headerNavItems: HeaderNavLink[] = [
     {
       path: '/home',
@@ -25,10 +28,4 @@ export class AppComponent {
     { path: '/impressum', label: 'Impressum' },
     { path: '/privacy', label: 'Privacy' },
   ]
-
-  // this is to prevent tree-shaking ApiService
-  constructor(
-    private _apiService: ApiService,
-    private authService: AuthService,
-  ) {}
 }

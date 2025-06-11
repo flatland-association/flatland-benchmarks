@@ -1,4 +1,4 @@
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { Router, RouterModule } from '@angular/router'
 
 @Component({
@@ -10,7 +10,9 @@ import { Router, RouterModule } from '@angular/router'
 export class BreadcrumbsComponent {
   crumbs: string[] = []
 
-  constructor(router: Router) {
+  constructor() {
+    const router = inject(Router)
+
     this.crumbs = router.routerState.snapshot.url.split('/').filter((c) => c)
   }
 

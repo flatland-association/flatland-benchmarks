@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, inject } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { BenchmarkDefinitionRow } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
@@ -12,9 +12,9 @@ import { ApiService } from '../../features/api/api.service'
   styleUrl: './benchmarks.view.scss',
 })
 export class BenchmarkView implements OnInit {
-  benchmarks?: BenchmarkDefinitionRow[]
+  apiService = inject(ApiService)
 
-  constructor(public apiService: ApiService) {}
+  benchmarks?: BenchmarkDefinitionRow[]
 
   async ngOnInit() {
     this.benchmarks = (await this.apiService.get('/benchmarks')).body

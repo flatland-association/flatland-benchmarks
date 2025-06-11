@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
+import { Injectable, inject } from '@angular/core'
 import { ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoints } from '@common/api-endpoints'
 import { ApiResponse } from '@common/api-response'
 import { ApiGetOptions, ApiPatchOptions, ApiPostOptions } from '@common/api-types'
@@ -17,7 +17,9 @@ commented out overloads.
   providedIn: 'root',
 })
 export class ApiService {
-  constructor(private http: HttpClient) {
+  private http = inject(HttpClient)
+
+  constructor() {
     // expose API service for debugging purposes
     //@ts-expect-error any
     window['apiService'] = this
