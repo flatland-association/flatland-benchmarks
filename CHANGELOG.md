@@ -3,6 +3,21 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.7.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.6.0...v0.7.0) (2025-06-11)
+
+
+### Features
+
+* **backend:** Bootstrap results aggregation ([#213](https://github.com/flatland-association/flatland-benchmarks/issues/213)) ([136be30](https://github.com/flatland-association/flatland-benchmarks/commit/136be30a5c8dca2fafadad98ec45734f377d0af0))
+* **backend:** Bootstrap Swagger UI ([#212](https://github.com/flatland-association/flatland-benchmarks/issues/212)) ([0e94bdc](https://github.com/flatland-association/flatland-benchmarks/commit/0e94bdc1a08ae6986f73e3b8ffa759dfc4f7d576))
+* **backend:** fetch results from s3 ([#199](https://github.com/flatland-association/flatland-benchmarks/issues/199)) ([7839d98](https://github.com/flatland-association/flatland-benchmarks/commit/7839d982f327e0ff3d9d32c5c4a6c8d382daba6c))
+* **backend:** Results report aggregated ([#222](https://github.com/flatland-association/flatland-benchmarks/issues/222)) ([e4f4283](https://github.com/flatland-association/flatland-benchmarks/commit/e4f42839758281ffe0c60f85720279f8ce39d4b1))
+
+
+### Bug Fixes
+
+* **frontend:** build fails ([#220](https://github.com/flatland-association/flatland-benchmarks/issues/220)) ([fa7c36d](https://github.com/flatland-association/flatland-benchmarks/commit/fa7c36dbf6df6963e2f6a5d0b2570952034425bf))
+
 ## [0.6.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.5.0...v0.6.0) (2025-04-28)
 
 
