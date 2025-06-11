@@ -195,44 +195,25 @@ arc42 documentation.
 
 # Context and Scope
 
-<div class="formalpara-title">
+> [!NOTE]  Context and scope - as the name suggests - delimits your system (i.e. your scope) from all its communication partners (neighboring systems and your scope) from all its communication partners (neighboring systems and users, i.e. the context of your system). It thereby specifies the external interfaces.
+> The FAB system is supposed to support validation campaigns in two modes
 
-**Contents**
+* FAB-internal evaluation: domain-specific evaluation systems are managed and spawned by FAB
+* FAB-external evaluation: evaluation is performed externally to FAB, the results are uploaded to FAB either manually or via a technical interface by the FAB-external evaluation system.
 
-</div>
+![SystemContext.drawio.png](img/architecture/SystemContext.drawio.png)
 
-Context and scope - as the name suggests - delimits your system (i.e.
-your scope) from all its communication partners (neighboring systems and
-users, i.e. the context of your system). It thereby specifies the
-external interfaces.
+Arrows represent control flow.
+Both, FAB-internal and FAB-external evaluation, can be closed-loop or interactive-loop (see above). Offline-loop is always FAB-external.
 
-If necessary, differentiate the business context (domain specific inputs
-and outputs) from the technical context (channels, protocols, hardware).
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-The domain interfaces and technical interfaces to communication partners
-are among your system’s most critical aspects. Make sure that you
-completely understand them.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-Various options:
-
-- Context diagrams
-
-- Lists of communication partners and their interfaces.
-
-See [Context and Scope](https://docs.arc42.org/section-3/) in the arc42
-documentation.
+| System/Role                                 | Description                                                                                                                                                                                                                                                              |
+|---------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| FAB                                         | central hub for validation campaign evaluation results. Entry-point for FAB-internal evaluation.                                                                                                                                                                         |
+| External Domain-Specific Evaluation Systems | run FAB-external evaluations.                                                                                                                                                                                                                                            |
+| Algorithmic Researcher                      | requests simulation for scenario and analyses scenario outcome, either from FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation)                                                                                                 |
+| Human-in-the-Loop Researcher                | requests simulation for scenario and analyses run information or measurements,                                                                                                                                                                                           |
+| Operator                                    | interacts with HMI, issuing requests to HMI based on information or action options from HMI.                                                                                                                                                                             |
+| Domain Expert Evaluator                     | analyses scenario outcomes, either from FAB (FAB-internal evaluation) or Domain-Specific Evaluation System (FAB-external evaluation), or uploads scenario outcomes to FAB from FAB-external evaluations. Domain Expert Evaluator may interview Operators for evaluation. |
 
 ## Business Context
 
@@ -275,42 +256,87 @@ the communication partner, the inputs, and the outputs.
 
 ## Technical Context
 
-<div class="formalpara-title">
+The following [Architecture Diagram](https://mermaid.js.org/syntax/architecture) shows the interplay of the FAB components:
 
-**Contents**
+```mermaid
+architecture-beta
+group api(cloud)[Validation Campaign Hub]
 
-</div>
+service db(database)[Database] in api
+service frontend(server)[Frontend] in api
+service backend(server)[Backend] in api
+service broker(internet)[Broker] in api
+service keycloak(server)[IAM] in api
 
-Technical interfaces (channels and transmission media) linking your
-system to its environment. In addition a mapping of domain specific
-input/output to the channels, i.e. an explanation which I/O uses which
-channel.
 
-<div class="formalpara-title">
+group railway(cloud)[Railway]
+service orchestratorailway(server)[Ochestrator] in railway
+service evaluatorrailway(server)[Test Runner and Test Evaluator] in railway
 
-**Motivation**
+group Cloudstorage(cloud)[Cloud Provider]
+service s3(disk)[S3 Object Storage] in Cloudstorage
 
-</div>
+group gh(cloud)[GitHub]
+service ghcr(disk)[ghcr] in gh
 
-Many stakeholders make architectural decision based on the technical
-interfaces between the system and its context. Especially infrastructure
-or hardware designers decide these technical interfaces.
 
-<div class="formalpara-title">
+junction junctionBackend in api
 
-**Form**
 
-</div>
+frontend:R -- L:backend
+backend:B -- T:junctionBackend
+backend:T -- B:broker
 
-E.g. UML deployment diagram describing channels to neighboring systems,
-together with a mapping table showing the relationships between channels
-and input/output.
+broker:R -- L:orchestratorailway
+orchestratorailway:B -- T:evaluatorrailway
+evaluatorrailway:L -- R:backend
+junctionBackend:T -- B:backend
 
-**\<Diagram or Table>**
+junctionBackend:R -- L:keycloak
+junctionBackend:L -- R:db
 
-**\<optionally: Explanation of technical interfaces>**
 
-**\<Mapping Input/Output to Channels>**
+evaluatorrailway:R -- L:s3
+evaluatorrailway:B -- L:ghcr
+```
+
+| Component             | Description                                                                                                       | Technical                         |
+|-----------------------|-------------------------------------------------------------------------------------------------------------------|-----------------------------------|
+| Frontend              | Web pages for managing, viewing and uploading campaign results/competition submissions                            | Node, JS, HTML                    |
+| Backend               | Campaign/competition/benchmark metadata and results                                                               | REST, Node, JS, HTML              |
+| Database              | Metadata and results store                                                                                        | PostgreSQL                        |
+| Broker                | Message queues for triggering evaluation and signalling status between backend and domain-specific orchestrators. | RabbitMQ                          |
+| IAM                   | Identity Access Management for backend services: users and groups                                                 | Keycloak                          |
+| Orchestrator Domain A | Manages pool of evaluation workers                                                                                | Blueprint: Celery                 |
+| Evaluator Domain A    | Evaluation worker.                                                                                                | Blueprint: Python + bash + Docker |
+| Object Storage        | Raw tabular results are uploaded to object storage from evaluator and fetched by backend.                         | AWS S3 compatible object storage  |
+
+And the following [information flow diagram](https://www.uml-diagrams.org/information-flow-diagrams.html) additionally reflects closed-loop or interactive-loop, both of FAB-internal and FAB-external evaluation (ignoring FAB system boundary, i.e. whether the domain-specific evaluation systems are managed by FAB or external).
+
+![Closed_and_Interactive_Loop_Eval.drawio.png](img/architecture/Closed_and_Interactive_Loop_Eval.drawio.png)
+
+### Level 1 Components
+
+| Component             | Responsibility                                                                                                                           | Example                                                                          |
+|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| FAB Web+Backend       | Manage scenarios for FAB-internal evaluation. Manage validation campaigns and results for both FAB-internal and FAB-external evaluation. | FAB                                                                              |
+| Prediction Module     | Step from state at time t.                                                                                                               | Flatland 3 environment                                                           |
+| Scenario Driver       | Hooks into simulation engine to provide state at time t (en lieu of production information system) for validation purposes.              |                                                                                  |
+| Scenario Evaluator    | Evaluate scenario outcome for validation purposes.                                                                                       | FAB Flatland 3 evaluator (conceptually computing metrics/KPIs on the trajectory) |
+| Evaluation Submodule  | Provide prediction for specified scenario.                                                                                               |                                                                                  |
+| Recommendation Module | Provide recommendation to HMI.                                                                                                           |                                                                                  |
+| HMI Module            | Provide information and action options to Operator.                                                                                      | Interactive AI Frontend  with Flatland event services                            |
+
+### Level 2 Components
+
+| Component           | Responsibility                                                                                     | Example                                                                 |
+|---------------------|----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| Simulation Engine   | Run simulation for state and scenario, brokering actions between AI agent and digital environment. | FAB Flatland 3 evaluator stepping the env with actions from submission. |
+| Digital Environment | Update state based on actions (step).                                                              | Flatland 3 env, Grid2Ops                                                |
+| AI Agent            | Provide actions based on observations from state                                                   | FAB Flatland 3 submission                                               |
+
+> [!IMPORTANT]  
+> Arrows indicate the direction of information flow and not direction of calls!
 
 # Solution Strategy
 
@@ -360,316 +386,326 @@ documentation.
 
 # Building Block View
 
-<div class="formalpara-title">
+### Level 1
 
-**Content**
+> [!NOTE]
+> [building block view](https://docs.arc42.org/section-5/) shows the static decomposition of the system into building blocks (modules, components, subsystems, classes, interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations, data structures, …) as well as their dependencies (relationships, associations, …)
 
-</div>
-
-The building block view shows the static decomposition of the system
-into building blocks (modules, components, subsystems, classes,
-interfaces, packages, libraries, frameworks, layers, partitions, tiers,
-functions, macros, operations, data structures, …) as well as their
-dependencies (relationships, associations, …)
-
-This view is mandatory for every architecture documentation. In analogy
-to a house this is the *floor plan*.
-
-<div class="formalpara-title">
-
-**Motivation**
-
-</div>
-
-Maintain an overview of your source code by making its structure
-understandable through abstraction.
-
-This allows you to communicate with your stakeholder on an abstract
-level without disclosing implementation details.
-
-<div class="formalpara-title">
-
-**Form**
-
-</div>
-
-The building block view is a hierarchical collection of black boxes and
-white boxes (see figure below) and their descriptions.
-
-![Hierarchy of building blocks](./img/architecture/05_building_blocks-EN.png)
-
-**Level 1** is the white box description of the overall system together
-with black box descriptions of all contained building blocks.
-
-**Level 2** zooms into some building blocks of level 1. Thus it contains
-the white box description of selected building blocks of level 1,
-together with black box descriptions of their internal building blocks.
-
-**Level 3** zooms into selected building blocks of level 2, and so on.
-
-See [Building Block View](https://docs.arc42.org/section-5/) in the
-arc42 documentation.
-
-## Whitebox Overall System
-
-Here you describe the decomposition of the overall system using the
-following white box template. It contains
-
-- an overview diagram
-
-- a motivation for the decomposition
-
-- black box descriptions of the contained building blocks. For these
-  we offer you alternatives:
-
-    - use *one* table for a short and pragmatic overview of all
-      contained building blocks and their interfaces
-
-    - use a list of black box descriptions of the building blocks
-      according to the black box template (see below). Depending on
-      your choice of tool this list could be sub-chapters (in text
-      files), sub-pages (in a Wiki) or nested elements (in a modeling
-      tool).
-
-- (optional:) important interfaces, that are not explained in the
-  black box templates of a building block, but are very important for
-  understanding the white box. Since there are so many ways to specify
-  interfaces why do not provide a specific template for them. In the
-  worst case you have to specify and describe syntax, semantics,
-  protocols, error handling, restrictions, versions, qualities,
-  necessary compatibilities and many things more. In the best case you
-  will get away with examples or simple signatures.
-
-***\<Overview Diagram>***
-
-The following [UML information flow diagram](https://www.uml-diagrams.org/information-flow-diagrams.html) shows the exchange of information between system
-components at high level:
-
-> [!IMPORTANT]  
-> Arrows indicate the direction of information flow and not direction of calls!
+The following diagram shows the building blocks in the Flatland 3 benchmarking closed loop:
 
 ![InformationFlow.drawio.png](./img/architecture/InformationFlow.drawio.png)
 
-Motivation  
-*\<text explanation>*
+Implementation:
 
-Contained Building Blocks  
-*\<Description of contained building block (black boxes)>*
+* closed-loop: backend polls broker, fetches results from S3 and uploads results via SCORES API
+* interactive or offline loop: results uploaded manually via SCORES REST API
 
-Important Interfaces  
-*\<Description of important interfaces>*
+### Level 2
 
-Insert your explanations of black boxes from level 1:
+Inspired by [LIPS](https://github.com/IRT-SystemX/LIPS), high-level data model is as follows:
 
-If you use tabular form you will only describe your black boxes with
-name and responsibility according to the following schema:
+![DataModel.drawio.png](img/architecture/DataModel.drawio.png)
 
-| **Name**         | **Responsibility** |
-|------------------|--------------------|
-| *\<black box 1>* |  *\<Text>*         |
-| *\<black box 2>* |  *\<Text>*         |
+Here's an overview of the aggregation in Pseudo-SQL style. More details below in API description.
 
-If you use a list of black box descriptions then you fill in a separate
-black box template for every important building block . Its headline is
-the name of the black box.
+* A submission is always with respect to a benchmark.
+* Raw result data is always with respect to submission and scenario.
+* Benchmark definition contains
+  * `f_t1`, `agg_t_1`: field `f_t1` of scenarios s1,..,s3 is aggregated by function `agg_t_1` into field `agg_field_t1`
+  * `f_b1`, `agg_b_1`: field `f_b1` of tests t1,t2 is aggregated by function `agg_b_1` into field `agg_field_b1`
+* Available aggregation functions: `SUM`, `NANSUM`, (weighted or equal weights if undefined) `MEAN`, (weighted or equal weights if undefined) `NANMEDIAN`, `MEDIAN`, `NANMEDIAN`
 
-### \<Name black box 1>
+```mermaid
+stateDiagram-v2
+  state t1 <<join>>
+  state t2 <<join>>
+  state t3 <<join>>
+  state b1 <<join>>
+  state b2 <<join>>
+  state c1 <<join>>
+  state "| <code>f_t1</code> | submission_id |" as s1
+  state "| <code>agg_field_t1</code> | <code>submission_id</code> |" as t1
+  state "| <code>agg_field_b1</code> | <code>submission_id</code> |" as b1
+  state "| <code>agg_field_b1</code> |" as c1
+  s1 --> t1: <code>f_t1</code>
+  note left of s1
+    s1 scenario results: SELECT <code>f_t1</code> FROM s1 // submission_id unique key
+  end note
+  s2 --> t1: <code>f_t1</code>
+  s3 --> t1: <code>f_t1</code>
+  s4 --> t2: <code>f_t2</code>
+  s5 --> t2: <code>f_t2</code>
+  s6 --> t3: <code>f_t3</code>
+  s7 --> t3: <code>f_t3</code>
+  t1 --> b1: <code>f_b1</code>
+  t2 --> b1: <code>f_b1</code>
+  t3 --> b1: <code>f_b1</code>
+  note right of t1
+    t1 (test aggregation): <br/>SELECT <code>agg_t1</code>(agg_field_t1) FROM s1,s2,s3 AS <code>agg_field_t1</code> GROUP BY submission_id
+  end note
+  note left of t2
+    t2
+  end note
+  note left of t3
+    t3
+  end note
+  note right of b1
+    b1 (benchmark aggregation - leaderboard): <br/>SELECT <code>agg_field_b1</code>(<code>f_b1</code>) AS <code>agg_field_b1</code> FROM t1,t2,t3 GROUP BY submission_id ORDER BY <code>agg_field_b1</code> ASCENDING
+  end note
+  t1 --> c1: <code>agg_field_b1</code>
+  t2 --> c1: <code>agg_field_b2</code>
+  note right of c1
+    c1 (campaign overview): <br/>SELECT <code>agg_field_b1</code>(<code>agg_field_t1_max</code>,...) AS <code>agg_field_b1</code> <br/>FROM <br/>[ SELECT MAX(<code>agg_field_t1</code>) AS <code>agg_field_t1_max</code>,... FROM t1,...]
+  end note
+```
 
-Here you describe \<black box 1> according the the following black box
-template:
+### API Roles
 
-- Purpose/Responsibility
+- `user`: can submit and view results
+- `admin`: can define benchmarks
+- `results-uploader`: can upload results (for all benchmarks)
 
-- Interface(s), when they are not extracted as separate paragraphs.
-  This interfaces may include qualities and performance
-  characteristics.
+### Setups
 
-- (Optional) Quality-/Performance characteristics of the black box,
-  e.g.availability, run time behavior, ….
+| ↕️️ aspect / ↔️️setup                         | benchmarking                                | competition                                 | campaign                                             |
+|-----------------------------------------------|---------------------------------------------|---------------------------------------------|------------------------------------------------------|
+| loop                                          | closed-loop                                 | closed-loop                                 | closed/interactive/offline loop                      |
+| submission                                    | any number of tests                         | all tests                                   | single test                                          |
+| results uploader                              | technical user with `results-uploader` role | technical user with `results-uploader` role | technical or human user with `results-uploader` role |
+| user default roles                            | `user`                                      | `user`                                      | `user`, `results-uploader` (dedicate FAB instance)   |
+| top-level overview                            | benchmarks                                  | benchmarks                                  | campaigns                                            |
+| benchmark overview                            | rounds -> benchmark leaderboard per round   | rounds -> benchmark leaderboard per round   | ❌                                                    |
+| campaign overview                             | ❌                                           | ❌                                           | benchmarks (row=benchmark)                           |
+| leaderboard (row=submission, benchmark score) | ✅                                           | ✅                                           | ❌                                                    |
+| benchmark drilldown (row=test)                | ✅                                           | ✅                                           | ✅                                                    |
+| test drilldown (row=scenario)                 | ✅                                           | ✅                                           | ✅                                                    |
 
-- (Optional) directory/file location
+### Interface 1: Benchmark definition API
 
-- (Optional) Fulfilled requirements (if you need traceability to
-  requirements).
+* `PUT /benchmarks`: create benchmark (JSON does not contain IDs)
+* `DELETE /benchmarks/{benchmark_id}`: delete benchmark
+* `GET /benchmarks/{benchmark_id}`: get benchmark definition (incl. generated IDs)
+* `POST /benchmarks/{benchmark_id}`: update existing benchmark definition (unreferenced tests/scenarios will be removed from the benchmark and left dangling)
+* `POST /tests/{test_id}`: same at test level
+* `POST /scenarios/{scenario_id}`: same at scenario level
+* `DELETE /tests/{test_id}/`: remove one test from the benchmark definition
+* `DELETE /scenarios/{scenario_id}`: remove one scenario from the test definition
 
-- (Optional) Open issues/problems/risks
+Optional:
 
-*\<Purpose/Responsibility>*
+* `PUT /tests/{test_id}/scenarios`: add scenario(s) under test
+* `PUT /benchmarks/{benchmark_id}/tests`: add test(s) under benchmark
 
-*\<Interface(s)>*
 
-*\<(Optional) Quality/Performance Characteristics>*
+Add/delete individual scenarios:
 
-*\<(Optional) Directory/File Location>*
+Remarks:
 
-*\<(Optional) Fulfilled Requirements>*
+* `{ "definition": ...}` allows for future backwards-compatible addition of optional attributes
+* `fields` defines tabular or form view of results at the hierarchy level (benchmark/test/scenario)
+* `agg_func` must be one of a pre-defined enum of values e.g. `sum`, `mean`, `nanmean` etc.
+* handling of nan-values depends on the aggregation function, similar to numpy:
+  * https://numpy.org/doc/stable/reference/generated/numpy.mean.html -> result is nan if values are missing are reported as nan
+  * https://numpy.org/doc/stable/reference/generated/numpy.nanmean.html -> result is mean of non-nan values
+* The definition must be consistent, i.e. `agg_field` must be one of the fields defined in the underlying elements.
+* Versioning: we keep `valid_from` and `valid_to` to allow to for future revert operations.
+* Note that we adhere to functional data processing paradigm: we re-process the data according to the current processing definition;
+  the raw data is kept on S3 and we could in principle re-process cached data at every level from S3 to the UI.
+* Scenario IDs are global IDs, not only relative to their parent benchmark/test.
 
-*\<(optional) Open Issues/Problems/Risks>*
+| Aggregation function | weights allowed | Description                                                                                                                              |
+|----------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `SUM`                | yes             | If one value is NaN, the sum will be NaN. Empty sum defaulting to 0.                                                                     |
+| `NANSUM`             | yes             | Sum over all non-NaN scores. Empty sum defaulting to 0.                                                                                  |
+| `MEAN`               | yes             | If one value is NaN, the mean will be NaN. Empty mean defaulting to NaN. If weights are present, then the mean is weighted mean.         |
+| `NANMEAN`            | yes             | Mean over all non-NaN scores, defaulting to 0.  Empty nanmean defaulting to NaN. If weights are present, then the mean is weighted mean. |
+| `MEDIAN`             | no              | If one value is NaN, the median will be NaN, defaulting to 0. Empty median defaulting to NaN.                                            |
+| `NANMEDIAN`          | no              | Median over all non-NaN scores, defaulting to 0. Empty nanmedian defaulting to NaN.                                                      |
 
-### \<Name black box 2>
+Relational schema:
 
-*\<black box template>*
+```mermaid
+erDiagram
+  SCENARIO_DEFINITION {
+    uuid benchmark_id PK, FK
+    uuid test_id PK, FK
+    uuid scenario_id PK
+    date valid_from
+    date valid_to
+    string[] view_field
+  }
+```
 
-### \<Name black box n>
+```mermaid
+erDiagram
+  TEST_DEFINITION {
+    uuid benchmark_id PK, FK
+    uuid test_id PK
+    string agg_func FK
+    string agg_field
+    Optional[float[]] weights
+    date valid_from
+    date valid_to
+    string[] view_agg_func
+    string[] view_agg_field
+    Optional[float[]][] view_weights
+  }
+```
 
-*\<black box template>*
+```mermaid
+erDiagram
+  BENCHMARK_DEFINITION {
+    uuid benchmark_id PK
+    string agg_func FK
+    string agg_field
+    Optional[float[]] weights
+    date valid_from
+    date valid_to
+    string[] view_agg_func
+    string[] view_agg_field
+    Optional[float[]][] view_weights
+  }
+```
 
-### Interface 1: Rabbit
+Note:
+
+* We assume the `agg_field` to be the same for all children.
+* Additional view fields can be defined together with their aggregation function
+
+### Interface 1b: Benchmark group definition API
+
+* `PUT /benchmark_groups`: create benchmark group
+* `POST /benchmark_groups/{benchmark_group_id}`: create validation campaign/competition/benchmark with the list of the underlying benchmarks
+* `DELETE /benchmark_groups/{benchmark_group_id}`: delete idem
+* `GET /benchmark_groups/{benchmark_group_id}`: retrieve list of benchmarks in this group along with metadata (type, campaign name/competition name); different UI dependening on type
+
+```mermaid
+erDiagram
+  BENCHMARK_GROUP {
+    UUID id PK
+    UUID setup FK
+  }
+```
+
+```mermaid
+erDiagram
+  BENCHMARK_SETUPS {
+    UUID id PK
+    string description "BENCHMARK|COMPETITION|CAMPAIGN"
+  }
+```
+
+```mermaid
+erDiagram
+  BENCHMARK_GROUP_MEMBERS {
+    UUID benchmark_group_id PK, FK
+    UUID benchmark_id PK, FK
+  }
+
+```
+
+Remarks:
+
+* General model grouping
+* multiple benchmarks as rounds of the same competition
+* multiple benchmarks as evaluation objects of the same validation campaign
+* different evolutions/flavours/objectives of a benchmark under the same common heading
+* The UI might be different in the different setups, but not necessarily so:
+  * tabs for different rounds of a competition or different versions of a benchmark
+  * table with different benchmarks of a validation campaign
+  * no tabs if a benchmark has only one version
+* If a definition is updated, we lazily assume results already uploaded still comply with the updated definition - upon aggregation, the UI might display NaN where data is missing. We assume the definition is validated at the begin of a campaign.
+
+Open Questions:
+
+* We might implement `SETUP` without enumeration, but with a UI configuration instead.
+
+### Interface 2: Submission and results APIs
+
+* `PUT /submissions`: create a submission with initial status and owner
+* `GET /submissions/{submission_id}`: status and owner of a submission
+* `POST /submissions/{submission_id}/status`: update status or make public of a submission
+
+* `GET /results/submission/{submission_id}/scenario/{scenario_id}`: raw scores of submission for single scenario
+* `POST /results/submission/{submission_id}/scenario/{scenario_id}`: live update for single scenario
+
+* `GET /results/submission/{submission_id}/tests/{test_id}`: aggregated scores of submission for single test
+* `POST /results/submission/{submission_id}/tests/{test_id}`: batch upload for subset of scenarios of a single test (scenarios not included will be NaN)
+
+* `GET /results/submission/{submission_id}/benchmarks/{benchmark_id}`: aggregated scores of submission for single benchmark
+* `POST /results/submission/{submission_id}/benchmarks/{benchmark_id}`: batch upload for subset of tests of a single benchmark
+
+* `GET /results/benchmark_group/{benchmark_group}?num_submissions`: get benchmarks with their num_submissions best submission(s)
+* `GET /results/benchmark/{benchmark_id}`: get submissions ordered by primary benchmark score (leaderboard in competition and benchmarks settings)
+* `GET /results/test/{test_id}`: get submissions ordered by primary test score
+* `GET /results/scenario/{scenario_id}`: get submissions ordered by primary scenario score
+
+Remarks:
+
+* An uploader can be a user or a group. Let's start with only users.
+* `{"data": ...}` allows for future backwards-compatible addition of optional attributes, like submitting on behalf of a group.
+* Partial results (aka. live update): Same evaluation during evaluations as afterwards: goes over benchmark/test definition and all scenarios below; missing values interpreted as nan; whether intermediate result is nan or an intermediate value depends on aggregation (e.g. `nansum` vs. `sum`).
+* Store only the raw results, do the aggregation upon GET request of the aggregated scores, either in backend (preferred) or (if implementation much simpler) in frontend
+* The campaign setup does not use the full-benchmark scores API.
+
+Constraints:
+
+* all fields defined in `SCENARIO_DEFINITION` must be present
+* all scenarios defined in `SCENARIO_DEFINITION` must be present
+
+Relational schema (multi-key-value based, i.e. multiple "raw" scores per scenario possible):
+
+```mermaid
+erDiagram
+  RESULTS {
+    UUID scenario_id PK, FK
+    UUID submission_id PK, FK
+    string key PK
+    float score
+  }
+```
+
+```mermaid
+erDiagram
+  SUBMISSIONS {
+    UUID submission_id PK
+    STATUS status "SUBMITTED|RUNNING|SUCCESS|FAILURE"
+    UUID benchmark_id FK
+    string description
+    boolean published
+  }
+```
+
+Future extensions:
+
+* `SUBMISSION_VERSIONS`: allows to group submissions with a version in order to re-use same description/heading for the same team/submitter:
+
+```mermaid
+erDiagram
+  SUBMISSION_VERSIONS {
+    UUID id PK
+    UUID submission_id FK
+    int version
+  }
+```
+
+### Interface 3: Orchestrator
+
+We use Celery with the following configuration:
+
+* Broker and backend is RabbitMQ
+* Queue name: Benchmark ID (UUID)
+* Task name: Benchmark ID (UUD)
+* Payload:
 
 ```json
 {
-  "benchmark": 1,
-  "submission_image": "ghcr.io/flatland-association/fab-flatland-submission-template:latest",
-  "code_repository": "",
+  "submission_data_url": "ghcr.io/flatland-association/fab-flatland-submission-template:latest",
   "tests": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15
+    "557d9a00-7e6d-410b-9bca-a017ca7fe3aa"
   ]
 }
 ```
-
-### Interface 2: Redis result structure
-
-There is currently no generic abstraction for the result structure.
-
-The redis result for Flatland 3 has the following JSON structure:
-
-```json
-{
-  "f3-evaluator": {
-    "job_status": "Complete",
-    "image_id": "ghcr.io/flatland-association/fab-flatland-evaluator@sha256:035327826cdad082bdcc072ca484639123545c332c447c57de4376e3fe77dd26",
-    "log": "<plaintext log from pod run>",
-    "job": {
-      "@see": "https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/"
-    },
-    "pod": {
-      "@see": "https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/"
-    },
-    "results.csv": "filename,test_id,env_id,n_agents,x_dim,y_dim,n_cities,max_rail_pairs_in_city,n_envs_run,seed,grid_mode,max_rails_between_cities,malfunction_duration_min,malfunction_duration_max,malfunction_interval,speed_ratios,reward,normalized_reward,percentage_complete,steps,simulation_time,nb_malfunctioning_trains,nb_deadlocked_trains,controller_inference_time_min,controller_inference_time_mean,controller_inference_time_max\nTest_0/Level_0.pkl,Test_0,Level_0,5,25,25,2,2,2,1,False,2,20,50,0,{1.0: 1.0},-140.0,0.4285714285714286,0.0,49.0,0.12987303733825684,0.0,0.0,3.314018249511719e-05,4.022462027413505e-05,6.794929504394531e-05\nTest_0/Level_1.pkl,Test_0,Level_1,5,25,25,2,2,2,2,False,2,20,50,250,{1.0: 1.0},-104.0,0.48,0.0,40.0,0.33571386337280273,0.0,2.0,3.314018249511719e-05,4.0233804938498525e-05,6.794929504394531e-05\nTest_1/Level_0.pkl,Test_1,Level_0,2,30,30,3,2,3,1,False,2,20,50,0,{1.0: 1.0},,,,,,,,,,\nTest_1/Level_1.pkl,Test_1,Level_1,2,30,30,3,2,3,2,False,2,20,50,300,{1.0: 1.0},,,,,,,,,,\nTest_1/Level_2.pkl,Test_1,Level_2,2,30,30,3,2,3,4,False,2,20,50,600,{1.0: 1.0},,,,,,,,,,\n",
-    "results.json": "{\"state\": \"FINISHED\", \"progress\": 1.0, \"simulation_count\": 2, \"total_simulation_count\": 5, \"score\": {\"score\": 0.9085714285714286, \"score_secondary\": 0.0}, \"meta\": {\"normalized_reward\": 0.45429, \"termination_cause\": \"The mean percentage of done agents during the last Test (2 environments) was too low: 0.000 < 0.25\", \"reward\": -122.0, \"percentage_complete\": 0.0}}"
-  },
-  "f3-submission": {
-    "job_status": "Complete",
-    "image_id": "ghcr.io/flatland-association/fab-flatland-submission-template@sha256:e32d331729c16a871287ef8862c5d77de5028e50971e91bad754b6ed63f0806b",
-    "log": "<plaintext log from pod run>",
-    "job": {
-      "@see": "https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/"
-    },
-    "pod": {
-      "@see": "https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/"
-    }
-  }
-}
-```
-
-The two sub-JSONs for `f3-evaluator` and `f3-submission` have the following attributes:
-
-| field          | description                            | data type                                                                                                                                                      |
-|----------------|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `job_status`   | status of the container/workload       | see [k8s job-v1/#JobStatus](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#JobStatus)                                          |
-| `image_id`     | image ID of the container/workload     | URL                                                                                                                                                            |
-| `log`          | log of the container/workload          | plaintext                                                                                                                                                      |
-| `job`          |                                        | see [k8s job-v1/#Job](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/job-v1/#Job)                                                      |
-| `pod`          |                                        | see [k8s pod-v1/#Pod](https://kubernetes.io/docs/reference/kubernetes-api/workload-resources/pod-v1/#Pod)                                                      |
-| `results.csv`  | results (`f3-evaluator` only)          | string-exported csv results, see [`self.evaluation_metadata_df`](https://github.com/flatland-association/flatland-rl/blob/main/flatland/evaluators/service.py) |
-| `results.json` | evaluation state (`f3-evaluator` only) | string-`dump`ed json results, see [`self.evaluation_state`](https://github.com/flatland-association/flatland-rl/blob/main/flatland/evaluators/service.py)      |
-
-Here's an example of the `load`ed JSON from `results.json`:
-
-```json
-{
-  "state": "FINISHED",
-  "progress": 1.0,
-  "simulation_count": 2,
-  "total_simulation_count": 5,
-  "score": {
-    "score": 0.7117346938775511,
-    "score_secondary": 0.2
-  },
-  "meta": {
-    "normalized_reward": 0.35587,
-    "termination_cause": "The mean percentage of done agents during the last Test (2 environments) was too low: 0.200 < 0.25",
-    "reward": -141.5,
-    "percentage_complete": 0.2
-  }
-}
-```
-
-Here's an example of the string-imported csv from `results.csv`:
-
-```csv
-filename,test_id,env_id,n_agents,x_dim,y_dim,n_cities,max_rail_pairs_in_city,n_envs_run,seed,grid_mode,max_rails_between_cities,malfunction_duration_min,malfunction_duration_max,malfunction_interval,speed_ratios,reward,normalized_reward,percentage_complete,steps,simulation_time,nb_malfunctioning_trains,nb_deadlocked_trains,controller_inference_time_min,controller_inference_time_mean,controller_inference_time_max
-Test_0/Level_0.pkl,Test_0,Level_0,5,25,25,2,2,2,1,False,2,20,50,0,{1.0: 1.0},-138.0,0.43673469387755104,0.4,49.0,0.11057591438293457,0.0,0.0,3.409385681152344e-05,4.0399784944495365e-05,5.841255187988281e-05
-Test_0/Level_1.pkl,Test_0,Level_1,5,25,25,2,2,2,2,False,2,20,50,250,{1.0: 1.0},-145.0,0.275,0.0,40.0,0.08973836898803711,0.0,0.0,3.409385681152344e-05,3.86907813254367e-05,5.841255187988281e-05
-Test_1/Level_0.pkl,Test_1,Level_0,2,30,30,3,2,3,1,False,2,20,50,0,{1.0: 1.0},,,,,,,,,,
-Test_1/Level_1.pkl,Test_1,Level_1,2,30,30,3,2,3,2,False,2,20,50,300,{1.0: 1.0},,,,,,,,,,
-Test_1/Level_2.pkl,Test_1,Level_2,2,30,30,3,2,3,4,False,2,20,50,600,{1.0: 1.0},,,,,,,,,,
-```
-
-### \<Name interface m>
-
-## Level 2
-
-Here you can specify the inner structure of (some) building blocks from
-level 1 as white boxes.
-
-You have to decide which building blocks of your system are important
-enough to justify such a detailed description. Please prefer relevance
-over completeness. Specify important, surprising, risky, complex or
-volatile building blocks. Leave out normal, simple, boring or
-standardized parts of your system
-
-### White Box *\<building block 1>*
-
-…describes the internal structure of *building block 1*.
-
-*\<white box template>*
-
-### White Box *\<building block 2>*
-
-*\<white box template>*
-
-…
-
-### White Box *\<building block m>*
-
-*\<white box template>*
-
-## Level 3
-
-Here you can specify the inner structure of (some) building blocks from
-level 2 as white boxes.
-
-When you need more detailed levels of your architecture please copy this
-part of arc42 for additional levels.
-
-### White Box \<\_building block x.1\_\>
-
-Specifies the internal structure of *building block x.1*.
-
-*\<white box template>*
-
-### White Box \<\_building block x.2\_\>
-
-*\<white box template>*
-
-### White Box \<\_building block y.1\_\>
-
-*\<white box template>*
 
 # Runtime View
 
@@ -744,6 +780,62 @@ documentation.
 ## …
 
 ## \<Runtime Scenario n>
+
+## Runtime Scenario Closed Loop
+
+Arrow directions signify call direction.
+
+```mermaid
+sequenceDiagram
+  AlgorithmicResearcher ->> Frontend: start experiment
+  Frontend ->> Backend: PUT /submissions
+  Backend ->> Broker: START {test_id} {submission_id} {submission_data_url}
+  Orchestrator ->> Broker: POLL START {test_id} {submission_id} {submission_data_url}
+  Orchestrator ->> TestRunnerEvaluator: run {test_id} with their data using prediction module from {submission_data_url} and upload results for {submission_id},{test_id}
+  TestRunnerEvaluator ->> Backend: POST /results/submission/{submission_id}/tests/{test_id}*
+  TestRunnerEvaluator ->> Backend: POST /submissions/{submission_id}/status
+  Orchestrator ->> Broker: END {submission_id}
+  Frontend ->> Backend: GET /submission/{submission_id}
+```
+
+(*) In campaign setting, this will be one results upload at test level (corresponding to one KPI). In competition settings, the results for the whole benchmark will be uploaded (multiple calls to test API or batch call). In benchmarking setting, this can be multiple test calls.
+For live update, mutliple result uploads at scenario may also be possible.
+
+## Runtime Scenario Interactive loop
+
+Arrow directions signify call direction.
+
+```mermaid
+sequenceDiagram
+  participant HumanFactorsResearcher
+  HumanFactorsResearcher ->> Frontend: start experiment
+  Frontend ->> Backend: PUT /submissions
+  participant BackendPoller
+  Backend ->> Broker: START {submission_id}
+  Worker ->> Broker: POLL START {submission_id}
+
+  loop results per test
+    HumanFactorsResearcher ->> Frontend: upload results.json
+    alt no submission_id yet
+      Frontend ->> Backend: PUT /submissions
+    end
+
+    Frontend ->> Backend: POST /results/submission/{submission_id}/tests/{test_id}
+    Frontend ->> Backend: POST /submission/{submission_id}/status
+  end
+```
+
+## Runtime Scenario Offline loop
+
+Arrow directions signify call direction.
+
+```mermaid
+sequenceDiagram
+  Researcher ->> Frontend: upload results.json
+  Frontend ->> Backend: PUT /submissions
+  Frontend ->> Backend: POST /results/submission/{submission_id}/tests/{test_id}
+  Frontend ->> Backend: POST /submission/{submission_id}/status
+```
 
 # Deployment View
 
