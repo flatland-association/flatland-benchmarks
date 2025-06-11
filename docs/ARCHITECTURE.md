@@ -497,64 +497,6 @@ Optional:
 * `PUT /tests/{test_id}/scenarios`: add scenario(s) under test
 * `PUT /benchmarks/{benchmark_id}/tests`: add test(s) under benchmark
 
-Format:
-
-```json
-{
-  "tests": [
-    {
-      "test_id": "00",
-      "fields": [
-        {
-          "name": "rewards",
-          "agg_func": "SUM",
-          "agg_field": "rewards",
-          "description": "primary score"
-        },
-        {
-          "name": "mean_done",
-          "agg_func": "MEAN_NAN",
-          "agg_field": "done",
-          "description": "mean percentage done"
-        }
-      ],
-      "scenarios": [
-        {
-          "scenario_id": "00",
-          "fields": [
-            {
-              "name": "rewards",
-              "description": "Rewards [-]"
-            },
-            {
-              "name": "runtime",
-              "description": "Runtime [s]"
-            },
-            {
-              "name": "done",
-              "description": "Percentage done [%]"
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "fields": [
-    {
-      "name": "rewards",
-      "agg_func": "SUM",
-      "agg_field": "rewards",
-      "description": "primary score"
-    },
-    {
-      "name": "mean_done",
-      "agg_func": "MEAN_NAN",
-      "agg_field": "done",
-      "description": "mean percentage done"
-    }
-  ]
-}
-```
 
 Add/delete individual scenarios:
 
