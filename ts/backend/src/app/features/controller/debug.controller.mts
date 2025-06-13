@@ -58,6 +58,11 @@ export class DebugController extends Controller {
         res.json({ "error": err.message })
         return
       }
+      if(err.message.includes("ECONNREFUSED")){
+        res.status(504)
+        res.json({ "error": err.message })
+        return
+      }
       this.serverError(res, err)
     });
 
