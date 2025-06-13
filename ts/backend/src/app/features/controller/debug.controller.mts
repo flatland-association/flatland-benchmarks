@@ -1,7 +1,11 @@
 import { configuration } from '../config/config.mjs'
-import { AmqpService } from '../services/amqp-service.mjs'
+import { CeleryService } from '../services/celery-client-service.mjs'
+import { SqlService } from '../services/sql-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { Controller, dbgRequestObject, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
+import { Logger } from '../logger/logger.mjs'
+
+const logger = new Logger('debug-controller')
 
 export class DebugController extends Controller {
   constructor(config: configuration) {
@@ -11,7 +15,7 @@ export class DebugController extends Controller {
     this.attachGet('/mirror/:id', this.getMirrorById)
     this.attachPost('/mirror', this.postMirror)
     this.attachPatch('/mirror/:id', this.patchMirrorById)
-    this.attachPost('/amqp', this.postAmqp)
+    this.attachGet('/health', this.getHealth)
     this.attachGet('/whoami', this.getWhoami)
   }
 
@@ -38,16 +42,43 @@ export class DebugController extends Controller {
     this.respond(res, { data: 'This is the PATCH /mirror/:id endpoint' }, dbgRequestObject(req))
   }
 
-  // Posts a message to amqp queue
-  postAmqp: PostHandler<'/amqp'> = async (req, res) => {
-    // send message to debug queue
-    const amqp = AmqpService.getInstance()
-    const sent = await amqp.sendToQueue('debug', req.body, 'submissionID')
-    // report what was sent
-    if (sent) {
-      this.respond(res, `relayed to "debug": ${JSON.stringify(req.body)}`)
-    } else {
-      this.serverError(res, { text: 'There was an error sending the message. Check backend log.' })
+  getHealth: GetHandler<'/health'> = async (req, res) => {
+    try {
+      // try running query
+      const sql = SqlService.getInstance()
+      await withTimeout(sql.query`SELECT * FROM field_definitions`, 3000)
+      .catch(function (err) {
+          logger.error(`Received error from queue:${err}`);
+          if(err.message == "Timeout"){
+            res.status(504)
+            res.json({ "error": err.message })
+            return
+          }
+          this.serverError(res, err)
+      });
+      if(sql.errors != undefined){
+        this.serverError(res, sql.errors)
+      }
+
+      // send message to debug queue
+      const amqp = CeleryService.getInstance()
+      const sent = amqp.isReady();
+      await withTimeout(sent, 3000)
+      .then(result => {
+          logger.info(`Received result from queue:${result}`);
+          this.respond(res, "ready", dbgRequestObject(req));
+        })
+      .catch(function (err) {
+        logger.error(`Received error from queue:${err}`);
+        if(err.message == "Timeout"){
+          res.status(504)
+          res.json({ "error": err.message })
+          return
+        }
+        this.serverError(res, err)
+      });
+    } catch(err){
+        this.serverError(res, err)
     }
   }
 
@@ -69,4 +100,12 @@ export class DebugController extends Controller {
         this.serverError(res, err)
       })
   }
+}
+
+// https://javascript.plainenglish.io/implementing-timeouts-for-javascript-promises-25e03102df29
+function withTimeout(promise, timeout) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), timeout))
+  ]);
 }

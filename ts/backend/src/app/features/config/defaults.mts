@@ -4,7 +4,7 @@ export const defaults = {
     host: '0.0.0.0',
     port: 8000,
   },
-  /* AMQP endpoint */
+  /* Celery broker endpoint */
   amqp: {
     host: 'localhost',
     port: 5672,
@@ -16,10 +16,6 @@ export const defaults = {
     user: 'benchmarks',
     password: 'benchmarks',
     database: 'benchmarks',
-  },
-  /* Redis endpoint */
-  redis: {
-    url: 'redis://localhost:6379', // redis[s]://[[username][:password]@][host][:port][/db-number]
   },
   /* S3 */
   s3: {

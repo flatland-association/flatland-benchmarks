@@ -4,7 +4,7 @@
     "host": "0.0.0.0",
     "port": 8000
   },
-  /* AMQP endpoint */
+  /* Celery broker endpoint */
   "amqp": {
     "host": "guest:guest@rabbit",
     "port": 5672
@@ -16,11 +16,6 @@
     "user": "benchmarks",
     "password": "benchmarks",
     "database": "benchmarks"
-  },
-  /* Redis endpoint */
-  "redis": {
-    "url": "redis://redis:6379"
-    // redis[s]://[[username][:password]@][host][:port][/db-number]
   },
   /* MinIO / S3 */
   "minio": {
