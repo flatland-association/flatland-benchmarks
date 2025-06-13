@@ -15,7 +15,7 @@ export class DebugController extends Controller {
     this.attachGet('/mirror/:id', this.getMirrorById)
     this.attachPost('/mirror', this.postMirror)
     this.attachPatch('/mirror/:id', this.patchMirrorById)
-    this.attachGet('/health', this.celeryReady)
+    this.attachGet('/health', this.getHealth)
     this.attachGet('/whoami', this.getWhoami)
   }
 
@@ -42,8 +42,7 @@ export class DebugController extends Controller {
     this.respond(res, { data: 'This is the PATCH /mirror/:id endpoint' }, dbgRequestObject(req))
   }
 
-  // Posts a message to amqp queue using Celery client
-  celeryReady: PostHandler<'/health'> = async (req, res) => {
+  getHealth: GetHandler<'/health'> = async (req, res) => {
     try {
       // try running query
       const sql = SqlService.getInstance()
@@ -69,11 +68,6 @@ export class DebugController extends Controller {
       .catch(function (err) {
         logger.error(`Received error from queue:${err}`);
         if(err.message == "Timeout"){
-          res.status(504)
-          res.json({ "error": err.message })
-          return
-        }
-        if(err.message.includes("ECONNREFUSED")){
           res.status(504)
           res.json({ "error": err.message })
           return
