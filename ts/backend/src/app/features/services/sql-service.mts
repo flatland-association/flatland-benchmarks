@@ -7,12 +7,12 @@ import { Service } from './service.mjs'
  */
 export class SqlService extends Service {
   /**
-   * Postgres notices that occured during `query`. Is reset to `undefined`
+   * Postgres notices that occurred during `query`. Is reset to `undefined`
    * upon invoking `query`.
    */
   notices?: postgres.Notice[]
   /**
-   * Postgres errors that occured during `query`. Is reset to `undefined`
+   * Postgres errors that occurred during `query`. Is reset to `undefined`
    * upon invoking `query`.
    */
   errors?: postgres.Error[]

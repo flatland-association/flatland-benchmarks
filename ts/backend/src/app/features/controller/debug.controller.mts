@@ -1,5 +1,6 @@
 import { configuration } from '../config/config.mjs'
 import { CeleryService } from '../services/celery-client-service.mjs'
+import { SqlService } from '../services/sql-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { Controller, dbgRequestObject, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
 import { Logger } from '../logger/logger.mjs'
@@ -43,29 +44,45 @@ export class DebugController extends Controller {
 
   // Posts a message to amqp queue using Celery client
   celeryReady: PostHandler<'/health'> = async (req, res) => {
-    // send message to debug queue
-    const amqp = CeleryService.getInstance()
-    const sent = amqp.isReady();
-    await withTimeout(sent,3000)
-    .then(result => {
-        logger.info(`Received result from queue:${result}`);
-        this.respond(res, "ready", dbgRequestObject(req));
-      })
-    .catch(function (err) {
-      logger.error(`Received error from queue:${err}`);
-      if(err.message == "Timeout"){
-        res.status(504)
-        res.json({ "error": err.message })
-        return
-      }
-      if(err.message.includes("ECONNREFUSED")){
-        res.status(504)
-        res.json({ "error": err.message })
-        return
-      }
-      this.serverError(res, err)
-    });
+    try {
+      // try running query
+      const sql = SqlService.getInstance()
+      await withTimeout(sql.query`SELECT * FROM field_definitions`, 3000)
+      .catch(function (err) {
+          logger.error(`Received error from queue:${err}`);
+          if(err.message == "Timeout"){
+            res.status(504)
+            res.json({ "error": err.message })
+            return
+          }
+          this.serverError(res, err)
+        });
 
+      // send message to debug queue
+      const amqp = CeleryService.getInstance()
+      const sent = amqp.isReady();
+      await withTimeout(sent, 3000)
+      .then(result => {
+          logger.info(`Received result from queue:${result}`);
+          this.respond(res, "ready", dbgRequestObject(req));
+        })
+      .catch(function (err) {
+        logger.error(`Received error from queue:${err}`);
+        if(err.message == "Timeout"){
+          res.status(504)
+          res.json({ "error": err.message })
+          return
+        }
+        if(err.message.includes("ECONNREFUSED")){
+          res.status(504)
+          res.json({ "error": err.message })
+          return
+        }
+        this.serverError(res, err)
+      });
+    } catch(err){
+        this.serverError(res, err)
+    }
   }
 
   getWhoami: GetHandler<'/whoami'> = async (req, res) => {
