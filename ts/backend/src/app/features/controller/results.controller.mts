@@ -35,6 +35,7 @@ export class ResultsController extends Controller {
     this.attachGet('/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id', this.getScenarioResults)
     this.attachGet('/results/benchmark/:benchmark_id', this.getLeaderboard)
     this.attachGet('/results/campaign-item/:benchmark_id', this.getCampaignItem)
+    this.attachGet('/results/campaign-item/:benchmark_id/tests/:test_id', this.getCampaignTest)
   }
 
   /**
@@ -572,6 +573,126 @@ export class ResultsController extends Controller {
           test_id: item.test.id,
           scorings: item.item?.scorings ?? null,
           submission_id: item.item?.submission.id ?? null,
+        }
+      }),
+    }
+    this.respond(res, [result])
+  }
+
+  /**
+   * @swagger
+   * /results/campaign-item/{benchmark_id}/tests/{test_id}:
+   *  get:
+   *    description: Get campaign item test leaderboard.
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: benchmark_id
+   *        description: Benchmark ID.
+   *        required: true
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *    parameters:
+   *      - in: path
+   *        name: test_id
+   *        description: Test ID.
+   *        required: true
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *    responses:
+   *      200:
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          benchmark_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of benchmark.
+   *                          items:
+   *                            type: array
+   *                            items:
+   *                              type: object
+   *                              properties:
+   *                                submission_id:
+   *                                  type: string
+   *                                  format: uuid
+   *                                  description: ID of submission.
+   *                                scorings:
+   *                                  type: object
+   *                                  description: Dictionary of submission scores.
+   *                                test_scorings:
+   *                                  type: array
+   *                                  items:
+   *                                    type: object
+   *                                    properties:
+   *                                      test_id:
+   *                                        type: string
+   *                                        format: uuid
+   *                                        description: ID of test.
+   *                                      scorings:
+   *                                        type: object
+   *                                        description: Dictionary of test scores.
+   *                                      scenario_scorings:
+   *                                        type: array
+   *                                        items:
+   *                                          type: object
+   *                                          properties:
+   *                                            scenario_id:
+   *                                              type: string
+   *                                              format: uuid
+   *                                              description: ID of scenario.
+   *                                            scorings:
+   *                                              type: object
+   *                                              description: Dictionary of scores.
+   */
+  getCampaignTest: GetHandler<'/results/campaign-item/:benchmark_id/tests/:test_id'> = async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth) {
+      this.unauthorizedError(res, { text: 'Not authorized' })
+      return
+    }
+    const benchmarkId = req.params.benchmark_id
+    const testId = req.params.test_id
+    // leaderboard contains all submissions (mixed tests), filter by test
+    const leaderboard = await this.aggregateLeaderboard(benchmarkId)
+    if (!leaderboard) {
+      this.requestError(res, { text: 'Campaign item could not be aggregated' })
+      return
+    }
+    // leaderboard contains all submissions (mixed tests), filter by test
+    leaderboard.items = leaderboard.items.filter((item) => item.tests[0].definition.id === testId)
+    // transform for transmission
+    const result: Leaderboard = {
+      benchmark_id: leaderboard.benchmark.id,
+      items: leaderboard.items.map((item) => {
+        return {
+          submission_id: item.submission.id,
+          scorings: item.scorings,
+          test_scorings: item.tests.map((test) => {
+            return {
+              test_id: test.definition.id,
+              scorings: test.scorings,
+              scenario_scorings: test.scenarios.map((scenario) => {
+                return {
+                  scenario_id: scenario.definition.id,
+                  scorings: scenario.scorings,
+                }
+              }),
+            }
+          }),
         }
       }),
     }
