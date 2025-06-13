@@ -52,12 +52,8 @@ interface ApiEndpointDefinitions {
     GET: ApiEndpoint<Empty, Empty, string>
     PATCH: ApiEndpoint<{ data: json }, Empty, { data: json }>
   }
-  '/dbsetup': {
-    GET: ApiEndpoint<Empty, Empty, null>
-  }
-  '/amqp': {
+  '/health': {
     GET: ApiEndpoint<Empty, Empty, string>
-    POST: ApiEndpoint<json, Empty, string>
   }
   '/whoami': {
     GET: ApiEndpoint<Empty, Empty, json>
