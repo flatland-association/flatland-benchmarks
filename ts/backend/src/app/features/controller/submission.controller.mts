@@ -6,7 +6,6 @@ import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { CeleryService } from '../services/celery-client-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
-import { S3Service } from '../services/s3-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import { Controller, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
 
