@@ -4,10 +4,10 @@ import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { Service } from './service.mjs'
 
-const logger = new Logger('amqp')
+const logger = new Logger('celery-service')
 
 /**
- * Service class providing common AMQP functionality.
+ * Service class providing common Celery client functionality.
  */
 export class CeleryService extends Service {
   constructor(config: configuration) {
