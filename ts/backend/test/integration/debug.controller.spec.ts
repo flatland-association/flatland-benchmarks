@@ -7,7 +7,7 @@ describe('Debug Controller Failing controller', () => {
 
   test('should time out because of unreachable broker', async () => {
     const testConfig = await getTestConfig()
-    testConfig.amqp.port = 1
+    testConfig.amqp.port = 2
     setupControllerTestEnvironment(testConfig)
     controller = new ControllerTestAdapter(DebugController, testConfig)
     const res = await controller.testGet('/health/', {})

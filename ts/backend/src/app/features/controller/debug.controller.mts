@@ -55,7 +55,10 @@ export class DebugController extends Controller {
             return
           }
           this.serverError(res, err)
-        });
+      });
+      if(sql.errors != undefined){
+        this.serverError(res, sql.errors)
+      }
 
       // send message to debug queue
       const amqp = CeleryService.getInstance()
