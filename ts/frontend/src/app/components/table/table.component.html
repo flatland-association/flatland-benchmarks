@@ -1,0 +1,27 @@
+<table class="w-full">
+  <thead class="font-bold text-neutral-500 bg-neutral-100">
+    <tr>
+      @for (column of columns; track $index) {
+        <th class="px-3 py-1" [ngClass]="{'rounded-tl': $index === 0, 'rounded-tr': $index === columns.length - 1, 'text-right': column.align === 'right', 'text-center': column.align === 'center'}">{{ column.title }}</th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (row of rows; track $index) {
+      <tr [routerLink]="row.routerLink" [ngClass]="{'cursor-pointer': !!row.routerLink}">
+        @for (cell of row.cells; track $index; let ci = $index) {
+          @let column = columns[ci];
+          <td class="px-3 py-3 border-b border-neutral-100" [ngClass]="{'text-right': column.align === 'right', 'text-center': column.align === 'center'}">
+            @if ('text' in cell) {
+              {{ cell.text }}
+            } @else if ('scorings' in cell) {
+              @if (cell.scorings) {
+                {{ cell.scorings['primary']?.score }}
+              }
+            }
+          </td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>
