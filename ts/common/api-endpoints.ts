@@ -110,6 +110,9 @@ interface ApiEndpointDefinitions {
   '/results/campaign-item/:benchmark_id': {
     GET: ApiEndpoint<Empty, Empty, CampaignItem[]>
   }
+  '/results/campaign-item/:benchmark_id/tests/:test_id': {
+    GET: ApiEndpoint<Empty, Empty, Leaderboard[]>
+  }
 }
 
 /**
