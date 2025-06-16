@@ -52,7 +52,6 @@ export async function getTestConfig() {
   testConfig.amqp.port = +env['RABBITMQ_PORT']
   // TODO: redis, keycloak: make port configurable directly
   // depends on https://github.com/flatland-association/flatland-benchmarks/issues/52
-  testConfig.s3.port = +env['MINIO_PORT']
   testConfig.keycloak.url = testConfig.keycloak.url.replace('8081', env['KEYCLOAK_PORT'])
 
   return testConfig

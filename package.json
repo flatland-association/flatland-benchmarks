@@ -28,7 +28,6 @@
     "@angular/platform-browser": "^20.0.2",
     "@angular/platform-browser-dynamic": "^20.0.2",
     "@angular/router": "^20.0.2",
-    "@aws-sdk/client-s3": "^3.804.0",
     "@flatland-association/flatland-ui": "^2.0.0",
     "@fortawesome/angular-fontawesome": "^2.0.1",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
