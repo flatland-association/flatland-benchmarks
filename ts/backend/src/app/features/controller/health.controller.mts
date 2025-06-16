@@ -13,28 +13,83 @@ export class HealthController extends Controller {
     this.attachGet('/health/live', this.getHealth)
   }
 
+  /**
+   * https://download.eclipse.org/microprofile/microprofile-health-2.1/microprofile-health-spec.html#_constructing_healthcheckresponse_s
+   * @swagger
+   * /health/live:
+   *  get:
+   *    description: Returns liveness.
+   *    responses:
+   *      200:
+   *        description: Live
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: object
+   *                      properties:
+   *                        status:
+   *                          type: string
+   *                    checks:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          name:
+   *                            type: string
+   *                          status:
+   *                            type: string
+   *                          data:
+   *                            type: string
+   */
   getHealth: GetHandler<'/health/live'> = async (req, res) => {
+    const payload = {
+      "status": "UP",
+      "checks": [
+        {
+          "name": "SqlService",
+          "status": "UP",
+        },
+        {
+          "name": "CeleryService",
+          "status": "UP"
+        }
+      ]
+    }
     // try running query
     const sql = SqlService.getInstance()
     await sql.query`SELECT * FROM field_definitions`
     .catch(function (err) {
         logger.error(`Received error from queue:${err}`);
-        this.serverError(res, err)
+        payload["status"] = "DOWN"
+        payload["checks"][0]["status"] = "DOWN"
     });
     if(sql.errors != undefined){
-      this.serverError(res, sql.errors)
+      payload["status"] = "DOWN"
+      payload["status"] = "DOWN"
+      payload["checks"][0]["status"] = "DOWN"
     }
 
     // send message to debug queue
     const celery = CeleryService.getInstance()
     const task = celery.isReady()
     await task
-    .then(result => {
-       this.respond(res, "ready", dbgRequestObject(req));
-     })
     .catch((err) => {
       logger.error(`Received error from queue:${err}`);
-      this.serverError(res, "failed")
+      payload["status"] = "DOWN"
+      payload["checks"][1]["status"] = "DOWN"
     })
+
+    if(payload["status"] == "UP"){
+      res.json(payload)
+    }
+    else{
+      res.status(503)
+      res.json(payload)
+    }
   }
 }

@@ -15,7 +15,7 @@ describe('Health Controller Failing controller', () => {
     console.log('= /health/live =')
     console.log(res.status)
     console.log(res.body)
-    expect(res.status).toBe(500)
+    expect(res.status).toBe(503)
   })
 
   test('should fail because unreachable db', async () => {
@@ -28,7 +28,7 @@ describe('Health Controller Failing controller', () => {
     console.log('= /health/live =')
     console.log(res.status)
     console.log(res.body)
-    expect(res.status).toBe(500)
+    expect(res.status).toBe(503)
   })
 
   test('should return healthy', async () => {
@@ -40,7 +40,18 @@ describe('Health Controller Failing controller', () => {
     console.log(res.status)
     console.log(res.body)
     expect(res.status).toBe(200)
-    expect(res.body).toBeApiResponse()
-    expect(res.body.body).toEqual("ready")
+    expect(res.body).toEqual({
+     "status": "UP",
+     "checks": [
+       {
+         "name": "SqlService",
+         "status": "UP",
+       },
+       {
+         "name": "CeleryService",
+         "status": "UP"
+       }
+     ]
+   })
   })
 })
