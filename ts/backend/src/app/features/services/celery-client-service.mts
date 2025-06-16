@@ -19,24 +19,33 @@ export class CeleryService extends Service {
    * Sends data to Celery. https://github.com/actumn/celery.node/blob/5a1a412955ae757cf0bd36015a15f5b7d18c69eb/src/app/client.ts#L135
    * @param benchmarkId Benchmark ID (equals Celery task name by convention).
    * @param payload Data to send.
-   * @param options Publish options.
+   * @param uuid SubmissionID
    * @returns `true` on success.
    */
   async sendTask(benchmarkId: string, payload: json, uuid: string) {
+    // fail fast if not connected
+    await this.isReady()
     const client = celery.createClient(
       `amqp://${this.config.amqp.host}:${this.config.amqp.port}`,
       `amqp://${this.config.amqp.host}:${this.config.amqp.port}`,
+      // queue
       benchmarkId,
     )
-    const result = client.sendTask(benchmarkId, [], payload, `sub-${uuid}`)
-    result.get().then((data) => {
-      logger.info('Received result from queue:')
-      logger.info(data)
+    console.log(`Sending payload ${payload} to amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
+    const result = client.sendTask(
+        benchmarkId, // taskName: string,
+        [], // args?: Array<any>,
+        payload, // kwargs?: object,
+        uuid, //     taskId?: string
+        )
+    console.log(`Sent task to amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
+    // return promise
+    return result.get().then((data) => {
+      console.log(`Received result from queue: ${data}`)
       client.disconnect().then(() => {
-        done()
       })
+      return data
     })
-    return true
   }
 
   /**

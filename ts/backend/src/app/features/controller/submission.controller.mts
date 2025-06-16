@@ -167,11 +167,15 @@ export class SubmissionController extends Controller {
       tests: tests,
     }
     logger.info(`Sending ${payload} to celery.`)
-    const sent = await celery.sendTask(req.body.benchmark_definition_id as string, payload, id)
-    if (sent) {
+    try {
+      // the returned unsettled promise is ignored and continues running (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+      celery.sendTask(req.body.benchmark_definition_id as string, payload, id)
+      // request succeeds once connection is checked ready and task sent
       this.respond(res, { id }, payload)
-    } else {
-      this.respond(res, { id }, 'Could not send message to broker. Check backend log.')
+    }
+    catch(error){
+      // request fails if sendTask fails as not ready
+      this.serverError(res, error)
     }
   }
 
