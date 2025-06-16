@@ -6,6 +6,7 @@ import swaggerDocument from '../../../swagger/swagger.json'
 import { configuration } from '../config/config.mjs'
 import { BenchmarkController } from '../controller/benchmark.controller.mjs'
 import { DebugController } from '../controller/debug.controller.mjs'
+import { HealthController } from '../controller/health.controller.mjs'
 import { ResultsController } from '../controller/results.controller.mjs'
 import { SubmissionController } from '../controller/submission.controller.mjs'
 import { TestController } from '../controller/test.controller.mjs'
@@ -30,6 +31,7 @@ export class Server {
 
     // use routes from controllers
     this.app.use(new DebugController(this.config).router)
+    this.app.use(new HealthController(this.config).router)
     this.app.use(new BenchmarkController(this.config).router)
     this.app.use(new TestController(this.config).router)
     this.app.use(new SubmissionController(this.config).router)

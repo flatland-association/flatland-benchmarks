@@ -15,7 +15,6 @@ export class DebugController extends Controller {
     this.attachGet('/mirror/:id', this.getMirrorById)
     this.attachPost('/mirror', this.postMirror)
     this.attachPatch('/mirror/:id', this.patchMirrorById)
-    this.attachGet('/health/live', this.getHealth)
     this.attachGet('/whoami', this.getWhoami)
   }
 
@@ -42,31 +41,6 @@ export class DebugController extends Controller {
     this.respond(res, { data: 'This is the PATCH /mirror/:id endpoint' }, dbgRequestObject(req))
   }
 
-  getHealth: GetHandler<'/health/live'> = async (req, res) => {
-    // try running query
-    const sql = SqlService.getInstance()
-    await sql.query`SELECT * FROM field_definitions`
-    .catch(function (err) {
-        logger.error(`Received error from queue:${err}`);
-        this.serverError(res, err)
-    });
-    if(sql.errors != undefined){
-      this.serverError(res, sql.errors)
-    }
-
-    // send message to debug queue
-    const celery = CeleryService.getInstance()
-    const task = celery.isReady()
-    await task
-    .then(result => {
-       this.respond(res, "ready", dbgRequestObject(req));
-     })
-    .catch((err) => {
-      logger.error(`Received error from queue:${err}`);
-      this.serverError(res, "failed")
-    })
-  }
-
   getWhoami: GetHandler<'/whoami'> = async (req, res) => {
     const auth = AuthService.getInstance()
     auth
@@ -85,12 +59,4 @@ export class DebugController extends Controller {
         this.serverError(res, err)
       })
   }
-}
-
-// https://javascript.plainenglish.io/implementing-timeouts-for-javascript-promises-25e03102df29
-function withTimeout(promise, timeout) {
-  return Promise.race([
-    promise,
-    new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), timeout))
-  ]);
 }
