@@ -43,43 +43,28 @@ export class DebugController extends Controller {
   }
 
   getHealth: GetHandler<'/health'> = async (req, res) => {
-    try {
-      // try running query
-      const sql = SqlService.getInstance()
-      await withTimeout(sql.query`SELECT * FROM field_definitions`, 3000)
-      .catch(function (err) {
-          logger.error(`Received error from queue:${err}`);
-          if(err.message == "Timeout"){
-            res.status(504)
-            res.json({ "error": err.message })
-            return
-          }
-          this.serverError(res, err)
-      });
-      if(sql.errors != undefined){
-        this.serverError(res, sql.errors)
-      }
-
-      // send message to debug queue
-      const amqp = CeleryService.getInstance()
-      const sent = amqp.isReady();
-      await withTimeout(sent, 3000)
-      .then(result => {
-          logger.info(`Received result from queue:${result}`);
-          this.respond(res, "ready", dbgRequestObject(req));
-        })
-      .catch(function (err) {
+    // try running query
+    const sql = SqlService.getInstance()
+    await sql.query`SELECT * FROM field_definitions`
+    .catch(function (err) {
         logger.error(`Received error from queue:${err}`);
-        if(err.message == "Timeout"){
-          res.status(504)
-          res.json({ "error": err.message })
-          return
-        }
         this.serverError(res, err)
-      });
-    } catch(err){
-        this.serverError(res, err)
+    });
+    if(sql.errors != undefined){
+      this.serverError(res, sql.errors)
     }
+
+    // send message to debug queue
+    const celery = CeleryService.getInstance()
+    const task = celery.isReady()
+    await task
+    .then(result => {
+       this.respond(res, "ready", dbgRequestObject(req));
+     })
+    .catch((err) => {
+      logger.error(`Received error from queue:${err}`);
+      this.serverError(res, "failed")
+    })
   }
 
   getWhoami: GetHandler<'/whoami'> = async (req, res) => {

@@ -9,8 +9,8 @@ describe.sequential('Celery client Service', () => {
     })
 
     test('should queue a message', async () => {
-      const amqp = CeleryService.getInstance()
-      const result = await amqp.sendToQueue('queue', { text: 'test' }, 'submissionUUID')
+      const celery = CeleryService.getInstance()
+      const result = await celery.sendToQueue('queue', { text: 'test' }, 'submissionUUID')
       expect(result).toBeTruthy()
     })
   })

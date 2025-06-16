@@ -3,6 +3,7 @@ import celery from 'celery-node'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { Service } from './service.mjs'
+import amqp from 'amqplib'
 
 const logger = new Logger('celery-service')
 
@@ -12,11 +13,6 @@ const logger = new Logger('celery-service')
 export class CeleryService extends Service {
   constructor(config: configuration) {
     super(config)
-  }
-
-  onError(err: unknown) {
-    logger.error(err as string)
-    return undefined
   }
 
   /**
@@ -33,7 +29,6 @@ export class CeleryService extends Service {
       benchmarkId,
     )
     const result = client.sendTask(benchmarkId, [], payload, `sub-${uuid}`)
-    logger.info(`Sent task, got: ${result}`)
     result.get().then((data) => {
       logger.info('Received result from queue:')
       logger.info(data)
@@ -49,16 +44,10 @@ export class CeleryService extends Service {
    * @param benchmarkId Benchmark ID (equals Celery task name by convention).
    * @param payload Data to send.
    * @param options Publish options.
-   * @returns `true` on success.
+   * @returns {Promise} promise that continues if backend and broker connected.
    */
-    async isReady() {
-      const client = celery.createClient(
-        `amqp://${this.config.amqp.host}:${this.config.amqp.port}`,
-        `amqp://${this.config.amqp.host}:${this.config.amqp.port}`,
-        "isReady",
-      )
-      const result = client.isReady();
-      logger.info(`Sent task, got: ${result}`)
-      return result;
+   // TODO use celery.createClient(...).isReady() instead
+    async isReady(): Promise<any> {
+        return amqp.connect(`amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
     }
 }

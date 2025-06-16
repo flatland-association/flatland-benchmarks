@@ -5,8 +5,9 @@ import { getTestConfig } from './setup.mjs'
 describe('Debug Controller Failing controller', () => {
   let controller: ControllerTestAdapter
 
-  test('should time out because of unreachable broker', async () => {
+  test('should because of unreachable broker', async () => {
     const testConfig = await getTestConfig()
+    testConfig.amqp.host = "nix.amqp.com"
     testConfig.amqp.port = 2
     setupControllerTestEnvironment(testConfig)
     controller = new ControllerTestAdapter(DebugController, testConfig)
@@ -14,12 +15,12 @@ describe('Debug Controller Failing controller', () => {
     console.log('= /health =')
     console.log(res.status)
     console.log(res.body)
-    expect(res.status).toBe(504)
-    expect(res.body).toEqual({error: "Timeout"})
+    expect(res.status).toBe(500)
   })
 
-  test('should time out because of unreachable db', async () => {
+  test('should fail because unreachable db', async () => {
     const testConfig = await getTestConfig()
+    testConfig.postgres.host = "nix.postgres.com"
     testConfig.postgres.port = 1 // do not use 0 - would fall back to default
     setupControllerTestEnvironment(testConfig)
     controller = new ControllerTestAdapter(DebugController, testConfig)
@@ -27,12 +28,8 @@ describe('Debug Controller Failing controller', () => {
     console.log('= /health =')
     console.log(res.status)
     console.log(res.body)
-    expect(res.status).toBe(504)
-    expect(res.body).toEqual({error: "Timeout"})
+    expect(res.status).toBe(500)
   })
-
-
-
 
   test('should return healthy', async () => {
     const testConfig = await getTestConfig()
