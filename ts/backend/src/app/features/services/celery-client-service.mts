@@ -20,7 +20,7 @@ export class CeleryService extends Service {
    * @param benchmarkId Benchmark ID (equals Celery task name by convention).
    * @param payload Data to send.
    * @param uuid SubmissionID
-   * @returns `true` on success.
+   * @returns Promise of task result if connection to broker = backend can be established.
    */
   async sendTask(benchmarkId: string, payload: json, uuid: string) {
     // fail fast if not connected
@@ -49,13 +49,14 @@ export class CeleryService extends Service {
   }
 
   /**
-   * Sends data to Celery. https://github.com/actumn/celery.node/blob/5a1a412955ae757cf0bd36015a15f5b7d18c69eb/src/app/client.ts#L135
+   * Checks whether connection to broker = backend is possible.
    * @param benchmarkId Benchmark ID (equals Celery task name by convention).
    * @param payload Data to send.
    * @param options Publish options.
    * @returns {Promise} promise that continues if backend and broker connected.
    */
    // TODO use celery.createClient(...).isReady() instead
+   // https://github.com/actumn/celery.node/blob/5a1a412955ae757cf0bd36015a15f5b7d18c69eb/src/app/client.ts#L135
     async isReady(): Promise<any> {
         return amqp.connect(`amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
     }
