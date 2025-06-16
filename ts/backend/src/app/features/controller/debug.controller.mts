@@ -15,7 +15,7 @@ export class DebugController extends Controller {
     this.attachGet('/mirror/:id', this.getMirrorById)
     this.attachPost('/mirror', this.postMirror)
     this.attachPatch('/mirror/:id', this.patchMirrorById)
-    this.attachGet('/health', this.getHealth)
+    this.attachGet('/health/live', this.getHealth)
     this.attachGet('/whoami', this.getWhoami)
   }
 
@@ -42,7 +42,7 @@ export class DebugController extends Controller {
     this.respond(res, { data: 'This is the PATCH /mirror/:id endpoint' }, dbgRequestObject(req))
   }
 
-  getHealth: GetHandler<'/health'> = async (req, res) => {
+  getHealth: GetHandler<'/health/live'> = async (req, res) => {
     // try running query
     const sql = SqlService.getInstance()
     await sql.query`SELECT * FROM field_definitions`
