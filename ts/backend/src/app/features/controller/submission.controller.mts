@@ -166,10 +166,8 @@ export class SubmissionController extends Controller {
       submission_data_url: req.body.submission_data_url,
       tests: tests,
     }
-    logger.info(payload)
-    const sent = await celery.sendToQueue(req.body.benchmark_definition_id as string, payload, id)
-    logger.info(sent)
-
+    logger.info(`Sending ${payload} to celery.`)
+    const sent = await celery.sendTask(req.body.benchmark_definition_id as string, payload, id)
     if (sent) {
       this.respond(res, { id }, payload)
     } else {

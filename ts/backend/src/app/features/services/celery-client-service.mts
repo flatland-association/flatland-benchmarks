@@ -22,7 +22,7 @@ export class CeleryService extends Service {
    * @param options Publish options.
    * @returns `true` on success.
    */
-  async sendToQueue(benchmarkId: string, payload: json, uuid: string) {
+  async sendTask(benchmarkId: string, payload: json, uuid: string) {
     const client = celery.createClient(
       `amqp://${this.config.amqp.host}:${this.config.amqp.port}`,
       `amqp://${this.config.amqp.host}:${this.config.amqp.port}`,
