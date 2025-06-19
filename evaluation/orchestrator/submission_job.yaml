@@ -38,13 +38,12 @@ spec:
         - args:
             - -c
             - |
-              set -e
-              set -x
+              set -euxo pipefail
               find /tmp
               unzip /tmp/environments/environments.zip -d /tmp/environments/
               find /tmp
           command:
-            - /bin/sh
+            - /bin/bash
           image: busybox
           imagePullPolicy: IfNotPresent
           name: extract-environments
