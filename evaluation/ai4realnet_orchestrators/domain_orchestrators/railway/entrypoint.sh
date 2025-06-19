@@ -11,3 +11,4 @@ sed -i "s/type=click.Path(exists=True),/type=click.Path(exists=True, path_type=P
 export PYTHONPATH=$PWD
 
 flatland-trajectory-generate-from-policy $@
+
