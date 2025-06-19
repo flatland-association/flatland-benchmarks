@@ -1,7 +1,5 @@
 import { AuthConfig } from 'angular-oauth2-oidc'
 
-// This is the environment file used during development (see angular.json)
-
 const authConfig: AuthConfig = {
   issuer: 'http://localhost:8081/realms/netzgrafikeditor',
   // The ClientId you received from the IAM Team
@@ -15,7 +13,7 @@ const authConfig: AuthConfig = {
   scope: 'openid profile email offline_access',
 }
 
-export const environment = {
+export const envConfig = {
   // API base URL
   apiBase: `${location.protocol}//${location.hostname}:8000`,
   // auth configuration or null if none is used

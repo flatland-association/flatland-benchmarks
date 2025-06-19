@@ -4,10 +4,14 @@
   "description": "FAB Frontend",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently --kill-others 'npm run private:serve' 'npm run private:test'",
-    "build": "ng build",
+    "start.fab": "ENVIRONMENT=fab.development npm run private:start",
+    "start.ai4realnet": "ENVIRONMENT=ai4realnet.development npm run private:start",
+    "build.fab": "ENVIRONMENT=fab.production npm run private:build",
+    "build.ai4realnet": "ENVIRONMENT=ai4realnet.production npm run private:build",
     "test": "ng test --watch=false --browsers=ChromeHeadless",
-    "private:serve": "ng serve",
-    "private:test": "ng test --browsers=ChromeHeadless"
+    "private:start": "concurrently --kill-others 'npm run private:serve' 'npm run private:test'",
+    "private:serve": "ng serve --configuration=${ENVIRONMENT}",
+    "private:test": "ng test --browsers=ChromeHeadless",
+    "private:build": "ng build --configuration=${ENVIRONMENT}"
   }
 }

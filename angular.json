@@ -68,7 +68,7 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "fab.production": {
               "budgets": [
                 {
                   "type": "initial",
@@ -83,31 +83,57 @@
               ],
               "outputHashing": "all"
             },
-            "development": {
+            "fab.development": {
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
               "fileReplacements": [
                 {
-                  "replace": "ts/frontend/src/environments/environment.ts",
-                  "with": "ts/frontend/src/environments/environment.development.ts"
+                  "replace": "ts/frontend/src/environments/env-config.production.ts",
+                  "with": "ts/frontend/src/environments/env-config.development.ts"
+                }
+              ]
+            },
+            "ai4realnet.production": {
+              "fileReplacements": [
+                {
+                  "replace": "ts/frontend/src/environments/env-static.fab.ts",
+                  "with": "ts/frontend/src/environments/env-static.ai4realnet.ts"
+                }
+              ]
+            },
+            "ai4realnet.development": {
+              "fileReplacements": [
+                {
+                  "replace": "ts/frontend/src/environments/env-config.production.ts",
+                  "with": "ts/frontend/src/environments/env-config.development.ts"
+                },
+                {
+                  "replace": "ts/frontend/src/environments/env-static.fab.ts",
+                  "with": "ts/frontend/src/environments/env-static.ai4realnet.ts"
                 }
               ]
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "fab.production"
         },
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
-            "production": {
-              "buildTarget": "frontend:build:production"
+            "fab.production": {
+              "buildTarget": "frontend:build:fab.production"
             },
-            "development": {
-              "buildTarget": "frontend:build:development"
+            "fab.development": {
+              "buildTarget": "frontend:build:fab.development"
+            },
+            "ai4realnet.production": {
+              "buildTarget": "frontend:build:fab.production,ai4realnet.production"
+            },
+            "ai4realnet.development": {
+              "buildTarget": "frontend:build:fab.development,ai4realnet.development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "fab.development"
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
