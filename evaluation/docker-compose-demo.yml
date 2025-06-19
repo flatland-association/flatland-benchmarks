@@ -41,6 +41,7 @@ services:
     command:
       - |
         set -euxo pipefail
+        # fail fast checking permissions
         ls -al /app/data
         mkdir -p /app/data/1234/
         touch /app/data/1234/nix.txt
