@@ -12,7 +12,7 @@ USER conda
 
 # setup flatland-rl conda env
 COPY environment.yml ./
-RUN set -e && set -x && conda --version  && \
+RUN set -euxo pipefail && conda --version  && \
     conda env create -f environment.yml && \
     conda init bash && \
     source /home/conda/.bashrc && \
