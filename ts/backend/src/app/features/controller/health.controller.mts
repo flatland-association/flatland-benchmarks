@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth-service.mjs'
 import { Controller, dbgRequestObject, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
 import { Logger } from '../logger/logger.mjs'
 
-const logger = new Logger('debug-controller')
+const logger = new Logger('health-controller')
 
 export class HealthController extends Controller {
   constructor(config: configuration) {
