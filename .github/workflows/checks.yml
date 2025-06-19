@@ -86,7 +86,7 @@ jobs:
         run: npm test
       - name: Build
         working-directory: ./ts/frontend/
-        run: npm run build
+        run: npm run build.fab
 
   test-backend:
     runs-on: ubuntu-latest
