@@ -95,6 +95,19 @@
               ]
             },
             "ai4realnet.production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all",
               "fileReplacements": [
                 {
                   "replace": "ts/frontend/src/environments/env-static.fab.ts",
@@ -103,6 +116,9 @@
               ]
             },
             "ai4realnet.development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
               "fileReplacements": [
                 {
                   "replace": "ts/frontend/src/environments/env-config.production.ts",
@@ -127,10 +143,10 @@
               "buildTarget": "frontend:build:fab.development"
             },
             "ai4realnet.production": {
-              "buildTarget": "frontend:build:fab.production,ai4realnet.production"
+              "buildTarget": "frontend:build:ai4realnet.production"
             },
             "ai4realnet.development": {
-              "buildTarget": "frontend:build:fab.development,ai4realnet.development"
+              "buildTarget": "frontend:build:ai4realnet.development"
             }
           },
           "defaultConfiguration": "fab.development"
