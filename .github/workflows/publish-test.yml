@@ -31,9 +31,9 @@ jobs:
         with:
           password: ${{ secrets.PYPI_TEST_API_TOKEN }}
           repository-url: https://test.pypi.org/legacy/
-          packages-dir: ./evaluation/ai4realnet_orchestrators/fab-clientlib
+          packages-dir: ./evaluation/ai4realnet_orchestrators/fab-clientlib/dist
       - name: Archive package
         uses: actions/upload-artifact@v4
         with:
           name: python-package
-          path: ./evaluation/ai4realnet_orchestrators/fab-clientlib
+          path: ./evaluation/ai4realnet_orchestrators/fab-clientlib/dist
