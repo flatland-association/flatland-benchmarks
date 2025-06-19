@@ -109,11 +109,16 @@ API specifications can be written in YAML or JSON. The complete OpenAPI Specific
 
 [OpenAPI Generator CLI](https://pypi.org/project/openapi-generator-cli/) is used to generate FAB API client libraries:
 
-1. Copy `swagger.json` from `ts/backend/src/swagger/swagger.json` from a FAB backend build.
+1. Copy `openapi.json` from `ts/backend/src/swagger/swagger.json` from a FAB backend build.
 2. Run
 
 ```
 python -m pip install openapi-generator-cli
-openapi-generator-cli generate -i swagger.json -g python --package-name fab_clientlib
+openapi-generator-cli generate -i openapi.json -g python --package-name fab_clientlib
 ```
 
+Configuration:
+
+* https://github.com/OpenAPITools/openapi-generator/tree/master?tab=readme-ov-file#3---usage
+* https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/python.md
+* https://github.com/OpenAPITools/openapi-generator/blob/8d8e3ddf16f2e79c24faf50fb3436b8f545d852f/modules/openapi-generator/src/main/resources/python/setup.mustache

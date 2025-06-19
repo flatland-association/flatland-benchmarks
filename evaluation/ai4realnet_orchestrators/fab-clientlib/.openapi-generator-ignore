@@ -1,0 +1,12 @@
+# Don't generate supporting code
+*.ts
+*.json
+*.sh
+*.tox
+.travis.yml
+.gitlab-ci.yml
+.gitignore
+*.cfg
+*.ini
+.github/
+.openapi-generator

@@ -38,7 +38,7 @@ jobs:
           python -m pip install -r evaluation/orchestrator/requirements.txt
           python -m pip install -r evaluation/ai4realnet_orchestrators/requirements.txt -r evaluation/ai4realnet_orchestrators/requirements-dev.txt
       - name: Run tests
-        working-directory: ./evaluation/
+        working-directory: evaluation/
         run: pytest -s --ignore ai4realnet_orchestrators
 
   tests-orchestrator-e2e:
@@ -58,15 +58,38 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Install pytest
+      - name: Install dependencies for ai4realnet_orchestrators
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r evaluation/ai4realnet_orchestrators/requirements.txt -r evaluation/ai4realnet_orchestrators/requirements-dev.txt
+      - name: Install client lib
+        working-directory: evaluation/ai4realnet_orchestrators/fab-clientlib
+        run: |
+          python -m pip install .
       - name: Run tests
-        working-directory: ./evaluation/ai4realnet_orchestrators
+        working-directory: evaluation/ai4realnet_orchestrators
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
           pytest -s test_containers_submission_api.py
+
+  test-clientlib:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.13" ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run fab-clientlib tests
+        working-directory: evaluation/ai4realnet_orchestrators/fab-clientlib
+        run: |
+          python -m pip install -r requirements.txt
+          python -m pip install -r test-requirements.txt
+          python -m pytest .
 
   test-frontend:
     runs-on: ubuntu-latest
@@ -82,10 +105,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run tests
-        working-directory: ./ts/frontend/
+        working-directory: ts/frontend/
         run: npm test
       - name: Build
-        working-directory: ./ts/frontend/
+        working-directory: ts/frontend/
         run: npm run build
 
   test-backend:
@@ -104,10 +127,10 @@ jobs:
       - name: Copy .env.test
         run: cp ./evaluation/.env.test.template ./evaluation/.env.test
       - name: Run tests
-        working-directory: ./ts/backend/
+        working-directory: ts/backend/
         run: npm test
       - name: Build
-        working-directory: ./ts/backend/
+        working-directory: ts/backend/
         run: npm run build
       - name: Set up Python 3.13
         uses: actions/setup-python@v5

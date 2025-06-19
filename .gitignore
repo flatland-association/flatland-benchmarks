@@ -177,3 +177,4 @@ images
 # Generated Swagger definitions
 swagger.json
 /evaluation/ai4realnet_orchestrators/.openapi-generator/
+/evaluation/ai4realnet_orchestrators/fab-clientlib/.openapi-generator/
