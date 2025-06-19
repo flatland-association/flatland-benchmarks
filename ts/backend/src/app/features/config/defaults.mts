@@ -4,7 +4,7 @@ export const defaults = {
     host: '0.0.0.0',
     port: 8000,
   },
-  /* AMQP endpoint */
+  /* Celery broker endpoint */
   amqp: {
     host: 'localhost',
     port: 5672,
@@ -16,21 +16,6 @@ export const defaults = {
     user: 'benchmarks',
     password: 'benchmarks',
     database: 'benchmarks',
-  },
-  /* Redis endpoint */
-  redis: {
-    url: 'redis://localhost:6379', // redis[s]://[[username][:password]@][host][:port][/db-number]
-  },
-  /* S3 */
-  s3: {
-    protocol: 'http://',
-    host: 'localhost',
-    port: 9000,
-    user: 'minioadmin',
-    password: 'minioadmin',
-    region: 'eu-central-2', // https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-regions.html
-    bucket: 'fab-demo-results',
-    path: 'results',
   },
   /* Keycloak endpoint */
   keycloak: {

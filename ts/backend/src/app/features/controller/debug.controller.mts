@@ -1,7 +1,11 @@
 import { configuration } from '../config/config.mjs'
-import { AmqpService } from '../services/amqp-service.mjs'
+import { CeleryService } from '../services/celery-client-service.mjs'
+import { SqlService } from '../services/sql-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { Controller, dbgRequestObject, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
+import { Logger } from '../logger/logger.mjs'
+
+const logger = new Logger('debug-controller')
 
 export class DebugController extends Controller {
   constructor(config: configuration) {
@@ -11,7 +15,6 @@ export class DebugController extends Controller {
     this.attachGet('/mirror/:id', this.getMirrorById)
     this.attachPost('/mirror', this.postMirror)
     this.attachPatch('/mirror/:id', this.patchMirrorById)
-    this.attachPost('/amqp', this.postAmqp)
     this.attachGet('/whoami', this.getWhoami)
   }
 
@@ -36,19 +39,6 @@ export class DebugController extends Controller {
 
   patchMirrorById: PatchHandler<'/mirror/:id'> = (req, res) => {
     this.respond(res, { data: 'This is the PATCH /mirror/:id endpoint' }, dbgRequestObject(req))
-  }
-
-  // Posts a message to amqp queue
-  postAmqp: PostHandler<'/amqp'> = async (req, res) => {
-    // send message to debug queue
-    const amqp = AmqpService.getInstance()
-    const sent = await amqp.sendToQueue('debug', req.body, 'submissionID')
-    // report what was sent
-    if (sent) {
-      this.respond(res, `relayed to "debug": ${JSON.stringify(req.body)}`)
-    } else {
-      this.serverError(res, { text: 'There was an error sending the message. Check backend log.' })
-    }
   }
 
   getWhoami: GetHandler<'/whoami'> = async (req, res) => {

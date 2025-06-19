@@ -3,6 +3,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { DockerComposeEnvironment, StartedDockerComposeEnvironment } from 'testcontainers'
 import { defaults } from '../../src/app/features/config/defaults.mjs'
+import JSON5 from 'json5'
 
 /*
 This global setup file is used to boot a Docker environment that runs in
@@ -41,7 +42,8 @@ export async function getTestConfig() {
   // needs to be built.
   const env = await loadEnv()
 
-  const testConfig = Object.assign({}, defaults)
+  // deep copy using JSON to prevent side effects between tests
+  const testConfig = JSON5.parse(JSON5.stringify(defaults))
 
   // adjust testConfig with ports from env
   // (the test runs outside testcontainers, so the services must connect to the
@@ -50,8 +52,6 @@ export async function getTestConfig() {
   testConfig.amqp.port = +env['RABBITMQ_PORT']
   // TODO: redis, keycloak: make port configurable directly
   // depends on https://github.com/flatland-association/flatland-benchmarks/issues/52
-  testConfig.redis.url = testConfig.redis.url.replace('6379', env['REDIS_PORT'])
-  testConfig.s3.port = +env['MINIO_PORT']
   testConfig.keycloak.url = testConfig.keycloak.url.replace('8081', env['KEYCLOAK_PORT'])
 
   return testConfig
