@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router'
 import { FooterNavLink, HeaderNavLink, LayoutComponent } from '@flatland-association/flatland-ui'
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import { OAuthModule } from 'angular-oauth2-oidc'
+import { environment } from '../environments/environment'
 import { ApiService } from './features/api/api.service'
 import { AuthService } from './features/auth/auth.service'
 
@@ -20,7 +21,7 @@ export class AppComponent {
     {
       path: '/home',
       label: 'Home',
-      lead: 'Flatland Benchmarks',
+      lead: environment.content.title,
     },
     { path: '/hub', label: 'Hub', icon: faArrowUpRightFromSquare },
   ]

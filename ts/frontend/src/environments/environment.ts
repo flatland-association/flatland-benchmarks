@@ -1,21 +1,19 @@
-import { AuthConfig } from 'angular-oauth2-oidc'
+import { envConfig } from './env-config.production'
+import { envStatic } from './env-static.fab'
 
-const authConfig: AuthConfig = {
-  issuer: 'https://keycloak.flatland.cloud/realms/netzgrafikeditor',
-  // The ClientId you received from the IAM Team
-  clientId: 'fab',
-  // For production with Angular i18n the language code needs to be included in the redirectUri.
-  // In your environment.prod.ts (or similar, but not your environment.ts) replace it with the following line:
-  // redirectUri: location.origin + location.pathname.substring(0, location.pathname.indexOf('/', 1) + 1)
-  // Note that these URIs must also be added to allowed redirect URIs in Azure (e.g. https://your-domain/en/, https://your-domain/de/, ...)
-  redirectUri: location.origin,
-  responseType: 'code',
-  scope: 'openid profile email offline_access',
-}
+/*
+Angular requires one environment to be the default environment and that to be
+simply "environment.ts" i.o.t. find the import file path and infer the
+`environment` objects type.
+
+This file is synthesized from a config (production/development) and static
+content (fab, ai4realnet)
+
+The default synthesizing is "fab.production" - others are achieved by
+replacing `env-config` and `env-static` during build. See `/angular.json`.
+*/
 
 export const environment = {
-  // API base URL
-  apiBase: `${location.protocol}//${location.hostname}:8000`,
-  // auth configuration or null if none is used
-  authConfig,
+  ...envConfig,
+  ...envStatic,
 }
