@@ -9,7 +9,7 @@ on:
         type: string
 
 jobs:
-  publish:
+  publish-fab-client-pypi-test:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
