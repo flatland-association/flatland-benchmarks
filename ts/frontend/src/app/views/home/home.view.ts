@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core'
 import { BenchmarkDefinitionRow } from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
+import { environment } from '../../../environments/environment'
 import { BenchmarkCardComponent } from '../../components/benchmark-card/benchmark-card.component'
 import { ApiService } from '../../features/api/api.service'
 
@@ -13,6 +14,7 @@ import { ApiService } from '../../features/api/api.service'
 export class HomeView implements OnInit {
   apiService = inject(ApiService)
 
+  environment = environment
   benchmarks?: BenchmarkDefinitionRow[]
 
   async ngOnInit() {
