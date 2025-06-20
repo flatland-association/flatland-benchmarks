@@ -73,6 +73,7 @@ jobs:
     strategy:
       matrix:
         node-version: [ "22.x" ]
+        dist: [ "fab", "ai4realnet" ]
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js ${{ matrix.node-version }}
@@ -84,9 +85,9 @@ jobs:
       - name: Run tests
         working-directory: ./ts/frontend/
         run: npm test
-      - name: Build
+      - name: Build ${{ matrix.dist }}
         working-directory: ./ts/frontend/
-        run: npm run build.fab
+        run: npm run build.${{ matrix.dist }}
 
   test-backend:
     runs-on: ubuntu-latest

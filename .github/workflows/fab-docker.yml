@@ -21,6 +21,9 @@ jobs:
   build-frontend-image:
     name: Build FAB Frontend
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dist: [ "fab", "ai4realnet" ]
     steps:
       - name: Evaluate tag
         run: |
@@ -41,10 +44,11 @@ jobs:
         with:
           context: .
           file: deployment/frontend/Dockerfile
+          build-args: DIST=${{ matrix.dist }}
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |
-            ghcr.io/flatland-association/fab-frontend:${{ env.TAG }}
+            ghcr.io/flatland-association/${{ matrix.dist }}-frontend:${{ env.TAG }}
   build-backend-image:
     name: Build FAB Backend
     runs-on: ubuntu-latest

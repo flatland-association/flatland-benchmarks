@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 COPY ./*.json /usr/src/app
 COPY ts /usr/src/app/ts
 
-RUN npm ci && cd ts/frontend && npm run build
+RUN npm ci && cd ts/frontend && npm run build.$DIST
 
 
 

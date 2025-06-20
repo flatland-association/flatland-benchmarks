@@ -23,6 +23,9 @@ jobs:
     if: ${{ needs.release-please.outputs.release_created }}
     name: Build FAB Frontend
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dist: [ "fab", "ai4realnet" ]
     steps:
       - uses: actions/checkout@v4
       - name: Set up QEMU
@@ -39,11 +42,12 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: deployment/frontend/Dockerfile
+          file: deployment/frontend/
+          build-args: DIST=${{ matrix.dist }}
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |
-            ghcr.io/flatland-association/fab-frontend:${{ needs.release-please.outputs.tag_name }}
+            ghcr.io/flatland-association/${{ matrix.dist }}-frontend:${{ needs.release-please.outputs.tag_name }}
   build-backend-image:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
