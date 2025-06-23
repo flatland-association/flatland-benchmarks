@@ -8,7 +8,7 @@ describe('SQL Service', () => {
 
     // All tests in this unit test test the services error behavior.
     // To enforce that, set an unreachable port.
-    config.postgres.host = "nix.com"
+    config.postgres.host = 'nix.com'
     config.postgres.port = 1 // do not use 0 - would fall back to default
 
     SqlService.create(config)

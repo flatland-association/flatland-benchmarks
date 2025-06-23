@@ -2,8 +2,8 @@ import { parseCommandLine } from './features/config/command-line.mjs'
 import { loadConfig } from './features/config/config.mjs'
 import { Logger } from './features/logger/logger.mjs'
 import { Server } from './features/server/server.mjs'
-import { CeleryService } from './features/services/celery-client-service.mjs'
 import { AuthService } from './features/services/auth-service.mjs'
+import { CeleryService } from './features/services/celery-client-service.mjs'
 import { SqlService } from './features/services/sql-service.mjs'
 
 // during boot, use defaults for logger

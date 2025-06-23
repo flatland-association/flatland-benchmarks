@@ -10,8 +10,8 @@ import TestAgent from 'supertest/lib/agent'
 import { expect, vi } from 'vitest'
 import { configuration } from '../src/app/features/config/config.mjs'
 import { Controller } from '../src/app/features/controller/controller.mjs'
-import { CeleryService } from '../src/app/features/services/celery-client-service.mjs'
 import { AuthService } from '../src/app/features/services/auth-service.mjs'
+import { CeleryService } from '../src/app/features/services/celery-client-service.mjs'
 import { SqlService } from '../src/app/features/services/sql-service.mjs'
 
 /*

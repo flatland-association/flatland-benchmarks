@@ -1,11 +1,6 @@
 import { configuration } from '../config/config.mjs'
-import { CeleryService } from '../services/celery-client-service.mjs'
-import { SqlService } from '../services/sql-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { Controller, dbgRequestObject, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
-import { Logger } from '../logger/logger.mjs'
-
-const logger = new Logger('debug-controller')
 
 export class DebugController extends Controller {
   constructor(config: configuration) {
