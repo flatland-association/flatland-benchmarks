@@ -23,9 +23,10 @@ jobs:
       - name: Update version and build client lib
         working-directory: ./evaluation/ai4realnet_orchestrators/fab-clientlib
         run: |
-          python -m pip install --upgrade build poetry
-          poetry version ${{ inputs.version }}
-          poetry build
+          python -m pip install openapi-generator-cli poetry
+          openapi-generator-cli generate -i openapi.json -g python -c .openapi-generator-config.json --package-name fab_clientlib -p packageVersion=${{ inputs.version }}
+          poetry --clean build
+          find dist
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
