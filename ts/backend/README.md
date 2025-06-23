@@ -64,7 +64,9 @@ There are no CLI code scaffolding tools for FAB Backend. Manually create `.mts` 
   This will:
   * compile the source code to a JavaScript module output to `dist/backend/app`
   * create an empty folder `dist/backend/config` for your convenience
+  * create an empty folder `dist/backend/public` for your convenience
 * Upload `dist/backend` to web server (e.g. nginx)
-* Manually copy `config/config.jsonc` (first time only) and modify according to your needs. The template is `ts/backend/src/config/config.jsonc`. It's not copied over automatically is to ensure the config template won't overwrite the user-specified configs.
+* Manually copy `config/config.jsonc` (first time only) and modify according to your needs. The template is `ts/backend/src/config/config.jsonc`. It's not copied over automatically to ensure the config template won't overwrite the user-specified configs.
+* Manually copy customization data to `public`. The template is `ts/backend/src/public/*`. It's not copied over automatically to ensure the customization template won't overwrite deployment-specific customizations.
 
 * Set up your server to execute `node main.min.mjs` in `app/` (intentionally leaving out further instructions, since this depends on the server in use)

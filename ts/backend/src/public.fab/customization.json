@@ -1,0 +1,9 @@
+{
+  "content": {
+    "title": "Flatland Benchmarks",
+    "home": {
+      "lead": "Welcome to Flatland Benchmarks, specifically designed to assess algorithms that address resource allocation tasks. These benchmarks operate akin to a machine learning competition, however, our goal is to run them on a continuous basis. This continuous operation provides a platform for researchers to consistently measure and compare their results against established baselines to provide a consistent metric for progress.",
+      "benchmarksHeading": "Discover benchmarks hosted by Flatland"
+    }
+  }
+}
