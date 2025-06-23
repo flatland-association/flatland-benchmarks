@@ -2,7 +2,7 @@ import uuid
 
 import pytest
 
-from evaluation.ai4realnet_orchestrators.fab_oauth_utils import backend_application_flow
+from fab_oauth_utils import backend_application_flow
 from fab_clientlib import DefaultApi, Configuration, ApiClient
 from test_containers_flatland_benchmarks import run_task, test_containers_fixture
 
