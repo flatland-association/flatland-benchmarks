@@ -25,7 +25,7 @@ jobs:
         run: |
           python -m pip install --upgrade build poetry
           poetry version ${{ inputs.version }}
-          python -m build
+          poetry build
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
