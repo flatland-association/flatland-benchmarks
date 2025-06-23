@@ -1,6 +1,7 @@
 import cors from 'cors'
 import type { Express } from 'express'
 import express from 'express'
+import fs from 'node:fs/promises'
 import * as swaggerUi from 'swagger-ui-express'
 import swaggerDocument from '../../../swagger/swagger.json'
 import { configuration } from '../config/config.mjs'
@@ -36,6 +37,16 @@ export class Server {
     this.app.use(new TestController(this.config).router)
     this.app.use(new SubmissionController(this.config).router)
     this.app.use(new ResultsController(this.config).router)
+
+    // serve public files from public with /public path prefix
+    fs.stat('../public')
+      .then((_stats) => {
+        this.app.use('/public', express.static('../public'))
+        logger.info('Serving static files under /public')
+      })
+      .catch((reason) => {
+        logger.fatal('Unable to serve static files', reason)
+      })
 
     // use swagger as apidoc
     this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
