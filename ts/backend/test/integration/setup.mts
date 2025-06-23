@@ -1,9 +1,9 @@
 import { parse } from 'dotenv'
+import JSON5 from 'json5'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { DockerComposeEnvironment, StartedDockerComposeEnvironment } from 'testcontainers'
 import { defaults } from '../../src/app/features/config/defaults.mjs'
-import JSON5 from 'json5'
 
 /*
 This global setup file is used to boot a Docker environment that runs in

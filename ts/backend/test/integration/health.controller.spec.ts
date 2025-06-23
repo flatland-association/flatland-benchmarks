@@ -7,7 +7,7 @@ describe('Health Controller Failing controller', () => {
 
   test('should because of unreachable broker', async () => {
     const testConfig = await getTestConfig()
-    testConfig.amqp.host = "nix.amqp.com"
+    testConfig.amqp.host = 'nix.amqp.com'
     testConfig.amqp.port = 2
     setupControllerTestEnvironment(testConfig)
     controller = new ControllerTestAdapter(HealthController, testConfig)
@@ -20,7 +20,7 @@ describe('Health Controller Failing controller', () => {
 
   test('should fail because unreachable db', async () => {
     const testConfig = await getTestConfig()
-    testConfig.postgres.host = "nix.postgres.com"
+    testConfig.postgres.host = 'nix.postgres.com'
     testConfig.postgres.port = 1 // do not use 0 - would fall back to default
     setupControllerTestEnvironment(testConfig)
     controller = new ControllerTestAdapter(HealthController, testConfig)
@@ -41,17 +41,17 @@ describe('Health Controller Failing controller', () => {
     console.log(res.body)
     expect(res.status).toBe(200)
     expect(res.body).toEqual({
-     "status": "UP",
-     "checks": [
-       {
-         "name": "SqlService",
-         "status": "UP",
-       },
-       {
-         "name": "CeleryService",
-         "status": "UP"
-       }
-     ]
-   })
+      status: 'UP',
+      checks: [
+        {
+          name: 'SqlService',
+          status: 'UP',
+        },
+        {
+          name: 'CeleryService',
+          status: 'UP',
+        },
+      ],
+    })
   })
 })

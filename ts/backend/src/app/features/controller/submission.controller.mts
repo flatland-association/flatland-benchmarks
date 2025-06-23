@@ -1,11 +1,10 @@
 import { appendDir } from '@common/endpoint-utils.js'
 import { Result, SubmissionPreview, SubmissionRow } from '@common/interfaces.js'
 import { StripDir } from '@common/utility-types.js'
-import { createClient } from 'redis'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
-import { CeleryService } from '../services/celery-client-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
+import { CeleryService } from '../services/celery-client-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import { Controller, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
 
@@ -172,8 +171,7 @@ export class SubmissionController extends Controller {
       celery.sendTask(req.body.benchmark_definition_id as string, payload, id)
       // request succeeds once connection is checked ready and task sent
       this.respond(res, { id }, payload)
-    }
-    catch(error){
+    } catch (error) {
       // request fails if sendTask fails as not ready
       this.serverError(res, error)
     }

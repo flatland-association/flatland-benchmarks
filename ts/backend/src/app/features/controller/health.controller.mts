@@ -1,9 +1,8 @@
 import { configuration } from '../config/config.mjs'
+import { Logger } from '../logger/logger.mjs'
 import { CeleryService } from '../services/celery-client-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
-import { AuthService } from '../services/auth-service.mjs'
-import { Controller, dbgRequestObject, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
-import { Logger } from '../logger/logger.mjs'
+import { Controller, GetHandler } from './controller.mjs'
 
 const logger = new Logger('health-controller')
 
@@ -48,46 +47,43 @@ export class HealthController extends Controller {
    */
   getHealth: GetHandler<'/health/live'> = async (req, res) => {
     const payload = {
-      "status": "UP",
-      "checks": [
+      status: 'UP',
+      checks: [
         {
-          "name": "SqlService",
-          "status": "UP",
+          name: 'SqlService',
+          status: 'UP',
         },
         {
-          "name": "CeleryService",
-          "status": "UP"
-        }
-      ]
+          name: 'CeleryService',
+          status: 'UP',
+        },
+      ],
     }
     // try running query
     const sql = SqlService.getInstance()
-    await sql.query`SELECT * FROM field_definitions`
-    .catch(function (err) {
-        logger.error(`Received error from queue:${err}`);
-        payload["status"] = "DOWN"
-        payload["checks"][0]["status"] = "DOWN"
-    });
-    if(sql.errors != undefined){
-      payload["status"] = "DOWN"
-      payload["status"] = "DOWN"
-      payload["checks"][0]["status"] = "DOWN"
+    await sql.query`SELECT * FROM field_definitions`.catch(function (err) {
+      logger.error(`Received error from queue:${err}`)
+      payload['status'] = 'DOWN'
+      payload['checks'][0]['status'] = 'DOWN'
+    })
+    if (sql.errors != undefined) {
+      payload['status'] = 'DOWN'
+      payload['status'] = 'DOWN'
+      payload['checks'][0]['status'] = 'DOWN'
     }
 
     // send message to debug queue
     const celery = CeleryService.getInstance()
     const task = celery.isReady()
-    await task
-    .catch((err) => {
-      logger.error(`Received error from queue:${err}`);
-      payload["status"] = "DOWN"
-      payload["checks"][1]["status"] = "DOWN"
+    await task.catch((err) => {
+      logger.error(`Received error from queue:${err}`)
+      payload['status'] = 'DOWN'
+      payload['checks'][1]['status'] = 'DOWN'
     })
 
-    if(payload["status"] == "UP"){
+    if (payload['status'] == 'UP') {
       res.json(payload)
-    }
-    else{
+    } else {
       res.status(503)
       res.json(payload)
     }
