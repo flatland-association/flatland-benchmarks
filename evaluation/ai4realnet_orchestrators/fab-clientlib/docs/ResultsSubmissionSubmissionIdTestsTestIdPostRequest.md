@@ -1,10 +1,11 @@
 # ResultsSubmissionSubmissionIdTestsTestIdPostRequest
 
+
 ## Properties
 
- Name     | Type                                                                                                                                      | Description | Notes      
-----------|-------------------------------------------------------------------------------------------------------------------------------------------|-------------|------------
- **data** | [**List[ResultsSubmissionSubmissionIdTestsTestIdPostRequestDataInner]**](ResultsSubmissionSubmissionIdTestsTestIdPostRequestDataInner.md) | Results.    | [optional] 
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**data** | [**List[ResultsSubmissionSubmissionIdTestsTestIdPostRequestDataInner]**](ResultsSubmissionSubmissionIdTestsTestIdPostRequestDataInner.md) | Results. | [optional] 
 
 ## Example
 
@@ -23,7 +24,6 @@ results_submission_submission_id_tests_test_id_post_request_dict = results_submi
 # create an instance of ResultsSubmissionSubmissionIdTestsTestIdPostRequest from a dict
 results_submission_submission_id_tests_test_id_post_request_from_dict = ResultsSubmissionSubmissionIdTestsTestIdPostRequest.from_dict(results_submission_submission_id_tests_test_id_post_request_dict)
 ```
-
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

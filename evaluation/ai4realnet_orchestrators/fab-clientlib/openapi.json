@@ -6,6 +6,153 @@
     "description": "Python client lib to access Flatland Association Benchmarks / AI4REALNET Campaign Hub Backend API, generated with openapi-generator"
   },
   "paths": {
+    "/health/live": {
+      "get": {
+        "description": "Returns liveness.",
+        "responses": {
+          "200": {
+            "description": "Live",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "object",
+                          "properties": {
+                            "status": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "checks": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              },
+                              "data": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/results/submission/{submission_id}": {
+      "get": {
+        "description": "Get aggregated submission overall results.",
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "submission_id",
+            "description": "Submission ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Aggregated submission overall results.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "submission_id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "ID of submission."
+                              },
+                              "scorings": {
+                                "type": "object",
+                                "description": "Dictionary of submission scores."
+                              },
+                              "test_scorings": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "test_id": {
+                                      "type": "string",
+                                      "format": "uuid",
+                                      "description": "ID of test."
+                                    },
+                                    "scorings": {
+                                      "type": "object",
+                                      "description": "Dictionary of test scores."
+                                    },
+                                    "scenario_scorings": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "scenario_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "description": "ID of scenario."
+                                          },
+                                          "scorings": {
+                                            "type": "object",
+                                            "description": "Dictionary of scores."
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/results/submission/{submission_id}/tests/{test_id}": {
       "get": {
         "description": "Get submission results aggregated by test.",
@@ -40,27 +187,52 @@
         ],
         "responses": {
           "200": {
-            "description": "All results inserted.",
+            "description": "Submission results aggregated by test.",
             "content": {
               "application/json": {
                 "schema": {
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/ApiResponse"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Some results could not be inserted, transaction aborted.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "allOf": [
+                    },
                     {
-                      "$ref": "#/components/schemas/ApiResponse"
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "test_id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "ID of test."
+                              },
+                              "scorings": {
+                                "type": "object",
+                                "description": "Dictionary of test scores."
+                              },
+                              "scenario_scorings": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "scenario_id": {
+                                      "type": "string",
+                                      "format": "uuid",
+                                      "description": "ID of scenario."
+                                    },
+                                    "scorings": {
+                                      "type": "object",
+                                      "description": "Dictionary of scores."
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   ]
                 }
@@ -152,6 +324,277 @@
                   "allOf": [
                     {
                       "$ref": "#/components/schemas/ApiResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/results/submission/{submission_id}/tests/{test_id}/scenario/{scenario_id}": {
+      "get": {
+        "description": "Get submission results for specific scenario.",
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "submission_id",
+            "description": "Submission ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "test_id",
+            "description": "Test ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "scenario_id",
+            "description": "Scenario ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Submission results for specific scenario.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "scenario_id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "ID of scenario."
+                              },
+                              "scorings": {
+                                "type": "object",
+                                "description": "Dictionary of scores."
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/results/benchmark/{benchmark_id}": {
+      "get": {
+        "description": "Get benchmark leaderboard.",
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "benchmark_id",
+            "description": "Benchmark ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Benchmark leaderboard.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "benchmark_id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "ID of benchmark."
+                              },
+                              "items": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "submission_id": {
+                                      "type": "string",
+                                      "format": "uuid",
+                                      "description": "ID of submission."
+                                    },
+                                    "scorings": {
+                                      "type": "object",
+                                      "description": "Dictionary of submission scores."
+                                    },
+                                    "test_scorings": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "test_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "description": "ID of test."
+                                          },
+                                          "scorings": {
+                                            "type": "object",
+                                            "description": "Dictionary of test scores."
+                                          },
+                                          "scenario_scorings": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "object",
+                                              "properties": {
+                                                "scenario_id": {
+                                                  "type": "string",
+                                                  "format": "uuid",
+                                                  "description": "ID of scenario."
+                                                },
+                                                "scorings": {
+                                                  "type": "object",
+                                                  "description": "Dictionary of scores."
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/results/campaign-item/{benchmark_id}": {
+      "get": {
+        "description": "Get campaign item leaderboard.",
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "benchmark_id",
+            "description": "Benchmark ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Campaign item leaderboard.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "benchmark_id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "ID of benchmark."
+                              },
+                              "items": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "test_id": {
+                                      "type": "string",
+                                      "format": "uuid",
+                                      "description": "ID of test."
+                                    },
+                                    "scorings": {
+                                      "type": "object",
+                                      "description": "Dictionary of test scores (best submission only)."
+                                    },
+                                    "submission_id": {
+                                      "type": "string",
+                                      "format": "uuid",
+                                      "description": "ID of best submission."
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
                     }
                   ]
                 }

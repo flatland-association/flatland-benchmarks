@@ -21,7 +21,13 @@ from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
 from fab_clientlib.models.api_response import ApiResponse
+from fab_clientlib.models.health_live_get200_response import HealthLiveGet200Response
+from fab_clientlib.models.results_benchmark_benchmark_id_get200_response import ResultsBenchmarkBenchmarkIdGet200Response
+from fab_clientlib.models.results_campaign_item_benchmark_id_get200_response import ResultsCampaignItemBenchmarkIdGet200Response
+from fab_clientlib.models.results_submission_submission_id_get200_response import ResultsSubmissionSubmissionIdGet200Response
+from fab_clientlib.models.results_submission_submission_id_tests_test_id_get200_response import ResultsSubmissionSubmissionIdTestsTestIdGet200Response
 from fab_clientlib.models.results_submission_submission_id_tests_test_id_post_request import ResultsSubmissionSubmissionIdTestsTestIdPostRequest
+from fab_clientlib.models.results_submission_submission_id_tests_test_id_scenario_scenario_id_get200_response import ResultsSubmissionSubmissionIdTestsTestIdScenarioScenarioIdGet200Response
 from fab_clientlib.models.submissions_get200_response import SubmissionsGet200Response
 from fab_clientlib.models.submissions_post200_response import SubmissionsPost200Response
 from fab_clientlib.models.submissions_post_request import SubmissionsPostRequest
@@ -45,596 +51,1925 @@ class DefaultApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
+
+    @validate_call
+    def health_live_get(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> HealthLiveGet200Response:
+        """health_live_get
+
+        Returns liveness.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._health_live_get_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "HealthLiveGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def health_live_get_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[HealthLiveGet200Response]:
+        """health_live_get
+
+        Returns liveness.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._health_live_get_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "HealthLiveGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def health_live_get_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """health_live_get
+
+        Returns liveness.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._health_live_get_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "HealthLiveGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _health_live_get_serialize(
+        self,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/health/live',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def results_benchmark_benchmark_id_get(
+        self,
+        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ResultsBenchmarkBenchmarkIdGet200Response:
+        """results_benchmark_benchmark_id_get
+
+        Get benchmark leaderboard.
+
+        :param benchmark_id: Benchmark ID. (required)
+        :type benchmark_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_benchmark_benchmark_id_get_serialize(
+            benchmark_id=benchmark_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsBenchmarkBenchmarkIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def results_benchmark_benchmark_id_get_with_http_info(
+        self,
+        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ResultsBenchmarkBenchmarkIdGet200Response]:
+        """results_benchmark_benchmark_id_get
+
+        Get benchmark leaderboard.
+
+        :param benchmark_id: Benchmark ID. (required)
+        :type benchmark_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_benchmark_benchmark_id_get_serialize(
+            benchmark_id=benchmark_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsBenchmarkBenchmarkIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def results_benchmark_benchmark_id_get_without_preload_content(
+        self,
+        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """results_benchmark_benchmark_id_get
+
+        Get benchmark leaderboard.
+
+        :param benchmark_id: Benchmark ID. (required)
+        :type benchmark_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_benchmark_benchmark_id_get_serialize(
+            benchmark_id=benchmark_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsBenchmarkBenchmarkIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _results_benchmark_benchmark_id_get_serialize(
+        self,
+        benchmark_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if benchmark_id is not None:
+            _path_params['benchmark_id'] = benchmark_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'oauth2'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/results/benchmark/{benchmark_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def results_campaign_item_benchmark_id_get(
+        self,
+        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ResultsCampaignItemBenchmarkIdGet200Response:
+        """results_campaign_item_benchmark_id_get
+
+        Get campaign item leaderboard.
+
+        :param benchmark_id: Benchmark ID. (required)
+        :type benchmark_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_campaign_item_benchmark_id_get_serialize(
+            benchmark_id=benchmark_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsCampaignItemBenchmarkIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def results_campaign_item_benchmark_id_get_with_http_info(
+        self,
+        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ResultsCampaignItemBenchmarkIdGet200Response]:
+        """results_campaign_item_benchmark_id_get
+
+        Get campaign item leaderboard.
+
+        :param benchmark_id: Benchmark ID. (required)
+        :type benchmark_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_campaign_item_benchmark_id_get_serialize(
+            benchmark_id=benchmark_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsCampaignItemBenchmarkIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def results_campaign_item_benchmark_id_get_without_preload_content(
+        self,
+        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """results_campaign_item_benchmark_id_get
+
+        Get campaign item leaderboard.
+
+        :param benchmark_id: Benchmark ID. (required)
+        :type benchmark_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_campaign_item_benchmark_id_get_serialize(
+            benchmark_id=benchmark_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsCampaignItemBenchmarkIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _results_campaign_item_benchmark_id_get_serialize(
+        self,
+        benchmark_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if benchmark_id is not None:
+            _path_params['benchmark_id'] = benchmark_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'oauth2'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/results/campaign-item/{benchmark_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def results_submission_submission_id_get(
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ResultsSubmissionSubmissionIdGet200Response:
+        """results_submission_submission_id_get
+
+        Get aggregated submission overall results.
+
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_submission_submission_id_get_serialize(
+            submission_id=submission_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsSubmissionSubmissionIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def results_submission_submission_id_get_with_http_info(
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ResultsSubmissionSubmissionIdGet200Response]:
+        """results_submission_submission_id_get
+
+        Get aggregated submission overall results.
+
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_submission_submission_id_get_serialize(
+            submission_id=submission_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsSubmissionSubmissionIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def results_submission_submission_id_get_without_preload_content(
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """results_submission_submission_id_get
+
+        Get aggregated submission overall results.
+
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_submission_submission_id_get_serialize(
+            submission_id=submission_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsSubmissionSubmissionIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _results_submission_submission_id_get_serialize(
+        self,
+        submission_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if submission_id is not None:
+            _path_params['submission_id'] = submission_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'oauth2'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/results/submission/{submission_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
     @validate_call
     def results_submission_submission_id_tests_test_id_get(
-      self,
-      submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-      test_id: Annotated[StrictStr, Field(description="Test ID.")],
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse:
-      """results_submission_submission_id_tests_test_id_get
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ResultsSubmissionSubmissionIdTestsTestIdGet200Response:
+        """results_submission_submission_id_tests_test_id_get
 
-      Get submission results aggregated by test.
+        Get submission results aggregated by test.
 
-      :param submission_id: Submission ID. (required)
-      :type submission_id: str
-      :param test_id: Test ID. (required)
-      :type test_id: str
-      :param _request_timeout: timeout setting for this request. If one
-                               number provided, it will be total request
-                               timeout. It can also be a pair (tuple) of
-                               (connection, read) timeouts.
-      :type _request_timeout: int, tuple(int, int), optional
-      :param _request_auth: set to override the auth_settings for an a single
-                            request; this effectively ignores the
-                            authentication in the spec for a single request.
-      :type _request_auth: dict, optional
-      :param _content_type: force content-type for the request.
-      :type _content_type: str, Optional
-      :param _headers: set to override the headers for a single
-                       request; this effectively ignores the headers
-                       in the spec for a single request.
-      :type _headers: dict, optional
-      :param _host_index: set to override the host_index for a single
-                          request; this effectively ignores the host_index
-                          in the spec for a single request.
-      :type _host_index: int, optional
-      :return: Returns the result object.
-      """  # noqa: E501
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param test_id: Test ID. (required)
+        :type test_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
 
-      _param = self._results_submission_submission_id_tests_test_id_get_serialize(
-        submission_id=submission_id,
-        test_id=test_id,
-        _request_auth=_request_auth,
-        _content_type=_content_type,
-        _headers=_headers,
-        _host_index=_host_index
-      )
+        _param = self._results_submission_submission_id_tests_test_id_get_serialize(
+            submission_id=submission_id,
+            test_id=test_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
 
-      _response_types_map: Dict[str, Optional[str]] = {
-        '200': "ApiResponse",
-        '400': "ApiResponse",
-      }
-      response_data = self.api_client.call_api(
-        *_param,
-        _request_timeout=_request_timeout
-      )
-      response_data.read()
-      return self.api_client.response_deserialize(
-        response_data=response_data,
-        response_types_map=_response_types_map,
-      ).data
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsSubmissionSubmissionIdTestsTestIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
 
     @validate_call
     def results_submission_submission_id_tests_test_id_get_with_http_info(
-      self,
-      submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-      test_id: Annotated[StrictStr, Field(description="Test ID.")],
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ApiResponse]:
-      """results_submission_submission_id_tests_test_id_get
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ResultsSubmissionSubmissionIdTestsTestIdGet200Response]:
+        """results_submission_submission_id_tests_test_id_get
 
-      Get submission results aggregated by test.
+        Get submission results aggregated by test.
 
-      :param submission_id: Submission ID. (required)
-      :type submission_id: str
-      :param test_id: Test ID. (required)
-      :type test_id: str
-      :param _request_timeout: timeout setting for this request. If one
-                               number provided, it will be total request
-                               timeout. It can also be a pair (tuple) of
-                               (connection, read) timeouts.
-      :type _request_timeout: int, tuple(int, int), optional
-      :param _request_auth: set to override the auth_settings for an a single
-                            request; this effectively ignores the
-                            authentication in the spec for a single request.
-      :type _request_auth: dict, optional
-      :param _content_type: force content-type for the request.
-      :type _content_type: str, Optional
-      :param _headers: set to override the headers for a single
-                       request; this effectively ignores the headers
-                       in the spec for a single request.
-      :type _headers: dict, optional
-      :param _host_index: set to override the host_index for a single
-                          request; this effectively ignores the host_index
-                          in the spec for a single request.
-      :type _host_index: int, optional
-      :return: Returns the result object.
-      """  # noqa: E501
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param test_id: Test ID. (required)
+        :type test_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
 
-      _param = self._results_submission_submission_id_tests_test_id_get_serialize(
-        submission_id=submission_id,
-        test_id=test_id,
-        _request_auth=_request_auth,
-        _content_type=_content_type,
-        _headers=_headers,
-        _host_index=_host_index
-      )
+        _param = self._results_submission_submission_id_tests_test_id_get_serialize(
+            submission_id=submission_id,
+            test_id=test_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
 
-      _response_types_map: Dict[str, Optional[str]] = {
-        '200': "ApiResponse",
-        '400': "ApiResponse",
-      }
-      response_data = self.api_client.call_api(
-        *_param,
-        _request_timeout=_request_timeout
-      )
-      response_data.read()
-      return self.api_client.response_deserialize(
-        response_data=response_data,
-        response_types_map=_response_types_map,
-      )
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsSubmissionSubmissionIdTestsTestIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
 
     @validate_call
     def results_submission_submission_id_tests_test_id_get_without_preload_content(
-      self,
-      submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-      test_id: Annotated[StrictStr, Field(description="Test ID.")],
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-      """results_submission_submission_id_tests_test_id_get
+        """results_submission_submission_id_tests_test_id_get
 
-      Get submission results aggregated by test.
+        Get submission results aggregated by test.
 
-      :param submission_id: Submission ID. (required)
-      :type submission_id: str
-      :param test_id: Test ID. (required)
-      :type test_id: str
-      :param _request_timeout: timeout setting for this request. If one
-                               number provided, it will be total request
-                               timeout. It can also be a pair (tuple) of
-                               (connection, read) timeouts.
-      :type _request_timeout: int, tuple(int, int), optional
-      :param _request_auth: set to override the auth_settings for an a single
-                            request; this effectively ignores the
-                            authentication in the spec for a single request.
-      :type _request_auth: dict, optional
-      :param _content_type: force content-type for the request.
-      :type _content_type: str, Optional
-      :param _headers: set to override the headers for a single
-                       request; this effectively ignores the headers
-                       in the spec for a single request.
-      :type _headers: dict, optional
-      :param _host_index: set to override the host_index for a single
-                          request; this effectively ignores the host_index
-                          in the spec for a single request.
-      :type _host_index: int, optional
-      :return: Returns the result object.
-      """  # noqa: E501
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param test_id: Test ID. (required)
+        :type test_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
 
-      _param = self._results_submission_submission_id_tests_test_id_get_serialize(
-        submission_id=submission_id,
-        test_id=test_id,
-        _request_auth=_request_auth,
-        _content_type=_content_type,
-        _headers=_headers,
-        _host_index=_host_index
-      )
-
-      _response_types_map: Dict[str, Optional[str]] = {
-        '200': "ApiResponse",
-        '400': "ApiResponse",
-      }
-      response_data = self.api_client.call_api(
-        *_param,
-        _request_timeout=_request_timeout
-      )
-      return response_data.response
-
-    def _results_submission_submission_id_tests_test_id_get_serialize(
-      self,
-      submission_id,
-      test_id,
-      _request_auth,
-      _content_type,
-      _headers,
-      _host_index,
-    ) -> RequestSerialized:
-
-      _host = None
-
-      _collection_formats: Dict[str, str] = {
-      }
-
-      _path_params: Dict[str, str] = {}
-      _query_params: List[Tuple[str, str]] = []
-      _header_params: Dict[str, Optional[str]] = _headers or {}
-      _form_params: List[Tuple[str, str]] = []
-      _files: Dict[
-        str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-      ] = {}
-      _body_params: Optional[bytes] = None
-
-      # process the path parameters
-      if submission_id is not None:
-        _path_params['submission_id'] = submission_id
-      if test_id is not None:
-        _path_params['test_id'] = test_id
-      # process the query parameters
-      # process the header parameters
-      # process the form parameters
-      # process the body parameter
-
-      # set the HTTP header `Accept`
-      if 'Accept' not in _header_params:
-        _header_params['Accept'] = self.api_client.select_header_accept(
-          [
-            'application/json'
-          ]
+        _param = self._results_submission_submission_id_tests_test_id_get_serialize(
+            submission_id=submission_id,
+            test_id=test_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
 
-      # authentication setting
-      _auth_settings: List[str] = [
-        'oauth2'
-      ]
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsSubmissionSubmissionIdTestsTestIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
 
-      return self.api_client.param_serialize(
-        method='GET',
-        resource_path='/results/submission/{submission_id}/tests/{test_id}',
-        path_params=_path_params,
-        query_params=_query_params,
-        header_params=_header_params,
-        body=_body_params,
-        post_params=_form_params,
-        files=_files,
-        auth_settings=_auth_settings,
-        collection_formats=_collection_formats,
-        _host=_host,
-        _request_auth=_request_auth
-      )
+
+    def _results_submission_submission_id_tests_test_id_get_serialize(
+        self,
+        submission_id,
+        test_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if submission_id is not None:
+            _path_params['submission_id'] = submission_id
+        if test_id is not None:
+            _path_params['test_id'] = test_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'oauth2'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/results/submission/{submission_id}/tests/{test_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
 
     @validate_call
     def results_submission_submission_id_tests_test_id_post(
-      self,
-      submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-      test_id: Annotated[StrictStr, Field(description="Test ID.")],
-      results_submission_submission_id_tests_test_id_post_request: ResultsSubmissionSubmissionIdTestsTestIdPostRequest,
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        results_submission_submission_id_tests_test_id_post_request: ResultsSubmissionSubmissionIdTestsTestIdPostRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse:
-      """results_submission_submission_id_tests_test_id_post
+        """results_submission_submission_id_tests_test_id_post
 
-      Inserts test results
+        Inserts test results
 
-      :param submission_id: Submission ID. (required)
-      :type submission_id: str
-      :param test_id: Test ID. (required)
-      :type test_id: str
-      :param results_submission_submission_id_tests_test_id_post_request: (required)
-      :type results_submission_submission_id_tests_test_id_post_request: ResultsSubmissionSubmissionIdTestsTestIdPostRequest
-      :param _request_timeout: timeout setting for this request. If one
-                               number provided, it will be total request
-                               timeout. It can also be a pair (tuple) of
-                               (connection, read) timeouts.
-      :type _request_timeout: int, tuple(int, int), optional
-      :param _request_auth: set to override the auth_settings for an a single
-                            request; this effectively ignores the
-                            authentication in the spec for a single request.
-      :type _request_auth: dict, optional
-      :param _content_type: force content-type for the request.
-      :type _content_type: str, Optional
-      :param _headers: set to override the headers for a single
-                       request; this effectively ignores the headers
-                       in the spec for a single request.
-      :type _headers: dict, optional
-      :param _host_index: set to override the host_index for a single
-                          request; this effectively ignores the host_index
-                          in the spec for a single request.
-      :type _host_index: int, optional
-      :return: Returns the result object.
-      """  # noqa: E501
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param test_id: Test ID. (required)
+        :type test_id: str
+        :param results_submission_submission_id_tests_test_id_post_request: (required)
+        :type results_submission_submission_id_tests_test_id_post_request: ResultsSubmissionSubmissionIdTestsTestIdPostRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
 
-      _param = self._results_submission_submission_id_tests_test_id_post_serialize(
-        submission_id=submission_id,
-        test_id=test_id,
-        results_submission_submission_id_tests_test_id_post_request=results_submission_submission_id_tests_test_id_post_request,
-        _request_auth=_request_auth,
-        _content_type=_content_type,
-        _headers=_headers,
-        _host_index=_host_index
-      )
+        _param = self._results_submission_submission_id_tests_test_id_post_serialize(
+            submission_id=submission_id,
+            test_id=test_id,
+            results_submission_submission_id_tests_test_id_post_request=results_submission_submission_id_tests_test_id_post_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
 
-      _response_types_map: Dict[str, Optional[str]] = {
-        '200': "ApiResponse",
-        '400': "ApiResponse",
-      }
-      response_data = self.api_client.call_api(
-        *_param,
-        _request_timeout=_request_timeout
-      )
-      response_data.read()
-      return self.api_client.response_deserialize(
-        response_data=response_data,
-        response_types_map=_response_types_map,
-      ).data
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ApiResponse",
+            '400': "ApiResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
 
     @validate_call
     def results_submission_submission_id_tests_test_id_post_with_http_info(
-      self,
-      submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-      test_id: Annotated[StrictStr, Field(description="Test ID.")],
-      results_submission_submission_id_tests_test_id_post_request: ResultsSubmissionSubmissionIdTestsTestIdPostRequest,
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        results_submission_submission_id_tests_test_id_post_request: ResultsSubmissionSubmissionIdTestsTestIdPostRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ApiResponse]:
-      """results_submission_submission_id_tests_test_id_post
+        """results_submission_submission_id_tests_test_id_post
 
-      Inserts test results
+        Inserts test results
 
-      :param submission_id: Submission ID. (required)
-      :type submission_id: str
-      :param test_id: Test ID. (required)
-      :type test_id: str
-      :param results_submission_submission_id_tests_test_id_post_request: (required)
-      :type results_submission_submission_id_tests_test_id_post_request: ResultsSubmissionSubmissionIdTestsTestIdPostRequest
-      :param _request_timeout: timeout setting for this request. If one
-                               number provided, it will be total request
-                               timeout. It can also be a pair (tuple) of
-                               (connection, read) timeouts.
-      :type _request_timeout: int, tuple(int, int), optional
-      :param _request_auth: set to override the auth_settings for an a single
-                            request; this effectively ignores the
-                            authentication in the spec for a single request.
-      :type _request_auth: dict, optional
-      :param _content_type: force content-type for the request.
-      :type _content_type: str, Optional
-      :param _headers: set to override the headers for a single
-                       request; this effectively ignores the headers
-                       in the spec for a single request.
-      :type _headers: dict, optional
-      :param _host_index: set to override the host_index for a single
-                          request; this effectively ignores the host_index
-                          in the spec for a single request.
-      :type _host_index: int, optional
-      :return: Returns the result object.
-      """  # noqa: E501
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param test_id: Test ID. (required)
+        :type test_id: str
+        :param results_submission_submission_id_tests_test_id_post_request: (required)
+        :type results_submission_submission_id_tests_test_id_post_request: ResultsSubmissionSubmissionIdTestsTestIdPostRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
 
-      _param = self._results_submission_submission_id_tests_test_id_post_serialize(
-        submission_id=submission_id,
-        test_id=test_id,
-        results_submission_submission_id_tests_test_id_post_request=results_submission_submission_id_tests_test_id_post_request,
-        _request_auth=_request_auth,
-        _content_type=_content_type,
-        _headers=_headers,
-        _host_index=_host_index
-      )
+        _param = self._results_submission_submission_id_tests_test_id_post_serialize(
+            submission_id=submission_id,
+            test_id=test_id,
+            results_submission_submission_id_tests_test_id_post_request=results_submission_submission_id_tests_test_id_post_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
 
-      _response_types_map: Dict[str, Optional[str]] = {
-        '200': "ApiResponse",
-        '400': "ApiResponse",
-      }
-      response_data = self.api_client.call_api(
-        *_param,
-        _request_timeout=_request_timeout
-      )
-      response_data.read()
-      return self.api_client.response_deserialize(
-        response_data=response_data,
-        response_types_map=_response_types_map,
-      )
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ApiResponse",
+            '400': "ApiResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
 
     @validate_call
     def results_submission_submission_id_tests_test_id_post_without_preload_content(
-      self,
-      submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-      test_id: Annotated[StrictStr, Field(description="Test ID.")],
-      results_submission_submission_id_tests_test_id_post_request: ResultsSubmissionSubmissionIdTestsTestIdPostRequest,
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        results_submission_submission_id_tests_test_id_post_request: ResultsSubmissionSubmissionIdTestsTestIdPostRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-      """results_submission_submission_id_tests_test_id_post
+        """results_submission_submission_id_tests_test_id_post
 
-      Inserts test results
+        Inserts test results
 
-      :param submission_id: Submission ID. (required)
-      :type submission_id: str
-      :param test_id: Test ID. (required)
-      :type test_id: str
-      :param results_submission_submission_id_tests_test_id_post_request: (required)
-      :type results_submission_submission_id_tests_test_id_post_request: ResultsSubmissionSubmissionIdTestsTestIdPostRequest
-      :param _request_timeout: timeout setting for this request. If one
-                               number provided, it will be total request
-                               timeout. It can also be a pair (tuple) of
-                               (connection, read) timeouts.
-      :type _request_timeout: int, tuple(int, int), optional
-      :param _request_auth: set to override the auth_settings for an a single
-                            request; this effectively ignores the
-                            authentication in the spec for a single request.
-      :type _request_auth: dict, optional
-      :param _content_type: force content-type for the request.
-      :type _content_type: str, Optional
-      :param _headers: set to override the headers for a single
-                       request; this effectively ignores the headers
-                       in the spec for a single request.
-      :type _headers: dict, optional
-      :param _host_index: set to override the host_index for a single
-                          request; this effectively ignores the host_index
-                          in the spec for a single request.
-      :type _host_index: int, optional
-      :return: Returns the result object.
-      """  # noqa: E501
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param test_id: Test ID. (required)
+        :type test_id: str
+        :param results_submission_submission_id_tests_test_id_post_request: (required)
+        :type results_submission_submission_id_tests_test_id_post_request: ResultsSubmissionSubmissionIdTestsTestIdPostRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
 
-      _param = self._results_submission_submission_id_tests_test_id_post_serialize(
-        submission_id=submission_id,
-        test_id=test_id,
-        results_submission_submission_id_tests_test_id_post_request=results_submission_submission_id_tests_test_id_post_request,
-        _request_auth=_request_auth,
-        _content_type=_content_type,
-        _headers=_headers,
-        _host_index=_host_index
-      )
+        _param = self._results_submission_submission_id_tests_test_id_post_serialize(
+            submission_id=submission_id,
+            test_id=test_id,
+            results_submission_submission_id_tests_test_id_post_request=results_submission_submission_id_tests_test_id_post_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
 
-      _response_types_map: Dict[str, Optional[str]] = {
-        '200': "ApiResponse",
-        '400': "ApiResponse",
-      }
-      response_data = self.api_client.call_api(
-        *_param,
-        _request_timeout=_request_timeout
-      )
-      return response_data.response
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ApiResponse",
+            '400': "ApiResponse",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
 
     def _results_submission_submission_id_tests_test_id_post_serialize(
-      self,
-      submission_id,
-      test_id,
-      results_submission_submission_id_tests_test_id_post_request,
-      _request_auth,
-      _content_type,
-      _headers,
-      _host_index,
+        self,
+        submission_id,
+        test_id,
+        results_submission_submission_id_tests_test_id_post_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
     ) -> RequestSerialized:
 
-      _host = None
+        _host = None
 
-      _collection_formats: Dict[str, str] = {
-      }
+        _collection_formats: Dict[str, str] = {
+        }
 
-      _path_params: Dict[str, str] = {}
-      _query_params: List[Tuple[str, str]] = []
-      _header_params: Dict[str, Optional[str]] = _headers or {}
-      _form_params: List[Tuple[str, str]] = []
-      _files: Dict[
-        str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-      ] = {}
-      _body_params: Optional[bytes] = None
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
 
-      # process the path parameters
-      if submission_id is not None:
-        _path_params['submission_id'] = submission_id
-      if test_id is not None:
-        _path_params['test_id'] = test_id
-      # process the query parameters
-      # process the header parameters
-      # process the form parameters
-      # process the body parameter
-      if results_submission_submission_id_tests_test_id_post_request is not None:
-        _body_params = results_submission_submission_id_tests_test_id_post_request
+        # process the path parameters
+        if submission_id is not None:
+            _path_params['submission_id'] = submission_id
+        if test_id is not None:
+            _path_params['test_id'] = test_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if results_submission_submission_id_tests_test_id_post_request is not None:
+            _body_params = results_submission_submission_id_tests_test_id_post_request
 
-      # set the HTTP header `Accept`
-      if 'Accept' not in _header_params:
-        _header_params['Accept'] = self.api_client.select_header_accept(
-          [
-            'application/json'
-          ]
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'oauth2'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/results/submission/{submission_id}/tests/{test_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
         )
 
-      # set the HTTP header `Content-Type`
-      if _content_type:
-        _header_params['Content-Type'] = _content_type
-      else:
-        _default_content_type = (
-          self.api_client.select_header_content_type(
-            [
-              'application/json'
+
+
+
+    @validate_call
+    def results_submission_submission_id_tests_test_id_scenario_scenario_id_get(
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        scenario_id: Annotated[StrictStr, Field(description="Scenario ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
             ]
-          )
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ResultsSubmissionSubmissionIdTestsTestIdScenarioScenarioIdGet200Response:
+        """results_submission_submission_id_tests_test_id_scenario_scenario_id_get
+
+        Get submission results for specific scenario.
+
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param test_id: Test ID. (required)
+        :type test_id: str
+        :param scenario_id: Scenario ID. (required)
+        :type scenario_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_submission_submission_id_tests_test_id_scenario_scenario_id_get_serialize(
+            submission_id=submission_id,
+            test_id=test_id,
+            scenario_id=scenario_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
         )
-        if _default_content_type is not None:
-          _header_params['Content-Type'] = _default_content_type
 
-      # authentication setting
-      _auth_settings: List[str] = [
-        'oauth2'
-      ]
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsSubmissionSubmissionIdTestsTestIdScenarioScenarioIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
 
-      return self.api_client.param_serialize(
-        method='POST',
-        resource_path='/results/submission/{submission_id}/tests/{test_id}',
-        path_params=_path_params,
-        query_params=_query_params,
-        header_params=_header_params,
-        body=_body_params,
-        post_params=_form_params,
-        files=_files,
-        auth_settings=_auth_settings,
-        collection_formats=_collection_formats,
-        _host=_host,
-        _request_auth=_request_auth
-      )
+
+    @validate_call
+    def results_submission_submission_id_tests_test_id_scenario_scenario_id_get_with_http_info(
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        scenario_id: Annotated[StrictStr, Field(description="Scenario ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ResultsSubmissionSubmissionIdTestsTestIdScenarioScenarioIdGet200Response]:
+        """results_submission_submission_id_tests_test_id_scenario_scenario_id_get
+
+        Get submission results for specific scenario.
+
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param test_id: Test ID. (required)
+        :type test_id: str
+        :param scenario_id: Scenario ID. (required)
+        :type scenario_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_submission_submission_id_tests_test_id_scenario_scenario_id_get_serialize(
+            submission_id=submission_id,
+            test_id=test_id,
+            scenario_id=scenario_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsSubmissionSubmissionIdTestsTestIdScenarioScenarioIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def results_submission_submission_id_tests_test_id_scenario_scenario_id_get_without_preload_content(
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        scenario_id: Annotated[StrictStr, Field(description="Scenario ID.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """results_submission_submission_id_tests_test_id_scenario_scenario_id_get
+
+        Get submission results for specific scenario.
+
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param test_id: Test ID. (required)
+        :type test_id: str
+        :param scenario_id: Scenario ID. (required)
+        :type scenario_id: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_submission_submission_id_tests_test_id_scenario_scenario_id_get_serialize(
+            submission_id=submission_id,
+            test_id=test_id,
+            scenario_id=scenario_id,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsSubmissionSubmissionIdTestsTestIdScenarioScenarioIdGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _results_submission_submission_id_tests_test_id_scenario_scenario_id_get_serialize(
+        self,
+        submission_id,
+        test_id,
+        scenario_id,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if submission_id is not None:
+            _path_params['submission_id'] = submission_id
+        if test_id is not None:
+            _path_params['test_id'] = test_id
+        if scenario_id is not None:
+            _path_params['scenario_id'] = scenario_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'oauth2'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/results/submission/{submission_id}/tests/{test_id}/scenario/{scenario_id}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
 
 
 
 
     @validate_call
     def submissions_get(
-      self,
-      benchmark: Annotated[Optional[StrictStr], Field(description="The number of items to skip before starting to collect the result set")] = None,
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        benchmark: Annotated[Optional[StrictStr], Field(description="The number of items to skip before starting to collect the result set")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SubmissionsGet200Response:
         """submissions_get
 
@@ -661,7 +1996,7 @@ class DefaultApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._submissions_get_serialize(
             benchmark=benchmark,
@@ -687,20 +2022,20 @@ class DefaultApi:
 
     @validate_call
     def submissions_get_with_http_info(
-      self,
-      benchmark: Annotated[Optional[StrictStr], Field(description="The number of items to skip before starting to collect the result set")] = None,
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        benchmark: Annotated[Optional[StrictStr], Field(description="The number of items to skip before starting to collect the result set")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SubmissionsGet200Response]:
         """submissions_get
 
@@ -727,7 +2062,7 @@ class DefaultApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._submissions_get_serialize(
             benchmark=benchmark,
@@ -753,20 +2088,20 @@ class DefaultApi:
 
     @validate_call
     def submissions_get_without_preload_content(
-      self,
-      benchmark: Annotated[Optional[StrictStr], Field(description="The number of items to skip before starting to collect the result set")] = None,
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        benchmark: Annotated[Optional[StrictStr], Field(description="The number of items to skip before starting to collect the result set")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """submissions_get
 
@@ -793,7 +2128,7 @@ class DefaultApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._submissions_get_serialize(
             benchmark=benchmark,
@@ -814,12 +2149,12 @@ class DefaultApi:
 
 
     def _submissions_get_serialize(
-      self,
-      benchmark,
-      _request_auth,
-      _content_type,
-      _headers,
-      _host_index,
+        self,
+        benchmark,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
     ) -> RequestSerialized:
 
         _host = None
@@ -839,8 +2174,9 @@ class DefaultApi:
         # process the path parameters
         # process the query parameters
         if benchmark is not None:
-          _query_params.append(('benchmark', benchmark))
-
+            
+            _query_params.append(('benchmark', benchmark))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -880,20 +2216,20 @@ class DefaultApi:
 
     @validate_call
     def submissions_post(
-      self,
-      submissions_post_request: SubmissionsPostRequest,
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        submissions_post_request: SubmissionsPostRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SubmissionsPost200Response:
         """submissions_post
 
@@ -921,7 +2257,7 @@ class DefaultApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._submissions_post_serialize(
             submissions_post_request=submissions_post_request,
@@ -947,20 +2283,20 @@ class DefaultApi:
 
     @validate_call
     def submissions_post_with_http_info(
-      self,
-      submissions_post_request: SubmissionsPostRequest,
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        submissions_post_request: SubmissionsPostRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SubmissionsPost200Response]:
         """submissions_post
 
@@ -988,7 +2324,7 @@ class DefaultApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._submissions_post_serialize(
             submissions_post_request=submissions_post_request,
@@ -1014,20 +2350,20 @@ class DefaultApi:
 
     @validate_call
     def submissions_post_without_preload_content(
-      self,
-      submissions_post_request: SubmissionsPostRequest,
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        submissions_post_request: SubmissionsPostRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """submissions_post
 
@@ -1055,7 +2391,7 @@ class DefaultApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._submissions_post_serialize(
             submissions_post_request=submissions_post_request,
@@ -1076,12 +2412,12 @@ class DefaultApi:
 
 
     def _submissions_post_serialize(
-      self,
-      submissions_post_request,
-      _request_auth,
-      _content_type,
-      _headers,
-      _host_index,
+        self,
+        submissions_post_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
     ) -> RequestSerialized:
 
         _host = None
@@ -1149,22 +2485,25 @@ class DefaultApi:
             _request_auth=_request_auth
         )
 
+
+
+
     @validate_call
     def submissions_uuid_get(
-      self,
-      uuid: Annotated[StrictStr, Field(description="The submission ID")],
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        uuid: Annotated[StrictStr, Field(description="The submission ID")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SubmissionsUuidGet200Response:
         """submissions_uuid_get
 
@@ -1191,7 +2530,7 @@ class DefaultApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._submissions_uuid_get_serialize(
             uuid=uuid,
@@ -1217,20 +2556,20 @@ class DefaultApi:
 
     @validate_call
     def submissions_uuid_get_with_http_info(
-      self,
-      uuid: Annotated[StrictStr, Field(description="The submission ID")],
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        uuid: Annotated[StrictStr, Field(description="The submission ID")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SubmissionsUuidGet200Response]:
         """submissions_uuid_get
 
@@ -1257,7 +2596,7 @@ class DefaultApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._submissions_uuid_get_serialize(
             uuid=uuid,
@@ -1283,20 +2622,20 @@ class DefaultApi:
 
     @validate_call
     def submissions_uuid_get_without_preload_content(
-      self,
-      uuid: Annotated[StrictStr, Field(description="The submission ID")],
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        uuid: Annotated[StrictStr, Field(description="The submission ID")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """submissions_uuid_get
 
@@ -1323,7 +2662,7 @@ class DefaultApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._submissions_uuid_get_serialize(
             uuid=uuid,
@@ -1344,12 +2683,12 @@ class DefaultApi:
 
 
     def _submissions_uuid_get_serialize(
-      self,
-      uuid,
-      _request_auth,
-      _content_type,
-      _headers,
-      _host_index,
+        self,
+        uuid,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
     ) -> RequestSerialized:
 
         _host = None
@@ -1374,6 +2713,7 @@ class DefaultApi:
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
@@ -1381,6 +2721,7 @@ class DefaultApi:
                     'application/json'
                 ]
             )
+
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1407,20 +2748,20 @@ class DefaultApi:
 
     @validate_call
     def tests_ids_get(
-      self,
-      ids: Annotated[List[StrictInt], Field(description="Comma-separated list of IDs.")],
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        ids: Annotated[List[StrictInt], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> TestsIdsGet200Response:
         """tests_ids_get
 
@@ -1448,7 +2789,7 @@ class DefaultApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._tests_ids_get_serialize(
             ids=ids,
@@ -1474,20 +2815,20 @@ class DefaultApi:
 
     @validate_call
     def tests_ids_get_with_http_info(
-      self,
-      ids: Annotated[List[StrictInt], Field(description="Comma-separated list of IDs.")],
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        ids: Annotated[List[StrictInt], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[TestsIdsGet200Response]:
         """tests_ids_get
 
@@ -1515,7 +2856,7 @@ class DefaultApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._tests_ids_get_serialize(
             ids=ids,
@@ -1541,20 +2882,20 @@ class DefaultApi:
 
     @validate_call
     def tests_ids_get_without_preload_content(
-      self,
-      ids: Annotated[List[StrictInt], Field(description="Comma-separated list of IDs.")],
-      _request_timeout: Union[
-        None,
-        Annotated[StrictFloat, Field(gt=0)],
-        Tuple[
-          Annotated[StrictFloat, Field(gt=0)],
-          Annotated[StrictFloat, Field(gt=0)]
-        ]
-      ] = None,
-      _request_auth: Optional[Dict[StrictStr, Any]] = None,
-      _content_type: Optional[StrictStr] = None,
-      _headers: Optional[Dict[StrictStr, Any]] = None,
-      _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+        self,
+        ids: Annotated[List[StrictInt], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
         """tests_ids_get
 
@@ -1582,7 +2923,7 @@ class DefaultApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """  # noqa: E501
+        """ # noqa: E501
 
         _param = self._tests_ids_get_serialize(
             ids=ids,
@@ -1601,13 +2942,14 @@ class DefaultApi:
         )
         return response_data.response
 
+
     def _tests_ids_get_serialize(
-      self,
-      ids,
-      _request_auth,
-      _content_type,
-      _headers,
-      _host_index,
+        self,
+        ids,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
     ) -> RequestSerialized:
 
         _host = None
@@ -1633,6 +2975,7 @@ class DefaultApi:
         # process the form parameters
         # process the body parameter
 
+
         # set the HTTP header `Accept`
         if 'Accept' not in _header_params:
             _header_params['Accept'] = self.api_client.select_header_accept(
@@ -1640,6 +2983,7 @@ class DefaultApi:
                     'application/json'
                 ]
             )
+
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1660,3 +3004,5 @@ class DefaultApi:
             _host=_host,
             _request_auth=_request_auth
         )
+
+
