@@ -30,7 +30,7 @@ class ResultsSubmissionSubmissionIdTestsTestIdGet200Response(BaseModel):
     ResultsSubmissionSubmissionIdTestsTestIdGet200Response
     """ # noqa: E501
     error: Optional[ApiResponseError] = None
-    body: Optional[List[ResultsSubmissionSubmissionIdGet200ResponseAllOfBodyInnerTestScoringsInner]] = None
+    body: Optional[ResultsSubmissionSubmissionIdGet200ResponseAllOfBodyInnerTestScoringsInner] = None
     __properties: ClassVar[List[str]] = ["error", "body"]
 
     model_config = ConfigDict(
@@ -75,13 +75,9 @@ class ResultsSubmissionSubmissionIdTestsTestIdGet200Response(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of error
         if self.error:
             _dict['error'] = self.error.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in body (list)
-        _items = []
+        # override the default output from pydantic by calling `to_dict()` of body
         if self.body:
-            for _item_body in self.body:
-                if _item_body:
-                    _items.append(_item_body.to_dict())
-            _dict['body'] = _items
+          _dict['body'] = self.body.to_dict()
         return _dict
 
     @classmethod
@@ -95,7 +91,7 @@ class ResultsSubmissionSubmissionIdTestsTestIdGet200Response(BaseModel):
 
         _obj = cls.model_validate({
             "error": ApiResponseError.from_dict(obj["error"]) if obj.get("error") is not None else None,
-            "body": [ResultsSubmissionSubmissionIdGet200ResponseAllOfBodyInnerTestScoringsInner.from_dict(_item) for _item in obj["body"]] if obj.get("body") is not None else None
+          "body": ResultsSubmissionSubmissionIdGet200ResponseAllOfBodyInnerTestScoringsInner.from_dict(obj["body"]) if obj.get("body") is not None else None
         })
         return _obj
 
