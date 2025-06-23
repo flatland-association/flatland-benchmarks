@@ -3,6 +3,13 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.7.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.7.0...v0.7.1) (2025-06-23)
+
+
+### Bug Fixes
+
+* Fix missing descriptions ([94f7116](https://github.com/flatland-association/flatland-benchmarks/commit/94f71163d64fd94b6a0c62ade7ca5b60779a0fb1))
+
 ## [0.7.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.6.0...v0.7.0) (2025-06-11)
 
 
