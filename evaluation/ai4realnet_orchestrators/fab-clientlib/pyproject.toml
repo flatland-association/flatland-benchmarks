@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "fab_clientlib"
-version = "0.0.0"
+version = "v0.0.0"
 description = "FAB Client Lib"
 authors = ["Olivier Stuker, Christian Eichenberger, Manuel Schneider <contact@flatland-association.org>"]
 license = "MIT License"

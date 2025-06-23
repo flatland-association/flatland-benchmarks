@@ -1,18 +1,19 @@
 # SubmissionsGet200ResponseAllOfBodyInner
 
+
 ## Properties
 
- Name                      | Type    | Description | Notes      
----------------------------|---------|-------------|------------
- **id**                    | **str** |             | [optional] 
- **uuid**                  | **str** |             | [optional] 
- **name**                  | **str** |             | [optional] 
- **benchmark**             | **str** |             | [optional] 
- **submitted_at**          | **str** |             | [optional] 
- **submitted_by_username** | **str** |             | [optional] 
- **public**                | **str** |             | [optional] 
- **scores**                | **str** |             | [optional] 
- **rank**                  | **str** |             | [optional] 
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **str** |  | [optional] 
+**uuid** | **str** |  | [optional] 
+**name** | **str** |  | [optional] 
+**benchmark** | **str** |  | [optional] 
+**submitted_at** | **str** |  | [optional] 
+**submitted_by_username** | **str** |  | [optional] 
+**public** | **str** |  | [optional] 
+**scores** | **str** |  | [optional] 
+**rank** | **str** |  | [optional] 
 
 ## Example
 
@@ -31,7 +32,6 @@ submissions_get200_response_all_of_body_inner_dict = submissions_get200_response
 # create an instance of SubmissionsGet200ResponseAllOfBodyInner from a dict
 submissions_get200_response_all_of_body_inner_from_dict = SubmissionsGet200ResponseAllOfBodyInner.from_dict(submissions_get200_response_all_of_body_inner_dict)
 ```
-
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

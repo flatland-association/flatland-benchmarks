@@ -1,11 +1,12 @@
 # TestsIdsGet200Response
 
+
 ## Properties
 
- Name      | Type                                                                                      | Description | Notes      
------------|-------------------------------------------------------------------------------------------|-------------|------------
- **error** | [**ApiResponseError**](ApiResponseError.md)                                               |             | [optional] 
- **body**  | [**List[TestsIdsGet200ResponseAllOfBodyInner]**](TestsIdsGet200ResponseAllOfBodyInner.md) |             | [optional] 
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**error** | [**ApiResponseError**](ApiResponseError.md) |  | [optional] 
+**body** | [**List[TestsIdsGet200ResponseAllOfBodyInner]**](TestsIdsGet200ResponseAllOfBodyInner.md) |  | [optional] 
 
 ## Example
 
@@ -24,7 +25,6 @@ tests_ids_get200_response_dict = tests_ids_get200_response_instance.to_dict()
 # create an instance of TestsIdsGet200Response from a dict
 tests_ids_get200_response_from_dict = TestsIdsGet200Response.from_dict(tests_ids_get200_response_dict)
 ```
-
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
