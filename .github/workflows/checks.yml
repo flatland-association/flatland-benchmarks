@@ -14,6 +14,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+
   test-evaluation-compute-worker:
     runs-on: ubuntu-22.04
     strategy:
@@ -90,6 +91,22 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install -r test-requirements.txt
           python -m pytest .
+
+  eslint:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ "22.x" ]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Run eslint
+        run: npx eslint
 
   test-frontend:
     runs-on: ubuntu-latest
