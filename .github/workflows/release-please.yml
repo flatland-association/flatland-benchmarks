@@ -122,3 +122,33 @@ jobs:
           push: true
           tags: |
             ghcr.io/flatland-association/fab-flatland-compute-worker:${{ needs.release-please.outputs.tag_name }}
+
+  publish-fab-client-pypi:
+    needs: release-please
+    runs-on: ubuntu-22.04
+    if: ${{ needs.release-please.outputs.release_created }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Update version and build client lib
+        working-directory: ./evaluation/ai4realnet_orchestrators/fab-clientlib
+        run: |
+          python -m pip install --upgrade build poetry
+          poetry version ${{ needs.release-please.outputs.tag_name }}
+          python -m build
+      - name: Publish package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          packages-dir: ./evaluation/ai4realnet_orchestrators/fab-clientlib/dist
+      - name: Archive package
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package
+          path: ./evaluation/ai4realnet_orchestrators/fab-clientlib/dist
