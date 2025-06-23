@@ -1,4 +1,5 @@
 {
+  "setup": "campaign",
   "content": {
     "title": "AI4REALNET Validation Campaign Hub",
     "home": {

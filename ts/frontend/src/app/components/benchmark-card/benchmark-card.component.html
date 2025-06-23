@@ -1,5 +1,5 @@
 @if (benchmark) {
-  <div class="bg-primary-400 flex flex-col w-full items-center justify-center gap-3 overflow-hidden rounded-md p-2 text-white cursor-pointer" [routerLink]="['/', 'benchmarks', benchmark.id]">
+  <div class="bg-primary-400 flex flex-col w-full items-center justify-center gap-3 overflow-hidden rounded-md p-2 text-white cursor-pointer" [routerLink]="routerLink">
     <h3 class="text-center text-xl font-bold">{{ benchmark.name }}</h3>
     <p class="text-center">{{ benchmark.description }}</p>
   </div>

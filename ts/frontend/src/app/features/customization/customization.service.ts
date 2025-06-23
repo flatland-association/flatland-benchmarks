@@ -3,10 +3,13 @@ import { inject, Injectable } from '@angular/core'
 import { firstValueFrom } from 'rxjs'
 import { environment } from '../../../environments/environment'
 
+export type Setup = 'benchmark' | 'campaign'
+
 // Type faith: We're currently unable to enforce that schema on
 // customization.json, but we strongly believe the .json validates against
 // this interface.
 export interface Customization {
+  setup: Setup
   content: {
     title: string
     home: {
