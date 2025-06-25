@@ -8,6 +8,8 @@ import { ParticipateView } from './views/participate/participate.view'
 import { SubmissionView } from './views/submission/submission.view'
 import { VcEvaluationObjectiveView } from './views/vc-evaluation-objective/vc-evaluation-objective.view'
 import { VcKpiView } from './views/vc-kpi/vc-kpi.view'
+import { VcMySubmissionsView } from './views/vc-my-submissions/vc-my-submissions.view'
+import { VcNewSubmissionView } from './views/vc-new-submission/vc-new-submission.view'
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -48,8 +50,18 @@ export const routes: Routes = [
     component: SubmissionView,
     canActivate: [AuthGuard],
   },
-  { path: 'vc-evaluation-objective/:benchmark_id', component: VcEvaluationObjectiveView },
-  { path: 'vc-evaluation-objective/:benchmark_id/:test_id', component: VcKpiView },
+  { path: 'vc-evaluation-objective/:benchmark_id', component: VcEvaluationObjectiveView, canActivate: [AuthGuard] },
+  {
+    path: 'vc-evaluation-objective/:benchmark_id/my-submissions',
+    component: VcMySubmissionsView,
+    canActivate: [AuthGuard],
+  },
+  { path: 'vc-evaluation-objective/:benchmark_id/:test_id', component: VcKpiView, canActivate: [AuthGuard] },
+  {
+    path: 'vc-evaluation-objective/:benchmark_id/:test_id/new-submission',
+    component: VcNewSubmissionView,
+    canActivate: [AuthGuard],
+  },
   { path: 'impressum', component: ImpressumView },
   { path: 'privacy', component: PrivacyView },
   { path: '**', component: NotFoundView },

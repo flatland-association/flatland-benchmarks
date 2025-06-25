@@ -8,7 +8,6 @@ import {
   PostTestResultsBody,
   Result,
   ScenarioScored,
-  SubmissionPreview,
   SubmissionRow,
   Test,
   TestDefinitionRow,
@@ -73,7 +72,7 @@ interface ApiEndpointDefinitions {
     GET: ApiEndpoint<Empty, Empty, TestDefinitionRow[]>
   }
   '/submissions': {
-    GET: ApiEndpoint<Empty, { benchmark?: string; uuid?: string; submitted_by?: string }, SubmissionPreview[]>
+    GET: ApiEndpoint<Empty, { benchmark?: string; uuid?: string; submitted_by?: string }, SubmissionRow[]>
     POST: ApiEndpoint<StripLocator<SubmissionRow>, Empty, { id: string }>
   }
   '/submissions/:uuid': {

@@ -1,7 +1,7 @@
 import { CommonModule, DecimalPipe } from '@angular/common'
 import { Component, Input, inject } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { SubmissionPreview } from '@common/interfaces'
+import { SubmissionRow } from '@common/interfaces'
 
 @Component({
   selector: 'app-leaderboard',
@@ -13,12 +13,12 @@ export class LeaderboardComponent {
   private router = inject(Router)
   private route = inject(ActivatedRoute)
 
-  @Input() submissions: SubmissionPreview[] = []
+  @Input() submissions: SubmissionRow[] = []
   @Input() navigates = false
 
-  click(submission: SubmissionPreview) {
+  click(submission: SubmissionRow) {
     if (this.navigates) {
-      this.router.navigate(['submissions', submission.uuid], { relativeTo: this.route })
+      this.router.navigate(['submissions', submission.id], { relativeTo: this.route })
     }
   }
 }

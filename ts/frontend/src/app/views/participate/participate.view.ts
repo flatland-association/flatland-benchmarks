@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { BenchmarkDefinitionRow, SubmissionPreview } from '@common/interfaces'
+import { BenchmarkDefinitionRow, SubmissionRow } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { LeaderboardComponent } from '../../components/leaderboard/leaderboard.component'
@@ -19,8 +19,8 @@ export class ParticipateView implements OnInit {
 
   id: string
   benchmark?: BenchmarkDefinitionRow
-  submissions?: SubmissionPreview[]
-  mySubmissions?: SubmissionPreview[]
+  submissions?: SubmissionRow[]
+  mySubmissions?: SubmissionRow[]
 
   constructor() {
     const route = inject(ActivatedRoute)

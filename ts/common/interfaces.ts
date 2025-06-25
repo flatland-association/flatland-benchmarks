@@ -28,6 +28,7 @@ export interface Test extends Resource<'/tests/'> {
   description: string
 }
 
+// TODO: remove
 export interface SubmissionPreview extends Resource<'/submissions/'> {
   name: string
   benchmark: ResourceId

@@ -1,0 +1,32 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<lib-content>
+  <h3 class="pb-8 text-xl font-bold">New submission</h3>
+
+  <div class="pb-8 flex flex-col gap-y-8">
+    <!-- <p>
+      To get started, download the submission starter kit from <a href="https://github.com/flatland-association/flatland-benchmarks-f3-starterkit" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </p> -->
+
+    <label class="block text-left cursor-pointer">
+      <span>Submission name</span>
+      <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-name" [(ngModel)]="submissionName">
+    </label>
+
+    <label class="block text-left cursor-pointer">
+      <span>URL to submission data</span>
+      <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-image-url" [(ngModel)]="submissionUrl">
+    </label>
+
+    @if (test) {
+      <div>
+        <h4 class="bp-2 font-bold">Test</h4>
+        <span>{{ test.name }}</span>
+      </div>
+    }
+
+    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-primary-100" type="button" [attr.disabled]="canSubmit() ? null : true" (click)="submit()">
+      Submit
+    </button>
+  </div>
+</lib-content>
