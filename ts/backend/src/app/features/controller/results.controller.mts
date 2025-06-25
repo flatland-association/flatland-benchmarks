@@ -601,6 +601,7 @@ export class ResultsController extends Controller {
    *          format: uuid
    *    responses:
    *      200:
+   *        description: campaign item test leaderboard.
    *        content:
    *          application/json:
    *            schema:
