@@ -40,7 +40,8 @@ jobs:
           python -m pip install -r evaluation/ai4realnet_orchestrators/requirements.txt -r evaluation/ai4realnet_orchestrators/requirements-dev.txt
       - name: Run tests
         working-directory: evaluation/
-        run: pytest -s --ignore ai4realnet_orchestrators
+        run: |
+          pytest -s --ignore ai4realnet_orchestrators
 
   tests-orchestrator-e2e:
     runs-on: ubuntu-22.04
@@ -89,7 +90,7 @@ jobs:
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
-          pytest -s test_containers_submission_api.py
+          pytest -s
 
   test-clientlib:
     runs-on: ubuntu-22.04
