@@ -33,17 +33,17 @@ export class HealthController extends Controller {
    *                      properties:
    *                        status:
    *                          type: string
-   *                    checks:
-   *                      type: array
-   *                      items:
-   *                        type: object
-   *                        properties:
-   *                          name:
-   *                            type: string
-   *                          status:
-   *                            type: string
-   *                          data:
-   *                            type: string
+   *                        checks:
+   *                          type: array
+   *                          items:
+   *                            type: object
+   *                            properties:
+   *                              name:
+   *                                type: string
+   *                              status:
+   *                                type: string
+   *                              data:
+   *                                type: string
    */
   getHealth: GetHandler<'/health/live'> = async (req, res) => {
     const payload = {
@@ -74,18 +74,23 @@ export class HealthController extends Controller {
 
     // send message to debug queue
     const celery = CeleryService.getInstance()
-    const task = celery.isReady()
-    await task.catch((err) => {
+    const client = celery.getClient()
+    const task = client.isReady()
+    await task.catch((err: unknown) => {
       logger.error(`Received error from queue:${err}`)
       payload['status'] = 'DOWN'
       payload['checks'][1]['status'] = 'DOWN'
     })
 
     if (payload['status'] == 'UP') {
-      res.json(payload)
+      this.respond(res, payload)
     } else {
+      // TODO: https://github.com/flatland-association/flatland-benchmarks/issues/264
       res.status(503)
-      res.json(payload)
+      res.json({
+        error: { text: 'Service unavailable' },
+        body: payload,
+      })
     }
   }
 }
