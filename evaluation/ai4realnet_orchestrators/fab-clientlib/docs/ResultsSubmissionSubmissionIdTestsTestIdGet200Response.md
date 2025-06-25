@@ -3,10 +3,10 @@
 
 ## Properties
 
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**error** | [**ApiResponseError**](ApiResponseError.md) |  | [optional] 
-**body** | [**List[ResultsSubmissionSubmissionIdGet200ResponseAllOfBodyInnerTestScoringsInner]**](ResultsSubmissionSubmissionIdGet200ResponseAllOfBodyInnerTestScoringsInner.md) |  | [optional] 
+ Name      | Type                                                                                                                                                            | Description | Notes      
+-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------|------------
+ **error** | [**ApiResponseError**](ApiResponseError.md)                                                                                                                     |             | [optional] 
+ **body**  | [**ResultsSubmissionSubmissionIdGet200ResponseAllOfBodyInnerTestScoringsInner**](ResultsSubmissionSubmissionIdGet200ResponseAllOfBodyInnerTestScoringsInner.md) |             | [optional] 
 
 ## Example
 

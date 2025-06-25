@@ -41,11 +41,15 @@ services:
     command:
       - |
         set -euxo pipefail
+        # fail fast checking permissions
+        ls -al /app/data
+        mkdir -p /app/data/1234/
+        touch /app/data/1234/nix.txt
         cd ai4realnet_orchestrators
         python -m celery -A domain_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${BENCHMARK_ID}
     build:
       context: .
-      dockerfile: Dockerfile_railway
+      dockerfile: Dockerfile_railway_orchestrator
     depends_on:
       rabbit:
         condition: service_healthy
@@ -53,8 +57,8 @@ services:
         condition: service_completed_successfully
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
-      #- ./ai4realnet_orchestrators/domain_orchestrators/railway/orchestrator.py:/app/ai4realnet_orchestrators/domain_orchestrators/railway/orchestrator.py
-      #- ./ai4realnet_orchestrators/domain_orchestrators/railway/test_runner_evaluator_557d9a00.py:/app/ai4realnet_orchestrators/domain_orchestrators/railway/test_runner_evaluator_557d9a00.py
+      - orchestrator-data:/app/data
+      - ./ai4realnet_orchestrators/:/app/ai4realnet_orchestrators/
     env_file: .env
     environment:
       # required for flyway start.sh
@@ -67,6 +71,7 @@ services:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
       - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
       - HOST_DIRECTORY=${PWD}
+      - DATA_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-data
       - CLIENT_SECRET=top-secret
       - TOKEN_URL=http://keycloak:8081/realms/netzgrafikeditor/protocol/openid-connect/token
       - OAUTHLIB_INSECURE_TRANSPORT=1
@@ -150,3 +155,6 @@ services:
       retries: 50
 networks:
   flatland-benchmarks:
+
+volumes:
+  orchestrator-data:
