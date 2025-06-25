@@ -211,7 +211,7 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(res, [result])
+    this.respond(res, result)
   }
 
   /**

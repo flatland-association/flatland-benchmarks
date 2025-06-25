@@ -91,7 +91,7 @@ interface ApiEndpointDefinitions {
     GET: ApiEndpoint<Empty, Empty, LeaderboardItem[]>
   }
   '/results/submission/:submission_id/tests/:test_id': {
-    GET: ApiEndpoint<Empty, Empty, TestScored[]>
+    GET: ApiEndpoint<Empty, Empty, TestScored>
     POST: ApiEndpoint<PostTestResultsBody, Empty, Empty>
   }
   '/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id': {
