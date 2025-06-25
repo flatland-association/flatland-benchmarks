@@ -90,7 +90,8 @@ jobs:
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
-          pytest -s
+          pytest -s test_containers_railway.py
+          pytest -s test_containers_submission_api.py
 
   test-clientlib:
     runs-on: ubuntu-22.04
