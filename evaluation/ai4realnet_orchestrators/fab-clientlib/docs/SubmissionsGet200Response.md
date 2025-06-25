@@ -1,11 +1,12 @@
 # SubmissionsGet200Response
 
+
 ## Properties
 
- Name      | Type                                                                                            | Description | Notes      
------------|-------------------------------------------------------------------------------------------------|-------------|------------
- **error** | [**ApiResponseError**](ApiResponseError.md)                                                     |             | [optional] 
- **body**  | [**List[SubmissionsGet200ResponseAllOfBodyInner]**](SubmissionsGet200ResponseAllOfBodyInner.md) |             | [optional] 
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**error** | [**ApiResponseError**](ApiResponseError.md) |  | [optional] 
+**body** | [**List[SubmissionsGet200ResponseAllOfBodyInner]**](SubmissionsGet200ResponseAllOfBodyInner.md) |  | [optional] 
 
 ## Example
 
@@ -24,7 +25,6 @@ submissions_get200_response_dict = submissions_get200_response_instance.to_dict(
 # create an instance of SubmissionsGet200Response from a dict
 submissions_get200_response_from_dict = SubmissionsGet200Response.from_dict(submissions_get200_response_dict)
 ```
-
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

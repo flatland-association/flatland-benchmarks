@@ -1,10 +1,11 @@
 # ApiResponseError
 
+
 ## Properties
 
- Name     | Type    | Description | Notes      
-----------|---------|-------------|------------
- **text** | **str** |             | [optional] 
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**text** | **str** |  | [optional] 
 
 ## Example
 
@@ -23,7 +24,6 @@ api_response_error_dict = api_response_error_instance.to_dict()
 # create an instance of ApiResponseError from a dict
 api_response_error_from_dict = ApiResponseError.from_dict(api_response_error_dict)
 ```
-
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

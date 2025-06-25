@@ -1,14 +1,15 @@
 # TestsIdsGet200ResponseAllOfBodyInner
 
+
 ## Properties
 
- Name                        | Type          | Description | Notes      
------------------------------|---------------|-------------|------------
- **dir**                     | **str**       |             | [optional] 
- **id**                      | **str**       |             | [optional] 
- **name**                    | **str**       |             | [optional] 
- **description**             | **str**       |             | [optional] 
- **scenario_definition_ids** | **List[str]** |             | [optional] 
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**dir** | **str** |  | [optional] 
+**id** | **str** |  | [optional] 
+**name** | **str** |  | [optional] 
+**description** | **str** |  | [optional] 
+**scenario_definition_ids** | **List[str]** |  | [optional] 
 
 ## Example
 
@@ -27,7 +28,6 @@ tests_ids_get200_response_all_of_body_inner_dict = tests_ids_get200_response_all
 # create an instance of TestsIdsGet200ResponseAllOfBodyInner from a dict
 tests_ids_get200_response_all_of_body_inner_from_dict = TestsIdsGet200ResponseAllOfBodyInner.from_dict(tests_ids_get200_response_all_of_body_inner_dict)
 ```
-
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

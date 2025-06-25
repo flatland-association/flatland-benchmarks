@@ -167,29 +167,27 @@ export class ResultsController extends Controller {
    *                - type: object
    *                  properties:
    *                    body:
-   *                      type: array
-   *                      items:
-   *                        type: object
-   *                        properties:
-   *                          test_id:
-   *                            type: string
-   *                            format: uuid
-   *                            description: ID of test.
-   *                          scorings:
+   *                      type: object
+   *                      properties:
+   *                        test_id:
+   *                          type: string
+   *                          format: uuid
+   *                          description: ID of test.
+   *                        scorings:
+   *                          type: object
+   *                          description: Dictionary of test scores.
+   *                        scenario_scorings:
+   *                          type: array
+   *                          items:
    *                            type: object
-   *                            description: Dictionary of test scores.
-   *                          scenario_scorings:
-   *                            type: array
-   *                            items:
-   *                              type: object
-   *                              properties:
-   *                                scenario_id:
-   *                                 type: string
-   *                                 format: uuid
-   *                                 description: ID of scenario.
-   *                                scorings:
-   *                                  type: object
-   *                                  description: Dictionary of scores.
+   *                            properties:
+   *                              scenario_id:
+   *                               type: string
+   *                               format: uuid
+   *                               description: ID of scenario.
+   *                              scorings:
+   *                                type: object
+   *                                description: Dictionary of scores.
    */
   getTestResults: GetHandler<'/results/submission/:submission_id/tests/:test_id'> = async (req, res) => {
     const authService = AuthService.getInstance()

@@ -1,16 +1,17 @@
 # SubmissionsUuidGet200ResponseAllOfBodyInner
 
+
 ## Properties
 
- Name                        | Type    | Description | Notes      
------------------------------|---------|-------------|------------
- **id**                      | **str** |             | [optional] 
- **benchmark_definition_id** | **str** |             | [optional] 
- **submitted_at**            | **str** |             | [optional] 
- **submitted_by_username**   | **str** |             | [optional] 
- **public**                  | **str** |             | [optional] 
- **scores**                  | **str** |             | [optional] 
- **rank**                    | **str** |             | [optional] 
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**id** | **str** |  | [optional] 
+**benchmark_definition_id** | **str** |  | [optional] 
+**submitted_at** | **str** |  | [optional] 
+**submitted_by_username** | **str** |  | [optional] 
+**public** | **str** |  | [optional] 
+**scores** | **str** |  | [optional] 
+**rank** | **str** |  | [optional] 
 
 ## Example
 
@@ -29,7 +30,6 @@ submissions_uuid_get200_response_all_of_body_inner_dict = submissions_uuid_get20
 # create an instance of SubmissionsUuidGet200ResponseAllOfBodyInner from a dict
 submissions_uuid_get200_response_all_of_body_inner_from_dict = SubmissionsUuidGet200ResponseAllOfBodyInner.from_dict(submissions_uuid_get200_response_all_of_body_inner_dict)
 ```
-
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

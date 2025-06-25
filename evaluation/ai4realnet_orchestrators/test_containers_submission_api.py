@@ -1,8 +1,10 @@
 import logging
+import os
 import time
 import uuid
 
 import pytest
+from fab_clientlib import ResultsSubmissionSubmissionIdTestsTestIdPostRequest, ResultsSubmissionSubmissionIdTestsTestIdPostRequestDataInner
 from testcontainers.compose import DockerCompose
 
 from fab_clientlib.api.default_api import DefaultApi
@@ -14,13 +16,11 @@ from fab_oauth_utils import backend_application_flow
 TRACE = 5
 logger = logging.getLogger(__name__)
 
-# set to True if docker-compose-demo.yml is already up and running
-ATTENDED = False
-
 
 @pytest.fixture(scope="module")
 def test_containers_fixture():
-  if ATTENDED:
+  # set env var ATTENDED to True if docker-compose-demo.yml is already up and running
+  if os.environ.get("ATTENDED", "False").lower() == "true":
     yield
     return
 
@@ -71,6 +71,16 @@ def test_containers_fixture():
 
 @pytest.mark.usefixtures("test_containers_fixture")
 def test_start_submission():
+  benchmark_id = '20ccc7c1-034c-4880-8946-bffc3fed1359'
+  test_id = '557d9a00-7e6d-410b-9bca-a017ca7fe3aa'
+
+  results = [
+    ('1ae61e4f-201b-4e97-a399-5c33fb75c57e', '557d9a00-7e6d-410b-9bca-a017ca7fe3aa', 'db5eaa85-3304-4804-b76f-14d23adb5d4c', 'primary', 100),
+    ('1ae61e4f-201b-4e97-a399-5c33fb75c57e', '557d9a00-7e6d-410b-9bca-a017ca7fe3aa', 'db5eaa85-3304-4804-b76f-14d23adb5d4c', 'secondary', 1.0),
+    ('564ebb54-48f0-4837-8066-b10bb832af9d', '557d9a00-7e6d-410b-9bca-a017ca7fe3aa', 'db5eaa85-3304-4804-b76f-14d23adb5d4c', 'primary', 100),
+    ('564ebb54-48f0-4837-8066-b10bb832af9d', '557d9a00-7e6d-410b-9bca-a017ca7fe3aa', 'db5eaa85-3304-4804-b76f-14d23adb5d4c', 'secondary', 0.8)
+  ]
+
   token = backend_application_flow(
     client_id='fab-client-credentials',
     client_secret='top-secret',
@@ -80,29 +90,40 @@ def test_start_submission():
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
   posted_submission = fab.submissions_post(SubmissionsPostRequest(
     name="fancy",
-    benchmark_definition_id='20ccc7c1-034c-4880-8946-bffc3fed1359',
+    benchmark_definition_id=benchmark_id,
     submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
     code_repository="https://github.com/you-name-it",
-    test_definition_ids=['557d9a00-7e6d-410b-9bca-a017ca7fe3aa'],  # TODO mandatory despite optional in swagger.json, use UUIDs
+    test_definition_ids=[test_id],  # TODO mandatory despite optional in swagger.json, use UUIDs
     # https://github.com/OpenAPITools/openapi-generator/issues/19485
     # https://github.com/openAPITools/openapi-generator-pip
   ))
   print(posted_submission)
-  submissions = fab.submissions_uuid_get(uuid=posted_submission.body.id)
+  submission_id = posted_submission.body.id
+  submissions = fab.submissions_uuid_get(uuid=submission_id)
   print(submissions)
-  assert submissions.body[0].id == posted_submission.body.id
-  assert submissions.body[0].benchmark_definition_id == '20ccc7c1-034c-4880-8946-bffc3fed1359'
+  assert submissions.body[0].id == submission_id
+  assert submissions.body[0].benchmark_definition_id == benchmark_id
   assert submissions.body[0].submitted_by_username == "service-account-fab-client-credentials"
 
-  # TODO finalize flatland-orchestrator incl. submission ->
+  fab.results_submission_submission_id_tests_test_id_post(
+    submission_id=submission_id,
+    test_id=test_id,
+    results_submission_submission_id_tests_test_id_post_request=ResultsSubmissionSubmissionIdTestsTestIdPostRequest(
+      data=[ResultsSubmissionSubmissionIdTestsTestIdPostRequestDataInner(
+        scenario_id=scenario_id,
+        additional_properties={key: value}
+      ) for scenario_id, test_id, submission_id, key, value in results]
+    )
+  )
 
-  # TODO merge my pr in fab? what does it need?
-  # TODO FAB deployment
-
-  # TODO extract orchestrator interface, possibly als test runner and test evaluator? and add UT
-
-  # TODO extract to repo,
-  # TODO post results ?
-  #  - integration celery task -> orchestrator -> test -> assert on log or on post?
-  #  - own docker compose
-  # TODO add integration test
+  test_results = fab.results_submission_submission_id_tests_test_id_get(
+    submission_id=submission_id,
+    test_id=test_id)
+  print("results_uploaded")
+  print(test_results.body)
+  assert test_results.body.scenario_scorings[0].scorings["primary"]["score"] == 100
+  assert test_results.body.scenario_scorings[0].scorings["secondary"]["score"] == 1.0
+  assert test_results.body.scenario_scorings[1].scorings["primary"]["score"] == 100
+  assert test_results.body.scenario_scorings[1].scorings["secondary"]["score"] == 0.8
+  assert test_results.body.scorings["primary"]["score"] == 200
+  assert test_results.body.scorings["secondary"]["score"] == 1.8

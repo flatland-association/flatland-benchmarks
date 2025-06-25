@@ -28,7 +28,7 @@ from typing_extensions import Self
 class SubmissionsPost200Response(BaseModel):
     """
     SubmissionsPost200Response
-    """  # noqa: E501
+    """ # noqa: E501
     error: Optional[ApiResponseError] = None
     body: Optional[SubmissionsPost200ResponseAllOfBody] = None
     __properties: ClassVar[List[str]] = ["error", "body"]
@@ -94,3 +94,5 @@ class SubmissionsPost200Response(BaseModel):
             "body": SubmissionsPost200ResponseAllOfBody.from_dict(obj["body"]) if obj.get("body") is not None else None
         })
         return _obj
+
+
