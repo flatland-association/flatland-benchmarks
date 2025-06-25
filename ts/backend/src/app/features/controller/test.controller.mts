@@ -69,6 +69,6 @@ export class TestController extends Controller {
       `
     const tests = appendDir('/tests/', rows)
     // return array - dev.002
-    this.respond(res, tests)
+    this.respond(req, res, tests)
   }
 }

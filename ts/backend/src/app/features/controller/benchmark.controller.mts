@@ -20,7 +20,7 @@ export class BenchmarkController extends Controller {
       ORDER BY name ASC
     `
     const resources = appendDir('/benchmarks/', rows)
-    this.respond(res, resources)
+    this.respond(req, res, resources)
   }
 
   getBenchmarkById: GetHandler<'/benchmarks/:id'> = async (req, res) => {
@@ -33,6 +33,6 @@ export class BenchmarkController extends Controller {
       LIMIT ${ids.length}
     `
     const benchmarks = appendDir('/benchmarks/', rows)
-    this.respond(res, benchmarks)
+    this.respond(req, res, benchmarks)
   }
 }

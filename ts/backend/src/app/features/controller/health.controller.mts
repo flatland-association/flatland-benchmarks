@@ -82,7 +82,7 @@ export class HealthController extends Controller {
     })
 
     if (payload['status'] == 'UP') {
-      this.respond(res, payload)
+      this.respond(req, res, payload)
     } else {
       // TODO: https://github.com/flatland-association/flatland-benchmarks/issues/264
       res.status(503)

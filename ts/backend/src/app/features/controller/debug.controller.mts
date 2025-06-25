@@ -14,26 +14,26 @@ export class DebugController extends Controller {
   }
 
   getMirror: GetHandler<'/mirror'> = (req, res) => {
-    this.respond(res, 'This is the /mirror endpoint', dbgRequestObject(req))
+    this.respond(req, res, 'This is the /mirror endpoint', dbgRequestObject(req))
   }
 
   getMirrorById: GetHandler<'/mirror/:id'> = (req, res) => {
-    this.respond(res, 'This is the /mirror/:id endpoint', dbgRequestObject(req))
+    this.respond(req, res, 'This is the /mirror/:id endpoint', dbgRequestObject(req))
   }
 
   postMirror: PostHandler<'/mirror'> = (req, res) => {
     // do not set body.data to see `requestError` in action
     // do not set body at all to see fallback error handling in action
     if (!req.body.data) {
-      this.requestError(res, { text: 'No data set in request body' })
+      this.requestError(req, res, { text: 'No data set in request body' })
       return
     } else {
-      this.respond(res, req.body, dbgRequestObject(req))
+      this.respond(req, res, req.body, dbgRequestObject(req))
     }
   }
 
   patchMirrorById: PatchHandler<'/mirror/:id'> = (req, res) => {
-    this.respond(res, { data: 'This is the PATCH /mirror/:id endpoint' }, dbgRequestObject(req))
+    this.respond(req, res, { data: 'This is the PATCH /mirror/:id endpoint' }, dbgRequestObject(req))
   }
 
   getWhoami: GetHandler<'/whoami'> = async (req, res) => {
@@ -48,10 +48,10 @@ export class DebugController extends Controller {
               name: jwtp['name'],
             }
           : null
-        this.respond(res, iam, jwtp)
+        this.respond(req, res, iam, jwtp)
       })
       .catch((err) => {
-        this.serverError(res, err)
+        this.serverError(req, res, err)
       })
   }
 }
