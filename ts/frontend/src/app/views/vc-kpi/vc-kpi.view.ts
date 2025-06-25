@@ -7,36 +7,6 @@ import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.c
 import { TableColumn, TableComponent, TableRow } from '../../components/table/table.component'
 import { ApiService } from '../../features/api/api.service'
 
-// const leArray = [
-//   { title: '' },
-//   { title: '', type: 'scoring-plain' },
-//   { title: '', type: 'text' },
-// ] as const satisfies TableColumn[] //{0: 'text', 1: 'number', 2: 'text'}
-
-// type RowItemType<C extends readonly TableColumn[]> = {
-//   -readonly [i in keyof C]: C[i]['type'] extends 'text'
-//     ? string
-//     : C[i]['type'] extends 'scoring-plain'
-//       ? Scoring
-//       : unknown
-// }
-
-// interface leRows<C extends readonly TableColumn[]> {
-//   items: RowItemType<C>
-// }
-
-// const a: Prettify<leRows<typeof leArray>> = {}
-
-// const columns = [
-//   { title: 'Rank', type: 'text' },
-//   { title: 'Submission', type: 'text' },
-//   { title: 'Score', align: 'right', type: 'scoring-plain' },
-// ] as const satisfies TableColumn[]
-
-// let rows: TableRow<typeof columns>[] = []
-
-// type ColumnTypes = TableRowItems<typeof columns>
-
 @Component({
   selector: 'view-vc-kpi',
   imports: [RouterModule, ContentComponent, SectionComponent, BreadcrumbsComponent, TableComponent],
@@ -69,7 +39,6 @@ export class VcKpiView implements OnInit {
         params: { benchmark_id: this.benchmarkId, test_id: this.testId },
       })
     ).body?.at(0)
-    console.log(board)
     // load linked resources
     // TODO: offload this to service with caching
     this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.benchmarkId } })).body?.at(0)
