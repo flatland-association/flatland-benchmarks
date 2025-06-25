@@ -181,6 +181,7 @@ services:
         condition: service_healthy
     volumes:
       - ./config-demo.jsonc:/usr/src/app/dist/backend/config/config.jsonc
+      # uncomment one of the two customizations:
       - ../ts/backend/src/public/ai4realnet/customization.json:/usr/src/app/dist/backend/public/customization.json
     #      - ../ts/backend/src/public/fab/customization.json:/usr/src/app/dist/backend/public/customization.json
     ports:
