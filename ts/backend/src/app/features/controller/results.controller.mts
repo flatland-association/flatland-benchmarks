@@ -592,7 +592,6 @@ export class ResultsController extends Controller {
    *        schema:
    *          type: string
    *          format: uuid
-   *    parameters:
    *      - in: path
    *        name: test_id
    *        description: Test ID.
