@@ -173,7 +173,7 @@ export class SubmissionController extends Controller {
       this.respond(res, { id }, payload)
     } catch (error) {
       // request fails if sendTask fails as not ready
-      this.serverError(res, error)
+      this.serverError(res, { text: error as string })
     }
   }
 

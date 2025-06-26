@@ -6,6 +6,7 @@
     "start.fab": "CUSTOMIZATION=fab npm run private:start",
     "start.ai4realnet": "CUSTOMIZATION=ai4realnet npm run private:start",
     "build": "npm run private:swagger:prod && npm run private:build && mkdir -p ../../dist/backend/config && mkdir -p ../../dist/backend/public && mkdir -p ../../dist/backend/app && cp ../../out-tsc/backend/main.min.mjs ../../dist/backend/app",
+    "check": "npm run private:swagger:prod && tsc -p tsconfig.check.json && npx eslint",
     "test": "vitest run --coverage",
     "private:start": "concurrently --kill-others 'npm run private:serve' 'npm run private:test'",
     "private:serve": "npm run private:swagger:dev && npm run private:build && cd ../../out-tsc && mkdir -p backend-serve/app && cp backend/main.min.mjs backend-serve/app && mkdir -p backend-serve/config && cp -n ../ts/backend/src/config/config.jsonc \"$_\" && rm -rf backend-serve/public && cp -rf ../ts/backend/src/public.${CUSTOMIZATION} backend-serve/public && cd backend-serve/app && node main.min.mjs --help --log-level=ALL --log-colorful --log-stringify",

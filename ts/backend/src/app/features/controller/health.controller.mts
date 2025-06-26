@@ -33,17 +33,17 @@ export class HealthController extends Controller {
    *                      properties:
    *                        status:
    *                          type: string
-   *                    checks:
-   *                      type: array
-   *                      items:
-   *                        type: object
-   *                        properties:
-   *                          name:
-   *                            type: string
-   *                          status:
-   *                            type: string
-   *                          data:
-   *                            type: string
+   *                        checks:
+   *                          type: array
+   *                          items:
+   *                            type: object
+   *                            properties:
+   *                              name:
+   *                                type: string
+   *                              status:
+   *                                type: string
+   *                              data:
+   *                                type: string
    */
   getHealth: GetHandler<'/health/live'> = async (req, res) => {
     const payload = {
@@ -82,10 +82,14 @@ export class HealthController extends Controller {
     })
 
     if (payload['status'] == 'UP') {
-      res.json(payload)
+      this.respond(res, payload)
     } else {
+      // TODO: https://github.com/flatland-association/flatland-benchmarks/issues/264
       res.status(503)
-      res.json(payload)
+      res.json({
+        error: { text: 'Service unavailable' },
+        body: payload,
+      })
     }
   }
 }

@@ -53,7 +53,7 @@ interface ApiEndpointDefinitions {
     PATCH: ApiEndpoint<{ data: json }, Empty, { data: json }>
   }
   '/health/live': {
-    GET: ApiEndpoint<Empty, Empty, string>
+    GET: ApiEndpoint<Empty, Empty, json>
   }
   '/whoami': {
     GET: ApiEndpoint<Empty, Empty, json>
