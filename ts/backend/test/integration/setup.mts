@@ -12,7 +12,7 @@ and reconfigure ports and volumes, as they might conflict.
 */
 
 const composeFilePath = '../../evaluation' // relative to ts/backend
-const composeFile = 'docker-compose-base.yml'
+const composeFile = 'docker-compose.yml'
 const envFile = '.env'
 const envTestFile = '.env.test'
 

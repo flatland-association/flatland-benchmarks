@@ -24,7 +24,7 @@ def test_containers_fixture():
   global basic
 
   start_time = time.time()
-  basic = DockerCompose(context=".", compose_file_name="../docker-compose-base.yml", profiles=["full"])
+  basic = DockerCompose(context=".", compose_file_name="../docker-compose.yml", profiles=["full"])
   logger.info("/ start docker compose down")
   basic.stop()
   duration = time.time() - start_time
