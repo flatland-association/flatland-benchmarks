@@ -79,12 +79,7 @@ export class SubmissionView implements OnInit, OnDestroy {
   }
 
   async publishResult() {
-    // if (this.result) {
-    //   this.result.public = true
-    //   // strip result_str to circumvent "payload too large" error
-    //   this.result.results_str = null
-    //   this.result = (await this.apiService.patch('/result', { body: this.result })).body
-    // }
+    // TODO
   }
 
   getPrimaryScoring(scorings: Scorings) {
