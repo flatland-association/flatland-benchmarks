@@ -22,6 +22,7 @@ services:
       # - ${POSTGRES_VOLUME:-flatland-benchmarks-postgres}:/var/lib/postgresql/data:delegated
 
   pgadmin:
+    profiles: [ tsdev, full ]
     image: dpage/pgadmin4
     hostname: pgadmin
     env_file: .env
@@ -50,7 +51,7 @@ services:
       - flatland-benchmarks
 
   keycloak:
-    profiles: [ full ]
+    profiles: [ tsdev, full ]
     build:
       context: ../deployment/keycloak
     hostname: keycloak
@@ -168,7 +169,6 @@ services:
       - flatland-benchmarks
 
   orchestrator:
-    profiles: [ full ]
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
     command: python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q flatland3-evaluation
@@ -274,7 +274,7 @@ services:
       - flatland-benchmarks
 
   orchestrator-railway:
-    profiles: [ full ]
+    profiles: [ tsdev, full ]
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
     entrypoint: [ "/bin/bash","-c" ]
