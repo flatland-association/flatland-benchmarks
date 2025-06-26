@@ -1,0 +1,21 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<lib-content>
+  <div class="pb-8 flex w-full">
+    <h2 class="text-2xl font-bold text-neutral-500">{{ test?.name }}</h2>
+  </div>
+
+  <lib-section class="w-full">
+    <p class="bp-8">
+      {{ test?.description }}
+    </p>
+  </lib-section>
+</lib-content>
+
+<lib-content>
+  <app-table [columns]="columns" [rows]="rows" class="w-full"></app-table>
+</lib-content>
+
+<lib-content>
+  <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'new-submission'">Submit solution</button>
+</lib-content>

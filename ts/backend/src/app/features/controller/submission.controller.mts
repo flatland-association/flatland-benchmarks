@@ -1,5 +1,5 @@
 import { appendDir } from '@common/endpoint-utils.js'
-import { Result, SubmissionPreview, SubmissionRow } from '@common/interfaces.js'
+import { Result, SubmissionRow } from '@common/interfaces.js'
 import { StripDir } from '@common/utility-types.js'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
@@ -71,49 +71,6 @@ export class SubmissionController extends Controller {
    *                            type: string
    *                            format: uuid
    *                            description: ID of submission.
-   *  get:
-   *    security:
-   *      - oauth2: [user]
-   *    parameters:
-   *      - in: query
-   *        name: benchmark
-   *        schema:
-   *          type: string
-   *        description: The number of items to skip before starting to collect the result set
-   *    responses:
-   *      200:
-   *        description: Requested tests.
-   *        content:
-   *          application/json:
-   *            schema:
-   *              allOf:
-   *                - $ref: "#/components/schemas/ApiResponse"
-   *                - type: object
-   *                  properties:
-   *                    body:
-   *                      type: array
-   *                      items:
-   *                        type: object
-   *                        properties:
-   *                          id:
-   *                            type: string
-   *                          uuid:
-   *                            type: string
-   *                            format: uuid
-   *                          name:
-   *                            type: string
-   *                          benchmark:
-   *                            type: string
-   *                          submitted_at:
-   *                            type: string
-   *                          submitted_by_username:
-   *                            type: string
-   *                          public:
-   *                            type: string
-   *                          scores:
-   *                            type: string
-   *                          rank:
-   *                            type: string
    */
   postSubmission: PostHandler<'/submissions'> = async (req, res) => {
     const authService = AuthService.getInstance()
@@ -177,7 +134,72 @@ export class SubmissionController extends Controller {
     }
   }
 
-  // returns scored and public submissions as preview
+  /**
+   * @swagger
+   * /submissions:
+   *  get:
+   *    description: Lists all published submissions.
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: query
+   *        name: benchmark
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *        description: Filter submissions by benchmark.
+   *      - in: query
+   *        name: submitted_by
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *        description: Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.
+   *    responses:
+   *      200:
+   *        description: Requested submissions.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                          benchmark_definition_id:
+   *                            type: string
+   *                            format: uuid
+   *                          test_definition_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   *                          name:
+   *                            type: string
+   *                          description:
+   *                            type: string
+   *                          submission_data_url:
+   *                            type: string
+   *                          code_repository:
+   *                            type: string
+   *                          submitted_at:
+   *                            type: string
+   *                          submitted_by:
+   *                            type: string
+   *                            format: uuid
+   *                          submitted_by_username:
+   *                            type: string
+   *                          status:
+   *                            type: string
+   *                          published:
+   *                            type: boolean
+   */
   getSubmissions: GetHandler<'/submissions'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
@@ -187,51 +209,36 @@ export class SubmissionController extends Controller {
     }
 
     const benchmarkId = req.query['benchmark']
-    const submissionIds = req.query['uuid']?.split(',')
     const submittedBy = req.query['submitted_by']
 
     const sql = SqlService.getInstance()
 
-    let whereScores = sql.fragment`scores IS NOT NULL`
-    let wherePublic = sql.fragment`public = true`
-    const whereBenchmark = benchmarkId ? sql.fragment`benchmark=${benchmarkId}` : sql.fragment`1=1`
-    let whereSubmission = sql.fragment`1=1`
+    // per default, list all public submissions
+    let wherePublic = sql.fragment`published = true`
+    let whereBenchmark = sql.fragment`1=1`
     let whereSubmittedBy = sql.fragment`1=1`
-    let limit = sql.fragment`LIMIT 3`
-    if (submissionIds) {
-      // turn off scores and public requirements if id is given
-      whereScores = sql.fragment`1=1`
-      wherePublic = sql.fragment`1=1`
-      whereSubmission = sql.fragment`submissions.uuid=ANY(${submissionIds})`
-      limit = sql.fragment`LIMIT ${submissionIds.length}`
+    if (benchmarkId) {
+      whereBenchmark = sql.fragment`benchmark_definition_id=${benchmarkId}`
     }
     if (submittedBy) {
-      // turn off limit, scores and public requirements if submitter is given
-      whereScores = sql.fragment`1=1`
-      wherePublic = sql.fragment`1=1`
+      // turn off public requirement if submitter matches authorized user
+      if (submittedBy === auth.sub) {
+        wherePublic = sql.fragment`1=1`
+      }
       whereSubmittedBy = sql.fragment`submitted_by=${submittedBy}`
-      limit = sql.fragment``
     }
 
-    const rows = await sql.query<StripDir<SubmissionPreview>>`
-        SELECT submissions.id, submissions.uuid, name, benchmark, submitted_at, submitted_by_username, public, scores, rank
-          FROM (
-            SELECT submissions.id, submissions.uuid, name, benchmark, submitted_at, submitted_by_username, public, scores, rank() OVER(PARTITION BY benchmark, public ORDER BY scores[1] DESC) AS rank, submitted_by
-              FROM submissions
-              LEFT JOIN results ON results.submission_uuid = submissions.uuid
-          ) AS submissions
-          WHERE
-            ${whereScores} AND
-            ${wherePublic} AND
-            ${whereBenchmark} AND
-            ${whereSubmission} AND
-            ${whereSubmittedBy}
-          ORDER BY scores[1] DESC
-          ${limit}
+    const rows = await sql.query<StripDir<SubmissionRow>>`
+        SELECT * FROM submissions
+        WHERE
+          ${wherePublic} AND
+          ${whereBenchmark} AND
+          ${whereSubmittedBy}
       `
     const resources = appendDir('/submissions/', rows)
     this.respond(req, res, resources)
   }
+
   /**
    * @swagger
    * /submissions/{uuid}:
@@ -267,16 +274,30 @@ export class SubmissionController extends Controller {
    *                          benchmark_definition_id:
    *                            type: string
    *                            format: uuid
+   *                          test_definition_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   *                          name:
+   *                            type: string
+   *                          description:
+   *                            type: string
+   *                          submission_data_url:
+   *                            type: string
+   *                          code_repository:
+   *                            type: string
    *                          submitted_at:
    *                            type: string
+   *                          submitted_by:
+   *                            type: string
+   *                            format: uuid
    *                          submitted_by_username:
    *                            type: string
-   *                          public:
+   *                          status:
    *                            type: string
-   *                          scores:
-   *                            type: string
-   *                          rank:
-   *                            type: string
+   *                          published:
+   *                            type: boolean
    */
   getSubmissionByUuid: GetHandler<'/submissions/:uuid'> = async (req, res) => {
     const authService = AuthService.getInstance()

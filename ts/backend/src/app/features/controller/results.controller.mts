@@ -1,12 +1,16 @@
 import {
   BenchmarkDefinitionRow,
+  CampaignItem,
   FieldDefinitionRow,
+  Leaderboard,
+  LeaderboardItem,
   ResultRow,
   ScenarioDefinitionRow,
+  ScenarioScored,
   SubmissionRow,
   TestDefinitionRow,
+  TestScored,
 } from '@common/interfaces'
-import { json } from '@common/utility-types'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AuthService } from '../services/auth-service.mjs'
@@ -31,6 +35,7 @@ export class ResultsController extends Controller {
     this.attachGet('/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id', this.getScenarioResults)
     this.attachGet('/results/benchmark/:benchmark_id', this.getLeaderboard)
     this.attachGet('/results/campaign-item/:benchmark_id', this.getCampaignItem)
+    this.attachGet('/results/benchmarks/:benchmark_id/tests/:test_id', this.getTestLeaderboard)
   }
 
   /**
@@ -110,7 +115,7 @@ export class ResultsController extends Controller {
     }
     // transform for transmission
     // TODO: properly define data format of results for transmission
-    const result = {
+    const result: LeaderboardItem = {
       submission_id: submissionScored.submission.id,
       scorings: submissionScored.scorings,
       test_scorings: submissionScored.tests.map((test) => {
@@ -126,7 +131,7 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(req, res, result as json)
+    this.respond(req, res, [result])
   }
 
   /**
@@ -196,7 +201,7 @@ export class ResultsController extends Controller {
     const testScored = await this.aggregateTestScore(submissionId, testId)
     // transform for transmission
     // TODO: properly define data format of results for transmission
-    const result = {
+    const result: TestScored = {
       test_id: testScored.definition.id,
       scorings: testScored.scorings,
       scenario_scorings: testScored.scenarios.map((scenario) => {
@@ -206,7 +211,7 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(req, res, result as json)
+    this.respond(req, res, result)
   }
 
   /**
@@ -376,11 +381,11 @@ export class ResultsController extends Controller {
     const scenarioScored = await this.aggregateScenarioScore(submissionId, testId, scenarioId)
     // transform for transmission
     // TODO: properly define data format of results for transmission
-    const result = {
+    const result: ScenarioScored = {
       scenario_id: scenarioScored.definition.id,
       scorings: scenarioScored.scorings,
     }
-    this.respond(req, res, result as json)
+    this.respond(req, res, [result])
   }
 
   /**
@@ -469,7 +474,7 @@ export class ResultsController extends Controller {
     }
     // transform for transmission
     // TODO: properly define data format of results for transmission
-    const result = {
+    const result: Leaderboard = {
       benchmark_id: leaderboard.benchmark.id,
       items: leaderboard.items.map((item) => {
         return {
@@ -490,7 +495,7 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(req, res, result as json)
+    this.respond(req, res, [result])
   }
 
   /**
@@ -559,7 +564,7 @@ export class ResultsController extends Controller {
     }
     // transform for transmission
     // TODO: properly define data format of results for transmission
-    const result = {
+    const result: CampaignItem = {
       benchmark_id: benchmarkId,
       items: leaderboard.map((item) => {
         return {
@@ -569,7 +574,127 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(req, res, result as json)
+    this.respond(req, res, [result])
+  }
+
+  /**
+   * @swagger
+   * /results/campaign-item/{benchmark_id}/tests/{test_id}:
+   *  get:
+   *    description: Get campaign item test leaderboard.
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: benchmark_id
+   *        description: Benchmark ID.
+   *        required: true
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *      - in: path
+   *        name: test_id
+   *        description: Test ID.
+   *        required: true
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *    responses:
+   *      200:
+   *        description: campaign item test leaderboard.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          benchmark_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of benchmark.
+   *                          items:
+   *                            type: array
+   *                            items:
+   *                              type: object
+   *                              properties:
+   *                                submission_id:
+   *                                  type: string
+   *                                  format: uuid
+   *                                  description: ID of submission.
+   *                                scorings:
+   *                                  type: object
+   *                                  description: Dictionary of submission scores.
+   *                                test_scorings:
+   *                                  type: array
+   *                                  items:
+   *                                    type: object
+   *                                    properties:
+   *                                      test_id:
+   *                                        type: string
+   *                                        format: uuid
+   *                                        description: ID of test.
+   *                                      scorings:
+   *                                        type: object
+   *                                        description: Dictionary of test scores.
+   *                                      scenario_scorings:
+   *                                        type: array
+   *                                        items:
+   *                                          type: object
+   *                                          properties:
+   *                                            scenario_id:
+   *                                              type: string
+   *                                              format: uuid
+   *                                              description: ID of scenario.
+   *                                            scorings:
+   *                                              type: object
+   *                                              description: Dictionary of scores.
+   */
+  getTestLeaderboard: GetHandler<'/results/benchmarks/:benchmark_id/tests/:test_id'> = async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth) {
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
+      return
+    }
+    const benchmarkId = req.params.benchmark_id
+    const testId = req.params.test_id
+    // leaderboard contains all submissions (mixed tests), filter by test
+    const leaderboard = await this.aggregateLeaderboard(benchmarkId)
+    if (!leaderboard) {
+      this.requestError(req, res, { text: 'Campaign item could not be aggregated' })
+      return
+    }
+    // leaderboard contains all submissions (mixed tests), filter by test
+    leaderboard.items = leaderboard.items.filter((item) => item.tests[0].definition.id === testId)
+    // transform for transmission
+    const result: Leaderboard = {
+      benchmark_id: leaderboard.benchmark.id,
+      items: leaderboard.items.map((item) => {
+        return {
+          submission_id: item.submission.id,
+          scorings: item.scorings,
+          test_scorings: item.tests.map((test) => {
+            return {
+              test_id: test.definition.id,
+              scorings: test.scorings,
+              scenario_scorings: test.scenarios.map((scenario) => {
+                return {
+                  scenario_id: scenario.definition.id,
+                  scorings: scenario.scorings,
+                }
+              }),
+            }
+          }),
+        }
+      }),
+    }
+    this.respond(req, res, [result])
   }
 
   // TODO: generalize the below:

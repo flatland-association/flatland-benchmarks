@@ -12,7 +12,7 @@
     "private:serve": "npm run private:swagger:dev && npm run private:build && cd ../../out-tsc && mkdir -p backend-serve/app && cp backend/main.min.mjs backend-serve/app && mkdir -p backend-serve/config && cp -n ../ts/backend/src/config/config.jsonc \"$_\" && rm -rf backend-serve/public && cp -rf ../ts/backend/src/public.${CUSTOMIZATION} backend-serve/public && cd backend-serve/app && node main.min.mjs --help --log-level=ALL --log-colorful --log-stringify",
     "private:build": "node esbuild.mjs",
     "private:test": "vitest watch --project=unit",
-    "private:swagger:dev": "swagger-jsdoc -d swagger.config.cjs -o src/swagger/swagger.json src/app/**/*.mts src/swagger/components.development.yml",
-    "private:swagger:prod": "swagger-jsdoc -d swagger.config.cjs -o src/swagger/swagger.json src/app/**/*.mts src/swagger/components.yml"
+    "private:swagger:dev": "swagger-jsdoc -d swagger.config.cjs -o src/swagger/swagger.json src/app/**/*.mts src/swagger/components.development.yml 2> swaggererrors.txt && cat swaggererrors.txt && exit $(cat swaggererrors.txt | wc -l)",
+    "private:swagger:prod": "swagger-jsdoc -d swagger.config.cjs -o src/swagger/swagger.json src/app/**/*.mts src/swagger/components.yml 2> swaggererrors.txt && cat swaggererrors.txt && exit $(cat swaggererrors.txt | wc -l)"
   }
 }

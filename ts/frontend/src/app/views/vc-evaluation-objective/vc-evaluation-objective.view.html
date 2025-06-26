@@ -1,0 +1,17 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<lib-content>
+  <div class="pb-8 flex w-full">
+    <h2 class="text-2xl font-bold text-neutral-500">{{ benchmark?.name }}</h2>
+  </div>
+
+  <lib-section class="w-full">
+    <p class="bp-8">
+      {{ benchmark?.description }}
+    </p>
+  </lib-section>
+</lib-content>
+
+<lib-content>
+  <app-table [columns]="columns" [rows]="rows" class="w-full"></app-table>
+</lib-content>

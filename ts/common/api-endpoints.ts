@@ -2,12 +2,16 @@ import { ApiRequest } from './api-request'
 import { ApiResponse } from './api-response'
 import {
   BenchmarkDefinitionRow,
+  CampaignItem,
+  Leaderboard,
+  LeaderboardItem,
   PostTestResultsBody,
   Result,
-  SubmissionPreview,
+  ScenarioScored,
   SubmissionRow,
   Test,
   TestDefinitionRow,
+  TestScored,
 } from './interfaces'
 import { Empty, json, NoNever, StripLocator } from './utility-types'
 
@@ -68,7 +72,7 @@ interface ApiEndpointDefinitions {
     GET: ApiEndpoint<Empty, Empty, TestDefinitionRow[]>
   }
   '/submissions': {
-    GET: ApiEndpoint<Empty, { benchmark?: string; uuid?: string; submitted_by?: string }, SubmissionPreview[]>
+    GET: ApiEndpoint<Empty, { benchmark?: string; uuid?: string; submitted_by?: string }, SubmissionRow[]>
     POST: ApiEndpoint<StripLocator<SubmissionRow>, Empty, { id: string }>
   }
   '/submissions/:uuid': {
@@ -84,22 +88,25 @@ interface ApiEndpointDefinitions {
     PATCH: ApiEndpoint<Partial<Result>, Empty, Result>
   }
   '/results/submission/:submission_id': {
-    GET: ApiEndpoint<Empty, Empty, json>
+    GET: ApiEndpoint<Empty, Empty, LeaderboardItem[]>
   }
   '/results/submission/:submission_id/tests/:test_id': {
-    GET: ApiEndpoint<Empty, Empty, json>
+    GET: ApiEndpoint<Empty, Empty, TestScored>
     POST: ApiEndpoint<PostTestResultsBody, Empty, Empty>
   }
   '/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id': {
-    GET: ApiEndpoint<Empty, Empty, json>
+    GET: ApiEndpoint<Empty, Empty, ScenarioScored[]>
   }
   // TODO: maybe rename to /results/leaderboard/:benchmark_id ?
   '/results/benchmark/:benchmark_id': {
-    GET: ApiEndpoint<Empty, Empty, json>
+    GET: ApiEndpoint<Empty, Empty, Leaderboard[]>
   }
   // TODO: maybe rename (strive for consistency)
   '/results/campaign-item/:benchmark_id': {
-    GET: ApiEndpoint<Empty, Empty, json>
+    GET: ApiEndpoint<Empty, Empty, CampaignItem[]>
+  }
+  '/results/benchmarks/:benchmark_id/tests/:test_id': {
+    GET: ApiEndpoint<Empty, Empty, Leaderboard[]>
   }
 }
 

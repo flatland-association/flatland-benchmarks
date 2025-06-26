@@ -59,7 +59,7 @@ export class NewSubmissionView implements OnInit {
     const response = await this.apiService.post('/submissions', {
       body: {
         name: this.submissionName,
-        benchmark_definition_id: this.benchmark?.id ?? 0,
+        benchmark_definition_id: this.benchmark?.id ?? '',
         submission_data_url: this.submissionImageUrl,
         code_repository: this.codeRepositoryUrl,
         test_definition_ids: this.tests?.filter((t, i) => this.testsSelection[i]).map((t) => t.id) ?? [],

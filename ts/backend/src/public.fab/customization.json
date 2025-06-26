@@ -1,4 +1,5 @@
 {
+  "setup": "benchmark",
   "content": {
     "title": "Flatland Benchmarks",
     "home": {
