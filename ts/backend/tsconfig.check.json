@@ -1,0 +1,9 @@
+/* "files" can't be set in tsconfig.json - it would break vitest. However, the
+exact reason why it breaks is unclear to me. OS */
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "files": ["./src/app/main.mts"]
+}

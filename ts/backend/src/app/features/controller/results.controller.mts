@@ -99,13 +99,13 @@ export class ResultsController extends Controller {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
-      this.unauthorizedError(res, { text: 'Not authorized' })
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
     const submissionId = req.params.submission_id
     const submissionScored = await this.aggregateSubmissionScore(submissionId)
     if (!submissionScored) {
-      this.requestError(res, { text: 'Score could not be aggregated' })
+      this.requestError(req, res, { text: 'Score could not be aggregated' })
       return
     }
     // transform for transmission
@@ -126,7 +126,7 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(res, result as json)
+    this.respond(req, res, result as json)
   }
 
   /**
@@ -188,7 +188,7 @@ export class ResultsController extends Controller {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
-      this.unauthorizedError(res, { text: 'Not authorized' })
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
     const submissionId = req.params.submission_id
@@ -206,7 +206,7 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(res, result as json)
+    this.respond(req, res, result as json)
   }
 
   /**
@@ -270,7 +270,7 @@ export class ResultsController extends Controller {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
-      this.unauthorizedError(res, { text: 'Not authorized' })
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
     const submissionId = req.params.submission_id
@@ -302,9 +302,9 @@ export class ResultsController extends Controller {
     const ok = !sql.errors
     if (ok) {
       await sql.query`COMMIT`
-      this.respond(res, {})
+      this.respond(req, res, {})
     } else {
-      this.requestError(res, { text: 'Some results could not be inserted, transaction aborted.' })
+      this.requestError(req, res, { text: 'Some results could not be inserted, transaction aborted.' })
     }
   }
 
@@ -367,7 +367,7 @@ export class ResultsController extends Controller {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
-      this.unauthorizedError(res, { text: 'Not authorized' })
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
     const submissionId = req.params.submission_id
@@ -380,7 +380,7 @@ export class ResultsController extends Controller {
       scenario_id: scenarioScored.definition.id,
       scorings: scenarioScored.scorings,
     }
-    this.respond(res, result as json)
+    this.respond(req, res, result as json)
   }
 
   /**
@@ -458,13 +458,13 @@ export class ResultsController extends Controller {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
-      this.unauthorizedError(res, { text: 'Not authorized' })
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
     const benchmarkId = req.params.benchmark_id
     const leaderboard = await this.aggregateLeaderboard(benchmarkId)
     if (!leaderboard) {
-      this.requestError(res, { text: 'Leaderboard could not be aggregated' })
+      this.requestError(req, res, { text: 'Leaderboard could not be aggregated' })
       return
     }
     // transform for transmission
@@ -490,7 +490,7 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(res, result as json)
+    this.respond(req, res, result as json)
   }
 
   /**
@@ -548,13 +548,13 @@ export class ResultsController extends Controller {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
-      this.unauthorizedError(res, { text: 'Not authorized' })
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
     const benchmarkId = req.params.benchmark_id
     const leaderboard = await this.aggregateCampaignItem(benchmarkId)
     if (!leaderboard) {
-      this.requestError(res, { text: 'Campaign item could not be aggregated' })
+      this.requestError(req, res, { text: 'Campaign item could not be aggregated' })
       return
     }
     // transform for transmission
@@ -569,7 +569,7 @@ export class ResultsController extends Controller {
         }
       }),
     }
-    this.respond(res, result as json)
+    this.respond(req, res, result as json)
   }
 
   // TODO: generalize the below:

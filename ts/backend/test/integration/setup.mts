@@ -4,6 +4,11 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { DockerComposeEnvironment, StartedDockerComposeEnvironment } from 'testcontainers'
 import { defaults } from '../../src/app/features/config/defaults.mjs'
+import { Logger } from '../../src/app/features/logger/logger.mjs'
+
+// Per default, suppress logger output. Makes debugging tests via console.log
+// a bit easier (otherwise stdout will be cluttered).
+Logger.setOptions({ '--log-level': 'NONE', '--log-colorful': 'true' })
 
 /*
 This global setup file is used to boot a Docker environment that runs in
