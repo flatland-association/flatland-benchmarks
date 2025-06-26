@@ -3,7 +3,7 @@
   "gitRepoId": "flatland-benchmarks",
   "packageName": "fab_clientlib",
   "packageUrl": "https://pypi.org/project/fab-clientlib/",
-  "licenseInfo": "MIT License",
+  "licenseInfo": "MIT",
   "licenseUrl": "https://github.com/flatland-association/flatland-benchmarks/blob/main/LICENSE",
   "infoEmail": "contact@flatland-association.org",
   "infoName": "Olivier Stuker, Christian Eichenberger, Manuel Schneider"
