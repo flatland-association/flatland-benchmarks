@@ -592,7 +592,6 @@ export class ResultsController extends Controller {
    *        schema:
    *          type: string
    *          format: uuid
-   *    parameters:
    *      - in: path
    *        name: test_id
    *        description: Test ID.
@@ -602,6 +601,7 @@ export class ResultsController extends Controller {
    *          format: uuid
    *    responses:
    *      200:
+   *        description: campaign item test leaderboard.
    *        content:
    *          application/json:
    *            schema:
