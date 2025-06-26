@@ -240,6 +240,9 @@ services:
       # reverse proxy to access keycloak via localhost:8081 in backend container
       - ../deployment/backend/nginx.conf:/etc/nginx/http.d/default.conf
       - ../deployment/backend/start_reverseproxy.sh:/flyway/start.sh
+      # uncomment one of the two customizations:
+      - ../ts/backend/src/public/ai4realnet/customization.json:/usr/src/app/dist/backend/public/customization.json
+    #      - ../ts/backend/src/public/fab/customization.json:/usr/src/app/dist/backend/public/customization.json
     entrypoint: bash
     command:
       - /flyway/start.sh
