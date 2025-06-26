@@ -1,3 +1,4 @@
+import { json } from '@common/utility-types'
 import celery from 'celery-node'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
@@ -36,26 +37,42 @@ export class CeleryService extends Service {
    */
   async sendTask(benchmarkId: string, payload: object, uuid: string) {
     // fail fast if not connected
-    const client = celery.createClient(
-      `amqp://${this.config.amqp.host}:${this.config.amqp.port}`,
-      `amqp://${this.config.amqp.host}:${this.config.amqp.port}`,
-      // queue
-      benchmarkId,
-    )
-    await client.isReady()
-    console.log(`Sending payload ${payload} to amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
-    const result = client.sendTask(
-      benchmarkId, // taskName: string,
-      [], // args?: Array<any>,
-      payload, // kwargs?: object,
-      uuid, //     taskId?: string
-    )
-    console.log(`Sent task to amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
-    // return promise
-    return result.get().then((data) => {
-      console.log(`Received result from queue: ${data}`)
-      client.disconnect()
-      return data
-    })
+    const client = this.getClient(benchmarkId)
+    // try...catch because celery-node doesn't catch all rejections that can
+    // occur during sendTask and then those propagate and must be caught in user
+    // code...
+    try {
+      return client
+        .isReady()
+        .then(() => {
+          console.log(`Sending payload ${payload} to amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
+          const result = client.sendTask(
+            benchmarkId, // taskName: string,
+            [], // args?: Array<any>,
+            payload, // kwargs?: object,
+            uuid, //     taskId?: string
+          )
+          console.log(`Sent task to amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
+          // return promise
+          return result
+            .get()
+            .then((data) => {
+              console.log(`Received result from queue: ${data}`)
+              client.disconnect()
+              return data
+            })
+            .catch((error) => {
+              logger.error('get result failed:', error)
+              return Promise.reject(error)
+            })
+        })
+        .catch((error) => {
+          logger.error('isReady failed:', error)
+          return Promise.reject(error)
+        })
+    } catch (error) {
+      logger.error('sendTask failed:', error as json)
+      return Promise.reject(error)
+    }
   }
 }

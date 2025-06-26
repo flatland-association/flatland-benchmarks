@@ -11,11 +11,12 @@ describe('Health Controller Failing controller', () => {
     testConfig.amqp.port = 2
     setupControllerTestEnvironment(testConfig)
     controller = new ControllerTestAdapter(HealthController, testConfig)
-    const res = await controller.testGet('/health/live/', {})
+    const res = await controller.testGet('/health/live', {})
     console.log('= /health/live =')
     console.log(res.status)
     console.log(res.body)
     expect(res.status).toBe(503)
+    expect(res.body).toBeApiResponse()
   })
 
   test('should fail because unreachable db', async () => {
@@ -24,23 +25,25 @@ describe('Health Controller Failing controller', () => {
     testConfig.postgres.port = 1 // do not use 0 - would fall back to default
     setupControllerTestEnvironment(testConfig)
     controller = new ControllerTestAdapter(HealthController, testConfig)
-    const res = await controller.testGet('/health/live/', {})
+    const res = await controller.testGet('/health/live', {})
     console.log('= /health/live =')
     console.log(res.status)
     console.log(res.body)
     expect(res.status).toBe(503)
+    expect(res.body).toBeApiResponse()
   })
 
   test('should return healthy', async () => {
     const testConfig = await getTestConfig()
     setupControllerTestEnvironment(testConfig)
     controller = new ControllerTestAdapter(HealthController, testConfig)
-    const res = await controller.testGet('/health/live/', {})
+    const res = await controller.testGet('/health/live', {})
     console.log('= /health/live =')
     console.log(res.status)
     console.log(res.body)
     expect(res.status).toBe(200)
-    expect(res.body).toEqual({
+    expect(res.body).toBeApiResponse()
+    expect(res.body.body).toEqual({
       status: 'UP',
       checks: [
         {
