@@ -214,7 +214,7 @@ export class SubmissionController extends Controller {
     const sql = SqlService.getInstance()
 
     // per default, list all public submissions
-    let wherePublic = sql.fragment`public = true`
+    let wherePublic = sql.fragment`published = true`
     let whereBenchmark = sql.fragment`1=1`
     let whereSubmittedBy = sql.fragment`1=1`
     if (benchmarkId) {
