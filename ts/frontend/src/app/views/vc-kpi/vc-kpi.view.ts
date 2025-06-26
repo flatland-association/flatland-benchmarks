@@ -35,7 +35,7 @@ export class VcKpiView implements OnInit {
 
   async ngOnInit() {
     const board = (
-      await this.apiService.get('/results/campaign-item/:benchmark_id/tests/:test_id', {
+      await this.apiService.get('/results/benchmarks/:benchmark_id/tests/:test_id', {
         params: { benchmark_id: this.benchmarkId, test_id: this.testId },
       })
     ).body?.at(0)

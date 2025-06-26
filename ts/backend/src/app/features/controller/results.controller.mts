@@ -35,7 +35,7 @@ export class ResultsController extends Controller {
     this.attachGet('/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id', this.getScenarioResults)
     this.attachGet('/results/benchmark/:benchmark_id', this.getLeaderboard)
     this.attachGet('/results/campaign-item/:benchmark_id', this.getCampaignItem)
-    this.attachGet('/results/campaign-item/:benchmark_id/tests/:test_id', this.getCampaignTest)
+    this.attachGet('/results/benchmarks/:benchmark_id/tests/:test_id', this.getTestLeaderboard)
   }
 
   /**
@@ -655,7 +655,7 @@ export class ResultsController extends Controller {
    *                                              type: object
    *                                              description: Dictionary of scores.
    */
-  getCampaignTest: GetHandler<'/results/campaign-item/:benchmark_id/tests/:test_id'> = async (req, res) => {
+  getTestLeaderboard: GetHandler<'/results/benchmarks/:benchmark_id/tests/:test_id'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
