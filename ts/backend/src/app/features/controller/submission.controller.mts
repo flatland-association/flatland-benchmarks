@@ -119,7 +119,7 @@ export class SubmissionController extends Controller {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
-      this.unauthorizedError(res, { text: 'Not authorized' })
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
     // save submission in db
@@ -148,7 +148,7 @@ export class SubmissionController extends Controller {
       `
     const id: string | undefined = idRow.at(0)?.['id']
     if (!id) {
-      this.serverError(res, { text: `could not insert submission` }, { id })
+      this.serverError(req, res, { text: `could not insert submission` }, { id })
       return
     }
     // get test names
@@ -170,10 +170,10 @@ export class SubmissionController extends Controller {
       // the returned unsettled promise is ignored and continues running (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
       celery.sendTask(req.body.benchmark_definition_id as string, payload, id)
       // request succeeds once connection is checked ready and task sent
-      this.respond(res, { id }, payload)
+      this.respond(req, res, { id }, payload)
     } catch (error) {
       // request fails if sendTask fails as not ready
-      this.serverError(res, { text: error as string })
+      this.serverError(req, res, { text: error as string })
     }
   }
 
@@ -182,7 +182,7 @@ export class SubmissionController extends Controller {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
-      this.unauthorizedError(res, { text: 'Not authorized' })
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
 
@@ -230,7 +230,7 @@ export class SubmissionController extends Controller {
           ${limit}
       `
     const resources = appendDir('/submissions/', rows)
-    this.respond(res, resources)
+    this.respond(req, res, resources)
   }
   /**
    * @swagger
@@ -282,7 +282,7 @@ export class SubmissionController extends Controller {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
-      this.unauthorizedError(res, { text: 'Not authorized' })
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
     const uuids = req.params.uuid.split(',')
@@ -295,14 +295,14 @@ export class SubmissionController extends Controller {
       `
     const submissions = appendDir('/submissions/', rows)
     // return array - dev.002
-    this.respond(res, submissions)
+    this.respond(req, res, submissions)
   }
 
   getSubmissionByUuidResults: GetHandler<'/submissions/:uuid/results'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
-      this.unauthorizedError(res, { text: 'Not authorized' })
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
     const uuid = req.params.uuid
@@ -312,14 +312,14 @@ export class SubmissionController extends Controller {
       WHERE submission_uuid=${uuid}
     `
     const results = appendDir('/results/', [row])
-    this.respond(res, results)
+    this.respond(req, res, results)
   }
 
   patchResult: PatchHandler<'/result'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
-      this.unauthorizedError(res, { text: 'Not authorized' })
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
 
@@ -336,6 +336,6 @@ export class SubmissionController extends Controller {
     `
 
     const [result] = appendDir('/results/', [row])
-    this.respond(res, result)
+    this.respond(req, res, result)
   }
 }
