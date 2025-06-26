@@ -17,6 +17,9 @@ services:
       start_period: 80s
     networks:
       - flatland-benchmarks
+      # If persistent storage is required, uncomment volumes list:
+      # volumes:
+      # - ${POSTGRES_VOLUME:-flatland-benchmarks-postgres}:/var/lib/postgresql/data:delegated
 
   pgadmin:
     image: dpage/pgadmin4
@@ -30,7 +33,7 @@ services:
     ports:
       - ${PGADMIN_LISTEN_PORT}:15432
     volumes:
-      - ${PGADMIN_VOLUME:-./var/pgadmin}:/var/lib/pgadmin:delegated
+      - ${PGADMIN_VOLUME:-flatland-benchmarks-pgadmin}:/var/lib/pgadmin:delegated
     networks:
       - flatland-benchmarks
 
@@ -59,7 +62,7 @@ services:
       # TODO can we avoid copying the realm config? Download in an init container from the repo....?
       - ./keycloak/netzgrafikeditor-realm.json:/opt/keycloak/data/import/netzgrafikeditor-realm.json
       # persist data, otherwise restarting the container nills JWTs
-      - ${KEYCLOAK_VOLUME:-./opt/keycloak}:/opt/keycloak/data/h2:delegated
+      - ${KEYCLOAK_VOLUME:-flatland-benchmarks-keycloak}:/opt/keycloak/data/h2:delegated
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=netzgrafikeditor
@@ -251,3 +254,7 @@ services:
 networks:
   flatland-benchmarks:
 
+volumes:
+  flatland-benchmarks-keycloak:
+  flatland-benchmarks-pgadmin:
+  flatland-benchmarks-postgres:

@@ -141,3 +141,6 @@ networks:
 
 volumes:
   orchestrator-data:
+  flatland-benchmarks-keycloak:
+  flatland-benchmarks-pgadmin:
+  flatland-benchmarks-postgres:
