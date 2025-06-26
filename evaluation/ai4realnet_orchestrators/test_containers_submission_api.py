@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 @pytest.fixture(scope="module")
 def test_containers_fixture():
-  # set env var ATTENDED to True if docker-compose-demo.yml is already up and running
+  # set env var ATTENDED to True if docker-compose.yml is already up and running
   if os.environ.get("ATTENDED", "False").lower() == "true":
     yield
     return
@@ -27,7 +27,7 @@ def test_containers_fixture():
   global basic
 
   start_time = time.time()
-  basic = DockerCompose(context=".", compose_file_name="../docker-compose-demo.yml", profiles=["full"], build=True)
+  basic = DockerCompose(context=".", compose_file_name="../docker-compose-base.yml", profiles=["full"], build=True)
   logger.info("/ start docker compose down")
   basic.stop()
   duration = time.time() - start_time

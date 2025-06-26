@@ -50,6 +50,7 @@ services:
       - flatland-benchmarks
 
   keycloak:
+    profiles: [ full ]
     build:
       context: ../deployment/keycloak
     hostname: keycloak
@@ -62,7 +63,7 @@ services:
       # TODO can we avoid copying the realm config? Download in an init container from the repo....?
       - ./keycloak/netzgrafikeditor-realm.json:/opt/keycloak/data/import/netzgrafikeditor-realm.json
       # persist data, otherwise restarting the container nills JWTs
-      - ${KEYCLOAK_VOLUME:-flatland-benchmarks-keycloak}:/opt/keycloak/data/h2:delegated
+      - ${KEYCLOAK_VOLUME:-flatland-benchmarks-keycloak}:/opt/keycloak/data/:delegated
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=netzgrafikeditor
@@ -167,6 +168,7 @@ services:
       - flatland-benchmarks
 
   orchestrator:
+    profiles: [ full ]
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
     command: python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q flatland3-evaluation
@@ -207,6 +209,7 @@ services:
       - flatland-benchmarks
 
   fab-backend:
+    profiles: [ full ]
     # TODO add switch to use pre-built image or local build
     #image: ghcr.io/flatland-association/fab-backend:latest
     #pull_policy: always
@@ -224,8 +227,22 @@ services:
         condition: service_healthy
       postgres:
         condition: service_healthy
+      # workaround for docker compose waithing for flyway although exited with 0 https://forums.docker.com/t/behavior-of-up-wait-changed/147699/4
+      flyway:
+        condition: service_completed_successfully
     volumes:
       - ./config-demo.jsonc:/usr/src/app/dist/backend/config/config.jsonc
+      #      # comment out for local development
+      #      - ../dist/backend/app:/usr/src/app/dist/backend/app
+      #      - ../node_modules:/usr/src/app/node_modules
+      #- ../ts/backend/src/migration/schema:/flyway/sql/schema
+      #- ../ts/backend/src/migration/data:/flyway/sql/data
+      # reverse proxy to access keycloak via localhost:8081 in backend container
+      - ../deployment/backend/nginx.conf:/etc/nginx/http.d/default.conf
+      - ../deployment/backend/start_reverseproxy.sh:/flyway/start.sh
+    entrypoint: bash
+    command:
+      - /flyway/start.sh
     ports:
       - 8000:8000
     healthcheck:
@@ -237,6 +254,7 @@ services:
       - flatland-benchmarks
 
   fab-frontend:
+    profiles: [ full ]
     # TODO add switch to use pre-built image or local build
     #image: ghcr.io/flatland-association/fab-frontend:latest
     #pull_policy: always
@@ -246,8 +264,60 @@ services:
     depends_on:
       fab-backend:
         condition: service_healthy
+
     ports:
       - 80:80
+    networks:
+      - flatland-benchmarks
+
+  orchestrator-railway:
+    profiles: [ full ]
+    # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
+    # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
+    entrypoint: [ "/bin/bash","-c" ]
+    command:
+      - |
+        set -euxo pipefail
+        # fail fast checking permissions
+        ls -al /app/data
+        mkdir -p /app/data/1234/
+        touch /app/data/1234/nix.txt
+        cd ai4realnet_orchestrators
+        python -m celery -A domain_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${BENCHMARK_ID}
+    build:
+      context: .
+      dockerfile: Dockerfile_railway_orchestrator
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      minio_setup:
+        condition: service_completed_successfully
+    volumes:
+      - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
+      - orchestrator-data:/app/data
+      - ./ai4realnet_orchestrators/:/app/ai4realnet_orchestrators/
+    env_file: .env
+    environment:
+      # required for flyway start.sh
+      - POSTGRES_HOST=${POSTGRES_HOST:-rabbit}
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+
+      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
+      - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
+      - HOST_DIRECTORY=${PWD}
+      - DATA_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-data
+      - CLIENT_SECRET=top-secret
+      - TOKEN_URL=http://keycloak:8081/realms/netzgrafikeditor/protocol/openid-connect/token
+      - OAUTHLIB_INSECURE_TRANSPORT=1
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: cd ai4realnet_orchestrators && python -m celery -A domain_orchestrators.railway.orchestrator inspect ping
     networks:
       - flatland-benchmarks
 
@@ -255,6 +325,7 @@ networks:
   flatland-benchmarks:
 
 volumes:
+  orchestrator-data:
   flatland-benchmarks-keycloak:
   flatland-benchmarks-pgadmin:
   flatland-benchmarks-postgres:
