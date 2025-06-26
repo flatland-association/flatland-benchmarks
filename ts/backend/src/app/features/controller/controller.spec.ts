@@ -28,22 +28,22 @@ describe.sequential('Controller', () => {
   test('should be able to attach handlers', () => {
     // can't attach to undefined endpoints, but can trick TS into see them as defined
     controller.attachGet('/test-get' as '/mirror', (req, res) => {
-      controller.respond(res, '<ok>', '<debug>')
+      controller.respond(req, res, '<ok>', '<debug>')
     })
     controller.attachPost('/test-post' as '/mirror', (req, res) => {
-      controller.respond(res, { data: '<ok>' }, '<debug>')
+      controller.respond(req, res, { data: '<ok>' }, '<debug>')
     })
     controller.attachPatch('/test-patch' as '/mirror/:id', (req, res) => {
-      controller.respond(res, { data: '<ok>' }, '<debug>')
+      controller.respond(req, res, { data: '<ok>' }, '<debug>')
     })
     controller.attachGet('/test-request-error' as '/mirror', (req, res) => {
-      controller.requestError(res, { text: 'request error' })
+      controller.requestError(req, res, { text: 'request error' })
     })
     controller.attachGet('/test-auth-error' as '/mirror', (req, res) => {
-      controller.unauthorizedError(res, { text: 'auth error' })
+      controller.unauthorizedError(req, res, { text: 'auth error' })
     })
     controller.attachGet('/test-server-error' as '/mirror', (req, res) => {
-      controller.serverError(res, { text: 'server error' })
+      controller.serverError(req, res, { text: 'server error' })
     })
     // test fallback error handler with exception
     controller.attachGet('/test-catch' as '/mirror', (_req, _res) => {

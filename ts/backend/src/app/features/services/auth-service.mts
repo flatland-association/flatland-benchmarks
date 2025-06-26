@@ -31,6 +31,7 @@ export class AuthService extends Service {
 
     // as-per-standard uri where JWT key set can be found
     const jwksUri = `${this.config.keycloak.url}/realms/${this.config.keycloak.realm}/protocol/openid-connect/certs`
+    logger.info(`fetching public key from  ${jwksUri}`)
     // get the public key for the JWT in question
     const client = new JwksClient({ jwksUri, timeout: this.config.keycloak.timeout })
     client
@@ -38,9 +39,11 @@ export class AuthService extends Service {
       .then((key) => {
         this.publicKey = key.getPublicKey()
         callback(null, this.publicKey)
+        logger.info(`fetched public key from  ${jwksUri}`)
       })
       .catch((err) => {
         callback(err)
+        logger.error(`failed fetching public key from  ${jwksUri}: ${JSON.stringify(err)}`)
       })
   }
 
@@ -52,7 +55,7 @@ export class AuthService extends Service {
    */
   async authorization(req: Request) {
     this.error = undefined
-    logger.info('authorization')
+    logger.debug(`authorizing token for request on ${req.method} ${req.originalUrl}`)
 
     const token = req.headers.authorization?.split(' ')[1]
 
@@ -65,10 +68,13 @@ export class AuthService extends Service {
       ): void => {
         if (error) {
           this.error = error
+          logger.error(`token verification for request on ${req.method} ${req.originalUrl} failed: ${error} `)
           return resolve(null)
         }
+        logger.debug(`token verification successful for request on ${req.method} ${req.originalUrl}.`)
         return resolve(decoded as JwtPayload)
       }
+      logger.debug(`verifying token for request on ${req.method} ${req.originalUrl}`)
       jwt.verify(token, this.getKey, { audience: this.config.keycloak.audience }, verifyCallback)
     })
   }

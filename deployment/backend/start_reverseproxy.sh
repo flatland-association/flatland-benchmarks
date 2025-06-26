@@ -7,4 +7,4 @@ nginx
 cd /usr/src/app/dist/backend/app
 echo $PWD
 ls -al
-node main.min.mjs
+node main.min.mjs --log-level=ALL --log-stringify

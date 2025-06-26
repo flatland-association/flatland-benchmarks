@@ -1,23 +1,29 @@
-[tool.poetry]
+[project]
 name = "fab_clientlib"
 version = "v0.0.0"
 description = "FAB Client Lib"
-authors = ["Olivier Stuker, Christian Eichenberger, Manuel Schneider <contact@flatland-association.org>"]
-license = "MIT License"
+authors = [
+  { name = "Olivier Stuker, Christian Eichenberger, Manuel Schneider", email = "contact@flatland-association.org" },
+]
+license = "MIT"
 readme = "README.md"
-repository = "https://github.com/flatland-association/flatland-benchmarks"
 keywords = ["OpenAPI", "OpenAPI-Generator", "FAB Client Lib"]
-include = ["fab_clientlib/py.typed"]
+requires-python = ">=3.9"
 
-[tool.poetry.dependencies]
-python = "^3.9"
+dependencies = [
+  "urllib3 (>=2.1.0,<3.0.0)",
+  "python-dateutil (>=2.8.2)",
+  "pydantic (>=2)",
+  "typing-extensions (>=4.7.1)"
+]
 
-urllib3 = ">= 2.1.0, < 3.0.0"
-python-dateutil = ">= 2.8.2"
-pydantic = ">= 2"
-typing-extensions = ">= 4.7.1"
+[project.urls]
+Repository = "https://github.com/flatland-association/flatland-benchmarks"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry]
+requires-poetry = ">=2.0"
+
+[tool.poetry.group.dev.dependencies]
 pytest = ">= 7.2.1"
 pytest-cov = ">= 2.8.1"
 tox = ">= 3.9.0"

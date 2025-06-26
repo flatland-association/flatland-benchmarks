@@ -35,7 +35,7 @@ export class CeleryService extends Service {
     const result = client.sendTask(
       benchmarkId, // taskName: string,
       [], // args?: Array<any>,
-      payload, // kwargs?: object,
+      payload as object, // kwargs?: object,
       uuid, //     taskId?: string
     )
     console.log(`Sent task to amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
@@ -56,7 +56,7 @@ export class CeleryService extends Service {
    */
   // TODO use celery.createClient(...).isReady() instead
   // https://github.com/actumn/celery.node/blob/5a1a412955ae757cf0bd36015a15f5b7d18c69eb/src/app/client.ts#L135
-  async isReady(): Promise {
+  async isReady(): Promise<unknown> {
     return amqp.connect(`amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
   }
 }
