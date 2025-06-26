@@ -74,9 +74,8 @@ export class HealthController extends Controller {
 
     // send message to debug queue
     const celery = CeleryService.getInstance()
-    const client = celery.getClient()
-    const task = client.isReady()
-    await task.catch((err: unknown) => {
+    const task = celery.isReady()
+    await task.catch((err) => {
       logger.error(`Received error from queue:${err}`)
       payload['status'] = 'DOWN'
       payload['checks'][1]['status'] = 'DOWN'

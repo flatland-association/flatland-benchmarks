@@ -1,5 +1,4 @@
 import celery from 'celery-node'
-import { describe, expect, test } from 'vitest'
 import { CeleryService } from '../../src/app/features/services/celery-client-service.mjs'
 import { getTestConfig } from './setup.mjs'
 

@@ -166,15 +166,15 @@ export class SubmissionController extends Controller {
       tests: tests,
     }
     logger.info(`Sending ${payload} to celery.`)
-    await celery
-      .sendTask(req.body.benchmark_definition_id as string, payload, id)
-      .then((_data) => {
-        // request succeeds once connection is checked ready and task sent
-        this.respond(res, { id }, payload)
-      })
-      .catch((error) => {
-        this.serverError(res, { text: error as string })
-      })
+    try {
+      // the returned unsettled promise is ignored and continues running (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+      celery.sendTask(req.body.benchmark_definition_id as string, payload, id)
+      // request succeeds once connection is checked ready and task sent
+      this.respond(res, { id }, payload)
+    } catch (error) {
+      // request fails if sendTask fails as not ready
+      this.serverError(res, { text: error as string })
+    }
   }
 
   // returns scored and public submissions as preview
