@@ -1,24 +1,28 @@
-# compose file for local dev
-
 services:
   postgres:
-    extends:
-      file: docker-compose-base.yml
-      service: postgres
-    # If persistent storage is required, uncomment volumes list:
-    # volumes:
-      # - ${POSTGRES_VOLUME:-./var/postgres}:/var/lib/postgresql/data:delegated
-
-  flyway:
-    extends:
-      file: docker-compose-base.yml
-      service: flyway
-    # data is not present in docker-compose-base but required for local dev
-    volumes:
-      - ../ts/backend/src/migration/schema:/flyway/sql/schema
-      - ../ts/backend/src/migration/data:/flyway/sql/data
+    image: postgres:15
+    hostname: postgres
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready", "-d", "${POSTGRES_DB}" ]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
+    networks:
+      - flatland-benchmarks
+      # If persistent storage is required, uncomment volumes list:
+      # volumes:
+      # - ${POSTGRES_VOLUME:-flatland-benchmarks-postgres}:/var/lib/postgresql/data:delegated
 
   pgadmin:
+    profiles: [ tsdev, full ]
     image: dpage/pgadmin4
     hostname: pgadmin
     env_file: .env
@@ -30,54 +34,301 @@ services:
     ports:
       - ${PGADMIN_LISTEN_PORT}:15432
     volumes:
-      - ${PGADMIN_VOLUME:-./var/pgadmin}:/var/lib/pgadmin:delegated
+      - ${PGADMIN_VOLUME:-flatland-benchmarks-pgadmin}:/var/lib/pgadmin:delegated
     networks:
       - flatland-benchmarks
 
-  redis:
-    extends:
-      file: docker-compose-base.yml
-      service: redis
-
-  redis-monitor:
-    extends:
-      file: docker-compose-base.yml
-      service: redis-monitor
-
-  rabbit:
-    extends:
-      file: docker-compose-base.yml
-      service: rabbit
-
-  minio:
-    extends:
-      file: docker-compose-base.yml
-      service: minio
-
-  minio_setup:
-    extends:
-      file: docker-compose-base.yml
-      service: minio_setup
-
-  orchestrator:
-    extends:
-      file: docker-compose-base.yml
-      service: orchestrator
+  flyway:
+    image: flyway/flyway
+    command: -url=jdbc:postgresql://postgres:5432/${POSTGRES_DB} -schemas=public -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} migrate  -connectRetries=60 -baselineOnMigrate=true
+    volumes:
+      - ../ts/backend/src/migration/schema:/flyway/sql/schema
+      - ../ts/backend/src/migration/data:/flyway/sql/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - flatland-benchmarks
 
   keycloak:
-    image: quay.io/keycloak/keycloak:23.0
+    profiles: [ tsdev, full ]
+    build:
+      context: ../deployment/keycloak
+    hostname: keycloak
     # as we need to access keycloak from backend Docker container under docker internal port, we need to start Keycloak on configured port, port forwarding in Docker run is not enough
-    command: start-dev --import-realm --http-port ${KEYCLOAK_PORT:-8081} --hostname localhost
+    command:
+      start-dev --import-realm --http-port ${KEYCLOAK_PORT:-8081} --hostname localhost
     ports:
       - ${KEYCLOAK_PORT:-8081}:${KEYCLOAK_PORT:-8081}
     volumes:
       # TODO can we avoid copying the realm config? Download in an init container from the repo....?
       - ./keycloak/netzgrafikeditor-realm.json:/opt/keycloak/data/import/netzgrafikeditor-realm.json
       # persist data, otherwise restarting the container nills JWTs
-      - ${KEYCLOAK_VOLUME:-./opt/keycloak}:/opt/keycloak/data/h2:delegated
+      - ${KEYCLOAK_VOLUME:-flatland-benchmarks-keycloak}:/opt/keycloak/data/:delegated
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=netzgrafikeditor
+    networks:
+      - flatland-benchmarks
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "curl -v --fail http://127.0.0.1:${KEYCLOAK_PORT:-8081}/realms/netzgrafikeditor/.well-known/openid-configuration" ]
+      interval: 5s
+      timeout: 20s
+      retries: 50
+
+  redis:
+    image: redis
+    ports:
+      - ${REDIS_PORT:-6379}:6379
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    networks:
+      - flatland-benchmarks
+
+  redis-monitor:
+    image: redis
+    command: redis-cli -h redis -p 6379 monitor
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    depends_on:
+      redis:
+        condition: service_started
+    networks:
+      - flatland-benchmarks
+
+  rabbit:
+    build:
+      context: rabbitmq
+      dockerfile: Dockerfile
+      args:
+        - WORKER_CONNECTION_TIMEOUT=${WORKER_CONNECTION_TIMEOUT}
+    hostname: rabbit
+    env_file: .env
+    environment:
+      - http_proxy=${RABBITMQ_HTTP_PROXY}
+      - https_proxy=${RABBITMQ_HTTPS_PROXY}
+      - no_proxy=${RABBITMQ_NO_PROXY}
+    ports:
+      - ${RABBITMQ_MANAGEMENT_PORT:-15672}:15672
+      - ${RABBITMQ_PORT}:5672
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: rabbitmqctl status
+      interval: 20s
+      timeout: 10s
+      retries: 30
+    networks:
+      - flatland-benchmarks
+
+  minio:
+    hostname: minio
+    image: "minio/minio:RELEASE.2024-11-07T00-52-20Z"
+    restart: on-failure
+    ports:
+      - "${MINIO_PORT}:${MINIO_PORT}"
+      - "${MINIO_CONSOLE_PORT}:${MINIO_CONSOLE_PORT}"
+    environment:
+      MINIO_ROOT_USER: "${MINIO_ROOT_USER}"
+      MINIO_ROOT_PASSWORD: "${MINIO_ROOT_PASSWORD}"
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "curl -v --fail 127.0.0.1:${MINIO_PORT}/minio/health/ready" ]
+      interval: 5s
+      timeout: 1s
+      retries: 5
+    command: server /data --address :${MINIO_PORT} --console-address :${MINIO_CONSOLE_PORT}
+    networks:
+      - flatland-benchmarks
+
+  minio_setup:
+    image: minio/mc:RELEASE.2024-11-05T11-29-45Z
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: [ "/bin/bash","-c" ]
+    command:
+      - |
+        set -euxo pipefail
+
+        /usr/bin/mc config host add myminio http://minio:${MINIO_PORT} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
+
+        # do not fail if bucket already exists:
+        /usr/bin/mc mb myminio/${S3_BUCKET} || true
+
+        echo "createbuckets successful"
+    networks:
+      - flatland-benchmarks
+
+  orchestrator:
+    # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
+    # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
+    command: python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q flatland3-evaluation
+    build:
+      context: ./orchestrator
+      dockerfile: Dockerfile_docker_compose
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      minio_setup:
+        condition: service_completed_successfully
+    volumes:
+      - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
+      - ./orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
+    env_file: .env
+    environment:
+      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
+      - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
+      - HOST_DIRECTORY=${PWD}
+      - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
+      - S3_BUCKET=${S3_BUCKET}
+      # for backend to S3 communication, use internal docker hostname
+      - AWS_ENDPOINT_URL=http://minio:${MINIO_PORT}
+      - AWS_ACCESS_KEY_ID=${MINIO_ROOT_USER}
+      - AWS_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD}
+      # TODO remove:
+      - S3_UPLOAD_PATH_TEMPLATE=${S3_UPLOAD_PATH_TEMPLATE}
+      - S3_UPLOAD_WITH_SUBMISSION_ID=true
+      - S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=${S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}
+
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: celery -A orchestrator inspect ping
+    networks:
+      - flatland-benchmarks
+
+  fab-backend:
+    profiles: [ full ]
+    # TODO add switch to use pre-built image or local build
+    #image: ghcr.io/flatland-association/fab-backend:latest
+    #pull_policy: always
+    build:
+      context: ../
+      dockerfile: deployment/backend/Dockerfile
+    # POSTGRES_ variables are required for flyway
+    env_file: .env
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      # workaround for docker compose waithing for flyway although exited with 0 https://forums.docker.com/t/behavior-of-up-wait-changed/147699/4
+      flyway:
+        condition: service_completed_successfully
+    volumes:
+      - ./config-demo.jsonc:/usr/src/app/dist/backend/config/config.jsonc
+      #      # comment out for local development
+      #      - ../dist/backend/app:/usr/src/app/dist/backend/app
+      #      - ../node_modules:/usr/src/app/node_modules
+      #- ../ts/backend/src/migration/schema:/flyway/sql/schema
+      #- ../ts/backend/src/migration/data:/flyway/sql/data
+      # reverse proxy to access keycloak via localhost:8081 in backend container
+      - ../deployment/backend/nginx.conf:/etc/nginx/http.d/default.conf
+      - ../deployment/backend/start_reverseproxy.sh:/flyway/start.sh
+      # uncomment one of the two customizations:
+      - ../ts/backend/src/public/ai4realnet/customization.json:/usr/src/app/dist/backend/public/customization.json
+    #      - ../ts/backend/src/public/fab/customization.json:/usr/src/app/dist/backend/public/customization.json
+    entrypoint: bash
+    command:
+      - /flyway/start.sh
+    ports:
+      - 8000:8000
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "wget -qq 127.0.0.1:8000/api-docs" ]
+      interval: 5s
+      timeout: 1s
+      retries: 5
+    networks:
+      - flatland-benchmarks
+
+  fab-frontend:
+    profiles: [ full ]
+    # TODO add switch to use pre-built image or local build
+    #image: ghcr.io/flatland-association/fab-frontend:latest
+    #pull_policy: always
+    build:
+      context: ../
+      dockerfile: deployment/frontend/Dockerfile
+    depends_on:
+      fab-backend:
+        condition: service_healthy
+
+    ports:
+      - 80:80
+    networks:
+      - flatland-benchmarks
+
+  orchestrator-railway:
+    profiles: [ tsdev, full ]
+    # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
+    # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
+    entrypoint: [ "/bin/bash","-c" ]
+    command:
+      - |
+        set -euxo pipefail
+        # fail fast checking permissions
+        ls -al /app/data
+        mkdir -p /app/data/1234/
+        touch /app/data/1234/nix.txt
+        cd ai4realnet_orchestrators
+        python -m celery -A domain_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${BENCHMARK_ID}
+    build:
+      context: .
+      dockerfile: Dockerfile_railway_orchestrator
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      minio_setup:
+        condition: service_completed_successfully
+    volumes:
+      - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
+      - orchestrator-data:/app/data
+      - ./ai4realnet_orchestrators/:/app/ai4realnet_orchestrators/
+    env_file: .env
+    environment:
+      # required for flyway start.sh
+      - POSTGRES_HOST=${POSTGRES_HOST:-rabbit}
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+
+      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
+      - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
+      - HOST_DIRECTORY=${PWD}
+      - DATA_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-data
+      - CLIENT_SECRET=top-secret
+      - TOKEN_URL=http://keycloak:8081/realms/netzgrafikeditor/protocol/openid-connect/token
+      - OAUTHLIB_INSECURE_TRANSPORT=1
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: cd ai4realnet_orchestrators && python -m celery -A domain_orchestrators.railway.orchestrator inspect ping
+    networks:
+      - flatland-benchmarks
 
 networks:
   flatland-benchmarks:
+
+volumes:
+  orchestrator-data:
+  flatland-benchmarks-keycloak:
+  flatland-benchmarks-pgadmin:
+  flatland-benchmarks-postgres:
