@@ -3,6 +3,21 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.8.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.7.1...v0.8.0) (2025-06-27)
+
+
+### Features
+
+* Add AI4REALNET example ([#280](https://github.com/flatland-association/flatland-benchmarks/issues/280)) ([222399f](https://github.com/flatland-association/flatland-benchmarks/commit/222399f922ad6bf678649aed48e0cb94bfa6d7fa))
+* Enable app customization ([#252](https://github.com/flatland-association/flatland-benchmarks/issues/252)) ([e67656b](https://github.com/flatland-association/flatland-benchmarks/commit/e67656b58e4c4f2bcf2618327c2d75715b872edc))
+* **frontend:** Tabular display of KPIs ([#262](https://github.com/flatland-association/flatland-benchmarks/issues/262)) ([0a8d554](https://github.com/flatland-association/flatland-benchmarks/commit/0a8d554245dd72e5989822db49ccf00721e289ea))
+* Run submission in orchestrator. ([b700f2d](https://github.com/flatland-association/flatland-benchmarks/commit/b700f2d494d2910dfb89b1e04dc342638901e847))
+
+
+### Bug Fixes
+
+* license SPDX Identifier enforced since 7.14.0 of openapi-generator. ([#271](https://github.com/flatland-association/flatland-benchmarks/issues/271)) ([2a7dddf](https://github.com/flatland-association/flatland-benchmarks/commit/2a7dddf80bb110313cfa49e94fd694b32a452279))
+
 ## [0.7.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.7.0...v0.7.1) (2025-06-23)
 
 
