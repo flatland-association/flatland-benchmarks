@@ -27,7 +27,7 @@ RUN sudo ls /tmp
 USER runner
 
 RUN mkdir ai4realnet_orchestrators
-ADD ./ai4realnet_orchestrators/ ./ai4realnet_orchestrators/
+ADD ./ ./ai4realnet_orchestrators/
 
 RUN find .
 
