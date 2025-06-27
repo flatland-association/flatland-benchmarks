@@ -29,7 +29,9 @@ describe('Benchmark controller', () => {
     expect(res.body).toBeApiResponse()
     // TODO: test interface equality only
     // relies on https://github.com/flatland-association/flatland-benchmarks/issues/181
-    expect(res.body.body).toEqual(protoBenchmark)
+    // Using toContainEqual with protoBenchmark[0] here, because demo data might
+    // contain more than just the prototype benchmark.
+    expect(res.body.body).toContainEqual(protoBenchmark[0])
   })
 
   test('should return benchmark details', async () => {

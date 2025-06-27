@@ -9,6 +9,9 @@ import {
   SubmissionRow,
   TestDefinitionRow,
 } from '@common/interfaces'
+import { Logger } from '../logger/logger.mjs'
+
+const logger = new Logger('aggregator')
 
 /*
 REMARK:
@@ -220,7 +223,7 @@ export class Aggregator {
       // only consider submissions made for requested benchmark, otherwise
       // ranking could show unexpected results
       items: submissions
-        .filter((submission) => submission.benchmark_definition === benchmarkDef)
+        .filter((submission) => submission.benchmark_definition?.id === benchmarkDef.id)
         .map((submission) =>
           this.getSubmissionScored(
             benchmarkDef,
@@ -259,7 +262,8 @@ export class Aggregator {
         const top = leaderboard.items.find(
           (item) =>
             item.tests[0].definition.id === testDef.id &&
-            this.getPrimaryScoring(item.scorings, benchmarkDef.field_definitions)?.rank === 1,
+            // find top item at test level
+            this.getPrimaryScoring(item.tests[0].scorings, benchmarkDef.field_definitions)?.rank === 1,
         )
         return {
           benchmark: benchmarkDef,
