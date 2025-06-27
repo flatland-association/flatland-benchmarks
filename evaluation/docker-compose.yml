@@ -288,7 +288,7 @@ services:
         cd ai4realnet_orchestrators
         python -m celery -A domain_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${BENCHMARK_ID}
     build:
-      context: .
+      context: ai4realnet_orchestrators
       dockerfile: Dockerfile_railway_orchestrator
     depends_on:
       rabbit:
@@ -298,7 +298,8 @@ services:
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
       - orchestrator-data:/app/data
-      - ./ai4realnet_orchestrators/:/app/ai4realnet_orchestrators/
+      # uncomment for local development:
+      #- ./:/app/ai4realnet_orchestrators/
     env_file: .env
     environment:
       # required for flyway start.sh
