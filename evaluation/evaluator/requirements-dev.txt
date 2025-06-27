@@ -1,4 +1,2 @@
 pytest-mockito==0.0.4
 testcontainers==4.9.1
-oauthlib >=3.2.2
-requests-oauthlib >=2.0.0

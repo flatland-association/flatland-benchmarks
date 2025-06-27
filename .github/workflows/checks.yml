@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
 
-  test-evaluation-compute-worker:
+  test-flatland3-benchmarks:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -37,13 +37,13 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r evaluation/requirements-dev.txt
           python -m pip install -r evaluation/orchestrator/requirements.txt
-          python -m pip install -r evaluation/ai4realnet_orchestrators/requirements.txt -r evaluation/ai4realnet_orchestrators/requirements-dev.txt
       - name: Run tests
         working-directory: evaluation/
         run: |
-          pytest -s --ignore ai4realnet_orchestrators
+          pytest -s evaluator
+          pytest -s orchestrator
 
-  tests-orchestrator-e2e:
+  tests-railway-orchestrator:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -52,11 +52,6 @@ jobs:
         node-version: [ "22.x" ]
     steps:
       - uses: actions/checkout@v4
-      - name: Download debug environments
-        run: |
-          wget "https://data.flatland.cloud/benchmarks/Flatland3/debug-environments.zip" -O debug-environments.zip
-          unzip -o debug-environments.zip -d evaluation/evaluator
-          find .
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -69,7 +64,7 @@ jobs:
           npm run build
       - name: Copy swagger.json from backend to openapi.json in client-lib
         run: |
-          cp ts/backend/src/swagger/swagger.json  ./evaluation/ai4realnet_orchestrators/fab-clientlib/openapi.json
+          cp ts/backend/src/swagger/swagger.json  fab-clientlib/openapi.json
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
@@ -79,11 +74,12 @@ jobs:
           python -m pip install --upgrade pip openapi-generator-cli
           python -m pip install -r evaluation/ai4realnet_orchestrators/requirements.txt -r evaluation/ai4realnet_orchestrators/requirements-dev.txt
       - name: Regenerate client lib
-        working-directory: ./evaluation/ai4realnet_orchestrators/fab-clientlib
+        working-directory: fab-clientlib
         run: |
+          python -m pip install openapi-generator-cli
           openapi-generator-cli generate -i openapi.json -g python -c .openapi-generator-config.json --package-name fab_clientlib
       - name: Install client lib
-        working-directory: evaluation/ai4realnet_orchestrators/fab-clientlib
+        working-directory: fab-clientlib
         run: |
           python -m pip install .
       - name: Run tests
@@ -91,7 +87,6 @@ jobs:
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
           pytest -s test_containers_railway.py
-          pytest -s test_containers_submission_api.py
 
   test-clientlib:
     runs-on: ubuntu-22.04
@@ -105,12 +100,40 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Run fab-clientlib tests
-        working-directory: evaluation/ai4realnet_orchestrators/fab-clientlib
+      - name: Run fab-clientlib unit tests
+        working-directory: fab-clientlib
         run: |
           python -m pip install -r requirements.txt
           python -m pip install -r test-requirements.txt
-          python -m pytest .
+          python -m pytest test
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm ci
+      - name: Re-generate swagger.json in backend build
+        working-directory: ts/backend/
+        run: |
+          npm run build
+      - name: Copy swagger.json from backend to openapi.json in client-lib
+        run: |
+          cp ts/backend/src/swagger/swagger.json  ./fab-clientlib/openapi.json
+      - name: Regenerate client lib
+        working-directory: fab-clientlib
+        run: |
+          python -m pip install openapi-generator-cli
+          openapi-generator-cli generate -i openapi.json -g python -c .openapi-generator-config.json --package-name fab_clientlib
+      - name: Install client lib
+        working-directory: fab-clientlib
+        run: |
+          python -m pip install .
+      - name: Run fab-clientlib integration tests
+        working-directory: fab-clientlib
+        run: |
+          export OAUTHLIB_INSECURE_TRANSPORT=1
+          python -m pip install -U -r requirements-dev.txt
+          pytest -s test_containers_submission_api.py
 
   eslint:
     runs-on: ubuntu-latest
