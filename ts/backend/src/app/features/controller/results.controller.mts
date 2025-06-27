@@ -776,7 +776,7 @@ export class ResultsController extends Controller {
     const sql = SqlService.getInstance()
     // load required definitions
     const submissionRows = await sql.query<SubmissionRow>`
-      SELECT * FROM submissions WHERE benchmark_definition_id=${benchmarkId}
+      SELECT * FROM submissions WHERE benchmark_definition_id=${benchmarkId} AND published=true
     `
     const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
       SELECT * FROM benchmark_definitions WHERE id=${benchmarkId}
@@ -809,7 +809,7 @@ export class ResultsController extends Controller {
     const sql = SqlService.getInstance()
     // load required definitions
     const submissionRows = await sql.query<SubmissionRow>`
-      SELECT * FROM submissions WHERE benchmark_definition_id=${benchmarkId}
+      SELECT * FROM submissions WHERE benchmark_definition_id=${benchmarkId} AND published=true
     `
     const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
       SELECT * FROM benchmark_definitions WHERE id=${benchmarkId}
