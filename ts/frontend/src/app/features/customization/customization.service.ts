@@ -17,6 +17,12 @@ export interface Customization {
       lead: string
       benchmarksHeading: string
     }
+    vcEvaluationObjective?: {
+      lead: string
+    }
+    vcKpi?: {
+      lead: string
+    }
   }
 }
 

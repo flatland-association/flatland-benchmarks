@@ -4,13 +4,16 @@
   <app-site-heading class="bp-8 flex w-full" [title]="test?.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
 
   <lib-section class="w-full">
-    <p class="bp-8">
+    <p>
       {{ test?.description }}
     </p>
   </lib-section>
 </lib-content>
 
 <lib-content>
+  @if (customization?.content?.vcKpi?.lead) {
+    <p class="pb-8">{{ customization?.content?.vcKpi?.lead }}</p>
+  }
   <app-table [columns]="columns" [rows]="rows" class="w-full"></app-table>
 </lib-content>
 
