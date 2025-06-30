@@ -17,6 +17,7 @@ import { AuthService } from '../services/auth-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import {
   Aggregator,
+  upcastBenchmarkDefinitionRow,
   upcastScenarioDefinitionRow,
   upcastSubmissionRow,
   upcastTestDefinitionRow,
@@ -824,6 +825,15 @@ export class ResultsController extends Controller {
     const testDefCandidates = await sql.query<TestDefinitionRow>`
       SELECT * FROM test_definitions
     `
+    // It's necessary to upcast both separately (potentially doing the work
+    // twice), because getCampaignItemScored should return something even if
+    // there's no submission to that benchmark yet.
+    const benchmarkDef = upcastBenchmarkDefinitionRow(
+      benchmarkDefRow,
+      fieldDefCandidates,
+      scenarioDefCandidates,
+      testDefCandidates,
+    )
     const submissions = submissionRows.map((submissionRow) =>
       upcastSubmissionRow(submissionRow, fieldDefCandidates, scenarioDefCandidates, testDefCandidates, [
         benchmarkDefRow,
@@ -833,7 +843,6 @@ export class ResultsController extends Controller {
     const resultRows: ResultRow[] = await sql.query<ResultRow>`
       SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_definition_id=${benchmarkId}
     `
-    const benchmarkDef = submissions.at(0)?.benchmark_definition
     if (!benchmarkDef) return null
     return Aggregator.getCampaignItemScored(benchmarkDef, submissions, resultRows)
   }
