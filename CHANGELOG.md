@@ -3,6 +3,52 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.8.7](https://github.com/flatland-association/flatland-benchmarks/compare/v0.8.6...v0.8.7) (2025-06-30)
+
+
+### Features
+
+* Add AI4REALNET example ([#280](https://github.com/flatland-association/flatland-benchmarks/issues/280)) ([222399f](https://github.com/flatland-association/flatland-benchmarks/commit/222399f922ad6bf678649aed48e0cb94bfa6d7fa))
+* **backend:** add configurable logger ([#147](https://github.com/flatland-association/flatland-benchmarks/issues/147)) ([e8a3b64](https://github.com/flatland-association/flatland-benchmarks/commit/e8a3b645b6e0ab52e8c06c83a82e3b62a8b0b420))
+* **backend:** Bootstrap results aggregation ([#213](https://github.com/flatland-association/flatland-benchmarks/issues/213)) ([136be30](https://github.com/flatland-association/flatland-benchmarks/commit/136be30a5c8dca2fafadad98ec45734f377d0af0))
+* **backend:** Bootstrap Swagger UI ([#212](https://github.com/flatland-association/flatland-benchmarks/issues/212)) ([0e94bdc](https://github.com/flatland-association/flatland-benchmarks/commit/0e94bdc1a08ae6986f73e3b8ffa759dfc4f7d576))
+* **backend:** fetch results from s3 ([#199](https://github.com/flatland-association/flatland-benchmarks/issues/199)) ([7839d98](https://github.com/flatland-association/flatland-benchmarks/commit/7839d982f327e0ff3d9d32c5c4a6c8d382daba6c))
+* **backend:** Results report aggregated ([#222](https://github.com/flatland-association/flatland-benchmarks/issues/222)) ([e4f4283](https://github.com/flatland-association/flatland-benchmarks/commit/e4f42839758281ffe0c60f85720279f8ce39d4b1))
+* **backend:** verify aud in jwt ([b978599](https://github.com/flatland-association/flatland-benchmarks/commit/b9785996bfe502dbba68d69c1393b4a89b661307))
+* Branding AI4REALNET ([2c20acd](https://github.com/flatland-association/flatland-benchmarks/commit/2c20acd25f04d680d685a276be9c2a53ade9f072))
+* Enable app customization ([#252](https://github.com/flatland-association/flatland-benchmarks/issues/252)) ([e67656b](https://github.com/flatland-association/flatland-benchmarks/commit/e67656b58e4c4f2bcf2618327c2d75715b872edc))
+* **frontend:** Tabular display of KPIs ([#262](https://github.com/flatland-association/flatland-benchmarks/issues/262)) ([0a8d554](https://github.com/flatland-association/flatland-benchmarks/commit/0a8d554245dd72e5989822db49ccf00721e289ea))
+* logs to s3 instead of redis. ([#183](https://github.com/flatland-association/flatland-benchmarks/issues/183)) ([7c12357](https://github.com/flatland-association/flatland-benchmarks/commit/7c12357926d4f53158c6d009ff2dc21fe94b9566))
+* Run submission in orchestrator. ([b700f2d](https://github.com/flatland-association/flatland-benchmarks/commit/b700f2d494d2910dfb89b1e04dc342638901e847))
+
+
+### Bug Fixes
+
+* environment.yml for flatland-rl==4.0.4. Workaround can be removed with flatland==4.0.5. ([#163](https://github.com/flatland-association/flatland-benchmarks/issues/163)) ([69710a3](https://github.com/flatland-association/flatland-benchmarks/commit/69710a37dfeaa5263b6a2de2eeea9e6e58340b41))
+* evaluate default value for Docker image tag when triggered by push on main. ([#146](https://github.com/flatland-association/flatland-benchmarks/issues/146)) ([885a3ee](https://github.com/flatland-association/flatland-benchmarks/commit/885a3eee6f39faf58e27658df3efebf32ec45a31))
+* Fix missing descriptions ([94f7116](https://github.com/flatland-association/flatland-benchmarks/commit/94f71163d64fd94b6a0c62ade7ca5b60779a0fb1))
+* **frontend:** build fails ([#220](https://github.com/flatland-association/flatland-benchmarks/issues/220)) ([fa7c36d](https://github.com/flatland-association/flatland-benchmarks/commit/fa7c36dbf6df6963e2f6a5d0b2570952034425bf))
+* license SPDX Identifier enforced since 7.14.0 of openapi-generator. ([#271](https://github.com/flatland-association/flatland-benchmarks/issues/271)) ([2a7dddf](https://github.com/flatland-association/flatland-benchmarks/commit/2a7dddf80bb110313cfa49e94fd694b32a452279))
+
+
+### Miscellaneous Chores
+
+* release 0.4.2 ([#151](https://github.com/flatland-association/flatland-benchmarks/issues/151)) ([b8f6ae3](https://github.com/flatland-association/flatland-benchmarks/commit/b8f6ae3ab48ba7b7caaa0413d21f536e62b5b52c))
+* release 0.8.1 ([c69d96c](https://github.com/flatland-association/flatland-benchmarks/commit/c69d96ca51a1f2aff2caa867342b601f391ae8a3))
+* release 0.8.1 ([cfb6ea0](https://github.com/flatland-association/flatland-benchmarks/commit/cfb6ea0d97e2bfbe0c59b4062d65caeaa83fc1cf))
+* release 0.8.2 ([c752f0f](https://github.com/flatland-association/flatland-benchmarks/commit/c752f0f31eaa95ba82e7ad695c9ae9fcd0b3e9b9))
+* release 0.8.3 ([96c0518](https://github.com/flatland-association/flatland-benchmarks/commit/96c0518e4cdedb93866ba147a4008ce4ae21b56a))
+* release 0.8.4 ([cbdab77](https://github.com/flatland-association/flatland-benchmarks/commit/cbdab778795bb68d1f6fac5a223a3ed9e31d7c6c))
+* release 0.8.5 ([d7aad1e](https://github.com/flatland-association/flatland-benchmarks/commit/d7aad1e657ca0d4926da9ca32112aa05f072cd73))
+* release 0.8.6 ([46eb35a](https://github.com/flatland-association/flatland-benchmarks/commit/46eb35ac821adea6d56151b181053cd0fbc6b2c5))
+* release 0.8.7 ([361ed7a](https://github.com/flatland-association/flatland-benchmarks/commit/361ed7a1619b9895b42eb77dc6fe14c13812d679))
+
+
+### Continuous Integration
+
+* fix typo int image tag. ([#155](https://github.com/flatland-association/flatland-benchmarks/issues/155)) ([6009201](https://github.com/flatland-association/flatland-benchmarks/commit/600920116b1e5b4b753e372604fb53876e670b89))
+* inline image build jobs instead of triggering workflows from release-please workflow. ([#153](https://github.com/flatland-association/flatland-benchmarks/issues/153)) ([4b38913](https://github.com/flatland-association/flatland-benchmarks/commit/4b389137dcd9dc2e539710c23479755ef5bb0d9e))
+
 ## [0.8.6](https://github.com/flatland-association/flatland-benchmarks/compare/v0.8.5...v0.8.6) (2025-06-30)
 
 
