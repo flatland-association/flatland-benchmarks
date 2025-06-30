@@ -3,6 +3,18 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.8.4](https://github.com/flatland-association/flatland-benchmarks/compare/v0.8.3...v0.8.4) (2025-06-30)
+
+
+### Features
+
+* Branding AI4REALNET ([2c20acd](https://github.com/flatland-association/flatland-benchmarks/commit/2c20acd25f04d680d685a276be9c2a53ade9f072))
+
+
+### Miscellaneous Chores
+
+* release 0.8.4 ([cbdab77](https://github.com/flatland-association/flatland-benchmarks/commit/cbdab778795bb68d1f6fac5a223a3ed9e31d7c6c))
+
 ## [0.8.3](https://github.com/flatland-association/flatland-benchmarks/compare/v0.8.2...v0.8.3) (2025-06-30)
 
 
