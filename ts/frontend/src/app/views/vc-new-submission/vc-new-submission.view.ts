@@ -44,8 +44,18 @@ export class VcNewSubmissionView implements OnInit {
     this.test = (await this.apiService.get('/tests/:id', { params: { id: this.testId } })).body?.at(0)
   }
 
+  requiresSubmissionDataUrl() {
+    // url is not required only if all tests are OFFLINE
+    return this.test?.loop !== 'OFFLINE'
+  }
+
   canSubmit() {
-    return this.submissionName != '' && this.submissionUrl != '' && !this.submissionUrl.includes(' ')
+    if (!this.test) return false
+    if (!this.submissionName) return false
+    if (this.requiresSubmissionDataUrl()) {
+      if (!this.submissionUrl || this.submissionUrl.includes(' ')) return false
+    }
+    return true
   }
 
   async submit() {

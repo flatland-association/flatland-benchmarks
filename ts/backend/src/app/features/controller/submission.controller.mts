@@ -1,5 +1,5 @@
 import { appendDir } from '@common/endpoint-utils.js'
-import { Result, SubmissionRow } from '@common/interfaces.js'
+import { Result, SubmissionRow, TestDefinitionRow } from '@common/interfaces.js'
 import { StripDir } from '@common/utility-types.js'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
@@ -108,29 +108,32 @@ export class SubmissionController extends Controller {
       this.serverError(req, res, { text: `could not insert submission` }, { id })
       return
     }
-    // get test names
-    const tests = (
-      await sql.query<{ name: string }>`
-          SELECT name FROM test_definitions
-          WHERE id=ANY(${req.body.test_definition_ids})
-          LIMIT ${req.body.test_definition_ids!.length}
-        `
-    ).map((r) => r.name)
-    // start evaluator
-    const celery = CeleryService.getInstance()
-    const payload = {
-      submission_data_url: req.body.submission_data_url,
-      tests: tests,
-    }
-    logger.info(`Sending ${payload} to celery.`)
-    try {
-      // the returned unsettled promise is ignored and continues running (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-      celery.sendTask(req.body.benchmark_definition_id as string, payload, id)
-      // request succeeds once connection is checked ready and task sent
-      this.respond(req, res, { id }, payload)
-    } catch (error) {
-      // request fails if sendTask fails as not ready
-      this.serverError(req, res, { text: error as string })
+    // get tests
+    const tests = await sql.query<TestDefinitionRow>`
+        SELECT * FROM test_definitions
+        WHERE id=ANY(${req.body.test_definition_ids})
+        LIMIT ${req.body.test_definition_ids!.length}
+      `
+    // if required (not all OFFLINE), send message with test names to evaluator
+    if (tests.some((test) => test.loop !== 'OFFLINE')) {
+      const celery = CeleryService.getInstance()
+      const payload = {
+        submission_data_url: req.body.submission_data_url,
+        tests: tests.map((test) => test.name),
+      }
+      logger.info(`Sending ${payload} to celery.`)
+      try {
+        // the returned unsettled promise is ignored and continues running (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+        celery.sendTask(req.body.benchmark_definition_id as string, payload, id)
+        // request succeeds once connection is checked ready and task sent
+        this.respond(req, res, { id }, payload)
+      } catch (error) {
+        // request fails if sendTask fails as not ready
+        this.serverError(req, res, { text: error as string })
+      }
+    } else {
+      logger.info('All tests are offline loop, no celery task sent.')
+      this.respond(req, res, { id })
     }
   }
 
