@@ -2,9 +2,16 @@
   "setup": "campaign",
   "content": {
     "title": "AI4REALNET Validation Campaign Hub",
+    "logo": "Ai4REALNET_Logo_Color.png",
     "home": {
-      "lead": "Welcome to the validation campaign hub. The validation campaign hub provides an overview of the evaluation objectives and their respective KPI of the [AI4REALNET project](https://ai4realnet.eu/). Through this hub, project partners can evaluate their solutions for specific KPI. The corresponding procedures follow either a fully automated evaluation or for KPI requiring human-machine interactions either semi-automated or offline. To make a submission choose the evaluation objective and subsequently the KPI.",
+      "lead": "Welcome to the validation campaign hub. The validation campaign hub provides an overview of the evaluation objectives and their respective KPI of the <a href='https://ai4realnet.eu/'>AI4REALNET project</a>. Through this hub, project partners can evaluate their solutions for specific KPI. The corresponding procedures follow either a fully automated evaluation or for KPI requiring human-machine interactions either semi-automated or offline. To make a submission choose the evaluation objective and subsequently the KPI.",
       "benchmarksHeading": "AI4REALNET Validation Campaign"
+    },
+    "vcEvaluationObjective": {
+      "lead": "For each KPI, the score of the best rest run is displayed. Select a KPI to make a submission."
+    },
+    "vcKpi": {
+      "lead": "All test runs for this KPI are listed below. Initiate a new test run or enter a new score by clicking on \"Submit solution\"."
     }
   }
 }

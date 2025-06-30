@@ -12,9 +12,16 @@ export interface Customization {
   setup: Setup
   content: {
     title: string
+    logo?: string
     home: {
       lead: string
       benchmarksHeading: string
+    }
+    vcEvaluationObjective?: {
+      lead: string
+    }
+    vcKpi?: {
+      lead: string
     }
   }
 }

@@ -4,17 +4,29 @@ import { BenchmarkDefinitionRow, SubmissionRow, TestDefinitionRow } from '@commo
 import { ElementType } from '@common/utility-types'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
+import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { TableColumn, TableComponent, TableRow } from '../../components/table/table.component'
 import { ApiService } from '../../features/api/api.service'
+import { Customization, CustomizationService } from '../../features/customization/customization.service'
+import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.pipe'
 
 @Component({
   selector: 'view-vc-kpi',
-  imports: [RouterModule, ContentComponent, SectionComponent, BreadcrumbsComponent, TableComponent],
+  imports: [
+    RouterModule,
+    ContentComponent,
+    SectionComponent,
+    BreadcrumbsComponent,
+    PublicResourcePipe,
+    SiteHeadingComponent,
+    TableComponent,
+  ],
   templateUrl: './vc-kpi.view.html',
   styleUrl: './vc-kpi.view.scss',
 })
 export class VcKpiView implements OnInit {
   apiService = inject(ApiService)
+  customizationService = inject(CustomizationService)
 
   benchmarkId: string
   testId: string
@@ -22,6 +34,7 @@ export class VcKpiView implements OnInit {
   benchmark?: BenchmarkDefinitionRow
   test?: TestDefinitionRow
   submissions?: Map<string, SubmissionRow>
+  customization?: Customization
 
   columns: TableColumn[] = [{ title: 'Rank' }, { title: 'Submission' }, { title: 'Score', align: 'right' }]
   rows: TableRow[] = []
@@ -34,6 +47,7 @@ export class VcKpiView implements OnInit {
   }
 
   async ngOnInit() {
+    this.customization = await this.customizationService.getCustomization()
     const board = (
       await this.apiService.get('/results/benchmarks/:benchmark_id/tests/:test_id', {
         params: { benchmark_id: this.benchmarkId, test_id: this.testId },
