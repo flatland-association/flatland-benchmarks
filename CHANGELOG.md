@@ -3,6 +3,13 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.8.5](https://github.com/flatland-association/flatland-benchmarks/compare/v0.8.4...v0.8.5) (2025-06-30)
+
+
+### Miscellaneous Chores
+
+* release 0.8.5 ([d7aad1e](https://github.com/flatland-association/flatland-benchmarks/commit/d7aad1e657ca0d4926da9ca32112aa05f072cd73))
+
 ## [0.8.4](https://github.com/flatland-association/flatland-benchmarks/compare/v0.8.3...v0.8.4) (2025-06-30)
 
 
