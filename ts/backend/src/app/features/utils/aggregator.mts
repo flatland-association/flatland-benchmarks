@@ -85,6 +85,7 @@ export function upcastTestDefinitionRow(
         return null
       }
     }),
+    loop: row.loop,
   }
 }
 
