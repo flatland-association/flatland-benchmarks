@@ -17,9 +17,11 @@ export class HomeView implements OnInit {
 
   benchmarks?: BenchmarkDefinitionRow[]
   customization?: Customization
+  leadHtml?: string
 
   async ngOnInit() {
     this.benchmarks = (await this.apiService.get('/benchmarks')).body
     this.customization = await this.customizationService.getCustomization()
+    this.leadHtml = this.customization.content.home.lead
   }
 }
