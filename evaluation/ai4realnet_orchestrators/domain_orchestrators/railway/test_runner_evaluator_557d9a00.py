@@ -50,7 +50,7 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
   client_id = os.environ.get("CLIENT_ID", 'fab-client-credentials')
   client_secret = os.environ.get("CLIENT_SECRET")
   token_url = os.environ.get("TOKEN_URL",
-                             "https://keycloak.flatland.cloud/realms/netzgrafikeditor/protocol/openid-connect/token")  # TODO change to flatland realm
+                             "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/token")  # TODO change to flatland realm
   token = backend_application_flow(client_id, client_secret, token_url)
   print(token)
 

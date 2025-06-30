@@ -1,7 +1,7 @@
 import { AuthConfig } from 'angular-oauth2-oidc'
 
 const authConfig: AuthConfig = {
-  issuer: 'https://keycloak.flatland.cloud/realms/netzgrafikeditor',
+  issuer: 'https://keycloak.flatland.cloud/realms/flatland',
   // The ClientId you received from the IAM Team
   clientId: 'fab',
   // For production with Angular i18n the language code needs to be included in the redirectUri.

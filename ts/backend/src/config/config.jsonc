@@ -20,7 +20,7 @@
   /* Keycloak endpoint */
   "keycloak": {
     "url": "http://localhost:8081", // http[s]://[host][:port]
-    "realm": "netzgrafikeditor",
+    "realm": "flatland",
     "audience": "fab", // must be present in JWT's aud
     "timeout": 30000 // ms
   }

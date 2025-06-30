@@ -62,16 +62,16 @@ services:
       - ${KEYCLOAK_PORT:-8081}:${KEYCLOAK_PORT:-8081}
     volumes:
       # TODO can we avoid copying the realm config? Download in an init container from the repo....?
-      - ./keycloak/netzgrafikeditor-realm.json:/opt/keycloak/data/import/netzgrafikeditor-realm.json
+      - ./keycloak/flatland-realm.json:/opt/keycloak/data/import/flatland-realm.json
       # persist data, otherwise restarting the container nills JWTs
       - ${KEYCLOAK_VOLUME:-flatland-benchmarks-keycloak}:/opt/keycloak/data/:delegated
     environment:
       - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=netzgrafikeditor
+      - KEYCLOAK_ADMIN_PASSWORD=flatland
     networks:
       - flatland-benchmarks
     healthcheck:
-      test: [ "CMD", "bash", "-c", "curl -v --fail http://127.0.0.1:${KEYCLOAK_PORT:-8081}/realms/netzgrafikeditor/.well-known/openid-configuration" ]
+      test: [ "CMD", "bash", "-c", "curl -v --fail http://127.0.0.1:${KEYCLOAK_PORT:-8081}/realms/flatland/.well-known/openid-configuration" ]
       interval: 5s
       timeout: 20s
       retries: 50
@@ -313,7 +313,7 @@ services:
       - HOST_DIRECTORY=${PWD}
       - DATA_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-data
       - CLIENT_SECRET=top-secret
-      - TOKEN_URL=http://keycloak:8081/realms/netzgrafikeditor/protocol/openid-connect/token
+      - TOKEN_URL=http://keycloak:8081/realms/flatland/protocol/openid-connect/token
       - OAUTHLIB_INSECURE_TRANSPORT=1
     logging:
       options:

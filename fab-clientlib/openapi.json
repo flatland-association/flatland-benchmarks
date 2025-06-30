@@ -928,8 +928,8 @@
         "type": "oauth2",
         "flows": {
           "authorizationCode": {
-            "authorizationUrl": "https://keycloak.flatland.cloud/realms/netzgrafikeditor/protocol/openid-connect/auth",
-            "tokenUrl": "https://keycloak.flatland.cloud/realms/netzgrafikeditor/protocol/openid-connect/token",
+            "authorizationUrl": "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/auth",
+            "tokenUrl": "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/token",
             "scopes": {}
           }
         }
