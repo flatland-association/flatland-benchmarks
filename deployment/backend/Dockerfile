@@ -31,7 +31,14 @@ COPY --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
 # Include schema at build time. If required, mount demo data at run time to /flyway/sql/data
 COPY --from=builder /usr/src/app/ts/backend/src/migration/schema /flyway/sql/schema
 
+RUN mkdir -p /usr/src/app/public
+COPY ts/backend/src/public.ai4realnet /usr/src/public.ai4realnet
+COPY ts/backend/src/public.fab /usr/src/public.fab
+RUN find /usr/src/public.*
+
 RUN mkdir -p /usr/src/app/dist/backend/config/
+RUN mkdir -p /usr/src/app/dist/backend/public/
+
 
 COPY deployment/backend/start.sh .
 
