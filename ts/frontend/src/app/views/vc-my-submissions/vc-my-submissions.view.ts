@@ -4,25 +4,37 @@ import { ActivatedRoute } from '@angular/router'
 import { BenchmarkDefinitionRow, SubmissionRow, TestDefinitionRow } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
+import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { TableColumn, TableComponent, TableRow } from '../../components/table/table.component'
 import { ApiService } from '../../features/api/api.service'
 import { AuthService } from '../../features/auth/auth.service'
+import { Customization, CustomizationService } from '../../features/customization/customization.service'
+import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.pipe'
 
 @Component({
   selector: 'view-vc-my-submissions',
-  imports: [FormsModule, ContentComponent, BreadcrumbsComponent, TableComponent],
+  imports: [
+    FormsModule,
+    ContentComponent,
+    BreadcrumbsComponent,
+    PublicResourcePipe,
+    SiteHeadingComponent,
+    TableComponent,
+  ],
   templateUrl: './vc-my-submissions.view.html',
   styleUrl: './vc-my-submissions.view.scss',
 })
 export class VcMySubmissionsView implements OnInit {
   apiService = inject(ApiService)
   authService = inject(AuthService)
+  customizationService = inject(CustomizationService)
 
   benchmarkId: string
 
   benchmark?: BenchmarkDefinitionRow
   submissions?: SubmissionRow[]
   tests?: Map<string, TestDefinitionRow>
+  customization?: Customization
 
   columns: TableColumn[] = [{ title: 'Name' }, { title: 'KPI' }, { title: 'Started' }]
   rows: TableRow[] = []
@@ -34,6 +46,7 @@ export class VcMySubmissionsView implements OnInit {
   }
 
   async ngOnInit() {
+    this.customization = await this.customizationService.getCustomization()
     const myUuid = this.authService.userUuid
     this.submissions = (
       await this.apiService.get('/submissions', {

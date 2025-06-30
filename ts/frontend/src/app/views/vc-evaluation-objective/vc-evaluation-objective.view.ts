@@ -4,23 +4,37 @@ import { ActivatedRoute, RouterModule } from '@angular/router'
 import { BenchmarkDefinitionRow, CampaignItem, SubmissionRow, TestDefinitionRow } from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
+import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { TableColumn, TableComponent, TableRow } from '../../components/table/table.component'
 import { ApiService } from '../../features/api/api.service'
+import { Customization, CustomizationService } from '../../features/customization/customization.service'
+import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.pipe'
 
 @Component({
   selector: 'view-vc-evaluation-objective',
-  imports: [FormsModule, RouterModule, ContentComponent, SectionComponent, BreadcrumbsComponent, TableComponent],
+  imports: [
+    FormsModule,
+    RouterModule,
+    ContentComponent,
+    SectionComponent,
+    BreadcrumbsComponent,
+    PublicResourcePipe,
+    SiteHeadingComponent,
+    TableComponent,
+  ],
   templateUrl: './vc-evaluation-objective.view.html',
   styleUrl: './vc-evaluation-objective.view.scss',
 })
 export class VcEvaluationObjectiveView implements OnInit {
   apiService = inject(ApiService)
+  customizationService = inject(CustomizationService)
 
   benchmarkId: string
   benchmark?: BenchmarkDefinitionRow
   tests?: Map<string, TestDefinitionRow>
   submissions?: Map<string, SubmissionRow>
   campaignItemBoard?: CampaignItem
+  customization?: Customization
 
   columns: TableColumn[] = [{ title: 'KPI' }, { title: 'Score', align: 'right' }]
   rows: TableRow[] = []
@@ -32,6 +46,7 @@ export class VcEvaluationObjectiveView implements OnInit {
   }
 
   async ngOnInit() {
+    this.customization = await this.customizationService.getCustomization()
     this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.benchmarkId } })).body?.at(0)
     this.campaignItemBoard = (
       await this.apiService.get('/results/campaign-item/:benchmark_id', {
