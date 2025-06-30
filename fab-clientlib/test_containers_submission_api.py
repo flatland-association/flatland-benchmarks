@@ -84,7 +84,7 @@ def test_start_submission():
   token = backend_application_flow(
     client_id='fab-client-credentials',
     client_secret='top-secret',
-    token_url='http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/token',
+    token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
   )
   print(token)
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))

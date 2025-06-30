@@ -3,7 +3,7 @@ import { AuthConfig } from 'angular-oauth2-oidc'
 // This is the environment file used during development (see angular.json)
 
 const authConfig: AuthConfig = {
-  issuer: 'http://localhost:8081/realms/netzgrafikeditor',
+  issuer: 'http://localhost:8081/realms/flatland',
   // The ClientId you received from the IAM Team
   clientId: 'fab',
   // For production with Angular i18n the language code needs to be included in the redirectUri.

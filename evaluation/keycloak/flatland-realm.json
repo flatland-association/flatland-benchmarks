@@ -1,6 +1,6 @@
 {
-  "id" : "netzgrafikeditor",
-  "realm" : "netzgrafikeditor",
+  "id": "flatland",
+  "realm": "flatland",
   "notBefore" : 0,
   "defaultSignatureAlgorithm" : "RS256",
   "revokeRefreshToken" : false,
@@ -56,7 +56,7 @@
         }
       },
       "clientRole" : false,
-      "containerId" : "netzgrafikeditor",
+      "containerId": "flatland",
       "attributes" : { }
     }, {
       "id" : "ecfcdc69-8e07-4837-a4e3-bc671d54ebcb",
@@ -64,7 +64,7 @@
       "description" : "${role_offline-access}",
       "composite" : false,
       "clientRole" : false,
-      "containerId" : "netzgrafikeditor",
+      "containerId": "flatland",
       "attributes" : { }
     }, {
       "id" : "f8e8dde9-fadf-4034-9523-b2194874973a",
@@ -72,7 +72,7 @@
       "description" : "${role_uma_authorization}",
       "composite" : false,
       "clientRole" : false,
-      "containerId" : "netzgrafikeditor",
+      "containerId": "flatland",
       "attributes" : { }
     } ],
     "client" : {
@@ -357,7 +357,7 @@
     "description" : "${role_default-roles}",
     "composite" : true,
     "clientRole" : false,
-    "containerId" : "netzgrafikeditor"
+    "containerId": "flatland"
   },
   "requiredCredentials" : [ "password" ],
   "otpPolicyType" : "totp",
@@ -530,12 +530,14 @@
     "clientId" : "account",
     "name" : "${client_account}",
     "rootUrl" : "${authBaseUrl}",
-    "baseUrl" : "/realms/netzgrafikeditor/account/",
+      "baseUrl": "/realms/flatland/account/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ "/realms/netzgrafikeditor/account/*" ],
+      "redirectUris": [
+        "/realms/flatland/account/*"
+      ],
     "webOrigins" : [ ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -560,12 +562,14 @@
     "clientId" : "account-console",
     "name" : "${client_account-console}",
     "rootUrl" : "${authBaseUrl}",
-    "baseUrl" : "/realms/netzgrafikeditor/account/",
+      "baseUrl": "/realms/flatland/account/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ "/realms/netzgrafikeditor/account/*" ],
+      "redirectUris": [
+        "/realms/flatland/account/*"
+      ],
     "webOrigins" : [ ],
     "notBefore" : 0,
     "bearerOnly" : false,
@@ -747,12 +751,14 @@
     "clientId" : "security-admin-console",
     "name" : "${client_security-admin-console}",
     "rootUrl" : "${authAdminUrl}",
-    "baseUrl" : "/admin/netzgrafikeditor/console/",
+      "baseUrl": "/admin/flatland/console/",
     "surrogateAuthRequired" : false,
     "enabled" : true,
     "alwaysDisplayInConsole" : false,
     "clientAuthenticatorType" : "client-secret",
-    "redirectUris" : [ "/admin/netzgrafikeditor/console/*" ],
+      "redirectUris": [
+        "/admin/flatland/console/*"
+      ],
     "webOrigins" : [ "+" ],
     "notBefore" : 0,
     "bearerOnly" : false,

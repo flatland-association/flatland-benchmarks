@@ -5,7 +5,7 @@ from requests_oauthlib import OAuth2Session
 def backend_application_flow(
   client_id='fab',
   client_secret='top-secret',
-  token_url='http://localhost:8081/realms/netzgrafikeditor/protocol/openid-connect/token'
+  token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token'
 ):
   """
   Resource Owner Client Credentials Grant Type (grant_type=client_credentials) flow aka. Backend Application Flow.

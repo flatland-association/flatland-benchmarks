@@ -137,7 +137,7 @@ Authentication schemes defined for the API:
 
 - **Type**: OAuth
 - **Flow**: accessCode
-- **Authorization URL**: https://keycloak.flatland.cloud/realms/netzgrafikeditor/protocol/openid-connect/auth
+- **Authorization URL**: https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/auth
 - **Scopes**: N/A
 
 
