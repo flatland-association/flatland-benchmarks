@@ -1,8 +1,8 @@
 #! /bin/bash
 set -euxo pipefail
 
-if [[ -n "$CUSTOMIZATION" ]]; then
-   RUN cp -R /usr/src/public.${CUSTOMIZATION}/* /usr/src/app/dist/backend/public/
+if [[ ! -z "$CUSTOMIZATION" ]]; then
+   cp -R /usr/src/public.${CUSTOMIZATION}/* /usr/src/app/dist/backend/public/
 fi
 
 
