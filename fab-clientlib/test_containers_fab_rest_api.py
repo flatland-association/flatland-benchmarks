@@ -69,8 +69,9 @@ def test_containers_fixture():
         raise e
 
 
+# GET /health/live
 @pytest.mark.usefixtures("test_containers_fixture")
-def test_health_endpoint():
+def test_health_live_get():
     token = backend_application_flow(
         client_id='fab-client-credentials',
         client_secret='top-secret',
@@ -86,8 +87,10 @@ def test_health_endpoint():
     assert response.body.checks[1].status == "UP"
 
 
+# POST /submissions
+# GET /results/submission/{submission_id}/tests/{test_id}
 @pytest.mark.usefixtures("test_containers_fixture")
-def test_start_submission():
+def test_submissions_post():
     benchmark_id = '20ccc7c1-034c-4880-8946-bffc3fed1359'
     test_id = '557d9a00-7e6d-410b-9bca-a017ca7fe3aa'
 
@@ -144,3 +147,38 @@ def test_start_submission():
     assert test_results.body.scenario_scorings[1].scorings["secondary"]["score"] == 0.8
     assert test_results.body.scorings["primary"]["score"] == 200
     assert test_results.body.scorings["secondary"]["score"] == 1.8
+
+
+# GET /submissions/
+@pytest.mark.usefixtures("test_containers_fixture")
+def test_submissions_get():
+    token = backend_application_flow(
+        client_id='fab-client-credentials',
+        client_secret='top-secret',
+        token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
+    )
+    fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
+    response = fab.submissions_get(benchmark="20ccc7c1-034c-4880-8946-bffc3fed1359")
+    assert len(response.body) == 1
+    assert response.body[0].id == "db5eaa85-3304-4804-b76f-14d23adb5d4c"
+    assert response.body[0].benchmark_definition_id == "20ccc7c1-034c-4880-8946-bffc3fed1359"
+    assert response.body[0].status == "SUCCESS"
+    assert response.body[0].published == True
+
+
+# GET /submissions/{submission_id}
+@pytest.mark.usefixtures("test_containers_fixture")
+def test_submissions_uuid_get():
+    token = backend_application_flow(
+        client_id='fab-client-credentials',
+        client_secret='top-secret',
+        token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
+    )
+    fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
+    response = fab.submissions_uuid_get(uuid="db5eaa85-3304-4804-b76f-14d23adb5d4c")
+    assert len(response.body) == 1
+    assert response.body[0].id == "db5eaa85-3304-4804-b76f-14d23adb5d4c"
+    assert response.body[0].benchmark_definition_id == "20ccc7c1-034c-4880-8946-bffc3fed1359"
+    assert response.body[0].test_definition_ids == ["557d9a00-7e6d-410b-9bca-a017ca7fe3aa"]
+    assert response.body[0].status == "SUCCESS"
+    assert response.body[0].published == True
