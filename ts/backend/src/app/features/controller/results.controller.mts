@@ -1,7 +1,10 @@
 import {
   BenchmarkDefinitionRow,
+  BenchmarkGroupDefinitionRow,
   CampaignItem,
+  CampaignItemItem,
   FieldDefinitionRow,
+  GroupLeaderboard,
   Leaderboard,
   LeaderboardItem,
   ResultRow,
@@ -18,6 +21,7 @@ import { SqlService } from '../services/sql-service.mjs'
 import {
   Aggregator,
   upcastBenchmarkDefinitionRow,
+  upcastBenchmarkGroupDefinitionRow,
   upcastScenarioDefinitionRow,
   upcastSubmissionRow,
   upcastTestDefinitionRow,
@@ -36,6 +40,7 @@ export class ResultsController extends Controller {
     this.attachGet('/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id', this.getScenarioResults)
     this.attachGet('/results/benchmark/:benchmark_id', this.getLeaderboard)
     this.attachGet('/results/campaign-item/:benchmark_id', this.getCampaignItem)
+    this.attachGet('/results/campaigns/:group_id', this.getGroupLeaderboard)
     this.attachGet('/results/benchmarks/:benchmark_id/tests/:test_id', this.getTestLeaderboard)
   }
 
@@ -567,12 +572,110 @@ export class ResultsController extends Controller {
     // TODO: properly define data format of results for transmission
     const result: CampaignItem = {
       benchmark_id: benchmarkId,
-      items: leaderboard.map((item) => {
+      items: leaderboard.items.map((item) => {
         return {
           test_id: item.test.id,
-          scorings: item.item?.scorings ?? null,
-          submission_id: item.item?.submission.id ?? null,
+          scorings: item.scorings ?? null,
+          submission_id: item.submission?.id ?? null,
         }
+      }),
+      scorings: leaderboard.scorings,
+    }
+    this.respond(req, res, [result])
+  }
+
+  /**
+   * @swagger
+   * /results/campaigns/{group_id}:
+   *  get:
+   *    description: Returns a campaign leaderboard (i.e. benchmark group leaderboard with top solution per test only).
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: group_id
+   *        description: Benchmark group ID.
+   *        required: true
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *    responses:
+   *      200:
+   *        description: Campaign leaderboard.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          group_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of benchmark group.
+   *                          items:
+   *                            type: array
+   *                            items:
+   *                              type: object
+   *                              properties:
+   *                                benchmark_id:
+   *                                  type: string
+   *                                  format: uuid
+   *                                  description: ID of benchmark.
+   *                                items:
+   *                                  type: array
+   *                                  items:
+   *                                    type: object
+   *                                    properties:
+   *                                      test_id:
+   *                                        type: string
+   *                                        format: uuid
+   *                                        description: ID of test.
+   *                                      scorings:
+   *                                        type: object
+   *                                        description: Dictionary of test scores (best submission only).
+   *                                      submission_id:
+   *                                        type: string
+   *                                        format: uuid
+   *                                        description: ID of best submission.
+   *                          scorings:
+   *                            type: object
+   *                            description: Dictionary of group scores
+   */
+  getGroupLeaderboard: GetHandler<'/results/campaigns/:group_id'> = async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth) {
+      this.unauthorizedError(req, res, { text: 'Not authorized' })
+      return
+    }
+    const groupId = req.params.group_id
+    const leaderboard = await this.aggregateGroupLeaderboard(groupId)
+    if (!leaderboard) {
+      this.requestError(req, res, { text: 'Group leaderboard could not be aggregated' })
+      return
+    }
+    // transform for transmission
+    // TODO: properly define data format of results for transmission
+    const result: GroupLeaderboard = {
+      group_id: groupId,
+      items: leaderboard.items.map((campaignItem) => {
+        return {
+          benchmark_id: campaignItem.benchmark.id,
+          items: campaignItem.items.map((campaignItemItem) => {
+            return {
+              test_id: campaignItemItem.test.id,
+              scorings: campaignItemItem.scorings,
+              submission_id: campaignItemItem.submission?.id ?? null,
+            } satisfies CampaignItemItem
+          }),
+          scorings: campaignItem.scorings,
+        } satisfies CampaignItem
       }),
     }
     this.respond(req, res, [result])
@@ -845,5 +948,54 @@ export class ResultsController extends Controller {
     `
     if (!benchmarkDef) return null
     return Aggregator.getCampaignItemScored(benchmarkDef, submissions, resultRows)
+  }
+
+  async aggregateGroupLeaderboard(groupId: string) {
+    const sql = SqlService.getInstance()
+    // load required definitions
+    const [groupDefRow] = await sql.query<BenchmarkGroupDefinitionRow>`
+      SELECT * FROM benchmark_groups WHERE id=${groupId}
+    `
+    const submissionRows = await sql.query<SubmissionRow>`
+      SELECT * FROM submissions WHERE benchmark_definition_id=ANY(${groupDefRow.benchmark_definition_ids}) AND published=true
+    `
+    // load required candidates for referenced fields (used in upcast) and upcast
+    const fieldDefCandidates = await sql.query<FieldDefinitionRow>`
+      SELECT * FROM field_definitions
+    `
+    const scenarioDefCandidates = await sql.query<ScenarioDefinitionRow>`
+      SELECT * FROM scenario_definitions
+    `
+    const testDefCandidates = await sql.query<TestDefinitionRow>`
+      SELECT * FROM test_definitions
+    `
+    const benchmarkDefCandidates = await sql.query<BenchmarkDefinitionRow>`
+      SELECT * FROM benchmark_definitions WHERE id=ANY(${groupDefRow.benchmark_definition_ids})
+    `
+    // It's necessary to upcast both separately (potentially doing the work
+    // twice), because getGroupLeaderboard should return something even if
+    // there's no submission to a group or therein benchmark yet.
+    const groupDef = upcastBenchmarkGroupDefinitionRow(
+      groupDefRow,
+      benchmarkDefCandidates,
+      fieldDefCandidates,
+      scenarioDefCandidates,
+      testDefCandidates,
+    )
+    const submissions = submissionRows.map((submissionRow) =>
+      upcastSubmissionRow(
+        submissionRow,
+        fieldDefCandidates,
+        scenarioDefCandidates,
+        testDefCandidates,
+        benchmarkDefCandidates,
+      ),
+    )
+    // load results
+    const resultRows: ResultRow[] = await sql.query<ResultRow>`
+      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_definition_id=ANY(${groupDefRow.benchmark_definition_ids})
+    `
+    if (!groupDef) return null
+    return Aggregator.getGroupLeaderboard(groupDef, submissions, resultRows)
   }
 }

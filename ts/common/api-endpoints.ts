@@ -4,6 +4,7 @@ import {
   BenchmarkDefinitionRow,
   BenchmarkGroupDefinitionRow,
   CampaignItem,
+  GroupLeaderboard,
   Leaderboard,
   LeaderboardItem,
   PostTestResultsBody,
@@ -111,6 +112,9 @@ interface ApiEndpointDefinitions {
   // TODO: maybe rename (strive for consistency)
   '/results/campaign-item/:benchmark_id': {
     GET: ApiEndpoint<Empty, Empty, CampaignItem[]>
+  }
+  '/results/campaigns/:group_id': {
+    GET: ApiEndpoint<Empty, Empty, GroupLeaderboard[]>
   }
   '/results/benchmarks/:benchmark_id/tests/:test_id': {
     GET: ApiEndpoint<Empty, Empty, Leaderboard[]>

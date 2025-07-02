@@ -190,4 +190,10 @@ export interface CampaignItemItem {
 export interface CampaignItem {
   benchmark_id: string
   items: CampaignItemItem[]
+  scorings: Scorings
+}
+
+export interface GroupLeaderboard {
+  group_id: string
+  items: CampaignItem[]
 }

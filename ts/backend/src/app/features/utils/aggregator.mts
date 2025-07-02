@@ -2,6 +2,7 @@
 
 import {
   BenchmarkDefinitionRow,
+  BenchmarkGroupDefinitionRow,
   FieldDefinitionRow,
   ResultRow,
   ScenarioDefinitionRow,
@@ -123,7 +124,38 @@ export function upcastBenchmarkDefinitionRow(
   }
 }
 
-// TODO: Benchmark Groups
+export interface BenchmarkGroupDefinition extends Omit<BenchmarkGroupDefinitionRow, 'benchmark_definition_ids'> {
+  benchmark_definitions: (BenchmarkDefinition | null)[]
+}
+
+export function upcastBenchmarkGroupDefinitionRow(
+  row: BenchmarkGroupDefinitionRow,
+  benchmarkDefinitionCandidates: BenchmarkDefinitionRow[],
+  fieldDefinitionCandidates: FieldDefinitionRow[],
+  scenarioDefinitionCandidates: ScenarioDefinitionRow[],
+  testDefinitionCandidates: TestDefinitionRow[],
+): BenchmarkGroupDefinition {
+  return {
+    dir: row.dir,
+    id: row.id,
+    name: row.name,
+    description: row.description,
+    setup: row.setup,
+    benchmark_definitions: row.benchmark_definition_ids.map((id) => {
+      const benchmark = benchmarkDefinitionCandidates.find((c) => c.id === id) ?? null
+      if (benchmark) {
+        return upcastBenchmarkDefinitionRow(
+          benchmark,
+          fieldDefinitionCandidates,
+          scenarioDefinitionCandidates,
+          testDefinitionCandidates,
+        )
+      } else {
+        return null
+      }
+    }),
+  }
+}
 
 export interface Submission extends Omit<SubmissionRow, 'benchmark_definition_id' | 'test_definition_ids'> {
   benchmark_definition: BenchmarkDefinition | null
@@ -193,10 +225,22 @@ export interface LeaderboardEx {
 }
 
 // required in campaign context
+export interface CampaignItemItemEx {
+  test: TestDefinition
+  scorings: Scorings | null
+  submission: Submission | null
+}
+
 export interface CampaignItemEx {
   benchmark: BenchmarkDefinition
-  test: TestDefinition
-  item: LeaderboardItemEx | undefined
+  items: CampaignItemItemEx[]
+  scorings: Scorings
+}
+
+export interface GroupLeaderboardEx {
+  group: BenchmarkGroupDefinition
+  // one item per benchmark in the group
+  items: CampaignItemEx[]
 }
 
 interface ScoringHost {
@@ -250,29 +294,68 @@ export class Aggregator {
     benchmarkDef: BenchmarkDefinition,
     submissions: Submission[],
     results: ResultRow[],
-  ): CampaignItemEx[] {
+  ): CampaignItemEx {
     // build leaderboard first (might not contain rows for each test)
     // TODO: either skip submission ranking or ensure submission total equals test total in campaign case
     const leaderboard = this.getLeaderboard(benchmarkDef, submissions, results)
-    // remap to campaign (exactly one row per test, containing top submission of that test)
-    const campaign = benchmarkDef.test_definitions
-      .filter((t) => !!t)
-      .map((testDef) => {
-        // REMARK: Comparing by object equality does not work in application,
-        // looks like upcast from rows does not create unique copies...
-        const top = leaderboard.items.find(
-          (item) =>
-            item.tests[0].definition.id === testDef.id &&
-            // find top item at test level
-            this.getPrimaryScoring(item.tests[0].scorings, benchmarkDef.field_definitions)?.rank === 1,
-        )
-        return {
-          benchmark: benchmarkDef,
-          test: testDef,
-          item: top,
-        } satisfies CampaignItemEx
-      })
-    return campaign
+    // remap to campaign item (exactly one row per test, containing top submission of that test)
+    const campaignItem: CampaignItemEx = {
+      benchmark: benchmarkDef,
+      items: benchmarkDef.test_definitions
+        .filter((t) => !!t)
+        .map((testDef) => {
+          // REMARK: Comparing by object equality does not work in application,
+          // looks like upcast from rows does not create unique copies...
+          const top = leaderboard.items.find(
+            (item) =>
+              item.tests[0].definition.id === testDef.id &&
+              // find top item at test level
+              this.getPrimaryScoring(item.tests[0].scorings, item.tests[0].definition.field_definitions)?.rank === 1,
+          )
+          return {
+            test: testDef,
+            // take top's test[0] scorings instead of top's scorings - because latter are already aggregated with benchmarks' field_definitions for benchmark setup
+            scorings: top?.tests[0].scorings ?? null,
+            submission: top?.submission ?? null,
+          } satisfies CampaignItemItemEx
+        }),
+      scorings: {}, // populated on-demand when scoring group
+    }
+    return campaignItem
+  }
+
+  /**
+   * Builds scored campaign item per benchmark in group, then aggregates all
+   * items' scores.
+   * @param groupDef
+   * @param submissions
+   * @param results
+   */
+  static getGroupLeaderboard(
+    groupDef: BenchmarkGroupDefinition,
+    submissions: Submission[],
+    results: ResultRow[],
+  ): GroupLeaderboardEx {
+    // prepare tree structure (containing scored campaign-items as items)
+    const groupLeaderboard: GroupLeaderboardEx = {
+      group: groupDef,
+      items: groupDef.benchmark_definitions
+        .filter((b) => !!b)
+        .map((benchmarkDef) => this.getCampaignItemScored(benchmarkDef, submissions, results)),
+    }
+    // second (once children are scored), aggregate benchmarks' scores
+    groupLeaderboard.items.forEach((item) => {
+      item.benchmark.field_definitions
+        .filter((f) => !!f)
+        .forEach((field) => {
+          // remap items' "scorings" property to undefined if null
+          const scorings = item.items.map((item) => {
+            return { scorings: item.scorings ?? undefined }
+          })
+          this.aggregateScore(item.scorings, field, scorings)
+        })
+    })
+    return groupLeaderboard
   }
 
   /**
