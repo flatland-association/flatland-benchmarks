@@ -140,7 +140,7 @@ def test_submissions_uuid_get():
         token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
     )
     fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
-    response = fab.submissions_uuid_get(uuid="db5eaa85-3304-4804-b76f-14d23adb5d4c")
+    response = fab.submissions_uuid_get(uuid=["db5eaa85-3304-4804-b76f-14d23adb5d4c"])
     assert len(response.body) == 1
     assert response.body[0].id == "db5eaa85-3304-4804-b76f-14d23adb5d4c"
     assert response.body[0].benchmark_definition_id == "20ccc7c1-034c-4880-8946-bffc3fed1359"
@@ -185,7 +185,7 @@ def test_submission_roundtrip():
     ))
     print(posted_submission)
     submission_id = posted_submission.body.id
-    submissions = fab.submissions_uuid_get(uuid=submission_id)
+    submissions = fab.submissions_uuid_get(uuid=[submission_id])
     print(submissions)
     assert submissions.body[0].id == submission_id
     assert submissions.body[0].benchmark_definition_id == benchmark_id
@@ -251,7 +251,7 @@ def test_submission_roundtrip():
     assert scenario_results2.body[0].scorings["secondary"]["score"] == 0.8
 
 
-    published_submission = fab.submissions_uuid_patch(uuid=submission_id)
+    published_submission = fab.submissions_uuid_patch(uuid=[submission_id])
     assert len(published_submission.body) >= 1
     assert published_submission.body[0].id == submission_id
     assert published_submission.body[0].benchmark_definition_id == benchmark_id
