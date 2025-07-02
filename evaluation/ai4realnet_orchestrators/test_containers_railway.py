@@ -107,7 +107,7 @@ def test_railway():
   print(token)
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
 
-  test_results = fab.results_submission_submission_id_tests_test_id_get(
+  test_results = fab.results_submissions_submission_id_tests_test_id_get(
     submission_id=submission_id,
     test_id=test_id)
   print("results_uploaded")

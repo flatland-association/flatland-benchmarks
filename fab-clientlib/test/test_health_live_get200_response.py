@@ -39,13 +39,13 @@ class TestHealthLiveGet200Response(unittest.TestCase):
                 error = fab_clientlib.models.api_response_error.ApiResponse_error(
                     text = '', ),
                 body = fab_clientlib.models._health_live_get_200_response_all_of_body._health_live_get_200_response_allOf_body(
-                    status = '', ),
-                checks = [
-                    fab_clientlib.models._health_live_get_200_response_all_of_checks_inner._health_live_get_200_response_allOf_checks_inner(
-                        name = '', 
-                        status = '', 
-                        data = '', )
-                    ]
+                    status = '', 
+                    checks = [
+                        fab_clientlib.models._health_live_get_200_response_all_of_body_checks_inner._health_live_get_200_response_allOf_body_checks_inner(
+                            name = '', 
+                            status = '', 
+                            data = '', )
+                        ], )
             )
         else:
             return HealthLiveGet200Response(
