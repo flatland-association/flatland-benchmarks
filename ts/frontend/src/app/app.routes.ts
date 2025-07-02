@@ -6,6 +6,7 @@ import { HomeView } from './views/home/home.view'
 import { NewSubmissionView } from './views/new-submission/new-submission.view'
 import { ParticipateView } from './views/participate/participate.view'
 import { SubmissionView } from './views/submission/submission.view'
+import { VcCampaignView } from './views/vc-campaign/vc-campaign.view'
 import { VcEvaluationObjectiveView } from './views/vc-evaluation-objective/vc-evaluation-objective.view'
 import { VcKpiView } from './views/vc-kpi/vc-kpi.view'
 import { VcMySubmissionsView } from './views/vc-my-submissions/vc-my-submissions.view'
@@ -50,6 +51,7 @@ export const routes: Routes = [
     component: SubmissionView,
     canActivate: [AuthGuard],
   },
+  { path: 'vc-campaign/:group_id', component: VcCampaignView, canActivate: [AuthGuard] },
   { path: 'vc-evaluation-objective/:benchmark_id', component: VcEvaluationObjectiveView, canActivate: [AuthGuard] },
   {
     path: 'vc-evaluation-objective/:benchmark_id/my-submissions',

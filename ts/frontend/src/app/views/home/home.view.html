@@ -8,8 +8,8 @@
 <lib-content class="pb-8" contentClass="gap-y-8">
   <h2 class="text-center text-2xl font-bold text-neutral-500">{{ customization?.content?.home?.benchmarksHeading }}</h2>
   <div class="flex flex-wrap justify-center gap-8">
-    @for (benchmark of benchmarks; track $index) {
-      <app-benchmark-card class="md:size-80 flex" [benchmark]="benchmark"></app-benchmark-card>
+    @for (group of groups; track $index) {
+      <app-benchmark-card class="md:size-80 flex" [benchmark]="group"></app-benchmark-card>
     }
   </div>
 </lib-content>
