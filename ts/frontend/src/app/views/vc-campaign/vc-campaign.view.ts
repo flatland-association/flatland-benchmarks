@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router'
 import {
   BenchmarkDefinitionRow,
   BenchmarkGroupDefinitionRow,
-  CampaignItem,
+  GroupLeaderboard,
   SubmissionRow,
   TestDefinitionRow,
 } from '@common/interfaces'
@@ -40,7 +40,7 @@ export class VcCampaignView implements OnInit {
   benchmarks?: Map<string, BenchmarkDefinitionRow>
   tests?: Map<string, TestDefinitionRow>
   submissions?: Map<string, SubmissionRow>
-  campaignBoard?: CampaignItem
+  campaignBoard?: GroupLeaderboard
   customization?: Customization
 
   columns: TableColumn[] = [
@@ -59,7 +59,9 @@ export class VcCampaignView implements OnInit {
   async ngOnInit() {
     this.customization = await this.customizationService.getCustomization()
     this.group = (await this.apiService.get('/benchmark-groups/:id', { params: { id: this.groupId } })).body?.at(0)
-    // TODO: board
+    this.campaignBoard = (
+      await this.apiService.get('/results/campaigns/:group_id', { params: { group_id: this.groupId } })
+    ).body?.at(0)
     // load linked resources
     // TODO: unify, see https://github.com/flatland-association/flatland-benchmarks/issues/66
     const benchmarkIds = this.group?.benchmark_definition_ids?.join(',')
@@ -72,16 +74,16 @@ export class VcCampaignView implements OnInit {
         ).body?.map((benchmark) => [benchmark.id, benchmark]),
       )
     }
-    // build table rows from objectives (TODO: from board)
+    // build table rows from board
     this.rows =
-      this.group?.benchmark_definition_ids.map((benchmarkId) => {
-        const benchmark = this.benchmarks?.get(benchmarkId)
+      this.campaignBoard?.items.map((item) => {
+        const benchmark = this.benchmarks?.get(item.benchmark_id)
         return {
-          routerLink: ['/', 'vc-evaluation-objective', benchmarkId],
+          routerLink: ['/', 'vc-evaluation-objective', item.benchmark_id],
           cells: [
             { text: benchmark?.name ?? 'NA' },
             { text: benchmark?.test_definition_ids.length ?? 'NA' },
-            { text: 'NA' },
+            { scorings: item.scorings },
           ],
         }
       }) ?? []
