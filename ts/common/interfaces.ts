@@ -103,6 +103,16 @@ export interface BenchmarkDefinitionRow extends Resource<'/benchmarks/'> {
   test_definition_ids: string[]
 }
 
+export type BenchmarkGroupSetup = 'BENCHMARK' | 'COMPETITION' | 'CAMPAIGN'
+
+export interface BenchmarkGroupDefinitionRow extends Resource<'/benchmark-groups/'> {
+  id: string
+  name: string
+  description: string
+  setup: BenchmarkGroupSetup
+  benchmark_definition_ids: string[]
+}
+
 export type SubmissionStatus = 'SUBMITTED' | 'RUNNING' | 'SUCCESS' | 'FAILURE'
 
 export interface SubmissionRow extends Resource<'/submissions/'> {

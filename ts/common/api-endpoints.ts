@@ -2,6 +2,7 @@ import { ApiRequest } from './api-request'
 import { ApiResponse } from './api-response'
 import {
   BenchmarkDefinitionRow,
+  BenchmarkGroupDefinitionRow,
   CampaignItem,
   Leaderboard,
   LeaderboardItem,
@@ -61,6 +62,12 @@ interface ApiEndpointDefinitions {
   }
   '/whoami': {
     GET: ApiEndpoint<Empty, Empty, json>
+  }
+  '/benchmark-groups': {
+    GET: ApiEndpoint<Empty, Empty, BenchmarkGroupDefinitionRow[]>
+  }
+  '/benchmark-groups/:id': {
+    GET: ApiEndpoint<Empty, Empty, BenchmarkGroupDefinitionRow[]>
   }
   '/benchmarks': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>

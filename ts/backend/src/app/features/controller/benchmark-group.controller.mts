@@ -1,0 +1,118 @@
+import { appendDir } from '@common/endpoint-utils.js'
+import { BenchmarkGroupDefinitionRow } from '@common/interfaces.js'
+import { StripDir } from '@common/utility-types.js'
+import { configuration } from '../config/config.mjs'
+import { SqlService } from '../services/sql-service.mjs'
+import { Controller, GetHandler } from './controller.mjs'
+
+export class BenchmarkGroupController extends Controller {
+  constructor(config: configuration) {
+    super(config)
+
+    this.attachGet('/benchmark-groups', this.getBenchmarkGroups)
+    this.attachGet('/benchmark-groups/:id', this.getBenchmarkGroupById)
+  }
+
+  /**
+   * @swagger
+   * /benchmark-groups:
+   *  get:
+   *    description: Lists benchmark-groups.
+   *    responses:
+   *      200:
+   *        description: List of benchmark-groups.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of benchmark-group.
+   *                          name:
+   *                            type: string
+   *                          description:
+   *                            type: string
+   *                          setup:
+   *                            type: string
+   *                          benchmark_definition_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   */
+  getBenchmarkGroups: GetHandler<'/benchmark-groups'> = async (req, res) => {
+    const sql = SqlService.getInstance()
+    const rows = await sql.query<StripDir<BenchmarkGroupDefinitionRow>>`
+      SELECT * FROM benchmark_groups
+      ORDER BY name ASC
+    `
+    const resources = appendDir('/benchmark-groups/', rows)
+    this.respond(req, res, resources)
+  }
+
+  /**
+   * @swagger
+   * /benchmark-groups/{id}:
+   *  get:
+   *    description: Returns requested benchmark-group.
+   *    parameters:
+   *      - in: path
+   *        name: id
+   *        required: true
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *        description: The submission ID
+   *    responses:
+   *      200:
+   *        description: Requested benchmark-groups.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of benchmark-group.
+   *                          name:
+   *                            type: string
+   *                          description:
+   *                            type: string
+   *                          setup:
+   *                            type: string
+   *                          benchmark_definition_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   */
+  getBenchmarkGroupById: GetHandler<'/benchmark-groups/:id'> = async (req, res) => {
+    const ids = req.params.id.split(',')
+    const sql = SqlService.getInstance()
+    // id=ANY - dev.003
+    const rows = await sql.query<StripDir<BenchmarkGroupDefinitionRow>>`
+      SELECT * FROM benchmark_groups
+      WHERE id=ANY(${ids})
+      LIMIT ${ids.length}
+    `
+    const benchmarks = appendDir('/benchmark-groups/', rows)
+    this.respond(req, res, benchmarks)
+  }
+}
