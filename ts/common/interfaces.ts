@@ -84,12 +84,15 @@ export interface ScenarioDefinitionRow extends Resource<'/scenarios/'> {
   field_definition_ids: string[]
 }
 
+export type Loop = 'CLOSED' | 'INTERACTIVE' | 'OFFLINE'
+
 export interface TestDefinitionRow extends Resource<'/tests/'> {
   id: string
   name: string
   description: string
   field_definition_ids: string[]
   scenario_definition_ids: string[]
+  loop: Loop
 }
 
 export interface BenchmarkDefinitionRow extends Resource<'/benchmarks/'> {
