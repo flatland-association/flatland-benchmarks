@@ -601,9 +601,9 @@
         }
       }
     },
-    "/results/campaign-items/{benchmark_id}/tests/{test_id}": {
+    "/results/benchmarks/{benchmark_id}/tests/{test_id}": {
       "get": {
-        "description": "Get campaign item test leaderboard.",
+        "description": "Get test leaderboard.",
         "security": [
           {
             "oauth2": [
@@ -635,7 +635,7 @@
         ],
         "responses": {
           "200": {
-            "description": "campaign item test leaderboard.",
+            "description": "test leaderboard.",
             "content": {
               "application/json": {
                 "schema": {

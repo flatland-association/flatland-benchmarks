@@ -85,8 +85,8 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApi* | [**health_live_get**](docs/DefaultApi.md#health_live_get) | **GET** /health/live | 
 *DefaultApi* | [**results_benchmarks_benchmark_id_get**](docs/DefaultApi.md#results_benchmarks_benchmark_id_get) | **GET** /results/benchmarks/{benchmark_id} | 
+*DefaultApi* | [**results_benchmarks_benchmark_id_tests_test_id_get**](docs/DefaultApi.md#results_benchmarks_benchmark_id_tests_test_id_get) | **GET** /results/benchmarks/{benchmark_id}/tests/{test_id} | 
 *DefaultApi* | [**results_campaign_items_benchmark_id_get**](docs/DefaultApi.md#results_campaign_items_benchmark_id_get) | **GET** /results/campaign-items/{benchmark_id} | 
-*DefaultApi* | [**results_campaign_items_benchmark_id_tests_test_id_get**](docs/DefaultApi.md#results_campaign_items_benchmark_id_tests_test_id_get) | **GET** /results/campaign-items/{benchmark_id}/tests/{test_id} | 
 *DefaultApi* | [**results_submissions_submission_id_get**](docs/DefaultApi.md#results_submissions_submission_id_get) | **GET** /results/submissions/{submission_id} | 
 *DefaultApi* | [**results_submissions_submission_id_tests_test_id_get**](docs/DefaultApi.md#results_submissions_submission_id_tests_test_id_get) | **GET** /results/submissions/{submission_id}/tests/{test_id} | 
 *DefaultApi* | [**results_submissions_submission_id_tests_test_id_post**](docs/DefaultApi.md#results_submissions_submission_id_tests_test_id_post) | **POST** /results/submissions/{submission_id}/tests/{test_id} | 

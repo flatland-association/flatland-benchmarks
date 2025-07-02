@@ -6,8 +6,8 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**health_live_get**](DefaultApi.md#health_live_get) | **GET** /health/live | 
 [**results_benchmarks_benchmark_id_get**](DefaultApi.md#results_benchmarks_benchmark_id_get) | **GET** /results/benchmarks/{benchmark_id} | 
+[**results_benchmarks_benchmark_id_tests_test_id_get**](DefaultApi.md#results_benchmarks_benchmark_id_tests_test_id_get) | **GET** /results/benchmarks/{benchmark_id}/tests/{test_id} | 
 [**results_campaign_items_benchmark_id_get**](DefaultApi.md#results_campaign_items_benchmark_id_get) | **GET** /results/campaign-items/{benchmark_id} | 
-[**results_campaign_items_benchmark_id_tests_test_id_get**](DefaultApi.md#results_campaign_items_benchmark_id_tests_test_id_get) | **GET** /results/campaign-items/{benchmark_id}/tests/{test_id} | 
 [**results_submissions_submission_id_get**](DefaultApi.md#results_submissions_submission_id_get) | **GET** /results/submissions/{submission_id} | 
 [**results_submissions_submission_id_tests_test_id_get**](DefaultApi.md#results_submissions_submission_id_tests_test_id_get) | **GET** /results/submissions/{submission_id}/tests/{test_id} | 
 [**results_submissions_submission_id_tests_test_id_post**](DefaultApi.md#results_submissions_submission_id_tests_test_id_post) | **POST** /results/submissions/{submission_id}/tests/{test_id} | 
@@ -152,6 +152,80 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **results_benchmarks_benchmark_id_tests_test_id_get**
+> ResultsBenchmarksBenchmarkIdGet200Response results_benchmarks_benchmark_id_tests_test_id_get(benchmark_id, test_id)
+
+Get test leaderboard.
+
+### Example
+
+* OAuth Authentication (oauth2):
+
+```python
+import fab_clientlib
+from fab_clientlib.models.results_benchmarks_benchmark_id_get200_response import ResultsBenchmarksBenchmarkIdGet200Response
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
+    benchmark_id = 'benchmark_id_example' # str | Benchmark ID.
+    test_id = 'test_id_example' # str | Test ID.
+
+    try:
+        api_response = api_instance.results_benchmarks_benchmark_id_tests_test_id_get(benchmark_id, test_id)
+        print("The response of DefaultApi->results_benchmarks_benchmark_id_tests_test_id_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->results_benchmarks_benchmark_id_tests_test_id_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **benchmark_id** | **str**| Benchmark ID. | 
+ **test_id** | **str**| Test ID. | 
+
+### Return type
+
+[**ResultsBenchmarksBenchmarkIdGet200Response**](ResultsBenchmarksBenchmarkIdGet200Response.md)
+
+### Authorization
+
+[oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | test leaderboard. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **results_campaign_items_benchmark_id_get**
 > ResultsCampaignItemsBenchmarkIdGet200Response results_campaign_items_benchmark_id_get(benchmark_id)
 
@@ -221,80 +295,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Campaign item leaderboard. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **results_campaign_items_benchmark_id_tests_test_id_get**
-> ResultsBenchmarksBenchmarkIdGet200Response results_campaign_items_benchmark_id_tests_test_id_get(benchmark_id, test_id)
-
-Get campaign item test leaderboard.
-
-### Example
-
-* OAuth Authentication (oauth2):
-
-```python
-import fab_clientlib
-from fab_clientlib.models.results_benchmarks_benchmark_id_get200_response import ResultsBenchmarksBenchmarkIdGet200Response
-from fab_clientlib.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = fab_clientlib.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
-
-# Enter a context with an instance of the API client
-with fab_clientlib.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = fab_clientlib.DefaultApi(api_client)
-    benchmark_id = 'benchmark_id_example' # str | Benchmark ID.
-    test_id = 'test_id_example' # str | Test ID.
-
-    try:
-        api_response = api_instance.results_campaign_items_benchmark_id_tests_test_id_get(benchmark_id, test_id)
-        print("The response of DefaultApi->results_campaign_items_benchmark_id_tests_test_id_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->results_campaign_items_benchmark_id_tests_test_id_get: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **benchmark_id** | **str**| Benchmark ID. | 
- **test_id** | **str**| Test ID. | 
-
-### Return type
-
-[**ResultsBenchmarksBenchmarkIdGet200Response**](ResultsBenchmarksBenchmarkIdGet200Response.md)
-
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | campaign item test leaderboard. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
