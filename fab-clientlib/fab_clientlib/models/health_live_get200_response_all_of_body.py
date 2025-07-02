@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from fab_clientlib.models.health_live_get200_response_all_of_body_checks_inner import HealthLiveGet200ResponseAllOfBodyChecksInner
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +29,8 @@ class HealthLiveGet200ResponseAllOfBody(BaseModel):
     HealthLiveGet200ResponseAllOfBody
     """ # noqa: E501
     status: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["status"]
+    checks: Optional[List[HealthLiveGet200ResponseAllOfBodyChecksInner]] = None
+    __properties: ClassVar[List[str]] = ["status", "checks"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -69,6 +71,13 @@ class HealthLiveGet200ResponseAllOfBody(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in checks (list)
+        _items = []
+        if self.checks:
+            for _item_checks in self.checks:
+                if _item_checks:
+                    _items.append(_item_checks.to_dict())
+            _dict['checks'] = _items
         return _dict
 
     @classmethod
@@ -81,7 +90,8 @@ class HealthLiveGet200ResponseAllOfBody(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "status": obj.get("status")
+            "status": obj.get("status"),
+            "checks": [HealthLiveGet200ResponseAllOfBodyChecksInner.from_dict(_item) for _item in obj["checks"]] if obj.get("checks") is not None else None
         })
         return _obj
 

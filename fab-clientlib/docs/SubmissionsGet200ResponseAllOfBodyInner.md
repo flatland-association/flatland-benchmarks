@@ -6,14 +6,17 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | [optional] 
-**uuid** | **str** |  | [optional] 
+**benchmark_definition_id** | **str** |  | [optional] 
+**test_definition_ids** | **List[str]** |  | [optional] 
 **name** | **str** |  | [optional] 
-**benchmark** | **str** |  | [optional] 
+**description** | **str** |  | [optional] 
+**submission_data_url** | **str** |  | [optional] 
+**code_repository** | **str** |  | [optional] 
 **submitted_at** | **str** |  | [optional] 
+**submitted_by** | **str** |  | [optional] 
 **submitted_by_username** | **str** |  | [optional] 
-**public** | **str** |  | [optional] 
-**scores** | **str** |  | [optional] 
-**rank** | **str** |  | [optional] 
+**status** | **str** |  | [optional] 
+**published** | **bool** |  | [optional] 
 
 ## Example
 
