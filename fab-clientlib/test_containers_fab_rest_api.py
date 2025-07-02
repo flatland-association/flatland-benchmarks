@@ -293,3 +293,62 @@ def test_submission_roundtrip():
   assert published_submission.body[0].benchmark_definition_id == benchmark_id
   assert published_submission.body[0].submitted_by_username == "service-account-fab-client-credentials"
   assert published_submission.body[0].published == True
+
+
+# GET /definitions/tests/{ids}
+@pytest.mark.usefixtures("test_containers_fixture")
+def test_definitions_tests_ids_get():
+  test_id = '557d9a00-7e6d-410b-9bca-a017ca7fe3aa'
+
+  token = backend_application_flow(
+    client_id='fab-client-credentials',
+    client_secret='top-secret',
+    token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
+  )
+  print(token)
+  fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
+  tests = fab.definitions_tests_ids_get(ids=[test_id])
+  assert len(tests.body) == 1
+  assert tests.body[0].id == test_id
+  assert tests.body[0].scenario_definition_ids == ['1ae61e4f-201b-4e97-a399-5c33fb75c57e', '564ebb54-48f0-4837-8066-b10bb832af9d']
+  assert tests.body[0].name == 'Test 1'
+  assert tests.body[0].description == 'Domain X benchmark'
+
+
+# GET /definitions/benchmarks/{ids}
+@pytest.mark.usefixtures("test_containers_fixture")
+def test_definitions_benchmarks_ids_get():
+  benchmark_id = '20ccc7c1-034c-4880-8946-bffc3fed1359'
+
+  token = backend_application_flow(
+    client_id='fab-client-credentials',
+    client_secret='top-secret',
+    token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
+  )
+  print(token)
+  fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
+  benchmarks = fab.definitions_benchmarks_ids_get(ids=[benchmark_id])
+  assert len(benchmarks.body) == 1
+  assert benchmarks.body[0].id == benchmark_id
+  assert benchmarks.body[0].test_definition_ids == ['557d9a00-7e6d-410b-9bca-a017ca7fe3aa']
+  assert benchmarks.body[0].name == 'Benchmark 1'
+  assert benchmarks.body[0].description == 'Domain X benchmark'
+
+
+# GET /definitions/benchmarks/
+@pytest.mark.usefixtures("test_containers_fixture")
+def test_definitions_benchmarks_get():
+  token = backend_application_flow(
+    client_id='fab-client-credentials',
+    client_secret='top-secret',
+    token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
+  )
+  print(token)
+  fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
+  benchmarks = fab.definitions_benchmarks_get()
+  assert len(benchmarks.body) == 6
+  assert benchmarks.body[0].id == "255fb1e8-af57-45a0-97dc-ecc3e6721b4f"
+  assert benchmarks.body[0].test_definition_ids == ['99f5a8f8-38d9-4a8c-9630-4789b0225ec0',
+                                                    'f23794a2-dcf2-4699-bb5f-534bcea5ecf0', ]
+  assert benchmarks.body[0].name == 'AI-human learning curves'
+  assert benchmarks.body[0].description == 'AI-human learning curves'

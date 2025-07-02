@@ -4,6 +4,9 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**definitions_benchmarks_get**](DefaultApi.md#definitions_benchmarks_get) | **GET** /definitions/benchmarks/ | 
+[**definitions_benchmarks_ids_get**](DefaultApi.md#definitions_benchmarks_ids_get) | **GET** /definitions/benchmarks/{ids} | 
+[**definitions_tests_ids_get**](DefaultApi.md#definitions_tests_ids_get) | **GET** /definitions/tests/{ids} | 
 [**health_live_get**](DefaultApi.md#health_live_get) | **GET** /health/live | 
 [**results_benchmarks_benchmark_id_get**](DefaultApi.md#results_benchmarks_benchmark_id_get) | **GET** /results/benchmarks/{benchmark_id} | 
 [**results_benchmarks_benchmark_id_tests_test_id_get**](DefaultApi.md#results_benchmarks_benchmark_id_tests_test_id_get) | **GET** /results/benchmarks/{benchmark_id}/tests/{test_id} | 
@@ -16,8 +19,219 @@ Method | HTTP request | Description
 [**submissions_post**](DefaultApi.md#submissions_post) | **POST** /submissions | 
 [**submissions_uuid_get**](DefaultApi.md#submissions_uuid_get) | **GET** /submissions/{uuid} | 
 [**submissions_uuid_patch**](DefaultApi.md#submissions_uuid_patch) | **PATCH** /submissions/{uuid} | 
-[**tests_ids_get**](DefaultApi.md#tests_ids_get) | **GET** /tests/{ids} | 
 
+
+# **definitions_benchmarks_get**
+> DefinitionsBenchmarksGet200Response definitions_benchmarks_get()
+
+Returns benchmarks.
+
+### Example
+
+* OAuth Authentication (oauth2):
+
+```python
+import fab_clientlib
+from fab_clientlib.models.definitions_benchmarks_get200_response import DefinitionsBenchmarksGet200Response
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
+
+    try:
+        api_response = api_instance.definitions_benchmarks_get()
+        print("The response of DefaultApi->definitions_benchmarks_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->definitions_benchmarks_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**DefinitionsBenchmarksGet200Response**](DefinitionsBenchmarksGet200Response.md)
+
+### Authorization
+
+[oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Benchmarks. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **definitions_benchmarks_ids_get**
+> DefinitionsBenchmarksGet200Response definitions_benchmarks_ids_get(ids)
+
+Returns tests with ID in `ids`.
+
+### Example
+
+* OAuth Authentication (oauth2):
+
+```python
+import fab_clientlib
+from fab_clientlib.models.definitions_benchmarks_get200_response import DefinitionsBenchmarksGet200Response
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
+    ids = ['ids_example'] # List[str] | Comma-separated list of IDs.
+
+    try:
+        api_response = api_instance.definitions_benchmarks_ids_get(ids)
+        print("The response of DefaultApi->definitions_benchmarks_ids_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->definitions_benchmarks_ids_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ids** | [**List[str]**](str.md)| Comma-separated list of IDs. | 
+
+### Return type
+
+[**DefinitionsBenchmarksGet200Response**](DefinitionsBenchmarksGet200Response.md)
+
+### Authorization
+
+[oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Requested benchmarks. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **definitions_tests_ids_get**
+> DefinitionsTestsIdsGet200Response definitions_tests_ids_get(ids)
+
+Returns tests with ID in `ids`.
+
+### Example
+
+* OAuth Authentication (oauth2):
+
+```python
+import fab_clientlib
+from fab_clientlib.models.definitions_tests_ids_get200_response import DefinitionsTestsIdsGet200Response
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
+    ids = ['ids_example'] # List[str] | Comma-separated list of IDs.
+
+    try:
+        api_response = api_instance.definitions_tests_ids_get(ids)
+        print("The response of DefaultApi->definitions_tests_ids_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->definitions_tests_ids_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ids** | [**List[str]**](str.md)| Comma-separated list of IDs. | 
+
+### Return type
+
+[**DefinitionsTestsIdsGet200Response**](DefinitionsTestsIdsGet200Response.md)
+
+### Authorization
+
+[oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Requested tests. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **health_live_get**
 > HealthLiveGet200Response health_live_get()
@@ -884,78 +1098,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Published submission. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **tests_ids_get**
-> TestsIdsGet200Response tests_ids_get(ids)
-
-Returns tests with ID in `ids`.
-
-### Example
-
-* OAuth Authentication (oauth2):
-
-```python
-import fab_clientlib
-from fab_clientlib.models.tests_ids_get200_response import TestsIdsGet200Response
-from fab_clientlib.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = fab_clientlib.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
-
-# Enter a context with an instance of the API client
-with fab_clientlib.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = fab_clientlib.DefaultApi(api_client)
-    ids = [56] # List[int] | Comma-separated list of IDs.
-
-    try:
-        api_response = api_instance.tests_ids_get(ids)
-        print("The response of DefaultApi->tests_ids_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->tests_ids_get: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ids** | [**List[int]**](int.md)| Comma-separated list of IDs. | 
-
-### Return type
-
-[**TestsIdsGet200Response**](TestsIdsGet200Response.md)
-
-### Authorization
-
-[oauth2](../README.md#oauth2)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Requested tests. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

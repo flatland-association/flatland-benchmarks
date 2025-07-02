@@ -9,12 +9,12 @@ export class TestController extends Controller {
   constructor(config: configuration) {
     super(config)
 
-    this.attachGet('/tests/:id', this.getTestById)
+    this.attachGet('/definitions/tests/:id', this.getTestById)
   }
 
   /**
    * @swagger
-   * /tests/{ids}:
+   * /definitions/tests/{ids}:
    *  get:
    *    description: Returns tests with ID in `ids`.
    *    security:
@@ -27,7 +27,8 @@ export class TestController extends Controller {
    *        schema:
    *          type: array
    *          items:
-   *            type: integer
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Requested tests.
@@ -58,7 +59,7 @@ export class TestController extends Controller {
    *                              type: string
    *                              format: uuid
    */
-  getTestById: GetHandler<'/tests/:id'> = async (req, res) => {
+  getTestById: GetHandler<'/definitions/tests/:id'> = async (req, res) => {
     const ids = req.params.id.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
@@ -67,7 +68,7 @@ export class TestController extends Controller {
         WHERE id=ANY(${ids})
         LIMIT ${ids.length}
       `
-    const tests = appendDir('/tests/', rows)
+    const tests = appendDir('/definitions/tests/', rows)
     // return array - dev.002
     this.respond(req, res, tests)
   }

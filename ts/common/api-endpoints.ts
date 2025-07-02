@@ -61,13 +61,13 @@ interface ApiEndpointDefinitions {
   '/whoami': {
     GET: ApiEndpoint<Empty, Empty, json>
   }
-  '/benchmarks': {
+  '/definitions/benchmarks': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
   }
-  '/benchmarks/:id': {
+  '/definitions/benchmarks/:id': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
   }
-  '/tests/:id': {
+  '/definitions/tests/:id': {
     GET: ApiEndpoint<Empty, Empty, TestDefinitionRow[]>
   }
   '/submissions': {

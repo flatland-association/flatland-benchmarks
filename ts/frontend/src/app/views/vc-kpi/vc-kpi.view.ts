@@ -55,8 +55,10 @@ export class VcKpiView implements OnInit {
     ).body?.at(0)
     // load linked resources
     // TODO: offload this to service with caching
-    this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.benchmarkId } })).body?.at(0)
-    this.test = (await this.apiService.get('/tests/:id', { params: { id: this.testId } })).body?.at(0)
+    this.benchmark = (
+      await this.apiService.get('/definitions/benchmarks/:id', { params: { id: this.benchmarkId } })
+    ).body?.at(0)
+    this.test = (await this.apiService.get('/definitions/tests/:id', { params: { id: this.testId } })).body?.at(0)
     const subIds = board?.items.map((item) => item.submission_id).join(',')
     if (subIds) {
       this.submissions = new Map(
