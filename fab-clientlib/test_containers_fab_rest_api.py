@@ -97,7 +97,7 @@ def test_submissions_post():
     results = [
         ('1ae61e4f-201b-4e97-a399-5c33fb75c57e', '557d9a00-7e6d-410b-9bca-a017ca7fe3aa', 'db5eaa85-3304-4804-b76f-14d23adb5d4c', 'primary', 100),
         ('1ae61e4f-201b-4e97-a399-5c33fb75c57e', '557d9a00-7e6d-410b-9bca-a017ca7fe3aa', 'db5eaa85-3304-4804-b76f-14d23adb5d4c', 'secondary', 1.0),
-        ('564ebb54-48f0-4837-8066-b10bb832af9d', '557d9a00-7e6d-410b-9bca-a017ca7fe3aa', 'db5eaa85-3304-4804-b76f-14d23adb5d4c', 'primary', 100),
+        ('564ebb54-48f0-4837-8066-b10bb832af9d', '557d9a00-7e6d-410b-9bca-a017ca7fe3aa', 'db5eaa85-3304-4804-b76f-14d23adb5d4c', 'primary', 101),
         ('564ebb54-48f0-4837-8066-b10bb832af9d', '557d9a00-7e6d-410b-9bca-a017ca7fe3aa', 'db5eaa85-3304-4804-b76f-14d23adb5d4c', 'secondary', 0.8)
     ]
 
@@ -143,10 +143,25 @@ def test_submissions_post():
     print(test_results.body)
     assert test_results.body.scenario_scorings[0].scorings["primary"]["score"] == 100
     assert test_results.body.scenario_scorings[0].scorings["secondary"]["score"] == 1.0
-    assert test_results.body.scenario_scorings[1].scorings["primary"]["score"] == 100
+    assert test_results.body.scenario_scorings[1].scorings["primary"]["score"] == 101
     assert test_results.body.scenario_scorings[1].scorings["secondary"]["score"] == 0.8
-    assert test_results.body.scorings["primary"]["score"] == 200
+    assert test_results.body.scorings["primary"]["score"] == 201
     assert test_results.body.scorings["secondary"]["score"] == 1.8
+
+    submission_results = fab.results_submissions_submission_id_get(
+        submission_id=submission_id,
+    )
+    assert len(submission_results.body) == 1
+    assert submission_results.body[0].submission_id == submission_id
+    assert len(submission_results.body[0].scorings) == 2
+    assert submission_results.body[0].scorings["primary"]["score"] == 201
+    assert submission_results.body[0].scorings["secondary"]["score"] == 1.8
+    assert len(submission_results.body[0].test_scorings) == 1
+    assert len(submission_results.body[0].test_scorings[0].scenario_scorings) == 2
+    assert submission_results.body[0].test_scorings[0].scenario_scorings[0].scorings["primary"]["score"] == 100
+    assert submission_results.body[0].test_scorings[0].scenario_scorings[0].scorings["secondary"]["score"] == 1.0
+    assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings["primary"]["score"] == 101
+    assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings["secondary"]["score"] == 0.8
 
 
 # GET /submissions/
