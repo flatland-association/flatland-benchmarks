@@ -173,6 +173,7 @@ def test_submissions_get():
         token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
     )
     fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
+    # TODO why benchmark and not benchmark_id?
     response = fab.submissions_get(benchmark="20ccc7c1-034c-4880-8946-bffc3fed1359")
     assert len(response.body) == 1
     assert response.body[0].id == "db5eaa85-3304-4804-b76f-14d23adb5d4c"

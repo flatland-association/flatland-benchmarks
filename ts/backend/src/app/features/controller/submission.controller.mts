@@ -323,6 +323,7 @@ export class SubmissionController extends Controller {
     this.respond(req, res, submissions)
   }
 
+  // TODO can we drop in favor ov /results/submission/{submission_id}
   getSubmissionByUuidResults: GetHandler<'/submissions/:uuid/results'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
@@ -340,6 +341,7 @@ export class SubmissionController extends Controller {
     this.respond(req, res, results)
   }
 
+  // TODO add swagger and change path to /submissions/:uuid
   patchResult: PatchHandler<'/result'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
