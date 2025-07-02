@@ -299,7 +299,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "All results inserted.",
             "content": {
               "application/json": {

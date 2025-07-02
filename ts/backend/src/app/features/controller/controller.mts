@@ -60,7 +60,8 @@ export class Controller {
    * @param dbg Additional debug info.
    * @see {@link ApiResponse}
    */
-  respond<T>(req: Request, res: Response<ApiResponse<T>>, body: T, dbg?: unknown) {
+  respond<T>(req: Request, res: Response<ApiResponse<T>>, body: T, dbg?: unknown, status = 200) {
+    res.status(status)
     res.json({
       body: body,
       dbg,

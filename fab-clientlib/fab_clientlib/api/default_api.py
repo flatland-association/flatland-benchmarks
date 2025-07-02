@@ -1693,7 +1693,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ApiResponse",
+            '201': "ApiResponse",
             '400': "ApiResponse",
         }
         response_data = self.api_client.call_api(
@@ -1769,7 +1769,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ApiResponse",
+            '201': "ApiResponse",
             '400': "ApiResponse",
         }
         response_data = self.api_client.call_api(
@@ -1845,7 +1845,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ApiResponse",
+            '201': "ApiResponse",
             '400': "ApiResponse",
         }
         response_data = self.api_client.call_api(

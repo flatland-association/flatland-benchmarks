@@ -257,7 +257,7 @@ export class ResultsController extends Controller {
    *                  additionalProperties:
    *                    type: number
    *    responses:
-   *      200:
+   *      201:
    *        description: All results inserted.
    *        content:
    *          application/json:
@@ -308,7 +308,7 @@ export class ResultsController extends Controller {
     const ok = !sql.errors
     if (ok) {
       await sql.query`COMMIT`
-      this.respond(req, res, {})
+      this.respond(req, res, {}, 201)
     } else {
       this.requestError(req, res, { text: 'Some results could not be inserted, transaction aborted.' })
     }
