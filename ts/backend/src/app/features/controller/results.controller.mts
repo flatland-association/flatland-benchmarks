@@ -34,19 +34,19 @@ export class ResultsController extends Controller {
   constructor(config: configuration) {
     super(config)
 
-    this.attachGet('/results/submission/:submission_id', this.getSubmissionResults)
-    this.attachGet('/results/submission/:submission_id/tests/:test_id', this.getTestResults)
-    this.attachPost('/results/submission/:submission_id/tests/:test_id', this.postTestResults)
-    this.attachGet('/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id', this.getScenarioResults)
-    this.attachGet('/results/benchmark/:benchmark_id', this.getLeaderboard)
-    this.attachGet('/results/campaign-item/:benchmark_id', this.getCampaignItem)
+    this.attachGet('/results/submissions/:submission_id', this.getSubmissionResults)
+    this.attachGet('/results/submissions/:submission_id/tests/:test_id', this.getTestResults)
+    this.attachPost('/results/submissions/:submission_id/tests/:test_id', this.postTestResults)
+    this.attachGet('/results/submissions/:submission_id/tests/:test_id/scenario/:scenario_id', this.getScenarioResults)
+    this.attachGet('/results/benchmarks/:benchmark_id', this.getLeaderboard)
+    this.attachGet('/results/campaign-items/:benchmark_id', this.getCampaignItem)
     this.attachGet('/results/campaigns/:group_id', this.getGroupLeaderboard)
     this.attachGet('/results/benchmarks/:benchmark_id/tests/:test_id', this.getTestLeaderboard)
   }
 
   /**
    * @swagger
-   * /results/submission/{submission_id}:
+   * /results/submissions/{submission_id}:
    *  get:
    *    description: Get aggregated submission overall results.
    *    security:
@@ -106,7 +106,7 @@ export class ResultsController extends Controller {
    *                                        type: object
    *                                        description: Dictionary of scores.
    */
-  getSubmissionResults: GetHandler<'/results/submission/:submission_id'> = async (req, res) => {
+  getSubmissionResults: GetHandler<'/results/submissions/:submission_id'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -142,7 +142,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submission/{submission_id}/tests/{test_id}:
+   * /results/submissions/{submission_id}/tests/{test_id}:
    *  get:
    *    description: Get submission results aggregated by test.
    *    security:
@@ -195,7 +195,7 @@ export class ResultsController extends Controller {
    *                                type: object
    *                                description: Dictionary of scores.
    */
-  getTestResults: GetHandler<'/results/submission/:submission_id/tests/:test_id'> = async (req, res) => {
+  getTestResults: GetHandler<'/results/submissions/:submission_id/tests/:test_id'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -222,7 +222,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submission/{submission_id}/tests/{test_id}:
+   * /results/submissions/{submission_id}/tests/{test_id}:
    *  post:
    *    description: Inserts test results
    *    security:
@@ -277,7 +277,7 @@ export class ResultsController extends Controller {
    *              allOf:
    *                - $ref: "#/components/schemas/ApiResponse"
    */
-  postTestResults: PostHandler<'/results/submission/:submission_id/tests/:test_id'> = async (req, res) => {
+  postTestResults: PostHandler<'/results/submissions/:submission_id/tests/:test_id'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -321,7 +321,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submission/{submission_id}/tests/{test_id}/scenario/{scenario_id}:
+   * /results/submissions/{submission_id}/tests/{test_id}/scenario/{scenario_id}:
    *  get:
    *    description: Get submission results for specific scenario.
    *    security:
@@ -371,7 +371,7 @@ export class ResultsController extends Controller {
    *                            type: object
    *                            description: Dictionary of scores.
    */
-  getScenarioResults: GetHandler<'/results/submission/:submission_id/tests/:test_id/scenario/:scenario_id'> = async (
+  getScenarioResults: GetHandler<'/results/submissions/:submission_id/tests/:test_id/scenario/:scenario_id'> = async (
     req,
     res,
   ) => {
@@ -396,7 +396,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/benchmark/{benchmark_id}:
+   * /results/benchmarks/{benchmark_id}:
    *  get:
    *    description: Get benchmark leaderboard.
    *    security:
@@ -465,7 +465,7 @@ export class ResultsController extends Controller {
    *                                              type: object
    *                                              description: Dictionary of scores.
    */
-  getLeaderboard: GetHandler<'/results/benchmark/:benchmark_id'> = async (req, res) => {
+  getLeaderboard: GetHandler<'/results/benchmarks/:benchmark_id'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -506,7 +506,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/campaign-item/{benchmark_id}:
+   * /results/campaign-items/{benchmark_id}:
    *  get:
    *    description: Get campaign item leaderboard.
    *    security:
@@ -555,7 +555,7 @@ export class ResultsController extends Controller {
    *                                  format: uuid
    *                                  description: ID of best submission.
    */
-  getCampaignItem: GetHandler<'/results/campaign-item/:benchmark_id'> = async (req, res) => {
+  getCampaignItem: GetHandler<'/results/campaign-items/:benchmark_id'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -683,7 +683,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/campaign-item/{benchmark_id}/tests/{test_id}:
+   * /results/benchmarks/{benchmark_id}/tests/{test_id}:
    *  get:
    *    description: Get campaign item test leaderboard.
    *    security:

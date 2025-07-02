@@ -4,7 +4,7 @@ import time
 import uuid
 
 import pytest
-from fab_clientlib import ResultsSubmissionSubmissionIdTestsTestIdPostRequest, ResultsSubmissionSubmissionIdTestsTestIdPostRequestDataInner
+from fab_clientlib import ResultsSubmissionsSubmissionIdTestsTestIdPostRequest, ResultsSubmissionsSubmissionIdTestsTestIdPostRequestDataInner
 from testcontainers.compose import DockerCompose
 
 from fab_clientlib.api.default_api import DefaultApi
@@ -105,18 +105,18 @@ def test_start_submission():
   assert submissions.body[0].benchmark_definition_id == benchmark_id
   assert submissions.body[0].submitted_by_username == "service-account-fab-client-credentials"
 
-  fab.results_submission_submission_id_tests_test_id_post(
+  fab.results_submissions_submission_id_tests_test_id_post(
     submission_id=submission_id,
     test_id=test_id,
-    results_submission_submission_id_tests_test_id_post_request=ResultsSubmissionSubmissionIdTestsTestIdPostRequest(
-      data=[ResultsSubmissionSubmissionIdTestsTestIdPostRequestDataInner(
+    results_submissions_submission_id_tests_test_id_post_request=ResultsSubmissionsSubmissionIdTestsTestIdPostRequest(
+      data=[ResultsSubmissionsSubmissionIdTestsTestIdPostRequestDataInner(
         scenario_id=scenario_id,
         additional_properties={key: value}
       ) for scenario_id, test_id, submission_id, key, value in results]
     )
   )
 
-  test_results = fab.results_submission_submission_id_tests_test_id_get(
+  test_results = fab.results_submissions_submission_id_tests_test_id_get(
     submission_id=submission_id,
     test_id=test_id)
   print("results_uploaded")

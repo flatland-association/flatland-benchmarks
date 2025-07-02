@@ -49,7 +49,7 @@ export class VcEvaluationObjectiveView implements OnInit {
     this.customization = await this.customizationService.getCustomization()
     this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.benchmarkId } })).body?.at(0)
     this.campaignItemBoard = (
-      await this.apiService.get('/results/campaign-item/:benchmark_id', {
+      await this.apiService.get('/results/campaign-items/:benchmark_id', {
         params: { benchmark_id: this.benchmarkId },
       })
     ).body?.at(0)

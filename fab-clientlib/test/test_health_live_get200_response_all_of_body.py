@@ -36,7 +36,13 @@ class TestHealthLiveGet200ResponseAllOfBody(unittest.TestCase):
         model = HealthLiveGet200ResponseAllOfBody()
         if include_optional:
             return HealthLiveGet200ResponseAllOfBody(
-                status = ''
+                status = '',
+                checks = [
+                    fab_clientlib.models._health_live_get_200_response_all_of_body_checks_inner._health_live_get_200_response_allOf_body_checks_inner(
+                        name = '', 
+                        status = '', 
+                        data = '', )
+                    ]
             )
         else:
             return HealthLiveGet200ResponseAllOfBody(

@@ -27,22 +27,22 @@
                           "properties": {
                             "status": {
                               "type": "string"
-                            }
-                          }
-                        },
-                        "checks": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "name": {
-                                "type": "string"
-                              },
-                              "status": {
-                                "type": "string"
-                              },
-                              "data": {
-                                "type": "string"
+                            },
+                            "checks": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "name": {
+                                    "type": "string"
+                                  },
+                                  "status": {
+                                    "type": "string"
+                                  },
+                                  "data": {
+                                    "type": "string"
+                                  }
+                                }
                               }
                             }
                           }
@@ -57,7 +57,7 @@
         }
       }
     },
-    "/results/submission/{submission_id}": {
+    "/results/submissions/{submission_id}": {
       "get": {
         "description": "Get aggregated submission overall results.",
         "security": [
@@ -153,7 +153,7 @@
         }
       }
     },
-    "/results/submission/{submission_id}/tests/{test_id}": {
+    "/results/submissions/{submission_id}/tests/{test_id}": {
       "get": {
         "description": "Get submission results aggregated by test.",
         "security": [
@@ -330,7 +330,7 @@
         }
       }
     },
-    "/results/submission/{submission_id}/tests/{test_id}/scenario/{scenario_id}": {
+    "/results/submissions/{submission_id}/tests/{test_id}/scenario/{scenario_id}": {
       "get": {
         "description": "Get submission results for specific scenario.",
         "security": [
@@ -412,7 +412,7 @@
         }
       }
     },
-    "/results/benchmark/{benchmark_id}": {
+    "/results/benchmarks/{benchmark_id}": {
       "get": {
         "description": "Get benchmark leaderboard.",
         "security": [
@@ -521,7 +521,7 @@
         }
       }
     },
-    "/results/campaign-item/{benchmark_id}": {
+    "/results/campaign-items/{benchmark_id}": {
       "get": {
         "description": "Get campaign item leaderboard.",
         "security": [
@@ -584,6 +584,125 @@
                                       "type": "string",
                                       "format": "uuid",
                                       "description": "ID of best submission."
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/results/campaign-items/{benchmark_id}/tests/{test_id}": {
+      "get": {
+        "description": "Get campaign item test leaderboard.",
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "benchmark_id",
+            "description": "Benchmark ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "test_id",
+            "description": "Test ID.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "campaign item test leaderboard.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "benchmark_id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "ID of benchmark."
+                              },
+                              "items": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "submission_id": {
+                                      "type": "string",
+                                      "format": "uuid",
+                                      "description": "ID of submission."
+                                    },
+                                    "scorings": {
+                                      "type": "object",
+                                      "description": "Dictionary of submission scores."
+                                    },
+                                    "test_scorings": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "test_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "description": "ID of test."
+                                          },
+                                          "scorings": {
+                                            "type": "object",
+                                            "description": "Dictionary of test scores."
+                                          },
+                                          "scenario_scorings": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "object",
+                                              "properties": {
+                                                "scenario_id": {
+                                                  "type": "string",
+                                                  "format": "uuid",
+                                                  "description": "ID of scenario."
+                                                },
+                                                "scorings": {
+                                                  "type": "object",
+                                                  "description": "Dictionary of scores."
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
                                     }
                                   }
                                 }
@@ -681,6 +800,7 @@
         }
       },
       "get": {
+        "description": "Lists all published submissions.",
         "security": [
           {
             "oauth2": [
@@ -693,14 +813,24 @@
             "in": "query",
             "name": "benchmark",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
-            "description": "The number of items to skip before starting to collect the result set"
+            "description": "Filter submissions by benchmark."
+          },
+          {
+            "in": "query",
+            "name": "submitted_by",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too."
           }
         ],
         "responses": {
           "200": {
-            "description": "Requested tests.",
+            "description": "Requested submissions.",
             "content": {
               "application/json": {
                 "schema": {
@@ -717,32 +847,47 @@
                             "type": "object",
                             "properties": {
                               "id": {
-                                "type": "string"
-                              },
-                              "uuid": {
                                 "type": "string",
                                 "format": "uuid"
+                              },
+                              "benchmark_definition_id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "test_definition_ids": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
                               },
                               "name": {
                                 "type": "string"
                               },
-                              "benchmark": {
+                              "description": {
+                                "type": "string"
+                              },
+                              "submission_data_url": {
+                                "type": "string"
+                              },
+                              "code_repository": {
                                 "type": "string"
                               },
                               "submitted_at": {
                                 "type": "string"
                               },
+                              "submitted_by": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
                               "submitted_by_username": {
                                 "type": "string"
                               },
-                              "public": {
+                              "status": {
                                 "type": "string"
                               },
-                              "scores": {
-                                "type": "string"
-                              },
-                              "rank": {
-                                "type": "string"
+                              "published": {
+                                "type": "boolean"
                               }
                             }
                           }
@@ -804,20 +949,40 @@
                                 "type": "string",
                                 "format": "uuid"
                               },
+                              "test_definition_ids": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "submission_data_url": {
+                                "type": "string"
+                              },
+                              "code_repository": {
+                                "type": "string"
+                              },
                               "submitted_at": {
                                 "type": "string"
+                              },
+                              "submitted_by": {
+                                "type": "string",
+                                "format": "uuid"
                               },
                               "submitted_by_username": {
                                 "type": "string"
                               },
-                              "public": {
+                              "status": {
                                 "type": "string"
                               },
-                              "scores": {
-                                "type": "string"
-                              },
-                              "rank": {
-                                "type": "string"
+                              "published": {
+                                "type": "boolean"
                               }
                             }
                           }

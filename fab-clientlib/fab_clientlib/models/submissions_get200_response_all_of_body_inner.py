@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,15 +28,18 @@ class SubmissionsGet200ResponseAllOfBodyInner(BaseModel):
     SubmissionsGet200ResponseAllOfBodyInner
     """ # noqa: E501
     id: Optional[StrictStr] = None
-    uuid: Optional[StrictStr] = None
+    benchmark_definition_id: Optional[StrictStr] = None
+    test_definition_ids: Optional[List[StrictStr]] = None
     name: Optional[StrictStr] = None
-    benchmark: Optional[StrictStr] = None
+    description: Optional[StrictStr] = None
+    submission_data_url: Optional[StrictStr] = None
+    code_repository: Optional[StrictStr] = None
     submitted_at: Optional[StrictStr] = None
+    submitted_by: Optional[StrictStr] = None
     submitted_by_username: Optional[StrictStr] = None
-    public: Optional[StrictStr] = None
-    scores: Optional[StrictStr] = None
-    rank: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["id", "uuid", "name", "benchmark", "submitted_at", "submitted_by_username", "public", "scores", "rank"]
+    status: Optional[StrictStr] = None
+    published: Optional[StrictBool] = None
+    __properties: ClassVar[List[str]] = ["id", "benchmark_definition_id", "test_definition_ids", "name", "description", "submission_data_url", "code_repository", "submitted_at", "submitted_by", "submitted_by_username", "status", "published"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,14 +93,17 @@ class SubmissionsGet200ResponseAllOfBodyInner(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
-            "uuid": obj.get("uuid"),
+            "benchmark_definition_id": obj.get("benchmark_definition_id"),
+            "test_definition_ids": obj.get("test_definition_ids"),
             "name": obj.get("name"),
-            "benchmark": obj.get("benchmark"),
+            "description": obj.get("description"),
+            "submission_data_url": obj.get("submission_data_url"),
+            "code_repository": obj.get("code_repository"),
             "submitted_at": obj.get("submitted_at"),
+            "submitted_by": obj.get("submitted_by"),
             "submitted_by_username": obj.get("submitted_by_username"),
-            "public": obj.get("public"),
-            "scores": obj.get("scores"),
-            "rank": obj.get("rank")
+            "status": obj.get("status"),
+            "published": obj.get("published")
         })
         return _obj
 

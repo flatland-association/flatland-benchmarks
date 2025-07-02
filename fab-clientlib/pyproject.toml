@@ -1,9 +1,9 @@
 [project]
 name = "fab_clientlib"
-version = "v0.0.0"
+version = "1.0.0"
 description = "FAB Client Lib"
 authors = [
-  { name = "Olivier Stuker, Christian Eichenberger, Manuel Schneider", email = "contact@flatland-association.org" },
+  {name = "Olivier Stuker, Christian Eichenberger, Manuel Schneider",email = "contact@flatland-association.org"},
 ]
 license = "MIT"
 readme = "README.md"

@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** |  | [optional] 
+**checks** | [**List[HealthLiveGet200ResponseAllOfBodyChecksInner]**](HealthLiveGet200ResponseAllOfBodyChecksInner.md) |  | [optional] 
 
 ## Example
 

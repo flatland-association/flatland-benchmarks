@@ -22,7 +22,6 @@ from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
 from fab_clientlib.models.api_response_error import ApiResponseError
 from fab_clientlib.models.health_live_get200_response_all_of_body import HealthLiveGet200ResponseAllOfBody
-from fab_clientlib.models.health_live_get200_response_all_of_checks_inner import HealthLiveGet200ResponseAllOfChecksInner
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -32,8 +31,7 @@ class HealthLiveGet200Response(BaseModel):
     """ # noqa: E501
     error: Optional[ApiResponseError] = None
     body: Optional[HealthLiveGet200ResponseAllOfBody] = None
-    checks: Optional[List[HealthLiveGet200ResponseAllOfChecksInner]] = None
-    __properties: ClassVar[List[str]] = ["error", "body", "checks"]
+    __properties: ClassVar[List[str]] = ["error", "body"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -80,13 +78,6 @@ class HealthLiveGet200Response(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of body
         if self.body:
             _dict['body'] = self.body.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in checks (list)
-        _items = []
-        if self.checks:
-            for _item_checks in self.checks:
-                if _item_checks:
-                    _items.append(_item_checks.to_dict())
-            _dict['checks'] = _items
         return _dict
 
     @classmethod
@@ -100,8 +91,7 @@ class HealthLiveGet200Response(BaseModel):
 
         _obj = cls.model_validate({
             "error": ApiResponseError.from_dict(obj["error"]) if obj.get("error") is not None else None,
-            "body": HealthLiveGet200ResponseAllOfBody.from_dict(obj["body"]) if obj.get("body") is not None else None,
-            "checks": [HealthLiveGet200ResponseAllOfChecksInner.from_dict(_item) for _item in obj["checks"]] if obj.get("checks") is not None else None
+            "body": HealthLiveGet200ResponseAllOfBody.from_dict(obj["body"]) if obj.get("body") is not None else None
         })
         return _obj
 

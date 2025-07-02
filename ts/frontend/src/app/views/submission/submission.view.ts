@@ -70,7 +70,7 @@ export class SubmissionView implements OnInit, OnDestroy {
   async loadResult() {
     if (this.submissionUuid) {
       await this.apiService
-        .get('/results/submission/:submission_id', { params: { submission_id: this.submissionUuid } })
+        .get('/results/submissions/:submission_id', { params: { submission_id: this.submissionUuid } })
         .then((res) => {
           this.result = res.body?.at(0)
           console.log(this.result)

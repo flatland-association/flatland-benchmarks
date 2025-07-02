@@ -7,7 +7,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **error** | [**ApiResponseError**](ApiResponseError.md) |  | [optional] 
 **body** | [**HealthLiveGet200ResponseAllOfBody**](HealthLiveGet200ResponseAllOfBody.md) |  | [optional] 
-**checks** | [**List[HealthLiveGet200ResponseAllOfChecksInner]**](HealthLiveGet200ResponseAllOfChecksInner.md) |  | [optional] 
 
 ## Example
 
