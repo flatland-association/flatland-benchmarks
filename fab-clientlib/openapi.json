@@ -904,6 +904,7 @@
     },
     "/submissions/{uuid}": {
       "get": {
+        "description": "Publish a submission.",
         "security": [
           {
             "oauth2": [
@@ -926,6 +927,99 @@
         "responses": {
           "200": {
             "description": "Requested submissions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "benchmark_definition_id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "test_definition_ids": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "submission_data_url": {
+                                "type": "string"
+                              },
+                              "code_repository": {
+                                "type": "string"
+                              },
+                              "submitted_at": {
+                                "type": "string"
+                              },
+                              "submitted_by": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "submitted_by_username": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              },
+                              "published": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "uuid",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The submission ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Published submission.",
             "content": {
               "application/json": {
                 "schema": {

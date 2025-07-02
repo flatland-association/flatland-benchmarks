@@ -48,15 +48,6 @@ export interface Submission_old extends Resource<'/submissions/'> {
   tests: ResourceId[]
 }
 
-export interface Result extends Resource<'/results/'> {
-  submission: ResourceId
-  done_at: string | null
-  success: boolean | null
-  scores: number[] | null
-  results_str: string | null
-  public: boolean | null
-}
-
 // TODO: merge/reduce number of interfaces, find a way to use same interface for transport as for computation
 
 export type AggFunction = 'SUM' | 'NANSUM' | 'MEAN' | 'NANMEAN' | 'MEADIAN' | 'NANMEDIAN'

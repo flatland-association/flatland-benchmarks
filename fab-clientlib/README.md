@@ -94,6 +94,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**submissions_get**](docs/DefaultApi.md#submissions_get) | **GET** /submissions | 
 *DefaultApi* | [**submissions_post**](docs/DefaultApi.md#submissions_post) | **POST** /submissions | 
 *DefaultApi* | [**submissions_uuid_get**](docs/DefaultApi.md#submissions_uuid_get) | **GET** /submissions/{uuid} | 
+*DefaultApi* | [**submissions_uuid_patch**](docs/DefaultApi.md#submissions_uuid_patch) | **PATCH** /submissions/{uuid} | 
 *DefaultApi* | [**tests_ids_get**](docs/DefaultApi.md#tests_ids_get) | **GET** /tests/{ids} | 
 
 

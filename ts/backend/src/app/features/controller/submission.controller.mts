@@ -1,5 +1,5 @@
 import { appendDir } from '@common/endpoint-utils.js'
-import { Result, SubmissionRow, TestDefinitionRow } from '@common/interfaces.js'
+import { SubmissionRow, TestDefinitionRow } from '@common/interfaces.js'
 import { StripDir } from '@common/utility-types.js'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
@@ -17,7 +17,7 @@ export class SubmissionController extends Controller {
     this.attachPost('/submissions', this.postSubmission)
     this.attachGet('/submissions', this.getSubmissions)
     this.attachGet('/submissions/:uuid', this.getSubmissionByUuid)
-    this.attachPatch('/result', this.patchResult)
+    this.attachPatch('/submissions/:uuid', this.patchSubmissionByUuid)
   }
 
   /**
@@ -246,6 +246,7 @@ export class SubmissionController extends Controller {
    * @swagger
    * /submissions/{uuid}:
    *  get:
+   *    description: Publish a submission.
    *    security:
    *      - oauth2: [user]
    *    parameters:
@@ -322,8 +323,68 @@ export class SubmissionController extends Controller {
     this.respond(req, res, submissions)
   }
 
-  // TODO add swagger and change path to /submissions/:uuid
-  patchResult: PatchHandler<'/result'> = async (req, res) => {
+  /**
+   * @swagger
+   * /submissions/{uuid}:
+   *  patch:
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: uuid
+   *        required: true
+   *        schema:
+   *          type: string
+   *          format: uuid
+   *        description: The submission ID
+   *    responses:
+   *      200:
+   *        description: Published submission.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                          benchmark_definition_id:
+   *                            type: string
+   *                            format: uuid
+   *                          test_definition_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   *                          name:
+   *                            type: string
+   *                          description:
+   *                            type: string
+   *                          submission_data_url:
+   *                            type: string
+   *                          code_repository:
+   *                            type: string
+   *                          submitted_at:
+   *                            type: string
+   *                          submitted_by:
+   *                            type: string
+   *                            format: uuid
+   *                          submitted_by_username:
+   *                            type: string
+   *                          status:
+   *                            type: string
+   *                          published:
+   *                            type: boolean
+   */
+  patchSubmissionByUuid: PatchHandler<'/submissions/:uuid'> = async (req, res) => {
+    logger.info(`patchSubmissionByUuid`)
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -331,19 +392,18 @@ export class SubmissionController extends Controller {
       return
     }
 
-    const uuid = req.body.uuid
-    // restrict to patchable fields
-    const patch = {
-      public: req.body.public,
-    }
+    const uuids = req.params.uuid.split(',')
+    logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
-    const [row] = await sql.query<StripDir<Result>>`
-      UPDATE results SET ${sql.fragment(patch, 'public')}
-        WHERE uuid=${uuid}
+    const rows = await sql.query<StripDir<SubmissionRow>>`
+      UPDATE submissions SET published=true
+        WHERE id=ANY(${uuids})
         RETURNING *
     `
+    logger.info(`rows ${rows}`)
 
-    const [result] = appendDir('/results/', [row])
-    this.respond(req, res, result)
+    const submissions = appendDir('/submissions/', rows)
+    // return array - dev.002
+    this.respond(req, res, submissions)
   }
 }
