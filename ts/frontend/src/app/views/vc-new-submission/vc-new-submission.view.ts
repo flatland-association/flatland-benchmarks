@@ -45,7 +45,7 @@ export class VcNewSubmissionView implements OnInit {
   }
 
   requiresSubmissionDataUrl() {
-    // url is not required only if all tests are OFFLINE
+    // url is required if test is not OFFLINE
     return this.test?.loop !== 'OFFLINE'
   }
 
