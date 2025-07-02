@@ -119,6 +119,7 @@ export class SubmissionController extends Controller {
       const celery = CeleryService.getInstance()
       const payload = {
         submission_data_url: req.body.submission_data_url,
+        // TODO we should only send non-OFFLINE tests
         tests: tests.map((test) => test.name),
       }
       logger.info(`Sending ${payload} to celery.`)
