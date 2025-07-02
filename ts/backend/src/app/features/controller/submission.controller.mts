@@ -246,17 +246,19 @@ export class SubmissionController extends Controller {
    * @swagger
    * /submissions/{uuid}:
    *  get:
-   *    description: Publish a submission.
+   *    description: Get submissions.
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: uuid
+   *        description: Comma-separated list of submission IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
-   *        description: The submission ID
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Requested submissions.
@@ -326,17 +328,20 @@ export class SubmissionController extends Controller {
   /**
    * @swagger
    * /submissions/{uuid}:
+   *  description: Publish submissions.
    *  patch:
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: uuid
+   *        description: Comma-separated list of IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
-   *        description: The submission ID
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Published submission.

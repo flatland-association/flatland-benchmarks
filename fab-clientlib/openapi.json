@@ -904,7 +904,7 @@
     },
     "/submissions/{uuid}": {
       "get": {
-        "description": "Publish a submission.",
+        "description": "Get submissions.",
         "security": [
           {
             "oauth2": [
@@ -916,12 +916,15 @@
           {
             "in": "path",
             "name": "uuid",
+            "description": "Comma-separated list of submission IDs.",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "description": "The submission ID"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
           }
         ],
         "responses": {
@@ -997,6 +1000,7 @@
           }
         }
       },
+      "description": "Publish submissions.",
       "patch": {
         "security": [
           {
@@ -1009,12 +1013,15 @@
           {
             "in": "path",
             "name": "uuid",
+            "description": "Comma-separated list of IDs.",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "description": "The submission ID"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
           }
         ],
         "responses": {

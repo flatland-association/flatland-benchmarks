@@ -748,7 +748,7 @@ Name | Type | Description  | Notes
 # **submissions_uuid_get**
 > SubmissionsGet200Response submissions_uuid_get(uuid)
 
-Publish a submission.
+Get submissions.
 
 ### Example
 
@@ -777,7 +777,7 @@ configuration.access_token = os.environ["ACCESS_TOKEN"]
 with fab_clientlib.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fab_clientlib.DefaultApi(api_client)
-    uuid = 'uuid_example' # str | The submission ID
+    uuid = ['uuid_example'] # List[str] | Comma-separated list of submission IDs.
 
     try:
         api_response = api_instance.submissions_uuid_get(uuid)
@@ -794,7 +794,7 @@ with fab_clientlib.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **uuid** | **str**| The submission ID | 
+ **uuid** | [**List[str]**](str.md)| Comma-separated list of submission IDs. | 
 
 ### Return type
 
@@ -847,7 +847,7 @@ configuration.access_token = os.environ["ACCESS_TOKEN"]
 with fab_clientlib.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fab_clientlib.DefaultApi(api_client)
-    uuid = 'uuid_example' # str | The submission ID
+    uuid = ['uuid_example'] # List[str] | Comma-separated list of IDs.
 
     try:
         api_response = api_instance.submissions_uuid_patch(uuid)
@@ -864,7 +864,7 @@ with fab_clientlib.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **uuid** | **str**| The submission ID | 
+ **uuid** | [**List[str]**](str.md)| Comma-separated list of IDs. | 
 
 ### Return type
 

@@ -2786,7 +2786,7 @@ class DefaultApi:
     @validate_call
     def submissions_uuid_get(
         self,
-        uuid: Annotated[StrictStr, Field(description="The submission ID")],
+        uuid: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2802,10 +2802,10 @@ class DefaultApi:
     ) -> SubmissionsGet200Response:
         """submissions_uuid_get
 
-        Publish a submission.
+        Get submissions.
 
-        :param uuid: The submission ID (required)
-        :type uuid: str
+        :param uuid: Comma-separated list of submission IDs. (required)
+        :type uuid: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2853,7 +2853,7 @@ class DefaultApi:
     @validate_call
     def submissions_uuid_get_with_http_info(
         self,
-        uuid: Annotated[StrictStr, Field(description="The submission ID")],
+        uuid: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2869,10 +2869,10 @@ class DefaultApi:
     ) -> ApiResponse[SubmissionsGet200Response]:
         """submissions_uuid_get
 
-        Publish a submission.
+        Get submissions.
 
-        :param uuid: The submission ID (required)
-        :type uuid: str
+        :param uuid: Comma-separated list of submission IDs. (required)
+        :type uuid: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2920,7 +2920,7 @@ class DefaultApi:
     @validate_call
     def submissions_uuid_get_without_preload_content(
         self,
-        uuid: Annotated[StrictStr, Field(description="The submission ID")],
+        uuid: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2936,10 +2936,10 @@ class DefaultApi:
     ) -> RESTResponseType:
         """submissions_uuid_get
 
-        Publish a submission.
+        Get submissions.
 
-        :param uuid: The submission ID (required)
-        :type uuid: str
+        :param uuid: Comma-separated list of submission IDs. (required)
+        :type uuid: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2992,6 +2992,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'uuid': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -3047,7 +3048,7 @@ class DefaultApi:
     @validate_call
     def submissions_uuid_patch(
         self,
-        uuid: Annotated[StrictStr, Field(description="The submission ID")],
+        uuid: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3064,8 +3065,8 @@ class DefaultApi:
         """submissions_uuid_patch
 
 
-        :param uuid: The submission ID (required)
-        :type uuid: str
+        :param uuid: Comma-separated list of IDs. (required)
+        :type uuid: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3113,7 +3114,7 @@ class DefaultApi:
     @validate_call
     def submissions_uuid_patch_with_http_info(
         self,
-        uuid: Annotated[StrictStr, Field(description="The submission ID")],
+        uuid: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3130,8 +3131,8 @@ class DefaultApi:
         """submissions_uuid_patch
 
 
-        :param uuid: The submission ID (required)
-        :type uuid: str
+        :param uuid: Comma-separated list of IDs. (required)
+        :type uuid: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3179,7 +3180,7 @@ class DefaultApi:
     @validate_call
     def submissions_uuid_patch_without_preload_content(
         self,
-        uuid: Annotated[StrictStr, Field(description="The submission ID")],
+        uuid: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3196,8 +3197,8 @@ class DefaultApi:
         """submissions_uuid_patch
 
 
-        :param uuid: The submission ID (required)
-        :type uuid: str
+        :param uuid: Comma-separated list of IDs. (required)
+        :type uuid: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3250,6 +3251,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'uuid': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
