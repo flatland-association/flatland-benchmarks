@@ -384,6 +384,15 @@ export class Aggregator {
           values.push(fieldName ? (scorings[fieldName]?.score ?? null) : null)
         }
       }
+      // weigh
+      if (field.agg_weights) {
+        // REMARK: error when number of weighs doesn't match number of scores?
+        for (let i = 0; i < values.length; i++) {
+          if (values[i] !== null) {
+            values[i]! *= field.agg_weights[i]
+          }
+        }
+      }
       // aggregate values
       scorings[field.key] = {
         score: this.runAggregation(values, field.agg_func),
