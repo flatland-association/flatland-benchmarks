@@ -3,9 +3,9 @@ INSERT INTO field_definitions
 VALUES
   ('9d6da5c3-1cfc-4f87-8b57-607a0ce02b2b', 'primary', 'Primary scenario score (from evaluator)', NULL, NULL),
   ('a2202f68-29fb-41ca-8761-81a75942e2ec', 'primary', 'Primary KPI score (NANSUM of scenario scores)', 'NANSUM', NULL),
-  ('90c8ac1d-10e4-400c-9893-6caaa2a1f2a9', 'primary', 'Primary objective score', 'NANSUM', NULL),
-  ('316b5e38-44ac-48b7-b894-c25f13dddfb2', 'primary', 'Effectiveness', 'NANSUM', array[0.11, 0.11, 0.11, 0.11, 0.17, 0.11, 0.17, 0.11]),
-  ('a294a990-a400-45dc-ade2-6b88a5da0808', 'primary', 'Resilience', 'NANSUM', array[0.25, 0.25, 0.25, 0.25]);
+  ('90c8ac1d-10e4-400c-9893-6caaa2a1f2a9', 'primary', 'Primary objective score', 'SUM', NULL),
+  ('316b5e38-44ac-48b7-b894-c25f13dddfb2', 'primary', 'Effectiveness', 'SUM', array[0.11, 0.11, 0.11, 0.11, 0.17, 0.11, 0.17, 0.11]),
+  ('a294a990-a400-45dc-ade2-6b88a5da0808', 'primary', 'Resilience', 'SUM', array[0.25, 0.25, 0.25, 0.25]);
 
 INSERT INTO scenario_definitions
   (id, name, description, field_definition_ids)
