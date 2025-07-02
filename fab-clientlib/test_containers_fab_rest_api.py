@@ -88,9 +88,11 @@ def test_health_live_get():
 
 
 # POST /submissions
+# POST /results/submission/{submission_id}/tests/{test_id}
 # GET /results/submission/{submission_id}/tests/{test_id}
+# GET /results/submission/{submission_id}/tests/{test_id}/scenario/{scenario_id}
 @pytest.mark.usefixtures("test_containers_fixture")
-def test_submissions_post():
+def test_submission_roundtrip():
     benchmark_id = '20ccc7c1-034c-4880-8946-bffc3fed1359'
     test_id = '557d9a00-7e6d-410b-9bca-a017ca7fe3aa'
 
@@ -162,6 +164,26 @@ def test_submissions_post():
     assert submission_results.body[0].test_scorings[0].scenario_scorings[0].scorings["secondary"]["score"] == 1.0
     assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings["primary"]["score"] == 101
     assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings["secondary"]["score"] == 0.8
+
+    scenario_results = fab.results_submissions_submission_id_tests_test_id_scenario_scenario_id_get(
+        submission_id=submission_id,
+        test_id=test_id,
+        scenario_id="1ae61e4f-201b-4e97-a399-5c33fb75c57e"
+    )
+    assert len(scenario_results.body) == 1
+    assert scenario_results.body[0].scenario_id == "1ae61e4f-201b-4e97-a399-5c33fb75c57e"
+    assert scenario_results.body[0].scorings["primary"]["score"] == 100
+    assert scenario_results.body[0].scorings["secondary"]["score"] == 1.0
+
+    scenario_results2 = fab.results_submissions_submission_id_tests_test_id_scenario_scenario_id_get(
+        submission_id=submission_id,
+        test_id=test_id,
+        scenario_id="564ebb54-48f0-4837-8066-b10bb832af9d"
+    )
+    assert len(scenario_results2.body) == 1
+    assert scenario_results2.body[0].scenario_id == "564ebb54-48f0-4837-8066-b10bb832af9d"
+    assert scenario_results2.body[0].scorings["primary"]["score"] == 101
+    assert scenario_results2.body[0].scorings["secondary"]["score"] == 0.8
 
 
 # GET /submissions/
