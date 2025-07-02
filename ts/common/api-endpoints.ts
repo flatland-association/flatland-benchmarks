@@ -78,9 +78,6 @@ interface ApiEndpointDefinitions {
   '/submissions/:uuid': {
     GET: ApiEndpoint<Empty, Empty, SubmissionRow[]>
   }
-  '/submissions/:uuid/results': {
-    GET: ApiEndpoint<Empty, Empty, Result[]>
-  }
   '/test': {
     GET: ApiEndpoint<Empty, Empty, Test>
   }

@@ -17,7 +17,6 @@ export class SubmissionController extends Controller {
     this.attachPost('/submissions', this.postSubmission)
     this.attachGet('/submissions', this.getSubmissions)
     this.attachGet('/submissions/:uuid', this.getSubmissionByUuid)
-    this.attachGet('/submissions/:uuid/results', this.getSubmissionByUuidResults)
     this.attachPatch('/result', this.patchResult)
   }
 
@@ -321,24 +320,6 @@ export class SubmissionController extends Controller {
     const submissions = appendDir('/submissions/', rows)
     // return array - dev.002
     this.respond(req, res, submissions)
-  }
-
-  // TODO can we drop in favor ov /results/submission/{submission_id}
-  getSubmissionByUuidResults: GetHandler<'/submissions/:uuid/results'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
-    const uuid = req.params.uuid
-    const sql = SqlService.getInstance()
-    const [row] = await sql.query<StripDir<Result>>`
-      SELECT * FROM results
-      WHERE submission_uuid=${uuid}
-    `
-    const results = appendDir('/results/', [row])
-    this.respond(req, res, results)
   }
 
   // TODO add swagger and change path to /submissions/:uuid
