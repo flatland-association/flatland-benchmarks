@@ -10,7 +10,7 @@ export class BenchmarkGroupController extends Controller {
     super(config)
 
     this.attachGet('/definitions/benchmark-groups', this.getBenchmarkGroups)
-    this.attachGet('/definitions/benchmark-groups/:group_id', this.getBenchmarkGroupById)
+    this.attachGet('/definitions/benchmark-groups/:group_ids', this.getBenchmarkGroupById)
   }
 
   /**
@@ -61,12 +61,12 @@ export class BenchmarkGroupController extends Controller {
 
   /**
    * @swagger
-   * /benchmark-groups/{group_id}:
+   * /benchmark-groups/{group_ids}:
    *  get:
    *    description: Returns benchmark-groups with ID in `group_id`.
    *    parameters:
    *      - in: path
-   *        name: group_id
+   *        name: group_ids
    *        required: true
    *        schema:
    *          type: string
@@ -103,8 +103,8 @@ export class BenchmarkGroupController extends Controller {
    *                              type: string
    *                              format: uuid
    */
-  getBenchmarkGroupById: GetHandler<'/definitions/benchmark-groups/:group_id'> = async (req, res) => {
-    const ids = req.params.group_id.split(',')
+  getBenchmarkGroupById: GetHandler<'/definitions/benchmark-groups/:group_ids'> = async (req, res) => {
+    const ids = req.params.group_ids.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<BenchmarkGroupDefinitionRow>>`

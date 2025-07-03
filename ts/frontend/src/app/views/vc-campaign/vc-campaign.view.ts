@@ -59,7 +59,7 @@ export class VcCampaignView implements OnInit {
   async ngOnInit() {
     this.customization = await this.customizationService.getCustomization()
     this.group = (
-      await this.apiService.get('/definitions/benchmark-groups/:group_id', { params: { group_id: this.groupId } })
+      await this.apiService.get('/definitions/benchmark-groups/:group_ids', { params: { group_ids: this.groupId } })
     ).body?.at(0)
     this.campaignOverview = (
       await this.apiService.get('/results/campaigns/:group_ids', { params: { group_ids: this.groupId } })

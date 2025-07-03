@@ -34,26 +34,26 @@ export class ResultsController extends Controller {
   constructor(config: configuration) {
     super(config)
 
-    this.attachGet('/results/submissions/:submission_id', this.getSubmissionResults)
-    this.attachGet('/results/submissions/:submission_id/tests/:test_id', this.getTestResults)
-    this.attachPost('/results/submissions/:submission_id/tests/:test_id', this.postTestResults)
-    this.attachGet('/results/submissions/:submission_id/scenario/:scenario_id', this.getScenarioResults)
-    this.attachGet('/results/benchmarks/:benchmark_id', this.getLeaderboard)
+    this.attachGet('/results/submissions/:submission_ids', this.getSubmissionResults)
+    this.attachGet('/results/submissions/:submission_id/tests/:test_ids', this.getTestResults)
+    this.attachPost('/results/submissions/:submission_id/tests/:test_ids', this.postTestResults)
+    this.attachGet('/results/submissions/:submission_id/scenario/:scenario_ids', this.getScenarioResults)
+    this.attachGet('/results/benchmarks/:benchmark_ids', this.getLeaderboard)
     this.attachGet('/results/campaign-items/:benchmark_ids', this.getCampaignItemOverview)
     this.attachGet('/results/campaigns/:group_ids', this.getCampaignOverview)
-    this.attachGet('/results/benchmarks/:benchmark_id/tests/:test_id', this.getTestLeaderboard)
+    this.attachGet('/results/benchmarks/:benchmark_id/tests/:test_ids', this.getTestLeaderboard)
   }
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}:
+   * /results/submissions/{submission_ids}:
    *  get:
    *    description: Get aggregated submission overall results.
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: submission_id
+   *        name: submission_ids
    *        description: Submission ID.
    *        required: true
    *        schema:
@@ -106,14 +106,16 @@ export class ResultsController extends Controller {
    *                                        type: object
    *                                        description: Dictionary of scores.
    */
-  getSubmissionResults: GetHandler<'/results/submissions/:submission_id'> = async (req, res) => {
+  getSubmissionResults: GetHandler<'/results/submissions/:submission_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    const submissionId = req.params.submission_id
+
+    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple submission_ids
+    const submissionId = req.params.submission_ids
     const submissionScored = await this.aggregateSubmissionScore(submissionId)
     if (!submissionScored) {
       this.requestError(req, res, { text: 'Score could not be aggregated' })
@@ -142,7 +144,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}/tests/{test_id}:
+   * /results/submissions/{submission_id}/tests/{test_ids}:
    *  get:
    *    description: Get submission results aggregated by test.
    *    security:
@@ -156,7 +158,7 @@ export class ResultsController extends Controller {
    *          type: string
    *          format: uuid
    *      - in: path
-   *        name: test_id
+   *        name: test_ids
    *        description: Test ID.
    *        required: true
    *        schema:
@@ -195,7 +197,7 @@ export class ResultsController extends Controller {
    *                                type: object
    *                                description: Dictionary of scores.
    */
-  getTestResults: GetHandler<'/results/submissions/:submission_id/tests/:test_id'> = async (req, res) => {
+  getTestResults: GetHandler<'/results/submissions/:submission_id/tests/:test_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -203,7 +205,9 @@ export class ResultsController extends Controller {
       return
     }
     const submissionId = req.params.submission_id
-    const testId = req.params.test_id
+
+    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple test_ids
+    const testId = req.params.test_ids
     const testScored = await this.aggregateTestScore(submissionId, testId)
     // transform for transmission
     // TODO: properly define data format of results for transmission
@@ -222,7 +226,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}/tests/{test_id}:
+   * /results/submissions/{submission_id}/tests/{test_ids}:
    *  post:
    *    description: Inserts test results
    *    security:
@@ -236,7 +240,7 @@ export class ResultsController extends Controller {
    *          type: string
    *          format: uuid
    *      - in: path
-   *        name: test_id
+   *        name: test_ids
    *        description: Test ID.
    *        required: true
    *        schema:
@@ -277,7 +281,7 @@ export class ResultsController extends Controller {
    *              allOf:
    *                - $ref: "#/components/schemas/ApiResponse"
    */
-  postTestResults: PostHandler<'/results/submissions/:submission_id/tests/:test_id'> = async (req, res) => {
+  postTestResults: PostHandler<'/results/submissions/:submission_id/tests/:test_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -285,7 +289,9 @@ export class ResultsController extends Controller {
       return
     }
     const submissionId = req.params.submission_id
-    const testId = req.params.test_id
+
+    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple test_ids
+    const testId = req.params.test_ids
     const resultRows = req.body.data.flatMap((score) => {
       const resultRows: ResultRow[] = []
       // score's keys are keys of score, except for the one being scenario_id, which is scenario_id
@@ -364,7 +370,7 @@ export class ResultsController extends Controller {
    *                            type: object
    *                            description: Dictionary of scores.
    */
-  getScenarioResults: GetHandler<'/results/submissions/:submission_id/scenario/:scenario_id'> = async (req, res) => {
+  getScenarioResults: GetHandler<'/results/submissions/:submission_id/scenario/:scenario_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -372,7 +378,9 @@ export class ResultsController extends Controller {
       return
     }
     const submissionId = req.params.submission_id
-    const scenarioId = req.params.scenario_id
+
+    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple scenario_ids
+    const scenarioId = req.params.scenario_ids
     const scenarioScored = await this.aggregateScenarioScore(submissionId, scenarioId)
     // transform for transmission
     // TODO: properly define data format of results for transmission
@@ -383,16 +391,17 @@ export class ResultsController extends Controller {
     this.respond(req, res, [result])
   }
 
+  // TODO
   /**
    * @swagger
-   * /results/benchmarks/{benchmark_id}:
+   * /results/benchmarks/{benchmark_ids}:
    *  get:
    *    description: Get benchmark leaderboard.
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: benchmark_id
+   *        name: benchmark_ids
    *        description: Benchmark ID.
    *        required: true
    *        schema:
@@ -454,14 +463,16 @@ export class ResultsController extends Controller {
    *                                              type: object
    *                                              description: Dictionary of scores.
    */
-  getLeaderboard: GetHandler<'/results/benchmarks/:benchmark_id'> = async (req, res) => {
+  getLeaderboard: GetHandler<'/results/benchmarks/:benchmark_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    const benchmarkId = req.params.benchmark_id
+
+    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple benchmark_ids
+    const benchmarkId = req.params.benchmark_ids
     const leaderboard = await this.aggregateLeaderboard(benchmarkId)
     if (!leaderboard) {
       this.requestError(req, res, { text: 'Leaderboard could not be aggregated' })
@@ -495,14 +506,14 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/campaign-items/{benchmark_id}:
+   * /results/campaign-items/{benchmark_ids}:
    *  get:
    *    description: Returns campaign-item overviews (i.e. all tests in benchmark with score of top submission per test).
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: benchmark_id
+   *        name: benchmark_ids
    *        description: Comma-separated list of IDs.
    *        required: true
    *        schema:
@@ -575,6 +586,7 @@ export class ResultsController extends Controller {
     this.respond(req, res, itemOverviews)
   }
 
+  // TODO
   /**
    * @swagger
    * /results/campaigns/{group_id}:
@@ -676,7 +688,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/benchmarks/{benchmark_id}/tests/{test_id}:
+   * /results/benchmarks/{benchmark_id}/tests/{test_ids}:
    *  get:
    *    description: Get test leaderboard.
    *    security:
@@ -690,7 +702,7 @@ export class ResultsController extends Controller {
    *          type: string
    *          format: uuid
    *      - in: path
-   *        name: test_id
+   *        name: test_ids
    *        description: Test ID.
    *        required: true
    *        schema:
@@ -752,7 +764,7 @@ export class ResultsController extends Controller {
    *                                              type: object
    *                                              description: Dictionary of scores.
    */
-  getTestLeaderboard: GetHandler<'/results/benchmarks/:benchmark_id/tests/:test_id'> = async (req, res) => {
+  getTestLeaderboard: GetHandler<'/results/benchmarks/:benchmark_id/tests/:test_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -760,7 +772,9 @@ export class ResultsController extends Controller {
       return
     }
     const benchmarkId = req.params.benchmark_id
-    const testId = req.params.test_id
+
+    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple test_ids
+    const testId = req.params.test_ids
     // leaderboard contains all submissions (mixed tests), filter by test
     const leaderboard = await this.aggregateLeaderboard(benchmarkId)
     if (!leaderboard) {
