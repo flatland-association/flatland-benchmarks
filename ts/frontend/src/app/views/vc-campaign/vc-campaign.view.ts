@@ -62,7 +62,7 @@ export class VcCampaignView implements OnInit {
       await this.apiService.get('/definitions/benchmark-groups/:group_id', { params: { group_id: this.groupId } })
     ).body?.at(0)
     this.campaignOverview = (
-      await this.apiService.get('/results/campaigns/:group_id', { params: { group_id: this.groupId } })
+      await this.apiService.get('/results/campaigns/:group_ids', { params: { group_ids: this.groupId } })
     ).body?.at(0)
     // load linked resources
     // TODO: unify, see https://github.com/flatland-association/flatland-benchmarks/issues/66

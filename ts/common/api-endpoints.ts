@@ -102,10 +102,10 @@ interface ApiEndpointDefinitions {
   '/results/benchmarks/:benchmark_id': {
     GET: ApiEndpoint<Empty, Empty, Leaderboard[]>
   }
-  '/results/campaign-items/:benchmark_id': {
+  '/results/campaign-items/:benchmark_ids': {
     GET: ApiEndpoint<Empty, Empty, CampaignItemOverview[]>
   }
-  '/results/campaigns/:group_id': {
+  '/results/campaigns/:group_ids': {
     GET: ApiEndpoint<Empty, Empty, CampaignOverview[]>
   }
   '/results/benchmarks/:benchmark_id/tests/:test_id': {

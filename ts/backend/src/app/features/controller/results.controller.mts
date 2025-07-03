@@ -39,8 +39,8 @@ export class ResultsController extends Controller {
     this.attachPost('/results/submissions/:submission_id/tests/:test_id', this.postTestResults)
     this.attachGet('/results/submissions/:submission_id/tests/:test_id/scenario/:scenario_id', this.getScenarioResults)
     this.attachGet('/results/benchmarks/:benchmark_id', this.getLeaderboard)
-    this.attachGet('/results/campaign-items/:benchmark_id', this.getCampaignItemOverview)
-    this.attachGet('/results/campaigns/:group_id', this.getCampaignOverview)
+    this.attachGet('/results/campaign-items/:benchmark_ids', this.getCampaignItemOverview)
+    this.attachGet('/results/campaigns/:group_ids', this.getCampaignOverview)
     this.attachGet('/results/benchmarks/:benchmark_id/tests/:test_id', this.getTestLeaderboard)
   }
 
@@ -555,14 +555,14 @@ export class ResultsController extends Controller {
    *                                  format: uuid
    *                                  description: ID of best submission.
    */
-  getCampaignItemOverview: GetHandler<'/results/campaign-items/:benchmark_id'> = async (req, res) => {
+  getCampaignItemOverview: GetHandler<'/results/campaign-items/:benchmark_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    const benchmarkIds = req.params.benchmark_id.split(',')
+    const benchmarkIds = req.params.benchmark_ids.split(',')
     const itemOverviews: CampaignItemOverview[] = []
     for (const benchmarkId of benchmarkIds) {
       const leaderboard = await this.aggregateCampaignItem(benchmarkId)
@@ -649,14 +649,14 @@ export class ResultsController extends Controller {
    *                            type: object
    *                            description: Dictionary of group scores
    */
-  getCampaignOverview: GetHandler<'/results/campaigns/:group_id'> = async (req, res) => {
+  getCampaignOverview: GetHandler<'/results/campaigns/:group_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    const groupIds = req.params.group_id.split(',')
+    const groupIds = req.params.group_ids.split(',')
     const overviews: CampaignOverview[] = []
     for (const groupId of groupIds) {
       const leaderboard = await this.aggregateGroupLeaderboard(groupId)

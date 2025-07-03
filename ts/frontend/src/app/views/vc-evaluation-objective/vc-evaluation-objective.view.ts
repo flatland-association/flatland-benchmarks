@@ -51,8 +51,8 @@ export class VcEvaluationObjectiveView implements OnInit {
       await this.apiService.get('/definitions/benchmarks/:id', { params: { id: this.benchmarkId } })
     ).body?.at(0)
     this.campaignItemOverview = (
-      await this.apiService.get('/results/campaign-items/:benchmark_id', {
-        params: { benchmark_id: this.benchmarkId },
+      await this.apiService.get('/results/campaign-items/:benchmark_ids', {
+        params: { benchmark_ids: this.benchmarkId },
       })
     ).body?.at(0)
     // load linked resources
