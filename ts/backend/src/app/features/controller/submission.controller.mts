@@ -16,8 +16,8 @@ export class SubmissionController extends Controller {
 
     this.attachPost('/submissions', this.postSubmission)
     this.attachGet('/submissions', this.getSubmissions)
-    this.attachGet('/submissions/:ids', this.getSubmissionByUuid)
-    this.attachPatch('/submissions/:ids', this.patchSubmissionByUuid)
+    this.attachGet('/submissions/:submission_ids', this.getSubmissionByUuid)
+    this.attachPatch('/submissions/:submission_ids', this.patchSubmissionByUuid)
   }
 
   /**
@@ -244,14 +244,14 @@ export class SubmissionController extends Controller {
 
   /**
    * @swagger
-   * /submissions/{ids}:
+   * /submissions/{submission_ids}:
    *  get:
    *    description: Get submissions.
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: ids
+   *        name: submission_ids
    *        description: Comma-separated list of submission IDs.
    *        required: true
    *        schema:
@@ -305,14 +305,14 @@ export class SubmissionController extends Controller {
    *                          published:
    *                            type: boolean
    */
-  getSubmissionByUuid: GetHandler<'/submissions/:ids'> = async (req, res) => {
+  getSubmissionByUuid: GetHandler<'/submissions/:submission_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    const uuids = req.params.ids.split(',')
+    const uuids = req.params.submission_ids.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<SubmissionRow>>`
@@ -327,14 +327,14 @@ export class SubmissionController extends Controller {
 
   /**
    * @swagger
-   * /submissions/{ids}:
+   * /submissions/{submission_ids}:
    *  description: Publish submissions.
    *  patch:
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: ids
+   *        name: submission_ids
    *        description: Comma-separated list of IDs.
    *        required: true
    *        schema:
@@ -388,7 +388,7 @@ export class SubmissionController extends Controller {
    *                          published:
    *                            type: boolean
    */
-  patchSubmissionByUuid: PatchHandler<'/submissions/:ids'> = async (req, res) => {
+  patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res) => {
     logger.info(`patchSubmissionByUuid`)
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
@@ -397,7 +397,7 @@ export class SubmissionController extends Controller {
       return
     }
 
-    const uuids = req.params.ids.split(',')
+    const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
     const rows = await sql.query<StripDir<SubmissionRow>>`

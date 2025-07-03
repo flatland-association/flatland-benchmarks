@@ -67,17 +67,17 @@ interface ApiEndpointDefinitions {
   '/definitions/benchmarks': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
   }
-  '/definitions/benchmarks/:ids': {
+  '/definitions/benchmarks/:benchmark_ids': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
   }
-  '/definitions/tests/:ids': {
+  '/definitions/tests/:test_ids': {
     GET: ApiEndpoint<Empty, Empty, TestDefinitionRow[]>
   }
   '/submissions': {
     GET: ApiEndpoint<Empty, { benchmark?: string; ids?: string; submitted_by?: string }, SubmissionRow[]>
     POST: ApiEndpoint<StripLocator<SubmissionRow>, Empty, { id: string }>
   }
-  '/submissions/:ids': {
+  '/submissions/:submission_ids': {
     GET: ApiEndpoint<Empty, Empty, SubmissionRow[]>
     PATCH: ApiEndpoint<Empty, Empty, SubmissionRow[]>
   }

@@ -35,8 +35,8 @@ describe('Benchmark controller', () => {
   })
 
   test('should return benchmark details', async () => {
-    const res = await controller.testGet('/definitions/benchmarks/:ids', {
-      params: { ids: '20ccc7c1-034c-4880-8946-bffc3fed1359' },
+    const res = await controller.testGet('/definitions/benchmarks/:benchmark_ids', {
+      params: { benchmark_ids: '20ccc7c1-034c-4880-8946-bffc3fed1359' },
     })
     expect(res.status).toBe(200)
     expect(res.body).toBeApiResponse()

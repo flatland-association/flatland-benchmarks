@@ -9,19 +9,19 @@ export class TestController extends Controller {
   constructor(config: configuration) {
     super(config)
 
-    this.attachGet('/definitions/tests/:ids', this.getTestById)
+    this.attachGet('/definitions/tests/:test_ids', this.getTestById)
   }
 
   /**
    * @swagger
-   * /definitions/tests/{ids}:
+   * /definitions/tests/{test_ids}:
    *  get:
    *    description: Returns tests with ID in `ids`.
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: ids
+   *        name: test_ids
    *        description: Comma-separated list of IDs.
    *        required: true
    *        schema:
@@ -59,8 +59,8 @@ export class TestController extends Controller {
    *                              type: string
    *                              format: uuid
    */
-  getTestById: GetHandler<'/definitions/tests/:ids'> = async (req, res) => {
-    const ids = req.params.ids.split(',')
+  getTestById: GetHandler<'/definitions/tests/:test_ids'> = async (req, res) => {
+    const ids = req.params.test_ids.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<TestDefinitionRow>>`

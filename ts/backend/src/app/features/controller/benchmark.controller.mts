@@ -10,7 +10,7 @@ export class BenchmarkController extends Controller {
     super(config)
 
     this.attachGet('/definitions/benchmarks', this.getBenchmarks)
-    this.attachGet('/definitions/benchmarks/:ids', this.getBenchmarkById)
+    this.attachGet('/definitions/benchmarks/:benchmark_ids', this.getBenchmarkById)
   }
 
   /**
@@ -65,14 +65,14 @@ export class BenchmarkController extends Controller {
 
   /**
    * @swagger
-   * /definitions/benchmarks/{ids}:
+   * /definitions/benchmarks/{benchmark_ids}:
    *  get:
    *    description: Returns tests with ID in `ids`.
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: ids
+   *        name: benchmark_ids
    *        description: Comma-separated list of IDs.
    *        required: true
    *        schema:
@@ -113,8 +113,8 @@ export class BenchmarkController extends Controller {
    *                              type: string
    *                              format: uuid
    */
-  getBenchmarkById: GetHandler<'/definitions/benchmarks/:ids'> = async (req, res) => {
-    const ids = req.params.ids.split(',')
+  getBenchmarkById: GetHandler<'/definitions/benchmarks/:benchmark_ids'> = async (req, res) => {
+    const ids = req.params.benchmark_ids.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<BenchmarkDefinitionRow>>`
