@@ -146,7 +146,7 @@ export class SubmissionController extends Controller {
    *      - oauth2: [user]
    *    parameters:
    *      - in: query
-   *        name: benchmark
+   *        name: benchmark_id
    *        schema:
    *          type: string
    *          format: uuid
@@ -211,7 +211,7 @@ export class SubmissionController extends Controller {
       return
     }
 
-    const benchmarkId = req.query['benchmark']
+    const benchmarkId = req.query['benchmark_id']
     const submittedBy = req.query['submitted_by']
 
     const sql = SqlService.getInstance()
