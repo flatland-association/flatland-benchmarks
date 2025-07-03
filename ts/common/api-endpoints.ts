@@ -96,7 +96,7 @@ interface ApiEndpointDefinitions {
     GET: ApiEndpoint<Empty, Empty, TestScored>
     POST: ApiEndpoint<PostTestResultsBody, Empty, Empty>
   }
-  '/results/submissions/:submission_id/tests/:test_id/scenario/:scenario_id': {
+  '/results/submissions/:submission_id/scenario/:scenario_id': {
     GET: ApiEndpoint<Empty, Empty, ScenarioScored[]>
   }
   '/results/benchmarks/:benchmark_id': {

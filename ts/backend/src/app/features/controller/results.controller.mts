@@ -37,7 +37,7 @@ export class ResultsController extends Controller {
     this.attachGet('/results/submissions/:submission_id', this.getSubmissionResults)
     this.attachGet('/results/submissions/:submission_id/tests/:test_id', this.getTestResults)
     this.attachPost('/results/submissions/:submission_id/tests/:test_id', this.postTestResults)
-    this.attachGet('/results/submissions/:submission_id/tests/:test_id/scenario/:scenario_id', this.getScenarioResults)
+    this.attachGet('/results/submissions/:submission_id/scenario/:scenario_id', this.getScenarioResults)
     this.attachGet('/results/benchmarks/:benchmark_id', this.getLeaderboard)
     this.attachGet('/results/campaign-items/:benchmark_ids', this.getCampaignItemOverview)
     this.attachGet('/results/campaigns/:group_ids', this.getCampaignOverview)
@@ -321,7 +321,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}/tests/{test_id}/scenario/{scenario_id}:
+   * /results/submissions/{submission_id}/scenario/{scenario_id}:
    *  get:
    *    description: Get submission results for specific scenario.
    *    security:
@@ -330,13 +330,6 @@ export class ResultsController extends Controller {
    *      - in: path
    *        name: submission_id
    *        description: Submission ID.
-   *        required: true
-   *        schema:
-   *          type: string
-   *          format: uuid
-   *      - in: path
-   *        name: test_id
-   *        description: Test ID.
    *        required: true
    *        schema:
    *          type: string
@@ -371,10 +364,7 @@ export class ResultsController extends Controller {
    *                            type: object
    *                            description: Dictionary of scores.
    */
-  getScenarioResults: GetHandler<'/results/submissions/:submission_id/tests/:test_id/scenario/:scenario_id'> = async (
-    req,
-    res,
-  ) => {
+  getScenarioResults: GetHandler<'/results/submissions/:submission_id/scenario/:scenario_id'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -382,9 +372,8 @@ export class ResultsController extends Controller {
       return
     }
     const submissionId = req.params.submission_id
-    const testId = req.params.test_id
     const scenarioId = req.params.scenario_id
-    const scenarioScored = await this.aggregateScenarioScore(submissionId, testId, scenarioId)
+    const scenarioScored = await this.aggregateScenarioScore(submissionId, scenarioId)
     // transform for transmission
     // TODO: properly define data format of results for transmission
     const result: ScenarioScored = {
@@ -807,7 +796,7 @@ export class ResultsController extends Controller {
 
   // TODO: generalize the below:
 
-  async aggregateScenarioScore(submissionId: string, testId: string, scenarioId: string) {
+  async aggregateScenarioScore(submissionId: string, scenarioId: string) {
     const sql = SqlService.getInstance()
     // load required definitions
     const [scenarioDefRow] = await sql.query<ScenarioDefinitionRow>`
@@ -820,7 +809,7 @@ export class ResultsController extends Controller {
     const scenarioDef = upcastScenarioDefinitionRow(scenarioDefRow, fieldDefCandidates)
     // load results
     const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT * FROM results WHERE submission_id=${submissionId} AND test_id=${testId} AND scenario_id=${scenarioId}
+      SELECT * FROM results WHERE submission_id=${submissionId} AND scenario_id=${scenarioId}
     `
     return Aggregator.getScenarioScored(scenarioDef, resultRows)
   }
