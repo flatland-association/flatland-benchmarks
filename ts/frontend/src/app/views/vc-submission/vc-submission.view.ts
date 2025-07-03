@@ -112,4 +112,12 @@ export class VcSubmissionView implements OnInit {
   isSubmissionScored() {
     return this.submissionBoard ? isLeaderboardItemScored(this.submissionBoard) : false
   }
+
+  async publish() {
+    if (this.submission && this.ownSubmission && this.isSubmissionScored()) {
+      this.submission = (
+        await this.apiService.patch('/submissions/:uuid', { params: { uuid: this.submission.id } })
+      ).body?.at(0)
+    }
+  }
 }

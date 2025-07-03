@@ -20,7 +20,7 @@
 </lib-content>
 
 <lib-content>
-  <!-- TODO: publish own submission 
-  <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'new-submission'">Submit solution</button>
-  -->
+  @if (submission?.published === false) {
+    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-primary-100" type="button" [attr.disabled]="isSubmissionScored() ? null : true" (click)="publish()">Publish submission</button>
+  }
 </lib-content>
