@@ -31,7 +31,7 @@ export class BenchmarksDetailView implements OnInit {
       await this.apiService.get('/definitions/benchmarks/:benchmark_ids', { params: { benchmark_ids: this.id } })
     ).body?.at(0)
     this.submissions = (
-      await this.apiService.get('/submissions', { query: { benchmark_id: this.benchmark?.id as string } })
+      await this.apiService.get('/submissions', { query: { benchmark_ids: this.benchmark?.id as string } })
     ).body
   }
 }
