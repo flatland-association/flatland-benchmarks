@@ -91,7 +91,7 @@ export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmark
   name: string
   description: string
   field_definition_ids: string[]
-  test_definition_ids: string[]
+  test_ids: string[]
 }
 
 export type SubmissionStatus = 'SUBMITTED' | 'RUNNING' | 'SUCCESS' | 'FAILURE'

@@ -777,7 +777,7 @@ export class ResultsController extends Controller {
     const sql = SqlService.getInstance()
     // load required definitions
     const submissionRows = await sql.query<SubmissionRow>`
-      SELECT * FROM submissions WHERE benchmark_definition_id=${benchmarkId} AND published=true
+      SELECT * FROM submissions WHERE benchmark_id=${benchmarkId} AND published=true
     `
     const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
       SELECT * FROM benchmark_definitions WHERE id=${benchmarkId}
@@ -799,7 +799,7 @@ export class ResultsController extends Controller {
     )
     // load results
     const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_definition_id=${benchmarkId}
+      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_id=${benchmarkId}
     `
     const benchmarkDef = submissions.at(0)?.benchmark_definition
     if (!benchmarkDef) return null
@@ -810,7 +810,7 @@ export class ResultsController extends Controller {
     const sql = SqlService.getInstance()
     // load required definitions
     const submissionRows = await sql.query<SubmissionRow>`
-      SELECT * FROM submissions WHERE benchmark_definition_id=${benchmarkId} AND published=true
+      SELECT * FROM submissions WHERE benchmark_id=${benchmarkId} AND published=true
     `
     const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
       SELECT * FROM benchmark_definitions WHERE id=${benchmarkId}
@@ -841,7 +841,7 @@ export class ResultsController extends Controller {
     )
     // load results
     const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_definition_id=${benchmarkId}
+      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_id=${benchmarkId}
     `
     if (!benchmarkDef) return null
     return Aggregator.getCampaignItemScored(benchmarkDef, submissions, resultRows)

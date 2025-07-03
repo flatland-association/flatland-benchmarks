@@ -64,9 +64,9 @@ export class VcNewSubmissionView implements OnInit {
     const response = await this.apiService.post('/submissions', {
       body: {
         name: this.submissionName,
-        benchmark_definition_id: this.benchmark?.id ?? '',
+        benchmark_id: this.benchmark?.id ?? '',
         submission_data_url: this.submissionUrl,
-        test_definition_ids: [this.testId],
+        test_ids: [this.testId],
       },
     })
     if (response.body?.id) {

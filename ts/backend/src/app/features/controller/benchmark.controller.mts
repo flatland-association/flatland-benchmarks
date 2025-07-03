@@ -47,7 +47,7 @@ export class BenchmarkController extends Controller {
    *                            items:
    *                              type: string
    *                              format: uuid
-   *                          test_definition_ids:
+   *                          test_ids:
    *                            type: array
    *                            items:
    *                              type: string
@@ -56,7 +56,7 @@ export class BenchmarkController extends Controller {
   getBenchmarks: GetHandler<'/definitions/benchmarks'> = async (req, res) => {
     const sql = SqlService.getInstance()
     const rows = await sql.query<StripDir<BenchmarkDefinitionRow>>`
-      SELECT id, name, description, field_definition_ids, test_definition_ids FROM benchmark_definitions
+      SELECT id, name, description, field_definition_ids, test_ids FROM benchmark_definitions
       ORDER BY name ASC
     `
     const resources = appendDir('/definitions/benchmarks/', rows)
@@ -107,7 +107,7 @@ export class BenchmarkController extends Controller {
    *                            items:
    *                              type: string
    *                              format: uuid
-   *                          test_definition_ids:
+   *                          test_ids:
    *                            type: array
    *                            items:
    *                              type: string
@@ -118,7 +118,7 @@ export class BenchmarkController extends Controller {
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<BenchmarkDefinitionRow>>`
-      SELECT id, name, description, field_definition_ids, test_definition_ids FROM benchmark_definitions
+      SELECT id, name, description, field_definition_ids, test_ids FROM benchmark_definitions
       WHERE id=ANY(${ids})
       LIMIT ${ids.length}
     `

@@ -59,7 +59,7 @@ export class VcMySubmissionsView implements OnInit {
       await this.apiService.get('/definitions/benchmarks/:id', { params: { id: this.benchmarkId } })
     ).body?.at(0)
     // gather unique test ids, load, transform to map (uuid: test)
-    const testIds = Array.from(new Set(this.submissions?.map((submission) => submission.test_definition_ids[0])))
+    const testIds = Array.from(new Set(this.submissions?.map((submission) => submission.test_ids[0])))
     const tests = (await this.apiService.get('/definitions/tests/:id', { params: { id: testIds.join(',') } })).body
     this.tests = new Map(tests?.map((test) => [test.id, test]))
     // build table rows from board
@@ -70,7 +70,7 @@ export class VcMySubmissionsView implements OnInit {
           // routerLink: item.test_id,
           cells: [
             { text: submission.name },
-            { text: this.tests?.get(submission.test_definition_ids[0])?.name ?? 'NA' },
+            { text: this.tests?.get(submission.test_ids[0])?.name ?? 'NA' },
             { text: submission.submitted_at ?? '' },
           ],
         }

@@ -83,7 +83,7 @@ export class SubmissionController extends Controller {
     const idRow = await sql.query`
         INSERT INTO submissions (
           benchmark_definition_id,
-          test_definition_ids,
+          test_ids,
           name,
           submission_data_url,
           code_repository,
@@ -175,10 +175,10 @@ export class SubmissionController extends Controller {
    *                          id:
    *                            type: string
    *                            format: uuid
-   *                          benchmark_definition_id:
+   *                          benchmark_id:
    *                            type: string
    *                            format: uuid
-   *                          test_definition_ids:
+   *                          test_ids:
    *                            type: array
    *                            items:
    *                              type: string
@@ -277,10 +277,10 @@ export class SubmissionController extends Controller {
    *                          id:
    *                            type: string
    *                            format: uuid
-   *                          benchmark_definition_id:
+   *                          benchmark_id:
    *                            type: string
    *                            format: uuid
-   *                          test_definition_ids:
+   *                          test_ids:
    *                            type: array
    *                            items:
    *                              type: string
@@ -360,10 +360,10 @@ export class SubmissionController extends Controller {
    *                          id:
    *                            type: string
    *                            format: uuid
-   *                          benchmark_definition_id:
+   *                          benchmark_id:
    *                            type: string
    *                            format: uuid
-   *                          test_definition_ids:
+   *                          test_ids:
    *                            type: array
    *                            items:
    *                              type: string

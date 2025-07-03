@@ -89,8 +89,7 @@ export function upcastTestDefinitionRow(
   }
 }
 
-export interface BenchmarkDefinition
-  extends Omit<BenchmarkDefinitionRow, 'field_definition_ids' | 'test_definition_ids'> {
+export interface BenchmarkDefinition extends Omit<BenchmarkDefinitionRow, 'field_definition_ids' | 'test_ids'> {
   /**
    * Defines aggregation of test scores in context:
    * - competition; to submission overall score
@@ -112,7 +111,7 @@ export function upcastBenchmarkDefinitionRow(
     name: row.name,
     description: row.description,
     field_definitions: row.field_definition_ids.map((id) => fieldDefinitionCandidates.find((c) => c.id === id) ?? null),
-    test_definitions: row.test_definition_ids.map((id) => {
+    test_definitions: row.test_ids.map((id) => {
       const test = testDefinitionCandidates.find((c) => c.id === id) ?? null
       if (test) {
         return upcastTestDefinitionRow(test, fieldDefinitionCandidates, scenarioDefinitionCandidates)
@@ -125,7 +124,7 @@ export function upcastBenchmarkDefinitionRow(
 
 // TODO: Benchmark Groups
 
-export interface Submission extends Omit<SubmissionRow, 'benchmark_definition_id' | 'test_definition_ids'> {
+export interface Submission extends Omit<SubmissionRow, 'benchmark_id' | 'test_ids'> {
   benchmark_definition: BenchmarkDefinition | null
   test_definitions: (TestDefinition | null)[]
 }

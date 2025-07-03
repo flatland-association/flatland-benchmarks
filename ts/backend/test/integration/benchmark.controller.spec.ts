@@ -10,7 +10,7 @@ const protoBenchmark = [
     name: 'Benchmark 1',
     description: 'Domain X benchmark',
     field_definition_ids: ['be7bf55a-9d79-4e89-8509-f8d2af9b3fad', 'f6b23ac8-2f12-4e77-8de4-4939b818ca8e'],
-    test_definition_ids: ['557d9a00-7e6d-410b-9bca-a017ca7fe3aa'],
+    test_ids: ['557d9a00-7e6d-410b-9bca-a017ca7fe3aa'],
   },
 ] satisfies ApiGetEndpoints['/definitions/benchmarks']['response']['body']
 
