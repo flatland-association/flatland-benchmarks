@@ -3,6 +3,25 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.8.8](https://github.com/flatland-association/flatland-benchmarks/compare/v0.8.7...v0.8.8) (2025-07-03)
+
+
+### Features
+
+* **backend:** publish submissions endpoint and test. ([8dd8576](https://github.com/flatland-association/flatland-benchmarks/commit/8dd85767082ee0f8569a21981ea3455e7dd02c26))
+* Benchmark group (Validation Campaign) ([#310](https://github.com/flatland-association/flatland-benchmarks/issues/310)) ([28c3329](https://github.com/flatland-association/flatland-benchmarks/commit/28c332970136786669b6db44e8908268d8137c99))
+* Offline loop submission (UI and backend) ([74589cc](https://github.com/flatland-association/flatland-benchmarks/commit/74589cc756952b5a70b0c1fe3c3383d447fb977e))
+
+
+### Bug Fixes
+
+* return 201 created upon posting submission. ([c95642d](https://github.com/flatland-association/flatland-benchmarks/commit/c95642d9728b221baf26b97e57ec388a74b85521))
+
+
+### Miscellaneous Chores
+
+* release 0.8.8 ([b07f7bb](https://github.com/flatland-association/flatland-benchmarks/commit/b07f7bb002a7eb9453a8fd87796ef87bd2ca9f92))
+
 ## [0.8.7](https://github.com/flatland-association/flatland-benchmarks/compare/v0.8.6...v0.8.7) (2025-06-30)
 
 
