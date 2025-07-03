@@ -8,7 +8,6 @@ import {
   Leaderboard,
   LeaderboardItem,
   PostTestResultsBody,
-  Result,
   ScenarioScored,
   SubmissionRow,
   Test,
@@ -70,13 +69,13 @@ interface ApiEndpointDefinitions {
   '/benchmark-groups/:id': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkGroupDefinitionRow[]>
   }
-  '/benchmarks': {
+  '/definitions/benchmarks': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
   }
-  '/benchmarks/:id': {
+  '/definitions/benchmarks/:id': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
   }
-  '/tests/:id': {
+  '/definitions/tests/:id': {
     GET: ApiEndpoint<Empty, Empty, TestDefinitionRow[]>
   }
   '/submissions': {
@@ -85,15 +84,10 @@ interface ApiEndpointDefinitions {
   }
   '/submissions/:uuid': {
     GET: ApiEndpoint<Empty, Empty, SubmissionRow[]>
-  }
-  '/submissions/:uuid/results': {
-    GET: ApiEndpoint<Empty, Empty, Result[]>
+    PATCH: ApiEndpoint<Empty, Empty, SubmissionRow[]>
   }
   '/test': {
     GET: ApiEndpoint<Empty, Empty, Test>
-  }
-  '/result': {
-    PATCH: ApiEndpoint<Partial<Result>, Empty, Result>
   }
   '/results/submissions/:submission_id': {
     GET: ApiEndpoint<Empty, Empty, LeaderboardItem[]>
@@ -105,11 +99,9 @@ interface ApiEndpointDefinitions {
   '/results/submissions/:submission_id/tests/:test_id/scenario/:scenario_id': {
     GET: ApiEndpoint<Empty, Empty, ScenarioScored[]>
   }
-  // TODO: maybe rename to /results/leaderboard/:benchmark_id ?
   '/results/benchmarks/:benchmark_id': {
     GET: ApiEndpoint<Empty, Empty, Leaderboard[]>
   }
-  // TODO: maybe rename (strive for consistency)
   '/results/campaign-items/:benchmark_id': {
     GET: ApiEndpoint<Empty, Empty, CampaignItem[]>
   }

@@ -31,6 +31,10 @@ __all__ = [
     "ApiException",
     "ApiResponse",
     "ApiResponseError",
+    "DefinitionsBenchmarksGet200Response",
+    "DefinitionsBenchmarksGet200ResponseAllOfBodyInner",
+    "DefinitionsTestsIdsGet200Response",
+    "DefinitionsTestsIdsGet200ResponseAllOfBodyInner",
     "HealthLiveGet200Response",
     "HealthLiveGet200ResponseAllOfBody",
     "HealthLiveGet200ResponseAllOfBodyChecksInner",
@@ -52,8 +56,6 @@ __all__ = [
     "SubmissionsPost200Response",
     "SubmissionsPost200ResponseAllOfBody",
     "SubmissionsPostRequest",
-    "TestsIdsGet200Response",
-    "TestsIdsGet200ResponseAllOfBodyInner",
 ]
 
 # import apis into sdk package
@@ -73,6 +75,10 @@ from fab_clientlib.exceptions import ApiException as ApiException
 # import models into sdk package
 from fab_clientlib.models.api_response import ApiResponse as ApiResponse
 from fab_clientlib.models.api_response_error import ApiResponseError as ApiResponseError
+from fab_clientlib.models.definitions_benchmarks_get200_response import DefinitionsBenchmarksGet200Response as DefinitionsBenchmarksGet200Response
+from fab_clientlib.models.definitions_benchmarks_get200_response_all_of_body_inner import DefinitionsBenchmarksGet200ResponseAllOfBodyInner as DefinitionsBenchmarksGet200ResponseAllOfBodyInner
+from fab_clientlib.models.definitions_tests_ids_get200_response import DefinitionsTestsIdsGet200Response as DefinitionsTestsIdsGet200Response
+from fab_clientlib.models.definitions_tests_ids_get200_response_all_of_body_inner import DefinitionsTestsIdsGet200ResponseAllOfBodyInner as DefinitionsTestsIdsGet200ResponseAllOfBodyInner
 from fab_clientlib.models.health_live_get200_response import HealthLiveGet200Response as HealthLiveGet200Response
 from fab_clientlib.models.health_live_get200_response_all_of_body import HealthLiveGet200ResponseAllOfBody as HealthLiveGet200ResponseAllOfBody
 from fab_clientlib.models.health_live_get200_response_all_of_body_checks_inner import HealthLiveGet200ResponseAllOfBodyChecksInner as HealthLiveGet200ResponseAllOfBodyChecksInner
@@ -94,5 +100,3 @@ from fab_clientlib.models.submissions_get200_response_all_of_body_inner import S
 from fab_clientlib.models.submissions_post200_response import SubmissionsPost200Response as SubmissionsPost200Response
 from fab_clientlib.models.submissions_post200_response_all_of_body import SubmissionsPost200ResponseAllOfBody as SubmissionsPost200ResponseAllOfBody
 from fab_clientlib.models.submissions_post_request import SubmissionsPostRequest as SubmissionsPostRequest
-from fab_clientlib.models.tests_ids_get200_response import TestsIdsGet200Response as TestsIdsGet200Response
-from fab_clientlib.models.tests_ids_get200_response_all_of_body_inner import TestsIdsGet200ResponseAllOfBodyInner as TestsIdsGet200ResponseAllOfBodyInner

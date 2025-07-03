@@ -47,7 +47,9 @@ export class VcEvaluationObjectiveView implements OnInit {
 
   async ngOnInit() {
     this.customization = await this.customizationService.getCustomization()
-    this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.benchmarkId } })).body?.at(0)
+    this.benchmark = (
+      await this.apiService.get('/definitions/benchmarks/:id', { params: { id: this.benchmarkId } })
+    ).body?.at(0)
     this.campaignItemBoard = (
       await this.apiService.get('/results/campaign-items/:benchmark_id', {
         params: { benchmark_id: this.benchmarkId },
@@ -59,7 +61,7 @@ export class VcEvaluationObjectiveView implements OnInit {
     if (testIds) {
       this.tests = new Map(
         (
-          await this.apiService.get('/tests/:id', {
+          await this.apiService.get('/definitions/tests/:id', {
             params: { id: testIds },
           })
         ).body?.map((test) => [test.id, test]),

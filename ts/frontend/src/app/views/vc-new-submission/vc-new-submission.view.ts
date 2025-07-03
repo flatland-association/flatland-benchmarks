@@ -40,8 +40,10 @@ export class VcNewSubmissionView implements OnInit {
   async ngOnInit() {
     this.customization = await this.customizationService.getCustomization()
     // TODO: offload this to service with caching
-    this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.benchmarkId } })).body?.at(0)
-    this.test = (await this.apiService.get('/tests/:id', { params: { id: this.testId } })).body?.at(0)
+    this.benchmark = (
+      await this.apiService.get('/definitions/benchmarks/:id', { params: { id: this.benchmarkId } })
+    ).body?.at(0)
+    this.test = (await this.apiService.get('/definitions/tests/:id', { params: { id: this.testId } })).body?.at(0)
   }
 
   requiresSubmissionDataUrl() {

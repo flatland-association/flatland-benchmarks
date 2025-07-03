@@ -11,19 +11,19 @@ export interface Resource<Dir extends ResourceDir = ResourceDir> {
   uuid?: string
 }
 
-export interface BenchmarkPreview extends Resource<'/benchmarks/'> {
+export interface BenchmarkPreview extends Resource<'/definitions/benchmarks/'> {
   name: string
   description: string
 }
 
-export interface Benchmark extends Resource<'/benchmarks/'> {
+export interface Benchmark extends Resource<'/definitions/benchmarks/'> {
   name: string
   description: string
   docker_image: string
   tests: number[]
 }
 
-export interface Test extends Resource<'/tests/'> {
+export interface Test extends Resource<'/definitions/tests/'> {
   name: string
   description: string
 }
@@ -48,15 +48,6 @@ export interface Submission_old extends Resource<'/submissions/'> {
   tests: ResourceId[]
 }
 
-export interface Result extends Resource<'/results/'> {
-  submission: ResourceId
-  done_at: string | null
-  success: boolean | null
-  scores: number[] | null
-  results_str: string | null
-  public: boolean | null
-}
-
 // TODO: merge/reduce number of interfaces, find a way to use same interface for transport as for computation
 
 export type AggFunction = 'SUM' | 'NANSUM' | 'MEAN' | 'NANMEAN' | 'MEADIAN' | 'NANMEDIAN'
@@ -77,7 +68,7 @@ export interface FieldDefinitionRow extends Resource<'/fields/'> {
   agg_lateral?: boolean | null
 }
 
-export interface ScenarioDefinitionRow extends Resource<'/scenarios/'> {
+export interface ScenarioDefinitionRow extends Resource<'/definitions/scenarios/'> {
   id: string
   name: string
   description: string
@@ -86,7 +77,7 @@ export interface ScenarioDefinitionRow extends Resource<'/scenarios/'> {
 
 export type Loop = 'CLOSED' | 'INTERACTIVE' | 'OFFLINE'
 
-export interface TestDefinitionRow extends Resource<'/tests/'> {
+export interface TestDefinitionRow extends Resource<'/definitions/tests/'> {
   id: string
   name: string
   description: string
@@ -95,7 +86,7 @@ export interface TestDefinitionRow extends Resource<'/tests/'> {
   loop: Loop
 }
 
-export interface BenchmarkDefinitionRow extends Resource<'/benchmarks/'> {
+export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmarks/'> {
   id: string
   name: string
   description: string
