@@ -16,7 +16,7 @@
               {{ cell.text }}
             } @else if ('scorings' in cell) {
               @if (cell.scorings) {
-                {{ cell.scorings['primary']?.score }}
+                {{ cell.scorings['primary']?.score | number:'1.2-2' }}
               }
             }
           </td>

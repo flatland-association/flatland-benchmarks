@@ -2,7 +2,9 @@ import { ApiRequest } from './api-request'
 import { ApiResponse } from './api-response'
 import {
   BenchmarkDefinitionRow,
-  CampaignItem,
+  BenchmarkGroupDefinitionRow,
+  CampaignItemOverview,
+  CampaignOverview,
   Leaderboard,
   LeaderboardItem,
   PostTestResultsBody,
@@ -61,6 +63,12 @@ interface ApiEndpointDefinitions {
   '/whoami': {
     GET: ApiEndpoint<Empty, Empty, json>
   }
+  '/definitions/benchmark-groups': {
+    GET: ApiEndpoint<Empty, Empty, BenchmarkGroupDefinitionRow[]>
+  }
+  '/definitions/benchmark-groups/:group_id': {
+    GET: ApiEndpoint<Empty, Empty, BenchmarkGroupDefinitionRow[]>
+  }
   '/test': {
     GET: ApiEndpoint<Empty, Empty, Test>
   }
@@ -94,8 +102,11 @@ interface ApiEndpointDefinitions {
   '/results/benchmarks/:benchmark_id': {
     GET: ApiEndpoint<Empty, Empty, Leaderboard[]>
   }
-  '/results/campaign-items/:benchmark_id': {
-    GET: ApiEndpoint<Empty, Empty, CampaignItem[]>
+  '/results/campaign-items/:benchmark_ids': {
+    GET: ApiEndpoint<Empty, Empty, CampaignItemOverview[]>
+  }
+  '/results/campaigns/:group_ids': {
+    GET: ApiEndpoint<Empty, Empty, CampaignOverview[]>
   }
   '/results/benchmarks/:benchmark_id/tests/:test_id': {
     GET: ApiEndpoint<Empty, Empty, Leaderboard[]>
