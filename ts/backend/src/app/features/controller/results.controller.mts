@@ -257,7 +257,7 @@ export class ResultsController extends Controller {
    *                  additionalProperties:
    *                    type: number
    *    responses:
-   *      200:
+   *      201:
    *        description: All results inserted.
    *        content:
    *          application/json:
@@ -308,7 +308,7 @@ export class ResultsController extends Controller {
     const ok = !sql.errors
     if (ok) {
       await sql.query`COMMIT`
-      this.respond(req, res, {})
+      this.respond(req, res, {}, 201)
     } else {
       this.requestError(req, res, { text: 'Some results could not be inserted, transaction aborted.' })
     }
@@ -580,9 +580,9 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/campaign-items/{benchmark_id}/tests/{test_id}:
+   * /results/benchmarks/{benchmark_id}/tests/{test_id}:
    *  get:
-   *    description: Get campaign item test leaderboard.
+   *    description: Get test leaderboard.
    *    security:
    *      - oauth2: [user]
    *    parameters:
@@ -602,7 +602,7 @@ export class ResultsController extends Controller {
    *          format: uuid
    *    responses:
    *      200:
-   *        description: campaign item test leaderboard.
+   *        description: test leaderboard.
    *        content:
    *          application/json:
    *            schema:

@@ -32,11 +32,11 @@ export class NewSubmissionView implements OnInit {
   }
 
   async ngOnInit() {
-    this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
+    this.benchmark = (await this.apiService.get('/definitions/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
     console.log(this.benchmark)
     // load all the available tests
     this.tests = (
-      await this.apiService.get('/tests/:id', {
+      await this.apiService.get('/definitions/tests/:id', {
         params: {
           id: this.benchmark!.test_definition_ids.join(','),
         },

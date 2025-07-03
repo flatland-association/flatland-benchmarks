@@ -61,6 +61,12 @@ configuration = fab_clientlib.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 
 # Enter a context with an instance of the API client
@@ -69,11 +75,11 @@ with fab_clientlib.ApiClient(configuration) as api_client:
     api_instance = fab_clientlib.DefaultApi(api_client)
 
     try:
-        api_response = api_instance.health_live_get()
-        print("The response of DefaultApi->health_live_get:\n")
+        api_response = api_instance.definitions_benchmarks_get()
+        print("The response of DefaultApi->definitions_benchmarks_get:\n")
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling DefaultApi->health_live_get: %s\n" % e)
+        print("Exception when calling DefaultApi->definitions_benchmarks_get: %s\n" % e)
 
 ```
 
@@ -83,10 +89,13 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DefaultApi* | [**definitions_benchmarks_get**](docs/DefaultApi.md#definitions_benchmarks_get) | **GET** /definitions/benchmarks/ | 
+*DefaultApi* | [**definitions_benchmarks_ids_get**](docs/DefaultApi.md#definitions_benchmarks_ids_get) | **GET** /definitions/benchmarks/{ids} | 
+*DefaultApi* | [**definitions_tests_ids_get**](docs/DefaultApi.md#definitions_tests_ids_get) | **GET** /definitions/tests/{ids} | 
 *DefaultApi* | [**health_live_get**](docs/DefaultApi.md#health_live_get) | **GET** /health/live | 
 *DefaultApi* | [**results_benchmarks_benchmark_id_get**](docs/DefaultApi.md#results_benchmarks_benchmark_id_get) | **GET** /results/benchmarks/{benchmark_id} | 
+*DefaultApi* | [**results_benchmarks_benchmark_id_tests_test_id_get**](docs/DefaultApi.md#results_benchmarks_benchmark_id_tests_test_id_get) | **GET** /results/benchmarks/{benchmark_id}/tests/{test_id} | 
 *DefaultApi* | [**results_campaign_items_benchmark_id_get**](docs/DefaultApi.md#results_campaign_items_benchmark_id_get) | **GET** /results/campaign-items/{benchmark_id} | 
-*DefaultApi* | [**results_campaign_items_benchmark_id_tests_test_id_get**](docs/DefaultApi.md#results_campaign_items_benchmark_id_tests_test_id_get) | **GET** /results/campaign-items/{benchmark_id}/tests/{test_id} | 
 *DefaultApi* | [**results_submissions_submission_id_get**](docs/DefaultApi.md#results_submissions_submission_id_get) | **GET** /results/submissions/{submission_id} | 
 *DefaultApi* | [**results_submissions_submission_id_tests_test_id_get**](docs/DefaultApi.md#results_submissions_submission_id_tests_test_id_get) | **GET** /results/submissions/{submission_id}/tests/{test_id} | 
 *DefaultApi* | [**results_submissions_submission_id_tests_test_id_post**](docs/DefaultApi.md#results_submissions_submission_id_tests_test_id_post) | **POST** /results/submissions/{submission_id}/tests/{test_id} | 
@@ -94,13 +103,17 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**submissions_get**](docs/DefaultApi.md#submissions_get) | **GET** /submissions | 
 *DefaultApi* | [**submissions_post**](docs/DefaultApi.md#submissions_post) | **POST** /submissions | 
 *DefaultApi* | [**submissions_uuid_get**](docs/DefaultApi.md#submissions_uuid_get) | **GET** /submissions/{uuid} | 
-*DefaultApi* | [**tests_ids_get**](docs/DefaultApi.md#tests_ids_get) | **GET** /tests/{ids} | 
+*DefaultApi* | [**submissions_uuid_patch**](docs/DefaultApi.md#submissions_uuid_patch) | **PATCH** /submissions/{uuid} | 
 
 
 ## Documentation For Models
 
  - [ApiResponse](docs/ApiResponse.md)
  - [ApiResponseError](docs/ApiResponseError.md)
+ - [DefinitionsBenchmarksGet200Response](docs/DefinitionsBenchmarksGet200Response.md)
+ - [DefinitionsBenchmarksGet200ResponseAllOfBodyInner](docs/DefinitionsBenchmarksGet200ResponseAllOfBodyInner.md)
+ - [DefinitionsTestsIdsGet200Response](docs/DefinitionsTestsIdsGet200Response.md)
+ - [DefinitionsTestsIdsGet200ResponseAllOfBodyInner](docs/DefinitionsTestsIdsGet200ResponseAllOfBodyInner.md)
  - [HealthLiveGet200Response](docs/HealthLiveGet200Response.md)
  - [HealthLiveGet200ResponseAllOfBody](docs/HealthLiveGet200ResponseAllOfBody.md)
  - [HealthLiveGet200ResponseAllOfBodyChecksInner](docs/HealthLiveGet200ResponseAllOfBodyChecksInner.md)
@@ -122,8 +135,6 @@ Class | Method | HTTP request | Description
  - [SubmissionsPost200Response](docs/SubmissionsPost200Response.md)
  - [SubmissionsPost200ResponseAllOfBody](docs/SubmissionsPost200ResponseAllOfBody.md)
  - [SubmissionsPostRequest](docs/SubmissionsPostRequest.md)
- - [TestsIdsGet200Response](docs/TestsIdsGet200Response.md)
- - [TestsIdsGet200ResponseAllOfBodyInner](docs/TestsIdsGet200ResponseAllOfBodyInner.md)
 
 
 <a id="documentation-for-authorization"></a>

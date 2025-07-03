@@ -9,21 +9,111 @@ export class BenchmarkController extends Controller {
   constructor(config: configuration) {
     super(config)
 
-    this.attachGet('/benchmarks', this.getBenchmarks)
-    this.attachGet('/benchmarks/:id', this.getBenchmarkById)
+    this.attachGet('/definitions/benchmarks', this.getBenchmarks)
+    this.attachGet('/definitions/benchmarks/:id', this.getBenchmarkById)
   }
 
-  getBenchmarks: GetHandler<'/benchmarks'> = async (req, res) => {
+  /**
+   * @swagger
+   * /definitions/benchmarks/:
+   *  get:
+   *    description: Returns benchmarks.
+   *    security:
+   *      - oauth2: [user]
+   *    responses:
+   *      200:
+   *        description: Benchmarks.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                          name:
+   *                            type: string
+   *                          description:
+   *                            type: string
+   *                          field_definition_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   *                          test_definition_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   */
+  getBenchmarks: GetHandler<'/definitions/benchmarks'> = async (req, res) => {
     const sql = SqlService.getInstance()
     const rows = await sql.query<StripDir<BenchmarkDefinitionRow>>`
       SELECT id, name, description, field_definition_ids, test_definition_ids FROM benchmark_definitions
       ORDER BY name ASC
     `
-    const resources = appendDir('/benchmarks/', rows)
+    const resources = appendDir('/definitions/benchmarks/', rows)
     this.respond(req, res, resources)
   }
 
-  getBenchmarkById: GetHandler<'/benchmarks/:id'> = async (req, res) => {
+  /**
+   * @swagger
+   * /definitions/benchmarks/{ids}:
+   *  get:
+   *    description: Returns tests with ID in `ids`.
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: ids
+   *        description: Comma-separated list of IDs.
+   *        required: true
+   *        schema:
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
+   *    responses:
+   *      200:
+   *        description: Requested benchmarks.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                          name:
+   *                            type: string
+   *                          description:
+   *                            type: string
+   *                          field_definition_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   *                          test_definition_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   */
+  getBenchmarkById: GetHandler<'/definitions/benchmarks/:id'> = async (req, res) => {
     const ids = req.params.id.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
@@ -32,7 +122,7 @@ export class BenchmarkController extends Controller {
       WHERE id=ANY(${ids})
       LIMIT ${ids.length}
     `
-    const benchmarks = appendDir('/benchmarks/', rows)
+    const benchmarks = appendDir('/definitions/benchmarks/', rows)
     this.respond(req, res, benchmarks)
   }
 }

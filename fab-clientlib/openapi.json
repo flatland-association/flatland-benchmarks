@@ -6,6 +6,151 @@
     "description": "Python client lib to access Flatland Association Benchmarks / AI4REALNET Campaign Hub Backend API, generated with openapi-generator"
   },
   "paths": {
+    "/definitions/benchmarks/": {
+      "get": {
+        "description": "Returns benchmarks.",
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Benchmarks.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "field_definition_ids": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
+                              },
+                              "test_definition_ids": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/definitions/benchmarks/{ids}": {
+      "get": {
+        "description": "Returns tests with ID in `ids`.",
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ids",
+            "description": "Comma-separated list of IDs.",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requested benchmarks.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "field_definition_ids": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
+                              },
+                              "test_definition_ids": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health/live": {
       "get": {
         "description": "Returns liveness.",
@@ -299,7 +444,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "All results inserted.",
             "content": {
               "application/json": {
@@ -601,9 +746,9 @@
         }
       }
     },
-    "/results/campaign-items/{benchmark_id}/tests/{test_id}": {
+    "/results/benchmarks/{benchmark_id}/tests/{test_id}": {
       "get": {
-        "description": "Get campaign item test leaderboard.",
+        "description": "Get test leaderboard.",
         "security": [
           {
             "oauth2": [
@@ -635,7 +780,7 @@
         ],
         "responses": {
           "200": {
-            "description": "campaign item test leaderboard.",
+            "description": "test leaderboard.",
             "content": {
               "application/json": {
                 "schema": {
@@ -904,6 +1049,7 @@
     },
     "/submissions/{uuid}": {
       "get": {
+        "description": "Get submissions.",
         "security": [
           {
             "oauth2": [
@@ -915,12 +1061,15 @@
           {
             "in": "path",
             "name": "uuid",
+            "description": "Comma-separated list of submission IDs.",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "description": "The submission ID"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
           }
         ],
         "responses": {
@@ -995,9 +1144,106 @@
             }
           }
         }
+      },
+      "description": "Publish submissions.",
+      "patch": {
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "uuid",
+            "description": "Comma-separated list of IDs.",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Published submission.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "benchmark_definition_id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "test_definition_ids": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "submission_data_url": {
+                                "type": "string"
+                              },
+                              "code_repository": {
+                                "type": "string"
+                              },
+                              "submitted_at": {
+                                "type": "string"
+                              },
+                              "submitted_by": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "submitted_by_username": {
+                                "type": "string"
+                              },
+                              "status": {
+                                "type": "string"
+                              },
+                              "published": {
+                                "type": "boolean"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
       }
     },
-    "/tests/{ids}": {
+    "/definitions/tests/{ids}": {
       "get": {
         "description": "Returns tests with ID in `ids`.",
         "security": [
@@ -1016,7 +1262,8 @@
             "schema": {
               "type": "array",
               "items": {
-                "type": "integer"
+                "type": "string",
+                "format": "uuid"
               }
             }
           }

@@ -55,10 +55,12 @@ export class VcMySubmissionsView implements OnInit {
     ).body
     // load linked resources
     // TODO: offload this to service with caching
-    this.benchmark = (await this.apiService.get('/benchmarks/:id', { params: { id: this.benchmarkId } })).body?.at(0)
+    this.benchmark = (
+      await this.apiService.get('/definitions/benchmarks/:id', { params: { id: this.benchmarkId } })
+    ).body?.at(0)
     // gather unique test ids, load, transform to map (uuid: test)
     const testIds = Array.from(new Set(this.submissions?.map((submission) => submission.test_definition_ids[0])))
-    const tests = (await this.apiService.get('/tests/:id', { params: { id: testIds.join(',') } })).body
+    const tests = (await this.apiService.get('/definitions/tests/:id', { params: { id: testIds.join(',') } })).body
     this.tests = new Map(tests?.map((test) => [test.id, test]))
     // build table rows from board
     this.rows =

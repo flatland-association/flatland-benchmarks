@@ -133,7 +133,7 @@ jobs:
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
           python -m pip install -U -r requirements-dev.txt
-          pytest -s test_containers_submission_api.py
+          pytest -s test_containers_fab_rest_api.py
 
   eslint:
     runs-on: ubuntu-latest

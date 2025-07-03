@@ -20,7 +20,7 @@ export class HomeView implements OnInit {
   leadHtml?: string
 
   async ngOnInit() {
-    this.benchmarks = (await this.apiService.get('/benchmarks')).body
+    this.benchmarks = (await this.apiService.get('/definitions/benchmarks')).body
     this.customization = await this.customizationService.getCustomization()
     this.leadHtml = this.customization.content.home.lead
   }

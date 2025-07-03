@@ -17,6 +17,6 @@ export class BenchmarkView implements OnInit {
   benchmarks?: BenchmarkDefinitionRow[]
 
   async ngOnInit() {
-    this.benchmarks = (await this.apiService.get('/benchmarks')).body
+    this.benchmarks = (await this.apiService.get('/definitions/benchmarks')).body
   }
 }
