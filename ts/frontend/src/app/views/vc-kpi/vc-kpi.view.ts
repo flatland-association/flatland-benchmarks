@@ -74,7 +74,7 @@ export class VcKpiView implements OnInit {
       board?.items.map((item) => {
         const testScoring = item.test_scorings[0].scorings
         return {
-          // routerLink: item.test_id,
+          routerLink: ['/', 'submissions', item.submission_id],
           cells: [
             { text: testScoring?.['primary']?.rank ?? '-' },
             { text: this.submissions!.get(item.submission_id)?.name ?? 'NA' },

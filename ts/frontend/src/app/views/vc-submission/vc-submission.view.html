@@ -1,0 +1,26 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<lib-content>
+  <app-site-heading class="bp-8 flex w-full" [title]="submission?.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
+
+  <lib-section class="w-full">
+    <p>
+      {{ submission?.description }}
+    </p>
+  </lib-section>
+</lib-content>
+
+<lib-content>
+  @if (isSubmissionScored()) {
+    <p class="pb-8">This submission has been successfully scored.</p>
+  } @else {
+    <p class="pb-8">This submission has not yet been scored completely.</p>
+  }
+  <app-table [columns]="columns" [rows]="rows" class="w-full"></app-table>
+</lib-content>
+
+<lib-content>
+  <!-- TODO: publish own submission 
+  <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'new-submission'">Submit solution</button>
+  -->
+</lib-content>
