@@ -101,7 +101,7 @@ export interface BenchmarkGroupDefinitionRow extends Resource<'/benchmark-groups
   name: string
   description: string
   setup: BenchmarkGroupSetup
-  benchmark_definition_ids: string[]
+  benchmark_ids: string[]
 }
 
 export type SubmissionStatus = 'SUBMITTED' | 'RUNNING' | 'SUCCESS' | 'FAILURE'

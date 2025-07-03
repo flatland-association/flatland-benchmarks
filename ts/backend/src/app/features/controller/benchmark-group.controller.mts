@@ -43,7 +43,7 @@ export class BenchmarkGroupController extends Controller {
    *                            type: string
    *                          setup:
    *                            type: string
-   *                          benchmark_definition_ids:
+   *                          benchmark_ids:
    *                            type: array
    *                            items:
    *                              type: string
@@ -97,7 +97,7 @@ export class BenchmarkGroupController extends Controller {
    *                            type: string
    *                          setup:
    *                            type: string
-   *                          benchmark_definition_ids:
+   *                          benchmark_ids:
    *                            type: array
    *                            items:
    *                              type: string

@@ -1,4 +1,5 @@
 
+ALTER TABLE benchmark_groups RENAME COLUMN benchmark_definition_ids TO benchmark_ids;
 
 ALTER TABLE benchmark_definitions RENAME COLUMN test_definition_ids TO test_ids;
 ALTER TABLE benchmark_definitions RENAME COLUMN field_definition_ids TO field_ids;

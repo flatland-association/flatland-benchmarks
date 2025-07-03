@@ -123,7 +123,7 @@ export function upcastBenchmarkDefinitionRow(
   }
 }
 
-export interface BenchmarkGroupDefinition extends Omit<BenchmarkGroupDefinitionRow, 'benchmark_definition_ids'> {
+export interface BenchmarkGroupDefinition extends Omit<BenchmarkGroupDefinitionRow, 'benchmark_ids'> {
   benchmark_definitions: (BenchmarkDefinition | null)[]
 }
 
@@ -140,7 +140,7 @@ export function upcastBenchmarkGroupDefinitionRow(
     name: row.name,
     description: row.description,
     setup: row.setup,
-    benchmark_definitions: row.benchmark_definition_ids.map((id) => {
+    benchmark_definitions: row.benchmark_ids.map((id) => {
       const benchmark = benchmarkDefinitionCandidates.find((c) => c.id === id) ?? null
       if (benchmark) {
         return upcastBenchmarkDefinitionRow(

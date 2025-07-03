@@ -961,7 +961,7 @@ export class ResultsController extends Controller {
       SELECT * FROM benchmark_groups WHERE id=${groupId}
     `
     const submissionRows = await sql.query<SubmissionRow>`
-      SELECT * FROM submissions WHERE benchmark_definition_id=ANY(${groupDefRow.benchmark_definition_ids}) AND published=true
+      SELECT * FROM submissions WHERE benchmark_id=ANY(${groupDefRow.benchmark_ids}) AND published=true
     `
     // load required candidates for referenced fields (used in upcast) and upcast
     const fieldDefCandidates = await sql.query<FieldDefinitionRow>`
@@ -974,7 +974,7 @@ export class ResultsController extends Controller {
       SELECT * FROM test_definitions
     `
     const benchmarkDefCandidates = await sql.query<BenchmarkDefinitionRow>`
-      SELECT * FROM benchmark_definitions WHERE id=ANY(${groupDefRow.benchmark_definition_ids})
+      SELECT * FROM benchmark_definitions WHERE id=ANY(${groupDefRow.benchmark_ids})
     `
     // It's necessary to upcast both separately (potentially doing the work
     // twice), because getGroupLeaderboard should return something even if
@@ -997,7 +997,7 @@ export class ResultsController extends Controller {
     )
     // load results
     const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_definition_id=ANY(${groupDefRow.benchmark_definition_ids})
+      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_id=ANY(${groupDefRow.benchmark_ids})
     `
     if (!groupDef) return null
     return Aggregator.getGroupLeaderboard(groupDef, submissions, resultRows)

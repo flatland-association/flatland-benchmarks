@@ -66,12 +66,12 @@ export class VcCampaignView implements OnInit {
     ).body?.at(0)
     // load linked resources
     // TODO: unify, see https://github.com/flatland-association/flatland-benchmarks/issues/66
-    const benchmarkIds = this.group?.benchmark_definition_ids?.join(',')
+    const benchmarkIds = this.group?.benchmark_ids?.join(',')
     if (benchmarkIds) {
       this.benchmarks = new Map(
         (
-          await this.apiService.get('/definitions/benchmarks/:id', {
-            params: { id: benchmarkIds },
+          await this.apiService.get('/definitions/benchmarks/:benchmark_ids', {
+            params: { benchmark_ids: benchmarkIds },
           })
         ).body?.map((benchmark) => [benchmark.id, benchmark]),
       )
@@ -84,7 +84,7 @@ export class VcCampaignView implements OnInit {
           routerLink: ['/', 'vc-evaluation-objective', item.benchmark_id],
           cells: [
             { text: benchmark?.name ?? 'NA' },
-            { text: benchmark?.test_definition_ids.length ?? 'NA' },
+            { text: benchmark?.test_ids.length ?? 'NA' },
             { scorings: item.scorings },
           ],
         }
