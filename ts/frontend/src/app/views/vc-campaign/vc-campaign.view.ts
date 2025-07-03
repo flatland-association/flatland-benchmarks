@@ -58,7 +58,9 @@ export class VcCampaignView implements OnInit {
 
   async ngOnInit() {
     this.customization = await this.customizationService.getCustomization()
-    this.group = (await this.apiService.get('/benchmark-groups/:id', { params: { id: this.groupId } })).body?.at(0)
+    this.group = (
+      await this.apiService.get('/definitions/benchmark-groups/:group_id', { params: { group_id: this.groupId } })
+    ).body?.at(0)
     this.campaignBoard = (
       await this.apiService.get('/results/campaigns/:group_id', { params: { group_id: this.groupId } })
     ).body?.at(0)
@@ -68,7 +70,7 @@ export class VcCampaignView implements OnInit {
     if (benchmarkIds) {
       this.benchmarks = new Map(
         (
-          await this.apiService.get('/benchmarks/:id', {
+          await this.apiService.get('/definitions/benchmarks/:id', {
             params: { id: benchmarkIds },
           })
         ).body?.map((benchmark) => [benchmark.id, benchmark]),

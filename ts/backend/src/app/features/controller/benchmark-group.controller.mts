@@ -9,8 +9,8 @@ export class BenchmarkGroupController extends Controller {
   constructor(config: configuration) {
     super(config)
 
-    this.attachGet('/benchmark-groups', this.getBenchmarkGroups)
-    this.attachGet('/benchmark-groups/:id', this.getBenchmarkGroupById)
+    this.attachGet('/definitions/benchmark-groups', this.getBenchmarkGroups)
+    this.attachGet('/definitions/benchmark-groups/:group_id', this.getBenchmarkGroupById)
   }
 
   /**
@@ -49,7 +49,7 @@ export class BenchmarkGroupController extends Controller {
    *                              type: string
    *                              format: uuid
    */
-  getBenchmarkGroups: GetHandler<'/benchmark-groups'> = async (req, res) => {
+  getBenchmarkGroups: GetHandler<'/definitions/benchmark-groups'> = async (req, res) => {
     const sql = SqlService.getInstance()
     const rows = await sql.query<StripDir<BenchmarkGroupDefinitionRow>>`
       SELECT * FROM benchmark_groups
@@ -61,17 +61,17 @@ export class BenchmarkGroupController extends Controller {
 
   /**
    * @swagger
-   * /benchmark-groups/{id}:
+   * /benchmark-groups/{group_id}:
    *  get:
-   *    description: Returns requested benchmark-group.
+   *    description: Returns benchmark-groups with ID in `group_id`.
    *    parameters:
    *      - in: path
-   *        name: id
+   *        name: group_id
    *        required: true
    *        schema:
    *          type: string
    *          format: uuid
-   *        description: The submission ID
+   *        description: Comma-separated list of IDs.
    *    responses:
    *      200:
    *        description: Requested benchmark-groups.
@@ -103,8 +103,8 @@ export class BenchmarkGroupController extends Controller {
    *                              type: string
    *                              format: uuid
    */
-  getBenchmarkGroupById: GetHandler<'/benchmark-groups/:id'> = async (req, res) => {
-    const ids = req.params.id.split(',')
+  getBenchmarkGroupById: GetHandler<'/definitions/benchmark-groups/:group_id'> = async (req, res) => {
+    const ids = req.params.group_id.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<BenchmarkGroupDefinitionRow>>`

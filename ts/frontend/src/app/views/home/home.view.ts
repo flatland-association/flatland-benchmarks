@@ -21,7 +21,7 @@ export class HomeView implements OnInit {
 
   async ngOnInit() {
     this.customization = await this.customizationService.getCustomization()
-    this.groups = (await this.apiService.get('/benchmark-groups')).body
+    this.groups = (await this.apiService.get('/definitions/benchmark-groups')).body
     this.leadHtml = this.customization.content.home.lead
   }
 }

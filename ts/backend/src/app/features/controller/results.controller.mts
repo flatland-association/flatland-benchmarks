@@ -39,8 +39,8 @@ export class ResultsController extends Controller {
     this.attachPost('/results/submissions/:submission_id/tests/:test_id', this.postTestResults)
     this.attachGet('/results/submissions/:submission_id/tests/:test_id/scenario/:scenario_id', this.getScenarioResults)
     this.attachGet('/results/benchmarks/:benchmark_id', this.getLeaderboard)
-    this.attachGet('/results/campaign-items/:benchmark_id', this.getCampaignItem)
-    this.attachGet('/results/campaigns/:group_id', this.getGroupLeaderboard)
+    this.attachGet('/results/campaign-items/:benchmark_id', this.getCampaignItemOverview)
+    this.attachGet('/results/campaigns/:group_id', this.getCampaignOverview)
     this.attachGet('/results/benchmarks/:benchmark_id/tests/:test_id', this.getTestLeaderboard)
   }
 
@@ -508,7 +508,7 @@ export class ResultsController extends Controller {
    * @swagger
    * /results/campaign-items/{benchmark_id}:
    *  get:
-   *    description: Get campaign item leaderboard.
+   *    description: Returns a campaign-item overview (i.e. all tests in benchmark with score of top submission per test).
    *    security:
    *      - oauth2: [user]
    *    parameters:
@@ -555,7 +555,7 @@ export class ResultsController extends Controller {
    *                                  format: uuid
    *                                  description: ID of best submission.
    */
-  getCampaignItem: GetHandler<'/results/campaign-items/:benchmark_id'> = async (req, res) => {
+  getCampaignItemOverview: GetHandler<'/results/campaign-items/:benchmark_id'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -588,7 +588,7 @@ export class ResultsController extends Controller {
    * @swagger
    * /results/campaigns/{group_id}:
    *  get:
-   *    description: Returns a campaign leaderboard (i.e. benchmark group leaderboard with top solution per test only).
+   *    description: Returns a campaign overview (i.e. all benchmarks in the group with score aggregated from their top submission per test).
    *    security:
    *      - oauth2: [user]
    *    parameters:
@@ -647,7 +647,7 @@ export class ResultsController extends Controller {
    *                            type: object
    *                            description: Dictionary of group scores
    */
-  getGroupLeaderboard: GetHandler<'/results/campaigns/:group_id'> = async (req, res) => {
+  getCampaignOverview: GetHandler<'/results/campaigns/:group_id'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {

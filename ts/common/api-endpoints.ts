@@ -63,10 +63,10 @@ interface ApiEndpointDefinitions {
   '/whoami': {
     GET: ApiEndpoint<Empty, Empty, json>
   }
-  '/benchmark-groups': {
+  '/definitions/benchmark-groups': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkGroupDefinitionRow[]>
   }
-  '/benchmark-groups/:id': {
+  '/definitions/benchmark-groups/:group_id': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkGroupDefinitionRow[]>
   }
   '/definitions/benchmarks': {
