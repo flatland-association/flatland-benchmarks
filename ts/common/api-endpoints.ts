@@ -3,8 +3,8 @@ import { ApiResponse } from './api-response'
 import {
   BenchmarkDefinitionRow,
   BenchmarkGroupDefinitionRow,
-  CampaignItem,
-  GroupLeaderboard,
+  CampaignItemOverview,
+  CampaignOverview,
   Leaderboard,
   LeaderboardItem,
   PostTestResultsBody,
@@ -103,10 +103,10 @@ interface ApiEndpointDefinitions {
     GET: ApiEndpoint<Empty, Empty, Leaderboard[]>
   }
   '/results/campaign-items/:benchmark_id': {
-    GET: ApiEndpoint<Empty, Empty, CampaignItem[]>
+    GET: ApiEndpoint<Empty, Empty, CampaignItemOverview[]>
   }
   '/results/campaigns/:group_id': {
-    GET: ApiEndpoint<Empty, Empty, GroupLeaderboard[]>
+    GET: ApiEndpoint<Empty, Empty, CampaignOverview[]>
   }
   '/results/benchmarks/:benchmark_id/tests/:test_id': {
     GET: ApiEndpoint<Empty, Empty, Leaderboard[]>

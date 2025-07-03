@@ -1,4 +1,4 @@
-import { GroupLeaderboard } from '@common/interfaces'
+import { CampaignOverview } from '@common/interfaces'
 import { ResultsController } from '../../src/app/features/controller/results.controller.mjs'
 import { ControllerTestAdapter, setupControllerTestEnvironment, testUserJwt } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
@@ -13,7 +13,7 @@ describe.sequential('Results controller', () => {
   })
 
   describe('should return aggregated campaign leaderboard', () => {
-    let leaderboard: GroupLeaderboard | undefined
+    let overview: CampaignOverview | undefined
 
     beforeAll(async () => {
       const res = await controller.testGet(
@@ -25,8 +25,8 @@ describe.sequential('Results controller', () => {
       )
       expect(res.status).toBe(200)
       expect(res.body).toBeApiResponse()
-      leaderboard = res.body.body?.at(0)
-      expect(leaderboard).toBeTruthy()
+      overview = res.body.body?.at(0)
+      expect(overview).toBeTruthy()
     })
 
     // group might contain additional benchmarks - for test, check that
@@ -36,7 +36,7 @@ describe.sequential('Results controller', () => {
       { uuid: 'c5145011-ce69-4679-8694-e1dbeb1ee4bb', score: 0.71 },
       { uuid: '1df5f920-ed2c-4873-957b-723b4b5d81b1', score: 0.82 },
     ])('should score $uuid with $score', (testCase) => {
-      const benchmark = leaderboard?.items.find(
+      const benchmark = overview?.items.find(
         // comparing by something else than uuid would require additional calls
         (item) => item.benchmark_id === testCase.uuid,
       )

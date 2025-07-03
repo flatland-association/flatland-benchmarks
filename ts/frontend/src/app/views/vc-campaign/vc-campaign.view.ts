@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router'
 import {
   BenchmarkDefinitionRow,
   BenchmarkGroupDefinitionRow,
-  GroupLeaderboard,
+  CampaignOverview,
   SubmissionRow,
   TestDefinitionRow,
 } from '@common/interfaces'
@@ -40,7 +40,7 @@ export class VcCampaignView implements OnInit {
   benchmarks?: Map<string, BenchmarkDefinitionRow>
   tests?: Map<string, TestDefinitionRow>
   submissions?: Map<string, SubmissionRow>
-  campaignBoard?: GroupLeaderboard
+  campaignOverview?: CampaignOverview
   customization?: Customization
 
   columns: TableColumn[] = [
@@ -61,7 +61,7 @@ export class VcCampaignView implements OnInit {
     this.group = (
       await this.apiService.get('/definitions/benchmark-groups/:group_id', { params: { group_id: this.groupId } })
     ).body?.at(0)
-    this.campaignBoard = (
+    this.campaignOverview = (
       await this.apiService.get('/results/campaigns/:group_id', { params: { group_id: this.groupId } })
     ).body?.at(0)
     // load linked resources
@@ -78,7 +78,7 @@ export class VcCampaignView implements OnInit {
     }
     // build table rows from board
     this.rows =
-      this.campaignBoard?.items.map((item) => {
+      this.campaignOverview?.items.map((item) => {
         const benchmark = this.benchmarks?.get(item.benchmark_id)
         return {
           routerLink: ['/', 'vc-evaluation-objective', item.benchmark_id],

@@ -1,10 +1,10 @@
 import {
   BenchmarkDefinitionRow,
   BenchmarkGroupDefinitionRow,
-  CampaignItem,
-  CampaignItemItem,
+  CampaignItemOverview,
+  CampaignItemOverviewItem,
+  CampaignOverview,
   FieldDefinitionRow,
-  GroupLeaderboard,
   Leaderboard,
   LeaderboardItem,
   ResultRow,
@@ -570,7 +570,7 @@ export class ResultsController extends Controller {
     }
     // transform for transmission
     // TODO: properly define data format of results for transmission
-    const result: CampaignItem = {
+    const result: CampaignItemOverview = {
       benchmark_id: benchmarkId,
       items: leaderboard.items.map((item) => {
         return {
@@ -662,7 +662,7 @@ export class ResultsController extends Controller {
     }
     // transform for transmission
     // TODO: properly define data format of results for transmission
-    const result: GroupLeaderboard = {
+    const result: CampaignOverview = {
       group_id: groupId,
       items: leaderboard.items.map((campaignItem) => {
         return {
@@ -672,10 +672,10 @@ export class ResultsController extends Controller {
               test_id: campaignItemItem.test.id,
               scorings: campaignItemItem.scorings,
               submission_id: campaignItemItem.submission?.id ?? null,
-            } satisfies CampaignItemItem
+            } satisfies CampaignItemOverviewItem
           }),
           scorings: campaignItem.scorings,
-        } satisfies CampaignItem
+        } satisfies CampaignItemOverview
       }),
     }
     this.respond(req, res, [result])

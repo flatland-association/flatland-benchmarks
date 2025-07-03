@@ -172,19 +172,19 @@ export interface Leaderboard {
   items: LeaderboardItem[]
 }
 
-export interface CampaignItemItem {
+export interface CampaignItemOverviewItem {
   test_id: string
   scorings: Scorings | null
   submission_id: string | null
 }
 
-export interface CampaignItem {
+export interface CampaignItemOverview {
   benchmark_id: string
-  items: CampaignItemItem[]
+  items: CampaignItemOverviewItem[]
   scorings: Scorings
 }
 
-export interface GroupLeaderboard {
+export interface CampaignOverview {
   group_id: string
-  items: CampaignItem[]
+  items: CampaignItemOverview[]
 }
