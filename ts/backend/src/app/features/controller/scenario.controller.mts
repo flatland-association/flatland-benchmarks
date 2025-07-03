@@ -21,7 +21,7 @@ export class ScenarioController extends Controller {
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: ids
+   *        name: scenario_ids
    *        description: Comma-separated list of IDs.
    *        required: true
    *        schema:
