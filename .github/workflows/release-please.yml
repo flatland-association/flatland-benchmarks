@@ -70,6 +70,8 @@ jobs:
           push: true
           tags: |
             ghcr.io/flatland-association/fab-backend:${{ needs.release-please.outputs.tag_name }}
+          build-args: |
+            FAB_VERSION=${{ needs.release-please.outputs.tag_name }}
   build-flatland-evaluator:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
@@ -96,8 +98,7 @@ jobs:
           push: true
           tags: |
             ghcr.io/flatland-association/fab-flatland-evaluator:${{ needs.release-please.outputs.tag_name }}
-          build-args: |
-            FAB_VERSION=${{ needs.release-please.outputs.tag_name }}
+
   build-flatland-compute-worker:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
