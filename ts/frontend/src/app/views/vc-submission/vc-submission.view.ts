@@ -57,12 +57,12 @@ export class VcSubmissionView implements OnInit {
   async ngOnInit() {
     this.customization = await this.customizationService.getCustomization()
     this.submission = (
-      await this.apiService.get('/submissions/:uuid', { params: { uuid: this.submissionId } })
+      await this.apiService.get('/submissions/:submission_ids', { params: { submission_ids: this.submissionId } })
     ).body?.at(0)
     this.ownSubmission = this.submission?.submitted_by === this.authService.userUuid
     this.submissionBoard = (
-      await this.apiService.get('/results/submissions/:submission_id', {
-        params: { submission_id: this.submissionId },
+      await this.apiService.get('/results/submissions/:submission_ids', {
+        params: { submission_ids: this.submissionId },
       })
     ).body?.at(0)
     // load linked resources
@@ -70,7 +70,9 @@ export class VcSubmissionView implements OnInit {
     // build array of unique test ids
     const testIds = Array.from(new Set(this.submissionBoard?.test_scorings.map((test) => test.test_id)))
     if (testIds) {
-      const tests = (await this.apiService.get('/definitions/tests/:id', { params: { id: testIds.join(',') } })).body
+      const tests = (
+        await this.apiService.get('/definitions/tests/:test_ids', { params: { test_ids: testIds.join(',') } })
+      ).body
       this.tests = new Map(tests?.map((test) => [test.id, test]))
     }
     // build array of unique scenario ids
@@ -116,7 +118,7 @@ export class VcSubmissionView implements OnInit {
   async publish() {
     if (this.submission && this.ownSubmission && this.isSubmissionScored()) {
       this.submission = (
-        await this.apiService.patch('/submissions/:uuid', { params: { uuid: this.submission.id } })
+        await this.apiService.patch('/submissions/:submission_ids', { params: { submission_ids: this.submission.id } })
       ).body?.at(0)
     }
   }
