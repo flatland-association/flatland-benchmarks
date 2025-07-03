@@ -8,6 +8,7 @@ import {
   Leaderboard,
   LeaderboardItem,
   PostTestResultsBody,
+  ScenarioDefinitionRow,
   ScenarioScored,
   SubmissionRow,
   Test,
@@ -77,6 +78,9 @@ interface ApiEndpointDefinitions {
   }
   '/definitions/tests/:id': {
     GET: ApiEndpoint<Empty, Empty, TestDefinitionRow[]>
+  }
+  '/definitions/scenarios/:scenario_ids': {
+    GET: ApiEndpoint<Empty, Empty, ScenarioDefinitionRow[]>
   }
   '/submissions': {
     GET: ApiEndpoint<Empty, { benchmark?: string; uuid?: string; submitted_by?: string }, SubmissionRow[]>
