@@ -287,8 +287,8 @@ export class ResultsController extends Controller {
       for (const key in score) {
         if (key != 'scenario_id') {
           resultRows.push({
-            scenario_definition_id: score.scenario_id,
-            test_definition_id: testId,
+            scenario_id: score.scenario_id,
+            test_id: testId,
             submission_id: submissionId,
             key,
             value: score[key],
@@ -713,7 +713,7 @@ export class ResultsController extends Controller {
     const scenarioDef = upcastScenarioDefinitionRow(scenarioDefRow, fieldDefCandidates)
     // load results
     const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT * FROM results WHERE submission_id=${submissionId} AND test_definition_id=${testId} AND scenario_definition_id=${scenarioId}
+      SELECT * FROM results WHERE submission_id=${submissionId} AND test_id=${testId} AND scenario_id=${scenarioId}
     `
     return Aggregator.getScenarioScored(scenarioDef, resultRows)
   }
@@ -734,7 +734,7 @@ export class ResultsController extends Controller {
     const testDef = upcastTestDefinitionRow(testDefRow, fieldDefCandidates, scenarioDefCandidates)
     // load results
     const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT * FROM results WHERE submission_id=${submissionId} AND test_definition_id=${testId}
+      SELECT * FROM results WHERE submission_id=${submissionId} AND test_id=${testId}
     `
     return Aggregator.getTestScored(testDef, resultRows)
   }

@@ -53,7 +53,7 @@ export class TestController extends Controller {
    *                            type: string
    *                          description:
    *                            type: string
-   *                          scenario_definition_ids:
+   *                          scenario_ids:
    *                            type: array
    *                            items:
    *                              type: string

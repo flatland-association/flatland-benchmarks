@@ -72,7 +72,7 @@ export interface ScenarioDefinitionRow extends Resource<'/definitions/scenarios/
   id: string
   name: string
   description: string
-  field_definition_ids: string[]
+  field_ids: string[]
 }
 
 export type Loop = 'CLOSED' | 'INTERACTIVE' | 'OFFLINE'
@@ -81,8 +81,8 @@ export interface TestDefinitionRow extends Resource<'/definitions/tests/'> {
   id: string
   name: string
   description: string
-  field_definition_ids: string[]
-  scenario_definition_ids: string[]
+  field_ids: string[]
+  scenario_ids: string[]
   loop: Loop
 }
 
@@ -90,7 +90,7 @@ export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmark
   id: string
   name: string
   description: string
-  field_definition_ids: string[]
+  field_ids: string[]
   test_ids: string[]
 }
 
@@ -112,8 +112,8 @@ export interface SubmissionRow extends Resource<'/submissions/'> {
 }
 
 export interface ResultRow {
-  scenario_definition_id: string
-  test_definition_id: string
+  scenario_id: string
+  test_id: string
   submission_id: string
   key: string
   value: number
