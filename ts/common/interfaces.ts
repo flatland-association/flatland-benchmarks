@@ -94,6 +94,16 @@ export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmark
   test_definition_ids: string[]
 }
 
+export type BenchmarkGroupSetup = 'BENCHMARK' | 'COMPETITION' | 'CAMPAIGN'
+
+export interface BenchmarkGroupDefinitionRow extends Resource<'/benchmark-groups/'> {
+  id: string
+  name: string
+  description: string
+  setup: BenchmarkGroupSetup
+  benchmark_definition_ids: string[]
+}
+
 export type SubmissionStatus = 'SUBMITTED' | 'RUNNING' | 'SUCCESS' | 'FAILURE'
 
 export interface SubmissionRow extends Resource<'/submissions/'> {
@@ -162,13 +172,19 @@ export interface Leaderboard {
   items: LeaderboardItem[]
 }
 
-export interface CampaignItemItem {
+export interface CampaignItemOverviewItem {
   test_id: string
   scorings: Scorings | null
   submission_id: string | null
 }
 
-export interface CampaignItem {
+export interface CampaignItemOverview {
   benchmark_id: string
-  items: CampaignItemItem[]
+  items: CampaignItemOverviewItem[]
+  scorings: Scorings
+}
+
+export interface CampaignOverview {
+  group_id: string
+  items: CampaignItemOverview[]
 }
