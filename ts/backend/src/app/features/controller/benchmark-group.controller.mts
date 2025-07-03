@@ -69,8 +69,10 @@ export class BenchmarkGroupController extends Controller {
    *        name: group_ids
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *        description: Comma-separated list of IDs.
    *    responses:
    *      200:

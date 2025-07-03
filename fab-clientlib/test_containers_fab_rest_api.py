@@ -4,13 +4,13 @@ import time
 import uuid
 
 import pytest
-from fab_clientlib import ResultsSubmissionsSubmissionIdTestsTestIdPostRequest, ResultsSubmissionsSubmissionIdTestsTestIdPostRequestDataInner
 from testcontainers.compose import DockerCompose
 
+from fab_clientlib import SubmissionsPostRequest, ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest, \
+  ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
 from fab_clientlib.api.default_api import DefaultApi
 from fab_clientlib.api_client import ApiClient
 from fab_clientlib.configuration import Configuration
-from fab_clientlib.models.submissions_post_request import SubmissionsPostRequest
 from fab_oauth_utils import backend_application_flow
 
 TRACE = 5
@@ -100,7 +100,7 @@ def test_results_benchmark():
   print(token)
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
 
-  benchmark_results = fab.results_benchmarks_benchmark_id_get(benchmark_id=benchmark_id)
+  benchmark_results = fab.results_benchmarks_benchmark_ids_get(benchmark_ids=[benchmark_id])
   assert len(benchmark_results.body) == 1
   assert benchmark_results.body[0].benchmark_id == benchmark_id
   assert len(benchmark_results.body[0].items) >= 1
@@ -124,7 +124,7 @@ def test_results_benchmarks_benchmark_id_test_id():
   )
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
 
-  response = fab.results_benchmarks_benchmark_id_tests_test_id_get(benchmark_id=benchmark_id, test_id=first_test_id)
+  response = fab.results_benchmarks_benchmark_id_tests_test_ids_get(benchmark_id=benchmark_id, test_ids=[first_test_id])
   assert len(response.body) == 1
   assert response.body[0].benchmark_id == benchmark_id
   assert len(response.body[0].items) == 2  # 2 submissions
@@ -140,11 +140,10 @@ def test_submissions_get():
     token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
   )
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
-  # TODO consistency in #272 -> benchmark_id
-  response = fab.submissions_get(benchmark="20ccc7c1-034c-4880-8946-bffc3fed1359")
+  response = fab.submissions_get(benchmark_ids=["20ccc7c1-034c-4880-8946-bffc3fed1359"])
   assert len(response.body) >= 1
   assert response.body[0].id == "db5eaa85-3304-4804-b76f-14d23adb5d4c"
-  assert response.body[0].benchmark_definition_id == "20ccc7c1-034c-4880-8946-bffc3fed1359"
+  assert response.body[0].benchmark_id == "20ccc7c1-034c-4880-8946-bffc3fed1359"
   assert response.body[0].status == "SUCCESS"
   assert response.body[0].published == True
 
@@ -158,11 +157,11 @@ def test_submissions_uuid_get():
     token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
   )
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
-  response = fab.submissions_uuid_get(uuid=["db5eaa85-3304-4804-b76f-14d23adb5d4c"])
+  response = fab.submissions_submission_ids_get(submission_ids=["db5eaa85-3304-4804-b76f-14d23adb5d4c"])
   assert len(response.body) == 1
   assert response.body[0].id == "db5eaa85-3304-4804-b76f-14d23adb5d4c"
-  assert response.body[0].benchmark_definition_id == "20ccc7c1-034c-4880-8946-bffc3fed1359"
-  assert response.body[0].test_definition_ids == ["557d9a00-7e6d-410b-9bca-a017ca7fe3aa"]
+  assert response.body[0].benchmark_id == "20ccc7c1-034c-4880-8946-bffc3fed1359"
+  assert response.body[0].test_ids == ["557d9a00-7e6d-410b-9bca-a017ca7fe3aa"]
   assert response.body[0].status == "SUCCESS"
   assert response.body[0].published == True
 
@@ -180,7 +179,7 @@ def test_results_campaign_items_benchmark_id():
   )
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
 
-  response = fab.results_campaign_items_benchmark_id_get(benchmark_id=benchmark_id)
+  response = fab.results_campaign_items_benchmark_ids_get(benchmark_ids=[benchmark_id])
   assert len(response.body) == 1
   assert response.body[0].benchmark_id == benchmark_id
   assert len(response.body[0].items) == 8  # KPIs
@@ -213,36 +212,36 @@ def test_submission_roundtrip():
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
   posted_submission = fab.submissions_post(SubmissionsPostRequest(
     name="fancy",
-    benchmark_definition_id=benchmark_id,
+    benchmark_id=benchmark_id,
     submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
     code_repository="https://github.com/you-name-it",
-    test_definition_ids=[test_id],  # TODO mandatory despite optional in swagger.json, use UUIDs
+    test_ids=[test_id],  # TODO mandatory despite optional in swagger.json, use UUIDs
     # https://github.com/OpenAPITools/openapi-generator/issues/19485
     # https://github.com/openAPITools/openapi-generator-pip
   ))
   print(posted_submission)
   submission_id = posted_submission.body.id
-  submissions = fab.submissions_uuid_get(uuid=[submission_id])
+  submissions = fab.submissions_submission_ids_get(submission_ids=[submission_id])
   print(submissions)
   assert submissions.body[0].id == submission_id
-  assert submissions.body[0].benchmark_definition_id == benchmark_id
+  assert submissions.body[0].benchmark_id == benchmark_id
   assert submissions.body[0].submitted_by_username == "service-account-fab-client-credentials"
   assert submissions.body[0].published == False
 
-  fab.results_submissions_submission_id_tests_test_id_post(
+  fab.results_submissions_submission_id_tests_test_ids_post(
     submission_id=submission_id,
-    test_id=test_id,
-    results_submissions_submission_id_tests_test_id_post_request=ResultsSubmissionsSubmissionIdTestsTestIdPostRequest(
-      data=[ResultsSubmissionsSubmissionIdTestsTestIdPostRequestDataInner(
+    test_ids=[test_id],
+    results_submissions_submission_id_tests_test_ids_post_request=ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest(
+      data=[ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
         scenario_id=scenario_id,
         additional_properties={key: value}
       ) for scenario_id, test_id, submission_id, key, value in results]
     )
   )
 
-  test_results = fab.results_submissions_submission_id_tests_test_id_get(
+  test_results = fab.results_submissions_submission_id_tests_test_ids_get(
     submission_id=submission_id,
-    test_id=test_id)
+    test_ids=[test_id])
   print("results_uploaded")
   print(test_results.body)
   assert test_results.body.scenario_scorings[0].scorings["primary"]["score"] == 100
@@ -252,8 +251,8 @@ def test_submission_roundtrip():
   assert test_results.body.scorings["primary"]["score"] == 199
   assert test_results.body.scorings["secondary"]["score"] == 1.8
 
-  submission_results = fab.results_submissions_submission_id_get(
-    submission_id=submission_id,
+  submission_results = fab.results_submissions_submission_ids_get(
+    submission_ids=[submission_id],
   )
   assert len(submission_results.body) == 1
   assert submission_results.body[0].submission_id == submission_id
@@ -267,30 +266,28 @@ def test_submission_roundtrip():
   assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings["primary"]["score"] == 99
   assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings["secondary"]["score"] == 0.8
 
-  scenario_results = fab.results_submissions_submission_id_tests_test_id_scenario_scenario_id_get(
+  scenario_results = fab.results_submissions_submission_id_scenario_scenario_ids_get(
     submission_id=submission_id,
-    test_id=test_id,
-    scenario_id="1ae61e4f-201b-4e97-a399-5c33fb75c57e"
+    scenario_ids=["1ae61e4f-201b-4e97-a399-5c33fb75c57e"]
   )
   assert len(scenario_results.body) == 1
   assert scenario_results.body[0].scenario_id == "1ae61e4f-201b-4e97-a399-5c33fb75c57e"
   assert scenario_results.body[0].scorings["primary"]["score"] == 100
   assert scenario_results.body[0].scorings["secondary"]["score"] == 1.0
 
-  scenario_results2 = fab.results_submissions_submission_id_tests_test_id_scenario_scenario_id_get(
+  scenario_results2 = fab.results_submissions_submission_id_scenario_scenario_ids_get(
     submission_id=submission_id,
-    test_id=test_id,
-    scenario_id="564ebb54-48f0-4837-8066-b10bb832af9d"
+    scenario_ids=["564ebb54-48f0-4837-8066-b10bb832af9d"]
   )
   assert len(scenario_results2.body) == 1
   assert scenario_results2.body[0].scenario_id == "564ebb54-48f0-4837-8066-b10bb832af9d"
   assert scenario_results2.body[0].scorings["primary"]["score"] == 99
   assert scenario_results2.body[0].scorings["secondary"]["score"] == 0.8
 
-  published_submission = fab.submissions_uuid_patch(uuid=[submission_id])
+  published_submission = fab.submissions_submission_ids_patch(submission_ids=[submission_id])
   assert len(published_submission.body) >= 1
   assert published_submission.body[0].id == submission_id
-  assert published_submission.body[0].benchmark_definition_id == benchmark_id
+  assert published_submission.body[0].benchmark_id == benchmark_id
   assert published_submission.body[0].submitted_by_username == "service-account-fab-client-credentials"
   assert published_submission.body[0].published == True
 
@@ -307,10 +304,10 @@ def test_definitions_tests_ids_get():
   )
   print(token)
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
-  tests = fab.definitions_tests_ids_get(ids=[test_id])
+  tests = fab.definitions_tests_test_ids_get(test_ids=[test_id])
   assert len(tests.body) == 1
   assert tests.body[0].id == test_id
-  assert tests.body[0].scenario_definition_ids == ['1ae61e4f-201b-4e97-a399-5c33fb75c57e', '564ebb54-48f0-4837-8066-b10bb832af9d']
+  assert tests.body[0].scenario_ids == ['1ae61e4f-201b-4e97-a399-5c33fb75c57e', '564ebb54-48f0-4837-8066-b10bb832af9d']
   assert tests.body[0].name == 'Test 1'
   assert tests.body[0].description == 'Domain X benchmark'
 
@@ -318,7 +315,7 @@ def test_definitions_tests_ids_get():
 # GET /definitions/benchmarks/{ids}
 @pytest.mark.usefixtures("test_containers_fixture")
 def test_definitions_benchmarks_ids_get():
-  benchmark_id = '20ccc7c1-034c-4880-8946-bffc3fed1359'
+  benchmark_ids = ['20ccc7c1-034c-4880-8946-bffc3fed1359','c5145011-ce69-4679-8694-e1dbeb1ee4bb']
 
   token = backend_application_flow(
     client_id='fab-client-credentials',
@@ -327,10 +324,10 @@ def test_definitions_benchmarks_ids_get():
   )
   print(token)
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
-  benchmarks = fab.definitions_benchmarks_ids_get(ids=[benchmark_id])
-  assert len(benchmarks.body) == 1
-  assert benchmarks.body[0].id == benchmark_id
-  assert benchmarks.body[0].test_definition_ids == ['557d9a00-7e6d-410b-9bca-a017ca7fe3aa']
+  benchmarks = fab.definitions_benchmarks_benchmark_ids_get(benchmark_ids=benchmark_ids)
+  assert len(benchmarks.body) == 2
+  assert benchmarks.body[0].id == benchmark_ids[0]
+  assert benchmarks.body[0].test_ids == ['557d9a00-7e6d-410b-9bca-a017ca7fe3aa']
   assert benchmarks.body[0].name == 'Benchmark 1'
   assert benchmarks.body[0].description == 'Domain X benchmark'
 
@@ -348,7 +345,7 @@ def test_definitions_benchmarks_get():
   benchmarks = fab.definitions_benchmarks_get()
   assert len(benchmarks.body) == 6
   assert benchmarks.body[0].id == "255fb1e8-af57-45a0-97dc-ecc3e6721b4f"
-  assert benchmarks.body[0].test_definition_ids == ['99f5a8f8-38d9-4a8c-9630-4789b0225ec0',
+  assert benchmarks.body[0].test_ids == ['99f5a8f8-38d9-4a8c-9630-4789b0225ec0',
                                                     'f23794a2-dcf2-4699-bb5f-534bcea5ecf0', ]
   assert benchmarks.body[0].name == 'AI-human learning curves'
   assert benchmarks.body[0].description == 'AI-human learning curves'

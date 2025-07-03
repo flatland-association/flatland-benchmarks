@@ -21,15 +21,17 @@ from pydantic import Field, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
 from fab_clientlib.models.api_response import ApiResponse
+from fab_clientlib.models.benchmark_groups_get200_response import BenchmarkGroupsGet200Response
 from fab_clientlib.models.definitions_benchmarks_get200_response import DefinitionsBenchmarksGet200Response
-from fab_clientlib.models.definitions_tests_ids_get200_response import DefinitionsTestsIdsGet200Response
+from fab_clientlib.models.definitions_tests_test_ids_get200_response import DefinitionsTestsTestIdsGet200Response
 from fab_clientlib.models.health_live_get200_response import HealthLiveGet200Response
-from fab_clientlib.models.results_benchmarks_benchmark_id_get200_response import ResultsBenchmarksBenchmarkIdGet200Response
-from fab_clientlib.models.results_campaign_items_benchmark_id_get200_response import ResultsCampaignItemsBenchmarkIdGet200Response
-from fab_clientlib.models.results_submissions_submission_id_get200_response import ResultsSubmissionsSubmissionIdGet200Response
-from fab_clientlib.models.results_submissions_submission_id_tests_test_id_get200_response import ResultsSubmissionsSubmissionIdTestsTestIdGet200Response
-from fab_clientlib.models.results_submissions_submission_id_tests_test_id_post_request import ResultsSubmissionsSubmissionIdTestsTestIdPostRequest
-from fab_clientlib.models.results_submissions_submission_id_tests_test_id_scenario_scenario_id_get200_response import ResultsSubmissionsSubmissionIdTestsTestIdScenarioScenarioIdGet200Response
+from fab_clientlib.models.results_benchmarks_benchmark_ids_get200_response import ResultsBenchmarksBenchmarkIdsGet200Response
+from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response import ResultsCampaignItemsBenchmarkIdsGet200Response
+from fab_clientlib.models.results_campaigns_group_ids_get200_response import ResultsCampaignsGroupIdsGet200Response
+from fab_clientlib.models.results_submissions_submission_id_scenario_scenario_ids_get200_response import ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response
+from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_get200_response import ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response
+from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_post_request import ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest
+from fab_clientlib.models.results_submissions_submission_ids_get200_response import ResultsSubmissionsSubmissionIdsGet200Response
 from fab_clientlib.models.submissions_get200_response import SubmissionsGet200Response
 from fab_clientlib.models.submissions_post200_response import SubmissionsPost200Response
 from fab_clientlib.models.submissions_post_request import SubmissionsPostRequest
@@ -50,6 +52,774 @@ class DefaultApi:
         if api_client is None:
             api_client = ApiClient.get_default()
         self.api_client = api_client
+
+
+    @validate_call
+    def benchmark_groups_get(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> BenchmarkGroupsGet200Response:
+        """benchmark_groups_get
+
+        Lists benchmark-groups.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._benchmark_groups_get_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BenchmarkGroupsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def benchmark_groups_get_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[BenchmarkGroupsGet200Response]:
+        """benchmark_groups_get
+
+        Lists benchmark-groups.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._benchmark_groups_get_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BenchmarkGroupsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def benchmark_groups_get_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """benchmark_groups_get
+
+        Lists benchmark-groups.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._benchmark_groups_get_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BenchmarkGroupsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _benchmark_groups_get_serialize(
+        self,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/benchmark-groups',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def benchmark_groups_group_ids_get(
+        self,
+        group_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> BenchmarkGroupsGet200Response:
+        """benchmark_groups_group_ids_get
+
+        Returns benchmark-groups with ID in `group_id`.
+
+        :param group_ids: Comma-separated list of IDs. (required)
+        :type group_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._benchmark_groups_group_ids_get_serialize(
+            group_ids=group_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BenchmarkGroupsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def benchmark_groups_group_ids_get_with_http_info(
+        self,
+        group_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[BenchmarkGroupsGet200Response]:
+        """benchmark_groups_group_ids_get
+
+        Returns benchmark-groups with ID in `group_id`.
+
+        :param group_ids: Comma-separated list of IDs. (required)
+        :type group_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._benchmark_groups_group_ids_get_serialize(
+            group_ids=group_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BenchmarkGroupsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def benchmark_groups_group_ids_get_without_preload_content(
+        self,
+        group_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """benchmark_groups_group_ids_get
+
+        Returns benchmark-groups with ID in `group_id`.
+
+        :param group_ids: Comma-separated list of IDs. (required)
+        :type group_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._benchmark_groups_group_ids_get_serialize(
+            group_ids=group_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "BenchmarkGroupsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _benchmark_groups_group_ids_get_serialize(
+        self,
+        group_ids,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'group_ids': 'csv',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if group_ids is not None:
+            _path_params['group_ids'] = group_ids
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/benchmark-groups/{group_ids}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def definitions_benchmarks_benchmark_ids_get(
+        self,
+        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> DefinitionsBenchmarksGet200Response:
+        """definitions_benchmarks_benchmark_ids_get
+
+        Returns tests with ID in `ids`.
+
+        :param benchmark_ids: Comma-separated list of IDs. (required)
+        :type benchmark_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._definitions_benchmarks_benchmark_ids_get_serialize(
+            benchmark_ids=benchmark_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DefinitionsBenchmarksGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def definitions_benchmarks_benchmark_ids_get_with_http_info(
+        self,
+        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[DefinitionsBenchmarksGet200Response]:
+        """definitions_benchmarks_benchmark_ids_get
+
+        Returns tests with ID in `ids`.
+
+        :param benchmark_ids: Comma-separated list of IDs. (required)
+        :type benchmark_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._definitions_benchmarks_benchmark_ids_get_serialize(
+            benchmark_ids=benchmark_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DefinitionsBenchmarksGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def definitions_benchmarks_benchmark_ids_get_without_preload_content(
+        self,
+        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """definitions_benchmarks_benchmark_ids_get
+
+        Returns tests with ID in `ids`.
+
+        :param benchmark_ids: Comma-separated list of IDs. (required)
+        :type benchmark_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._definitions_benchmarks_benchmark_ids_get_serialize(
+            benchmark_ids=benchmark_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DefinitionsBenchmarksGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _definitions_benchmarks_benchmark_ids_get_serialize(
+        self,
+        benchmark_ids,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'benchmark_ids': 'csv',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if benchmark_ids is not None:
+            _path_params['benchmark_ids'] = benchmark_ids
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'oauth2'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/definitions/benchmarks/{benchmark_ids}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
 
 
     @validate_call
@@ -299,9 +1069,9 @@ class DefaultApi:
 
 
     @validate_call
-    def definitions_benchmarks_ids_get(
+    def definitions_tests_test_ids_get(
         self,
-        ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -314,13 +1084,13 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> DefinitionsBenchmarksGet200Response:
-        """definitions_benchmarks_ids_get
+    ) -> DefinitionsTestsTestIdsGet200Response:
+        """definitions_tests_test_ids_get
 
         Returns tests with ID in `ids`.
 
-        :param ids: Comma-separated list of IDs. (required)
-        :type ids: List[str]
+        :param test_ids: Comma-separated list of IDs. (required)
+        :type test_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -343,8 +1113,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._definitions_benchmarks_ids_get_serialize(
-            ids=ids,
+        _param = self._definitions_tests_test_ids_get_serialize(
+            test_ids=test_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -352,7 +1122,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DefinitionsBenchmarksGet200Response",
+            '200': "DefinitionsTestsTestIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -366,9 +1136,9 @@ class DefaultApi:
 
 
     @validate_call
-    def definitions_benchmarks_ids_get_with_http_info(
+    def definitions_tests_test_ids_get_with_http_info(
         self,
-        ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -381,13 +1151,13 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[DefinitionsBenchmarksGet200Response]:
-        """definitions_benchmarks_ids_get
+    ) -> ApiResponse[DefinitionsTestsTestIdsGet200Response]:
+        """definitions_tests_test_ids_get
 
         Returns tests with ID in `ids`.
 
-        :param ids: Comma-separated list of IDs. (required)
-        :type ids: List[str]
+        :param test_ids: Comma-separated list of IDs. (required)
+        :type test_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -410,8 +1180,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._definitions_benchmarks_ids_get_serialize(
-            ids=ids,
+        _param = self._definitions_tests_test_ids_get_serialize(
+            test_ids=test_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -419,7 +1189,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DefinitionsBenchmarksGet200Response",
+            '200': "DefinitionsTestsTestIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -433,9 +1203,9 @@ class DefaultApi:
 
 
     @validate_call
-    def definitions_benchmarks_ids_get_without_preload_content(
+    def definitions_tests_test_ids_get_without_preload_content(
         self,
-        ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -449,12 +1219,12 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """definitions_benchmarks_ids_get
+        """definitions_tests_test_ids_get
 
         Returns tests with ID in `ids`.
 
-        :param ids: Comma-separated list of IDs. (required)
-        :type ids: List[str]
+        :param test_ids: Comma-separated list of IDs. (required)
+        :type test_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -477,8 +1247,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._definitions_benchmarks_ids_get_serialize(
-            ids=ids,
+        _param = self._definitions_tests_test_ids_get_serialize(
+            test_ids=test_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -486,7 +1256,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DefinitionsBenchmarksGet200Response",
+            '200': "DefinitionsTestsTestIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -495,9 +1265,9 @@ class DefaultApi:
         return response_data.response
 
 
-    def _definitions_benchmarks_ids_get_serialize(
+    def _definitions_tests_test_ids_get_serialize(
         self,
-        ids,
+        test_ids,
         _request_auth,
         _content_type,
         _headers,
@@ -507,7 +1277,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'ids': 'csv',
+            'test_ids': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -520,8 +1290,8 @@ class DefaultApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if ids is not None:
-            _path_params['ids'] = ids
+        if test_ids is not None:
+            _path_params['test_ids'] = test_ids
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -544,269 +1314,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/definitions/benchmarks/{ids}',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def definitions_tests_ids_get(
-        self,
-        ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> DefinitionsTestsIdsGet200Response:
-        """definitions_tests_ids_get
-
-        Returns tests with ID in `ids`.
-
-        :param ids: Comma-separated list of IDs. (required)
-        :type ids: List[str]
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._definitions_tests_ids_get_serialize(
-            ids=ids,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DefinitionsTestsIdsGet200Response",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def definitions_tests_ids_get_with_http_info(
-        self,
-        ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[DefinitionsTestsIdsGet200Response]:
-        """definitions_tests_ids_get
-
-        Returns tests with ID in `ids`.
-
-        :param ids: Comma-separated list of IDs. (required)
-        :type ids: List[str]
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._definitions_tests_ids_get_serialize(
-            ids=ids,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DefinitionsTestsIdsGet200Response",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def definitions_tests_ids_get_without_preload_content(
-        self,
-        ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """definitions_tests_ids_get
-
-        Returns tests with ID in `ids`.
-
-        :param ids: Comma-separated list of IDs. (required)
-        :type ids: List[str]
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._definitions_tests_ids_get_serialize(
-            ids=ids,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "DefinitionsTestsIdsGet200Response",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _definitions_tests_ids_get_serialize(
-        self,
-        ids,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-            'ids': 'csv',
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if ids is not None:
-            _path_params['ids'] = ids
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-
-        # authentication setting
-        _auth_settings: List[str] = [
-            'oauth2'
-        ]
-
-        return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/definitions/tests/{ids}',
+            resource_path='/definitions/tests/{test_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1068,9 +1576,10 @@ class DefaultApi:
 
 
     @validate_call
-    def results_benchmarks_benchmark_id_get(
+    def results_benchmarks_benchmark_id_tests_test_ids_get(
         self,
         benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
+        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1083,13 +1592,15 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ResultsBenchmarksBenchmarkIdGet200Response:
-        """results_benchmarks_benchmark_id_get
+    ) -> ResultsBenchmarksBenchmarkIdsGet200Response:
+        """results_benchmarks_benchmark_id_tests_test_ids_get
 
-        Get benchmark leaderboard.
+        Get test leaderboard.
 
         :param benchmark_id: Benchmark ID. (required)
         :type benchmark_id: str
+        :param test_ids: Comma-separated list of test IDs. (required)
+        :type test_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1112,8 +1623,9 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_benchmarks_benchmark_id_get_serialize(
+        _param = self._results_benchmarks_benchmark_id_tests_test_ids_get_serialize(
             benchmark_id=benchmark_id,
+            test_ids=test_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1121,7 +1633,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsBenchmarksBenchmarkIdGet200Response",
+            '200': "ResultsBenchmarksBenchmarkIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1135,9 +1647,10 @@ class DefaultApi:
 
 
     @validate_call
-    def results_benchmarks_benchmark_id_get_with_http_info(
+    def results_benchmarks_benchmark_id_tests_test_ids_get_with_http_info(
         self,
         benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
+        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1150,13 +1663,15 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ResultsBenchmarksBenchmarkIdGet200Response]:
-        """results_benchmarks_benchmark_id_get
+    ) -> ApiResponse[ResultsBenchmarksBenchmarkIdsGet200Response]:
+        """results_benchmarks_benchmark_id_tests_test_ids_get
 
-        Get benchmark leaderboard.
+        Get test leaderboard.
 
         :param benchmark_id: Benchmark ID. (required)
         :type benchmark_id: str
+        :param test_ids: Comma-separated list of test IDs. (required)
+        :type test_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1179,8 +1694,9 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_benchmarks_benchmark_id_get_serialize(
+        _param = self._results_benchmarks_benchmark_id_tests_test_ids_get_serialize(
             benchmark_id=benchmark_id,
+            test_ids=test_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1188,7 +1704,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsBenchmarksBenchmarkIdGet200Response",
+            '200': "ResultsBenchmarksBenchmarkIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1202,9 +1718,10 @@ class DefaultApi:
 
 
     @validate_call
-    def results_benchmarks_benchmark_id_get_without_preload_content(
+    def results_benchmarks_benchmark_id_tests_test_ids_get_without_preload_content(
         self,
         benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
+        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1218,12 +1735,14 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """results_benchmarks_benchmark_id_get
+        """results_benchmarks_benchmark_id_tests_test_ids_get
 
-        Get benchmark leaderboard.
+        Get test leaderboard.
 
         :param benchmark_id: Benchmark ID. (required)
         :type benchmark_id: str
+        :param test_ids: Comma-separated list of test IDs. (required)
+        :type test_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1246,8 +1765,9 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_benchmarks_benchmark_id_get_serialize(
+        _param = self._results_benchmarks_benchmark_id_tests_test_ids_get_serialize(
             benchmark_id=benchmark_id,
+            test_ids=test_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1255,7 +1775,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsBenchmarksBenchmarkIdGet200Response",
+            '200': "ResultsBenchmarksBenchmarkIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1264,9 +1784,10 @@ class DefaultApi:
         return response_data.response
 
 
-    def _results_benchmarks_benchmark_id_get_serialize(
+    def _results_benchmarks_benchmark_id_tests_test_ids_get_serialize(
         self,
         benchmark_id,
+        test_ids,
         _request_auth,
         _content_type,
         _headers,
@@ -1276,6 +1797,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'test_ids': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -1290,6 +1812,8 @@ class DefaultApi:
         # process the path parameters
         if benchmark_id is not None:
             _path_params['benchmark_id'] = benchmark_id
+        if test_ids is not None:
+            _path_params['test_ids'] = test_ids
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -1312,7 +1836,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/results/benchmarks/{benchmark_id}',
+            resource_path='/results/benchmarks/{benchmark_id}/tests/{test_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1329,10 +1853,9 @@ class DefaultApi:
 
 
     @validate_call
-    def results_benchmarks_benchmark_id_tests_test_id_get(
+    def results_benchmarks_benchmark_ids_get(
         self,
-        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
-        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1345,15 +1868,13 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ResultsBenchmarksBenchmarkIdGet200Response:
-        """results_benchmarks_benchmark_id_tests_test_id_get
+    ) -> ResultsBenchmarksBenchmarkIdsGet200Response:
+        """results_benchmarks_benchmark_ids_get
 
-        Get test leaderboard.
+        Get benchmark leaderboard.
 
-        :param benchmark_id: Benchmark ID. (required)
-        :type benchmark_id: str
-        :param test_id: Test ID. (required)
-        :type test_id: str
+        :param benchmark_ids: Comma-separated list of benchmark IDs. (required)
+        :type benchmark_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1376,9 +1897,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_benchmarks_benchmark_id_tests_test_id_get_serialize(
-            benchmark_id=benchmark_id,
-            test_id=test_id,
+        _param = self._results_benchmarks_benchmark_ids_get_serialize(
+            benchmark_ids=benchmark_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1386,7 +1906,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsBenchmarksBenchmarkIdGet200Response",
+            '200': "ResultsBenchmarksBenchmarkIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1400,10 +1920,9 @@ class DefaultApi:
 
 
     @validate_call
-    def results_benchmarks_benchmark_id_tests_test_id_get_with_http_info(
+    def results_benchmarks_benchmark_ids_get_with_http_info(
         self,
-        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
-        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1416,15 +1935,13 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ResultsBenchmarksBenchmarkIdGet200Response]:
-        """results_benchmarks_benchmark_id_tests_test_id_get
+    ) -> ApiResponse[ResultsBenchmarksBenchmarkIdsGet200Response]:
+        """results_benchmarks_benchmark_ids_get
 
-        Get test leaderboard.
+        Get benchmark leaderboard.
 
-        :param benchmark_id: Benchmark ID. (required)
-        :type benchmark_id: str
-        :param test_id: Test ID. (required)
-        :type test_id: str
+        :param benchmark_ids: Comma-separated list of benchmark IDs. (required)
+        :type benchmark_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1447,9 +1964,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_benchmarks_benchmark_id_tests_test_id_get_serialize(
-            benchmark_id=benchmark_id,
-            test_id=test_id,
+        _param = self._results_benchmarks_benchmark_ids_get_serialize(
+            benchmark_ids=benchmark_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1457,7 +1973,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsBenchmarksBenchmarkIdGet200Response",
+            '200': "ResultsBenchmarksBenchmarkIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1471,10 +1987,9 @@ class DefaultApi:
 
 
     @validate_call
-    def results_benchmarks_benchmark_id_tests_test_id_get_without_preload_content(
+    def results_benchmarks_benchmark_ids_get_without_preload_content(
         self,
-        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
-        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1488,14 +2003,12 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """results_benchmarks_benchmark_id_tests_test_id_get
+        """results_benchmarks_benchmark_ids_get
 
-        Get test leaderboard.
+        Get benchmark leaderboard.
 
-        :param benchmark_id: Benchmark ID. (required)
-        :type benchmark_id: str
-        :param test_id: Test ID. (required)
-        :type test_id: str
+        :param benchmark_ids: Comma-separated list of benchmark IDs. (required)
+        :type benchmark_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1518,9 +2031,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_benchmarks_benchmark_id_tests_test_id_get_serialize(
-            benchmark_id=benchmark_id,
-            test_id=test_id,
+        _param = self._results_benchmarks_benchmark_ids_get_serialize(
+            benchmark_ids=benchmark_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1528,7 +2040,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsBenchmarksBenchmarkIdGet200Response",
+            '200': "ResultsBenchmarksBenchmarkIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1537,10 +2049,9 @@ class DefaultApi:
         return response_data.response
 
 
-    def _results_benchmarks_benchmark_id_tests_test_id_get_serialize(
+    def _results_benchmarks_benchmark_ids_get_serialize(
         self,
-        benchmark_id,
-        test_id,
+        benchmark_ids,
         _request_auth,
         _content_type,
         _headers,
@@ -1550,6 +2061,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'benchmark_ids': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -1562,10 +2074,8 @@ class DefaultApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if benchmark_id is not None:
-            _path_params['benchmark_id'] = benchmark_id
-        if test_id is not None:
-            _path_params['test_id'] = test_id
+        if benchmark_ids is not None:
+            _path_params['benchmark_ids'] = benchmark_ids
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -1588,7 +2098,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/results/benchmarks/{benchmark_id}/tests/{test_id}',
+            resource_path='/results/benchmarks/{benchmark_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1605,9 +2115,9 @@ class DefaultApi:
 
 
     @validate_call
-    def results_campaign_items_benchmark_id_get(
+    def results_campaign_items_benchmark_ids_get(
         self,
-        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
+        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1620,13 +2130,13 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ResultsCampaignItemsBenchmarkIdGet200Response:
-        """results_campaign_items_benchmark_id_get
+    ) -> ResultsCampaignItemsBenchmarkIdsGet200Response:
+        """results_campaign_items_benchmark_ids_get
 
-        Get campaign item leaderboard.
+        Returns campaign-item overviews (i.e. all tests in benchmark with score of top submission per test).
 
-        :param benchmark_id: Benchmark ID. (required)
-        :type benchmark_id: str
+        :param benchmark_ids: Comma-separated list of benchmark IDs. (required)
+        :type benchmark_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1649,8 +2159,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_campaign_items_benchmark_id_get_serialize(
-            benchmark_id=benchmark_id,
+        _param = self._results_campaign_items_benchmark_ids_get_serialize(
+            benchmark_ids=benchmark_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1658,7 +2168,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsCampaignItemsBenchmarkIdGet200Response",
+            '200': "ResultsCampaignItemsBenchmarkIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1672,9 +2182,9 @@ class DefaultApi:
 
 
     @validate_call
-    def results_campaign_items_benchmark_id_get_with_http_info(
+    def results_campaign_items_benchmark_ids_get_with_http_info(
         self,
-        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
+        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1687,13 +2197,13 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ResultsCampaignItemsBenchmarkIdGet200Response]:
-        """results_campaign_items_benchmark_id_get
+    ) -> ApiResponse[ResultsCampaignItemsBenchmarkIdsGet200Response]:
+        """results_campaign_items_benchmark_ids_get
 
-        Get campaign item leaderboard.
+        Returns campaign-item overviews (i.e. all tests in benchmark with score of top submission per test).
 
-        :param benchmark_id: Benchmark ID. (required)
-        :type benchmark_id: str
+        :param benchmark_ids: Comma-separated list of benchmark IDs. (required)
+        :type benchmark_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1716,8 +2226,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_campaign_items_benchmark_id_get_serialize(
-            benchmark_id=benchmark_id,
+        _param = self._results_campaign_items_benchmark_ids_get_serialize(
+            benchmark_ids=benchmark_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1725,7 +2235,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsCampaignItemsBenchmarkIdGet200Response",
+            '200': "ResultsCampaignItemsBenchmarkIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1739,9 +2249,9 @@ class DefaultApi:
 
 
     @validate_call
-    def results_campaign_items_benchmark_id_get_without_preload_content(
+    def results_campaign_items_benchmark_ids_get_without_preload_content(
         self,
-        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
+        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1755,12 +2265,12 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """results_campaign_items_benchmark_id_get
+        """results_campaign_items_benchmark_ids_get
 
-        Get campaign item leaderboard.
+        Returns campaign-item overviews (i.e. all tests in benchmark with score of top submission per test).
 
-        :param benchmark_id: Benchmark ID. (required)
-        :type benchmark_id: str
+        :param benchmark_ids: Comma-separated list of benchmark IDs. (required)
+        :type benchmark_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1783,8 +2293,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_campaign_items_benchmark_id_get_serialize(
-            benchmark_id=benchmark_id,
+        _param = self._results_campaign_items_benchmark_ids_get_serialize(
+            benchmark_ids=benchmark_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1792,7 +2302,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsCampaignItemsBenchmarkIdGet200Response",
+            '200': "ResultsCampaignItemsBenchmarkIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1801,9 +2311,9 @@ class DefaultApi:
         return response_data.response
 
 
-    def _results_campaign_items_benchmark_id_get_serialize(
+    def _results_campaign_items_benchmark_ids_get_serialize(
         self,
-        benchmark_id,
+        benchmark_ids,
         _request_auth,
         _content_type,
         _headers,
@@ -1813,6 +2323,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'benchmark_ids': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -1825,8 +2336,8 @@ class DefaultApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if benchmark_id is not None:
-            _path_params['benchmark_id'] = benchmark_id
+        if benchmark_ids is not None:
+            _path_params['benchmark_ids'] = benchmark_ids
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -1849,7 +2360,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/results/campaign-items/{benchmark_id}',
+            resource_path='/results/campaign-items/{benchmark_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1866,9 +2377,9 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_get(
+    def results_campaigns_group_ids_get(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        group_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1881,13 +2392,13 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ResultsSubmissionsSubmissionIdGet200Response:
-        """results_submissions_submission_id_get
+    ) -> ResultsCampaignsGroupIdsGet200Response:
+        """results_campaigns_group_ids_get
 
-        Get aggregated submission overall results.
+        Returns campaign overviews (i.e. all benchmarks in the group with score aggregated from their top submission per test).
 
-        :param submission_id: Submission ID. (required)
-        :type submission_id: str
+        :param group_ids: Comma-separated list of IDs. (required)
+        :type group_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1910,8 +2421,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_get_serialize(
-            submission_id=submission_id,
+        _param = self._results_campaigns_group_ids_get_serialize(
+            group_ids=group_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1919,7 +2430,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdGet200Response",
+            '200': "ResultsCampaignsGroupIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1933,9 +2444,9 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_get_with_http_info(
+    def results_campaigns_group_ids_get_with_http_info(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        group_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1948,13 +2459,13 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ResultsSubmissionsSubmissionIdGet200Response]:
-        """results_submissions_submission_id_get
+    ) -> ApiResponse[ResultsCampaignsGroupIdsGet200Response]:
+        """results_campaigns_group_ids_get
 
-        Get aggregated submission overall results.
+        Returns campaign overviews (i.e. all benchmarks in the group with score aggregated from their top submission per test).
 
-        :param submission_id: Submission ID. (required)
-        :type submission_id: str
+        :param group_ids: Comma-separated list of IDs. (required)
+        :type group_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1977,8 +2488,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_get_serialize(
-            submission_id=submission_id,
+        _param = self._results_campaigns_group_ids_get_serialize(
+            group_ids=group_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1986,7 +2497,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdGet200Response",
+            '200': "ResultsCampaignsGroupIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2000,9 +2511,9 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_get_without_preload_content(
+    def results_campaigns_group_ids_get_without_preload_content(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        group_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2016,12 +2527,12 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """results_submissions_submission_id_get
+        """results_campaigns_group_ids_get
 
-        Get aggregated submission overall results.
+        Returns campaign overviews (i.e. all benchmarks in the group with score aggregated from their top submission per test).
 
-        :param submission_id: Submission ID. (required)
-        :type submission_id: str
+        :param group_ids: Comma-separated list of IDs. (required)
+        :type group_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2044,8 +2555,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_get_serialize(
-            submission_id=submission_id,
+        _param = self._results_campaigns_group_ids_get_serialize(
+            group_ids=group_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2053,7 +2564,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdGet200Response",
+            '200': "ResultsCampaignsGroupIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2062,9 +2573,284 @@ class DefaultApi:
         return response_data.response
 
 
-    def _results_submissions_submission_id_get_serialize(
+    def _results_campaigns_group_ids_get_serialize(
+        self,
+        group_ids,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'group_ids': 'csv',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if group_ids is not None:
+            _path_params['group_ids'] = group_ids
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'oauth2'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/results/campaigns/{group_ids}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def results_submissions_submission_id_scenario_scenario_ids_get(
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        scenario_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of scenario IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response:
+        """results_submissions_submission_id_scenario_scenario_ids_get
+
+        Get submission results for specific scenario.
+
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param scenario_ids: Comma-separated list of scenario IDs. (required)
+        :type scenario_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_submissions_submission_id_scenario_scenario_ids_get_serialize(
+            submission_id=submission_id,
+            scenario_ids=scenario_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def results_submissions_submission_id_scenario_scenario_ids_get_with_http_info(
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        scenario_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of scenario IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response]:
+        """results_submissions_submission_id_scenario_scenario_ids_get
+
+        Get submission results for specific scenario.
+
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param scenario_ids: Comma-separated list of scenario IDs. (required)
+        :type scenario_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_submissions_submission_id_scenario_scenario_ids_get_serialize(
+            submission_id=submission_id,
+            scenario_ids=scenario_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def results_submissions_submission_id_scenario_scenario_ids_get_without_preload_content(
+        self,
+        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
+        scenario_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of scenario IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """results_submissions_submission_id_scenario_scenario_ids_get
+
+        Get submission results for specific scenario.
+
+        :param submission_id: Submission ID. (required)
+        :type submission_id: str
+        :param scenario_ids: Comma-separated list of scenario IDs. (required)
+        :type scenario_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._results_submissions_submission_id_scenario_scenario_ids_get_serialize(
+            submission_id=submission_id,
+            scenario_ids=scenario_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _results_submissions_submission_id_scenario_scenario_ids_get_serialize(
         self,
         submission_id,
+        scenario_ids,
         _request_auth,
         _content_type,
         _headers,
@@ -2074,6 +2860,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'scenario_ids': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -2088,6 +2875,8 @@ class DefaultApi:
         # process the path parameters
         if submission_id is not None:
             _path_params['submission_id'] = submission_id
+        if scenario_ids is not None:
+            _path_params['scenario_ids'] = scenario_ids
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -2110,7 +2899,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/results/submissions/{submission_id}',
+            resource_path='/results/submissions/{submission_id}/scenario/{scenario_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2127,10 +2916,10 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_tests_test_id_get(
+    def results_submissions_submission_id_tests_test_ids_get(
         self,
         submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of Test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2143,15 +2932,15 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ResultsSubmissionsSubmissionIdTestsTestIdGet200Response:
-        """results_submissions_submission_id_tests_test_id_get
+    ) -> ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response:
+        """results_submissions_submission_id_tests_test_ids_get
 
         Get submission results aggregated by test.
 
         :param submission_id: Submission ID. (required)
         :type submission_id: str
-        :param test_id: Test ID. (required)
-        :type test_id: str
+        :param test_ids: Comma-separated list of Test IDs. (required)
+        :type test_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2174,9 +2963,9 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_tests_test_id_get_serialize(
+        _param = self._results_submissions_submission_id_tests_test_ids_get_serialize(
             submission_id=submission_id,
-            test_id=test_id,
+            test_ids=test_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2184,7 +2973,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdTestsTestIdGet200Response",
+            '200': "ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2198,10 +2987,10 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_tests_test_id_get_with_http_info(
+    def results_submissions_submission_id_tests_test_ids_get_with_http_info(
         self,
         submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of Test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2214,15 +3003,15 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ResultsSubmissionsSubmissionIdTestsTestIdGet200Response]:
-        """results_submissions_submission_id_tests_test_id_get
+    ) -> ApiResponse[ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response]:
+        """results_submissions_submission_id_tests_test_ids_get
 
         Get submission results aggregated by test.
 
         :param submission_id: Submission ID. (required)
         :type submission_id: str
-        :param test_id: Test ID. (required)
-        :type test_id: str
+        :param test_ids: Comma-separated list of Test IDs. (required)
+        :type test_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2245,9 +3034,9 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_tests_test_id_get_serialize(
+        _param = self._results_submissions_submission_id_tests_test_ids_get_serialize(
             submission_id=submission_id,
-            test_id=test_id,
+            test_ids=test_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2255,7 +3044,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdTestsTestIdGet200Response",
+            '200': "ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2269,10 +3058,10 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_tests_test_id_get_without_preload_content(
+    def results_submissions_submission_id_tests_test_ids_get_without_preload_content(
         self,
         submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_id: Annotated[StrictStr, Field(description="Test ID.")],
+        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of Test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2286,14 +3075,14 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """results_submissions_submission_id_tests_test_id_get
+        """results_submissions_submission_id_tests_test_ids_get
 
         Get submission results aggregated by test.
 
         :param submission_id: Submission ID. (required)
         :type submission_id: str
-        :param test_id: Test ID. (required)
-        :type test_id: str
+        :param test_ids: Comma-separated list of Test IDs. (required)
+        :type test_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2316,9 +3105,9 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_tests_test_id_get_serialize(
+        _param = self._results_submissions_submission_id_tests_test_ids_get_serialize(
             submission_id=submission_id,
-            test_id=test_id,
+            test_ids=test_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2326,7 +3115,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdTestsTestIdGet200Response",
+            '200': "ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2335,10 +3124,10 @@ class DefaultApi:
         return response_data.response
 
 
-    def _results_submissions_submission_id_tests_test_id_get_serialize(
+    def _results_submissions_submission_id_tests_test_ids_get_serialize(
         self,
         submission_id,
-        test_id,
+        test_ids,
         _request_auth,
         _content_type,
         _headers,
@@ -2348,6 +3137,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'test_ids': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -2362,8 +3152,8 @@ class DefaultApi:
         # process the path parameters
         if submission_id is not None:
             _path_params['submission_id'] = submission_id
-        if test_id is not None:
-            _path_params['test_id'] = test_id
+        if test_ids is not None:
+            _path_params['test_ids'] = test_ids
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -2386,7 +3176,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/results/submissions/{submission_id}/tests/{test_id}',
+            resource_path='/results/submissions/{submission_id}/tests/{test_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2403,11 +3193,11 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_tests_test_id_post(
+    def results_submissions_submission_id_tests_test_ids_post(
         self,
         submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_id: Annotated[StrictStr, Field(description="Test ID.")],
-        results_submissions_submission_id_tests_test_id_post_request: ResultsSubmissionsSubmissionIdTestsTestIdPostRequest,
+        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of test IDs.")],
+        results_submissions_submission_id_tests_test_ids_post_request: ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2421,16 +3211,16 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse:
-        """results_submissions_submission_id_tests_test_id_post
+        """results_submissions_submission_id_tests_test_ids_post
 
         Inserts test results
 
         :param submission_id: Submission ID. (required)
         :type submission_id: str
-        :param test_id: Test ID. (required)
-        :type test_id: str
-        :param results_submissions_submission_id_tests_test_id_post_request: (required)
-        :type results_submissions_submission_id_tests_test_id_post_request: ResultsSubmissionsSubmissionIdTestsTestIdPostRequest
+        :param test_ids: Comma-separated list of test IDs. (required)
+        :type test_ids: List[str]
+        :param results_submissions_submission_id_tests_test_ids_post_request: (required)
+        :type results_submissions_submission_id_tests_test_ids_post_request: ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2453,10 +3243,10 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_tests_test_id_post_serialize(
+        _param = self._results_submissions_submission_id_tests_test_ids_post_serialize(
             submission_id=submission_id,
-            test_id=test_id,
-            results_submissions_submission_id_tests_test_id_post_request=results_submissions_submission_id_tests_test_id_post_request,
+            test_ids=test_ids,
+            results_submissions_submission_id_tests_test_ids_post_request=results_submissions_submission_id_tests_test_ids_post_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2479,11 +3269,11 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_tests_test_id_post_with_http_info(
+    def results_submissions_submission_id_tests_test_ids_post_with_http_info(
         self,
         submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_id: Annotated[StrictStr, Field(description="Test ID.")],
-        results_submissions_submission_id_tests_test_id_post_request: ResultsSubmissionsSubmissionIdTestsTestIdPostRequest,
+        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of test IDs.")],
+        results_submissions_submission_id_tests_test_ids_post_request: ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2497,16 +3287,16 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ApiResponse]:
-        """results_submissions_submission_id_tests_test_id_post
+        """results_submissions_submission_id_tests_test_ids_post
 
         Inserts test results
 
         :param submission_id: Submission ID. (required)
         :type submission_id: str
-        :param test_id: Test ID. (required)
-        :type test_id: str
-        :param results_submissions_submission_id_tests_test_id_post_request: (required)
-        :type results_submissions_submission_id_tests_test_id_post_request: ResultsSubmissionsSubmissionIdTestsTestIdPostRequest
+        :param test_ids: Comma-separated list of test IDs. (required)
+        :type test_ids: List[str]
+        :param results_submissions_submission_id_tests_test_ids_post_request: (required)
+        :type results_submissions_submission_id_tests_test_ids_post_request: ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2529,10 +3319,10 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_tests_test_id_post_serialize(
+        _param = self._results_submissions_submission_id_tests_test_ids_post_serialize(
             submission_id=submission_id,
-            test_id=test_id,
-            results_submissions_submission_id_tests_test_id_post_request=results_submissions_submission_id_tests_test_id_post_request,
+            test_ids=test_ids,
+            results_submissions_submission_id_tests_test_ids_post_request=results_submissions_submission_id_tests_test_ids_post_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2555,11 +3345,11 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_tests_test_id_post_without_preload_content(
+    def results_submissions_submission_id_tests_test_ids_post_without_preload_content(
         self,
         submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_id: Annotated[StrictStr, Field(description="Test ID.")],
-        results_submissions_submission_id_tests_test_id_post_request: ResultsSubmissionsSubmissionIdTestsTestIdPostRequest,
+        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of test IDs.")],
+        results_submissions_submission_id_tests_test_ids_post_request: ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2573,16 +3363,16 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """results_submissions_submission_id_tests_test_id_post
+        """results_submissions_submission_id_tests_test_ids_post
 
         Inserts test results
 
         :param submission_id: Submission ID. (required)
         :type submission_id: str
-        :param test_id: Test ID. (required)
-        :type test_id: str
-        :param results_submissions_submission_id_tests_test_id_post_request: (required)
-        :type results_submissions_submission_id_tests_test_id_post_request: ResultsSubmissionsSubmissionIdTestsTestIdPostRequest
+        :param test_ids: Comma-separated list of test IDs. (required)
+        :type test_ids: List[str]
+        :param results_submissions_submission_id_tests_test_ids_post_request: (required)
+        :type results_submissions_submission_id_tests_test_ids_post_request: ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2605,10 +3395,10 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_tests_test_id_post_serialize(
+        _param = self._results_submissions_submission_id_tests_test_ids_post_serialize(
             submission_id=submission_id,
-            test_id=test_id,
-            results_submissions_submission_id_tests_test_id_post_request=results_submissions_submission_id_tests_test_id_post_request,
+            test_ids=test_ids,
+            results_submissions_submission_id_tests_test_ids_post_request=results_submissions_submission_id_tests_test_ids_post_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2626,11 +3416,11 @@ class DefaultApi:
         return response_data.response
 
 
-    def _results_submissions_submission_id_tests_test_id_post_serialize(
+    def _results_submissions_submission_id_tests_test_ids_post_serialize(
         self,
         submission_id,
-        test_id,
-        results_submissions_submission_id_tests_test_id_post_request,
+        test_ids,
+        results_submissions_submission_id_tests_test_ids_post_request,
         _request_auth,
         _content_type,
         _headers,
@@ -2640,6 +3430,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'test_ids': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -2654,14 +3445,14 @@ class DefaultApi:
         # process the path parameters
         if submission_id is not None:
             _path_params['submission_id'] = submission_id
-        if test_id is not None:
-            _path_params['test_id'] = test_id
+        if test_ids is not None:
+            _path_params['test_ids'] = test_ids
         # process the query parameters
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if results_submissions_submission_id_tests_test_id_post_request is not None:
-            _body_params = results_submissions_submission_id_tests_test_id_post_request
+        if results_submissions_submission_id_tests_test_ids_post_request is not None:
+            _body_params = results_submissions_submission_id_tests_test_ids_post_request
 
 
         # set the HTTP header `Accept`
@@ -2693,7 +3484,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/results/submissions/{submission_id}/tests/{test_id}',
+            resource_path='/results/submissions/{submission_id}/tests/{test_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2710,11 +3501,9 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_tests_test_id_scenario_scenario_id_get(
+    def results_submissions_submission_ids_get(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_id: Annotated[StrictStr, Field(description="Test ID.")],
-        scenario_id: Annotated[StrictStr, Field(description="Scenario ID.")],
+        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2727,17 +3516,13 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ResultsSubmissionsSubmissionIdTestsTestIdScenarioScenarioIdGet200Response:
-        """results_submissions_submission_id_tests_test_id_scenario_scenario_id_get
+    ) -> ResultsSubmissionsSubmissionIdsGet200Response:
+        """results_submissions_submission_ids_get
 
-        Get submission results for specific scenario.
+        Get aggregated submission overall results.
 
-        :param submission_id: Submission ID. (required)
-        :type submission_id: str
-        :param test_id: Test ID. (required)
-        :type test_id: str
-        :param scenario_id: Scenario ID. (required)
-        :type scenario_id: str
+        :param submission_ids: Comma-separated list of submission IDs. (required)
+        :type submission_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2760,10 +3545,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_tests_test_id_scenario_scenario_id_get_serialize(
-            submission_id=submission_id,
-            test_id=test_id,
-            scenario_id=scenario_id,
+        _param = self._results_submissions_submission_ids_get_serialize(
+            submission_ids=submission_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2771,7 +3554,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdTestsTestIdScenarioScenarioIdGet200Response",
+            '200': "ResultsSubmissionsSubmissionIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2785,11 +3568,9 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_tests_test_id_scenario_scenario_id_get_with_http_info(
+    def results_submissions_submission_ids_get_with_http_info(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_id: Annotated[StrictStr, Field(description="Test ID.")],
-        scenario_id: Annotated[StrictStr, Field(description="Scenario ID.")],
+        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2802,17 +3583,13 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ResultsSubmissionsSubmissionIdTestsTestIdScenarioScenarioIdGet200Response]:
-        """results_submissions_submission_id_tests_test_id_scenario_scenario_id_get
+    ) -> ApiResponse[ResultsSubmissionsSubmissionIdsGet200Response]:
+        """results_submissions_submission_ids_get
 
-        Get submission results for specific scenario.
+        Get aggregated submission overall results.
 
-        :param submission_id: Submission ID. (required)
-        :type submission_id: str
-        :param test_id: Test ID. (required)
-        :type test_id: str
-        :param scenario_id: Scenario ID. (required)
-        :type scenario_id: str
+        :param submission_ids: Comma-separated list of submission IDs. (required)
+        :type submission_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2835,10 +3612,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_tests_test_id_scenario_scenario_id_get_serialize(
-            submission_id=submission_id,
-            test_id=test_id,
-            scenario_id=scenario_id,
+        _param = self._results_submissions_submission_ids_get_serialize(
+            submission_ids=submission_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2846,7 +3621,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdTestsTestIdScenarioScenarioIdGet200Response",
+            '200': "ResultsSubmissionsSubmissionIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2860,11 +3635,9 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_tests_test_id_scenario_scenario_id_get_without_preload_content(
+    def results_submissions_submission_ids_get_without_preload_content(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_id: Annotated[StrictStr, Field(description="Test ID.")],
-        scenario_id: Annotated[StrictStr, Field(description="Scenario ID.")],
+        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2878,16 +3651,12 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """results_submissions_submission_id_tests_test_id_scenario_scenario_id_get
+        """results_submissions_submission_ids_get
 
-        Get submission results for specific scenario.
+        Get aggregated submission overall results.
 
-        :param submission_id: Submission ID. (required)
-        :type submission_id: str
-        :param test_id: Test ID. (required)
-        :type test_id: str
-        :param scenario_id: Scenario ID. (required)
-        :type scenario_id: str
+        :param submission_ids: Comma-separated list of submission IDs. (required)
+        :type submission_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2910,10 +3679,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_tests_test_id_scenario_scenario_id_get_serialize(
-            submission_id=submission_id,
-            test_id=test_id,
-            scenario_id=scenario_id,
+        _param = self._results_submissions_submission_ids_get_serialize(
+            submission_ids=submission_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2921,7 +3688,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdTestsTestIdScenarioScenarioIdGet200Response",
+            '200': "ResultsSubmissionsSubmissionIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2930,11 +3697,9 @@ class DefaultApi:
         return response_data.response
 
 
-    def _results_submissions_submission_id_tests_test_id_scenario_scenario_id_get_serialize(
+    def _results_submissions_submission_ids_get_serialize(
         self,
-        submission_id,
-        test_id,
-        scenario_id,
+        submission_ids,
         _request_auth,
         _content_type,
         _headers,
@@ -2944,6 +3709,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'submission_ids': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -2956,12 +3722,8 @@ class DefaultApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if submission_id is not None:
-            _path_params['submission_id'] = submission_id
-        if test_id is not None:
-            _path_params['test_id'] = test_id
-        if scenario_id is not None:
-            _path_params['scenario_id'] = scenario_id
+        if submission_ids is not None:
+            _path_params['submission_ids'] = submission_ids
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -2984,7 +3746,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/results/submissions/{submission_id}/tests/{test_id}/scenario/{scenario_id}',
+            resource_path='/results/submissions/{submission_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3003,7 +3765,7 @@ class DefaultApi:
     @validate_call
     def submissions_get(
         self,
-        benchmark: Annotated[Optional[StrictStr], Field(description="Filter submissions by benchmark.")] = None,
+        benchmark_ids: Annotated[Optional[List[StrictStr]], Field(description="Filter submissions by benchmark.")] = None,
         submitted_by: Annotated[Optional[StrictStr], Field(description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
         _request_timeout: Union[
             None,
@@ -3022,8 +3784,8 @@ class DefaultApi:
 
         Lists all published submissions.
 
-        :param benchmark: Filter submissions by benchmark.
-        :type benchmark: str
+        :param benchmark_ids: Filter submissions by benchmark.
+        :type benchmark_ids: List[str]
         :param submitted_by: Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.
         :type submitted_by: str
         :param _request_timeout: timeout setting for this request. If one
@@ -3049,7 +3811,7 @@ class DefaultApi:
         """ # noqa: E501
 
         _param = self._submissions_get_serialize(
-            benchmark=benchmark,
+            benchmark_ids=benchmark_ids,
             submitted_by=submitted_by,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3074,7 +3836,7 @@ class DefaultApi:
     @validate_call
     def submissions_get_with_http_info(
         self,
-        benchmark: Annotated[Optional[StrictStr], Field(description="Filter submissions by benchmark.")] = None,
+        benchmark_ids: Annotated[Optional[List[StrictStr]], Field(description="Filter submissions by benchmark.")] = None,
         submitted_by: Annotated[Optional[StrictStr], Field(description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
         _request_timeout: Union[
             None,
@@ -3093,8 +3855,8 @@ class DefaultApi:
 
         Lists all published submissions.
 
-        :param benchmark: Filter submissions by benchmark.
-        :type benchmark: str
+        :param benchmark_ids: Filter submissions by benchmark.
+        :type benchmark_ids: List[str]
         :param submitted_by: Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.
         :type submitted_by: str
         :param _request_timeout: timeout setting for this request. If one
@@ -3120,7 +3882,7 @@ class DefaultApi:
         """ # noqa: E501
 
         _param = self._submissions_get_serialize(
-            benchmark=benchmark,
+            benchmark_ids=benchmark_ids,
             submitted_by=submitted_by,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3145,7 +3907,7 @@ class DefaultApi:
     @validate_call
     def submissions_get_without_preload_content(
         self,
-        benchmark: Annotated[Optional[StrictStr], Field(description="Filter submissions by benchmark.")] = None,
+        benchmark_ids: Annotated[Optional[List[StrictStr]], Field(description="Filter submissions by benchmark.")] = None,
         submitted_by: Annotated[Optional[StrictStr], Field(description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
         _request_timeout: Union[
             None,
@@ -3164,8 +3926,8 @@ class DefaultApi:
 
         Lists all published submissions.
 
-        :param benchmark: Filter submissions by benchmark.
-        :type benchmark: str
+        :param benchmark_ids: Filter submissions by benchmark.
+        :type benchmark_ids: List[str]
         :param submitted_by: Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.
         :type submitted_by: str
         :param _request_timeout: timeout setting for this request. If one
@@ -3191,7 +3953,7 @@ class DefaultApi:
         """ # noqa: E501
 
         _param = self._submissions_get_serialize(
-            benchmark=benchmark,
+            benchmark_ids=benchmark_ids,
             submitted_by=submitted_by,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -3211,7 +3973,7 @@ class DefaultApi:
 
     def _submissions_get_serialize(
         self,
-        benchmark,
+        benchmark_ids,
         submitted_by,
         _request_auth,
         _content_type,
@@ -3222,6 +3984,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'benchmark_ids': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -3235,9 +3998,9 @@ class DefaultApi:
 
         # process the path parameters
         # process the query parameters
-        if benchmark is not None:
+        if benchmark_ids is not None:
             
-            _query_params.append(('benchmark', benchmark))
+            _query_params.append(('benchmark_ids', benchmark_ids))
             
         if submitted_by is not None:
             
@@ -3555,9 +4318,9 @@ class DefaultApi:
 
 
     @validate_call
-    def submissions_uuid_get(
+    def submissions_submission_ids_get(
         self,
-        uuid: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
+        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3571,12 +4334,12 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SubmissionsGet200Response:
-        """submissions_uuid_get
+        """submissions_submission_ids_get
 
         Get submissions.
 
-        :param uuid: Comma-separated list of submission IDs. (required)
-        :type uuid: List[str]
+        :param submission_ids: Comma-separated list of submission IDs. (required)
+        :type submission_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3599,8 +4362,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._submissions_uuid_get_serialize(
-            uuid=uuid,
+        _param = self._submissions_submission_ids_get_serialize(
+            submission_ids=submission_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3622,9 +4385,9 @@ class DefaultApi:
 
 
     @validate_call
-    def submissions_uuid_get_with_http_info(
+    def submissions_submission_ids_get_with_http_info(
         self,
-        uuid: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
+        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3638,12 +4401,12 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SubmissionsGet200Response]:
-        """submissions_uuid_get
+        """submissions_submission_ids_get
 
         Get submissions.
 
-        :param uuid: Comma-separated list of submission IDs. (required)
-        :type uuid: List[str]
+        :param submission_ids: Comma-separated list of submission IDs. (required)
+        :type submission_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3666,8 +4429,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._submissions_uuid_get_serialize(
-            uuid=uuid,
+        _param = self._submissions_submission_ids_get_serialize(
+            submission_ids=submission_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3689,9 +4452,9 @@ class DefaultApi:
 
 
     @validate_call
-    def submissions_uuid_get_without_preload_content(
+    def submissions_submission_ids_get_without_preload_content(
         self,
-        uuid: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
+        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3705,12 +4468,12 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """submissions_uuid_get
+        """submissions_submission_ids_get
 
         Get submissions.
 
-        :param uuid: Comma-separated list of submission IDs. (required)
-        :type uuid: List[str]
+        :param submission_ids: Comma-separated list of submission IDs. (required)
+        :type submission_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3733,8 +4496,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._submissions_uuid_get_serialize(
-            uuid=uuid,
+        _param = self._submissions_submission_ids_get_serialize(
+            submission_ids=submission_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3751,9 +4514,9 @@ class DefaultApi:
         return response_data.response
 
 
-    def _submissions_uuid_get_serialize(
+    def _submissions_submission_ids_get_serialize(
         self,
-        uuid,
+        submission_ids,
         _request_auth,
         _content_type,
         _headers,
@@ -3763,7 +4526,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'uuid': 'csv',
+            'submission_ids': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -3776,8 +4539,8 @@ class DefaultApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if submission_ids is not None:
+            _path_params['submission_ids'] = submission_ids
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -3800,7 +4563,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/submissions/{uuid}',
+            resource_path='/submissions/{submission_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -3817,9 +4580,9 @@ class DefaultApi:
 
 
     @validate_call
-    def submissions_uuid_patch(
+    def submissions_submission_ids_patch(
         self,
-        uuid: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3833,11 +4596,11 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SubmissionsGet200Response:
-        """submissions_uuid_patch
+        """submissions_submission_ids_patch
 
 
-        :param uuid: Comma-separated list of IDs. (required)
-        :type uuid: List[str]
+        :param submission_ids: Comma-separated list of IDs. (required)
+        :type submission_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3860,8 +4623,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._submissions_uuid_patch_serialize(
-            uuid=uuid,
+        _param = self._submissions_submission_ids_patch_serialize(
+            submission_ids=submission_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3883,9 +4646,9 @@ class DefaultApi:
 
 
     @validate_call
-    def submissions_uuid_patch_with_http_info(
+    def submissions_submission_ids_patch_with_http_info(
         self,
-        uuid: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3899,11 +4662,11 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SubmissionsGet200Response]:
-        """submissions_uuid_patch
+        """submissions_submission_ids_patch
 
 
-        :param uuid: Comma-separated list of IDs. (required)
-        :type uuid: List[str]
+        :param submission_ids: Comma-separated list of IDs. (required)
+        :type submission_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3926,8 +4689,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._submissions_uuid_patch_serialize(
-            uuid=uuid,
+        _param = self._submissions_submission_ids_patch_serialize(
+            submission_ids=submission_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3949,9 +4712,9 @@ class DefaultApi:
 
 
     @validate_call
-    def submissions_uuid_patch_without_preload_content(
+    def submissions_submission_ids_patch_without_preload_content(
         self,
-        uuid: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3965,11 +4728,11 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """submissions_uuid_patch
+        """submissions_submission_ids_patch
 
 
-        :param uuid: Comma-separated list of IDs. (required)
-        :type uuid: List[str]
+        :param submission_ids: Comma-separated list of IDs. (required)
+        :type submission_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3992,8 +4755,8 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._submissions_uuid_patch_serialize(
-            uuid=uuid,
+        _param = self._submissions_submission_ids_patch_serialize(
+            submission_ids=submission_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4010,9 +4773,9 @@ class DefaultApi:
         return response_data.response
 
 
-    def _submissions_uuid_patch_serialize(
+    def _submissions_submission_ids_patch_serialize(
         self,
-        uuid,
+        submission_ids,
         _request_auth,
         _content_type,
         _headers,
@@ -4022,7 +4785,7 @@ class DefaultApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'uuid': 'csv',
+            'submission_ids': 'csv',
         }
 
         _path_params: Dict[str, str] = {}
@@ -4035,8 +4798,8 @@ class DefaultApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if uuid is not None:
-            _path_params['uuid'] = uuid
+        if submission_ids is not None:
+            _path_params['submission_ids'] = submission_ids
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -4059,7 +4822,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='PATCH',
-            resource_path='/submissions/{uuid}',
+            resource_path='/submissions/{submission_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

@@ -146,10 +146,12 @@ export class SubmissionController extends Controller {
    *      - oauth2: [user]
    *    parameters:
    *      - in: query
-   *        name: benchmark_id
+   *        name: benchmark_ids
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *        description: Filter submissions by benchmark.
    *      - in: query
    *        name: submitted_by
@@ -211,7 +213,7 @@ export class SubmissionController extends Controller {
       return
     }
 
-    const benchmarkId = req.query['benchmark_id']
+    const benchmarkId = req.query['benchmark_ids']
     const submittedBy = req.query['submitted_by']
 
     const sql = SqlService.getInstance()
@@ -221,6 +223,7 @@ export class SubmissionController extends Controller {
     let whereBenchmark = sql.fragment`1=1`
     let whereSubmittedBy = sql.fragment`1=1`
     if (benchmarkId) {
+      // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple benchmark_ids
       whereBenchmark = sql.fragment`benchmark_id=${benchmarkId}`
     }
     if (submittedBy) {

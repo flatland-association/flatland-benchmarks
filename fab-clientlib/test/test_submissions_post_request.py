@@ -37,10 +37,10 @@ class TestSubmissionsPostRequest(unittest.TestCase):
         if include_optional:
             return SubmissionsPostRequest(
                 name = '',
-                benchmark_definition_id = '',
+                benchmark_id = '',
                 submission_data_url = '',
                 code_repository = '',
-                test_definition_ids = [
+                test_ids = [
                     ''
                     ]
             )

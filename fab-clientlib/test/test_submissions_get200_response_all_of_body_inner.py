@@ -37,8 +37,8 @@ class TestSubmissionsGet200ResponseAllOfBodyInner(unittest.TestCase):
         if include_optional:
             return SubmissionsGet200ResponseAllOfBodyInner(
                 id = '',
-                benchmark_definition_id = '',
-                test_definition_ids = [
+                benchmark_id = '',
+                test_ids = [
                     ''
                     ],
                 name = '',

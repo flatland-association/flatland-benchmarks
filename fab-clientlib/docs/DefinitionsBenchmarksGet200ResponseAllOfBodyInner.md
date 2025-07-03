@@ -8,8 +8,8 @@ Name | Type | Description | Notes
 **id** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
-**field_definition_ids** | **List[str]** |  | [optional] 
-**test_definition_ids** | **List[str]** |  | [optional] 
+**field_ids** | **List[str]** |  | [optional] 
+**test_ids** | **List[str]** |  | [optional] 
 
 ## Example
 

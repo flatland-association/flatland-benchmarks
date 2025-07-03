@@ -54,11 +54,13 @@ export class ResultsController extends Controller {
    *    parameters:
    *      - in: path
    *        name: submission_ids
-   *        description: Submission ID.
+   *        description: Comma-separated list of submission IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Aggregated submission overall results.
@@ -159,11 +161,13 @@ export class ResultsController extends Controller {
    *          format: uuid
    *      - in: path
    *        name: test_ids
-   *        description: Test ID.
+   *        description: Comma-separated list of Test IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Submission results aggregated by test.
@@ -241,11 +245,13 @@ export class ResultsController extends Controller {
    *          format: uuid
    *      - in: path
    *        name: test_ids
-   *        description: Test ID.
+   *        description: Comma-separated list of test IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    requestBody:
    *      required: true
    *      content:
@@ -327,7 +333,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}/scenario/{scenario_id}:
+   * /results/submissions/{submission_id}/scenario/{scenario_ids}:
    *  get:
    *    description: Get submission results for specific scenario.
    *    security:
@@ -341,12 +347,14 @@ export class ResultsController extends Controller {
    *          type: string
    *          format: uuid
    *      - in: path
-   *        name: scenario_id
-   *        description: Scenario ID.
+   *        name: scenario_ids
+   *        description: Comma-separated list of scenario IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Submission results for specific scenario.
@@ -391,7 +399,6 @@ export class ResultsController extends Controller {
     this.respond(req, res, [result])
   }
 
-  // TODO
   /**
    * @swagger
    * /results/benchmarks/{benchmark_ids}:
@@ -402,11 +409,13 @@ export class ResultsController extends Controller {
    *    parameters:
    *      - in: path
    *        name: benchmark_ids
-   *        description: Benchmark ID.
+   *        description: Comma-separated list of benchmark IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Benchmark leaderboard.
@@ -514,11 +523,13 @@ export class ResultsController extends Controller {
    *    parameters:
    *      - in: path
    *        name: benchmark_ids
-   *        description: Comma-separated list of IDs.
+   *        description: Comma-separated list of benchmark IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Campaign item leaderboard.
@@ -586,22 +597,23 @@ export class ResultsController extends Controller {
     this.respond(req, res, itemOverviews)
   }
 
-  // TODO
   /**
    * @swagger
-   * /results/campaigns/{group_id}:
+   * /results/campaigns/{group_ids}:
    *  get:
    *    description: Returns campaign overviews (i.e. all benchmarks in the group with score aggregated from their top submission per test).
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: group_id
+   *        name: group_ids
    *        description: Comma-separated list of IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Campaign leaderboard.
@@ -703,11 +715,13 @@ export class ResultsController extends Controller {
    *          format: uuid
    *      - in: path
    *        name: test_ids
-   *        description: Test ID.
+   *        description: Comma-separated list of test IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: test leaderboard.

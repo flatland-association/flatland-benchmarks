@@ -4,8 +4,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from fab_clientlib import DefaultApi, Configuration, ApiClient, ResultsSubmissionsSubmissionIdTestsTestIdPostRequest, \
-  ResultsSubmissionsSubmissionIdTestsTestIdPostRequestDataInner
+from fab_clientlib import DefaultApi, Configuration, ApiClient, ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest, \
+  ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
 from fab_exec_utils import exec_with_logging
 from fab_oauth_utils import backend_application_flow
 
@@ -72,11 +72,11 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
     ('564ebb54-48f0-4837-8066-b10bb832af9d', '557d9a00-7e6d-410b-9bca-a017ca7fe3aa', 'db5eaa85-3304-4804-b76f-14d23adb5d4c', 'secondary', 0.8)
   ]
 
-  fab.results_submissions_submission_id_tests_test_id_post(
+  fab.results_submissions_submission_id_tests_test_ids_post(
     submission_id=submission_id,
-    test_id=test_id,
-    results_submissions_submission_id_tests_test_id_post_request=ResultsSubmissionsSubmissionIdTestsTestIdPostRequest(
-      data=[ResultsSubmissionsSubmissionIdTestsTestIdPostRequestDataInner(
+    test_ids=[test_id],
+    results_submissions_submission_id_tests_test_ids_post_request=ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest(
+      data=[ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
         scenario_id=scenario_id,
         additional_properties={key: value}
       ) for scenario_id, test_id, submission_id, key, value in results]

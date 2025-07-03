@@ -43,10 +43,10 @@ class TestDefinitionsBenchmarksGet200Response(unittest.TestCase):
                         id = '', 
                         name = '', 
                         description = '', 
-                        field_definition_ids = [
+                        field_ids = [
                             ''
                             ], 
-                        test_definition_ids = [
+                        test_ids = [
                             ''
                             ], )
                     ]
