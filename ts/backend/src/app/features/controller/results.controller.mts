@@ -161,7 +161,7 @@ export class ResultsController extends Controller {
    *          format: uuid
    *      - in: path
    *        name: test_ids
-   *        description: Comma-separated list of Test IDs.
+   *        description: Comma-separated list of test IDs.
    *        required: true
    *        schema:
    *          type: array
