@@ -16,8 +16,8 @@ export class SubmissionController extends Controller {
 
     this.attachPost('/submissions', this.postSubmission)
     this.attachGet('/submissions', this.getSubmissions)
-    this.attachGet('/submissions/:uuid', this.getSubmissionByUuid)
-    this.attachPatch('/submissions/:uuid', this.patchSubmissionByUuid)
+    this.attachGet('/submissions/:submission_ids', this.getSubmissionByUuid)
+    this.attachPatch('/submissions/:submission_ids', this.patchSubmissionByUuid)
   }
 
   /**
@@ -37,7 +37,7 @@ export class SubmissionController extends Controller {
    *              name:
    *                type: string
    *                description: Display name of submission.
-   *              benchmark_definition_id:
+   *              benchmark_id:
    *                type: string
    *                format: uuid
    *                description: ID of benchmark this submission belongs to.
@@ -47,7 +47,7 @@ export class SubmissionController extends Controller {
    *              code_repository:
    *                type: string
    *                description: URL of submission code repository.
-   *              test_definition_ids:
+   *              test_ids:
    *                type: array
    *                items:
    *                  type: string
@@ -82,8 +82,8 @@ export class SubmissionController extends Controller {
     const sql = SqlService.getInstance()
     const idRow = await sql.query`
         INSERT INTO submissions (
-          benchmark_definition_id,
-          test_definition_ids,
+          benchmark_id,
+          test_ids,
           name,
           submission_data_url,
           code_repository,
@@ -91,8 +91,8 @@ export class SubmissionController extends Controller {
           submitted_by,
           submitted_by_username
         ) VALUES (
-          ${req.body.benchmark_definition_id},
-          ${req.body.test_definition_ids},
+          ${req.body.benchmark_id},
+          ${req.body.test_ids},
           ${req.body.name},
           ${req.body.submission_data_url},
           ${req.body.code_repository ?? null},
@@ -110,8 +110,8 @@ export class SubmissionController extends Controller {
     // get tests
     const tests = await sql.query<TestDefinitionRow>`
         SELECT * FROM test_definitions
-        WHERE id=ANY(${req.body.test_definition_ids})
-        LIMIT ${req.body.test_definition_ids!.length}
+        WHERE id=ANY(${req.body.test_ids})
+        LIMIT ${req.body.test_ids!.length}
       `
     // if required (not all OFFLINE), send message with test names to evaluator
     if (tests.some((test) => test.loop !== 'OFFLINE')) {
@@ -119,12 +119,12 @@ export class SubmissionController extends Controller {
       const payload = {
         submission_data_url: req.body.submission_data_url,
         // TODO we should only send non-OFFLINE tests
-        tests: tests.map((test) => test.name),
+        tests: tests.map((test) => test.id),
       }
       logger.info(`Sending ${payload} to celery.`)
       try {
         // the returned unsettled promise is ignored and continues running (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-        celery.sendTask(req.body.benchmark_definition_id as string, payload, id)
+        celery.sendTask(req.body.benchmark_id as string, payload, id)
         // request succeeds once connection is checked ready and task sent
         this.respond(req, res, { id }, payload)
       } catch (error) {
@@ -146,10 +146,12 @@ export class SubmissionController extends Controller {
    *      - oauth2: [user]
    *    parameters:
    *      - in: query
-   *        name: benchmark
+   *        name: benchmark_ids
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *        description: Filter submissions by benchmark.
    *      - in: query
    *        name: submitted_by
@@ -175,10 +177,10 @@ export class SubmissionController extends Controller {
    *                          id:
    *                            type: string
    *                            format: uuid
-   *                          benchmark_definition_id:
+   *                          benchmark_id:
    *                            type: string
    *                            format: uuid
-   *                          test_definition_ids:
+   *                          test_ids:
    *                            type: array
    *                            items:
    *                              type: string
@@ -211,7 +213,7 @@ export class SubmissionController extends Controller {
       return
     }
 
-    const benchmarkId = req.query['benchmark']
+    const benchmarkId = req.query['benchmark_ids']
     const submittedBy = req.query['submitted_by']
 
     const sql = SqlService.getInstance()
@@ -221,7 +223,8 @@ export class SubmissionController extends Controller {
     let whereBenchmark = sql.fragment`1=1`
     let whereSubmittedBy = sql.fragment`1=1`
     if (benchmarkId) {
-      whereBenchmark = sql.fragment`benchmark_definition_id=${benchmarkId}`
+      // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple benchmark_ids
+      whereBenchmark = sql.fragment`benchmark_id=${benchmarkId}`
     }
     if (submittedBy) {
       // turn off public requirement if submitter matches authorized user
@@ -244,14 +247,14 @@ export class SubmissionController extends Controller {
 
   /**
    * @swagger
-   * /submissions/{uuid}:
+   * /submissions/{submission_ids}:
    *  get:
    *    description: Get submissions.
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: uuid
+   *        name: submission_ids
    *        description: Comma-separated list of submission IDs.
    *        required: true
    *        schema:
@@ -277,10 +280,10 @@ export class SubmissionController extends Controller {
    *                          id:
    *                            type: string
    *                            format: uuid
-   *                          benchmark_definition_id:
+   *                          benchmark_id:
    *                            type: string
    *                            format: uuid
-   *                          test_definition_ids:
+   *                          test_ids:
    *                            type: array
    *                            items:
    *                              type: string
@@ -305,14 +308,14 @@ export class SubmissionController extends Controller {
    *                          published:
    *                            type: boolean
    */
-  getSubmissionByUuid: GetHandler<'/submissions/:uuid'> = async (req, res) => {
+  getSubmissionByUuid: GetHandler<'/submissions/:submission_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    const uuids = req.params.uuid.split(',')
+    const uuids = req.params.submission_ids.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<SubmissionRow>>`
@@ -327,14 +330,14 @@ export class SubmissionController extends Controller {
 
   /**
    * @swagger
-   * /submissions/{uuid}:
+   * /submissions/{submission_ids}:
    *  description: Publish submissions.
    *  patch:
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: uuid
+   *        name: submission_ids
    *        description: Comma-separated list of IDs.
    *        required: true
    *        schema:
@@ -360,10 +363,10 @@ export class SubmissionController extends Controller {
    *                          id:
    *                            type: string
    *                            format: uuid
-   *                          benchmark_definition_id:
+   *                          benchmark_id:
    *                            type: string
    *                            format: uuid
-   *                          test_definition_ids:
+   *                          test_ids:
    *                            type: array
    *                            items:
    *                              type: string
@@ -388,7 +391,7 @@ export class SubmissionController extends Controller {
    *                          published:
    *                            type: boolean
    */
-  patchSubmissionByUuid: PatchHandler<'/submissions/:uuid'> = async (req, res) => {
+  patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res) => {
     logger.info(`patchSubmissionByUuid`)
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
@@ -397,7 +400,7 @@ export class SubmissionController extends Controller {
       return
     }
 
-    const uuids = req.params.uuid.split(',')
+    const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
     const rows = await sql.query<StripDir<SubmissionRow>>`

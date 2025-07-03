@@ -27,9 +27,11 @@ export class BenchmarksDetailView implements OnInit {
   }
 
   async ngOnInit() {
-    this.benchmark = (await this.apiService.get('/definitions/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
+    this.benchmark = (
+      await this.apiService.get('/definitions/benchmarks/:benchmark_ids', { params: { benchmark_ids: this.id } })
+    ).body?.at(0)
     this.submissions = (
-      await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id as string } })
+      await this.apiService.get('/submissions', { query: { benchmark_ids: this.benchmark?.id as string } })
     ).body
   }
 }

@@ -27,50 +27,86 @@ class TestDefaultApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
+    def test_benchmark_groups_get(self) -> None:
+        """Test case for benchmark_groups_get
+
+        """
+        pass
+
+    def test_benchmark_groups_group_ids_get(self) -> None:
+        """Test case for benchmark_groups_group_ids_get
+
+        """
+        pass
+
+    def test_definitions_benchmarks_benchmark_ids_get(self) -> None:
+        """Test case for definitions_benchmarks_benchmark_ids_get
+
+        """
+        pass
+
+    def test_definitions_benchmarks_get(self) -> None:
+        """Test case for definitions_benchmarks_get
+
+        """
+        pass
+
+    def test_definitions_tests_test_ids_get(self) -> None:
+        """Test case for definitions_tests_test_ids_get
+
+        """
+        pass
+
     def test_health_live_get(self) -> None:
         """Test case for health_live_get
 
         """
         pass
 
-    def test_results_benchmarks_benchmark_id_get(self) -> None:
-        """Test case for results_benchmarks_benchmark_id_get
+    def test_results_benchmarks_benchmark_id_tests_test_ids_get(self) -> None:
+        """Test case for results_benchmarks_benchmark_id_tests_test_ids_get
 
         """
         pass
 
-    def test_results_campaign_items_benchmark_id_get(self) -> None:
-        """Test case for results_campaign_items_benchmark_id_get
+    def test_results_benchmarks_benchmark_ids_get(self) -> None:
+        """Test case for results_benchmarks_benchmark_ids_get
 
         """
         pass
 
-    def test_results_campaign_items_benchmark_id_tests_test_id_get(self) -> None:
-        """Test case for results_campaign_items_benchmark_id_tests_test_id_get
+    def test_results_campaign_items_benchmark_ids_get(self) -> None:
+        """Test case for results_campaign_items_benchmark_ids_get
 
         """
         pass
 
-    def test_results_submissions_submission_id_get(self) -> None:
-        """Test case for results_submissions_submission_id_get
+    def test_results_campaigns_group_ids_get(self) -> None:
+        """Test case for results_campaigns_group_ids_get
 
         """
         pass
 
-    def test_results_submissions_submission_id_tests_test_id_get(self) -> None:
-        """Test case for results_submissions_submission_id_tests_test_id_get
+    def test_results_submissions_submission_id_scenario_scenario_ids_get(self) -> None:
+        """Test case for results_submissions_submission_id_scenario_scenario_ids_get
 
         """
         pass
 
-    def test_results_submissions_submission_id_tests_test_id_post(self) -> None:
-        """Test case for results_submissions_submission_id_tests_test_id_post
+    def test_results_submissions_submission_id_tests_test_ids_get(self) -> None:
+        """Test case for results_submissions_submission_id_tests_test_ids_get
 
         """
         pass
 
-    def test_results_submissions_submission_id_tests_test_id_scenario_scenario_id_get(self) -> None:
-        """Test case for results_submissions_submission_id_tests_test_id_scenario_scenario_id_get
+    def test_results_submissions_submission_id_tests_test_ids_post(self) -> None:
+        """Test case for results_submissions_submission_id_tests_test_ids_post
+
+        """
+        pass
+
+    def test_results_submissions_submission_ids_get(self) -> None:
+        """Test case for results_submissions_submission_ids_get
 
         """
         pass
@@ -87,14 +123,14 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
-    def test_submissions_uuid_get(self) -> None:
-        """Test case for submissions_uuid_get
+    def test_submissions_submission_ids_get(self) -> None:
+        """Test case for submissions_submission_ids_get
 
         """
         pass
 
-    def test_tests_ids_get(self) -> None:
-        """Test case for tests_ids_get
+    def test_submissions_submission_ids_patch(self) -> None:
+        """Test case for submissions_submission_ids_patch
 
         """
         pass

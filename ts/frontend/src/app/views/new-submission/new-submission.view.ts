@@ -32,13 +32,15 @@ export class NewSubmissionView implements OnInit {
   }
 
   async ngOnInit() {
-    this.benchmark = (await this.apiService.get('/definitions/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
+    this.benchmark = (
+      await this.apiService.get('/definitions/benchmarks/:benchmark_ids', { params: { benchmark_ids: this.id } })
+    ).body?.at(0)
     console.log(this.benchmark)
     // load all the available tests
     this.tests = (
-      await this.apiService.get('/definitions/tests/:id', {
+      await this.apiService.get('/definitions/tests/:test_ids', {
         params: {
-          id: this.benchmark!.test_definition_ids.join(','),
+          test_ids: this.benchmark!.test_ids.join(','),
         },
       })
     ).body
@@ -59,10 +61,10 @@ export class NewSubmissionView implements OnInit {
     const response = await this.apiService.post('/submissions', {
       body: {
         name: this.submissionName,
-        benchmark_definition_id: this.benchmark?.id ?? '',
+        benchmark_id: this.benchmark?.id ?? '',
         submission_data_url: this.submissionImageUrl,
         code_repository: this.codeRepositoryUrl,
-        test_definition_ids: this.tests?.filter((t, i) => this.testsSelection[i]).map((t) => t.id) ?? [],
+        test_ids: this.tests?.filter((t, i) => this.testsSelection[i]).map((t) => t.id) ?? [],
       },
     })
     if (response.body?.id) {

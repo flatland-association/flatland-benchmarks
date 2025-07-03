@@ -28,8 +28,8 @@ class SubmissionsGet200ResponseAllOfBodyInner(BaseModel):
     SubmissionsGet200ResponseAllOfBodyInner
     """ # noqa: E501
     id: Optional[StrictStr] = None
-    benchmark_definition_id: Optional[StrictStr] = None
-    test_definition_ids: Optional[List[StrictStr]] = None
+    benchmark_id: Optional[StrictStr] = None
+    test_ids: Optional[List[StrictStr]] = None
     name: Optional[StrictStr] = None
     description: Optional[StrictStr] = None
     submission_data_url: Optional[StrictStr] = None
@@ -39,7 +39,7 @@ class SubmissionsGet200ResponseAllOfBodyInner(BaseModel):
     submitted_by_username: Optional[StrictStr] = None
     status: Optional[StrictStr] = None
     published: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["id", "benchmark_definition_id", "test_definition_ids", "name", "description", "submission_data_url", "code_repository", "submitted_at", "submitted_by", "submitted_by_username", "status", "published"]
+    __properties: ClassVar[List[str]] = ["id", "benchmark_id", "test_ids", "name", "description", "submission_data_url", "code_repository", "submitted_at", "submitted_by", "submitted_by_username", "status", "published"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,8 +93,8 @@ class SubmissionsGet200ResponseAllOfBodyInner(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
-            "benchmark_definition_id": obj.get("benchmark_definition_id"),
-            "test_definition_ids": obj.get("test_definition_ids"),
+            "benchmark_id": obj.get("benchmark_id"),
+            "test_ids": obj.get("test_ids"),
             "name": obj.get("name"),
             "description": obj.get("description"),
             "submission_data_url": obj.get("submission_data_url"),

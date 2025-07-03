@@ -120,30 +120,30 @@ const dummySubmissions = {
 const dummyResults: ResultRow[] = [
   // results for submission 1
   {
-    scenario_definition_id: dummyScenarios.sc1.id,
-    test_definition_id: dummyTests.t1.id,
+    scenario_id: dummyScenarios.sc1.id,
+    test_id: dummyTests.t1.id,
     submission_id: dummySubmissions.s1.id,
     key: 'primary',
     value: 100,
   },
   {
-    scenario_definition_id: dummyScenarios.sc2.id,
-    test_definition_id: dummyTests.t1.id,
+    scenario_id: dummyScenarios.sc2.id,
+    test_id: dummyTests.t1.id,
     submission_id: dummySubmissions.s1.id,
     key: 'primary',
     value: 100,
   },
   // results for submission 2
   {
-    scenario_definition_id: dummyScenarios.sc1.id,
-    test_definition_id: dummyTests.t1.id,
+    scenario_id: dummyScenarios.sc1.id,
+    test_id: dummyTests.t1.id,
     submission_id: dummySubmissions.s2.id,
     key: 'primary',
     value: 100,
   },
   {
-    scenario_definition_id: dummyScenarios.sc1.id,
-    test_definition_id: dummyTests.t1.id,
+    scenario_id: dummyScenarios.sc1.id,
+    test_id: dummyTests.t1.id,
     submission_id: dummySubmissions.s2.id,
     key: 'primary',
     value: 50,
