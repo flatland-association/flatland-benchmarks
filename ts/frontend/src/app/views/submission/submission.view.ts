@@ -36,7 +36,7 @@ export class SubmissionView implements OnInit, OnDestroy {
   ngOnInit() {
     // load submission details
     if (this.submissionUuid) {
-      this.apiService.get('/submissions/:uuid', { params: { uuid: this.submissionUuid } }).then(({ body }) => {
+      this.apiService.get('/submissions/:ids', { params: { ids: this.submissionUuid } }).then(({ body }) => {
         this.submission = body?.at(0)
       })
     }

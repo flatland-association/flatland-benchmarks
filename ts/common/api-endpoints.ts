@@ -61,25 +61,25 @@ interface ApiEndpointDefinitions {
   '/whoami': {
     GET: ApiEndpoint<Empty, Empty, json>
   }
+  '/test': {
+    GET: ApiEndpoint<Empty, Empty, Test>
+  }
   '/definitions/benchmarks': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
   }
-  '/definitions/benchmarks/:id': {
+  '/definitions/benchmarks/:ids': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
   }
-  '/definitions/tests/:id': {
+  '/definitions/tests/:ids': {
     GET: ApiEndpoint<Empty, Empty, TestDefinitionRow[]>
   }
   '/submissions': {
-    GET: ApiEndpoint<Empty, { benchmark?: string; uuid?: string; submitted_by?: string }, SubmissionRow[]>
+    GET: ApiEndpoint<Empty, { benchmark?: string; ids?: string; submitted_by?: string }, SubmissionRow[]>
     POST: ApiEndpoint<StripLocator<SubmissionRow>, Empty, { id: string }>
   }
-  '/submissions/:uuid': {
+  '/submissions/:ids': {
     GET: ApiEndpoint<Empty, Empty, SubmissionRow[]>
     PATCH: ApiEndpoint<Empty, Empty, SubmissionRow[]>
-  }
-  '/test': {
-    GET: ApiEndpoint<Empty, Empty, Test>
   }
   '/results/submissions/:submission_id': {
     GET: ApiEndpoint<Empty, Empty, LeaderboardItem[]>

@@ -10,7 +10,7 @@ export class BenchmarkController extends Controller {
     super(config)
 
     this.attachGet('/definitions/benchmarks', this.getBenchmarks)
-    this.attachGet('/definitions/benchmarks/:id', this.getBenchmarkById)
+    this.attachGet('/definitions/benchmarks/:ids', this.getBenchmarkById)
   }
 
   /**
@@ -113,8 +113,8 @@ export class BenchmarkController extends Controller {
    *                              type: string
    *                              format: uuid
    */
-  getBenchmarkById: GetHandler<'/definitions/benchmarks/:id'> = async (req, res) => {
-    const ids = req.params.id.split(',')
+  getBenchmarkById: GetHandler<'/definitions/benchmarks/:ids'> = async (req, res) => {
+    const ids = req.params.ids.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<BenchmarkDefinitionRow>>`

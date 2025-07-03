@@ -41,14 +41,14 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}:
+   * /results/submissions/{ids}:
    *  get:
    *    description: Get aggregated submission overall results.
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: submission_id
+   *        name: ids
    *        description: Submission ID.
    *        required: true
    *        schema:

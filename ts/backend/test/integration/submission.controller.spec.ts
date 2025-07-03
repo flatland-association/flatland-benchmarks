@@ -36,13 +36,13 @@ describe.sequential('Submission controller', () => {
   })
 
   test('should reject get submissions from unauthorized users', async () => {
-    const res = await controller.testGet('/submissions/:uuid', { params: { uuid: submissionUuid } })
+    const res = await controller.testGet('/submissions/:ids', { params: { ids: submissionUuid } })
     expect(res.status).toBe(401)
     expect(res.body).toBeApiResponse()
   })
 
   test('should allow get submissions', async () => {
-    const res = await controller.testGet('/submissions/:uuid', { params: { uuid: submissionUuid } }, testUserJwt)
+    const res = await controller.testGet('/submissions/:ids', { params: { ids: submissionUuid } }, testUserJwt)
     expect(res.status).toBe(200)
     expect(res.body).toBeApiResponse()
     expect(res.body.body?.at(0)).toBeTruthy()

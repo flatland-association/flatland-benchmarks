@@ -9,7 +9,7 @@ export class TestController extends Controller {
   constructor(config: configuration) {
     super(config)
 
-    this.attachGet('/definitions/tests/:id', this.getTestById)
+    this.attachGet('/definitions/tests/:ids', this.getTestById)
   }
 
   /**
@@ -59,8 +59,8 @@ export class TestController extends Controller {
    *                              type: string
    *                              format: uuid
    */
-  getTestById: GetHandler<'/definitions/tests/:id'> = async (req, res) => {
-    const ids = req.params.id.split(',')
+  getTestById: GetHandler<'/definitions/tests/:ids'> = async (req, res) => {
+    const ids = req.params.ids.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<TestDefinitionRow>>`
