@@ -31,7 +31,7 @@ Leaderboard -  i.e. a list of scored submissions
 └ SubmissionScored[] - scored submissions (scores aggregated at test level and aggregated at benchmark level from tests), a submission refers to exactly one benchmark by definition
   └ TestScored[] - scored tests (aggregated from scenarios)
     └ ScenarioScored[] - scored scenarios
-    
+
 In campaign setting:
 Campaign Overview: list of CampaignItems
 └ CampaignItem -  a benchmark scored by aggregation of the best test score; the best test from all SubmissionScored
@@ -137,7 +137,7 @@ export function upcastSubmissionRow(
   testDefinitionCandidates: TestDefinitionRow[],
   benchmarkDefinitionCandidates: BenchmarkDefinitionRow[],
 ): Submission {
-  const benchmarkDef = benchmarkDefinitionCandidates.find((c) => c.id === row.benchmark_definition_id) ?? null
+  const benchmarkDef = benchmarkDefinitionCandidates.find((c) => c.id === row.benchmark_id) ?? null
   return {
     dir: row.dir,
     id: row.id,
@@ -149,7 +149,7 @@ export function upcastSubmissionRow(
           testDefinitionCandidates,
         )
       : null,
-    test_definitions: row.test_definition_ids.map((id) => {
+    test_definitions: row.test_ids.map((id) => {
       const test = testDefinitionCandidates.find((c) => c.id === id) ?? null
       if (test) {
         return upcastTestDefinitionRow(test, fieldDefinitionCandidates, scenarioDefinitionCandidates)

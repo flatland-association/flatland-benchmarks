@@ -98,8 +98,8 @@ export type SubmissionStatus = 'SUBMITTED' | 'RUNNING' | 'SUCCESS' | 'FAILURE'
 
 export interface SubmissionRow extends Resource<'/submissions/'> {
   id: string
-  benchmark_definition_id: string
-  test_definition_ids: string[]
+  benchmark_id: string
+  test_ids: string[]
   name: string
   description?: string | null
   submission_data_url: string

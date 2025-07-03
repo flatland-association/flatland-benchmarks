@@ -5,8 +5,8 @@ import { ControllerTestAdapter, setupControllerTestEnvironment, testUserJwt } fr
 import { getTestConfig } from './setup.mjs'
 
 const testSubmission: StripLocator<SubmissionRow> = {
-  benchmark_definition_id: '20ccc7c1-034c-4880-8946-bffc3fed1359',
-  test_definition_ids: ['79094281-35ff-484d-a687-cccb228a04a0'],
+  benchmark_id: '20ccc7c1-034c-4880-8946-bffc3fed1359',
+  test_ids: ['79094281-35ff-484d-a687-cccb228a04a0'],
   name: 'test',
   submission_data_url: 'none',
 }

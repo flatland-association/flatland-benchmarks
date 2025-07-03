@@ -746,7 +746,7 @@ export class ResultsController extends Controller {
       SELECT * FROM submissions WHERE id=${submissionId}
     `
     const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
-      SELECT * FROM benchmark_definitions WHERE id=${submissionRow.benchmark_definition_id}
+      SELECT * FROM benchmark_definitions WHERE id=${submissionRow.benchmark_id}
     `
     // load required candidates for referenced fields (used in upcast) and upcast
     const fieldDefCandidates = await sql.query<FieldDefinitionRow>`

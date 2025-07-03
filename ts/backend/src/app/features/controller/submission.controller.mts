@@ -37,7 +37,7 @@ export class SubmissionController extends Controller {
    *              name:
    *                type: string
    *                description: Display name of submission.
-   *              benchmark_definition_id:
+   *              benchmark_id:
    *                type: string
    *                format: uuid
    *                description: ID of benchmark this submission belongs to.
@@ -47,7 +47,7 @@ export class SubmissionController extends Controller {
    *              code_repository:
    *                type: string
    *                description: URL of submission code repository.
-   *              test_definition_ids:
+   *              test_ids:
    *                type: array
    *                items:
    *                  type: string
@@ -91,8 +91,8 @@ export class SubmissionController extends Controller {
           submitted_by,
           submitted_by_username
         ) VALUES (
-          ${req.body.benchmark_definition_id},
-          ${req.body.test_definition_ids},
+          ${req.body.benchmark_id},
+          ${req.body.test_ids},
           ${req.body.name},
           ${req.body.submission_data_url},
           ${req.body.code_repository ?? null},
@@ -110,8 +110,8 @@ export class SubmissionController extends Controller {
     // get tests
     const tests = await sql.query<TestDefinitionRow>`
         SELECT * FROM test_definitions
-        WHERE id=ANY(${req.body.test_definition_ids})
-        LIMIT ${req.body.test_definition_ids!.length}
+        WHERE id=ANY(${req.body.test_ids})
+        LIMIT ${req.body.test_ids!.length}
       `
     // if required (not all OFFLINE), send message with test names to evaluator
     if (tests.some((test) => test.loop !== 'OFFLINE')) {
@@ -124,7 +124,7 @@ export class SubmissionController extends Controller {
       logger.info(`Sending ${payload} to celery.`)
       try {
         // the returned unsettled promise is ignored and continues running (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-        celery.sendTask(req.body.benchmark_definition_id as string, payload, id)
+        celery.sendTask(req.body.benchmark_id as string, payload, id)
         // request succeeds once connection is checked ready and task sent
         this.respond(req, res, { id }, payload)
       } catch (error) {
