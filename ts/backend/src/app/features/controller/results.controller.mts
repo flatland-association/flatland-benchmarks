@@ -508,13 +508,13 @@ export class ResultsController extends Controller {
    * @swagger
    * /results/campaign-items/{benchmark_id}:
    *  get:
-   *    description: Returns a campaign-item overview (i.e. all tests in benchmark with score of top submission per test).
+   *    description: Returns campaign-item overviews (i.e. all tests in benchmark with score of top submission per test).
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: benchmark_id
-   *        description: Benchmark ID.
+   *        description: Comma-separated list of IDs.
    *        required: true
    *        schema:
    *          type: string
@@ -562,39 +562,41 @@ export class ResultsController extends Controller {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    const benchmarkId = req.params.benchmark_id
-    const leaderboard = await this.aggregateCampaignItem(benchmarkId)
-    if (!leaderboard) {
-      this.requestError(req, res, { text: 'Campaign item could not be aggregated' })
-      return
+    const benchmarkIds = req.params.benchmark_id.split(',')
+    const itemOverviews: CampaignItemOverview[] = []
+    for (const benchmarkId of benchmarkIds) {
+      const leaderboard = await this.aggregateCampaignItem(benchmarkId)
+      // only transmit valid overviews
+      if (leaderboard) {
+        // transform for transmission
+        // TODO: properly define data format of results for transmission
+        itemOverviews.push({
+          benchmark_id: benchmarkId,
+          items: leaderboard.items.map((item) => {
+            return {
+              test_id: item.test.id,
+              scorings: item.scorings ?? null,
+              submission_id: item.submission?.id ?? null,
+            }
+          }),
+          scorings: leaderboard.scorings,
+        })
+      }
     }
-    // transform for transmission
-    // TODO: properly define data format of results for transmission
-    const result: CampaignItemOverview = {
-      benchmark_id: benchmarkId,
-      items: leaderboard.items.map((item) => {
-        return {
-          test_id: item.test.id,
-          scorings: item.scorings ?? null,
-          submission_id: item.submission?.id ?? null,
-        }
-      }),
-      scorings: leaderboard.scorings,
-    }
-    this.respond(req, res, [result])
+    this.respond(req, res, itemOverviews)
   }
 
   /**
    * @swagger
    * /results/campaigns/{group_id}:
    *  get:
-   *    description: Returns a campaign overview (i.e. all benchmarks in the group with score aggregated from their top submission per test).
+   *    description: Returns campaign overviews (i.e. all benchmarks in the group with score aggregated from their top submission per test).
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: group_id
-   *        description: Benchmark group ID.
+   *        description: Comma-separated list of IDs.
    *        required: true
    *        schema:
    *          type: string
@@ -654,31 +656,33 @@ export class ResultsController extends Controller {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    const groupId = req.params.group_id
-    const leaderboard = await this.aggregateGroupLeaderboard(groupId)
-    if (!leaderboard) {
-      this.requestError(req, res, { text: 'Group leaderboard could not be aggregated' })
-      return
-    }
-    // transform for transmission
-    // TODO: properly define data format of results for transmission
-    const result: CampaignOverview = {
-      group_id: groupId,
-      items: leaderboard.items.map((campaignItem) => {
-        return {
-          benchmark_id: campaignItem.benchmark.id,
-          items: campaignItem.items.map((campaignItemItem) => {
+    const groupIds = req.params.group_id.split(',')
+    const overviews: CampaignOverview[] = []
+    for (const groupId of groupIds) {
+      const leaderboard = await this.aggregateGroupLeaderboard(groupId)
+      // only transmit valid overviews
+      if (leaderboard) {
+        // transform for transmission
+        // TODO: properly define data format of results for transmission
+        overviews.push({
+          group_id: groupId,
+          items: leaderboard.items.map((campaignItem) => {
             return {
-              test_id: campaignItemItem.test.id,
-              scorings: campaignItemItem.scorings,
-              submission_id: campaignItemItem.submission?.id ?? null,
-            } satisfies CampaignItemOverviewItem
+              benchmark_id: campaignItem.benchmark.id,
+              items: campaignItem.items.map((campaignItemItem) => {
+                return {
+                  test_id: campaignItemItem.test.id,
+                  scorings: campaignItemItem.scorings,
+                  submission_id: campaignItemItem.submission?.id ?? null,
+                } satisfies CampaignItemOverviewItem
+              }),
+              scorings: campaignItem.scorings,
+            } satisfies CampaignItemOverview
           }),
-          scorings: campaignItem.scorings,
-        } satisfies CampaignItemOverview
-      }),
+        })
+      }
     }
-    this.respond(req, res, [result])
+    this.respond(req, res, overviews)
   }
 
   /**
