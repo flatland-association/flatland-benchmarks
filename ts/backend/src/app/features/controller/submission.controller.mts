@@ -82,7 +82,7 @@ export class SubmissionController extends Controller {
     const sql = SqlService.getInstance()
     const idRow = await sql.query`
         INSERT INTO submissions (
-          benchmark_definition_id,
+          benchmark_id,
           test_ids,
           name,
           submission_data_url,
@@ -221,7 +221,7 @@ export class SubmissionController extends Controller {
     let whereBenchmark = sql.fragment`1=1`
     let whereSubmittedBy = sql.fragment`1=1`
     if (benchmarkId) {
-      whereBenchmark = sql.fragment`benchmark_definition_id=${benchmarkId}`
+      whereBenchmark = sql.fragment`benchmark_id=${benchmarkId}`
     }
     if (submittedBy) {
       // turn off public requirement if submitter matches authorized user
