@@ -66,40 +66,40 @@ interface ApiEndpointDefinitions {
   '/definitions/benchmark-groups': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkGroupDefinitionRow[]>
   }
-  '/definitions/benchmark-groups/:group_id': {
+  '/definitions/benchmark-groups/:group_ids': {
     GET: ApiEndpoint<Empty, Empty, BenchmarkGroupDefinitionRow[]>
-  }
-  '/definitions/benchmarks': {
-    GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
-  }
-  '/definitions/benchmarks/:id': {
-    GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
-  }
-  '/definitions/tests/:id': {
-    GET: ApiEndpoint<Empty, Empty, TestDefinitionRow[]>
-  }
-  '/submissions': {
-    GET: ApiEndpoint<Empty, { benchmark?: string; uuid?: string; submitted_by?: string }, SubmissionRow[]>
-    POST: ApiEndpoint<StripLocator<SubmissionRow>, Empty, { id: string }>
-  }
-  '/submissions/:uuid': {
-    GET: ApiEndpoint<Empty, Empty, SubmissionRow[]>
-    PATCH: ApiEndpoint<Empty, Empty, SubmissionRow[]>
   }
   '/test': {
     GET: ApiEndpoint<Empty, Empty, Test>
   }
-  '/results/submissions/:submission_id': {
+  '/definitions/benchmarks': {
+    GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
+  }
+  '/definitions/benchmarks/:benchmark_ids': {
+    GET: ApiEndpoint<Empty, Empty, BenchmarkDefinitionRow[]>
+  }
+  '/definitions/tests/:test_ids': {
+    GET: ApiEndpoint<Empty, Empty, TestDefinitionRow[]>
+  }
+  '/submissions': {
+    GET: ApiEndpoint<Empty, { benchmark_ids?: string; ids?: string; submitted_by?: string }, SubmissionRow[]>
+    POST: ApiEndpoint<StripLocator<SubmissionRow>, Empty, { id: string }>
+  }
+  '/submissions/:submission_ids': {
+    GET: ApiEndpoint<Empty, Empty, SubmissionRow[]>
+    PATCH: ApiEndpoint<Empty, Empty, SubmissionRow[]>
+  }
+  '/results/submissions/:submission_ids': {
     GET: ApiEndpoint<Empty, Empty, LeaderboardItem[]>
   }
-  '/results/submissions/:submission_id/tests/:test_id': {
+  '/results/submissions/:submission_id/tests/:test_ids': {
     GET: ApiEndpoint<Empty, Empty, TestScored>
     POST: ApiEndpoint<PostTestResultsBody, Empty, Empty>
   }
-  '/results/submissions/:submission_id/tests/:test_id/scenario/:scenario_id': {
+  '/results/submissions/:submission_id/scenario/:scenario_ids': {
     GET: ApiEndpoint<Empty, Empty, ScenarioScored[]>
   }
-  '/results/benchmarks/:benchmark_id': {
+  '/results/benchmarks/:benchmark_ids': {
     GET: ApiEndpoint<Empty, Empty, Leaderboard[]>
   }
   '/results/campaign-items/:benchmark_ids': {
@@ -108,7 +108,7 @@ interface ApiEndpointDefinitions {
   '/results/campaigns/:group_ids': {
     GET: ApiEndpoint<Empty, Empty, CampaignOverview[]>
   }
-  '/results/benchmarks/:benchmark_id/tests/:test_id': {
+  '/results/benchmarks/:benchmark_id/tests/:test_ids': {
     GET: ApiEndpoint<Empty, Empty, Leaderboard[]>
   }
 }

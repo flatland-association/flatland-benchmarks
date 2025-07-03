@@ -32,7 +32,7 @@ Leaderboard -  i.e. a list of scored submissions
 └ SubmissionScored[] - scored submissions (scores aggregated at test level and aggregated at benchmark level from tests), a submission refers to exactly one benchmark by definition
   └ TestScored[] - scored tests (aggregated from scenarios)
     └ ScenarioScored[] - scored scenarios
-    
+
 In campaign setting:
 Campaign Overview: list of CampaignItems
 └ CampaignItem -  a benchmark scored by aggregation of the best test score; the best test from all SubmissionScored
@@ -45,7 +45,7 @@ N.B. the scored tree knows a level between benchmarks and tests (submissions).
 */
 
 // TODO: find a generic way to do all this (the interfaces for definition objects and the upcast row -> object)
-export interface ScenarioDefinition extends Omit<ScenarioDefinitionRow, 'field_definition_ids'> {
+export interface ScenarioDefinition extends Omit<ScenarioDefinitionRow, 'field_ids'> {
   field_definitions: (FieldDefinitionRow | null)[]
 }
 
@@ -58,11 +58,11 @@ export function upcastScenarioDefinitionRow(
     id: row.id,
     name: row.name,
     description: row.description,
-    field_definitions: row.field_definition_ids.map((id) => fieldDefinitionCandidates.find((c) => c.id === id) ?? null),
+    field_definitions: row.field_ids.map((id) => fieldDefinitionCandidates.find((c) => c.id === id) ?? null),
   }
 }
 
-export interface TestDefinition extends Omit<TestDefinitionRow, 'field_definition_ids' | 'scenario_definition_ids'> {
+export interface TestDefinition extends Omit<TestDefinitionRow, 'field_ids' | 'scenario_ids'> {
   field_definitions: (FieldDefinitionRow | null)[]
   scenario_definitions: (ScenarioDefinition | null)[]
 }
@@ -77,8 +77,8 @@ export function upcastTestDefinitionRow(
     id: row.id,
     name: row.name,
     description: row.description,
-    field_definitions: row.field_definition_ids.map((id) => fieldDefinitionCandidates.find((c) => c.id === id) ?? null),
-    scenario_definitions: row.scenario_definition_ids.map((id) => {
+    field_definitions: row.field_ids.map((id) => fieldDefinitionCandidates.find((c) => c.id === id) ?? null),
+    scenario_definitions: row.scenario_ids.map((id) => {
       const scenario = scenarioDefinitionCandidates.find((c) => c.id === id) ?? null
       if (scenario) {
         return upcastScenarioDefinitionRow(scenario, fieldDefinitionCandidates)
@@ -90,8 +90,7 @@ export function upcastTestDefinitionRow(
   }
 }
 
-export interface BenchmarkDefinition
-  extends Omit<BenchmarkDefinitionRow, 'field_definition_ids' | 'test_definition_ids'> {
+export interface BenchmarkDefinition extends Omit<BenchmarkDefinitionRow, 'field_ids' | 'test_ids'> {
   /**
    * Defines aggregation of test scores in context:
    * - competition; to submission overall score
@@ -112,8 +111,8 @@ export function upcastBenchmarkDefinitionRow(
     id: row.id,
     name: row.name,
     description: row.description,
-    field_definitions: row.field_definition_ids.map((id) => fieldDefinitionCandidates.find((c) => c.id === id) ?? null),
-    test_definitions: row.test_definition_ids.map((id) => {
+    field_definitions: row.field_ids.map((id) => fieldDefinitionCandidates.find((c) => c.id === id) ?? null),
+    test_definitions: row.test_ids.map((id) => {
       const test = testDefinitionCandidates.find((c) => c.id === id) ?? null
       if (test) {
         return upcastTestDefinitionRow(test, fieldDefinitionCandidates, scenarioDefinitionCandidates)
@@ -124,7 +123,7 @@ export function upcastBenchmarkDefinitionRow(
   }
 }
 
-export interface BenchmarkGroupDefinition extends Omit<BenchmarkGroupDefinitionRow, 'benchmark_definition_ids'> {
+export interface BenchmarkGroupDefinition extends Omit<BenchmarkGroupDefinitionRow, 'benchmark_ids'> {
   benchmark_definitions: (BenchmarkDefinition | null)[]
 }
 
@@ -141,7 +140,7 @@ export function upcastBenchmarkGroupDefinitionRow(
     name: row.name,
     description: row.description,
     setup: row.setup,
-    benchmark_definitions: row.benchmark_definition_ids.map((id) => {
+    benchmark_definitions: row.benchmark_ids.map((id) => {
       const benchmark = benchmarkDefinitionCandidates.find((c) => c.id === id) ?? null
       if (benchmark) {
         return upcastBenchmarkDefinitionRow(
@@ -157,7 +156,7 @@ export function upcastBenchmarkGroupDefinitionRow(
   }
 }
 
-export interface Submission extends Omit<SubmissionRow, 'benchmark_definition_id' | 'test_definition_ids'> {
+export interface Submission extends Omit<SubmissionRow, 'benchmark_id' | 'test_ids'> {
   benchmark_definition: BenchmarkDefinition | null
   test_definitions: (TestDefinition | null)[]
 }
@@ -169,7 +168,7 @@ export function upcastSubmissionRow(
   testDefinitionCandidates: TestDefinitionRow[],
   benchmarkDefinitionCandidates: BenchmarkDefinitionRow[],
 ): Submission {
-  const benchmarkDef = benchmarkDefinitionCandidates.find((c) => c.id === row.benchmark_definition_id) ?? null
+  const benchmarkDef = benchmarkDefinitionCandidates.find((c) => c.id === row.benchmark_id) ?? null
   return {
     dir: row.dir,
     id: row.id,
@@ -181,7 +180,7 @@ export function upcastSubmissionRow(
           testDefinitionCandidates,
         )
       : null,
-    test_definitions: row.test_definition_ids.map((id) => {
+    test_definitions: row.test_ids.map((id) => {
       const test = testDefinitionCandidates.find((c) => c.id === id) ?? null
       if (test) {
         return upcastTestDefinitionRow(test, fieldDefinitionCandidates, scenarioDefinitionCandidates)
@@ -400,7 +399,7 @@ export class Aggregator {
         .map((scenario) =>
           this.getScenarioScored(
             scenario,
-            results.filter((result) => result.scenario_definition_id === scenario.id),
+            results.filter((result) => result.scenario_id === scenario.id),
           ),
         ),
       scorings: {},

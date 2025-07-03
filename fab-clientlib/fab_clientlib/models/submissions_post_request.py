@@ -28,11 +28,11 @@ class SubmissionsPostRequest(BaseModel):
     SubmissionsPostRequest
     """ # noqa: E501
     name: Optional[StrictStr] = Field(default=None, description="Display name of submission.")
-    benchmark_definition_id: Optional[StrictStr] = Field(default=None, description="ID of benchmark this submission belongs to.")
+    benchmark_id: Optional[StrictStr] = Field(default=None, description="ID of benchmark this submission belongs to.")
     submission_data_url: Optional[StrictStr] = Field(default=None, description="URL of submission executable image.")
     code_repository: Optional[StrictStr] = Field(default=None, description="URL of submission code repository.")
-    test_definition_ids: Optional[List[StrictStr]] = Field(default=None, description="IDs of tests to run.")
-    __properties: ClassVar[List[str]] = ["name", "benchmark_definition_id", "submission_data_url", "code_repository", "test_definition_ids"]
+    test_ids: Optional[List[StrictStr]] = Field(default=None, description="IDs of tests to run.")
+    __properties: ClassVar[List[str]] = ["name", "benchmark_id", "submission_data_url", "code_repository", "test_ids"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -86,10 +86,10 @@ class SubmissionsPostRequest(BaseModel):
 
         _obj = cls.model_validate({
             "name": obj.get("name"),
-            "benchmark_definition_id": obj.get("benchmark_definition_id"),
+            "benchmark_id": obj.get("benchmark_id"),
             "submission_data_url": obj.get("submission_data_url"),
             "code_repository": obj.get("code_repository"),
-            "test_definition_ids": obj.get("test_definition_ids")
+            "test_ids": obj.get("test_ids")
         })
         return _obj
 

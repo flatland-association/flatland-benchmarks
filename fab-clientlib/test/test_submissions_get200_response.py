@@ -41,8 +41,8 @@ class TestSubmissionsGet200Response(unittest.TestCase):
                 body = [
                     fab_clientlib.models._submissions_get_200_response_all_of_body_inner._submissions_get_200_response_allOf_body_inner(
                         id = '', 
-                        benchmark_definition_id = '', 
-                        test_definition_ids = [
+                        benchmark_id = '', 
+                        test_ids = [
                             ''
                             ], 
                         name = '', 

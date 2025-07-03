@@ -6,6 +6,131 @@
     "description": "Python client lib to access Flatland Association Benchmarks / AI4REALNET Campaign Hub Backend API, generated with openapi-generator"
   },
   "paths": {
+    "/benchmark-groups": {
+      "get": {
+        "description": "Lists benchmark-groups.",
+        "responses": {
+          "200": {
+            "description": "List of benchmark-groups.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "ID of benchmark-group."
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "setup": {
+                                "type": "string"
+                              },
+                              "benchmark_ids": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/benchmark-groups/{group_ids}": {
+      "get": {
+        "description": "Returns benchmark-groups with ID in `group_id`.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "group_ids",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            },
+            "description": "Comma-separated list of IDs."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requested benchmark-groups.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "ID of benchmark-group."
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "setup": {
+                                "type": "string"
+                              },
+                              "benchmark_ids": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "format": "uuid"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/definitions/benchmarks/": {
       "get": {
         "description": "Returns benchmarks.",
@@ -44,14 +169,14 @@
                               "description": {
                                 "type": "string"
                               },
-                              "field_definition_ids": {
+                              "field_ids": {
                                 "type": "array",
                                 "items": {
                                   "type": "string",
                                   "format": "uuid"
                                 }
                               },
-                              "test_definition_ids": {
+                              "test_ids": {
                                 "type": "array",
                                 "items": {
                                   "type": "string",
@@ -71,7 +196,7 @@
         }
       }
     },
-    "/definitions/benchmarks/{ids}": {
+    "/definitions/benchmarks/{benchmark_ids}": {
       "get": {
         "description": "Returns tests with ID in `ids`.",
         "security": [
@@ -84,7 +209,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "ids",
+            "name": "benchmark_ids",
             "description": "Comma-separated list of IDs.",
             "required": true,
             "schema": {
@@ -124,14 +249,14 @@
                               "description": {
                                 "type": "string"
                               },
-                              "field_definition_ids": {
+                              "field_ids": {
                                 "type": "array",
                                 "items": {
                                   "type": "string",
                                   "format": "uuid"
                                 }
                               },
-                              "test_definition_ids": {
+                              "test_ids": {
                                 "type": "array",
                                 "items": {
                                   "type": "string",
@@ -202,7 +327,7 @@
         }
       }
     },
-    "/results/submissions/{submission_id}": {
+    "/results/submissions/{submission_ids}": {
       "get": {
         "description": "Get aggregated submission overall results.",
         "security": [
@@ -215,12 +340,15 @@
         "parameters": [
           {
             "in": "path",
-            "name": "submission_id",
-            "description": "Submission ID.",
+            "name": "submission_ids",
+            "description": "Comma-separated list of submission IDs.",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
             }
           }
         ],
@@ -298,7 +426,7 @@
         }
       }
     },
-    "/results/submissions/{submission_id}/tests/{test_id}": {
+    "/results/submissions/{submission_id}/tests/{test_ids}": {
       "get": {
         "description": "Get submission results aggregated by test.",
         "security": [
@@ -321,12 +449,15 @@
           },
           {
             "in": "path",
-            "name": "test_id",
-            "description": "Test ID.",
+            "name": "test_ids",
+            "description": "Comma-separated list of Test IDs.",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
             }
           }
         ],
@@ -405,12 +536,15 @@
           },
           {
             "in": "path",
-            "name": "test_id",
-            "description": "Test ID.",
+            "name": "test_ids",
+            "description": "Comma-separated list of test IDs.",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
             }
           }
         ],
@@ -475,7 +609,7 @@
         }
       }
     },
-    "/results/submissions/{submission_id}/tests/{test_id}/scenario/{scenario_id}": {
+    "/results/submissions/{submission_id}/scenario/{scenario_ids}": {
       "get": {
         "description": "Get submission results for specific scenario.",
         "security": [
@@ -498,22 +632,15 @@
           },
           {
             "in": "path",
-            "name": "test_id",
-            "description": "Test ID.",
+            "name": "scenario_ids",
+            "description": "Comma-separated list of scenario IDs.",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          },
-          {
-            "in": "path",
-            "name": "scenario_id",
-            "description": "Scenario ID.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
             }
           }
         ],
@@ -557,7 +684,7 @@
         }
       }
     },
-    "/results/benchmarks/{benchmark_id}": {
+    "/results/benchmarks/{benchmark_ids}": {
       "get": {
         "description": "Get benchmark leaderboard.",
         "security": [
@@ -570,12 +697,15 @@
         "parameters": [
           {
             "in": "path",
-            "name": "benchmark_id",
-            "description": "Benchmark ID.",
+            "name": "benchmark_ids",
+            "description": "Comma-separated list of benchmark IDs.",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
             }
           }
         ],
@@ -666,9 +796,9 @@
         }
       }
     },
-    "/results/campaign-items/{benchmark_id}": {
+    "/results/campaign-items/{benchmark_ids}": {
       "get": {
-        "description": "Get campaign item leaderboard.",
+        "description": "Returns campaign-item overviews (i.e. all tests in benchmark with score of top submission per test).",
         "security": [
           {
             "oauth2": [
@@ -679,12 +809,15 @@
         "parameters": [
           {
             "in": "path",
-            "name": "benchmark_id",
-            "description": "Benchmark ID.",
+            "name": "benchmark_ids",
+            "description": "Comma-separated list of benchmark IDs.",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
             }
           }
         ],
@@ -746,7 +879,107 @@
         }
       }
     },
-    "/results/benchmarks/{benchmark_id}/tests/{test_id}": {
+    "/results/campaigns/{group_ids}": {
+      "get": {
+        "description": "Returns campaign overviews (i.e. all benchmarks in the group with score aggregated from their top submission per test).",
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "group_ids",
+            "description": "Comma-separated list of IDs.",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Campaign leaderboard.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "group_id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "ID of benchmark group."
+                              },
+                              "items": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "benchmark_id": {
+                                      "type": "string",
+                                      "format": "uuid",
+                                      "description": "ID of benchmark."
+                                    },
+                                    "items": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "test_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "description": "ID of test."
+                                          },
+                                          "scorings": {
+                                            "type": "object",
+                                            "description": "Dictionary of test scores (best submission only)."
+                                          },
+                                          "submission_id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "description": "ID of best submission."
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "scorings": {
+                                "type": "object",
+                                "description": "Dictionary of group scores"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/results/benchmarks/{benchmark_id}/tests/{test_ids}": {
       "get": {
         "description": "Get test leaderboard.",
         "security": [
@@ -769,12 +1002,15 @@
           },
           {
             "in": "path",
-            "name": "test_id",
-            "description": "Test ID.",
+            "name": "test_ids",
+            "description": "Comma-separated list of test IDs.",
             "required": true,
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
             }
           }
         ],
@@ -886,7 +1122,7 @@
                     "type": "string",
                     "description": "Display name of submission."
                   },
-                  "benchmark_definition_id": {
+                  "benchmark_id": {
                     "type": "string",
                     "format": "uuid",
                     "description": "ID of benchmark this submission belongs to."
@@ -899,7 +1135,7 @@
                     "type": "string",
                     "description": "URL of submission code repository."
                   },
-                  "test_definition_ids": {
+                  "test_ids": {
                     "type": "array",
                     "items": {
                       "type": "string",
@@ -956,10 +1192,13 @@
         "parameters": [
           {
             "in": "query",
-            "name": "benchmark",
+            "name": "benchmark_ids",
             "schema": {
-              "type": "string",
-              "format": "uuid"
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
             },
             "description": "Filter submissions by benchmark."
           },
@@ -995,11 +1234,11 @@
                                 "type": "string",
                                 "format": "uuid"
                               },
-                              "benchmark_definition_id": {
+                              "benchmark_id": {
                                 "type": "string",
                                 "format": "uuid"
                               },
-                              "test_definition_ids": {
+                              "test_ids": {
                                 "type": "array",
                                 "items": {
                                   "type": "string",
@@ -1047,7 +1286,7 @@
         }
       }
     },
-    "/submissions/{uuid}": {
+    "/submissions/{submission_ids}": {
       "get": {
         "description": "Get submissions.",
         "security": [
@@ -1060,7 +1299,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "uuid",
+            "name": "submission_ids",
             "description": "Comma-separated list of submission IDs.",
             "required": true,
             "schema": {
@@ -1094,11 +1333,11 @@
                                 "type": "string",
                                 "format": "uuid"
                               },
-                              "benchmark_definition_id": {
+                              "benchmark_id": {
                                 "type": "string",
                                 "format": "uuid"
                               },
-                              "test_definition_ids": {
+                              "test_ids": {
                                 "type": "array",
                                 "items": {
                                   "type": "string",
@@ -1157,7 +1396,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "uuid",
+            "name": "submission_ids",
             "description": "Comma-separated list of IDs.",
             "required": true,
             "schema": {
@@ -1191,11 +1430,11 @@
                                 "type": "string",
                                 "format": "uuid"
                               },
-                              "benchmark_definition_id": {
+                              "benchmark_id": {
                                 "type": "string",
                                 "format": "uuid"
                               },
-                              "test_definition_ids": {
+                              "test_ids": {
                                 "type": "array",
                                 "items": {
                                   "type": "string",
@@ -1243,7 +1482,7 @@
         }
       }
     },
-    "/definitions/tests/{ids}": {
+    "/definitions/tests/{test_ids}": {
       "get": {
         "description": "Returns tests with ID in `ids`.",
         "security": [
@@ -1256,7 +1495,7 @@
         "parameters": [
           {
             "in": "path",
-            "name": "ids",
+            "name": "test_ids",
             "description": "Comma-separated list of IDs.",
             "required": true,
             "schema": {
@@ -1299,7 +1538,7 @@
                               "description": {
                                 "type": "string"
                               },
-                              "scenario_definition_ids": {
+                              "scenario_ids": {
                                 "type": "array",
                                 "items": {
                                   "type": "string",

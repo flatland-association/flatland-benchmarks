@@ -6,10 +6,10 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **str** | Display name of submission. | [optional] 
-**benchmark_definition_id** | **str** | ID of benchmark this submission belongs to. | [optional] 
+**benchmark_id** | **str** | ID of benchmark this submission belongs to. | [optional] 
 **submission_data_url** | **str** | URL of submission executable image. | [optional] 
 **code_repository** | **str** | URL of submission code repository. | [optional] 
-**test_definition_ids** | **List[str]** | IDs of tests to run. | [optional] 
+**test_ids** | **List[str]** | IDs of tests to run. | [optional] 
 
 ## Example
 

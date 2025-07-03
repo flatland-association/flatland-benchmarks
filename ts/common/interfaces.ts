@@ -72,7 +72,7 @@ export interface ScenarioDefinitionRow extends Resource<'/definitions/scenarios/
   id: string
   name: string
   description: string
-  field_definition_ids: string[]
+  field_ids: string[]
 }
 
 export type Loop = 'CLOSED' | 'INTERACTIVE' | 'OFFLINE'
@@ -81,8 +81,8 @@ export interface TestDefinitionRow extends Resource<'/definitions/tests/'> {
   id: string
   name: string
   description: string
-  field_definition_ids: string[]
-  scenario_definition_ids: string[]
+  field_ids: string[]
+  scenario_ids: string[]
   loop: Loop
 }
 
@@ -90,8 +90,8 @@ export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmark
   id: string
   name: string
   description: string
-  field_definition_ids: string[]
-  test_definition_ids: string[]
+  field_ids: string[]
+  test_ids: string[]
 }
 
 export type BenchmarkGroupSetup = 'BENCHMARK' | 'COMPETITION' | 'CAMPAIGN'
@@ -101,15 +101,15 @@ export interface BenchmarkGroupDefinitionRow extends Resource<'/benchmark-groups
   name: string
   description: string
   setup: BenchmarkGroupSetup
-  benchmark_definition_ids: string[]
+  benchmark_ids: string[]
 }
 
 export type SubmissionStatus = 'SUBMITTED' | 'RUNNING' | 'SUCCESS' | 'FAILURE'
 
 export interface SubmissionRow extends Resource<'/submissions/'> {
   id: string
-  benchmark_definition_id: string
-  test_definition_ids: string[]
+  benchmark_id: string
+  test_ids: string[]
   name: string
   description?: string | null
   submission_data_url: string
@@ -122,8 +122,8 @@ export interface SubmissionRow extends Resource<'/submissions/'> {
 }
 
 export interface ResultRow {
-  scenario_definition_id: string
-  test_definition_id: string
+  scenario_id: string
+  test_id: string
   submission_id: string
   key: string
   value: number

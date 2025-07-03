@@ -6,8 +6,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | [optional] 
-**benchmark_definition_id** | **str** |  | [optional] 
-**test_definition_ids** | **List[str]** |  | [optional] 
+**benchmark_id** | **str** |  | [optional] 
+**test_ids** | **List[str]** |  | [optional] 
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
 **submission_data_url** | **str** |  | [optional] 

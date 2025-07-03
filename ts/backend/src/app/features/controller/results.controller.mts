@@ -34,31 +34,33 @@ export class ResultsController extends Controller {
   constructor(config: configuration) {
     super(config)
 
-    this.attachGet('/results/submissions/:submission_id', this.getSubmissionResults)
-    this.attachGet('/results/submissions/:submission_id/tests/:test_id', this.getTestResults)
-    this.attachPost('/results/submissions/:submission_id/tests/:test_id', this.postTestResults)
-    this.attachGet('/results/submissions/:submission_id/tests/:test_id/scenario/:scenario_id', this.getScenarioResults)
-    this.attachGet('/results/benchmarks/:benchmark_id', this.getLeaderboard)
+    this.attachGet('/results/submissions/:submission_ids', this.getSubmissionResults)
+    this.attachGet('/results/submissions/:submission_id/tests/:test_ids', this.getTestResults)
+    this.attachPost('/results/submissions/:submission_id/tests/:test_ids', this.postTestResults)
+    this.attachGet('/results/submissions/:submission_id/scenario/:scenario_ids', this.getScenarioResults)
+    this.attachGet('/results/benchmarks/:benchmark_ids', this.getLeaderboard)
     this.attachGet('/results/campaign-items/:benchmark_ids', this.getCampaignItemOverview)
     this.attachGet('/results/campaigns/:group_ids', this.getCampaignOverview)
-    this.attachGet('/results/benchmarks/:benchmark_id/tests/:test_id', this.getTestLeaderboard)
+    this.attachGet('/results/benchmarks/:benchmark_id/tests/:test_ids', this.getTestLeaderboard)
   }
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}:
+   * /results/submissions/{submission_ids}:
    *  get:
    *    description: Get aggregated submission overall results.
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: submission_id
-   *        description: Submission ID.
+   *        name: submission_ids
+   *        description: Comma-separated list of submission IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Aggregated submission overall results.
@@ -106,14 +108,16 @@ export class ResultsController extends Controller {
    *                                        type: object
    *                                        description: Dictionary of scores.
    */
-  getSubmissionResults: GetHandler<'/results/submissions/:submission_id'> = async (req, res) => {
+  getSubmissionResults: GetHandler<'/results/submissions/:submission_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    const submissionId = req.params.submission_id
+
+    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple submission_ids
+    const submissionId = req.params.submission_ids
     const submissionScored = await this.aggregateSubmissionScore(submissionId)
     if (!submissionScored) {
       this.requestError(req, res, { text: 'Score could not be aggregated' })
@@ -142,7 +146,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}/tests/{test_id}:
+   * /results/submissions/{submission_id}/tests/{test_ids}:
    *  get:
    *    description: Get submission results aggregated by test.
    *    security:
@@ -156,12 +160,14 @@ export class ResultsController extends Controller {
    *          type: string
    *          format: uuid
    *      - in: path
-   *        name: test_id
-   *        description: Test ID.
+   *        name: test_ids
+   *        description: Comma-separated list of test IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Submission results aggregated by test.
@@ -195,7 +201,7 @@ export class ResultsController extends Controller {
    *                                type: object
    *                                description: Dictionary of scores.
    */
-  getTestResults: GetHandler<'/results/submissions/:submission_id/tests/:test_id'> = async (req, res) => {
+  getTestResults: GetHandler<'/results/submissions/:submission_id/tests/:test_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -203,7 +209,9 @@ export class ResultsController extends Controller {
       return
     }
     const submissionId = req.params.submission_id
-    const testId = req.params.test_id
+
+    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple test_ids
+    const testId = req.params.test_ids
     const testScored = await this.aggregateTestScore(submissionId, testId)
     // transform for transmission
     // TODO: properly define data format of results for transmission
@@ -222,7 +230,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}/tests/{test_id}:
+   * /results/submissions/{submission_id}/tests/{test_ids}:
    *  post:
    *    description: Inserts test results
    *    security:
@@ -236,12 +244,14 @@ export class ResultsController extends Controller {
    *          type: string
    *          format: uuid
    *      - in: path
-   *        name: test_id
-   *        description: Test ID.
+   *        name: test_ids
+   *        description: Comma-separated list of test IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    requestBody:
    *      required: true
    *      content:
@@ -277,7 +287,7 @@ export class ResultsController extends Controller {
    *              allOf:
    *                - $ref: "#/components/schemas/ApiResponse"
    */
-  postTestResults: PostHandler<'/results/submissions/:submission_id/tests/:test_id'> = async (req, res) => {
+  postTestResults: PostHandler<'/results/submissions/:submission_id/tests/:test_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -285,15 +295,17 @@ export class ResultsController extends Controller {
       return
     }
     const submissionId = req.params.submission_id
-    const testId = req.params.test_id
+
+    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple test_ids
+    const testId = req.params.test_ids
     const resultRows = req.body.data.flatMap((score) => {
       const resultRows: ResultRow[] = []
       // score's keys are keys of score, except for the one being scenario_id, which is scenario_id
       for (const key in score) {
         if (key != 'scenario_id') {
           resultRows.push({
-            scenario_definition_id: score.scenario_id,
-            test_definition_id: testId,
+            scenario_id: score.scenario_id,
+            test_id: testId,
             submission_id: submissionId,
             key,
             value: score[key],
@@ -321,7 +333,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}/tests/{test_id}/scenario/{scenario_id}:
+   * /results/submissions/{submission_id}/scenario/{scenario_ids}:
    *  get:
    *    description: Get submission results for specific scenario.
    *    security:
@@ -335,19 +347,14 @@ export class ResultsController extends Controller {
    *          type: string
    *          format: uuid
    *      - in: path
-   *        name: test_id
-   *        description: Test ID.
+   *        name: scenario_ids
+   *        description: Comma-separated list of scenario IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
-   *      - in: path
-   *        name: scenario_id
-   *        description: Scenario ID.
-   *        required: true
-   *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Submission results for specific scenario.
@@ -371,10 +378,7 @@ export class ResultsController extends Controller {
    *                            type: object
    *                            description: Dictionary of scores.
    */
-  getScenarioResults: GetHandler<'/results/submissions/:submission_id/tests/:test_id/scenario/:scenario_id'> = async (
-    req,
-    res,
-  ) => {
+  getScenarioResults: GetHandler<'/results/submissions/:submission_id/scenario/:scenario_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -382,9 +386,10 @@ export class ResultsController extends Controller {
       return
     }
     const submissionId = req.params.submission_id
-    const testId = req.params.test_id
-    const scenarioId = req.params.scenario_id
-    const scenarioScored = await this.aggregateScenarioScore(submissionId, testId, scenarioId)
+
+    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple scenario_ids
+    const scenarioId = req.params.scenario_ids
+    const scenarioScored = await this.aggregateScenarioScore(submissionId, scenarioId)
     // transform for transmission
     // TODO: properly define data format of results for transmission
     const result: ScenarioScored = {
@@ -396,19 +401,21 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/benchmarks/{benchmark_id}:
+   * /results/benchmarks/{benchmark_ids}:
    *  get:
    *    description: Get benchmark leaderboard.
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: benchmark_id
-   *        description: Benchmark ID.
+   *        name: benchmark_ids
+   *        description: Comma-separated list of benchmark IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Benchmark leaderboard.
@@ -465,14 +472,16 @@ export class ResultsController extends Controller {
    *                                              type: object
    *                                              description: Dictionary of scores.
    */
-  getLeaderboard: GetHandler<'/results/benchmarks/:benchmark_id'> = async (req, res) => {
+  getLeaderboard: GetHandler<'/results/benchmarks/:benchmark_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    const benchmarkId = req.params.benchmark_id
+
+    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple benchmark_ids
+    const benchmarkId = req.params.benchmark_ids
     const leaderboard = await this.aggregateLeaderboard(benchmarkId)
     if (!leaderboard) {
       this.requestError(req, res, { text: 'Leaderboard could not be aggregated' })
@@ -506,19 +515,21 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/campaign-items/{benchmark_id}:
+   * /results/campaign-items/{benchmark_ids}:
    *  get:
    *    description: Returns campaign-item overviews (i.e. all tests in benchmark with score of top submission per test).
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: benchmark_id
-   *        description: Comma-separated list of IDs.
+   *        name: benchmark_ids
+   *        description: Comma-separated list of benchmark IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Campaign item leaderboard.
@@ -588,19 +599,21 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/campaigns/{group_id}:
+   * /results/campaigns/{group_ids}:
    *  get:
    *    description: Returns campaign overviews (i.e. all benchmarks in the group with score aggregated from their top submission per test).
    *    security:
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
-   *        name: group_id
+   *        name: group_ids
    *        description: Comma-separated list of IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: Campaign leaderboard.
@@ -687,7 +700,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/benchmarks/{benchmark_id}/tests/{test_id}:
+   * /results/benchmarks/{benchmark_id}/tests/{test_ids}:
    *  get:
    *    description: Get test leaderboard.
    *    security:
@@ -701,12 +714,14 @@ export class ResultsController extends Controller {
    *          type: string
    *          format: uuid
    *      - in: path
-   *        name: test_id
-   *        description: Test ID.
+   *        name: test_ids
+   *        description: Comma-separated list of test IDs.
    *        required: true
    *        schema:
-   *          type: string
-   *          format: uuid
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
    *    responses:
    *      200:
    *        description: test leaderboard.
@@ -763,7 +778,7 @@ export class ResultsController extends Controller {
    *                                              type: object
    *                                              description: Dictionary of scores.
    */
-  getTestLeaderboard: GetHandler<'/results/benchmarks/:benchmark_id/tests/:test_id'> = async (req, res) => {
+  getTestLeaderboard: GetHandler<'/results/benchmarks/:benchmark_id/tests/:test_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
     if (!auth) {
@@ -771,7 +786,9 @@ export class ResultsController extends Controller {
       return
     }
     const benchmarkId = req.params.benchmark_id
-    const testId = req.params.test_id
+
+    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple test_ids
+    const testId = req.params.test_ids
     // leaderboard contains all submissions (mixed tests), filter by test
     const leaderboard = await this.aggregateLeaderboard(benchmarkId)
     if (!leaderboard) {
@@ -807,7 +824,7 @@ export class ResultsController extends Controller {
 
   // TODO: generalize the below:
 
-  async aggregateScenarioScore(submissionId: string, testId: string, scenarioId: string) {
+  async aggregateScenarioScore(submissionId: string, scenarioId: string) {
     const sql = SqlService.getInstance()
     // load required definitions
     const [scenarioDefRow] = await sql.query<ScenarioDefinitionRow>`
@@ -820,7 +837,7 @@ export class ResultsController extends Controller {
     const scenarioDef = upcastScenarioDefinitionRow(scenarioDefRow, fieldDefCandidates)
     // load results
     const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT * FROM results WHERE submission_id=${submissionId} AND test_definition_id=${testId} AND scenario_definition_id=${scenarioId}
+      SELECT * FROM results WHERE submission_id=${submissionId} AND scenario_id=${scenarioId}
     `
     return Aggregator.getScenarioScored(scenarioDef, resultRows)
   }
@@ -841,7 +858,7 @@ export class ResultsController extends Controller {
     const testDef = upcastTestDefinitionRow(testDefRow, fieldDefCandidates, scenarioDefCandidates)
     // load results
     const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT * FROM results WHERE submission_id=${submissionId} AND test_definition_id=${testId}
+      SELECT * FROM results WHERE submission_id=${submissionId} AND test_id=${testId}
     `
     return Aggregator.getTestScored(testDef, resultRows)
   }
@@ -853,7 +870,7 @@ export class ResultsController extends Controller {
       SELECT * FROM submissions WHERE id=${submissionId}
     `
     const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
-      SELECT * FROM benchmark_definitions WHERE id=${submissionRow.benchmark_definition_id}
+      SELECT * FROM benchmark_definitions WHERE id=${submissionRow.benchmark_id}
     `
     // load required candidates for referenced fields (used in upcast) and upcast
     const fieldDefCandidates = await sql.query<FieldDefinitionRow>`
@@ -884,7 +901,7 @@ export class ResultsController extends Controller {
     const sql = SqlService.getInstance()
     // load required definitions
     const submissionRows = await sql.query<SubmissionRow>`
-      SELECT * FROM submissions WHERE benchmark_definition_id=${benchmarkId} AND published=true
+      SELECT * FROM submissions WHERE benchmark_id=${benchmarkId} AND published=true
     `
     const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
       SELECT * FROM benchmark_definitions WHERE id=${benchmarkId}
@@ -906,7 +923,7 @@ export class ResultsController extends Controller {
     )
     // load results
     const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_definition_id=${benchmarkId}
+      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_id=${benchmarkId}
     `
     const benchmarkDef = submissions.at(0)?.benchmark_definition
     if (!benchmarkDef) return null
@@ -917,7 +934,7 @@ export class ResultsController extends Controller {
     const sql = SqlService.getInstance()
     // load required definitions
     const submissionRows = await sql.query<SubmissionRow>`
-      SELECT * FROM submissions WHERE benchmark_definition_id=${benchmarkId} AND published=true
+      SELECT * FROM submissions WHERE benchmark_id=${benchmarkId} AND published=true
     `
     const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
       SELECT * FROM benchmark_definitions WHERE id=${benchmarkId}
@@ -948,7 +965,7 @@ export class ResultsController extends Controller {
     )
     // load results
     const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_definition_id=${benchmarkId}
+      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_id=${benchmarkId}
     `
     if (!benchmarkDef) return null
     return Aggregator.getCampaignItemScored(benchmarkDef, submissions, resultRows)
@@ -961,7 +978,7 @@ export class ResultsController extends Controller {
       SELECT * FROM benchmark_groups WHERE id=${groupId}
     `
     const submissionRows = await sql.query<SubmissionRow>`
-      SELECT * FROM submissions WHERE benchmark_definition_id=ANY(${groupDefRow.benchmark_definition_ids}) AND published=true
+      SELECT * FROM submissions WHERE benchmark_id=ANY(${groupDefRow.benchmark_ids}) AND published=true
     `
     // load required candidates for referenced fields (used in upcast) and upcast
     const fieldDefCandidates = await sql.query<FieldDefinitionRow>`
@@ -974,7 +991,7 @@ export class ResultsController extends Controller {
       SELECT * FROM test_definitions
     `
     const benchmarkDefCandidates = await sql.query<BenchmarkDefinitionRow>`
-      SELECT * FROM benchmark_definitions WHERE id=ANY(${groupDefRow.benchmark_definition_ids})
+      SELECT * FROM benchmark_definitions WHERE id=ANY(${groupDefRow.benchmark_ids})
     `
     // It's necessary to upcast both separately (potentially doing the work
     // twice), because getGroupLeaderboard should return something even if
@@ -997,7 +1014,7 @@ export class ResultsController extends Controller {
     )
     // load results
     const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_definition_id=ANY(${groupDefRow.benchmark_definition_ids})
+      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_id=ANY(${groupDefRow.benchmark_ids})
     `
     if (!groupDef) return null
     return Aggregator.getGroupLeaderboard(groupDef, submissions, resultRows)

@@ -49,22 +49,26 @@ export class VcKpiView implements OnInit {
   async ngOnInit() {
     this.customization = await this.customizationService.getCustomization()
     const board = (
-      await this.apiService.get('/results/benchmarks/:benchmark_id/tests/:test_id', {
-        params: { benchmark_id: this.benchmarkId, test_id: this.testId },
+      await this.apiService.get('/results/benchmarks/:benchmark_id/tests/:test_ids', {
+        params: { benchmark_id: this.benchmarkId, test_ids: this.testId },
       })
     ).body?.at(0)
     // load linked resources
     // TODO: offload this to service with caching
     this.benchmark = (
-      await this.apiService.get('/definitions/benchmarks/:id', { params: { id: this.benchmarkId } })
+      await this.apiService.get('/definitions/benchmarks/:benchmark_ids', {
+        params: { benchmark_ids: this.benchmarkId },
+      })
     ).body?.at(0)
-    this.test = (await this.apiService.get('/definitions/tests/:id', { params: { id: this.testId } })).body?.at(0)
+    this.test = (
+      await this.apiService.get('/definitions/tests/:test_ids', { params: { test_ids: this.testId } })
+    ).body?.at(0)
     const subIds = board?.items.map((item) => item.submission_id).join(',')
     if (subIds) {
       this.submissions = new Map(
         (
-          await this.apiService.get('/submissions/:uuid', {
-            params: { uuid: subIds },
+          await this.apiService.get('/submissions/:submission_ids', {
+            params: { submission_ids: subIds },
           })
         ).body?.map((submission) => [submission.id, submission]),
       )

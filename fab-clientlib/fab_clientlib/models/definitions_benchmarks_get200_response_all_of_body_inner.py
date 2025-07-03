@@ -30,9 +30,9 @@ class DefinitionsBenchmarksGet200ResponseAllOfBodyInner(BaseModel):
     id: Optional[StrictStr] = None
     name: Optional[StrictStr] = None
     description: Optional[StrictStr] = None
-    field_definition_ids: Optional[List[StrictStr]] = None
-    test_definition_ids: Optional[List[StrictStr]] = None
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "field_definition_ids", "test_definition_ids"]
+    field_ids: Optional[List[StrictStr]] = None
+    test_ids: Optional[List[StrictStr]] = None
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "field_ids", "test_ids"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,8 +88,8 @@ class DefinitionsBenchmarksGet200ResponseAllOfBodyInner(BaseModel):
             "id": obj.get("id"),
             "name": obj.get("name"),
             "description": obj.get("description"),
-            "field_definition_ids": obj.get("field_definition_ids"),
-            "test_definition_ids": obj.get("test_definition_ids")
+            "field_ids": obj.get("field_ids"),
+            "test_ids": obj.get("test_ids")
         })
         return _obj
 

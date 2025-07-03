@@ -30,13 +30,15 @@ export class ParticipateView implements OnInit {
 
   async ngOnInit() {
     const myUuid = this.authService.userUuid
-    this.benchmark = (await this.apiService.get('/definitions/benchmarks/:id', { params: { id: this.id } })).body?.at(0)
+    this.benchmark = (
+      await this.apiService.get('/definitions/benchmarks/:benchmark_ids', { params: { benchmark_ids: this.id } })
+    ).body?.at(0)
     this.submissions = (
-      await this.apiService.get('/submissions', { query: { benchmark: this.benchmark?.id as string } })
+      await this.apiService.get('/submissions', { query: { benchmark_ids: this.benchmark?.id as string } })
     ).body
     this.mySubmissions = (
       await this.apiService.get('/submissions', {
-        query: { benchmark: this.benchmark?.id as string, submitted_by: myUuid },
+        query: { benchmark_ids: this.benchmark?.id as string, submitted_by: myUuid },
       })
     ).body
   }
