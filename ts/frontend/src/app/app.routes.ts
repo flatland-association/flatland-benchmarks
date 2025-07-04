@@ -3,6 +3,7 @@ import { ImpressumView, NotFoundView, PrivacyView } from '@flatland-association/
 import { AuthGuard } from './guards/auth.guard'
 import { BenchmarksDetailView } from './views/benchmarks-detail/benchmarks-detail.view'
 import { HomeView } from './views/home/home.view'
+import { MySubmissionsView } from './views/my-submissions/my-submissions.view'
 import { NewSubmissionView } from './views/new-submission/new-submission.view'
 import { ParticipateView } from './views/participate/participate.view'
 import { SubmissionView } from './views/submission/submission.view'
@@ -74,6 +75,11 @@ export const routes: Routes = [
   {
     path: 'submissions/:submission_id/results/:test_id/:scenario_id',
     component: VcResultsView,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'my-submissions',
+    component: MySubmissionsView,
     canActivate: [AuthGuard],
   },
   { path: 'impressum', component: ImpressumView },

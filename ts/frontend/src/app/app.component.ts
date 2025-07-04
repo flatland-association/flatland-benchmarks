@@ -31,6 +31,10 @@ export class AppComponent implements OnInit {
         label: 'Home',
         lead: (await this.customizationService.getCustomization()).content.title,
       },
+      {
+        path: '/my-submissions',
+        label: 'My submissions',
+      },
       { path: '/hub', label: 'Hub', icon: faArrowUpRightFromSquare },
     ]
   }
