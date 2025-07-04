@@ -8,6 +8,7 @@ import { configuration } from '../config/config.mjs'
 import { BenchmarkGroupController } from '../controller/benchmark-group.controller.mjs'
 import { BenchmarkController } from '../controller/benchmark.controller.mjs'
 import { DebugController } from '../controller/debug.controller.mjs'
+import { FieldController } from '../controller/field.controller.mjs'
 import { HealthController } from '../controller/health.controller.mjs'
 import { ResultsController } from '../controller/results.controller.mjs'
 import { ScenarioController } from '../controller/scenario.controller.mjs'
@@ -39,6 +40,7 @@ export class Server {
     this.app.use(new BenchmarkGroupController(this.config).router)
     this.app.use(new TestController(this.config).router)
     this.app.use(new ScenarioController(this.config).router)
+    this.app.use(new FieldController(this.config).router)
     this.app.use(new SubmissionController(this.config).router)
     this.app.use(new ResultsController(this.config).router)
 
