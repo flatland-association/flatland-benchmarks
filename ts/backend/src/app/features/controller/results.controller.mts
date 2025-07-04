@@ -123,7 +123,6 @@ export class ResultsController extends Controller {
       // only transmit valid items
       if (leaderboardItem) {
         // transform for transmission
-        // TODO: properly define data format of results for transmission
         leaderboardItems.push({
           submission_id: leaderboardItem.submission.id,
           scorings: leaderboardItem.scorings,
