@@ -1,7 +1,18 @@
 import { CommonModule } from '@angular/common'
 import { Component, Input } from '@angular/core'
+import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
 import { Scorings } from '@common/interfaces'
+
+/**
+ * Input in a cell.
+ */
+export interface TableInput {
+  /** (Initial) value to display. */
+  value: number | null
+  /** Callback invoked when the input field changes. */
+  onChange: (value: number) => void
+}
 
 /**
  * One column in a {@link TableComponent}.
@@ -23,11 +34,19 @@ export type TableCell =
       /** Text to display in the cell. */
       text: string | number | null
       scorings?: undefined
+      input?: undefined
     }
   | {
       text?: undefined
       /** Scorings to display in the cell. */
       scorings: Scorings | null
+      input?: undefined
+    }
+  | {
+      text?: undefined
+      scorings?: undefined
+      /** Input field to display in the cell. */
+      input: TableInput
     }
 
 /**
@@ -43,7 +62,7 @@ export interface TableRow {
 
 @Component({
   selector: 'app-table',
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
