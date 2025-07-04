@@ -116,32 +116,32 @@ export class ResultsController extends Controller {
       return
     }
 
-    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple submission_ids
-    const submissionId = req.params.submission_ids
-    const submissionScored = await this.aggregateSubmissionScore(submissionId)
-    if (!submissionScored) {
-      this.requestError(req, res, { text: 'Score could not be aggregated' })
-      return
-    }
-    // transform for transmission
-    // TODO: properly define data format of results for transmission
-    const result: LeaderboardItem = {
-      submission_id: submissionScored.submission.id,
-      scorings: submissionScored.scorings,
-      test_scorings: submissionScored.tests.map((test) => {
-        return {
-          test_id: test.definition.id,
-          scorings: test.scorings,
-          scenario_scorings: test.scenarios.map((scenario) => {
+    const submissionIds = req.params.submission_ids.split(',')
+    const leaderboardItems: LeaderboardItem[] = []
+    for (const submissionId of submissionIds) {
+      const leaderboardItem = await this.aggregateSubmissionScore(submissionId)
+      // only transmit valid items
+      if (leaderboardItem) {
+        // transform for transmission
+        leaderboardItems.push({
+          submission_id: leaderboardItem.submission.id,
+          scorings: leaderboardItem.scorings,
+          test_scorings: leaderboardItem.tests.map((test) => {
             return {
-              scenario_id: scenario.definition.id,
-              scorings: scenario.scorings,
-            }
+              test_id: test.definition.id,
+              scorings: test.scorings,
+              scenario_scorings: test.scenarios.map((scenario) => {
+                return {
+                  scenario_id: scenario.definition.id,
+                  scorings: scenario.scorings,
+                } satisfies ScenarioScored
+              }),
+            } satisfies TestScored
           }),
-        }
-      }),
+        })
+      }
     }
-    this.respond(req, res, [result])
+    this.respond(req, res, leaderboardItems)
   }
 
   /**
