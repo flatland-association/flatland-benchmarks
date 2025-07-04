@@ -11,6 +11,7 @@ import { VcEvaluationObjectiveView } from './views/vc-evaluation-objective/vc-ev
 import { VcKpiView } from './views/vc-kpi/vc-kpi.view'
 import { VcMySubmissionsView } from './views/vc-my-submissions/vc-my-submissions.view'
 import { VcNewSubmissionView } from './views/vc-new-submission/vc-new-submission.view'
+import { VcResultsView } from './views/vc-results/vc-results.view'
 import { VcSubmissionView } from './views/vc-submission/vc-submission.view'
 
 export const routes: Routes = [
@@ -68,6 +69,11 @@ export const routes: Routes = [
   {
     path: 'submissions/:submission_id',
     component: VcSubmissionView,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'submissions/:submission_id/results/:test_id/:scenario_id',
+    component: VcResultsView,
     canActivate: [AuthGuard],
   },
   { path: 'impressum', component: ImpressumView },

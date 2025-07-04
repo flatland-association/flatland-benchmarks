@@ -52,7 +52,7 @@ export interface Submission_old extends Resource<'/submissions/'> {
 
 export type AggFunction = 'SUM' | 'NANSUM' | 'MEAN' | 'NANMEAN' | 'MEADIAN' | 'NANMEDIAN'
 
-export interface FieldDefinitionRow extends Resource<'/fields/'> {
+export interface FieldDefinitionRow extends Resource<'/definitions/fields/'> {
   id: string
   /** Identifier of field, how it's accessed in aggregation. */
   key: string
