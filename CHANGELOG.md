@@ -3,6 +3,16 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.9.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.8.9...v0.9.0) (2025-07-04)
+
+
+### Features
+
+* **frontend:** Add top-level my-submission view linking to vc submissions ([#325](https://github.com/flatland-association/flatland-benchmarks/issues/325)) ([df0118f](https://github.com/flatland-association/flatland-benchmarks/commit/df0118fb4b799cde592373452b0d8abfe07ddcc4))
+* **frontend:** Display submission status ([#322](https://github.com/flatland-association/flatland-benchmarks/issues/322)) ([a0bd50f](https://github.com/flatland-association/flatland-benchmarks/commit/a0bd50f5b8719cc39c2362249786919741525e6b))
+* **frontend:** Manual results upload ([#324](https://github.com/flatland-association/flatland-benchmarks/issues/324)) ([eac7078](https://github.com/flatland-association/flatland-benchmarks/commit/eac707893b5b5f49a51d45f3aa404e9d7f216b31))
+* Submission details ([#319](https://github.com/flatland-association/flatland-benchmarks/issues/319)) ([a8ae003](https://github.com/flatland-association/flatland-benchmarks/commit/a8ae003e9d733f7506f0608d033ea7910c3c5ba7))
+
 ## [0.8.9](https://github.com/flatland-association/flatland-benchmarks/compare/v0.8.8...v0.8.9) (2025-07-03)
 
 
