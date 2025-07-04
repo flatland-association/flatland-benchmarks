@@ -101,6 +101,7 @@ export class VcSubmissionView implements OnInit {
       //... and per scenario
       test.scenario_scorings.forEach((scenario) => {
         this.rows.push({
+          routerLink: ['results', test.test_id, scenario.scenario_id],
           cells: [
             { text: '' },
             { text: this.scenarios!.get(scenario.scenario_id)?.name ?? 'NA' },
