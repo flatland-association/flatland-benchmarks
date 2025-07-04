@@ -11,6 +11,7 @@ import { VcEvaluationObjectiveView } from './views/vc-evaluation-objective/vc-ev
 import { VcKpiView } from './views/vc-kpi/vc-kpi.view'
 import { VcMySubmissionsView } from './views/vc-my-submissions/vc-my-submissions.view'
 import { VcNewSubmissionView } from './views/vc-new-submission/vc-new-submission.view'
+import { VcSubmissionView } from './views/vc-submission/vc-submission.view'
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -62,6 +63,11 @@ export const routes: Routes = [
   {
     path: 'vc-evaluation-objective/:benchmark_id/:test_id/new-submission',
     component: VcNewSubmissionView,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'submissions/:submission_id',
+    component: VcSubmissionView,
     canActivate: [AuthGuard],
   },
   { path: 'impressum', component: ImpressumView },

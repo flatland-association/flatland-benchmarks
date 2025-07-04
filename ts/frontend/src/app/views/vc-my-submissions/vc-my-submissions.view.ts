@@ -70,8 +70,7 @@ export class VcMySubmissionsView implements OnInit {
     this.rows =
       this.submissions?.map((submission) => {
         return {
-          // TODO: submission detail view
-          // routerLink: item.test_id,
+          routerLink: ['/', 'submissions', submission.id],
           cells: [
             { text: submission.name },
             { text: this.tests?.get(submission.test_ids[0])?.name ?? 'NA' },
