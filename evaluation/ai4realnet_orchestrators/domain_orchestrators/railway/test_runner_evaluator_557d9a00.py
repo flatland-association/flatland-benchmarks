@@ -37,9 +37,9 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
   Path(data_dir).chmod(0o777)
 
   # temporary workaround till fix is released in flatland-rl:
-  args = ["docker", "run", "--rm", "-it", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "mkdir", "-p", f"/vol/{test_id}/{submission_id}"]
+  args = ["docker", "run", "--rm",  "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "mkdir", "-p", f"/vol/{test_id}/{submission_id}"]
   exec_with_logging(args if not SUDO else ["sudo"] + args)
-  args = ["docker", "run", "--rm", "-it", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "chmod", "-R", "a=rwx",
+  args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "chmod", "-R", "a=rwx",
           f"/vol/{test_id}/{submission_id}"]
   exec_with_logging(args if not SUDO else ["sudo"] + args)
 
