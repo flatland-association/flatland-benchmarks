@@ -30,14 +30,15 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
   TOKEN_URL = os.environ.get("TOKEN_URL", "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/token")
   # sudo required when doing DinD - otherwise, we get "permission denied while trying to connect to the Docker daemon socket"
   SUDO = os.environ.get("SUDO", "true").lower() == "true"
-  DATA_VOLUME_MOUNTPATH= os.environ.get("DATA_VOLUME_MOUNTPATH", "/app/data")
+  DATA_VOLUME_MOUNTPATH = os.environ.get("DATA_VOLUME_MOUNTPATH", "/app/data")
 
+  # TODO cleanup if not local?
   data_dir = f"{DATA_VOLUME_MOUNTPATH}/{test_id}/{submission_id}"
   Path(data_dir).mkdir(parents=True, exist_ok=False)
   Path(data_dir).chmod(0o777)
 
   # temporary workaround till fix is released in flatland-rl:
-  args = ["docker", "run", "--rm",  "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "mkdir", "-p", f"/vol/{test_id}/{submission_id}"]
+  args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "mkdir", "-p", f"/vol/{test_id}/{submission_id}"]
   exec_with_logging(args if not SUDO else ["sudo"] + args)
   args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "chmod", "-R", "a=rwx",
           f"/vol/{test_id}/{submission_id}"]
@@ -46,7 +47,7 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
   args = [
     "docker", "run",
     "--rm",
-    "-v", f"{DATA_VOLUME}:{DATA_VOLUME_MOUNTPATH}",
+    "-v", f"{DATA_VOLUME}:/app/data",
     # TODO build own container
     "-v", f"{HOST_DIRECTORY}/domain_orchestrators/railway/entrypoint.sh:/home/conda/run.sh",
     # Don't allow subprocesses to raise privileges, see https://github.com/codalab/codabench/blob/43e01d4bc3de26e8339ddb1463eef7d960ddb3af/compute_worker/compute_worker.py#L520
@@ -55,7 +56,7 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
     "-e", "PYTHONUNBUFFERED=1",
     "-e", "OAUTHLIB_INSECURE_TRANSPORT=1",
     submission_data_url,
-    "--data-dir", data_dir,
+    "--data-dir", f"/app/data/{test_id}/{submission_id}",
     "--policy-pkg", "flatland_baselines.deadlock_avoidance_heuristic.policy.deadlock_avoidance_policy", "--policy-cls", "DeadLockAvoidancePolicy",
     "--obs-builder-pkg", "flatland_baselines.deadlock_avoidance_heuristic.observation.full_env_observation", "--obs-builder-cls", "FullEnvObservation",
     "--ep-id", submission_id
