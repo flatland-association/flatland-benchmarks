@@ -3,6 +3,13 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.9.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.9.0...v0.9.1) (2025-07-05)
+
+
+### ops
+
+* allow args in entrypoint for fab backend. ([#329](https://github.com/flatland-association/flatland-benchmarks/issues/329)) ([22f8b50](https://github.com/flatland-association/flatland-benchmarks/commit/22f8b5099ff681c474685b36e28f473cfad115ec))
+
 ## [0.9.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.8.9...v0.9.0) (2025-07-04)
 
 
