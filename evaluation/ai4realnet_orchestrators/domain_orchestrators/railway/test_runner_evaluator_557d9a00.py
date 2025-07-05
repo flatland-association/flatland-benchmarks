@@ -9,10 +9,6 @@ from fab_clientlib import DefaultApi, Configuration, ApiClient, ResultsSubmissio
 from fab_exec_utils import exec_with_logging
 from fab_oauth_utils import backend_application_flow
 
-# required only for docker in docker
-HOST_DIRECTORY = os.environ.get("HOST_DIRECTORY")
-DATA_VOLUME = os.environ.get("DATA_VOLUME")
-
 
 def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_data_url: str):
   """
@@ -24,15 +20,33 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
   test_id: specifies the test to execute
   submission_data_url: reference to the prediction module to use
   """
-  data_dir = f"/app/data/{test_id}/{submission_id}"
+
+  # required only for docker in docker
+  HOST_DIRECTORY = os.environ.get("HOST_DIRECTORY")
+  DATA_VOLUME = os.environ.get("DATA_VOLUME")
+  FAB_API_URL = os.environ.get("FAB_API_URL")
+  CLIENT_ID = os.environ.get("CLIENT_ID", 'fab-client-credentials')
+  CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
+  TOKEN_URL = os.environ.get("TOKEN_URL", "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/token")
+  # sudo required when doing DinD - otherwise, we get "permission denied while trying to connect to the Docker daemon socket"
+  SUDO = os.environ.get("SUDO", "true").lower() == "true"
+  DATA_VOLUME_MOUNTPATH= os.environ.get("DATA_VOLUME_MOUNTPATH", "/app/data")
+
+  data_dir = f"{DATA_VOLUME_MOUNTPATH}/{test_id}/{submission_id}"
   Path(data_dir).mkdir(parents=True, exist_ok=False)
   Path(data_dir).chmod(0o777)
 
-  exec_with_logging([
-    # sudo required - otherwise, we get "permission denied while trying to connect to the Docker daemon socket"
-    "sudo", "docker", "run",
+  # temporary workaround till fix is released in flatland-rl:
+  args = ["docker", "run", "--rm", "-it", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "mkdir", "-p", f"/vol/{test_id}/{submission_id}"]
+  exec_with_logging(args if not SUDO else ["sudo"] + args)
+  args = ["docker", "run", "--rm", "-it", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "chmod", "-R", "a=rwx",
+          f"/vol/{test_id}/{submission_id}"]
+  exec_with_logging(args if not SUDO else ["sudo"] + args)
+
+  args = [
+    "docker", "run",
     "--rm",
-    "-v", f"{DATA_VOLUME}:/app/data",
+    "-v", f"{DATA_VOLUME}:{DATA_VOLUME_MOUNTPATH}",
     # TODO build own container
     "-v", f"{HOST_DIRECTORY}/domain_orchestrators/railway/entrypoint.sh:/home/conda/run.sh",
     # Don't allow subprocesses to raise privileges, see https://github.com/codalab/codabench/blob/43e01d4bc3de26e8339ddb1463eef7d960ddb3af/compute_worker/compute_worker.py#L520
@@ -45,24 +59,21 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
     "--policy-pkg", "flatland_baselines.deadlock_avoidance_heuristic.policy.deadlock_avoidance_policy", "--policy-cls", "DeadLockAvoidancePolicy",
     "--obs-builder-pkg", "flatland_baselines.deadlock_avoidance_heuristic.observation.full_env_observation", "--obs-builder-cls", "FullEnvObservation",
     "--ep-id", submission_id
-  ], log_level_stdout=logging.DEBUG)
+  ]
+  exec_with_logging(args if not SUDO else ["sudo"] + args, log_level_stdout=logging.DEBUG)
 
-  client_id = os.environ.get("CLIENT_ID", 'fab-client-credentials')
-  client_secret = os.environ.get("CLIENT_SECRET")
-  token_url = os.environ.get("TOKEN_URL",
-                             "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/token")  # TODO change to flatland realm
-  token = backend_application_flow(client_id, client_secret, token_url)
+  token = backend_application_flow(CLIENT_ID, CLIENT_SECRET, TOKEN_URL)
   print(token)
 
   # run your experiment here and write results to "@TestId.json"
-  df = pd.read_csv(f"/app/data/{test_id}/{submission_id}/event_logs/TrainMovementEvents.trains_arrived.tsv", sep="\t")
+  df = pd.read_csv(f"{DATA_VOLUME_MOUNTPATH}/{test_id}/{submission_id}/event_logs/TrainMovementEvents.trains_arrived.tsv", sep="\t")
   print(df)
   assert len(df) == 1
   print(df.iloc[0])
   success_rate = df.iloc[0]["success_rate"]
   print(success_rate)
 
-  fab = DefaultApi(ApiClient(configuration=Configuration(host="http://fab-backend:8000", access_token=token["access_token"])))
+  fab = DefaultApi(ApiClient(configuration=Configuration(host=FAB_API_URL, access_token=token["access_token"])))
 
   # TODO extract UUIDs and results from tsv
   results = [
