@@ -187,7 +187,9 @@ services:
     environment:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
       - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
+      # TODO get rid
       - HOST_DIRECTORY=${PWD}
+      - FAB_API_URL=http://fab-backend:8000
       - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
       - S3_BUCKET=${S3_BUCKET}
       # for backend to S3 communication, use internal docker hostname
@@ -311,6 +313,7 @@ services:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
       - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
       - HOST_DIRECTORY=${PWD}
+      - FAB_API_URL=http://fab-backend:8000
       - DATA_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-data
       - CLIENT_SECRET=top-secret
       - TOKEN_URL=http://keycloak:8081/realms/flatland/protocol/openid-connect/token
