@@ -40,7 +40,8 @@ RUN mkdir -p /usr/src/app/dist/backend/config/
 RUN mkdir -p /usr/src/app/dist/backend/public/
 
 # inject version
-ARG FAB_VERSION="0.0.0"
+ARG FAB_VERSION
+ENV FAB_VERSION=${FAB_VERSION:-"0.0.0"}
 COPY --from=builder /usr/src/app/ts/backend/src/swagger/swagger.json  /usr/src/app/dist/backend/public/openapi.json
 RUN sed -i 's/"version": .*,/"version": "'${FAB_VERSION}'",/g' /usr/src/app/dist/backend/public/openapi.json && head /usr/src/app/dist/backend/public/openapi.json
 
