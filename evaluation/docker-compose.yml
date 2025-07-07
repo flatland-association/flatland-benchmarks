@@ -116,6 +116,7 @@ services:
       - no_proxy=${RABBITMQ_NO_PROXY}
     ports:
       - ${RABBITMQ_MANAGEMENT_PORT:-15672}:15672
+      - ${RABBITMQ_TLS_PORT}:5671
       - ${RABBITMQ_PORT}:5672
     restart: unless-stopped
     logging:
@@ -127,6 +128,10 @@ services:
       interval: 20s
       timeout: 10s
       retries: 30
+    volumes:
+      # https://www.rabbitmq.com/docs/ssl#automated-certificate-generation tls-gen -> test/basic.sh
+      - ./rabbitmq/certs:/cert_rabbitmq
+      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.config
     networks:
       - flatland-benchmarks
 
