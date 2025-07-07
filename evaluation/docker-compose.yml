@@ -187,7 +187,7 @@ services:
     environment:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
       - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
-      - HOST_DIRECTORY=${PWD}
+      - FAB_API_URL=http://fab-backend:8000
       - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
       - S3_BUCKET=${S3_BUCKET}
       # for backend to S3 communication, use internal docker hostname
@@ -198,6 +198,7 @@ services:
       - S3_UPLOAD_PATH_TEMPLATE=${S3_UPLOAD_PATH_TEMPLATE}
       - S3_UPLOAD_WITH_SUBMISSION_ID=true
       - S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=${S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}
+      - HOST_DIRECTORY=${PWD}
 
     logging:
       options:
@@ -273,6 +274,19 @@ services:
     networks:
       - flatland-benchmarks
 
+  orchestrator-railway-setup:
+    image: alpine
+    volumes:
+      - ./ai4realnet_orchestrators/domain_orchestrators/railway/submission_data_entrypoint.sh:/tmp/submission_data_entrypoint.sh
+      - orchestrator-data:/vol
+    entrypoint: [ "/bin/sh","-c" ]
+    command:
+      - |
+        set -euxo pipefail
+        cp /tmp/submission_data_entrypoint.sh /vol/submission_data_entrypoint.sh
+        chmod a=rx /vol/submission_data_entrypoint.sh
+        cat /vol/submission_data_entrypoint.sh
+
   orchestrator-railway:
     profiles: [ tsdev, full ]
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
@@ -295,6 +309,8 @@ services:
         condition: service_healthy
       minio_setup:
         condition: service_completed_successfully
+      orchestrator-railway-setup:
+        condition: service_completed_successfully
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
       - orchestrator-data:/app/data
@@ -310,7 +326,7 @@ services:
 
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
       - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
-      - HOST_DIRECTORY=${PWD}
+      - FAB_API_URL=http://fab-backend:8000
       - DATA_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-data
       - CLIENT_SECRET=top-secret
       - TOKEN_URL=http://keycloak:8081/realms/flatland/protocol/openid-connect/token

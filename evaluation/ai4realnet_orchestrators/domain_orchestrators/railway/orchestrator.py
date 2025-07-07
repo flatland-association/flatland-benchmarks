@@ -2,12 +2,9 @@
 import logging
 import os
 import traceback
-from pathlib import Path
 from typing import Dict
 from typing import List
-from uuid import uuid4
 
-import pandas as pd
 from celery import Celery
 
 from .test_runner_evaluator_557d9a00 import run_and_evaluate_test_557d9a00
