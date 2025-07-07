@@ -1,5 +1,6 @@
 import logging
 import os
+import ssl
 import time
 import uuid
 from typing import List
@@ -68,9 +69,16 @@ def test_containers_fixture():
 def run_task(benchmark_id: str, task_id: str, submission_data_url: str, tests: List[str], **kwargs):
   start_time = time.time()
   app = Celery(
-    broker="pyamqp://localhost:5672",
-    backend="rpc://localhost:5672",
+    broker="amqps://guest:guest@localhost:5671",
+    backend="rpc://",
+    broker_use_ssl={
+      'keyfile': "../rabbitmq/certs/client_localhost_key.pem",
+      'certfile': "../rabbitmq/certs/client_localhost_certificate.pem",
+      'ca_certs': "../rabbitmq/certs/ca_certificate.pem",
+      'cert_reqs': ssl.CERT_REQUIRED
+    }
   )
+
   logger.info(f"/ Start simulate submission from portal for task_id={task_id}.....")
 
   ret = app.send_task(
