@@ -31,12 +31,7 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
   SUDO = os.environ.get("SUDO", "true").lower() == "true"
   DATA_VOLUME_MOUNTPATH = os.environ.get("DATA_VOLUME_MOUNTPATH", "/app/data")
 
-  # TODO cleanup if not local?
-  data_dir = f"{DATA_VOLUME_MOUNTPATH}/{test_id}/{submission_id}"
-  Path(data_dir).mkdir(parents=True, exist_ok=False)
-  Path(data_dir).chmod(0o777)
-
-  # --data-dir must exist TODO fix in flatland-rl instead
+  # --data-dir must exist -- TODO fix in flatland-rl instead
   args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "mkdir", "-p", f"/vol/{test_id}/{submission_id}"]
   exec_with_logging(args if not SUDO else ["sudo"] + args)
   args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "chmod", "-R", "a=rwx",
@@ -47,17 +42,16 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
     "docker", "run",
     "--rm",
     "-v", f"{DATA_VOLUME}:/app/data",
-    # TODO make own image instead/in addition?
-    # override entrypoint
-    "-v", f"{DATA_VOLUME}:/vol",
-    "--entrypoint", "/vol/submission_data_entrypoint.sh",
+    "--entrypoint", "/bin/bash",
     # Don't allow subprocesses to raise privileges, see https://github.com/codalab/codabench/blob/43e01d4bc3de26e8339ddb1463eef7d960ddb3af/compute_worker/compute_worker.py#L520
-                    "--security-opt=no-new-privileges",
+    "--security-opt=no-new-privileges",
     # Don't buffer python output, so we don't lose any
     "-e", "PYTHONUNBUFFERED=1",
     # for integration tests with localhost http
     "-e", "OAUTHLIB_INSECURE_TRANSPORT=1",
     submission_data_url,
+    # TODO hard-coded dependency on flatland-baselines
+    "/home/conda/entrypoint_generic.sh", "flatland-trajectory-generate-from-policy",
     "--data-dir", f"/app/data/{test_id}/{submission_id}",
     "--policy-pkg", "flatland_baselines.deadlock_avoidance_heuristic.policy.deadlock_avoidance_policy", "--policy-cls", "DeadLockAvoidancePolicy",
     "--obs-builder-pkg", "flatland_baselines.deadlock_avoidance_heuristic.observation.full_env_observation", "--obs-builder-cls", "FullEnvObservation",
