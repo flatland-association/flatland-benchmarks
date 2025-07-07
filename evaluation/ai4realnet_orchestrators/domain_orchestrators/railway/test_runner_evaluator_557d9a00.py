@@ -22,7 +22,6 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
   """
 
   # required only for docker in docker
-  HOST_DIRECTORY = os.environ.get("HOST_DIRECTORY")
   DATA_VOLUME = os.environ.get("DATA_VOLUME")
   FAB_API_URL = os.environ.get("FAB_API_URL")
   CLIENT_ID = os.environ.get("CLIENT_ID", 'fab-client-credentials')
@@ -37,7 +36,7 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
   Path(data_dir).mkdir(parents=True, exist_ok=False)
   Path(data_dir).chmod(0o777)
 
-  # temporary workaround till fix is released in flatland-rl:
+  # --data-dir must exist TODO fix in flatland-rl instead
   args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "mkdir", "-p", f"/vol/{test_id}/{submission_id}"]
   exec_with_logging(args if not SUDO else ["sudo"] + args)
   args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "chmod", "-R", "a=rwx",
@@ -48,12 +47,15 @@ def run_and_evaluate_test_557d9a00(submission_id: str, test_id: str, submission_
     "docker", "run",
     "--rm",
     "-v", f"{DATA_VOLUME}:/app/data",
-    # TODO build own container
-    "-v", f"{HOST_DIRECTORY}/domain_orchestrators/railway/entrypoint.sh:/home/conda/run.sh",
+    # TODO make own image instead/in addition?
+    # override entrypoint
+    "-v", f"{DATA_VOLUME}:/vol",
+    "--entrypoint", "/vol/submission_data_entrypoint.sh",
     # Don't allow subprocesses to raise privileges, see https://github.com/codalab/codabench/blob/43e01d4bc3de26e8339ddb1463eef7d960ddb3af/compute_worker/compute_worker.py#L520
-    "--security-opt=no-new-privileges",
+                    "--security-opt=no-new-privileges",
     # Don't buffer python output, so we don't lose any
     "-e", "PYTHONUNBUFFERED=1",
+    # for integration tests with localhost http
     "-e", "OAUTHLIB_INSECURE_TRANSPORT=1",
     submission_data_url,
     "--data-dir", f"/app/data/{test_id}/{submission_id}",
