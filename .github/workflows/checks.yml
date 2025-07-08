@@ -189,7 +189,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Copy .env.test
-        run: cp ./evaluation/.env.test.template ./evaluation/.env.test
+        run: cp .env.test.template .env.test
       - name: Run tests
         working-directory: ts/backend/
         run: npm test

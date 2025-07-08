@@ -21,6 +21,7 @@ app = Celery(
   backend=os.environ.get('BACKEND_URL'),
 )
 
+
 HOST_DIRECTORY = os.environ.get("HOST_DIRECTORY", "/tmp/codabench/")
 
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
