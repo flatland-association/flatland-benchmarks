@@ -39,12 +39,15 @@ jobs:
       - name: Build and Push Container Image
         uses: docker/build-push-action@v6
         with:
-          file: docker/flatland3_benchmarks/Dockerfile
+          # TODO harmonize context .
+          file: evaluation/flatland3_benchmarks/evaluator/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
+          # TODO harmonize naming: fab-flatland3-benchmarks-evaluator?
           tags: |
             ghcr.io/flatland-association/fab-flatland-evaluator:${{ env.TAG }}
 
+  # TODO rename orchestrator
   build-flatland-compute-worker:
     name: Build Flatland 3 Compute Worker
     runs-on: ubuntu-latest
@@ -66,9 +69,11 @@ jobs:
       - name: Build and Push Container Image
         uses: docker/build-push-action@v6
         with:
-          context: evaluation/orchestrator
-          file: evaluation/orchestrator/Dockerfile
+          # TODO harmonize context .
+          context: evaluation/flatland3_benchmarks/orchestrator
+          file: evaluation/flatland3_benchmarks/orchestrator/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
+          # TODO harmonize naming: fab-flatland3-benchmarks-orchestrator?
           tags: |
             ghcr.io/flatland-association/fab-flatland-compute-worker:${{ env.TAG }}
