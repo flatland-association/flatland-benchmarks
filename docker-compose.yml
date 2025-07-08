@@ -53,7 +53,7 @@ services:
   keycloak:
     profiles: [ tsdev, full ]
     build:
-      context: deployment/keycloak
+      context: docker/keycloak
     hostname: keycloak
     # as we need to access keycloak from backend Docker container under docker internal port, we need to start Keycloak on configured port, port forwarding in Docker run is not enough
     command:
