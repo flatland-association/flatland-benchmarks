@@ -28,7 +28,7 @@ def test_containers_fixture():
 
   start_time = time.time()
 
-  basic = DockerCompose(context=".", compose_file_name="../docker-compose.yml", profiles=["full"])
+  basic = DockerCompose(context=".", compose_file_name="../../docker-compose.yml", profiles=["full"])
   logger.info("/ start docker compose down")
   basic.stop()
   duration = time.time() - start_time
@@ -102,7 +102,7 @@ def run_task(benchmark_id: str, task_id: str, submission_data_url: str, tests: L
 )
 def test_succesful_run(expected_total_simulation_count, tests: List[str]):
   submission_id = str(uuid.uuid4())
-  config = dotenv_values("../.env")
+  config = dotenv_values("../../.env")
 
   ret = run_task('flatland3-evaluation', submission_id, submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
                  tests=tests, **config)

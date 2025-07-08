@@ -39,8 +39,8 @@ jobs:
       - name: Build and Push Container Image
         uses: docker/build-push-action@v6
         with:
-          context: evaluation/evaluator
-          file: evaluation/evaluator/Dockerfile
+          context: evaluation/flatland3_benchmarks/evaluator
+          file: evaluation/flatland3_benchmarks/evaluator/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |

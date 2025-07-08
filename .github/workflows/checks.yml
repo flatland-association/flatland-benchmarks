@@ -26,7 +26,7 @@ jobs:
       - name: Download debug environments
         run: |
           wget "https://data.flatland.cloud/benchmarks/Flatland3/debug-environments.zip" -O debug-environments.zip
-          unzip -o debug-environments.zip -d evaluation/evaluator
+          unzip -o debug-environments.zip -d evaluation/flatland3_benchmarks/evaluator
           find .
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -35,10 +35,10 @@ jobs:
       - name: Install pytest
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -r evaluation/requirements-dev.txt
-          python -m pip install -r evaluation/orchestrator/requirements.txt
+          python -m pip install -r evaluation/flatland3_benchmarks/requirements-dev.txt
+          python -m pip install -r evaluation/flatland3_benchmarks/orchestrator/requirements.txt
       - name: Run tests
-        working-directory: evaluation/
+        working-directory: evaluation/flatland3_benchmarks
         run: |
           pytest -s evaluator
           pytest -s orchestrator
