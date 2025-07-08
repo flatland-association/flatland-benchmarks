@@ -172,7 +172,7 @@ services:
     networks:
       - flatland-benchmarks
 
-  orchestrator:
+  flatland3-benchmarks-orchestrator:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
     command: python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q flatland3-evaluation
@@ -202,7 +202,6 @@ services:
       - S3_UPLOAD_WITH_SUBMISSION_ID=true
       - S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=${S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}
       - DOCKERCOMPOSE_HOST_DIRECTORY=${PWD}
-
     logging:
       options:
         max-size: "20m"
@@ -275,7 +274,7 @@ services:
     networks:
       - flatland-benchmarks
 
-  orchestrator-railway-setup:
+  ai4realnet-orchestrator-railway-setup:
     image: alpine
     volumes:
       - ./evaluation/ai4realnet_orchestrators/domain_orchestrators/railway/submission_data_entrypoint.sh:/tmp/submission_data_entrypoint.sh
@@ -288,7 +287,7 @@ services:
         chmod a=rx /vol/submission_data_entrypoint.sh
         cat /vol/submission_data_entrypoint.sh
 
-  orchestrator-railway:
+  ai4realnet-orchestrator-railway:
     profiles: [ tsdev, full ]
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
