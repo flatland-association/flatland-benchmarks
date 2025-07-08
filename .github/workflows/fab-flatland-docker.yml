@@ -19,7 +19,7 @@ defaults:
 
 jobs:
   build-fab-flatland3-benchmarks-evaluator:
-    name: Build Flatland 3 Evaluator
+    name: Build Flatland 3 Benchmarks Evaluator
     runs-on: ubuntu-latest
     steps:
       - name: Evaluate tag
@@ -48,7 +48,7 @@ jobs:
             ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:${{ env.TAG }}
 
   build-fab-flatland3-benchmarks-orchestrator:
-    name: Build Flatland 3 Compute Worker
+    name: Build Flatland 3 Benchmarks Orchestrator
     runs-on: ubuntu-latest
     steps:
       - name: Evaluate tag

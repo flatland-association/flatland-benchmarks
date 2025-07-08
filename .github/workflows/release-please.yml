@@ -73,7 +73,7 @@ jobs:
   build-fab-flatland3-benchmarks-evaluator:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
-    name: Build Flatland 3 Evaluator
+    name: Build Flatland 3 Benchmarks Evaluator
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -101,7 +101,7 @@ jobs:
   build-fab-flatland3-benchmarks-orchestrator:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
-    name: Build Flatland 3 Compute Worker
+    name: Build Flatland 3 Benchmarks Orchestrator
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
