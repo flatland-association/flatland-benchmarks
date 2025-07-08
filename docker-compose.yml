@@ -308,7 +308,7 @@ services:
         condition: service_healthy
       minio_setup:
         condition: service_completed_successfully
-      orchestrator-railway-setup:
+      ai4realnet-orchestrator-railway-setup:
         condition: service_completed_successfully
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
