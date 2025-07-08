@@ -84,10 +84,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           repository: flatland-association/ai4realnet-orchestrators
+          # TODO
           ref: feature/blueprint
-          path: flatland-benchmarks/evaluation
-          sparse-checkout: |
-            ai4realnet_orchestrators
+          path: evaluation/ai4realnet_orchestrators
+      # TODO
       - name: find
         run: find .
       - name: Run tests
