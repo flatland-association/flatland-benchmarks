@@ -21,7 +21,8 @@ app = Celery(
   backend=os.environ.get('BACKEND_URL'),
 )
 
-HOST_DIRECTORY = os.environ.get("HOST_DIRECTORY", "/tmp/codabench/")
+
+DOCKERCOMPOSE_HOST_DIRECTORY = os.environ.get("DOCKERCOMPOSE_HOST_DIRECTORY", "/tmp/codabench/")
 
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
 SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.3,4.0.4,4.1.0")
@@ -102,7 +103,7 @@ def orchestrator(self,
     evaluator_exec_args.extend(["-e", f"AICROWD_IS_GRADING={True}"])
 
     evaluator_exec_args.extend([
-      "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/environments",
+      "-v", f"{DOCKERCOMPOSE_HOST_DIRECTORY}/evaluation/flatland3_benchmarks/evaluator/debug-environments/:/tmp/environments",
       "-e", "AICROWD_TESTS_FOLDER=/tmp/environments/",
       "--network", BENCHMARKING_NETWORK,
       docker_image,
@@ -119,7 +120,7 @@ def orchestrator(self,
         "-e", "redis_ip=redis",
         "-e", "AICROWD_TESTS_FOLDER=/tmp/environments/",
         "-e", f"AICROWD_SUBMISSION_ID={task_id}",
-        "-v", f"{HOST_DIRECTORY}/evaluator/debug-environments/:/tmp/environments/",
+        "-v", f"{DOCKERCOMPOSE_HOST_DIRECTORY}/evaluation/flatland3_benchmarks/evaluator/debug-environments/:/tmp/environments/",
         "--network", BENCHMARKING_NETWORK,
         submission_data_url,
       ])

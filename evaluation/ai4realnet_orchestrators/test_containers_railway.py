@@ -25,7 +25,7 @@ def test_containers_fixture():
   global basic
 
   start_time = time.time()
-  basic = DockerCompose(context=".", compose_file_name="../docker-compose.yml", profiles=["full"])
+  basic = DockerCompose(context="../..", profiles=["full"])
   logger.info("/ start docker compose down")
   basic.stop()
   duration = time.time() - start_time
@@ -72,9 +72,9 @@ def run_task(benchmark_id: str, task_id: str, submission_data_url: str, tests: L
     broker="amqps://guest:guest@localhost:5671",
     backend="rpc://",
     broker_use_ssl={
-      'keyfile': "../rabbitmq/certs/client_localhost_key.pem",
-      'certfile': "../rabbitmq/certs/client_localhost_certificate.pem",
-      'ca_certs': "../rabbitmq/certs/ca_certificate.pem",
+      'keyfile': "../../docker/rabbitmq/certs/client_localhost_key.pem",
+      'certfile': "../../docker/rabbitmq/certs/client_localhost_certificate.pem",
+      'ca_certs': "../../docker/rabbitmq/certs/ca_certificate.pem",
       'cert_reqs': ssl.CERT_REQUIRED
     }
   )

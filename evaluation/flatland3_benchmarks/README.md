@@ -13,7 +13,7 @@ both from a conceptual and an implementation point of view.
 
 ## Architecture
 
-Referring to [Information Flow](../docs/img/architecture/InformationFlow.drawio.png), it covers the components by 8 services:
+Referring to [Information Flow](../../docs/img/architecture/InformationFlow.drawio.png), it covers the components by 8 services:
 
 | Component           | Service                                                                                                                                                |
 |---------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|

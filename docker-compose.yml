@@ -42,8 +42,8 @@ services:
     image: flyway/flyway
     command: -url=jdbc:postgresql://postgres:5432/${POSTGRES_DB} -schemas=public -user=${POSTGRES_USER} -password=${POSTGRES_PASSWORD} migrate  -connectRetries=60 -baselineOnMigrate=true
     volumes:
-      - ../ts/backend/src/migration/schema:/flyway/sql/schema
-      - ../ts/backend/src/migration/data:/flyway/sql/data
+      - ./ts/backend/src/migration/schema:/flyway/sql/schema
+      - ./ts/backend/src/migration/data:/flyway/sql/data
     depends_on:
       postgres:
         condition: service_healthy
@@ -53,7 +53,7 @@ services:
   keycloak:
     profiles: [ tsdev, full ]
     build:
-      context: ../deployment/keycloak
+      context: docker/keycloak
     hostname: keycloak
     # as we need to access keycloak from backend Docker container under docker internal port, we need to start Keycloak on configured port, port forwarding in Docker run is not enough
     command:
@@ -62,7 +62,7 @@ services:
       - ${KEYCLOAK_PORT:-8081}:${KEYCLOAK_PORT:-8081}
     volumes:
       # TODO can we avoid copying the realm config? Download in an init container from the repo....?
-      - ./keycloak/flatland-realm.json:/opt/keycloak/data/import/flatland-realm.json
+      - ./docker/keycloak/flatland-realm.json:/opt/keycloak/data/import/flatland-realm.json
       # persist data, otherwise restarting the container nills JWTs
       - ${KEYCLOAK_VOLUME:-flatland-benchmarks-keycloak}:/opt/keycloak/data/:delegated
     environment:
@@ -104,8 +104,7 @@ services:
 
   rabbit:
     build:
-      context: rabbitmq
-      dockerfile: Dockerfile
+      context: docker/rabbitmq
       args:
         - WORKER_CONNECTION_TIMEOUT=${WORKER_CONNECTION_TIMEOUT}
     hostname: rabbit
@@ -130,8 +129,8 @@ services:
       retries: 30
     volumes:
       # https://www.rabbitmq.com/docs/ssl#automated-certificate-generation tls-gen -> test/basic.sh
-      - ./rabbitmq/certs:/cert_rabbitmq
-      - ./rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.config
+      - ./docker/rabbitmq/certs:/cert_rabbitmq
+      - ./docker/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.config
     networks:
       - flatland-benchmarks
 
@@ -173,13 +172,12 @@ services:
     networks:
       - flatland-benchmarks
 
-  orchestrator:
+  flatland3-benchmarks-orchestrator:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
     command: python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q flatland3-evaluation
     build:
-      context: ./orchestrator
-      dockerfile: Dockerfile_docker_compose
+      dockerfile: docker/flatland3_benchmarks/orchestrator/Dockerfile
     depends_on:
       rabbit:
         condition: service_healthy
@@ -187,7 +185,7 @@ services:
         condition: service_completed_successfully
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
-      - ./orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
+      - ./docker/flatland3_benchmarks/orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
     env_file: .env
     environment:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
@@ -203,8 +201,7 @@ services:
       - S3_UPLOAD_PATH_TEMPLATE=${S3_UPLOAD_PATH_TEMPLATE}
       - S3_UPLOAD_WITH_SUBMISSION_ID=true
       - S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=${S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}
-      - HOST_DIRECTORY=${PWD}
-
+      - DOCKERCOMPOSE_HOST_DIRECTORY=${PWD}
     logging:
       options:
         max-size: "20m"
@@ -220,7 +217,6 @@ services:
     #image: ghcr.io/flatland-association/fab-backend:latest
     #pull_policy: always
     build:
-      context: ../
       dockerfile: deployment/backend/Dockerfile
     # POSTGRES_ variables are required for flyway
     env_file: .env
@@ -237,18 +233,18 @@ services:
       flyway:
         condition: service_completed_successfully
     volumes:
-      - ./config-demo.jsonc:/usr/src/app/dist/backend/config/config.jsonc
+      - ./docker/config-demo.jsonc:/usr/src/app/dist/backend/config/config.jsonc
       #      # comment out for local development
-      #      - ../dist/backend/app:/usr/src/app/dist/backend/app
-      #      - ../node_modules:/usr/src/app/node_modules
-      #- ../ts/backend/src/migration/schema:/flyway/sql/schema
-      #- ../ts/backend/src/migration/data:/flyway/sql/data
+      #      - ./dist/backend/app:/usr/src/app/dist/backend/app
+      #      - ./node_modules:/usr/src/app/node_modules
+      #- ./ts/backend/src/migration/schema:/flyway/sql/schema
+      #- ./ts/backend/src/migration/data:/flyway/sql/data
       # reverse proxy to access keycloak via localhost:8081 in backend container
-      - ../deployment/backend/nginx.conf:/etc/nginx/http.d/default.conf
-      - ../deployment/backend/start_reverseproxy.sh:/flyway/start.sh
+      - ./deployment/backend/nginx.conf:/etc/nginx/http.d/default.conf
+      - ./deployment/backend/start_reverseproxy.sh:/flyway/start.sh
       # uncomment one of the two customizations:
-      - ../ts/backend/src/public/ai4realnet/customization.json:/usr/src/app/dist/backend/public/customization.json
-    #      - ../ts/backend/src/public/fab/customization.json:/usr/src/app/dist/backend/public/customization.json
+      - ./ts/backend/src/public/ai4realnet/customization.json:/usr/src/app/dist/backend/public/customization.json
+    #      - ./ts/backend/src/public/fab/customization.json:/usr/src/app/dist/backend/public/customization.json
     entrypoint: bash
     command:
       - /flyway/start.sh
@@ -268,7 +264,6 @@ services:
     #image: ghcr.io/flatland-association/fab-frontend:latest
     #pull_policy: always
     build:
-      context: ../
       dockerfile: deployment/frontend/Dockerfile
     depends_on:
       fab-backend:
@@ -279,10 +274,10 @@ services:
     networks:
       - flatland-benchmarks
 
-  orchestrator-railway-setup:
+  ai4realnet-orchestrator-railway-setup:
     image: alpine
     volumes:
-      - ./ai4realnet_orchestrators/domain_orchestrators/railway/submission_data_entrypoint.sh:/tmp/submission_data_entrypoint.sh
+      - ./evaluation/ai4realnet_orchestrators/domain_orchestrators/railway/submission_data_entrypoint.sh:/tmp/submission_data_entrypoint.sh
       - orchestrator-data:/vol
     entrypoint: [ "/bin/sh","-c" ]
     command:
@@ -292,7 +287,7 @@ services:
         chmod a=rx /vol/submission_data_entrypoint.sh
         cat /vol/submission_data_entrypoint.sh
 
-  orchestrator-railway:
+  ai4realnet-orchestrator-railway:
     profiles: [ tsdev, full ]
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
@@ -307,20 +302,19 @@ services:
         cd ai4realnet_orchestrators
         python -m celery -A domain_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${BENCHMARK_ID}
     build:
-      context: .
-      dockerfile: Dockerfile_railway_orchestrator
+      dockerfile: docker/ai4realnet_orchestrators/railway/Dockerfile
     depends_on:
       rabbit:
         condition: service_healthy
       minio_setup:
         condition: service_completed_successfully
-      orchestrator-railway-setup:
+      ai4realnet-orchestrator-railway-setup:
         condition: service_completed_successfully
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
       - orchestrator-data:/app/data
-      - ./ai4realnet_orchestrators/:/app/ai4realnet_orchestrators/
-      - ./rabbitmq/certs:/cert_rabbitmq
+      - ./evaluation/ai4realnet_orchestrators/:/app/ai4realnet_orchestrators/
+      - ./docker/rabbitmq/certs:/cert_rabbitmq
     env_file: .env
     environment:
       # required for flyway start.sh

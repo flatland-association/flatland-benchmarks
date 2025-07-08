@@ -16,7 +16,7 @@ parallel to the one used in development. To achieve that, take the dev env
 and reconfigure ports and volumes, as they might conflict.
 */
 
-const composeFilePath = '../../evaluation' // relative to ts/backend
+const composeFilePath = '../../' // relative to ts/backend
 const composeFile = 'docker-compose.yml'
 const envFile = '.env'
 const envTestFile = '.env.test'
