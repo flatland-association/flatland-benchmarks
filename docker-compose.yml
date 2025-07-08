@@ -178,7 +178,7 @@ services:
     command: python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q flatland3-evaluation
     build:
       context: .
-      dockerfile: docker/orchestrator/Dockerfile_docker_compose
+      dockerfile: docker/orchestrator/Dockerfile
     depends_on:
       rabbit:
         condition: service_healthy
@@ -307,7 +307,7 @@ services:
         python -m celery -A domain_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${BENCHMARK_ID}
     build:
       context: .
-      dockerfile: docker/ai4realnet_orchestrators/railway/Dockerfile_railway_orchestrator
+      dockerfile: docker/ai4realnet_orchestrators/railway/Dockerfile
     depends_on:
       rabbit:
         condition: service_healthy
