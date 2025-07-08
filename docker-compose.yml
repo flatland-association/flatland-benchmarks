@@ -177,7 +177,6 @@ services:
     # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
     command: python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q flatland3-evaluation
     build:
-      context: .
       dockerfile: docker/flatland3_benchmarks/Dockerfile
     depends_on:
       rabbit:
@@ -219,7 +218,6 @@ services:
     #image: ghcr.io/flatland-association/fab-backend:latest
     #pull_policy: always
     build:
-      context: ./
       dockerfile: deployment/backend/Dockerfile
     # POSTGRES_ variables are required for flyway
     env_file: .env
@@ -267,7 +265,6 @@ services:
     #image: ghcr.io/flatland-association/fab-frontend:latest
     #pull_policy: always
     build:
-      context: ./
       dockerfile: deployment/frontend/Dockerfile
     depends_on:
       fab-backend:
@@ -306,7 +303,6 @@ services:
         cd ai4realnet_orchestrators
         python -m celery -A domain_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${BENCHMARK_ID}
     build:
-      context: .
       dockerfile: docker/ai4realnet_orchestrators/railway/Dockerfile
     depends_on:
       rabbit:
