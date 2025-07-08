@@ -177,7 +177,7 @@ services:
     # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
     command: python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q flatland3-evaluation
     build:
-      dockerfile: docker/flatland3_benchmarks/Dockerfile
+      dockerfile: docker/flatland3_benchmarks/orchestrator/Dockerfile
     depends_on:
       rabbit:
         condition: service_healthy
@@ -185,7 +185,7 @@ services:
         condition: service_completed_successfully
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
-      - ./docker/flatland3_benchmarks/orchestrator_docker_compose.py:/app/orchestrator.py
+      - ./docker/flatland3_benchmarks/orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
     env_file: .env
     environment:
       - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
