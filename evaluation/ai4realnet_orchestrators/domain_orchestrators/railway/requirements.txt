@@ -1,3 +1,0 @@
-pandas
-# TODO use released version
-git+https://github.com/flatland-association/flatland-benchmarks.git@272-drop-definition-id-in-exposed-api#subdirectory=fab-clientlib
