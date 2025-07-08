@@ -92,6 +92,7 @@ jobs:
       - name: Run tests
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
+          find
           python -m pip install -r requirements.txt -r requirements-dev.txt
           export OAUTHLIB_INSECURE_TRANSPORT=1
           pytest -s test_containers_railway.py
