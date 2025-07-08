@@ -52,7 +52,7 @@ jobs:
           pytest -s evaluator
           pytest -s orchestrator
 
-  tests-railway-orchestrator:
+  test-ai4realnet-orchestrator-railway:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
