@@ -107,7 +107,7 @@ def test_results_benchmark():
   assert benchmark_results.body[0].items[0].submission_id == "db5eaa85-3304-4804-b76f-14d23adb5d4c"
   assert len(benchmark_results.body[0].items[0].scorings) == 2
   assert benchmark_results.body[0].items[0].scorings["primary"]["score"] == 200
-  assert benchmark_results.body[0].items[0].scorings["secondary"]["score"] == 1.8
+  assert benchmark_results.body[0].items[0].scorings["secondary"]["score"] == 0.9
   assert len(benchmark_results.body[0].items[0].test_scorings) == 1
 
 
@@ -249,7 +249,7 @@ def test_submission_roundtrip():
   assert test_results.body.scenario_scorings[1].scorings["primary"]["score"] == 99
   assert test_results.body.scenario_scorings[1].scorings["secondary"]["score"] == 0.8
   assert test_results.body.scorings["primary"]["score"] == 199
-  assert test_results.body.scorings["secondary"]["score"] == 1.8
+  assert test_results.body.scorings["secondary"]["score"] == 0.9
 
   submission_results = fab.results_submissions_submission_ids_get(
     submission_ids=[submission_id],
@@ -258,7 +258,7 @@ def test_submission_roundtrip():
   assert submission_results.body[0].submission_id == submission_id
   assert len(submission_results.body[0].scorings) == 2
   assert submission_results.body[0].scorings["primary"]["score"] == 199
-  assert submission_results.body[0].scorings["secondary"]["score"] == 1.8
+  assert submission_results.body[0].scorings["secondary"]["score"] == 0.9
   assert len(submission_results.body[0].test_scorings) == 1
   assert len(submission_results.body[0].test_scorings[0].scenario_scorings) == 2
   assert submission_results.body[0].test_scorings[0].scenario_scorings[0].scorings["primary"]["score"] == 100
