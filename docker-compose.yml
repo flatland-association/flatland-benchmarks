@@ -277,7 +277,7 @@ services:
   ai4realnet-orchestrator-railway-setup:
     image: alpine
     volumes:
-      - ./evaluation/ai4realnet_orchestrators/domain_orchestrators/railway/submission_data_entrypoint.sh:/tmp/submission_data_entrypoint.sh
+      - ./evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/submission_data_entrypoint.sh:/tmp/submission_data_entrypoint.sh
       - orchestrator-data:/vol
     entrypoint: [ "/bin/sh","-c" ]
     command:
@@ -300,9 +300,9 @@ services:
         mkdir -p /app/data/1234/
         touch /app/data/1234/nix.txt
         cd ai4realnet_orchestrators
-        python -m celery -A domain_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${BENCHMARK_ID}
+        python -m celery -A ai4realnet_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${BENCHMARK_ID}
     build:
-      dockerfile: evaluation/ai4realnet_orchestrators/domain_orchestrators/railway/Dockerfile
+      dockerfile: evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/Dockerfile
     depends_on:
       rabbit:
         condition: service_healthy
@@ -338,7 +338,7 @@ services:
         max-size: "20m"
         max-file: "5"
     healthcheck:
-      test: cd ai4realnet_orchestrators && python -m celery -A domain_orchestrators.railway.orchestrator inspect ping
+      test: cd ai4realnet_orchestrators && python -m celery -A ai4realnet_orchestrators.railway.orchestrator inspect ping
     networks:
       - flatland-benchmarks
 
