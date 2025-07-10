@@ -268,7 +268,8 @@ services:
     depends_on:
       fab-backend:
         condition: service_healthy
-
+    volumes:
+      - ./docker/fab-frontend/additional-entrypoint.sh:/docker-entrypoint.d/frontend-entrypoint.sh:rx
     ports:
       - 80:80
     networks:
