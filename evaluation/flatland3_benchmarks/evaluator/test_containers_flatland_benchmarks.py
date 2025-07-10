@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import ssl
 import time
 import uuid
 from io import StringIO
@@ -12,6 +13,9 @@ import pytest
 from celery import Celery
 from dotenv import dotenv_values
 from testcontainers.compose import DockerCompose
+
+from fab_clientlib import DefaultApi, ApiClient, Configuration
+from fab_oauth_utils import backend_application_flow
 
 TRACE = 5
 logger = logging.getLogger(__name__)
@@ -40,8 +44,8 @@ def test_containers_fixture():
     duration = time.time() - start_time
     logger.info(f"\\ end docker compose up. Took {duration:.2f} seconds.")
 
-    task_id = str(uuid.uuid4())
-    yield task_id
+    submission_id = str(uuid.uuid4())
+    yield submission_id
 
     # TODO workaround for testcontainers not supporting streaming to logger
     start_time = time.time()
@@ -69,17 +73,17 @@ def test_containers_fixture():
 
 
 # TODO extract to dev utils
-def run_task(benchmark_id: str, task_id: str, submission_data_url: str, tests: List[str], **kwargs):
+def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, tests: List[str], **kwargs):
   start_time = time.time()
   app = Celery(
-    broker="pyamqp://localhost:5672",
-    backend="rpc://localhost:5672",
+    broker="amqp://localhost:5672",
+    backend="rpc://",
   )
-  logger.info(f"/ Start simulate submission from portal for task_id={task_id}.....")
+  logger.info(f"/ Start simulate submission from portal for submission_id={submission_id}.....")
 
   ret = app.send_task(
     benchmark_id,
-    task_id=task_id,
+    task_id=submission_id,
     kwargs={
       "submission_data_url": submission_data_url,
       "tests": tests,
@@ -90,10 +94,12 @@ def run_task(benchmark_id: str, task_id: str, submission_data_url: str, tests: L
   logger.info(ret)
   duration = time.time() - start_time
   logger.info(
-    f"\\ End simulate submission from portal for task_id={task_id}. Took {duration} seconds.")
+    f"\\ End simulate submission from portal for submission_id={submission_id}. Took {duration} seconds.")
   return ret
 
 
+# TODO use uuids instead
+# TODO drop / harmonize return values
 @pytest.mark.usefixtures("test_containers_fixture")
 @pytest.mark.parametrize(
   "tests,expected_total_simulation_count",
@@ -104,7 +110,8 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str]):
   submission_id = str(uuid.uuid4())
   config = dotenv_values("../../.env")
 
-  ret = run_task('flatland3-evaluation', submission_id, submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
+  ret = run_task('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', submission_id,
+                 submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
                  tests=tests, **config)
 
   logger.info(f"{[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
@@ -164,10 +171,42 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str]):
   data = json.loads(results_json)
   print(data)
 
+  token = backend_application_flow(
+    client_id='fab-client-credentials',
+    client_secret='top-secret',
+    token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
+  )
+  print(token)
+  fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
+
+  fab.submissions_submission_ids_patch(submission_ids=[submission_id])
+
+  test_ids = {
+    "Test_0": "4ecdb9f4-e2ff-41ff-9857-abe649c19c50",
+    "Test_1": "5206f2ee-d0a9-405b-8da3-93625e169811"
+  }
+
+  # TODO handle case None
+  if tests is not None:
+    for test in tests:
+      test_results = fab.results_submissions_submission_id_tests_test_ids_get(
+        submission_id=submission_id,
+        # TODO is API broken with multiple IDs?
+        test_ids=[test_ids[test]])
+      print("results_uploaded")
+      print(test_results)
+      # TODO non-hard-coded results - add expected scores
+      assert test_results.body.scenario_scorings[0].scorings["primary"]["score"] == 55
+      # assert test_results.body.scenario_scorings[0].scorings["secondary"]["score"] == 0.4285714285714285
+      assert test_results.body.scenario_scorings[1].scorings["primary"]["score"] == 55
+      # assert test_results.body.scenario_scorings[1].scorings["secondary"]["score"] == 1.0
+      assert test_results.body.scorings["primary"]["score"] == 55 * len(test_results.body.scenario_scorings)
+      # assert test_results.body.scorings["secondary"]["score"] == 0.7142857142857142
+
 
 @pytest.mark.usefixtures("test_containers_fixture")
 def test_failing_run():
   submission_id = str(uuid.uuid4())
   with pytest.raises(Exception) as exc_info:
-    run_task('flatland3-evaluation', submission_id, "asdfasdf")
+    run_task('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', submission_id, "asdfasdf")
     assert str(exc_info.value).startswith(f"Failed execution ['sudo', 'docker', 'run', '--name', 'flatland3-submission-{submission_id}'")

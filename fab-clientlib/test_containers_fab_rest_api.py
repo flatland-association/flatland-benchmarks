@@ -39,8 +39,8 @@ def test_containers_fixture():
     duration = time.time() - start_time
     logger.info(f"\\ end docker compose up. Took {duration:.2f} seconds.")
 
-    task_id = str(uuid.uuid4())
-    yield task_id
+    submission_id = str(uuid.uuid4())
+    yield submission_id
 
     # TODO workaround for testcontainers not supporting streaming to logger
     start_time = time.time()
