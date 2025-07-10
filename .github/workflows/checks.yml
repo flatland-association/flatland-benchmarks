@@ -39,13 +39,20 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements-dev.txt
           python -m pip install -r orchestrator/requirements.txt
+      - name: Clone ai4realnet-orchestrators for integration tests
+        uses: actions/checkout@v4
+        with:
+          repository: flatland-association/ai4realnet-orchestrators
+          # TODO
+          ref: feature/blueprint
+          path: evaluation/ai4realnet_orchestrators
       - name: Run tests
         working-directory: evaluation/flatland3_benchmarks
         run: |
           pytest -s evaluator
           pytest -s orchestrator
 
-  tests-railway-orchestrator:
+  test-ai4realnet-orchestrator-railway:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -81,12 +88,19 @@ jobs:
         working-directory: fab-clientlib
         run: |
           python -m pip install .
+      - name: Clone ai4realnet-orchestrators for integration tests
+        uses: actions/checkout@v4
+        with:
+          repository: flatland-association/ai4realnet-orchestrators
+          # TODO
+          ref: feature/blueprint
+          path: evaluation/ai4realnet_orchestrators
       - name: Run tests
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
-          python -m pip install -r requirements.txt -r requirements-dev.txt
+          python -m pip install -r requirements.txt -r requirements-dev.txt -r ai4realnet_orchestrators/railway/requirements.txt
           export OAUTHLIB_INSECURE_TRANSPORT=1
-          pytest -s test_containers_railway.py
+          pytest -s -m integration
 
   test-clientlib:
     runs-on: ubuntu-22.04
@@ -128,6 +142,13 @@ jobs:
         working-directory: fab-clientlib
         run: |
           python -m pip install .
+      - name: Clone ai4realnet-orchestrators for integration tests
+        uses: actions/checkout@v4
+        with:
+          repository: flatland-association/ai4realnet-orchestrators
+          # TODO
+          ref: feature/blueprint
+          path: evaluation/ai4realnet_orchestrators
       - name: Run fab-clientlib integration tests
         working-directory: fab-clientlib
         run: |

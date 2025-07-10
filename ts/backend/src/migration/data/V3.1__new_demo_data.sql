@@ -4,9 +4,9 @@ VALUES
 ('b84d4c81-c0f6-4b74-a5a2-ba3fa0b68f8e', 'primary', 'Primary score (from evaluator)', NULL),
 ('046ff05d-8386-4d17-82b9-96f405a358f0', 'secondary', 'Secondary score (from evaluator)', NULL),
 ('68c1f46f-f69d-45fa-9693-23b60d5e7752', 'primary', 'Primary test score (aggregated)', 'NANSUM'),
-('be4a7bb4-347b-43b8-a1a9-6bb20029078c', 'secondary', 'Secondary test score (aggregated)', 'NANSUM'),
+('be4a7bb4-347b-43b8-a1a9-6bb20029078c', 'secondary', 'Secondary test score (aggregated)', 'NANMEAN'),
 ('be7bf55a-9d79-4e89-8509-f8d2af9b3fad', 'primary', 'Primary submission score (aggregated)', 'NANSUM'),
-('f6b23ac8-2f12-4e77-8de4-4939b818ca8e', 'secondary', 'Secondary submission score (aggregated)', 'NANSUM');
+('f6b23ac8-2f12-4e77-8de4-4939b818ca8e', 'secondary', 'Secondary submission score (aggregated)', 'NANMEAN');
 
 INSERT INTO scenario_definitions
 (id, name, description, field_definition_ids)
