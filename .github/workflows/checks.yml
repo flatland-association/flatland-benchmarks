@@ -43,8 +43,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: flatland-association/ai4realnet-orchestrators
-          # TODO
-          ref: feature/blueprint
           path: evaluation/ai4realnet_orchestrators
       - name: Run tests
         working-directory: evaluation/flatland3_benchmarks
@@ -92,8 +90,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: flatland-association/ai4realnet-orchestrators
-          # TODO
-          ref: feature/blueprint
           path: evaluation/ai4realnet_orchestrators
       - name: Run tests
         working-directory: evaluation/ai4realnet_orchestrators
@@ -146,8 +142,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: flatland-association/ai4realnet-orchestrators
-          # TODO
-          ref: feature/blueprint
           path: evaluation/ai4realnet_orchestrators
       - name: Run fab-clientlib integration tests
         working-directory: fab-clientlib
