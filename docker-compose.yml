@@ -189,7 +189,6 @@ services:
       - ./docker/flatland3_benchmarks/orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
       - ./fab-clientlib/:/app/fab-clientlib
       - ./docker/rabbitmq/certs:/cert_rabbitmq
-    #    env_file: .env
     environment:
       # Celery configuration
       - BENCHMARK_ID=f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
@@ -212,13 +211,13 @@ services:
       - S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=${S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}
       - DOCKERCOMPOSE_HOST_DIRECTORY=${PWD}
 
-      # fab client configuration
+      # configuration for fab-clientlib:
       - FAB_API_URL=http://fab-backend:8000
       - CLIENT_ID=fab-client-credentials
       - CLIENT_SECRET=top-secret
-      # use Docker hostname as called from orchestrator run within Docker container
+      # use Docker hostname as called from orchestrator run within Docker container:
       - TOKEN_URL=http://keycloak:8081/realms/flatland/protocol/openid-connect/token
-      # we use http in fab-backend
+      # we use http in fab-backend:
       - OAUTHLIB_INSECURE_TRANSPORT=1
     logging:
       options:
@@ -337,22 +336,25 @@ services:
       - ./docker/rabbitmq/certs:/cert_rabbitmq
     env_file: .env
     environment:
-      # required for flyway start.sh
+      # required for flyway start.sh:
       - POSTGRES_HOST=${POSTGRES_HOST:-rabbit}
       - POSTGRES_PORT=${POSTGRES_PORT:-5432}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
+      # Celery configuration:
       - BROKER_URL=amqps://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5671//
+      - RABBITMQ_CA_CERTS=/cert_rabbitmq/ca_certificate.pem
+      - RABBITMQ_KEYFILE=/cert_rabbitmq/client_localhost_key.pem
+      - RABBITMQ_CERTFILE=/cert_rabbitmq/client_localhost_certificate.pem
       - BACKEND_URL=rpc://
+      # configuration for fab-clientlib:
       - FAB_API_URL=http://fab-backend:8000
       - DATA_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-data
       - CLIENT_SECRET=top-secret
       - TOKEN_URL=http://keycloak:8081/realms/flatland/protocol/openid-connect/token
       - OAUTHLIB_INSECURE_TRANSPORT=1
-      - RABBITMQ_CA_CERTS=/cert_rabbitmq/ca_certificate.pem
-      - RABBITMQ_KEYFILE=/cert_rabbitmq/client_localhost_key.pem
-      - RABBITMQ_CERTFILE=/cert_rabbitmq/client_localhost_certificate.pem
+
     logging:
       options:
         max-size: "20m"
