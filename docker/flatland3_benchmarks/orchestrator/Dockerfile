@@ -1,4 +1,4 @@
-FROM ghcr.io/flatland-association/fab-flatland-compute-worker:latest
+FROM ghcr.io/flatland-association/fab-flatland3-benchmarks-orchestrator:latest
 
 # switch to root again
 USER root
@@ -14,3 +14,6 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER runner
 
 RUN sudo ls /tmp
+
+# TODO temporary workaround until part of fab-flatland3-benchmarks-orchestrator:latest
+RUN python -m pip install -U fab-clientlib
