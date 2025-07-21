@@ -105,7 +105,7 @@ def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, te
   [
     # TODO aggregation over scenarios: sum, aggregation over tests:nansum -> sum_normalized_reward
     # TODO test secondary as well
-    ("all", 5, [[1, 1], [1, 1, 1]], [2, 3]),
+    (None, 5, [[1, 1], [1, 1, 1]], [2, 3]),
     (["Test_0", "Test_1"], 5, [[1, 1], [1, 1, 1]], [2, 3]),
     (["Test_0"], 2, [[1, 1], [None, None, None]], [2, 0]),
     (["Test_1"], 3, [[None, None], [1, 1, 1]], [0, 3])
