@@ -11,6 +11,7 @@ from typing import List, Optional
 
 import boto3
 import celery.exceptions
+import numpy as np
 import pandas as pd
 from celery import Celery
 from celery.app.log import TaskFormatter
@@ -38,7 +39,7 @@ app = Celery(
 DOCKERCOMPOSE_HOST_DIRECTORY = os.environ.get("DOCKERCOMPOSE_HOST_DIRECTORY", "/tmp/codabench/")
 
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
-SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.3,4.0.4,4.1.0")
+SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.3,4.0.4,4.1.0,4.1.1,4.1.2,4.1.3")
 
 FAB_API_URL = os.environ.get("FAB_API_URL")
 CLIENT_ID = os.environ.get("CLIENT_ID")
@@ -173,6 +174,13 @@ def orchestrator(self,
     obj = s3.get_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + ".json")
     ret_evaluator["results.json"] = obj['Body'].read().decode("utf-8")
 
+    print("results.csv")
+    df_results = pd.read_csv(StringIO(ret_evaluator["results.csv"]))
+    print(df_results)
+    print("results.json")
+    json_results = json.loads(ret_evaluator["results.json"])
+    print(json_results)
+
     logger.info(f"Get logs from containers...")
     exec_with_logging(["sudo", "docker", "ps"])
     try:
@@ -210,31 +218,14 @@ def orchestrator(self,
     print("token")
     print(token)
 
-    # TODO mount metadata.csv into orchestrator or extend evaluator with this part
-    # TODO upload data
-    # TODO generalize to rolled out benchmarks
-    # df_metadata = pd.read_csv(f"{DOCKERCOMPOSE_HOST_DIRECTORY}/evaluation/flatland3_benchmarks/evaluator/debug-environments/metadata.csv")
-    df_metadata = pd.read_csv(StringIO("""test_id,env_id,n_agents,x_dim,y_dim,n_cities,max_rail_pairs_in_city,n_envs_run,seed,grid_mode,max_rails_between_cities,malfunction_duration_min,malfunction_duration_max,malfunction_interval,speed_ratios,fab_benchmark_id,fab_test_id,fab_scenario_id
-Test_0,Level_0,5,25,25,2,2,2,1,False,2,20,50,0,{1.0: 1.0},f669fb8d-80ac-4ba7-8875-0a33ed5d30b9,4ecdb9f4-e2ff-41ff-9857-abe649c19c50,d99f4d35-aec5-41c1-a7b0-64f78b35d7ef
-Test_0,Level_1,5,25,25,2,2,2,2,False,2,20,50,250,{1.0: 1.0},f669fb8d-80ac-4ba7-8875-0a33ed5d30b9,4ecdb9f4-e2ff-41ff-9857-abe649c19c50,04d618b8-84df-406b-b803-d516c7425537
-Test_1,Level_0,2,30,30,3,2,3,1,False,2,20,50,0,{1.0: 1.0},f669fb8d-80ac-4ba7-8875-0a33ed5d30b9,5206f2ee-d0a9-405b-8da3-93625e169811,6f3ad83c-3312-4ab3-9740-cbce80feea91
-Test_1,Level_1,2,30,30,3,2,3,2,False,2,20,50,300,{1.0: 1.0},f669fb8d-80ac-4ba7-8875-0a33ed5d30b9,5206f2ee-d0a9-405b-8da3-93625e169811,f954a860-e963-431e-a09d-5b1040948f2d
-Test_1,Level_2,2,30,30,3,2,3,4,False,2,20,50,600,{1.0: 1.0},f669fb8d-80ac-4ba7-8875-0a33ed5d30b9,5206f2ee-d0a9-405b-8da3-93625e169811,f92bfe0c-5347-4d89-bc17-b6f86d514ef8"""))
-    print("metadata.csv")
-    print(df_metadata)
-
-    print("results.csv")
-    df_results = pd.read_csv(StringIO(ret_evaluator["results.csv"]))
-    print(df_results)
-    print("results.json")
-    json_results = json.loads(ret_evaluator["results.json"])
-    print(json_results)
-
     fab = DefaultApi(ApiClient(configuration=Configuration(host=FAB_API_URL, access_token=token["access_token"])))
 
-    # TODO upload only requested tests
-    for _, row in df_metadata.iterrows():
-      # could also be sent at once, but this way we get continuous updates
+    for _, row in df_results.iterrows():
+      print("uploading results for row:")
+      print(row)
+      if np.isnan(row["normalized_reward"]):
+        print("skipping")
+        continue
       fab.results_submissions_submission_id_tests_test_ids_post(
         submission_id=submission_id,
         test_ids=[row["fab_test_id"]],
@@ -242,9 +233,8 @@ Test_1,Level_2,2,30,30,3,2,3,4,False,2,20,50,600,{1.0: 1.0},f669fb8d-80ac-4ba7-8
           data=[
             ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
               scenario_id=row["fab_scenario_id"],
-              # TODO hard-coded
               # TODO use better names than primary and secondary -> e.g. rewards and success_rate
-              additional_properties={"primary": "55"},
+              additional_properties={"primary": row["normalized_reward"], "secondary": row["percentage_complete"]},
             )
           ]
         ),

@@ -1,7 +1,6 @@
 import json
 import logging
 import os
-import ssl
 import time
 import uuid
 from io import StringIO
@@ -102,16 +101,30 @@ def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, te
 # TODO drop / harmonize return values
 @pytest.mark.usefixtures("test_containers_fixture")
 @pytest.mark.parametrize(
-  "tests,expected_total_simulation_count",
-  [(None, 5), (["Test_0", "Test_1"], 5), (["Test_0"], 2), (["Test_1"], 3)],
-  ids=["all", "Test_0,Test_1", "Test0", "Test1"]
+  "tests,expected_total_simulation_count,expected_primary_scenario_scores,expected_primary_test_scores",
+  [
+    # TODO aggregation over scenarios: sum, aggregation over tests:nansum -> sum_normalized_reward
+    # TODO test secondary as well
+    ("all", 5, [[1, 1], [1, 1, 1]], [2, 3]),
+    (["Test_0", "Test_1"], 5, [[1, 1], [1, 1, 1]], [2, 3]),
+    (["Test_0"], 2, [[1, 1], [None, None, None]], [2, 0]),
+    (["Test_1"], 3, [[None, None], [1, 1, 1]], [0, 3])
+  ],
+  ids=[
+    "none",
+    "Test_0,Test_1",
+    "Test0",
+    "Test1"
+  ]
 )
-def test_succesful_run(expected_total_simulation_count, tests: List[str]):
+def test_succesful_run(expected_total_simulation_count, tests: List[str], expected_primary_scenario_scores: List[List[float]],
+                       expected_primary_test_scores: List[float]):
   submission_id = str(uuid.uuid4())
   config = dotenv_values("../../.env")
 
   ret = run_task('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', submission_id,
-                 submission_data_url="ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest",
+                 # use deterministic baselines
+                 submission_data_url="ghcr.io/flatland-association/flatland-baselines:latest",
                  tests=tests, **config)
 
   logger.info(f"{[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
@@ -132,7 +145,7 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str]):
   assert ret["f3-submission"]["job_status"] == "Complete"
 
   assert ret["f3-evaluator"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-evaluator:latest"
-  assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest"
+  assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/flatland-baselines:latest"
 
   assert "end evaluator/run.sh" in str(ret["f3-evaluator"]["log"])
   assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])
@@ -186,22 +199,16 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str]):
     "Test_1": "5206f2ee-d0a9-405b-8da3-93625e169811"
   }
 
-  # TODO handle case None
-  if tests is not None:
-    for test in tests:
-      test_results = fab.results_submissions_submission_id_tests_test_ids_get(
-        submission_id=submission_id,
-        # TODO is API broken with multiple IDs?
-        test_ids=[test_ids[test]])
-      print("results_uploaded")
-      print(test_results)
-      # TODO non-hard-coded results - add expected scores
-      assert test_results.body.scenario_scorings[0].scorings["primary"]["score"] == 55
-      # assert test_results.body.scenario_scorings[0].scorings["secondary"]["score"] == 0.4285714285714285
-      assert test_results.body.scenario_scorings[1].scorings["primary"]["score"] == 55
-      # assert test_results.body.scenario_scorings[1].scorings["secondary"]["score"] == 1.0
-      assert test_results.body.scorings["primary"]["score"] == 55 * len(test_results.body.scenario_scorings)
-      # assert test_results.body.scorings["secondary"]["score"] == 0.7142857142857142
+  for (test_name, test_id), scenario_scores, test_score in zip(test_ids.items(), expected_primary_scenario_scores, expected_primary_test_scores):
+    test_results = fab.results_submissions_submission_id_tests_test_ids_get(
+      submission_id=submission_id,
+      # TODO is API broken with multiple IDs?
+      test_ids=[test_id])
+    print("results_uploaded")
+    print(test_results)
+    for i in range(len(scenario_scores)):
+      assert test_results.body.scenario_scorings[i].scorings["primary"]["score"] == scenario_scores[i]
+    assert test_results.body.scorings["primary"]["score"] == test_score
 
 
 @pytest.mark.usefixtures("test_containers_fixture")
