@@ -111,7 +111,7 @@ def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, te
     (["Test_1"], 3, [[None, None], [1, 1, 1]], [0, 3])
   ],
   ids=[
-    "none",
+    "all",
     "Test_0,Test_1",
     "Test0",
     "Test1"
