@@ -233,8 +233,10 @@ def orchestrator(self,
           data=[
             ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
               scenario_id=row["fab_scenario_id"],
-              # TODO use better names than primary and secondary -> e.g. rewards and success_rate
-              additional_properties={"primary": row["normalized_reward"], "secondary": row["percentage_complete"]},
+              additional_properties={
+                "normalized_reward": row["normalized_reward"],
+                "percentage_complete": row["percentage_complete"]
+              },
             )
           ]
         ),

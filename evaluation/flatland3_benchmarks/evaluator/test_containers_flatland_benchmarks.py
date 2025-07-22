@@ -103,7 +103,6 @@ def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, te
 @pytest.mark.parametrize(
   "tests,expected_total_simulation_count,expected_primary_scenario_scores,expected_primary_test_scores",
   [
-    # TODO aggregation over scenarios: sum, aggregation over tests:nansum -> sum_normalized_reward
     # TODO test secondary as well
     (None, 5, [[1, 1], [1, 1, 1]], [2, 3]),
     (["Test_0", "Test_1"], 5, [[1, 1], [1, 1, 1]], [2, 3]),
@@ -207,8 +206,8 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
     print("results_uploaded")
     print(test_results)
     for i in range(len(scenario_scores)):
-      assert test_results.body.scenario_scorings[i].scorings["primary"]["score"] == scenario_scores[i]
-    assert test_results.body.scorings["primary"]["score"] == test_score
+      assert test_results.body.scenario_scorings[i].scorings["normalized_reward"]["score"] == scenario_scores[i]
+    assert test_results.body.scorings["normalized_reward"]["score"] == test_score
 
 
 @pytest.mark.usefixtures("test_containers_fixture")
