@@ -13,6 +13,7 @@ from celery import Celery
 from dotenv import dotenv_values
 from testcontainers.compose import DockerCompose
 
+
 from fab_clientlib import DefaultApi, ApiClient, Configuration
 from fab_oauth_utils import backend_application_flow
 
@@ -97,7 +98,6 @@ def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, te
   return ret
 
 
-# TODO use uuids instead
 # TODO drop / harmonize return values
 @pytest.mark.usefixtures("test_containers_fixture")
 @pytest.mark.parametrize(
@@ -105,9 +105,9 @@ def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, te
   [
     # TODO test secondary as well
     (None, 5, [[1, 1], [1, 1, 1]], [2, 3]),
-    (["Test_0", "Test_1"], 5, [[1, 1], [1, 1, 1]], [2, 3]),
-    (["Test_0"], 2, [[1, 1], [None, None, None]], [2, 0]),
-    (["Test_1"], 3, [[None, None], [1, 1, 1]], [0, 3])
+    (["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"], 5, [[1, 1], [1, 1, 1]], [2, 3]),
+    (["4ecdb9f4-e2ff-41ff-9857-abe649c19c50"], 2, [[1, 1], [None, None, None]], [2, 0]),
+    (["5206f2ee-d0a9-405b-8da3-93625e169811"], 3, [[None, None], [1, 1, 1]], [0, 3])
   ],
   ids=[
     "all",
@@ -155,7 +155,7 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
   logger.debug(res_json)
 
   scenarios_run = res_df.loc[res_df['controller_inference_time_max'].notna()]
-  tests_with_some_steps = set(scenarios_run["test_id"])
+  tests_with_some_steps = set(scenarios_run["fab_test_id"])
   # Due to non-determinism of agent and early stopping ("The mean percentage of done agents during the last Test (2 environments) was too low: 0.100 < 0.25"), we cannot check the number of scenarios or tests run
   if tests is not None:
     assert len(tests_with_some_steps.difference(tests)) == 0, (tests_with_some_steps, tests)

@@ -17,6 +17,7 @@ from celery import Celery
 from celery.app.log import TaskFormatter
 from celery.signals import after_setup_task_logger
 from celery.utils.log import get_task_logger
+from yaml import safe_load
 
 from fab_clientlib import ApiClient, DefaultApi, Configuration, ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest, \
   ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
@@ -54,6 +55,10 @@ def setup_task_logger(logger, *args, **kwargs):
   for handler in logger.handlers:
     tf = TaskFormatter("[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] [%(task_name)s] - [%(task_id)s] - %(message)s")
     handler.setFormatter(tf)
+
+
+TEST_IDS = safe_load(os.environ.get("TEST_IDS", "{}"))
+REVERSE_TEST_IDS = {v: k for k, v in TEST_IDS.items()}
 
 
 # TODO extract test runnner and share between docker compose and k8s implementation?
@@ -120,7 +125,8 @@ def orchestrator(self,
     if SUPPORTED_CLIENT_VERSIONS is not None:
       evaluator_exec_args.extend(["-e", f"SUPPORTED_CLIENT_VERSIONS={SUPPORTED_CLIENT_VERSIONS}"])
     if tests is not None:
-      evaluator_exec_args.extend(["-e", f"TEST_ID_FILTER={','.join(tests)}"])
+      test_names = [REVERSE_TEST_IDS[test_id] for test_id in tests]
+      evaluator_exec_args.extend(["-e", f"TEST_ID_FILTER={','.join(test_names)}"])
     evaluator_exec_args.extend(["-e", f"AICROWD_IS_GRADING={True}"])
 
     evaluator_exec_args.extend([
