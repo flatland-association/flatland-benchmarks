@@ -10,7 +10,7 @@ from mockito import verify
 from mockito import when
 
 from fab_clientlib import DefaultApi
-from orchestrator import run_evaluation, TaskExecutionError
+from orchestrator import TaskExecutionError, K8sFlatlandBenchmarksOrchestrator
 
 
 def test_tasks_successful():
@@ -43,12 +43,12 @@ def test_tasks_successful():
 
   m = mock()
   results_csv_bytes = b64encode(urandom(4))
-  results_json_bytes = b64encode(urandom(4))
+  results_json_bytes = "{}".encode('utf-8')
   when(m).read().thenReturn(results_csv_bytes, results_json_bytes)
   when(s3).get_object(Bucket=mockito.any(), Key=mockito.any()).thenReturn({"Body": m})
-
-  ret = run_evaluation(submission_id="1234", test_runner_evaluator_image="fancy", submission_data_url="pancy", batch_api=batch_api, core_api=core_api, s3=s3,
-                       s3_upload_path_template="results/{}", fab=fab)
+  ret = K8sFlatlandBenchmarksOrchestrator(submission_id="1234").orchestrator(test_runner_evaluator_image="fancy", submission_data_url="pancy",
+                                                                             batch_api=batch_api, core_api=core_api, s3=s3,
+                                                                             s3_upload_path_template="results/{}", fab=fab)
 
   verify(batch_api, times=1).list_namespaced_job(...)
   verify(core_api, times=1).list_namespaced_pod(namespace="fab-int", label_selector=f"job-name=f3-evaluator-1234")
@@ -111,8 +111,9 @@ def test_tasks_failing():
   when(core_api).read_namespaced_pod_log("subi", namespace="fab-int").thenReturn("abcd")
 
   with pytest.raises(TaskExecutionError) as exc_info:
-    run_evaluation(submission_id="1234", test_runner_evaluator_image="fancy", submission_data_url="pancy", batch_api=batch_api, core_api=core_api, s3=s3,
-                   s3_upload_path_template="results/{}", fab=fab)
+    K8sFlatlandBenchmarksOrchestrator(submission_id="1234").orchestrator(test_runner_evaluator_image="fancy", submission_data_url="pancy", batch_api=batch_api,
+                                                                         core_api=core_api, s3=s3,
+                                                                         s3_upload_path_template="results/{}", fab=fab)
 
   assert exc_info.value.message.startswith(f"Failed task with submission_id=1234 with docker_image=fancy and submission_data_url=pancy")
   ret = exc_info.value.status

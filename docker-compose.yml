@@ -187,6 +187,7 @@ services:
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
       - ./docker/flatland3_benchmarks/orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
+      - ./evaluation/flatland3_benchmarks/orchestrator/orchestrator_common.py:/app/orchestrator_common.py
       - ./fab-clientlib/:/app/fab-clientlib
       - ./docker/rabbitmq/certs:/cert_rabbitmq
     environment:

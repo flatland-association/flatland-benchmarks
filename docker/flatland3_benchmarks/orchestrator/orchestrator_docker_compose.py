@@ -1,27 +1,19 @@
 # based on https://github.com/codalab/codabench/blob/develop/orchestrator/orchestrator.py
 import asyncio
-import json
 import logging
 import os
 import ssl
 import subprocess
-import time
-from io import BytesIO, TextIOWrapper, StringIO
+from io import BytesIO, TextIOWrapper
 from typing import List, Optional
 
-import boto3
-import celery.exceptions
-import numpy as np
-import pandas as pd
 from celery import Celery
 from celery.app.log import TaskFormatter
 from celery.signals import after_setup_task_logger
 from celery.utils.log import get_task_logger
 from yaml import safe_load
 
-from fab_clientlib import ApiClient, DefaultApi, Configuration, ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest, \
-  ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
-from fab_oauth_utils import backend_application_flow
+from orchestrator_common import FlatlandBenchmarksOrchestrator
 
 logger = get_task_logger(__name__)
 
@@ -61,46 +53,16 @@ TEST_IDS = safe_load(os.environ.get("TEST_IDS", "{}"))
 REVERSE_TEST_IDS = {v: k for k, v in TEST_IDS.items()}
 
 
-# TODO extract test runnner and share between docker compose and k8s implementation?
-# N.B. name to be used by send_task
-@app.task(name=os.environ.get("BENCHMARK_ID"), bind=True, soft_time_limit=10 * 60, time_limit=12 * 60)
-def orchestrator(self,
-                 submission_data_url: str,
-                 tests: List[str] = None,
-                 TEST_RUNNER_EVALUATOR_IMAGE="ghcr.io/flatland-association/fab-flatland-evaluator:latest",
-                 AWS_ENDPOINT_URL=None,
-                 AWS_ACCESS_KEY_ID=None,
-                 AWS_SECRET_ACCESS_KEY=None,
-                 S3_BUCKET=None,
-                 S3_UPLOAD_PATH_TEMPLATE=None,
-                 S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=None,
-                 **kwargs):
-  submission_id = self.request.id
+class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
 
-  try:
-    start_time = time.time()
-
-    if AWS_ENDPOINT_URL is None:
-      AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
-    if AWS_ACCESS_KEY_ID is None:
-      AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
-    if AWS_SECRET_ACCESS_KEY is None:
-      AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
-    if S3_BUCKET is None:
-      S3_BUCKET = os.environ.get("S3_BUCKET", None)
-    if S3_UPLOAD_PATH_TEMPLATE is None:
-      S3_UPLOAD_PATH_TEMPLATE = os.environ.get("S3_UPLOAD_PATH_TEMPLATE", None)
-    if S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID is None:
-      S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.environ.get("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
-    if TEST_RUNNER_EVALUATOR_IMAGE is None:
+  def run_flatland(self, test_runner_evaluator_image, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key,
+                   s3_bucket, s3_upload_path_template, s3_upload_path_template_use_submission_id, **kwargs):
+    if test_runner_evaluator_image is None:
       os.environ.get("TEST_RUNNER_EVALUATOR_IMAGE", None)
-
-    docker_image = TEST_RUNNER_EVALUATOR_IMAGE
+    docker_image = test_runner_evaluator_image
     logger.info(f"/ start task with submission_id={submission_id} with docker_image={docker_image} and submission_data_url={submission_data_url}")
-
     assert BENCHMARKING_NETWORK is not None
     assert docker_image is not None
-
     loop = asyncio.get_event_loop()
     evaluator_future = loop.create_future()
     submission_future = loop.create_future()
@@ -110,35 +72,32 @@ def orchestrator(self,
       "-e", "redis_ip=redis",
       "-e", f"AICROWD_SUBMISSION_ID={submission_id}",
     ]
-    if AWS_ENDPOINT_URL:
-      evaluator_exec_args.extend(["-e", f"AWS_ENDPOINT_URL={AWS_ENDPOINT_URL}"])
-    if AWS_ACCESS_KEY_ID:
-      evaluator_exec_args.extend(["-e", f"AWS_ACCESS_KEY_ID={AWS_ACCESS_KEY_ID}"])
-    if AWS_SECRET_ACCESS_KEY:
-      evaluator_exec_args.extend(["-e", f"AWS_SECRET_ACCESS_KEY={AWS_SECRET_ACCESS_KEY}"])
-    if S3_BUCKET:
-      evaluator_exec_args.extend(["-e", f"S3_BUCKET={S3_BUCKET}"])
-    if S3_UPLOAD_PATH_TEMPLATE:
-      evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE={S3_UPLOAD_PATH_TEMPLATE}"])
-    if S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID:
-      evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID={S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}"])
+    if aws_endpoint_url:
+      evaluator_exec_args.extend(["-e", f"AWS_ENDPOINT_URL={aws_endpoint_url}"])
+    if aws_access_key_id:
+      evaluator_exec_args.extend(["-e", f"AWS_ACCESS_KEY_ID={aws_access_key_id}"])
+    if aws_secret_access_key:
+      evaluator_exec_args.extend(["-e", f"AWS_SECRET_ACCESS_KEY={aws_secret_access_key}"])
+    if s3_bucket:
+      evaluator_exec_args.extend(["-e", f"S3_BUCKET={s3_bucket}"])
+    if s3_upload_path_template:
+      evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE={s3_upload_path_template}"])
+    if s3_upload_path_template_use_submission_id:
+      evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID={s3_upload_path_template_use_submission_id}"])
     if SUPPORTED_CLIENT_VERSIONS is not None:
       evaluator_exec_args.extend(["-e", f"SUPPORTED_CLIENT_VERSIONS={SUPPORTED_CLIENT_VERSIONS}"])
     if tests is not None:
       test_names = [REVERSE_TEST_IDS[test_id] for test_id in tests]
       evaluator_exec_args.extend(["-e", f"TEST_ID_FILTER={','.join(test_names)}"])
     evaluator_exec_args.extend(["-e", f"AICROWD_IS_GRADING={True}"])
-
     evaluator_exec_args.extend([
       "-v", f"{DOCKERCOMPOSE_HOST_DIRECTORY}/evaluation/flatland3_benchmarks/evaluator/debug-environments/:/tmp/environments",
       "-e", "AICROWD_TESTS_FOLDER=/tmp/environments/",
       "--network", BENCHMARKING_NETWORK,
       docker_image,
     ])
-
     exec_with_logging(["sudo", "docker", "pull", docker_image])
     exec_with_logging(["sudo", "docker", "pull", submission_data_url])
-
     gathered_tasks = asyncio.gather(
       run_async_and_catch_output(evaluator_future, exec_args=evaluator_exec_args),
       run_async_and_catch_output(submission_future, exec_args=[
@@ -153,104 +112,15 @@ def orchestrator(self,
       ])
     )
     loop.run_until_complete(gathered_tasks)
-    duration = time.time() - start_time
-    logger.info(
-      f"\\ end task with submission_id={submission_id} with docker_image={docker_image} and submission_data_url={submission_data_url}. Took {duration:.2f} seconds.")
-
     ret_evaluator = evaluator_future.result()
     ret_evaluator["image_id"] = docker_image
     ret_submission = submission_future.result()
     ret_submission["image_id"] = submission_data_url
     ret = {"f3-evaluator": ret_evaluator, "f3-submission": ret_submission}
     logger.debug("Task with submission_id=%s got results from docker run: %s.", submission_id, ret)
-
     if ret_evaluator["job_status"] != "Complete" or ret_submission["job_status"] != "Complete":
       raise Exception(f"Evaluator or submission failed, aborting: {ret}")
 
-    logger.info("Get results files from S3 under %s...", AWS_ENDPOINT_URL)
-    s3 = boto3.client(
-      's3',
-      # https://docs.weka.io/additional-protocols/s3/s3-examples-using-boto3
-      endpoint_url=AWS_ENDPOINT_URL,
-      aws_access_key_id=AWS_ACCESS_KEY_ID,
-      aws_secret_access_key=AWS_SECRET_ACCESS_KEY
-    )
-    obj = s3.get_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + ".csv")
-    ret_evaluator["results.csv"] = obj['Body'].read().decode("utf-8")
-    obj = s3.get_object(Bucket=S3_BUCKET, Key=S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + ".json")
-    ret_evaluator["results.json"] = obj['Body'].read().decode("utf-8")
-
-    print("results.csv")
-    df_results = pd.read_csv(StringIO(ret_evaluator["results.csv"]))
-    print(df_results)
-    print("results.json")
-    json_results = json.loads(ret_evaluator["results.json"])
-    print(json_results)
-
-    logger.info(f"Get logs from containers...")
-    exec_with_logging(["sudo", "docker", "ps"])
-    try:
-      logger.info("/ Logs from container %s", f"flatland3-evaluator-{submission_id}")
-      stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{submission_id}", ], collect=True)
-      stdo = "\n".join(stdo)
-      file_name = S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + "_evaluator_stdout.log"
-      response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stdo)
-      logger.info("upload %s got response %s", file_name, response)
-      stde = "\n".join(stde)
-      file_name = S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + "_evaluator_stderr.log"
-      response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stde)
-      logger.info("upload %s got response %s", file_name, response)
-      exec_with_logging(["sudo", "docker", "rm", f"flatland3-evaluator-{submission_id}", ])
-      logger.info("\\ Logs from container %s", f"flatland3-evaluator-{submission_id}")
-    except Exception as e:
-      logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{submission_id}", exc_info=e)
-    try:
-      logger.info("/ Logs from container %s", f"flatland3-submission-{submission_id}")
-      stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{submission_id}", ], collect=True)
-      stdo = "\n".join(stdo)
-      file_name = S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + "_submission_stdout.log"
-      response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stdo)
-      logger.info("upload %s got response %s", file_name, response)
-      stde = "\n".join(stde)
-      file_name = S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + "_submission_stderr.log"
-      response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stde)
-      logger.info("upload %s got response %s", file_name, response)
-      exec_with_logging(["sudo", "docker", "rm", f"flatland3-submission-{submission_id}", ])
-      logger.info("\\ Logs from container %s", f"flatland3-submission-{submission_id}")
-    except Exception as e:
-      logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{submission_id}", exc_info=e)
-
-    token = backend_application_flow(CLIENT_ID, CLIENT_SECRET, TOKEN_URL)
-    print("token")
-    print(token)
-
-    fab = DefaultApi(ApiClient(configuration=Configuration(host=FAB_API_URL, access_token=token["access_token"])))
-
-    for _, row in df_results.iterrows():
-      print("uploading results for row:")
-      print(row)
-      if np.isnan(row["normalized_reward"]):
-        print("skipping")
-        continue
-      fab.results_submissions_submission_id_tests_test_ids_post(
-        submission_id=submission_id,
-        test_ids=[row["fab_test_id"]],
-        results_submissions_submission_id_tests_test_ids_post_request=ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest(
-          data=[
-            ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
-              scenario_id=row["fab_scenario_id"],
-              additional_properties={
-                "normalized_reward": row["normalized_reward"],
-                "percentage_complete": row["percentage_complete"]
-              },
-            )
-          ]
-        ),
-      )
-    return ret
-
-  except celery.exceptions.SoftTimeLimitExceeded as e:
-    logger.info("Hit %s - getting logs from containers", e)
     exec_with_logging(["sudo", "docker", "ps"])
     try:
       logger.info("/ Logs from container %s", f"flatland3-evaluator-{submission_id}")
@@ -264,7 +134,68 @@ def orchestrator(self,
       logger.info("\\ Logs from container %s", f"flatland3-submission-{submission_id}")
     except:
       logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{submission_id}")
-    raise e
+
+    # logger.info(f"Get logs from containers...")
+    # exec_with_logging(["sudo", "docker", "ps"])
+    # try:
+    #   logger.info("/ Logs from container %s", f"flatland3-evaluator-{submission_id}")
+    #   stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{submission_id}", ], collect=True)
+    #   stdo = "\n".join(stdo)
+    #   file_name = S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + "_evaluator_stdout.log"
+    #   response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stdo)
+    #   logger.info("upload %s got response %s", file_name, response)
+    #   stde = "\n".join(stde)
+    #   file_name = S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + "_evaluator_stderr.log"
+    #   response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stde)
+    #   logger.info("upload %s got response %s", file_name, response)
+    #   exec_with_logging(["sudo", "docker", "rm", f"flatland3-evaluator-{submission_id}", ])
+    #   logger.info("\\ Logs from container %s", f"flatland3-evaluator-{submission_id}")
+    # except Exception as e:
+    #   logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{submission_id}", exc_info=e)
+    # try:
+    #   logger.info("/ Logs from container %s", f"flatland3-submission-{submission_id}")
+    #   stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{submission_id}", ], collect=True)
+    #   stdo = "\n".join(stdo)
+    #   file_name = S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + "_submission_stdout.log"
+    #   response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stdo)
+    #   logger.info("upload %s got response %s", file_name, response)
+    #   stde = "\n".join(stde)
+    #   file_name = S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + "_submission_stderr.log"
+    #   response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stde)
+    #   logger.info("upload %s got response %s", file_name, response)
+    #   exec_with_logging(["sudo", "docker", "rm", f"flatland3-submission-{submission_id}", ])
+    #   logger.info("\\ Logs from container %s", f"flatland3-submission-{submission_id}")
+    # except Exception as e:
+    #   logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{submission_id}", exc_info=e)
+    return ret
+
+
+# N.B. name to be used by send_task
+@app.task(name=os.environ.get("BENCHMARK_ID"), bind=True, soft_time_limit=10 * 60, time_limit=12 * 60)
+def orchestrator(self,
+                 submission_data_url: str,
+                 tests: List[str] = None,
+                 TEST_RUNNER_EVALUATOR_IMAGE="ghcr.io/flatland-association/fab-flatland-evaluator:latest",
+                 AWS_ENDPOINT_URL=None,
+                 AWS_ACCESS_KEY_ID=None,
+                 AWS_SECRET_ACCESS_KEY=None,
+                 S3_BUCKET=None,
+                 S3_UPLOAD_PATH_TEMPLATE=None,
+                 S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=None,
+                 **kwargs):
+  submission_id = self.request.id
+  return DockerComposeFlatlandBenchmarksOrchestrator(submission_id).orchestrator(
+    submission_data_url=submission_data_url,
+    tests=tests,
+    test_runner_evaluator_image=TEST_RUNNER_EVALUATOR_IMAGE,
+    aws_endpoint_url=AWS_ENDPOINT_URL,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    s3_bucket=S3_BUCKET,
+    s3_upload_path_template=S3_UPLOAD_PATH_TEMPLATE,
+    s3_upload_path_template_use_submission_id=S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID,
+    **kwargs
+  )
 
 
 # https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
