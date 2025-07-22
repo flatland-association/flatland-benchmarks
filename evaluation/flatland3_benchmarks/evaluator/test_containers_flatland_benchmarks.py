@@ -72,7 +72,6 @@ def test_containers_fixture():
     raise e
 
 
-# TODO extract to dev utils
 def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, tests: List[str], **kwargs):
   start_time = time.time()
   app = Celery(
