@@ -207,8 +207,8 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
     for i in range(len(primary_scenario_scores)):
       assert test_results.body.scenario_scorings[i].scorings["normalized_reward"]["score"] == primary_scenario_scores[i]
       assert test_results.body.scenario_scorings[i].scorings["percentage_complete"]["score"] == secondary_scenario_scores[i]
-    assert test_results.body.scorings["normalized_reward"]["score"] == primary_test_score
-    assert test_results.body.scorings["percentage_complete"]["score"] == secondary_test_score
+    assert test_results.body.scorings["sum_normalized_reward"]["score"] == primary_test_score
+    assert test_results.body.scorings["mean_percentage_complete"]["score"] == secondary_test_score
 
 
 @pytest.mark.usefixtures("test_containers_fixture")

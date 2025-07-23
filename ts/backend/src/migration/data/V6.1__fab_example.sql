@@ -1,15 +1,14 @@
 -- generated with gen_flatland3_benchmarks_sql.py
 
 INSERT INTO field_definitions
-  (id, key, description, agg_func, agg_weights)
+  (id, key, description, agg_func, agg_weights, agg_fields)
   VALUES
-  ('5ee7e465-5d28-4207-9a70-9d74698caad4', 'normalized_reward', 'Scenario score (raw primary values)', NULL, NULL),
-  -- TODO would like to use sum_normalized_reward not work - field mapping not implemented yet?
-  ('855b50f1-257a-4077-b4b9-a92300dc37bd', 'normalized_reward', 'Test score (NANSUM of primary scenario scores)', 'NANSUM', NULL),
-  ('e9680c38-4e79-4950-a555-469b156d9ca2', 'normalized_reward', 'Benchmark score (NANSUM of primary test scores)', 'NANSUM', NULL),
-  ('ca65bb4c-79b0-4603-a642-81eba7a9cebb', 'percentage_complete', 'Scenario score (raw values)', NULL, NULL),
-  ('2a5acb41-bb10-45d6-86de-fb3181048e1a', 'percentage_complete', 'Test score (MEAN of scenario scores)', 'NANMEAN', NULL),
-  ('0128f4b5-71b2-4ee4-b6db-f566a7e88e62', 'percentage_complete', 'Benchmark score (NANMEAN of test scores)', 'NANMEAN', NULL);
+  ('5ee7e465-5d28-4207-9a70-9d74698caad4', 'normalized_reward', 'Scenario score (raw primary values)', NULL, NULL, NULL),
+  ('855b50f1-257a-4077-b4b9-a92300dc37bd', 'sum_normalized_reward', 'Test score (NANSUM of primary scenario scores)', 'NANSUM', NULL, '"normalized_reward"'),
+  ('e9680c38-4e79-4950-a555-469b156d9ca2', 'sum_normalized_reward', 'Benchmark score (NANSUM of primary test scores)', 'NANSUM', NULL, '"sum_normalized_reward"'),
+  ('ca65bb4c-79b0-4603-a642-81eba7a9cebb', 'percentage_complete', 'Scenario score (raw values)', NULL, NULL, NULL),
+  ('2a5acb41-bb10-45d6-86de-fb3181048e1a', 'mean_percentage_complete', 'Test score (MEAN of scenario scores)', 'NANMEAN', NULL, '"percentage_complete"'),
+  ('0128f4b5-71b2-4ee4-b6db-f566a7e88e62', 'mean_percentage_complete', 'Benchmark score (NANMEAN of test scores)', 'NANMEAN', NULL, '"mean_percentage_complete"');
 
 
 INSERT INTO scenario_definitions
