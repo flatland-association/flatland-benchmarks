@@ -95,8 +95,8 @@
   },
   "scripts": {
     "prepare": "husky",
-    "docker:up": "cd evaluation && docker compose --profile tsdev up -d",
-    "docker:up:cvolumes": "cd evaluation && docker compose --env-file .env.cvolumes --env-file .env --profile tsdev up -d",
-    "docker:down": "cd evaluation && docker compose --profile tsdev down"
+    "docker:up": "docker compose --profile tsdev up -d",
+    "docker:up:cvolumes": "docker compose --env-file .env.cvolumes --env-file .env --profile tsdev up -d",
+    "docker:down": "docker compose --profile tsdev down"
   }
 }

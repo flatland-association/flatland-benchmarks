@@ -170,7 +170,7 @@ images
 *.drawio
 
 # private files (require local changes to work properly)
-/evaluation/.env.cvolumes
+*.env.cvolumes
 
 # Generated Swagger definitions
 swagger.json
