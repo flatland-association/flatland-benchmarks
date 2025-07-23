@@ -177,3 +177,6 @@ swagger.json
 swaggererrors.txt
 /evaluation/ai4realnet_orchestrators/.openapi-generator/
 /evaluation/ai4realnet_orchestrators/fab-clientlib/.openapi-generator/
+
+# evaluation orchestrators
+/evaluation/ai4realnet_orchestrators
