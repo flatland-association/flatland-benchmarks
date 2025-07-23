@@ -2,10 +2,20 @@ import re
 import uuid
 from collections import defaultdict
 
+import pandas as pd
+
 if __name__ == '__main__':
 
-  NUM_TESTS = 2
-  NUM_LEVELS_PER_TEST = 3
+  if True:
+    NUM_TESTS = 15
+    NUM_LEVELS_PER_TEST = 10
+    df_metadata = pd.read_csv("../../benchmarks/flatland3/metadata.csv.template")
+    test_descriptions = [f"{v['n_agents']} agents,  {v['y_dim']}x{v['x_dim']}, 2 {v['n_cities']}" for k, v in
+                         list(df_metadata.groupby("test_id").aggregate('first').iterrows())]
+  else:
+    NUM_TESTS = 2
+    NUM_LEVELS_PER_TEST = 3
+    test_descriptions = [['5 agents, 25x25, 2 cities, 2 seeds'] * NUM_TESTS]
 
   normalized_reward_scenario_field = str(uuid.uuid4())
   normalized_reward_test_field = str(uuid.uuid4())
@@ -43,10 +53,10 @@ if __name__ == '__main__':
 VALUES
 """
   test_ids = []
-  for i in range(NUM_TESTS):
+  for i, label in enumerate(test_descriptions):
     test_id = str(uuid.uuid4())
     test_ids.append(test_id)
-    test_definitions += f"""('{test_id}', 'Test {i}', '5 agents, 25x25, 2 cities, 2 seeds', array['{normalized_reward_test_field}','{percentage_complete_test_field}']::uuid[], array['{"', '".join(scenario_ids[i])}']::uuid[], 'CLOSED'),
+    test_definitions += f"""('{test_id}', 'Test {i}', '{label}', array['{normalized_reward_test_field}','{percentage_complete_test_field}']::uuid[], array['{"', '".join(scenario_ids[i])}']::uuid[], 'CLOSED'),
 """
   test_definitions = re.sub(",\n$", ";", test_definitions)
 
