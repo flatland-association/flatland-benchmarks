@@ -7,15 +7,21 @@ if __name__ == '__main__':
   NUM_TESTS = 2
   NUM_LEVELS_PER_TEST = 3
 
-  scenario_field = str(uuid.uuid4())
-  test_field = str(uuid.uuid4())
-  benchmark_field = str(uuid.uuid4())
+  normalized_reward_scenario_field = str(uuid.uuid4())
+  normalized_reward_test_field = str(uuid.uuid4())
+  normalized_reward_benchmark_field = str(uuid.uuid4())
+  percentage_complete_scenario_field = str(uuid.uuid4())
+  percentage_complete_test_field = str(uuid.uuid4())
+  percentage_complete_benchmark_field = str(uuid.uuid4())
   field_definitions = f"""INSERT INTO field_definitions
   (id, key, description, agg_func, agg_weights)
   VALUES
-  ('{scenario_field}', 'primary', 'Scenario score (raw values)', NULL, NULL),
-  ('{test_field}', 'primary', 'Test score (NANSUM of scenario scores)', 'NANSUM', NULL),
-  ('{benchmark_field}', 'primary', 'Benchmark score (NANSUM of test scores)', 'NANSUM', NULL);
+  ('{normalized_reward_scenario_field}', 'normalized_reward', 'Scenario score (raw values)', NULL, NULL),
+  ('{normalized_reward_test_field}', 'normalized_reward', 'Test score (NANSUM of scenario scores)', 'NANSUM', NULL),
+  ('{normalized_reward_benchmark_field}', 'normalized_reward', 'Benchmark score (NANSUM of test scores)', 'NANSUM', NULL),
+  ('{percentage_complete_scenario_field}', 'percentage_complete', 'Scenario score (raw values)', NULL, NULL),
+  ('{percentage_complete_test_field}', 'percentage_complete', 'Test score (NANMEAN of scenario scores)', 'NANMEAN', NULL),
+  ('{percentage_complete_benchmark_field}', 'percentage_complete', 'Benchmark score (NANMEAN of test scores)', 'NANMEAN', NULL);
   """
 
   scenario_definitions = f"""INSERT INTO scenario_definitions
@@ -27,7 +33,7 @@ if __name__ == '__main__':
     for j in range(NUM_LEVELS_PER_TEST):
       scenario_id = str(uuid.uuid4())
       scenario_ids[i].append(scenario_id)
-      scenario_definitions += f"""('{scenario_id}', 'Test {i} Level {j}', 'Test {i} Level {j}', array['{scenario_field}']::uuid[]),
+      scenario_definitions += f"""('{scenario_id}', 'Test {i} Level {j}', 'Test {i} Level {j}', array['{normalized_reward_scenario_field}','{percentage_complete_scenario_field}']::uuid[]),
 """
 
   scenario_definitions = re.sub(",\n$", ";", scenario_definitions)
@@ -40,7 +46,7 @@ VALUES
   for i in range(NUM_TESTS):
     test_id = str(uuid.uuid4())
     test_ids.append(test_id)
-    test_definitions += f"""('{test_id}', 'Test {i}', '5 agents, 25x25, 2 cities, 2 seeds', array['{test_field}']::uuid[], array['{"', '".join(scenario_ids[i])}']::uuid[], 'CLOSED'),
+    test_definitions += f"""('{test_id}', 'Test {i}', '5 agents, 25x25, 2 cities, 2 seeds', array['{normalized_reward_test_field}','{percentage_complete_test_field}']::uuid[], array['{"', '".join(scenario_ids[i])}']::uuid[], 'CLOSED'),
 """
   test_definitions = re.sub(",\n$", ";", test_definitions)
 
@@ -50,7 +56,7 @@ VALUES
   benchmark_definitions = f"""INSERT INTO benchmark_definitions
   (id, name, description, field_ids, test_ids)
 VALUES
-  ('{benchmark_id}', 'Round 1', 'Round 1', array['{benchmark_field}']::uuid[], array['{"', '".join(test_ids)}']::uuid[]);
+  ('{benchmark_id}', 'Round 1', 'Round 1', array['{normalized_reward_benchmark_field}','{percentage_complete_benchmark_field}']::uuid[], array['{"', '".join(test_ids)}']::uuid[]);
 
 
 INSERT INTO benchmark_groups

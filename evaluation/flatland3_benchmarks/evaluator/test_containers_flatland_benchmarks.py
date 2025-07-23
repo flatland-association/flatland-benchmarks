@@ -13,7 +13,6 @@ from celery import Celery
 from dotenv import dotenv_values
 from testcontainers.compose import DockerCompose
 
-
 from fab_clientlib import DefaultApi, ApiClient, Configuration
 from fab_oauth_utils import backend_application_flow
 
@@ -97,16 +96,14 @@ def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, te
   return ret
 
 
-# TODO drop / harmonize return values
 @pytest.mark.usefixtures("test_containers_fixture")
 @pytest.mark.parametrize(
-  "tests,expected_total_simulation_count,expected_primary_scenario_scores,expected_primary_test_scores",
+  "tests,expected_total_simulation_count,expected_primary_scenario_scores,expected_primary_test_scores,expected_secondary_scenario_scores,expected_secondary_test_scores",
   [
-    # TODO test secondary as well
-    (None, 5, [[1, 1], [1, 1, 1]], [2, 3]),
-    (["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"], 5, [[1, 1], [1, 1, 1]], [2, 3]),
-    (["4ecdb9f4-e2ff-41ff-9857-abe649c19c50"], 2, [[1, 1], [None, None, None]], [2, 0]),
-    (["5206f2ee-d0a9-405b-8da3-93625e169811"], 3, [[None, None], [1, 1, 1]], [0, 3])
+    (None, 5, [[1, 1], [1, 1, 1]], [2, 3], [[1, 1], [1, 1, 1]], [1, 1]),
+    (["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"], 5, [[1, 1], [1, 1, 1]], [2, 3], [[1, 1], [1, 1, 1]], [1, 1]),
+    (["4ecdb9f4-e2ff-41ff-9857-abe649c19c50"], 2, [[1, 1], [None, None, None]], [2, 0], [[1, 1], [None, None, None]], [1, None]),
+    (["5206f2ee-d0a9-405b-8da3-93625e169811"], 3, [[None, None], [1, 1, 1]], [0, 3], [[None, None], [1, 1, 1]], [None, 1])
   ],
   ids=[
     "all",
@@ -116,7 +113,8 @@ def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, te
   ]
 )
 def test_succesful_run(expected_total_simulation_count, tests: List[str], expected_primary_scenario_scores: List[List[float]],
-                       expected_primary_test_scores: List[float]):
+                       expected_primary_test_scores: List[float], expected_secondary_scenario_scores: List[List[float]],
+                       expected_secondary_test_scores: List[float]):
   submission_id = str(uuid.uuid4())
   config = dotenv_values("../../.env")
 
@@ -152,6 +150,8 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
   logger.debug(res_df)
   res_json = json.loads(ret["f3-evaluator"]["results.json"])
   logger.debug(res_json)
+
+  assert res_json["simulation_count"] == expected_total_simulation_count
 
   scenarios_run = res_df.loc[res_df['controller_inference_time_max'].notna()]
   tests_with_some_steps = set(scenarios_run["fab_test_id"])
@@ -197,16 +197,18 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
     "Test_1": "5206f2ee-d0a9-405b-8da3-93625e169811"
   }
 
-  for (test_name, test_id), scenario_scores, test_score in zip(test_ids.items(), expected_primary_scenario_scores, expected_primary_test_scores):
+  for (test_name, test_id), primary_scenario_scores, primary_test_score, secondary_scenario_scores, secondary_test_score in (
+    zip(test_ids.items(), expected_primary_scenario_scores, expected_primary_test_scores, expected_secondary_scenario_scores, expected_secondary_test_scores)):
     test_results = fab.results_submissions_submission_id_tests_test_ids_get(
       submission_id=submission_id,
-      # TODO is API broken with multiple IDs?
       test_ids=[test_id])
     print("results_uploaded")
     print(test_results)
-    for i in range(len(scenario_scores)):
-      assert test_results.body.scenario_scorings[i].scorings["normalized_reward"]["score"] == scenario_scores[i]
-    assert test_results.body.scorings["normalized_reward"]["score"] == test_score
+    for i in range(len(primary_scenario_scores)):
+      assert test_results.body.scenario_scorings[i].scorings["normalized_reward"]["score"] == primary_scenario_scores[i]
+      assert test_results.body.scenario_scorings[i].scorings["percentage_complete"]["score"] == secondary_scenario_scores[i]
+    assert test_results.body.scorings["normalized_reward"]["score"] == primary_test_score
+    assert test_results.body.scorings["percentage_complete"]["score"] == secondary_test_score
 
 
 @pytest.mark.usefixtures("test_containers_fixture")
