@@ -13,6 +13,8 @@ It is recommended to use [VSCode](https://code.visualstudio.com) with the [ESLin
 
 [Node.js](https://nodejs.org) must be installed. It runs frontend and backend code as well as local scripts (e.g. `npx lint-staged` which will lint and format staged source files). Node.js includes npm, which is required to install node modules.
 
+[Docker](https://www.docker.com) must be installed. It runs containers providing services like database and authentication in local dev.
+
 To complete your local setup, run
 
 ```bash
@@ -20,6 +22,12 @@ npm ci
 ```
 
 in the project root folder. This will install all required node modules as listed in `package-lock.json`.
+
+After that, it's necessary to clone flatland-association/ai4realnet-orchestrator into `evaluation/ai4realnet_orchestrators` in order to be able to run integration tests. This is done by running this command from the project root folder:
+
+```bash
+git clone https://github.com/flatland-association/ai4realnet-orchestrators.git evaluation/ai4realnet_orchestrators
+```
 
 The project is configured to lint and format your source code before committing and also on explicit save (when using VSCode as described above). However, if you're not using VSCode or for some reason not using the extensions, your code will still be linted and formatted before a commit. Be aware that in this case lint warnings and errors will abort your commit!
 
