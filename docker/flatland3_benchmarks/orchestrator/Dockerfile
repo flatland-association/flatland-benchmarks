@@ -1,4 +1,4 @@
-FROM ghcr.io/flatland-association/fab-flatland-compute-worker:latest
+FROM ghcr.io/flatland-association/fab-flatland3-benchmarks-orchestrator:latest
 
 # switch to root again
 USER root

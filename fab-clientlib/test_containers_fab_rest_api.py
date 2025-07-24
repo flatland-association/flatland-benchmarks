@@ -39,8 +39,8 @@ def test_containers_fixture():
     duration = time.time() - start_time
     logger.info(f"\\ end docker compose up. Took {duration:.2f} seconds.")
 
-    task_id = str(uuid.uuid4())
-    yield task_id
+    submission_id = str(uuid.uuid4())
+    yield submission_id
 
     # TODO workaround for testcontainers not supporting streaming to logger
     start_time = time.time()
@@ -343,7 +343,7 @@ def test_definitions_benchmarks_get():
   print(token)
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
   benchmarks = fab.definitions_benchmarks_get()
-  assert len(benchmarks.body) == 6
+  assert len(benchmarks.body) == 7
   assert benchmarks.body[0].id == "255fb1e8-af57-45a0-97dc-ecc3e6721b4f"
   assert benchmarks.body[0].test_ids == ['99f5a8f8-38d9-4a8c-9630-4789b0225ec0',
                                                     'f23794a2-dcf2-4699-bb5f-534bcea5ecf0', ]
