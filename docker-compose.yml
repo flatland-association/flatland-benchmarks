@@ -175,8 +175,9 @@ services:
   flatland3-benchmarks-orchestrator:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
-    command: python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q flatland3-evaluation
+    command: python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
     build:
+      # install sudo for DinD
       dockerfile: docker/flatland3_benchmarks/orchestrator/Dockerfile
     depends_on:
       rabbit:
@@ -186,22 +187,40 @@ services:
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
       - ./docker/flatland3_benchmarks/orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
-    env_file: .env
+      - ./evaluation/flatland3_benchmarks/orchestrator/orchestrator_common.py:/app/orchestrator_common.py
+      - ./fab-clientlib/:/app/fab-clientlib
+      - ./docker/rabbitmq/certs:/cert_rabbitmq
     environment:
-      - BROKER_URL=pyamqp://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
-      - BACKEND_URL=rpc://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5672//
-      - FAB_API_URL=http://fab-backend:8000
+      # Celery configuration
+      - BENCHMARK_ID=f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
+      - TEST_IDS=${TEST_IDS}
+      - PYTHONPATH=/app/:/app/fab-clientlib
+      - BROKER_URL=amqps://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5671//
+      - BACKEND_URL=rpc://
+      - RABBITMQ_CA_CERTS=/cert_rabbitmq/ca_certificate.pem
+      - RABBITMQ_KEYFILE=/cert_rabbitmq/client_localhost_key.pem
+      - RABBITMQ_CERTFILE=/cert_rabbitmq/client_localhost_certificate.pem
+
+      # evaluator configuration
       - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
-      - S3_BUCKET=${S3_BUCKET}
+      - S3_BUCKET=fab-demo-results
       # for backend to S3 communication, use internal docker hostname
       - AWS_ENDPOINT_URL=http://minio:${MINIO_PORT}
       - AWS_ACCESS_KEY_ID=${MINIO_ROOT_USER}
       - AWS_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD}
-      # TODO remove:
       - S3_UPLOAD_PATH_TEMPLATE=${S3_UPLOAD_PATH_TEMPLATE}
       - S3_UPLOAD_WITH_SUBMISSION_ID=true
       - S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=${S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}
       - DOCKERCOMPOSE_HOST_DIRECTORY=${PWD}
+
+      # configuration for fab-clientlib:
+      - FAB_API_URL=http://fab-backend:8000
+      - CLIENT_ID=fab-client-credentials
+      - CLIENT_SECRET=top-secret
+      # use Docker hostname as called from orchestrator run within Docker container:
+      - TOKEN_URL=http://keycloak:8081/realms/flatland/protocol/openid-connect/token
+      # we use http in fab-backend:
+      - OAUTHLIB_INSECURE_TRANSPORT=1
     logging:
       options:
         max-size: "20m"
@@ -224,6 +243,7 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
+      - CUSTOMIZATION=fab
     depends_on:
       rabbit:
         condition: service_healthy
@@ -243,8 +263,8 @@ services:
       - ./deployment/backend/nginx.conf:/etc/nginx/http.d/default.conf
       - ./deployment/backend/start_reverseproxy.sh:/flyway/start.sh
       # uncomment one of the two customizations:
-      - ./ts/backend/src/public/ai4realnet/customization.json:/usr/src/app/dist/backend/public/customization.json
-    #      - ./ts/backend/src/public/fab/customization.json:/usr/src/app/dist/backend/public/customization.json
+      #      - ./ts/backend/src/public.ai4realnet/customization.json:/usr/src/app/dist/backend/public/customization.json
+      - ./ts/backend/src/public.fab/customization.json:/usr/src/app/dist/backend/public/customization.json
     entrypoint: bash
     command:
       - /flyway/start.sh
@@ -268,7 +288,8 @@ services:
     depends_on:
       fab-backend:
         condition: service_healthy
-
+    volumes:
+      - ./docker/fab-frontend/additional-entrypoint.sh:/docker-entrypoint.d/frontend-entrypoint.sh:rx
     ports:
       - 80:80
     networks:
@@ -317,22 +338,25 @@ services:
       - ./docker/rabbitmq/certs:/cert_rabbitmq
     env_file: .env
     environment:
-      # required for flyway start.sh
+      # required for flyway start.sh:
       - POSTGRES_HOST=${POSTGRES_HOST:-rabbit}
       - POSTGRES_PORT=${POSTGRES_PORT:-5432}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
+      # Celery configuration:
       - BROKER_URL=amqps://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5671//
+      - RABBITMQ_CA_CERTS=/cert_rabbitmq/ca_certificate.pem
+      - RABBITMQ_KEYFILE=/cert_rabbitmq/client_localhost_key.pem
+      - RABBITMQ_CERTFILE=/cert_rabbitmq/client_localhost_certificate.pem
       - BACKEND_URL=rpc://
+      # configuration for fab-clientlib:
       - FAB_API_URL=http://fab-backend:8000
       - DATA_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-data
       - CLIENT_SECRET=top-secret
       - TOKEN_URL=http://keycloak:8081/realms/flatland/protocol/openid-connect/token
       - OAUTHLIB_INSECURE_TRANSPORT=1
-      - RABBITMQ_CA_CERTS=/cert_rabbitmq/ca_certificate.pem
-      - RABBITMQ_KEYFILE=/cert_rabbitmq/client_localhost_key.pem
-      - RABBITMQ_CERTFILE=/cert_rabbitmq/client_localhost_certificate.pem
+
     logging:
       options:
         max-size: "20m"
