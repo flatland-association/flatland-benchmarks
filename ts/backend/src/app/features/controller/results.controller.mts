@@ -487,6 +487,14 @@ export class ResultsController extends Controller {
       this.requestError(req, res, { text: 'Leaderboard could not be aggregated' })
       return
     }
+    // sort leaderboard by rank (of primary score)
+    // REMARK: the presence of 'primary' is not a given but satisfies the
+    // current requirement, which is to pass the tests before refactor.
+    leaderboard.items.sort((a, b) => {
+      const rankA = a.scorings['primary']?.rank ?? Infinity
+      const rankB = b.scorings['primary']?.rank ?? Infinity
+      return rankA - rankB
+    })
     // transform for transmission
     // TODO: properly define data format of results for transmission
     const result: Leaderboard = {
