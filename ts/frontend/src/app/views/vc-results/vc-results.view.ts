@@ -4,9 +4,9 @@ import {
   FieldDefinitionRow,
   PostTestResultsBody,
   ScenarioDefinitionRow,
-  ScenarioScored,
   Scoring,
   SubmissionRow,
+  SubmissionScenarioScore,
 } from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
@@ -41,7 +41,7 @@ export class VcResultsView implements OnInit {
   scenarioId: string
   submission?: SubmissionRow
   scenario?: ScenarioDefinitionRow
-  results?: ScenarioScored
+  results?: SubmissionScenarioScore
   fields?: FieldDefinitionRow[]
   manualFields: string[] = []
   customization?: Customization

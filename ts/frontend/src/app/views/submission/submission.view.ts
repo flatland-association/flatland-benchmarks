@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { LeaderboardItem, Scorings, SubmissionRow } from '@common/interfaces'
+import { Scorings, SubmissionRow, SubmissionScore } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { ApiService } from '../../features/api/api.service'
@@ -22,7 +22,7 @@ export class SubmissionView implements OnInit, OnDestroy {
 
   submission?: SubmissionRow
 
-  result?: LeaderboardItem
+  result?: SubmissionScore
 
   isLive = false
   timeout?: number

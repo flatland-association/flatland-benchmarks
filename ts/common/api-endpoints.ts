@@ -7,14 +7,14 @@ import {
   CampaignOverview,
   FieldDefinitionRow,
   Leaderboard,
-  LeaderboardItem,
   PostTestResultsBody,
   ScenarioDefinitionRow,
-  ScenarioScored,
   SubmissionRow,
+  SubmissionScenarioScore,
+  SubmissionScore,
+  SubmissionTestScore,
   Test,
   TestDefinitionRow,
-  TestScored,
 } from './interfaces'
 import { Empty, json, NoNever, StripLocator } from './utility-types'
 
@@ -98,14 +98,14 @@ interface ApiEndpointDefinitions {
     PATCH: ApiEndpoint<Empty, Empty, SubmissionRow[]>
   }
   '/results/submissions/:submission_ids': {
-    GET: ApiEndpoint<Empty, Empty, LeaderboardItem[]>
+    GET: ApiEndpoint<Empty, Empty, SubmissionScore[]>
   }
   '/results/submissions/:submission_id/tests/:test_ids': {
-    GET: ApiEndpoint<Empty, Empty, TestScored>
+    GET: ApiEndpoint<Empty, Empty, SubmissionTestScore>
     POST: ApiEndpoint<PostTestResultsBody, Empty, Empty>
   }
   '/results/submissions/:submission_id/scenario/:scenario_ids': {
-    GET: ApiEndpoint<Empty, Empty, ScenarioScored[]>
+    GET: ApiEndpoint<Empty, Empty, SubmissionScenarioScore[]>
   }
   '/results/benchmarks/:benchmark_ids': {
     GET: ApiEndpoint<Empty, Empty, Leaderboard[]>
