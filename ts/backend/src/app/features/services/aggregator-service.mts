@@ -18,7 +18,6 @@ import {
 import { json } from '@common/utility-types'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
-import { Aggregator } from '../utils/aggregator.mjs'
 import { Service } from './service.mjs'
 import { SqlService } from './sql-service.mjs'
 
@@ -443,7 +442,7 @@ export class AggregatorService extends Service {
       scenario.field_ids.forEach((fieldId) => {
         const field = this.findField(sources, fieldId)
         if (field) {
-          Aggregator.aggregateScore(scenarioScored.scorings, field, [], results)
+          this.aggregateScore(scenarioScored.scorings, field, [], results)
         }
       })
     }
@@ -480,7 +479,7 @@ export class AggregatorService extends Service {
       test.field_ids.forEach((fieldId) => {
         const field = this.findField(sources, fieldId)
         if (field) {
-          Aggregator.aggregateScore(testScored.scorings, field, testScored.scenario_scorings)
+          this.aggregateScore(testScored.scorings, field, testScored.scenario_scorings)
         }
       })
     }
@@ -514,7 +513,7 @@ export class AggregatorService extends Service {
         benchmark.field_ids.forEach((fieldId) => {
           const field = this.findField(sources, fieldId)
           if (field) {
-            Aggregator.aggregateScore(submissionScored.scorings, field, submissionScored.test_scorings)
+            this.aggregateScore(submissionScored.scorings, field, submissionScored.test_scorings)
           }
         })
       }
@@ -604,7 +603,7 @@ export class AggregatorService extends Service {
           const scorings = campaignItemOverview.items.map((item) => {
             return { scorings: item.scorings ?? undefined }
           })
-          Aggregator.aggregateScore(campaignItemOverview.scorings, field, scorings)
+          this.aggregateScore(campaignItemOverview.scorings, field, scorings)
         }
       })
     }
@@ -635,6 +634,160 @@ export class AggregatorService extends Service {
   }
 
   // Internals
+
+  /**
+   * Aggregates scores from subordinate scorings (`children` or `results`) into
+   * `scorings` using the defined aggregation in `field`.
+   */
+  aggregateScore(
+    scorings: Scorings,
+    field: FieldDefinitionRow,
+    children: { scorings?: Scorings }[],
+    results: ResultRow[] = [],
+  ) {
+    // if agg_func is nullish, take first match from results
+    if (!field.agg_func) {
+      const fieldName = this.getInFieldName(field, 0)
+      scorings[field.key] = {
+        score: results.find((result) => result.key === fieldName)?.value ?? null,
+      }
+    }
+    // otherwise, aggregate accordingly
+    else {
+      let values: (number | null)[]
+      // collect scores from children matching in_field
+      if (!field.agg_lateral) {
+        // REMARK: error when number of fields doesn't match number of scores?
+        values = children.map((child, index) => {
+          const fieldName = this.getInFieldName(field, index)
+          return fieldName ? (child.scorings?.[fieldName]?.score ?? null) : null
+        })
+      }
+      // collect scores from collected scores matching in_field
+      else {
+        values = []
+        for (let index = 0; index < (Array.isArray(field.agg_fields) ? field.agg_fields.length : 1); index++) {
+          const fieldName = this.getInFieldName(field, index)
+          values.push(fieldName ? (scorings[fieldName]?.score ?? null) : null)
+        }
+      }
+      // weigh
+      if (field.agg_weights) {
+        // REMARK: extra values (when more values than weighs) will be 0
+        for (let i = 0; i < values.length; i++) {
+          if (values[i] !== null) {
+            values[i]! *= field.agg_weights[i] ?? 0
+          }
+        }
+      }
+      // aggregate values
+      scorings[field.key] = {
+        score: this.runAggregationFunction(values, field.agg_func),
+      }
+    }
+  }
+
+  /**
+   * Returns the field name of the subordinate scoring, which is either
+   * explicitly defined in `agg_fields` or falls back to the field's own key.
+   */
+  getInFieldName(field: FieldDefinitionRow, index: number): string | undefined {
+    // if agg_fields is nullish, return field key
+    if (!field.agg_fields) {
+      return field.key
+    } else if (typeof field.agg_fields === 'string') {
+      return field.agg_fields
+    } else {
+      // returns undefined when out-of-bounds
+      return field.agg_fields[index]
+    }
+  }
+
+  // since JSON can't express NaN, use null in its place
+  runAggregationFunction(values: (number | null)[], func: string) {
+    switch (func) {
+      // sum
+      case 'SUM':
+        return this.aggSum(values)
+      case 'NANSUM':
+        return this.aggNaNSum(values)
+      // mean
+      case 'MEAN':
+        return this.aggMean(values)
+      case 'NANMEAN':
+        return this.aggNaNMean(values)
+      // median
+      case 'MEDIAN':
+        return this.aggMedian(values)
+      case 'NANMEDIAN':
+        return this.aggNaNMedian(values)
+      default:
+        return null
+    }
+  }
+
+  /**
+   * Calculates sum, returns `null` if there's a `null` in values.
+   */
+  aggSum(values: (number | null)[]) {
+    let sum = 0
+    for (const value of values) {
+      // null? early abort
+      if (value === null) return null
+      sum += value
+    }
+    return sum
+  }
+
+  /**
+   * Calculates sum over all non-`null` values.
+   */
+  aggNaNSum(values: (number | null)[]) {
+    return this.aggSum(values.filter((v) => v !== null))
+  }
+
+  /**
+   * Calculates mean, returns `null` if there's a `null` in values.
+   */
+  aggMean(values: (number | null)[]) {
+    // empty set defaults to null
+    if (values.length === 0) return null
+    const sum = this.aggSum(values)
+    return sum !== null ? sum / values.length : null
+  }
+
+  /**
+   * Calculates mean over all non-`null` values.
+   */
+  aggNaNMean(values: (number | null)[]) {
+    return this.aggMean(values.filter((v) => v !== null))
+  }
+
+  /**
+   * Calculates median, returns `null` if there's a `null` in values.
+   */
+  aggMedian(values: (number | null)[]) {
+    // empty set defaults to null
+    if (values.length === 0) return null
+    // having null results in null
+    if (values.some((score) => score === null)) return null
+    // calculate median
+    values.sort((a, b) => (a as number) - (b as number))
+    if (values.length % 2 === 1) {
+      const i = (values.length - 1) / 2
+      return values[i]
+    } else {
+      const i = (values.length - 2) / 2
+      return ((values[i] as number) + (values[i + 1] as number)) / 2
+    }
+  }
+
+  /**
+   * Calculates median over all non-`null` values.
+   */
+  aggNaNMedian(values: (number | null)[]) {
+    return this.aggMedian(values.filter((v) => v !== null))
+  }
 
   /**
    * Fills rank, highest and lowest score of every scoring in all items.
