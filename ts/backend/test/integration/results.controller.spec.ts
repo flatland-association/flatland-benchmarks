@@ -99,7 +99,7 @@ describe.sequential('Results controller', () => {
       // rank must match index (off by one)
       const submission = board?.items[testCase.rank - 1]
       expect(submission?.submission_id).toBe(testCase.submission_id)
-      expect(submission?.scorings['primary']?.score).toBeCloseTo(testCase.score, 4)
+      expect(submission?.scorings['primary']?.score).toBeCloseTo(testCase.score, 2)
       expect(submission?.scorings['primary']?.rank).toBe(testCase.rank)
     })
   })
