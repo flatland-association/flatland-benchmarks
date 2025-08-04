@@ -1,7 +1,10 @@
 import { CampaignItemOverview, CampaignOverview, Leaderboard } from '@common/interfaces'
 import { ResultsController } from '../../src/app/features/controller/results.controller.mjs'
+import { Logger } from '../../src/app/features/logger/logger.mjs'
 import { ControllerTestAdapter, setupControllerTestEnvironment, testUserJwt } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
+
+Logger.setOptions({ '--log-level': 'ERROR' })
 
 describe.sequential('Results controller', () => {
   let controller: ControllerTestAdapter
