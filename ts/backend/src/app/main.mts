@@ -2,6 +2,7 @@ import { parseCommandLine } from './features/config/command-line.mjs'
 import { loadConfig } from './features/config/config.mjs'
 import { Logger } from './features/logger/logger.mjs'
 import { Server } from './features/server/server.mjs'
+import { AggregatorService } from './features/services/aggregator-service.mjs'
 import { AuthService } from './features/services/auth-service.mjs'
 import { CeleryService } from './features/services/celery-client-service.mjs'
 import { SqlService } from './features/services/sql-service.mjs'
@@ -20,6 +21,7 @@ const config = loadConfig()
 SqlService.create(config)
 CeleryService.create(config)
 AuthService.create(config)
+AggregatorService.create(config)
 
 new Server(config)
 

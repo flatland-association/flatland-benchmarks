@@ -1,31 +1,9 @@
-import {
-  BenchmarkDefinitionRow,
-  BenchmarkGroupDefinitionRow,
-  CampaignItemOverview,
-  CampaignItemOverviewItem,
-  CampaignOverview,
-  FieldDefinitionRow,
-  Leaderboard,
-  LeaderboardItem,
-  ResultRow,
-  ScenarioDefinitionRow,
-  ScenarioScored,
-  SubmissionRow,
-  TestDefinitionRow,
-  TestScored,
-} from '@common/interfaces'
+import { ResultRow } from '@common/interfaces'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
+import { AggregatorService } from '../services/aggregator-service.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
-import {
-  Aggregator,
-  upcastBenchmarkDefinitionRow,
-  upcastBenchmarkGroupDefinitionRow,
-  upcastScenarioDefinitionRow,
-  upcastSubmissionRow,
-  upcastTestDefinitionRow,
-} from '../utils/aggregator.mjs'
 import { Controller, GetHandler, PostHandler } from './controller.mjs'
 
 const logger = new Logger('results-controller')
@@ -117,31 +95,10 @@ export class ResultsController extends Controller {
     }
 
     const submissionIds = req.params.submission_ids.split(',')
-    const leaderboardItems: LeaderboardItem[] = []
-    for (const submissionId of submissionIds) {
-      const leaderboardItem = await this.aggregateSubmissionScore(submissionId)
-      // only transmit valid items
-      if (leaderboardItem) {
-        // transform for transmission
-        leaderboardItems.push({
-          submission_id: leaderboardItem.submission.id,
-          scorings: leaderboardItem.scorings,
-          test_scorings: leaderboardItem.tests.map((test) => {
-            return {
-              test_id: test.definition.id,
-              scorings: test.scorings,
-              scenario_scorings: test.scenarios.map((scenario) => {
-                return {
-                  scenario_id: scenario.definition.id,
-                  scorings: scenario.scorings,
-                } satisfies ScenarioScored
-              }),
-            } satisfies TestScored
-          }),
-        })
-      }
-    }
-    this.respond(req, res, leaderboardItems)
+
+    const aggregator = AggregatorService.getInstance()
+    const score = await aggregator.getSubmissionScore(submissionIds)
+    this.respond(req, res, score)
   }
 
   /**
@@ -208,24 +165,15 @@ export class ResultsController extends Controller {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    const submissionId = req.params.submission_id
 
-    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple test_ids
-    const testId = req.params.test_ids
-    const testScored = await this.aggregateTestScore(submissionId, testId)
-    // transform for transmission
-    // TODO: properly define data format of results for transmission
-    const result: TestScored = {
-      test_id: testScored.definition.id,
-      scorings: testScored.scorings,
-      scenario_scorings: testScored.scenarios.map((scenario) => {
-        return {
-          scenario_id: scenario.definition.id,
-          scorings: scenario.scorings,
-        }
-      }),
-    }
-    this.respond(req, res, result)
+    const submissionId = req.params.submission_id
+    const testIds = req.params.test_ids.split(',')
+
+    const aggregator = AggregatorService.getInstance()
+    // TOFIX: should return whole array
+    // https://github.com/flatland-association/flatland-benchmarks/issues/352
+    const [score] = await aggregator.getSubmissionTestScore(submissionId, testIds)
+    this.respond(req, res, score)
   }
 
   /**
@@ -385,18 +333,13 @@ export class ResultsController extends Controller {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    const submissionId = req.params.submission_id
 
-    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple scenario_ids
-    const scenarioId = req.params.scenario_ids
-    const scenarioScored = await this.aggregateScenarioScore(submissionId, scenarioId)
-    // transform for transmission
-    // TODO: properly define data format of results for transmission
-    const result: ScenarioScored = {
-      scenario_id: scenarioScored.definition.id,
-      scorings: scenarioScored.scorings,
-    }
-    this.respond(req, res, [result])
+    const submissionId = req.params.submission_id
+    const scenarioIds = req.params.scenario_ids.split(',')
+
+    const aggregator = AggregatorService.getInstance()
+    const score = await aggregator.getSubmissionScenarioScore(submissionId, scenarioIds)
+    this.respond(req, res, score)
   }
 
   /**
@@ -480,37 +423,11 @@ export class ResultsController extends Controller {
       return
     }
 
-    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple benchmark_ids
-    const benchmarkId = req.params.benchmark_ids
-    const leaderboard = await this.aggregateLeaderboard(benchmarkId)
-    if (!leaderboard) {
-      this.requestError(req, res, { text: 'Leaderboard could not be aggregated' })
-      return
-    }
-    // transform for transmission
-    // TODO: properly define data format of results for transmission
-    const result: Leaderboard = {
-      benchmark_id: leaderboard.benchmark.id,
-      items: leaderboard.items.map((item) => {
-        return {
-          submission_id: item.submission.id,
-          scorings: item.scorings,
-          test_scorings: item.tests.map((test) => {
-            return {
-              test_id: test.definition.id,
-              scorings: test.scorings,
-              scenario_scorings: test.scenarios.map((scenario) => {
-                return {
-                  scenario_id: scenario.definition.id,
-                  scorings: scenario.scorings,
-                }
-              }),
-            }
-          }),
-        }
-      }),
-    }
-    this.respond(req, res, [result])
+    const benchmarkIds = req.params.benchmark_ids.split(',')
+
+    const aggregator = AggregatorService.getInstance()
+    const board = await aggregator.getBenchmarkLeaderboard(benchmarkIds)
+    this.respond(req, res, board)
   }
 
   /**
@@ -574,27 +491,10 @@ export class ResultsController extends Controller {
       return
     }
     const benchmarkIds = req.params.benchmark_ids.split(',')
-    const itemOverviews: CampaignItemOverview[] = []
-    for (const benchmarkId of benchmarkIds) {
-      const leaderboard = await this.aggregateCampaignItem(benchmarkId)
-      // only transmit valid overviews
-      if (leaderboard) {
-        // transform for transmission
-        // TODO: properly define data format of results for transmission
-        itemOverviews.push({
-          benchmark_id: benchmarkId,
-          items: leaderboard.items.map((item) => {
-            return {
-              test_id: item.test.id,
-              scorings: item.scorings ?? null,
-              submission_id: item.submission?.id ?? null,
-            }
-          }),
-          scorings: leaderboard.scorings,
-        })
-      }
-    }
-    this.respond(req, res, itemOverviews)
+
+    const aggregator = AggregatorService.getInstance()
+    const board = await aggregator.getCampaignItemOverview(benchmarkIds)
+    this.respond(req, res, board)
   }
 
   /**
@@ -669,33 +569,12 @@ export class ResultsController extends Controller {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
+
     const groupIds = req.params.group_ids.split(',')
-    const overviews: CampaignOverview[] = []
-    for (const groupId of groupIds) {
-      const leaderboard = await this.aggregateGroupLeaderboard(groupId)
-      // only transmit valid overviews
-      if (leaderboard) {
-        // transform for transmission
-        // TODO: properly define data format of results for transmission
-        overviews.push({
-          group_id: groupId,
-          items: leaderboard.items.map((campaignItem) => {
-            return {
-              benchmark_id: campaignItem.benchmark.id,
-              items: campaignItem.items.map((campaignItemItem) => {
-                return {
-                  test_id: campaignItemItem.test.id,
-                  scorings: campaignItemItem.scorings,
-                  submission_id: campaignItemItem.submission?.id ?? null,
-                } satisfies CampaignItemOverviewItem
-              }),
-              scorings: campaignItem.scorings,
-            } satisfies CampaignItemOverview
-          }),
-        })
-      }
-    }
-    this.respond(req, res, overviews)
+
+    const aggregator = AggregatorService.getInstance()
+    const board = await aggregator.getCampaignOverview(groupIds)
+    this.respond(req, res, board)
   }
 
   /**
@@ -785,238 +664,12 @@ export class ResultsController extends Controller {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
+
     const benchmarkId = req.params.benchmark_id
+    const testIds = req.params.test_ids.split(',')
 
-    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple test_ids
-    const testId = req.params.test_ids
-    // leaderboard contains all submissions (mixed tests), filter by test
-    const leaderboard = await this.aggregateLeaderboard(benchmarkId)
-    if (!leaderboard) {
-      this.requestError(req, res, { text: 'Campaign item could not be aggregated' })
-      return
-    }
-    // leaderboard contains all submissions (mixed tests), filter by test
-    leaderboard.items = leaderboard.items.filter((item) => item.tests[0].definition.id === testId)
-    // transform for transmission
-    const result: Leaderboard = {
-      benchmark_id: leaderboard.benchmark.id,
-      items: leaderboard.items.map((item) => {
-        return {
-          submission_id: item.submission.id,
-          scorings: item.scorings,
-          test_scorings: item.tests.map((test) => {
-            return {
-              test_id: test.definition.id,
-              scorings: test.scorings,
-              scenario_scorings: test.scenarios.map((scenario) => {
-                return {
-                  scenario_id: scenario.definition.id,
-                  scorings: scenario.scorings,
-                }
-              }),
-            }
-          }),
-        }
-      }),
-    }
-    this.respond(req, res, [result])
-  }
-
-  // TODO: generalize the below:
-
-  async aggregateScenarioScore(submissionId: string, scenarioId: string) {
-    const sql = SqlService.getInstance()
-    // load required definitions
-    const [scenarioDefRow] = await sql.query<ScenarioDefinitionRow>`
-      SELECT * FROM scenario_definitions WHERE id=${scenarioId}
-    `
-    // load required candidates for referenced fields (used in upcast) and upcast
-    const fieldDefCandidates = await sql.query<FieldDefinitionRow>`
-      SELECT * FROM field_definitions
-    `
-    const scenarioDef = upcastScenarioDefinitionRow(scenarioDefRow, fieldDefCandidates)
-    // load results
-    const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT * FROM results WHERE submission_id=${submissionId} AND scenario_id=${scenarioId}
-    `
-    return Aggregator.getScenarioScored(scenarioDef, resultRows)
-  }
-
-  async aggregateTestScore(submissionId: string, testId: string) {
-    const sql = SqlService.getInstance()
-    // load required definitions
-    const [testDefRow] = await sql.query<TestDefinitionRow>`
-      SELECT * FROM test_definitions WHERE id=${testId}
-    `
-    // load required candidates for referenced fields (used in upcast) and upcast
-    const fieldDefCandidates = await sql.query<FieldDefinitionRow>`
-      SELECT * FROM field_definitions
-    `
-    const scenarioDefCandidates = await sql.query<ScenarioDefinitionRow>`
-      SELECT * FROM scenario_definitions
-    `
-    const testDef = upcastTestDefinitionRow(testDefRow, fieldDefCandidates, scenarioDefCandidates)
-    // load results
-    const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT * FROM results WHERE submission_id=${submissionId} AND test_id=${testId}
-    `
-    return Aggregator.getTestScored(testDef, resultRows)
-  }
-
-  async aggregateSubmissionScore(submissionId: string) {
-    const sql = SqlService.getInstance()
-    // load required definitions
-    const [submissionRow] = await sql.query<SubmissionRow>`
-      SELECT * FROM submissions WHERE id=${submissionId}
-    `
-    const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
-      SELECT * FROM benchmark_definitions WHERE id=${submissionRow.benchmark_id}
-    `
-    // load required candidates for referenced fields (used in upcast) and upcast
-    const fieldDefCandidates = await sql.query<FieldDefinitionRow>`
-      SELECT * FROM field_definitions
-    `
-    const scenarioDefCandidates = await sql.query<ScenarioDefinitionRow>`
-      SELECT * FROM scenario_definitions
-    `
-    const testDefCandidates = await sql.query<TestDefinitionRow>`
-      SELECT * FROM test_definitions
-    `
-    const submission = upcastSubmissionRow(
-      submissionRow,
-      fieldDefCandidates,
-      scenarioDefCandidates,
-      testDefCandidates,
-      [benchmarkDefRow],
-    )
-    // load results
-    const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT * FROM results WHERE submission_id=${submissionId}
-    `
-    if (!submission.benchmark_definition) return null
-    return Aggregator.getSubmissionScored(submission.benchmark_definition, submission, resultRows)
-  }
-
-  async aggregateLeaderboard(benchmarkId: string) {
-    const sql = SqlService.getInstance()
-    // load required definitions
-    const submissionRows = await sql.query<SubmissionRow>`
-      SELECT * FROM submissions WHERE benchmark_id=${benchmarkId} AND published=true
-    `
-    const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
-      SELECT * FROM benchmark_definitions WHERE id=${benchmarkId}
-    `
-    // load required candidates for referenced fields (used in upcast) and upcast
-    const fieldDefCandidates = await sql.query<FieldDefinitionRow>`
-      SELECT * FROM field_definitions
-    `
-    const scenarioDefCandidates = await sql.query<ScenarioDefinitionRow>`
-      SELECT * FROM scenario_definitions
-    `
-    const testDefCandidates = await sql.query<TestDefinitionRow>`
-      SELECT * FROM test_definitions
-    `
-    const submissions = submissionRows.map((submissionRow) =>
-      upcastSubmissionRow(submissionRow, fieldDefCandidates, scenarioDefCandidates, testDefCandidates, [
-        benchmarkDefRow,
-      ]),
-    )
-    // load results
-    const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_id=${benchmarkId}
-    `
-    const benchmarkDef = submissions.at(0)?.benchmark_definition
-    if (!benchmarkDef) return null
-    return Aggregator.getLeaderboard(benchmarkDef, submissions, resultRows)
-  }
-
-  async aggregateCampaignItem(benchmarkId: string) {
-    const sql = SqlService.getInstance()
-    // load required definitions
-    const submissionRows = await sql.query<SubmissionRow>`
-      SELECT * FROM submissions WHERE benchmark_id=${benchmarkId} AND published=true
-    `
-    const [benchmarkDefRow] = await sql.query<BenchmarkDefinitionRow>`
-      SELECT * FROM benchmark_definitions WHERE id=${benchmarkId}
-    `
-    // load required candidates for referenced fields (used in upcast) and upcast
-    const fieldDefCandidates = await sql.query<FieldDefinitionRow>`
-      SELECT * FROM field_definitions
-    `
-    const scenarioDefCandidates = await sql.query<ScenarioDefinitionRow>`
-      SELECT * FROM scenario_definitions
-    `
-    const testDefCandidates = await sql.query<TestDefinitionRow>`
-      SELECT * FROM test_definitions
-    `
-    // It's necessary to upcast both separately (potentially doing the work
-    // twice), because getCampaignItemScored should return something even if
-    // there's no submission to that benchmark yet.
-    const benchmarkDef = upcastBenchmarkDefinitionRow(
-      benchmarkDefRow,
-      fieldDefCandidates,
-      scenarioDefCandidates,
-      testDefCandidates,
-    )
-    const submissions = submissionRows.map((submissionRow) =>
-      upcastSubmissionRow(submissionRow, fieldDefCandidates, scenarioDefCandidates, testDefCandidates, [
-        benchmarkDefRow,
-      ]),
-    )
-    // load results
-    const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_id=${benchmarkId}
-    `
-    if (!benchmarkDef) return null
-    return Aggregator.getCampaignItemScored(benchmarkDef, submissions, resultRows)
-  }
-
-  async aggregateGroupLeaderboard(groupId: string) {
-    const sql = SqlService.getInstance()
-    // load required definitions
-    const [groupDefRow] = await sql.query<BenchmarkGroupDefinitionRow>`
-      SELECT * FROM benchmark_groups WHERE id=${groupId}
-    `
-    const submissionRows = await sql.query<SubmissionRow>`
-      SELECT * FROM submissions WHERE benchmark_id=ANY(${groupDefRow.benchmark_ids}) AND published=true
-    `
-    // load required candidates for referenced fields (used in upcast) and upcast
-    const fieldDefCandidates = await sql.query<FieldDefinitionRow>`
-      SELECT * FROM field_definitions
-    `
-    const scenarioDefCandidates = await sql.query<ScenarioDefinitionRow>`
-      SELECT * FROM scenario_definitions
-    `
-    const testDefCandidates = await sql.query<TestDefinitionRow>`
-      SELECT * FROM test_definitions
-    `
-    const benchmarkDefCandidates = await sql.query<BenchmarkDefinitionRow>`
-      SELECT * FROM benchmark_definitions WHERE id=ANY(${groupDefRow.benchmark_ids})
-    `
-    // It's necessary to upcast both separately (potentially doing the work
-    // twice), because getGroupLeaderboard should return something even if
-    // there's no submission to a group or therein benchmark yet.
-    const groupDef = upcastBenchmarkGroupDefinitionRow(
-      groupDefRow,
-      benchmarkDefCandidates,
-      fieldDefCandidates,
-      scenarioDefCandidates,
-      testDefCandidates,
-    )
-    const submissions = submissionRows.map((submissionRow) =>
-      upcastSubmissionRow(
-        submissionRow,
-        fieldDefCandidates,
-        scenarioDefCandidates,
-        testDefCandidates,
-        benchmarkDefCandidates,
-      ),
-    )
-    // load results
-    const resultRows: ResultRow[] = await sql.query<ResultRow>`
-      SELECT results.* FROM results LEFT JOIN submissions ON results.submission_id = submissions.id WHERE submissions.benchmark_id=ANY(${groupDefRow.benchmark_ids})
-    `
-    if (!groupDef) return null
-    return Aggregator.getGroupLeaderboard(groupDef, submissions, resultRows)
+    const aggregator = AggregatorService.getInstance()
+    const board = await aggregator.getBenchmarkTestLeaderboard(benchmarkId, testIds)
+    this.respond(req, res, board)
   }
 }

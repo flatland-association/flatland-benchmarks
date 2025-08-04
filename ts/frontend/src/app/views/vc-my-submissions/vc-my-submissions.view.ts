@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common'
 import { Component, inject, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { BenchmarkDefinitionRow, LeaderboardItem, SubmissionRow, TestDefinitionRow } from '@common/interfaces'
+import { BenchmarkDefinitionRow, SubmissionRow, SubmissionScore, TestDefinitionRow } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
@@ -35,7 +35,7 @@ export class VcMySubmissionsView implements OnInit {
 
   benchmark?: BenchmarkDefinitionRow
   submissions?: SubmissionRow[]
-  leaderboardItems?: Map<string, LeaderboardItem>
+  leaderboardItems?: Map<string, SubmissionScore>
   tests?: Map<string, TestDefinitionRow>
   customization?: Customization
 

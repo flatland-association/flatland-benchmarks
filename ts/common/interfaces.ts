@@ -150,29 +150,30 @@ export interface Scoring {
 // TODO: naming?
 export type Scorings = Record<string, Scoring | null>
 
-export interface ScenarioScored {
+export interface SubmissionScenarioScore {
   scenario_id: string
   scorings: Scorings
 }
 
-export interface TestScored {
+export interface SubmissionTestScore {
   test_id: string
   scorings: Scorings
-  scenario_scorings: ScenarioScored[]
+  scenario_scorings: SubmissionScenarioScore[]
 }
 
-export interface LeaderboardItem {
+export interface SubmissionScore {
   submission_id: string
   scorings: Scorings
-  test_scorings: TestScored[]
+  test_scorings: SubmissionTestScore[]
 }
 
 export interface Leaderboard {
   benchmark_id: string
-  items: LeaderboardItem[]
+  // TODO: rename property to submissions maybe?
+  items: SubmissionScore[]
 }
 
-export interface CampaignItemOverviewItem {
+export interface OverviewItem {
   test_id: string
   scorings: Scorings | null
   submission_id: string | null
@@ -180,7 +181,7 @@ export interface CampaignItemOverviewItem {
 
 export interface CampaignItemOverview {
   benchmark_id: string
-  items: CampaignItemOverviewItem[]
+  items: OverviewItem[]
   scorings: Scorings
 }
 
