@@ -91,6 +91,7 @@ export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmark
   name: string
   description: string
   field_ids: string[]
+  campaign_field_ids: string[]
   test_ids: string[]
 }
 

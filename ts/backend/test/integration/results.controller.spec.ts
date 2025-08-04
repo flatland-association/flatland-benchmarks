@@ -23,10 +23,7 @@ describe.sequential('Results controller', () => {
     )
     expect(res.status).toBe(200)
     expect(res.body).toBeApiResponse()
-    // TOFIX: 0.0946 is "submission score" mistakenly multiplied with weighing
-    // for benchmark score. See issue:
-    // https://github.com/flatland-association/flatland-benchmarks/issues/320
-    expect(res.body.body?.at(0)?.scorings['primary']?.score).toBeCloseTo(0.0946, 4)
+    expect(res.body.body?.at(0)?.scorings['primary']?.score).toBeCloseTo(0.86, 2)
   })
 
   test('should return submission test score', async () => {
@@ -87,18 +84,17 @@ describe.sequential('Results controller', () => {
       expect(board?.items).toHaveLength(9)
     })
 
-    // leaderboard is sorted by submission score (which is mistakenly weighed)
-    // https://github.com/flatland-association/flatland-benchmarks/issues/320
+    // leaderboard is sorted by submission score
     test.each([
-      { rank: 1, submission_id: 'd3408a40-c7b5-4d34-9f89-fd0322114273', score: 0.1012 },
-      { rank: 2, submission_id: '0f4ecf0f-c0a8-4141-9b28-1cb488808e14', score: 0.099 },
-      { rank: 3, submission_id: 'cd4d44bc-d40e-4173-bccb-f04e0be1b2ae', score: 0.0946 },
-      { rank: 4, submission_id: 'fb655288-2b79-4a1f-a9a7-bf449ffa3f70', score: 0.0891 },
-      { rank: 5, submission_id: 'c0781558-f35a-4f06-8bf4-6cff18b165e0', score: 0.0792 },
-      { rank: 6, submission_id: '392b0c0a-5ea0-45c9-86c7-50d16c35271b', score: 0.0693 },
-      { rank: 7, submission_id: '398684ee-fb13-4a73-95ac-f5a6584bb9ea', score: 0.0583 },
-      { rank: 8, submission_id: 'ca001ce9-f10f-4dea-a299-2a0efce0f00d', score: 0.0495 },
-      { rank: 9, submission_id: '5fa91da5-127b-408c-8863-a3ac670030b3', score: 0.022 },
+      { rank: 1, submission_id: 'd3408a40-c7b5-4d34-9f89-fd0322114273', score: 0.92 },
+      { rank: 2, submission_id: '0f4ecf0f-c0a8-4141-9b28-1cb488808e14', score: 0.9 },
+      { rank: 3, submission_id: 'cd4d44bc-d40e-4173-bccb-f04e0be1b2ae', score: 0.86 },
+      { rank: 4, submission_id: 'fb655288-2b79-4a1f-a9a7-bf449ffa3f70', score: 0.81 },
+      { rank: 5, submission_id: 'c0781558-f35a-4f06-8bf4-6cff18b165e0', score: 0.72 },
+      { rank: 6, submission_id: '392b0c0a-5ea0-45c9-86c7-50d16c35271b', score: 0.63 },
+      { rank: 7, submission_id: '398684ee-fb13-4a73-95ac-f5a6584bb9ea', score: 0.53 },
+      { rank: 8, submission_id: 'ca001ce9-f10f-4dea-a299-2a0efce0f00d', score: 0.45 },
+      { rank: 9, submission_id: '5fa91da5-127b-408c-8863-a3ac670030b3', score: 0.2 },
     ])('having $submission_id on rank $rank with score $score', (testCase) => {
       // rank must match index (off by one)
       const submission = board?.items[testCase.rank - 1]
