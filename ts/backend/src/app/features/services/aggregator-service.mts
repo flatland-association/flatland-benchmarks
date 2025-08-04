@@ -63,6 +63,8 @@ interface CampaignOverviewSources extends SubmissionScoreSources {
  *    score for overviews.
  */
 export class AggregatorService extends Service {
+  sql?: SqlService
+
   constructor(config: configuration) {
     super(config)
   }
@@ -200,9 +202,9 @@ export class AggregatorService extends Service {
     scenarioIds: string[],
   ): Promise<SubmissionScenarioScoreSources> {
     logger.trace('loadSubmissionScenarioScoreSources', { submissionId, scenarioIds })
-    const sql = SqlService.getInstance()
+    this.sql = SqlService.getInstance()
     // load relevant sources (relevant means: referenced from scenarioId)
-    const [sources] = await sql.query<SubmissionScenarioScoreSources>`
+    const [sources] = await this.sql.query<SubmissionScenarioScoreSources>`
       SELECT
         json_agg(DISTINCT to_jsonb(scenario_definitions)) AS scenario_definitions,
         json_agg(DISTINCT to_jsonb(field_definitions)) AS field_definitions,
@@ -212,16 +214,22 @@ export class AggregatorService extends Service {
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = ${submissionId}
       WHERE scenario_definitions.id = ANY(${scenarioIds})
     `
-    return sources
+    if (this.sql.errors) {
+      logger.error(this.sql.errors as unknown as json)
+    }
+    return (
+      sources ??
+      ({ scenario_definitions: [], field_definitions: [], results: [] } satisfies SubmissionScenarioScoreSources)
+    )
   }
 
   /**
    * Loads sources required to calculate `SubmissionTestScore`s.
    */
   async loadSubmissionTestScoreSources(submissionId: string, testIds: string[]): Promise<SubmissionTestScoreSources> {
-    const sql = SqlService.getInstance()
+    this.sql = SqlService.getInstance()
     // load relevant sources (relevant means: referenced from testId)
-    const [sources] = await sql.query<SubmissionTestScoreSources>`
+    const [sources] = await this.sql.query<SubmissionTestScoreSources>`
       SELECT
         json_agg(DISTINCT to_jsonb(test_definitions)) AS test_definitions,
         json_agg(DISTINCT to_jsonb(scenario_definitions)) AS scenario_definitions,
@@ -233,20 +241,31 @@ export class AggregatorService extends Service {
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = ${submissionId}
       WHERE test_definitions.id = ANY(${testIds})
     `
-    return sources
+    if (this.sql.errors) {
+      logger.error(this.sql.errors as unknown as json)
+    }
+    return (
+      sources ??
+      ({
+        test_definitions: [],
+        scenario_definitions: [],
+        field_definitions: [],
+        results: [],
+      } satisfies SubmissionTestScoreSources)
+    )
   }
 
   /**
    * Loads sources required to calculate `SubmissionScore`s.
    */
   async loadSubmissionScoreSources(submissionIds: string[]): Promise<SubmissionScoreSources> {
-    const sql = SqlService.getInstance()
+    this.sql = SqlService.getInstance()
     // load relevant sources (relevant means: referenced from benchmark
     // submission was made for)
     // IMPORTANT: Do not shortcut to "reference tests from submission directly",
     // since submission might be for fewer tests than required by benchmark
     // definition for correct aggregation of submission score.
-    const [sources] = await sql.query<SubmissionScoreSources>`
+    const [sources] = await this.sql.query<SubmissionScoreSources>`
       SELECT
         json_agg(DISTINCT to_jsonb(submissions)) AS submissions,
         json_agg(DISTINCT to_jsonb(benchmark_definitions)) AS benchmark_definitions,
@@ -262,16 +281,29 @@ export class AggregatorService extends Service {
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
       WHERE submissions.id = ANY(${submissionIds})
     `
-    return sources
+    if (this.sql.errors) {
+      logger.error(this.sql.errors as unknown as json)
+    }
+    return (
+      sources ??
+      ({
+        submissions: [],
+        benchmark_definitions: [],
+        test_definitions: [],
+        scenario_definitions: [],
+        field_definitions: [],
+        results: [],
+      } satisfies SubmissionScoreSources)
+    )
   }
 
   /**
    * Loads sources required to build `Leaderboard`s.
    */
   async loadLeaderboardSources(benchmarkIds: string[]): Promise<SubmissionScoreSources> {
-    const sql = SqlService.getInstance()
+    this.sql = SqlService.getInstance()
     // load relevant sources (relevant means: referenced from benchmark)
-    const [sources] = await sql.query<SubmissionScoreSources>`
+    const [sources] = await this.sql.query<SubmissionScoreSources>`
       SELECT
         json_agg(DISTINCT to_jsonb(benchmark_definitions)) AS benchmark_definitions,
         json_agg(DISTINCT to_jsonb(submissions)) AS submissions,
@@ -287,16 +319,29 @@ export class AggregatorService extends Service {
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
       WHERE benchmark_definitions.id = ANY(${benchmarkIds})
     `
-    return sources
+    if (this.sql.errors) {
+      logger.error(this.sql.errors as unknown as json)
+    }
+    return (
+      sources ??
+      ({
+        submissions: [],
+        benchmark_definitions: [],
+        test_definitions: [],
+        scenario_definitions: [],
+        field_definitions: [],
+        results: [],
+      } satisfies SubmissionScoreSources)
+    )
   }
 
   /**
    * Loads sources required to build `CampaignOverview`s.
    */
   async loadCampaignOverviewSources(groupIds: string[]): Promise<CampaignOverviewSources> {
-    const sql = SqlService.getInstance()
+    this.sql = SqlService.getInstance()
     // load relevant sources (relevant means: referenced from benchmark)
-    const [sources] = await sql.query<CampaignOverviewSources>`
+    const [sources] = await this.sql.query<CampaignOverviewSources>`
       SELECT
         json_agg(DISTINCT to_jsonb(benchmark_groups)) AS benchmark_groups,
         json_agg(DISTINCT to_jsonb(benchmark_definitions)) AS benchmark_definitions,
@@ -314,7 +359,21 @@ export class AggregatorService extends Service {
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
       WHERE benchmark_groups.id = ANY(${groupIds})
     `
-    return sources
+    if (this.sql.errors) {
+      logger.error(this.sql.errors as unknown as json)
+    }
+    return (
+      sources ??
+      ({
+        submissions: [],
+        benchmark_groups: [],
+        benchmark_definitions: [],
+        test_definitions: [],
+        scenario_definitions: [],
+        field_definitions: [],
+        results: [],
+      } satisfies CampaignOverviewSources)
+    )
   }
 
   /**
