@@ -174,8 +174,8 @@ export class AggregatorService extends Service {
    */
   async getCampaignItemOverview(benchmarkIds: string[]): Promise<CampaignItemOverview[]> {
     logger.trace('getCampaignItemOverview', { benchmarkIds })
-    // load relevant sources (campaign items are extracted via leaderboard)
-    const sources = await this.loadLeaderboardSources(benchmarkIds)
+    // load relevant sources
+    const sources = await this.loadCampaignItemOverviewSources(benchmarkIds)
     // build overview for all benchmarks
     return benchmarkIds.map((benchmarkId) => this.buildCampaignItemOverview(sources, benchmarkId))
   }
@@ -336,6 +336,44 @@ export class AggregatorService extends Service {
   }
 
   /**
+   * Loads sources required to build `CampaignItemOverview`s.
+   */
+  async loadCampaignItemOverviewSources(benchmarkIds: string[]): Promise<SubmissionScoreSources> {
+    this.sql = SqlService.getInstance()
+    // load relevant sources (relevant means: referenced from benchmark)
+    const [sources] = await this.sql.query<SubmissionScoreSources>`
+      SELECT
+        json_agg(DISTINCT to_jsonb(benchmark_definitions)) AS benchmark_definitions,
+        json_agg(DISTINCT to_jsonb(submissions)) AS submissions,
+        json_agg(DISTINCT to_jsonb(test_definitions)) AS test_definitions,
+        json_agg(DISTINCT to_jsonb(scenario_definitions)) AS scenario_definitions,
+        json_agg(DISTINCT to_jsonb(field_definitions)) AS field_definitions,
+        json_agg(DISTINCT to_jsonb(results)) AS results
+      FROM benchmark_definitions
+      LEFT JOIN submissions ON submissions.benchmark_id = benchmark_definitions.id AND submissions.published = true
+      LEFT JOIN test_definitions ON test_definitions.id = ANY(benchmark_definitions.test_ids)
+      LEFT JOIN scenario_definitions ON scenario_definitions.id = ANY(test_definitions.scenario_ids)
+      LEFT JOIN field_definitions ON field_definitions.id = ANY(scenario_definitions.field_ids || test_definitions.field_ids || benchmark_definitions.field_ids || benchmark_definitions.campaign_field_ids)
+      LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
+      WHERE benchmark_definitions.id = ANY(${benchmarkIds})
+    `
+    if (this.sql.errors) {
+      logger.error(this.sql.errors as unknown as json)
+    }
+    return (
+      sources ??
+      ({
+        submissions: [],
+        benchmark_definitions: [],
+        test_definitions: [],
+        scenario_definitions: [],
+        field_definitions: [],
+        results: [],
+      } satisfies SubmissionScoreSources)
+    )
+  }
+
+  /**
    * Loads sources required to build `CampaignOverview`s.
    */
   async loadCampaignOverviewSources(groupIds: string[]): Promise<CampaignOverviewSources> {
@@ -355,7 +393,7 @@ export class AggregatorService extends Service {
       LEFT JOIN submissions ON submissions.benchmark_id = benchmark_definitions.id AND submissions.published = true
       LEFT JOIN test_definitions ON test_definitions.id = ANY(benchmark_definitions.test_ids)
       LEFT JOIN scenario_definitions ON scenario_definitions.id = ANY(test_definitions.scenario_ids)
-      LEFT JOIN field_definitions ON field_definitions.id = ANY(scenario_definitions.field_ids || test_definitions.field_ids || benchmark_definitions.field_ids)
+      LEFT JOIN field_definitions ON field_definitions.id = ANY(scenario_definitions.field_ids || test_definitions.field_ids || benchmark_definitions.field_ids || benchmark_definitions.campaign_field_ids)
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
       WHERE benchmark_groups.id = ANY(${groupIds})
     `
@@ -647,15 +685,14 @@ export class AggregatorService extends Service {
         return {
           test_id: testId,
           // Take top's test[0] scorings instead of top's scorings - because
-          // latter are already aggregated with benchmarks' field_definitions.
-          // See issue:
-          // https://github.com/flatland-association/flatland-benchmarks/issues/320
+          // latter are submission scorings and ranked against all submissions
+          // in benchmark instead of test scorings ranked in test
           scorings: top?.test_scorings[0].scorings ?? null,
           submission_id: top?.submission_id ?? null,
         }
       })
-      //... then aggregate own score
-      benchmark.field_ids.forEach((fieldId) => {
+      //... then aggregate own score using campaign field definitions
+      benchmark.campaign_field_ids.forEach((fieldId) => {
         const field = this.findField(sources, fieldId)
         if (field) {
           // remap items' "scorings" property to undefined if null for aggregation
