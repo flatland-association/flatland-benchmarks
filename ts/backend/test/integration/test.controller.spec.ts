@@ -12,7 +12,9 @@ describe.sequential('Test controller', () => {
   })
 
   test('should return test by id', async () => {
-    const res = await controller.testGet('/definitions/tests/:test_ids', { params: { ids: '1' } })
+    const res = await controller.testGet('/definitions/tests/:test_ids', {
+      params: { test_ids: 'aeabd5b9-4e86-4c7a-859f-a32ff1be5516' },
+    })
     expect(res.status).toBe(200)
     expect(res.body).toBeApiResponse()
   })
