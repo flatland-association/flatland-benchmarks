@@ -45,7 +45,7 @@ export type NotUnion<T, U = T> = U extends T ? ([T] extends [U] ? T : never) : n
  * Data type for values that can be serialized and deserialized using
  * `JSON.stringify` and `JSON.parse`.
  */
-export type json = boolean | number | string | null | undefined | { [key: string]: json } | json[]
+export type json = boolean | number | string | object | null | undefined
 
 /**
  * Coerces given type to accept `string | number` where it initially only

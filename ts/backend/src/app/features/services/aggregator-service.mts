@@ -15,7 +15,6 @@ import {
   SubmissionTestScore,
   TestDefinitionRow,
 } from '@common/interfaces'
-import { json } from '@common/utility-types'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { Service } from './service.mjs'
@@ -215,7 +214,7 @@ export class AggregatorService extends Service {
       WHERE scenario_definitions.id = ANY(${scenarioIds})
     `
     if (this.sql.errors) {
-      logger.error(this.sql.errors as unknown as json)
+      logger.error(this.sql.errors)
     }
     return (
       sources ??
@@ -242,7 +241,7 @@ export class AggregatorService extends Service {
       WHERE test_definitions.id = ANY(${testIds})
     `
     if (this.sql.errors) {
-      logger.error(this.sql.errors as unknown as json)
+      logger.error(this.sql.errors)
     }
     return (
       sources ??
@@ -282,7 +281,7 @@ export class AggregatorService extends Service {
       WHERE submissions.id = ANY(${submissionIds})
     `
     if (this.sql.errors) {
-      logger.error(this.sql.errors as unknown as json)
+      logger.error(this.sql.errors)
     }
     return (
       sources ??
@@ -320,7 +319,7 @@ export class AggregatorService extends Service {
       WHERE benchmark_definitions.id = ANY(${benchmarkIds})
     `
     if (this.sql.errors) {
-      logger.error(this.sql.errors as unknown as json)
+      logger.error(this.sql.errors)
     }
     return (
       sources ??
@@ -358,7 +357,7 @@ export class AggregatorService extends Service {
       WHERE benchmark_definitions.id = ANY(${benchmarkIds})
     `
     if (this.sql.errors) {
-      logger.error(this.sql.errors as unknown as json)
+      logger.error(this.sql.errors)
     }
     return (
       sources ??
@@ -398,7 +397,7 @@ export class AggregatorService extends Service {
       WHERE benchmark_groups.id = ANY(${groupIds})
     `
     if (this.sql.errors) {
-      logger.error(this.sql.errors as unknown as json)
+      logger.error(this.sql.errors)
     }
     return (
       sources ??
@@ -423,7 +422,7 @@ export class AggregatorService extends Service {
   ): FieldDefinitionRow | undefined {
     const field = sources.field_definitions.find((fieldDefRow) => fieldDefRow?.id === fieldId)
     if (!field) {
-      logger.warn(`field ${fieldId} not found in sources`, sources.field_definitions as unknown as json)
+      logger.warn(`field ${fieldId} not found in sources`, sources.field_definitions)
     }
     return field ?? undefined
   }
@@ -437,7 +436,7 @@ export class AggregatorService extends Service {
   ): ScenarioDefinitionRow | undefined {
     const scenario = sources.scenario_definitions.find((scenarioDefRow) => scenarioDefRow?.id === scenarioId)
     if (!scenario) {
-      logger.warn(`scenario ${scenarioId} not found in sources`, sources.scenario_definitions as unknown as json)
+      logger.warn(`scenario ${scenarioId} not found in sources`, sources.scenario_definitions)
     }
     return scenario ?? undefined
   }
@@ -448,7 +447,7 @@ export class AggregatorService extends Service {
   findTest(sources: { test_definitions: (TestDefinitionRow | null)[] }, testId: string): TestDefinitionRow | undefined {
     const test = sources.test_definitions.find((testDefRow) => testDefRow?.id === testId)
     if (!test) {
-      logger.warn(`test ${testId} not found in sources`, sources.test_definitions as unknown as json)
+      logger.warn(`test ${testId} not found in sources`, sources.test_definitions)
     }
     return test ?? undefined
   }
@@ -459,7 +458,7 @@ export class AggregatorService extends Service {
   findSubmission(sources: { submissions: (SubmissionRow | null)[] }, submissionId: string): SubmissionRow | undefined {
     const submission = sources.submissions.find((submission) => submission?.id === submissionId)
     if (!submission) {
-      logger.warn(`submission ${submissionId} not found in sources`, sources.submissions as unknown as json)
+      logger.warn(`submission ${submissionId} not found in sources`, sources.submissions)
     }
     return submission ?? undefined
   }
@@ -473,7 +472,7 @@ export class AggregatorService extends Service {
   ): BenchmarkDefinitionRow | undefined {
     const benchmark = sources.benchmark_definitions.find((benchmarkDefRow) => benchmarkDefRow?.id === benchmarkId)
     if (!benchmark) {
-      logger.warn(`benchmark ${benchmarkId} not found in sources`, sources.benchmark_definitions as unknown as json)
+      logger.warn(`benchmark ${benchmarkId} not found in sources`, sources.benchmark_definitions)
     }
     return benchmark ?? undefined
   }
@@ -487,7 +486,7 @@ export class AggregatorService extends Service {
   ): BenchmarkGroupDefinitionRow | undefined {
     const group = sources.benchmark_groups.find((groupDefRow) => groupDefRow?.id === groupId)
     if (!group) {
-      logger.warn(`group ${groupId} not found in sources`, sources.benchmark_groups as unknown as json)
+      logger.warn(`group ${groupId} not found in sources`, sources.benchmark_groups)
     }
     return group ?? undefined
   }
@@ -502,10 +501,7 @@ export class AggregatorService extends Service {
   ): FieldDefinitionRow | undefined {
     const primary = sources.field_definitions.find((fieldDefRow) => fieldDefRow?.id === entity.field_ids[0])
     if (!primary) {
-      logger.warn(
-        `field ${entity.field_ids[0]} (primary score) not found in sources`,
-        sources.field_definitions as unknown as json,
-      )
+      logger.warn(`field ${entity.field_ids[0]} (primary score) not found in sources`, sources.field_definitions)
     }
     return primary ?? undefined
   }
