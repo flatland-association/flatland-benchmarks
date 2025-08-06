@@ -3,6 +3,18 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.10.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.9.3...v0.10.0) (2025-08-06)
+
+
+### Features
+
+* **backend:** Aggregate benchmark score with campaign fields in campaign setting ([#360](https://github.com/flatland-association/flatland-benchmarks/issues/360)) ([52a1b16](https://github.com/flatland-association/flatland-benchmarks/commit/52a1b16a8503ebc1226982618e3afdf29217e380))
+
+
+### Bug Fixes
+
+* **backend:** Logger: preserve error messages ([#367](https://github.com/flatland-association/flatland-benchmarks/issues/367)) ([09e0568](https://github.com/flatland-association/flatland-benchmarks/commit/09e056892a2cce4a8a8fa23e4af2811969dcf7a1))
+
 ## [0.9.3](https://github.com/flatland-association/flatland-benchmarks/compare/v0.9.2...v0.9.3) (2025-07-05)
 
 
