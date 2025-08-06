@@ -1,4 +1,3 @@
-import { json } from '@common/utility-types.js'
 import ansiStyles from 'ansi-styles'
 import log4js from 'log4js'
 import { cliOptions } from '../config/command-line.mjs'
@@ -74,7 +73,7 @@ export class Logger {
   }
 
   // Must be private i.o.t. always skip the correct number of stack trace lines.
-  private log(level: log4js.Level, ...messages: json[]) {
+  private log(level: log4js.Level, ...messages: unknown[]) {
     // update log level (can't be done in constructor because level is set at runtime)
     this.logger.level = this.logLevel ?? Logger.defaultLogLevel
 
@@ -110,7 +109,48 @@ export class Logger {
       this.logger.addContext('stack', src)
     }
 
-    this.logger.log(level, Logger.stringifyMessage ? JSON.stringify(messages) : messages)
+    let printables: unknown[] | string
+    if (Logger.stringifyMessage) {
+      // some types require special treatment in order to be stringified correctly
+      printables = JSON.stringify(
+        messages.map((msg) => {
+          // functions are JSON.stringified as undefined
+          if (typeof msg === 'function') {
+            return msg.toString()
+          }
+          // symbols are JSON.stringified as undefined
+          if (typeof msg === 'symbol') {
+            return msg.toString()
+          }
+          // bigints cause error in JSON.stringify
+          if (typeof msg === 'bigint') {
+            return `BigInt(${msg})`
+          }
+          // undefined is JSON.stringified as null - make distinguishable
+          if (typeof msg === 'undefined') {
+            return 'null(undefined)'
+          }
+          // errors are JSON.stringified as {}
+          if (msg instanceof Error) {
+            let stringified = msg.toString()
+            if (msg.stack) {
+              stringified += ' (' + msg.stack + ')'
+            }
+            return stringified
+          }
+          return msg
+        }),
+      )
+    } else {
+      printables = messages.map((msg) => {
+        // functions are not preserved in node when written to stdout
+        if (typeof msg === 'function') {
+          return msg.toString()
+        }
+        return msg
+      })
+    }
+    this.logger.log(level, printables)
 
     return
   }
@@ -118,42 +158,42 @@ export class Logger {
   /**
    * Log a message with log level `TRACE`.
    */
-  trace(...messages: json[]) {
+  trace(...messages: unknown[]) {
     this.log(log4js.levels.TRACE, ...messages)
   }
 
   /**
    * Log a message with log level `DEBUG`.
    */
-  debug(...messages: json[]) {
+  debug(...messages: unknown[]) {
     this.log(log4js.levels.DEBUG, ...messages)
   }
 
   /**
    * Log a message with log level `INFO`.
    */
-  info(...messages: json[]) {
+  info(...messages: unknown[]) {
     this.log(log4js.levels.INFO, ...messages)
   }
 
   /**
    * Log a message with log level `WARN`.
    */
-  warn(...messages: json[]) {
+  warn(...messages: unknown[]) {
     this.log(log4js.levels.WARN, ...messages)
   }
 
   /**
    * Log a message with log level `ERROR`.
    */
-  error(...messages: json[]) {
+  error(...messages: unknown[]) {
     this.log(log4js.levels.ERROR, ...messages)
   }
 
   /**
    * Log a message with log level `FATAL`.
    */
-  fatal(...messages: json[]) {
+  fatal(...messages: unknown[]) {
     this.log(log4js.levels.FATAL, ...messages)
   }
 }

@@ -66,7 +66,7 @@ export class Controller {
       body: body,
       dbg,
     })
-    logger.debug(`${req.method} ${req.originalUrl} response 200: ${JSON.stringify(body)}`)
+    logger.debug(`${req.method} ${req.originalUrl}: Response ${status}`, body)
   }
 
   /**
@@ -84,7 +84,7 @@ export class Controller {
       error,
       dbg,
     })
-    logger.warn(`${req.method} ${req.originalUrl}: Bad request 400: ${JSON.stringify(error)}`)
+    logger.warn(`${req.method} ${req.originalUrl}: Bad request 400`, error)
   }
 
   /**
@@ -102,7 +102,7 @@ export class Controller {
       error,
       dbg,
     })
-    logger.warn(`${req.method} ${req.originalUrl}: Unauthorized 401: ${JSON.stringify(error)}`)
+    logger.warn(`${req.method} ${req.originalUrl}: Unauthorized 401`, error)
   }
 
   /**
@@ -120,7 +120,7 @@ export class Controller {
       error,
       dbg,
     })
-    logger.error(`${req.method} ${req.originalUrl}: Server error 500: ${JSON.stringify(error)}`)
+    logger.error(`${req.method} ${req.originalUrl}: Internal server error 500`, error)
   }
 
   // Attach handler wrapper, serves two purposes:
@@ -134,16 +134,16 @@ export class Controller {
   ) {
     this.router[verb](endpoint, async (req, res, next) => {
       try {
-        logger.debug(`${req.method} ${req.originalUrl} received: ${JSON.stringify(req.body)}`)
+        logger.debug(`${req.method} ${req.originalUrl}: Request`, req.body)
         await handler(req, res, next)
         // force a server error if the handler did not respond
         if (!res.writableEnded) {
+          logger.error(`${req.method} ${req.originalUrl}: Handler did not respond.`)
           next('Handler did not respond')
-          logger.error(`${req.method} ${req.originalUrl}: handler did not respond.`)
         }
       } catch (error) {
+        logger.error(`${req.method} ${req.originalUrl}: Exception`, error)
         next(error)
-        logger.error(`${req.method} ${req.originalUrl} error: ${JSON.stringify(error)}`)
       }
     })
   }

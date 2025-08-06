@@ -1,5 +1,5 @@
 import cors from 'cors'
-import type { Express } from 'express'
+import type { Express, NextFunction, Request, Response } from 'express'
 import express from 'express'
 import fs from 'node:fs/promises'
 import * as swaggerUi from 'swagger-ui-express'
@@ -57,15 +57,21 @@ export class Server {
     // use swagger as apidoc
     this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.app.use((err: any, _req: unknown, res: any, next: any) => {
+    this.app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
       if (!err) {
         return next()
       }
 
-      logger.error('Handled exception, responded with 500:', err)
-      res.status(500)
-      res.send('500: Internal server error')
+      if (!res.headersSent) {
+        res.status(500)
+        res.send('500: Internal server error')
+        logger.error(
+          `${req.method} ${req.originalUrl}: Handler terminated with error, responded with internal server error 500:`,
+          err,
+        )
+      } else {
+        logger.error(`${req.method} ${req.originalUrl}: Handler terminated with error after headers were sent`, err)
+      }
     })
 
     // start listening
