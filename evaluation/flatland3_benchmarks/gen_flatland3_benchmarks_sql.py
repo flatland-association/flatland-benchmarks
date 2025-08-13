@@ -19,7 +19,7 @@ if __name__ == '__main__':
     benchmark_group_id = "0ca46887-897a-463f-bf83-c6cd6269a976"
     # https://ai4realnet.eu/use-cases/
     benchmark_name = "Playground Electricity Network"
-    benchmark_name = "Playground Air Traffic Network"
+    benchmark_name = "Playground Air Traffic Management"
     benchmark_name = "Playground Railway"
 
   normalized_reward_scenario_field = str(uuid.uuid4())
