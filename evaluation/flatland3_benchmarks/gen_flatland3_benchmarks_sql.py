@@ -2,20 +2,22 @@ import re
 import uuid
 from collections import defaultdict
 
-import pandas as pd
-
 if __name__ == '__main__':
 
-  if True:
+  if False:
     NUM_TESTS = 15
     NUM_LEVELS_PER_TEST = 10
     df_metadata = pd.read_csv("../../benchmarks/flatland3/metadata.csv.template")
     test_descriptions = [f"{v['n_agents']} agents,  {v['y_dim']}x{v['x_dim']}, 2 {v['n_cities']}" for k, v in
                          list(df_metadata.groupby("test_id").aggregate('first').iterrows())]
+    benchmark_group_id = None
+    benchmark_name = "Round 1"
   else:
     NUM_TESTS = 2
     NUM_LEVELS_PER_TEST = 3
-    test_descriptions = [['5 agents, 25x25, 2 cities, 2 seeds'] * NUM_TESTS]
+    test_descriptions = ['lorem ipsum'] * NUM_TESTS
+    benchmark_group_id = "0ca46887-897a-463f-bf83-c6cd6269a976"
+    benchmark_name = "Playground Electricity Network"
 
   normalized_reward_scenario_field = str(uuid.uuid4())
   normalized_reward_test_field = str(uuid.uuid4())
@@ -61,20 +63,20 @@ VALUES
   test_definitions = re.sub(",\n$", ";", test_definitions)
 
   benchmark_id = str(uuid.uuid4())
-  benchmark_group_id = str(uuid.uuid4())
-
   benchmark_definitions = f"""INSERT INTO benchmark_definitions
   (id, name, description, field_ids, test_ids)
 VALUES
-  ('{benchmark_id}', 'Round 1', 'Round 1', array['{normalized_reward_benchmark_field}','{percentage_complete_benchmark_field}']::uuid[], array['{"', '".join(test_ids)}']::uuid[]);
-
-
-INSERT INTO benchmark_groups
-  (id, setup, name, description, benchmark_ids)
-VALUES
-  ('{benchmark_group_id}', 'COMPETITION', 'Flatland 3 Benchmarks', 'The Flatland 3 Benchmarks.', array['{benchmark_id}']::uuid[]);"""
+  ('{benchmark_id}', '{benchmark_name}', '{benchmark_name}', array['{normalized_reward_benchmark_field}','{percentage_complete_benchmark_field}']::uuid[], array['{"', '".join(test_ids)}']::uuid[]);"""
 
   print(field_definitions)
   print(scenario_definitions)
   print(test_definitions)
   print(benchmark_definitions)
+  if benchmark_group_id is None:
+    benchmark_group_id = str(uuid.uuid4())
+    benchmark_group_definitions = f""" INSERT INTO benchmark_groups
+  (id, setup, name, description, benchmark_ids)
+VALUES
+  ('{benchmark_group_id}', 'COMPETITION', 'Flatland 3 Benchmarks', 'The Flatland 3 Benchmarks.', array['{benchmark_id}']::uuid[]);"""
+
+    print(benchmark_group_definitions)
