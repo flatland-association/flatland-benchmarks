@@ -1,8 +1,11 @@
 import { Injectable, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import { OAuthService } from 'angular-oauth2-oidc'
+import { Observable, ReplaySubject } from 'rxjs'
 import { first } from 'rxjs/operators'
 import { environment } from '../../../environments/environment'
+
+export type AuthState = 'loggedin' | 'loggedout'
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +14,7 @@ export class AuthService {
   oauthService = inject(OAuthService)
   private router = inject(Router)
 
-  // Promise that resolves once the login has been successful.
-  // This only works for forceful logins.
-  readonly initialized?: Promise<unknown>
+  private _state = new ReplaySubject<AuthState>(1)
 
   constructor() {
     // expose service for debugging purposes
@@ -27,12 +28,43 @@ export class AuthService {
     // To start the login flow, call `logIn()`.
     this.oauthService.loadDiscoveryDocumentAndTryLogin()
     // As soon as a token is received, redirect to the passed state.
+    // (This is done only once, because the token_received also event fires when
+    // a token is refreshed.)
     this.oauthService.events.pipe(first((e) => e.type === 'token_received')).subscribe(() => {
       const state = decodeURIComponent(this.oauthService.state || '')
       if (state && state !== '/') {
         this.router.navigate([state])
       }
     })
+    this.oauthService.events.subscribe((e) => {
+      switch (e.type) {
+        // successfully logged in when a token is received
+        case 'token_received': {
+          this._state.next('loggedin')
+          break
+        }
+        // force logout on explicit logout and token errors
+        case 'logout':
+        case 'token_error':
+        case 'token_validation_error':
+        case 'token_refresh_error': {
+          this._state.next('loggedout')
+          break
+        }
+      }
+    })
+    // It's also possible that the locally stored token is still valid, treat
+    // this as being logged in
+    if (this.isLoggedIn()) {
+      this._state.next('loggedin')
+    }
+  }
+
+  /**
+   * Returns the `AuthState` as observable.
+   */
+  getAuthState() {
+    return this._state as Observable<AuthState>
   }
 
   /**
@@ -77,12 +109,5 @@ export class AuthService {
 
   get scopes(): string[] {
     return this.oauthService.getGrantedScopes() as string[]
-  }
-
-  async hasRole(role: string) {
-    // Await the successful login of the user.
-    await this.initialized
-    // Using indexOf for IE11 compatibility.
-    return this.claims && Array.isArray(this.claims.roles) && this.claims.roles.indexOf(role) >= 0
   }
 }
