@@ -28,7 +28,7 @@
     "@angular/platform-browser": "^20.1.7",
     "@angular/platform-browser-dynamic": "^20.1.7",
     "@angular/router": "^20.1.7",
-    "@flatland-association/flatland-ui": "^2.1.0",
+    "@flatland-association/flatland-ui": "^2.1.2",
     "@fortawesome/angular-fontawesome": "^3.0.0",
     "@fortawesome/free-brands-svg-icons": "^7.0.0",
     "@fortawesome/free-regular-svg-icons": "^7.0.0",
