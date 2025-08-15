@@ -2,7 +2,6 @@ import { Injectable, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import { OAuthService } from 'angular-oauth2-oidc'
 import { Observable, ReplaySubject } from 'rxjs'
-import { first } from 'rxjs/operators'
 import { environment } from '../../../environments/environment'
 
 export type AuthState = 'loggedin' | 'loggedout'
@@ -27,21 +26,17 @@ export class AuthService {
     // Try logging user in, don't start login flow if it doesn't work.
     // To start the login flow, call `logIn()`.
     this.oauthService.loadDiscoveryDocumentAndTryLogin()
-    // As soon as a token is received, redirect to the passed state.
-    // (This is done only once, because the token_received event also fires when
-    // a token is refreshed.)
-    this.oauthService.events.pipe(first((e) => e.type === 'token_received')).subscribe(() => {
-      const state = decodeURIComponent(this.oauthService.state || '')
-      if (state && state !== '/') {
-        this.router.navigate([state])
-      }
-    })
     // Update auth state when auth service events occur
     this.oauthService.events.subscribe((e) => {
       switch (e.type) {
         // successfully logged in when a token is received
         case 'token_received': {
           this._authState.next('loggedin')
+          // if a state was passed, use that for redirect
+          const state = decodeURIComponent(this.oauthService.state || '')
+          if (state && state !== '/') {
+            this.router.navigate([state])
+          }
           break
         }
         // logged out on explicit logout and token errors
@@ -81,7 +76,7 @@ export class AuthService {
    * form.
    * @param state State passed around during login, used as redirect url on success.
    */
-  logIn(state: string) {
+  logIn(state?: string) {
     this.oauthService.initLoginFlow(state)
   }
 
