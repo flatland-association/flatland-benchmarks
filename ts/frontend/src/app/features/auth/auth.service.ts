@@ -14,7 +14,7 @@ export class AuthService {
   oauthService = inject(OAuthService)
   private router = inject(Router)
 
-  private _state = new ReplaySubject<AuthState>(1)
+  private _authState = new ReplaySubject<AuthState>(1)
 
   constructor() {
     // expose service for debugging purposes
@@ -28,7 +28,7 @@ export class AuthService {
     // To start the login flow, call `logIn()`.
     this.oauthService.loadDiscoveryDocumentAndTryLogin()
     // As soon as a token is received, redirect to the passed state.
-    // (This is done only once, because the token_received also event fires when
+    // (This is done only once, because the token_received event also fires when
     // a token is refreshed.)
     this.oauthService.events.pipe(first((e) => e.type === 'token_received')).subscribe(() => {
       const state = decodeURIComponent(this.oauthService.state || '')
@@ -36,19 +36,20 @@ export class AuthService {
         this.router.navigate([state])
       }
     })
+    // Update auth state when auth service events occur
     this.oauthService.events.subscribe((e) => {
       switch (e.type) {
         // successfully logged in when a token is received
         case 'token_received': {
-          this._state.next('loggedin')
+          this._authState.next('loggedin')
           break
         }
-        // force logout on explicit logout and token errors
+        // logged out on explicit logout and token errors
         case 'logout':
         case 'token_error':
         case 'token_validation_error':
         case 'token_refresh_error': {
-          this._state.next('loggedout')
+          this._authState.next('loggedout')
           break
         }
       }
@@ -56,7 +57,7 @@ export class AuthService {
     // It's also possible that the locally stored token is still valid, treat
     // this as being logged in
     if (this.isLoggedIn()) {
-      this._state.next('loggedin')
+      this._authState.next('loggedin')
     }
   }
 
@@ -64,7 +65,7 @@ export class AuthService {
    * Returns the `AuthState` as observable.
    */
   getAuthState() {
-    return this._state as Observable<AuthState>
+    return this._authState as Observable<AuthState>
   }
 
   /**

@@ -36,7 +36,9 @@ export class AppComponent implements OnInit {
       { path: '/hub', label: 'Hub', icon: faArrowUpRightFromSquare },
     ]
 
+    // initially show the user menu without active user
     this.showLoggedOutUserMenu()
+    // update user menu when auth state changes
     this.authService.getAuthState().subscribe((state) => {
       if (state === 'loggedin') {
         this.showLoggedInUserMenu()
@@ -46,6 +48,7 @@ export class AppComponent implements OnInit {
     })
   }
 
+  // sets the user menu to be shown when a user is logged in
   showLoggedInUserMenu() {
     this.headerUserMenu = {
       username: this.authService.claims.name,
@@ -61,6 +64,7 @@ export class AppComponent implements OnInit {
     }
   }
 
+  // sets the user menu to be shown when no user is logged in
   showLoggedOutUserMenu() {
     this.headerUserMenu = {
       onLoginClick: () => {
