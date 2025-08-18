@@ -9,6 +9,7 @@ const authConfig: AuthConfig = {
   // redirectUri: location.origin + location.pathname.substring(0, location.pathname.indexOf('/', 1) + 1)
   // Note that these URIs must also be added to allowed redirect URIs in Azure (e.g. https://your-domain/en/, https://your-domain/de/, ...)
   redirectUri: location.origin,
+  silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
   responseType: 'code',
   scope: 'openid profile email offline_access',
 }
