@@ -1,8 +1,10 @@
 import { Injectable, inject } from '@angular/core'
 import { Router } from '@angular/router'
 import { OAuthService } from 'angular-oauth2-oidc'
-import { first } from 'rxjs/operators'
+import { Observable, ReplaySubject } from 'rxjs'
 import { environment } from '../../../environments/environment'
+
+export type AuthState = 'loggedin' | 'loggedout'
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +13,7 @@ export class AuthService {
   oauthService = inject(OAuthService)
   private router = inject(Router)
 
-  // Promise that resolves once the login has been successful.
-  // This only works for forceful logins.
-  readonly initialized?: Promise<unknown>
+  private _authState = new ReplaySubject<AuthState>(1)
 
   constructor() {
     // expose service for debugging purposes
@@ -26,13 +26,41 @@ export class AuthService {
     // Try logging user in, don't start login flow if it doesn't work.
     // To start the login flow, call `logIn()`.
     this.oauthService.loadDiscoveryDocumentAndTryLogin()
-    // As soon as a token is received, redirect to the passed state.
-    this.oauthService.events.pipe(first((e) => e.type === 'token_received')).subscribe(() => {
-      const state = decodeURIComponent(this.oauthService.state || '')
-      if (state && state !== '/') {
-        this.router.navigate([state])
+    // Update auth state when auth service events occur
+    this.oauthService.events.subscribe((e) => {
+      switch (e.type) {
+        // successfully logged in when a token is received
+        case 'token_received': {
+          this._authState.next('loggedin')
+          // if a state was passed, use that for redirect
+          const state = decodeURIComponent(this.oauthService.state || '')
+          if (state && state !== '/') {
+            this.router.navigate([state])
+          }
+          break
+        }
+        // logged out on explicit logout and token errors
+        case 'logout':
+        case 'token_error':
+        case 'token_validation_error':
+        case 'token_refresh_error': {
+          this._authState.next('loggedout')
+          break
+        }
       }
     })
+    // It's also possible that the locally stored token is still valid, treat
+    // this as being logged in
+    if (this.isLoggedIn()) {
+      this._authState.next('loggedin')
+    }
+  }
+
+  /**
+   * Returns the `AuthState` as observable.
+   */
+  getAuthState() {
+    return this._authState as Observable<AuthState>
   }
 
   /**
@@ -48,7 +76,7 @@ export class AuthService {
    * form.
    * @param state State passed around during login, used as redirect url on success.
    */
-  logIn(state: string) {
+  logIn(state?: string) {
     this.oauthService.initLoginFlow(state)
   }
 
@@ -77,12 +105,5 @@ export class AuthService {
 
   get scopes(): string[] {
     return this.oauthService.getGrantedScopes() as string[]
-  }
-
-  async hasRole(role: string) {
-    // Await the successful login of the user.
-    await this.initialized
-    // Using indexOf for IE11 compatibility.
-    return this.claims && Array.isArray(this.claims.roles) && this.claims.roles.indexOf(role) >= 0
   }
 }
