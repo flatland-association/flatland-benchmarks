@@ -76,7 +76,10 @@ export class VcEvaluationObjectiveView implements OnInit {
         ).body?.map((test) => [test.id, test]),
       )
     }
-    const subIds = this.campaignItemOverview?.items.map((item) => item.submission_id).join(',')
+    const subIds = this.campaignItemOverview?.items
+      .map((item) => item.submission_id)
+      .filter((id) => !!id)
+      .join(',')
     if (subIds) {
       this.submissions = new Map(
         (
