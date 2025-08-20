@@ -1,3 +1,9 @@
 <lib-layout [headerNavItems]="headerNavItems" [headerUserMenu]="headerUserMenu" headerUserMenuClass="!bg-neutral-50 !text-neutral-600" [footerNavItems]="footerNavItems">
   <router-outlet />
+  @if (showErrorMessage && errorMessage) {
+    <lib-modal [(open)]="showErrorMessage">
+      <h1 class="text-2xl font-bold text-neutral-500 pb-2">{{errorMessage.title}}</h1>
+      <p class="whitespace-pre-line font-light text-neutral-700">{{errorMessage.message}}</p>
+    </lib-modal>
+  }
 </lib-layout>

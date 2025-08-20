@@ -1,15 +1,22 @@
-import { Component, inject, OnInit } from '@angular/core'
+import { Component, effect, inject, OnInit } from '@angular/core'
 import { Router, RouterOutlet } from '@angular/router'
-import { FooterNavLink, HeaderNavLink, HeaderUserMenu, LayoutComponent } from '@flatland-association/flatland-ui'
+import {
+  FooterNavLink,
+  HeaderNavLink,
+  HeaderUserMenu,
+  LayoutComponent,
+  ModalComponent,
+} from '@flatland-association/flatland-ui'
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import { OAuthModule } from 'angular-oauth2-oidc'
 import { ApiService } from './features/api/api.service'
 import { AuthService } from './features/auth/auth.service'
 import { CustomizationService } from './features/customization/customization.service'
+import { ErrorMessage, ErrorMessageService } from './features/error-message/error-message.service'
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, LayoutComponent, OAuthModule],
+  imports: [RouterOutlet, LayoutComponent, ModalComponent, OAuthModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -18,6 +25,7 @@ export class AppComponent implements OnInit {
   private authService = inject(AuthService)
   private customizationService = inject(CustomizationService)
   private router = inject(Router)
+  private errorMessageService = inject(ErrorMessageService)
 
   headerNavItems: HeaderNavLink[] = []
   headerUserMenu?: HeaderUserMenu
@@ -25,6 +33,17 @@ export class AppComponent implements OnInit {
     { path: '/impressum', label: 'Impressum' },
     { path: '/privacy', label: 'Privacy' },
   ]
+  errorMessage: ErrorMessage | undefined
+  showErrorMessage = false
+
+  constructor() {
+    // Can't use computed() here because somehow the computed signal is not
+    // listened to..?
+    effect(() => {
+      this.errorMessage = this.errorMessageService.errorMessage()
+      this.showErrorMessage = true
+    })
+  }
 
   async ngOnInit() {
     this.headerNavItems = [
