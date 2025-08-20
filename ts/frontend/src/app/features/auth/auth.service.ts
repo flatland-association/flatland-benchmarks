@@ -77,7 +77,17 @@ export class AuthService {
    * @param state State passed around during login, used as redirect url on success.
    */
   logIn(state?: string) {
-    this.oauthService.initLoginFlow(state)
+    const keycloakTab = window.open('about:blank', 'keycloakTab')!
+    this.oauthService
+      .initImplicitFlowInPopup({ windowRef: keycloakTab })
+      .then(() => {
+        if (state && state !== '/') {
+          this.router.navigate([state])
+        }
+      })
+      .catch(() => {
+        // presence of handler required, although no action is taken
+      })
   }
 
   /**
