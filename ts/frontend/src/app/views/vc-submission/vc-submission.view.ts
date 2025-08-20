@@ -1,6 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { ScenarioDefinitionRow, SubmissionRow, SubmissionScore, TestDefinitionRow } from '@common/interfaces'
+import {
+  FieldDefinitionRow,
+  ScenarioDefinitionRow,
+  SubmissionRow,
+  SubmissionScore,
+  TestDefinitionRow,
+} from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
@@ -10,11 +16,17 @@ import { AuthService } from '../../features/auth/auth.service'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.pipe'
 
+/**
+ * Returns whether all submission's scenarios have non-null scores only.
+ */
 export function isLeaderboardItemScored(item: SubmissionScore) {
   const scenarioScorings = item.test_scorings.flatMap((test) =>
     test.scenario_scorings.map((scenario) => scenario.scorings),
   )
-  return scenarioScorings.every((scoring) => scoring['primary']?.score !== null)
+  return scenarioScorings.every((scoring) => {
+    const keys = Object.keys(scoring)
+    return keys.every((key) => scoring[key]?.score !== null)
+  })
 }
 
 @Component({
@@ -41,6 +53,7 @@ export class VcSubmissionView implements OnInit {
   submissionBoard?: SubmissionScore
   tests?: Map<string, TestDefinitionRow>
   scenarios?: Map<string, ScenarioDefinitionRow>
+  fields?: Map<string, FieldDefinitionRow>
   customization?: Customization
 
   ownSubmission = false
@@ -91,21 +104,46 @@ export class VcSubmissionView implements OnInit {
       ).body
       this.scenarios = new Map(scenarios?.map((scenario) => [scenario.id, scenario]))
     }
+    // build array of unique field ids from all tests and scenarios
+    const fieldIdsSet = new Set<string>()
+    this.tests?.forEach((test) => {
+      test.field_ids.forEach((fieldId) => {
+        fieldIdsSet.add(fieldId)
+      })
+    })
+    this.scenarios?.forEach((scenario) => {
+      scenario.field_ids.forEach((fieldId) => {
+        fieldIdsSet.add(fieldId)
+      })
+    })
+    const fieldIds = Array.from(fieldIdsSet)
+    if (fieldIds) {
+      const fields = (
+        await this.apiService.get('/definitions/fields/:field_ids', {
+          params: { field_ids: fieldIds.join(',') },
+        })
+      ).body
+      this.fields = new Map(fields?.map((field) => [field.id, field]))
+    }
     // build table rows from board
     this.rows = []
     // append one line per test
-    this.submissionBoard?.test_scorings.forEach((test) => {
+    this.submissionBoard?.test_scorings.forEach((testScore) => {
+      const test = this.tests?.get(testScore.test_id)
+      const fields = test?.field_ids.map((fieldId) => this.fields?.get(fieldId))
       this.rows.push({
-        cells: [{ text: this.tests!.get(test.test_id)?.name ?? 'NA' }, { text: '' }, { scorings: test.scorings }],
+        cells: [{ text: test?.name ?? 'NA' }, { text: '' }, { scorings: testScore.scorings, fieldDefinitions: fields }],
       })
       //... and per scenario
-      test.scenario_scorings.forEach((scenario) => {
+      testScore.scenario_scorings.forEach((scenarioScore) => {
+        const scenario = this.scenarios?.get(scenarioScore.scenario_id)
+        const fields = scenario?.field_ids.map((fieldId) => this.fields?.get(fieldId))
         this.rows.push({
-          routerLink: ['results', test.test_id, scenario.scenario_id],
+          routerLink: ['results', testScore.test_id, scenarioScore.scenario_id],
           cells: [
             { text: '' },
-            { text: this.scenarios!.get(scenario.scenario_id)?.name ?? 'NA' },
-            { scorings: scenario.scorings },
+            { text: scenario?.name ?? 'NA' },
+            { scorings: scenarioScore.scorings, fieldDefinitions: fields },
           ],
         })
       })

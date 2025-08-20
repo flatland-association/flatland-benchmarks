@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { BenchmarkDefinitionRow, SubmissionRow, TestDefinitionRow } from '@common/interfaces'
+import { BenchmarkDefinitionRow, FieldDefinitionRow, SubmissionRow, TestDefinitionRow } from '@common/interfaces'
 import { ElementType } from '@common/utility-types'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
@@ -33,6 +33,7 @@ export class VcKpiView implements OnInit {
 
   benchmark?: BenchmarkDefinitionRow
   test?: TestDefinitionRow
+  fields?: FieldDefinitionRow[]
   submissions?: Map<string, SubmissionRow>
   customization?: Customization
 
@@ -73,6 +74,15 @@ export class VcKpiView implements OnInit {
         ).body?.map((submission) => [submission.id, submission]),
       )
     }
+    // only one test, means only one relevant source of field_ids
+    const fieldIds = this.test?.field_ids
+    if (fieldIds) {
+      this.fields = (
+        await this.apiService.get('/definitions/fields/:field_ids', {
+          params: { field_ids: fieldIds.join(',') },
+        })
+      ).body
+    }
     // build table rows from board
     this.rows =
       board?.items.map((item) => {
@@ -80,9 +90,9 @@ export class VcKpiView implements OnInit {
         return {
           routerLink: ['/', 'submissions', item.submission_id],
           cells: [
-            { text: testScoring?.['primary']?.rank ?? '-' },
+            { text: testScoring?.[this.fields?.at(0)?.key ?? 'primary']?.rank ?? '-' },
             { text: this.submissions!.get(item.submission_id)?.name ?? 'NA' },
-            { scorings: testScoring },
+            { scorings: testScoring, fieldDefinitions: this.fields },
           ],
         } satisfies ElementType<typeof this.rows>
       }) ?? []

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { Component, Input } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
-import { Scorings } from '@common/interfaces'
+import { FieldDefinitionRow, Scorings } from '@common/interfaces'
 
 /**
  * Input in a cell.
@@ -34,17 +34,24 @@ export type TableCell =
       /** Text to display in the cell. */
       text: string | number | null
       scorings?: undefined
+      fieldDefinitions?: undefined
       input?: undefined
     }
   | {
       text?: undefined
       /** Scorings to display in the cell. */
       scorings: Scorings | null
+      /**
+       * Meta data (field definitions) of Scorings to display. Optional, default
+       * is to display `primary`.
+       */
+      fieldDefinitions?: (FieldDefinitionRow | undefined)[]
       input?: undefined
     }
   | {
       text?: undefined
       scorings?: undefined
+      fieldDefinitions?: undefined
       /** Input field to display in the cell. */
       input: TableInput
     }
@@ -72,4 +79,9 @@ export class TableComponent {
 
   @Input()
   rows: TableRow[] = []
+
+  getPrimaryScoring(cell: TableCell) {
+    const primaryKey = cell.fieldDefinitions?.at(0)?.key ?? 'primary'
+    return cell.scorings?.[primaryKey]
+  }
 }
