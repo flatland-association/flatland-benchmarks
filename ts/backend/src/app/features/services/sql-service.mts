@@ -11,11 +11,6 @@ export class SqlService extends Service {
    * upon invoking `query`.
    */
   notices?: postgres.Notice[]
-  /**
-   * Postgres errors that occurred during `query`. Is reset to `undefined`
-   * upon invoking `query`.
-   */
-  errors?: postgres.Error[]
 
   /**
    * Postgres statement from `query`. Is reset to `undefined` upon invoking
@@ -27,6 +22,7 @@ export class SqlService extends Service {
    * Template tag to make SQL queries. All notices and errors raised during
    * query execution are written to {@link notices} and {@link errors}
    * respectively, which in turn are emptied at the start of `query`.
+   * @throws postgres.Error
    * @example
    * ```ts
    * sqlService.query`DROP DATABASE benchmarks`
@@ -45,18 +41,11 @@ export class SqlService extends Service {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   query(strings: TemplateStringsArray, ...params: postgres.ParameterOrFragment<any>[]) {
     this.notices = undefined
-    this.errors = undefined
     this.statement = undefined
-    return this._query(strings, ...params)
-      .then((q) => {
-        this.statement = q.statement
-        return q
-      })
-      .catch((error) => {
-        this.errors ??= []
-        this.errors.push(error)
-        return []
-      })
+    return this._query(strings, ...params).then((q) => {
+      this.statement = q.statement
+      return q
+    })
   }
 
   private _query
@@ -95,7 +84,6 @@ export class SqlService extends Service {
 export function dbgSqlState(sql: SqlService) {
   return {
     notices: sql.notices,
-    errors: sql.errors,
     statement: sql.statement,
   }
 }

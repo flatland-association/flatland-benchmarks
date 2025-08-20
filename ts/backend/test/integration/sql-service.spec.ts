@@ -25,21 +25,17 @@ describe.sequential('SQL Service (with Postgres)', () => {
 
   test('should error on faulty query (syntax error)', async () => {
     const sql = SqlService.getInstance()
-    const rows = await sql.query`
+    await expect(sql.query`
       SELEC
-    `
-    expect(rows).toEqual([])
-    expect(sql.errors).toBeTruthy()
+    `).rejects.toThrow()
   })
 
   test('should error on faulty query (schema error)', async () => {
     const sql = SqlService.getInstance()
     // Should this test ever fail maybe give the developer who decided to add a column named "shit emoji" to the benchmark table a stern talking-to.
-    const rows = await sql.query`
+    await expect(sql.query`
       SELECT 💩 FROM benchmarks
-    `
-    expect(rows).toEqual([])
-    expect(sql.errors).toBeTruthy()
+    `).rejects.toThrow()
   })
 
   test('should write notices to debug object', async () => {
