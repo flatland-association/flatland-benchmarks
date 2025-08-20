@@ -266,15 +266,15 @@ export class ResultsController extends Controller {
     // save in db
     const sql = SqlService.getInstance()
     // TODO: abstract transaction as `sql.transactionQuery` or similar...
-    await sql.query`BEGIN`
-    await sql.query`
-      INSERT INTO results ${sql.fragment(resultRows)}
-    `
-    const ok = !sql.errors
-    if (ok) {
+    try {
+      await sql.query`BEGIN`
+      await sql.query`
+        INSERT INTO results ${sql.fragment(resultRows)}
+      `
       await sql.query`COMMIT`
       this.respond(req, res, {}, 201)
-    } else {
+    } catch (error) {
+      logger.error(error)
       this.requestError(req, res, { text: 'Some results could not be inserted, transaction aborted.' })
     }
   }
