@@ -65,7 +65,7 @@ export class MySubmissionsView implements OnInit {
     this.rows =
       this.submissions?.map((submission) => {
         return {
-          routerLink: ['/', 'vc-evaluation-objective', submission.test_ids[0], 'my-submissions'],
+          routerLink: ['/', 'vc-evaluation-objective', submission.benchmark_id, 'my-submissions'],
           cells: [
             { text: submission.name },
             { text: this.benchmarks?.get(submission.benchmark_id)?.name ?? 'NA' },

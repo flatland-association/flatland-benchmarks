@@ -5,6 +5,7 @@ import {
   BenchmarkDefinitionRow,
   BenchmarkGroupDefinitionRow,
   CampaignOverview,
+  FieldDefinitionRow,
   SubmissionRow,
   TestDefinitionRow,
 } from '@common/interfaces'
@@ -39,6 +40,7 @@ export class VcCampaignView implements OnInit {
   group?: BenchmarkGroupDefinitionRow
   benchmarks?: Map<string, BenchmarkDefinitionRow>
   tests?: Map<string, TestDefinitionRow>
+  fields?: Map<string, FieldDefinitionRow>
   submissions?: Map<string, SubmissionRow>
   campaignOverview?: CampaignOverview
   customization?: Customization
@@ -76,16 +78,33 @@ export class VcCampaignView implements OnInit {
         ).body?.map((benchmark) => [benchmark.id, benchmark]),
       )
     }
+    // build array of unique field ids from all benchmarks
+    const fieldIdsSet = new Set<string>()
+    this.benchmarks?.forEach((benchmark) => {
+      benchmark.field_ids.forEach((fieldId) => {
+        fieldIdsSet.add(fieldId)
+      })
+    })
+    const fieldIds = Array.from(fieldIdsSet)
+    if (fieldIds) {
+      const fields = (
+        await this.apiService.get('/definitions/fields/:field_ids', {
+          params: { field_ids: fieldIds.join(',') },
+        })
+      ).body
+      this.fields = new Map(fields?.map((field) => [field.id, field]))
+    }
     // build table rows from board
     this.rows =
       this.campaignOverview?.items.map((item) => {
         const benchmark = this.benchmarks?.get(item.benchmark_id)
+        const fields = benchmark?.field_ids.map((fieldId) => this.fields?.get(fieldId))
         return {
           routerLink: ['/', 'vc-evaluation-objective', item.benchmark_id],
           cells: [
             { text: benchmark?.name ?? 'NA' },
             { text: benchmark?.test_ids.length ?? 'NA' },
-            { scorings: item.scorings },
+            { scorings: item.scorings, fieldDefinitions: fields },
           ],
         }
       }) ?? []

@@ -2,7 +2,13 @@ import { DatePipe } from '@angular/common'
 import { Component, inject, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { BenchmarkDefinitionRow, SubmissionRow, SubmissionScore, TestDefinitionRow } from '@common/interfaces'
+import {
+  BenchmarkDefinitionRow,
+  FieldDefinitionRow,
+  SubmissionRow,
+  SubmissionScore,
+  TestDefinitionRow,
+} from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
@@ -37,6 +43,7 @@ export class VcMySubmissionsView implements OnInit {
   submissions?: SubmissionRow[]
   leaderboardItems?: Map<string, SubmissionScore>
   tests?: Map<string, TestDefinitionRow>
+  fields?: (FieldDefinitionRow | undefined)[]
   customization?: Customization
 
   columns: TableColumn[] = [{ title: 'Name' }, { title: 'KPI' }, { title: 'Started' }, { title: 'Score' }]
@@ -73,6 +80,15 @@ export class VcMySubmissionsView implements OnInit {
         params: { benchmark_ids: this.benchmarkId },
       })
     ).body?.at(0)
+    // only one benchmark, means only one relevant source of field_ids
+    const fieldIds = this.benchmark?.field_ids
+    if (fieldIds) {
+      this.fields = (
+        await this.apiService.get('/definitions/fields/:field_ids', {
+          params: { field_ids: fieldIds.join(',') },
+        })
+      ).body
+    }
     // gather unique test ids, load, transform to map (uuid: test)
     const testIds = Array.from(new Set(this.submissions?.map((submission) => submission.test_ids[0])))
     const tests = (
@@ -93,7 +109,7 @@ export class VcMySubmissionsView implements OnInit {
             { text: submission.name },
             { text: this.tests?.get(submission.test_ids[0])?.name ?? 'NA' },
             { text: startedAtStr },
-            isScored ? { scorings: leaderboardItem!.scorings } : { text: '⚠️' },
+            isScored ? { scorings: leaderboardItem!.scorings, fieldDefinitions: this.fields } : { text: '⚠️' },
           ],
         }
       }) ?? []

@@ -1,7 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { BenchmarkDefinitionRow, CampaignItemOverview, SubmissionRow, TestDefinitionRow } from '@common/interfaces'
+import {
+  BenchmarkDefinitionRow,
+  CampaignItemOverview,
+  FieldDefinitionRow,
+  SubmissionRow,
+  TestDefinitionRow,
+} from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
@@ -32,6 +38,7 @@ export class VcEvaluationObjectiveView implements OnInit {
   benchmarkId: string
   benchmark?: BenchmarkDefinitionRow
   tests?: Map<string, TestDefinitionRow>
+  fields?: Map<string, FieldDefinitionRow>
   submissions?: Map<string, SubmissionRow>
   campaignItemOverview?: CampaignItemOverview
   customization?: Customization
@@ -79,12 +86,30 @@ export class VcEvaluationObjectiveView implements OnInit {
         ).body?.map((submission) => [submission.id, submission]),
       )
     }
+    // build array of unique field ids from all tests
+    const fieldIdsSet = new Set<string>()
+    this.tests?.forEach((test) => {
+      test.field_ids.forEach((fieldId) => {
+        fieldIdsSet.add(fieldId)
+      })
+    })
+    const fieldIds = Array.from(fieldIdsSet)
+    if (fieldIds) {
+      const fields = (
+        await this.apiService.get('/definitions/fields/:field_ids', {
+          params: { field_ids: fieldIds.join(',') },
+        })
+      ).body
+      this.fields = new Map(fields?.map((field) => [field.id, field]))
+    }
     // build table rows from board
     this.rows =
       this.campaignItemOverview?.items.map((item) => {
+        const test = this.tests?.get(item.test_id)
+        const fields = test?.field_ids.map((fieldId) => this.fields?.get(fieldId))
         return {
           routerLink: item.test_id,
-          cells: [{ text: this.tests?.get(item.test_id)?.name ?? 'NA' }, { scorings: item.scorings }],
+          cells: [{ text: test?.name ?? 'NA' }, { scorings: item.scorings, fieldDefinitions: fields }],
         }
       }) ?? []
   }
