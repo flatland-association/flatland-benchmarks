@@ -111,6 +111,23 @@ def gen_sql(
     print(benchmark_group_definitions)
 
 
+def gen_ai4realnet_from_csv(csv):
+  df = pd.read_csv(csv, sep=";")  # , on_bad_lines="skip", )
+  print(df)
+  for _, row in df.iterrows():
+    print(row)
+    gen_sql(
+      num_levels_per_test=1,
+      num_tests=1,
+      benchmark_group_id="0ca46887-897a-463f-bf83-c6cd6269a976",
+      benchmark_name=row["Evaluation Objective"],
+      fields=[["measurement", "NANSUM"]],
+      test_descriptions=[row["KPI"]],
+      test_type=row[7]
+    )
+
+
 if __name__ == '__main__':
-  gen_ai4realnet_playground()
-  gen_flatland3_benchmarks()
+  # gen_ai4realnet_playground()
+  # gen_flatland3_benchmarks()
+  gen_ai4realnet_from_csv(csv="KPI per Benchmark(Tabelle1).csv")
