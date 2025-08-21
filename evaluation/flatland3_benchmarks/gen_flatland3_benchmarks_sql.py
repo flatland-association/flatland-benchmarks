@@ -21,7 +21,7 @@ def gen_ai4realnet_playground():
 
   fields = [["normalized_reward", "NANSUM"], ["percentage_complete", "NANMEAN"]]
 
-  gen_sql(NUM_LEVELS_PER_TEST, NUM_TESTS, benchmark_group_id, benchmark_name, fields, test_descriptions, test_type)
+  gen_sql(NUM_LEVELS_PER_TEST, benchmark_group_id, benchmark_name, fields, test_descriptions, test_type)
 
 
 def gen_flatland3_benchmarks():
@@ -35,22 +35,20 @@ def gen_flatland3_benchmarks():
   benchmark_group_id = None
   benchmark_name = "Round 1"
   fields = [["normalized_reward", "NANSUM"], ["percentage_complete", "NANMEAN"]]
-  gen_sql(NUM_LEVELS_PER_TEST, NUM_TESTS, benchmark_group_id, benchmark_name, fields, test_descriptions, test_type)
+  gen_sql(NUM_LEVELS_PER_TEST, benchmark_group_id, benchmark_name, fields, test_descriptions, test_type)
 
 
-def gen_sql(
-  num_levels_per_test,
-  num_tests,
-  benchmark_group_id,
-  benchmark_name,
-  fields,
-  test_descriptions,
-  test_type
-):
+def gen_sql(num_levels_per_test, benchmark_group_id, benchmark_name, fields, test_descriptions, test_type):
   field_definitions = ""
   scenario_fields = []
   test_fields = []
   benchmark_fields = []
+
+  test_ids = []
+  for _ in test_descriptions:
+    test_id = str(uuid.uuid4())
+    test_ids.append(test_id)
+
   for key, agg_func in fields:
     scenario_field = str(uuid.uuid4())
     test_field = str(uuid.uuid4())
@@ -72,11 +70,11 @@ def gen_sql(
     VALUES
   """
   scenario_ids = defaultdict(lambda: [])
-  for i in range(num_tests):
+  for i, test_id in enumerate(test_ids):
     for j in range(num_levels_per_test):
       scenario_id = str(uuid.uuid4())
-      scenario_ids[i].append(scenario_id)
-      scenario_definitions += f"""  ('{scenario_id}', 'Test {i} Level {j}', 'Test {i} Level {j}', array['{scenario_field.join("\', \'")}']::uuid[]),
+      scenario_ids[test_id].append(scenario_id)
+      scenario_definitions += f"""  ('{scenario_id}', 'Test {i} Level {j}', 'Test {i} Level {j}', array['{"\', \'".join(scenario_fields)}']::uuid[]),
 
   """
   scenario_definitions = re.sub(",\n$", ";", scenario_definitions)
@@ -84,11 +82,8 @@ def gen_sql(
     (id, name, description, field_ids, scenario_ids, loop)
     VALUES
   """
-  test_ids = []
-  for i, label in enumerate(test_descriptions):
-    test_id = str(uuid.uuid4())
-    test_ids.append(test_id)
-    test_definitions += f"""  ('{test_id}', 'Test {i}', '{label}', array['{"\', \'".join(test_fields)}']::uuid[], array['{"', '".join(scenario_ids[i])}']::uuid[], '{test_type}'),
+  for (i, label), test_id in zip(enumerate(test_descriptions), test_ids):
+    test_definitions += f"""  ('{test_id}', 'Test {i}', '{label}', array['{"\', \'".join(test_fields)}']::uuid[], array['{"', '".join(scenario_ids[test_id])}']::uuid[], '{test_type}'),
 
   """
   test_definitions = re.sub(",\n$", ";", test_definitions)
@@ -110,21 +105,40 @@ def gen_sql(
 
     print(benchmark_group_definitions)
 
+  return {
+    "benchmarks": [{
+      "id": benchmark_id,
+      "name": benchmark_name,
+      "fields": benchmark_fields,
+      "tests": [{
+        "id": test_id,
+        # "name": "",
+        "fields": test_fields,
+        "scenarios": [{
+          "id": scenario_id,
+          # name
+          "fields": scenario_fields,
+        } for scenario_id in scenario_ids[test_id]]
+
+      } for test_id in test_ids]
+    }]
+  }
+
 
 def gen_ai4realnet_from_csv(csv):
   df = pd.read_csv(csv, sep=";")  # , on_bad_lines="skip", )
   print(df)
+  rets = []
   for _, row in df.iterrows():
     print(row)
-    gen_sql(
-      num_levels_per_test=1,
-      num_tests=1,
-      benchmark_group_id="0ca46887-897a-463f-bf83-c6cd6269a976",
-      benchmark_name=row["Evaluation Objective"],
-      fields=[["measurement", "NANSUM"]],
-      test_descriptions=[row["KPI"]],
-      test_type=row[7]
-    )
+    ret = gen_sql(num_levels_per_test=1, benchmark_group_id="0ca46887-897a-463f-bf83-c6cd6269a976", benchmark_name=row["Evaluation Objective"],
+                  fields=[["measurement", "NANSUM"]], test_descriptions=[row["KPI"]], test_type=row[7])
+    rets.append(ret)
+  for ret in rets:
+    for benchmark in ret["benchmarks"]:
+      for test in benchmark["tests"]:
+        for scenario in test["scenarios"]:
+          print(f"benchmark_id={benchmark['id']}, benchmark_name=\"{benchmark['name']}\", test_id={test['id']}, scenario_id={scenario['id']}")
 
 
 if __name__ == '__main__':
