@@ -6,7 +6,7 @@ import { Service } from './service.mjs'
  * Interface wrapping postgres' sql template tag in `query`, which is itself
  * also a template tag, but returns the resulting rows.
  */
-export interface WrappedSql {
+export interface WrappedSql<SQL extends postgres.Sql> {
   // must extends object | undefined otherwise it's not usable in RowList
   /**
    * Template tag to make SQL queries. Side effects depend on implementation.
@@ -22,13 +22,13 @@ export interface WrappedSql {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ...params: postgres.ParameterOrFragment<any>[]
   ): Promise<postgres.RowList<T[]>>
-  fragment: postgres.TransactionSql
+  fragment: SQL
 }
 
 /**
  * Service class providing common SQL functionality.
  */
-export class SqlService extends Service {
+export class SqlService extends Service implements WrappedSql<postgres.Sql> {
   /**
    * Postgres notices that occurred during `query`. Is reset to `undefined`
    * upon invoking `query` or `transaction`.
@@ -52,20 +52,14 @@ export class SqlService extends Service {
    * ```
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates | Tagged Templates}
    */
-  query(
+  query<T extends object | undefined = postgres.Row>(
     strings: TemplateStringsArray,
-    // TypeScript won't infer fragment type if not using `any`
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...params: postgres.ParameterOrFragment<any>[] // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ): Promise<postgres.RowList<postgres.Row[]> | any[]>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  query<T>(strings: TemplateStringsArray, ...params: postgres.ParameterOrFragment<any>[]): Promise<T[]>
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  query(strings: TemplateStringsArray, ...params: postgres.ParameterOrFragment<any>[]) {
+    ...params: postgres.ParameterOrFragment<any>[]
+  ): Promise<postgres.RowList<T[]>> {
     this.notices = undefined
     this.statements = undefined
-    return this._query(strings, ...params).then((q) => {
+    return this._query<T[]>(strings, ...params).then((q) => {
       this.statements ??= []
       this.statements.push(q.statement)
       return q
@@ -93,11 +87,11 @@ export class SqlService extends Service {
    * })
    * ```
    */
-  async transaction(transactions: (sql: WrappedSql) => Promise<unknown>) {
+  async transaction(transactions: (sql: WrappedSql<postgres.TransactionSql>) => Promise<unknown>) {
     this.notices = undefined
     this.statements = undefined
     await this._query.begin(async (postgresql) => {
-      const wrappedSql: WrappedSql = {
+      const wrappedSql: WrappedSql<postgres.TransactionSql> = {
         query: <T extends object | undefined>(
           strings: TemplateStringsArray,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any

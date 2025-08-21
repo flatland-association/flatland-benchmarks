@@ -12,7 +12,7 @@ describe.sequential('SQL Service (with Postgres)', () => {
     const rows = await sql.query`
       SELECT NOW()
     `
-    expect(rows.at(0)?.now).toBeInstanceOf(Date)
+    expect(rows.at(0)?.['now']).toBeInstanceOf(Date)
   })
 
   test('should execute query on set up schema', async () => {
