@@ -15,6 +15,63 @@ describe.sequential('Results controller', () => {
     controller = new ControllerTestAdapter(ResultsController, testConfig)
   })
 
+  test('should allow posting new results', async () => {
+    const res = await controller.testPost(
+      '/results/submissions/:submission_id/tests/:test_ids',
+      {
+        params: {
+          submission_id: '5fa91da5-127b-408c-8863-a3ac670030b3',
+          test_ids: 'aeabd5b9-4e86-4c7a-859f-a32ff1be5516',
+        },
+        // The controller currently does not check if
+        // a) a field of that name exists
+        // b) the scenario has a field with that name in its fields array
+        // c) the submission references the test or scenario
+        // That's why this test works. If either of above change, update test.
+        //@ts-expect-error type
+        body: { data: [{ scenario_id: '8fba6834-cd86-4bca-b3b5-f14d6c54d92f', secondary: 1.0, tertiary: 3.14 }] },
+      },
+      testUserJwt,
+    )
+    expect(res.status).toBe(201)
+    expect(res.body.body).toEqual({})
+  })
+
+  test('should reject posting results that already exist', async () => {
+    const res = await controller.testPost(
+      '/results/submissions/:submission_id/tests/:test_ids',
+      {
+        params: {
+          submission_id: '5fa91da5-127b-408c-8863-a3ac670030b3',
+          test_ids: 'aeabd5b9-4e86-4c7a-859f-a32ff1be5516',
+        },
+        //@ts-expect-error type
+        body: { data: [{ scenario_id: '8fba6834-cd86-4bca-b3b5-f14d6c54d92f', primary: 1.0 }] },
+      },
+      testUserJwt,
+    )
+    expect(res.status).toBe(400)
+    expect(res.body.error?.text).toContain('results could not be inserted')
+  })
+
+  test('should reject posting results that partially exist', async () => {
+    const res = await controller.testPost(
+      '/results/submissions/:submission_id/tests/:test_ids',
+      {
+        params: {
+          submission_id: '5fa91da5-127b-408c-8863-a3ac670030b3',
+          test_ids: 'aeabd5b9-4e86-4c7a-859f-a32ff1be5516',
+        },
+        // see also comment above in 'should allow posting new results'
+        //@ts-expect-error type
+        body: { data: [{ scenario_id: '8fba6834-cd86-4bca-b3b5-f14d6c54d92f', primary: 1.0, totally_new_score: 7.0 }] },
+      },
+      testUserJwt,
+    )
+    expect(res.status).toBe(400)
+    expect(res.body.error?.text).toContain('results could not be inserted')
+  })
+
   test('should return submission total score', async () => {
     const res = await controller.testGet(
       '/results/submissions/:submission_ids',

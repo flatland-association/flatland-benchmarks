@@ -265,14 +265,13 @@ export class ResultsController extends Controller {
     // TODO: check that all defined fields are present
     // save in db
     const sql = SqlService.getInstance()
-    // TODO: abstract transaction as `sql.transactionQuery` or similar...
     try {
-      await sql.query`BEGIN`
-      await sql.query`
-        INSERT INTO results ${sql.fragment(resultRows)}
-      `
-      await sql.query`COMMIT`
-      this.respond(req, res, {}, 201)
+      await sql.transaction(async (sql) => {
+        await sql.query`
+          INSERT INTO results ${sql.fragment(resultRows)}
+        `
+      })
+      this.respond(req, res, {}, undefined, 201)
     } catch (error) {
       logger.error(error)
       this.requestError(req, res, { text: 'Some results could not be inserted, transaction aborted.' })
