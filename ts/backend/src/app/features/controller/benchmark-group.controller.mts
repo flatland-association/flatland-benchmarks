@@ -15,7 +15,7 @@ export class BenchmarkGroupController extends Controller {
 
   /**
    * @swagger
-   * /benchmark-groups:
+   * /definitions/benchmark-groups:
    *  get:
    *    description: Lists benchmark-groups.
    *    responses:
@@ -61,7 +61,7 @@ export class BenchmarkGroupController extends Controller {
 
   /**
    * @swagger
-   * /benchmark-groups/{group_ids}:
+   * /definitions/benchmark-groups/{group_ids}:
    *  get:
    *    description: Returns benchmark-groups with ID in `group_id`.
    *    parameters:
