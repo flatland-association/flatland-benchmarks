@@ -180,6 +180,7 @@ services:
       - |
         set -euxo pipefail
         pwd
+        python -m pip install -r /app/fab-clientlib/requirements.txt
         python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
     build:
       # install sudo for DinD
