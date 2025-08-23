@@ -175,7 +175,12 @@ services:
   flatland3-benchmarks-orchestrator:
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
-    command: python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
+    entrypoint: [ "/bin/bash","-c" ]
+    command:
+      - |
+        set -euxo pipefail
+        pwd
+        python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
     build:
       # install sudo for DinD
       dockerfile: docker/flatland3_benchmarks/orchestrator/Dockerfile
