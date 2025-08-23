@@ -90,7 +90,7 @@ def test_health_live_get():
 # GET /results/benchmark/{benchmark_id}
 @pytest.mark.usefixtures("test_containers_fixture")
 def test_results_benchmark():
-  benchmark_id = '20ccc7c1-034c-4880-8946-bffc3fed1359'
+  benchmark_id = uuid.UUID('20ccc7c1-034c-4880-8946-bffc3fed1359')
 
   token = backend_application_flow(
     client_id='fab-client-credentials',
@@ -104,7 +104,7 @@ def test_results_benchmark():
   assert len(benchmark_results.body) == 1
   assert benchmark_results.body[0].benchmark_id == benchmark_id
   assert len(benchmark_results.body[0].items) >= 1
-  assert benchmark_results.body[0].items[0].submission_id == "db5eaa85-3304-4804-b76f-14d23adb5d4c"
+  assert benchmark_results.body[0].items[0].submission_id == uuid.UUID("db5eaa85-3304-4804-b76f-14d23adb5d4c")
   assert len(benchmark_results.body[0].items[0].scorings) == 2
   assert benchmark_results.body[0].items[0].scorings["primary"]["score"] == 200
   assert benchmark_results.body[0].items[0].scorings["secondary"]["score"] == 0.9
@@ -114,8 +114,8 @@ def test_results_benchmark():
 # GET /results/benchmarks/{benchmark_id}/tests/{test_id}
 @pytest.mark.usefixtures("test_containers_fixture")
 def test_results_benchmarks_benchmark_id_test_id():
-  benchmark_id = "c5145011-ce69-4679-8694-e1dbeb1ee4bb"
-  first_test_id = "aeabd5b9-4e86-4c7a-859f-a32ff1be5516"
+  benchmark_id = uuid.UUID("c5145011-ce69-4679-8694-e1dbeb1ee4bb")
+  first_test_id = uuid.UUID("aeabd5b9-4e86-4c7a-859f-a32ff1be5516")
 
   token = backend_application_flow(
     client_id='fab-client-credentials',
@@ -128,7 +128,7 @@ def test_results_benchmarks_benchmark_id_test_id():
   assert len(response.body) == 1
   assert response.body[0].benchmark_id == benchmark_id
   assert len(response.body[0].items) == 2  # 2 submissions
-  assert response.body[0].items[0].submission_id == "cd4d44bc-d40e-4173-bccb-f04e0be1b2ae"
+  assert response.body[0].items[0].submission_id == uuid.UUID("cd4d44bc-d40e-4173-bccb-f04e0be1b2ae")
 
 
 # GET /submissions/
@@ -140,7 +140,7 @@ def test_submissions_get():
     token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
   )
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
-  response = fab.submissions_get(benchmark_ids=["20ccc7c1-034c-4880-8946-bffc3fed1359"])
+  response = fab.submissions_get(benchmark_ids=[uuid.UUID("20ccc7c1-034c-4880-8946-bffc3fed1359")])
   assert len(response.body) >= 1
   assert response.body[0].id == "db5eaa85-3304-4804-b76f-14d23adb5d4c"
   assert response.body[0].benchmark_id == "20ccc7c1-034c-4880-8946-bffc3fed1359"
@@ -157,7 +157,7 @@ def test_submissions_uuid_get():
     token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
   )
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
-  response = fab.submissions_submission_ids_get(submission_ids=["db5eaa85-3304-4804-b76f-14d23adb5d4c"])
+  response = fab.submissions_submission_ids_get(submission_ids=[uuid.UUID("db5eaa85-3304-4804-b76f-14d23adb5d4c")])
   assert len(response.body) == 1
   assert response.body[0].id == "db5eaa85-3304-4804-b76f-14d23adb5d4c"
   assert response.body[0].benchmark_id == "20ccc7c1-034c-4880-8946-bffc3fed1359"
@@ -169,8 +169,8 @@ def test_submissions_uuid_get():
 # GET /results/campaign-items/{benchmark_id}
 @pytest.mark.usefixtures("test_containers_fixture")
 def test_results_campaign_items_benchmark_id():
-  benchmark_id = "c5145011-ce69-4679-8694-e1dbeb1ee4bb"
-  first_test_id = "aeabd5b9-4e86-4c7a-859f-a32ff1be5516"
+  benchmark_id = uuid.UUID("c5145011-ce69-4679-8694-e1dbeb1ee4bb")
+  first_test_id = uuid.UUID("aeabd5b9-4e86-4c7a-859f-a32ff1be5516")
 
   token = backend_application_flow(
     client_id='fab-client-credentials',
@@ -193,8 +193,8 @@ def test_results_campaign_items_benchmark_id():
 # GET /results/submission/{submission_id}/tests/{test_id}/scenario/{scenario_id}
 @pytest.mark.usefixtures("test_containers_fixture")
 def test_submission_roundtrip():
-  benchmark_id = '20ccc7c1-034c-4880-8946-bffc3fed1359'
-  test_id = '557d9a00-7e6d-410b-9bca-a017ca7fe3aa'
+  benchmark_id = uuid.UUID('20ccc7c1-034c-4880-8946-bffc3fed1359')
+  test_id = uuid.UUID('557d9a00-7e6d-410b-9bca-a017ca7fe3aa')
 
   results = [
     ('1ae61e4f-201b-4e97-a399-5c33fb75c57e', '557d9a00-7e6d-410b-9bca-a017ca7fe3aa', 'db5eaa85-3304-4804-b76f-14d23adb5d4c', 'primary', 100),
@@ -268,7 +268,7 @@ def test_submission_roundtrip():
 
   scenario_results = fab.results_submissions_submission_id_scenario_scenario_ids_get(
     submission_id=submission_id,
-    scenario_ids=["1ae61e4f-201b-4e97-a399-5c33fb75c57e"]
+    scenario_ids=[uuid.UUID("1ae61e4f-201b-4e97-a399-5c33fb75c57e")]
   )
   assert len(scenario_results.body) == 1
   assert scenario_results.body[0].scenario_id == "1ae61e4f-201b-4e97-a399-5c33fb75c57e"
@@ -277,7 +277,7 @@ def test_submission_roundtrip():
 
   scenario_results2 = fab.results_submissions_submission_id_scenario_scenario_ids_get(
     submission_id=submission_id,
-    scenario_ids=["564ebb54-48f0-4837-8066-b10bb832af9d"]
+    scenario_ids=[uuid.UUID("564ebb54-48f0-4837-8066-b10bb832af9d")]
   )
   assert len(scenario_results2.body) == 1
   assert scenario_results2.body[0].scenario_id == "564ebb54-48f0-4837-8066-b10bb832af9d"
@@ -295,7 +295,7 @@ def test_submission_roundtrip():
 # GET /definitions/tests/{ids}
 @pytest.mark.usefixtures("test_containers_fixture")
 def test_definitions_tests_ids_get():
-  test_id = '557d9a00-7e6d-410b-9bca-a017ca7fe3aa'
+  test_id = uuid.UUID('557d9a00-7e6d-410b-9bca-a017ca7fe3aa')
 
   token = backend_application_flow(
     client_id='fab-client-credentials',
@@ -315,7 +315,7 @@ def test_definitions_tests_ids_get():
 # GET /definitions/benchmarks/{ids}
 @pytest.mark.usefixtures("test_containers_fixture")
 def test_definitions_benchmarks_ids_get():
-  benchmark_ids = ['20ccc7c1-034c-4880-8946-bffc3fed1359','c5145011-ce69-4679-8694-e1dbeb1ee4bb']
+  benchmark_ids = [uuid.UUID('20ccc7c1-034c-4880-8946-bffc3fed1359'), uuid.UUID('c5145011-ce69-4679-8694-e1dbeb1ee4bb')]
 
   token = backend_application_flow(
     client_id='fab-client-credentials',
@@ -345,7 +345,7 @@ def test_definitions_benchmarks_get():
   benchmarks = fab.definitions_benchmarks_get()
   assert len(benchmarks.body) == 7
   assert benchmarks.body[0].id == "255fb1e8-af57-45a0-97dc-ecc3e6721b4f"
-  assert benchmarks.body[0].test_ids == ['99f5a8f8-38d9-4a8c-9630-4789b0225ec0',
-                                                    'f23794a2-dcf2-4699-bb5f-534bcea5ecf0', ]
+  assert benchmarks.body[0].test_ids == [uuid.UUID('99f5a8f8-38d9-4a8c-9630-4789b0225ec0'),
+                                         uuid.UUID('f23794a2-dcf2-4699-bb5f-534bcea5ecf0'), ]
   assert benchmarks.body[0].name == 'AI-human learning curves'
   assert benchmarks.body[0].description == 'AI-human learning curves'

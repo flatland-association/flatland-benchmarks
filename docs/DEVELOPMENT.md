@@ -83,7 +83,7 @@ API specifications can be written in YAML or JSON. The complete OpenAPI Specific
 2. Run
 
 ```
-python -m pip install openapi-generator-cli
+python -m pip install openapi-generator-cli==7.15.0
 openapi-generator-cli generate -i openapi.json -g python --package-name fab_clientlib
 ```
 

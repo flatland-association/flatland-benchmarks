@@ -84,7 +84,7 @@ jobs:
       - name: Regenerate client lib
         working-directory: fab-clientlib
         run: |
-          python -m pip install openapi-generator-cli
+          python -m pip install openapi-generator-cli==7.15.0
           openapi-generator-cli generate -i openapi.json -g python -c .openapi-generator-config.json --package-name fab_clientlib
       - name: Install client lib
         working-directory: fab-clientlib
@@ -136,7 +136,7 @@ jobs:
       - name: Regenerate client lib
         working-directory: fab-clientlib
         run: |
-          python -m pip install openapi-generator-cli
+          python -m pip install openapi-generator-cli==7.15.0
           openapi-generator-cli generate -i openapi.json -g python -c .openapi-generator-config.json --package-name fab_clientlib
       - name: Install client lib
         working-directory: fab-clientlib
@@ -221,7 +221,7 @@ jobs:
           python-version: 3.13
       - name: validate swagger.json
         run: |
-          python -m pip install openapi-generator-cli
+          python -m pip install openapi-generator-cli==7.15.0
           # workaround for validate always returning 0
           openapi-generator-cli validate -i ts/backend/src/swagger/swagger.json  2> fail.txt
           cat fail.txt
