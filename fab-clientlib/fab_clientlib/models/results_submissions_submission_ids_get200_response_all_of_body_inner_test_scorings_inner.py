@@ -14,21 +14,26 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
-
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner import ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
+
+from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner import \
+  ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner
+
 
 class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner(BaseModel):
     """
     ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
     """ # noqa: E501
-    test_id: Optional[StrictStr] = Field(default=None, description="ID of test.")
+    test_id: Optional[UUID] = Field(default=None, description="ID of test.")
     scorings: Optional[Dict[str, Any]] = Field(default=None, description="Dictionary of test scores.")
     scenario_scorings: Optional[List[ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner]] = None
     __properties: ClassVar[List[str]] = ["test_id", "scorings", "scenario_scorings"]

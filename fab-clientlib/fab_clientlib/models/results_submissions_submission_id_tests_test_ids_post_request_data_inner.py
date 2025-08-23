@@ -14,20 +14,23 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
-
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
+
 
 class ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(BaseModel):
     """
     ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
     """ # noqa: E501
-    scenario_id: Optional[StrictStr] = Field(default=None, description="ID of scenario")
+    scenario_id: Optional[UUID] = Field(default=None, description="ID of scenario")
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["scenario_id"]
 

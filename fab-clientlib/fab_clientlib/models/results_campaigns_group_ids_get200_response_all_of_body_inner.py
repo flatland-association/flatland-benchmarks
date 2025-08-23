@@ -14,21 +14,26 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
-
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner import ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
+
+from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner import \
+  ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner
+
 
 class ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner(BaseModel):
     """
     ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner
     """ # noqa: E501
-    group_id: Optional[StrictStr] = Field(default=None, description="ID of benchmark group.")
+    group_id: Optional[UUID] = Field(default=None, description="ID of benchmark group.")
     items: Optional[List[ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner]] = None
     scorings: Optional[Dict[str, Any]] = Field(default=None, description="Dictionary of group scores")
     __properties: ClassVar[List[str]] = ["group_id", "items", "scorings"]

@@ -62,7 +62,82 @@ __all__ = [
     "SubmissionsPostRequest",
 ]
 
-# import apis into sdk package
+if __import__("typing").TYPE_CHECKING:
+  # import apis into sdk package
+  from fab_clientlib.api.default_api import DefaultApi as DefaultApi
+
+  # import ApiClient
+  from fab_clientlib.api_response import ApiResponse as ApiResponse
+  from fab_clientlib.api_client import ApiClient as ApiClient
+  from fab_clientlib.configuration import Configuration as Configuration
+  from fab_clientlib.exceptions import OpenApiException as OpenApiException
+  from fab_clientlib.exceptions import ApiTypeError as ApiTypeError
+  from fab_clientlib.exceptions import ApiValueError as ApiValueError
+  from fab_clientlib.exceptions import ApiKeyError as ApiKeyError
+  from fab_clientlib.exceptions import ApiAttributeError as ApiAttributeError
+  from fab_clientlib.exceptions import ApiException as ApiException
+
+  # import models into sdk package
+  from fab_clientlib.models.api_response import ApiResponse as ApiResponse
+  from fab_clientlib.models.api_response_error import ApiResponseError as ApiResponseError
+  from fab_clientlib.models.benchmark_groups_get200_response import BenchmarkGroupsGet200Response as BenchmarkGroupsGet200Response
+  from fab_clientlib.models.benchmark_groups_get200_response_all_of_body_inner import \
+    BenchmarkGroupsGet200ResponseAllOfBodyInner as BenchmarkGroupsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.definitions_benchmarks_get200_response import DefinitionsBenchmarksGet200Response as DefinitionsBenchmarksGet200Response
+  from fab_clientlib.models.definitions_benchmarks_get200_response_all_of_body_inner import \
+    DefinitionsBenchmarksGet200ResponseAllOfBodyInner as DefinitionsBenchmarksGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.definitions_tests_test_ids_get200_response import DefinitionsTestsTestIdsGet200Response as DefinitionsTestsTestIdsGet200Response
+  from fab_clientlib.models.definitions_tests_test_ids_get200_response_all_of_body_inner import \
+    DefinitionsTestsTestIdsGet200ResponseAllOfBodyInner as DefinitionsTestsTestIdsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.health_live_get200_response import HealthLiveGet200Response as HealthLiveGet200Response
+  from fab_clientlib.models.health_live_get200_response_all_of_body import HealthLiveGet200ResponseAllOfBody as HealthLiveGet200ResponseAllOfBody
+  from fab_clientlib.models.health_live_get200_response_all_of_body_checks_inner import \
+    HealthLiveGet200ResponseAllOfBodyChecksInner as HealthLiveGet200ResponseAllOfBodyChecksInner
+  from fab_clientlib.models.results_benchmarks_benchmark_ids_get200_response import \
+    ResultsBenchmarksBenchmarkIdsGet200Response as ResultsBenchmarksBenchmarkIdsGet200Response
+  from fab_clientlib.models.results_benchmarks_benchmark_ids_get200_response_all_of_body_inner import \
+    ResultsBenchmarksBenchmarkIdsGet200ResponseAllOfBodyInner as ResultsBenchmarksBenchmarkIdsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response import \
+    ResultsCampaignItemsBenchmarkIdsGet200Response as ResultsCampaignItemsBenchmarkIdsGet200Response
+  from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner import \
+    ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner as ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner_items_inner import \
+    ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner as ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
+  from fab_clientlib.models.results_campaigns_group_ids_get200_response import ResultsCampaignsGroupIdsGet200Response as ResultsCampaignsGroupIdsGet200Response
+  from fab_clientlib.models.results_campaigns_group_ids_get200_response_all_of_body_inner import \
+    ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner as ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.results_submissions_submission_id_scenario_scenario_ids_get200_response import \
+    ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response as ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response
+  from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_get200_response import \
+    ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response as ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response
+  from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_post_request import \
+    ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest as ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest
+  from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_post_request_data_inner import \
+    ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner as ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
+  from fab_clientlib.models.results_submissions_submission_ids_get200_response import \
+    ResultsSubmissionsSubmissionIdsGet200Response as ResultsSubmissionsSubmissionIdsGet200Response
+  from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner import \
+    ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner as ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner import \
+    ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner as ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
+  from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner import \
+    ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner as ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner
+  from fab_clientlib.models.submissions_get200_response import SubmissionsGet200Response as SubmissionsGet200Response
+  from fab_clientlib.models.submissions_get200_response_all_of_body_inner import \
+    SubmissionsGet200ResponseAllOfBodyInner as SubmissionsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.submissions_post200_response import SubmissionsPost200Response as SubmissionsPost200Response
+  from fab_clientlib.models.submissions_post200_response_all_of_body import SubmissionsPost200ResponseAllOfBody as SubmissionsPost200ResponseAllOfBody
+  from fab_clientlib.models.submissions_post_request import SubmissionsPostRequest as SubmissionsPostRequest
+
+else:
+  from lazy_imports import LazyModule, as_package, load
+
+  load(
+    LazyModule(
+      *as_package(__file__),
+      ("__version__", __version__),
+      ("__all__", __all__),
+      """# import apis into sdk package
 from fab_clientlib.api.default_api import DefaultApi as DefaultApi
 
 # import ApiClient
@@ -108,3 +183,9 @@ from fab_clientlib.models.submissions_get200_response_all_of_body_inner import S
 from fab_clientlib.models.submissions_post200_response import SubmissionsPost200Response as SubmissionsPost200Response
 from fab_clientlib.models.submissions_post200_response_all_of_body import SubmissionsPost200ResponseAllOfBody as SubmissionsPost200ResponseAllOfBody
 from fab_clientlib.models.submissions_post_request import SubmissionsPostRequest as SubmissionsPostRequest
+
+""",
+      name=__name__,
+      doc=__doc__,
+    )
+  )

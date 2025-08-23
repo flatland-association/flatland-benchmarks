@@ -12,15 +12,16 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-import warnings
-from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, Tuple, Union
+from typing import List, Optional
+from uuid import UUID
+
+from pydantic import Field
+from pydantic import validate_call, StrictFloat, StrictStr, StrictInt
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
-from typing import List, Optional
-from typing_extensions import Annotated
-from fab_clientlib.models.api_response import ApiResponse
+from fab_clientlib.api_client import ApiClient, RequestSerialized
+from fab_clientlib.api_response import ApiResponse
 from fab_clientlib.models.benchmark_groups_get200_response import BenchmarkGroupsGet200Response
 from fab_clientlib.models.definitions_benchmarks_get200_response import DefinitionsBenchmarksGet200Response
 from fab_clientlib.models.definitions_tests_test_ids_get200_response import DefinitionsTestsTestIdsGet200Response
@@ -28,16 +29,14 @@ from fab_clientlib.models.health_live_get200_response import HealthLiveGet200Res
 from fab_clientlib.models.results_benchmarks_benchmark_ids_get200_response import ResultsBenchmarksBenchmarkIdsGet200Response
 from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response import ResultsCampaignItemsBenchmarkIdsGet200Response
 from fab_clientlib.models.results_campaigns_group_ids_get200_response import ResultsCampaignsGroupIdsGet200Response
-from fab_clientlib.models.results_submissions_submission_id_scenario_scenario_ids_get200_response import ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response
+from fab_clientlib.models.results_submissions_submission_id_scenario_scenario_ids_get200_response import \
+  ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response
 from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_get200_response import ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response
 from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_post_request import ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest
 from fab_clientlib.models.results_submissions_submission_ids_get200_response import ResultsSubmissionsSubmissionIdsGet200Response
 from fab_clientlib.models.submissions_get200_response import SubmissionsGet200Response
 from fab_clientlib.models.submissions_post200_response import SubmissionsPost200Response
 from fab_clientlib.models.submissions_post_request import SubmissionsPostRequest
-
-from fab_clientlib.api_client import ApiClient, RequestSerialized
-from fab_clientlib.api_response import ApiResponse
 from fab_clientlib.rest import RESTResponseType
 
 
@@ -302,7 +301,7 @@ class DefaultApi:
     @validate_call
     def benchmark_groups_group_ids_get(
         self,
-        group_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -369,7 +368,7 @@ class DefaultApi:
     @validate_call
     def benchmark_groups_group_ids_get_with_http_info(
         self,
-        group_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -436,7 +435,7 @@ class DefaultApi:
     @validate_call
     def benchmark_groups_group_ids_get_without_preload_content(
         self,
-        group_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -563,7 +562,7 @@ class DefaultApi:
     @validate_call
     def definitions_benchmarks_benchmark_ids_get(
         self,
-        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -630,7 +629,7 @@ class DefaultApi:
     @validate_call
     def definitions_benchmarks_benchmark_ids_get_with_http_info(
         self,
-        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -697,7 +696,7 @@ class DefaultApi:
     @validate_call
     def definitions_benchmarks_benchmark_ids_get_without_preload_content(
         self,
-        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1071,7 +1070,7 @@ class DefaultApi:
     @validate_call
     def definitions_tests_test_ids_get(
         self,
-        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1138,7 +1137,7 @@ class DefaultApi:
     @validate_call
     def definitions_tests_test_ids_get_with_http_info(
         self,
-        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1205,7 +1204,7 @@ class DefaultApi:
     @validate_call
     def definitions_tests_test_ids_get_without_preload_content(
         self,
-        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1578,8 +1577,8 @@ class DefaultApi:
     @validate_call
     def results_benchmarks_benchmark_id_tests_test_ids_get(
         self,
-        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
-        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of test IDs.")],
+      benchmark_id: Annotated[UUID, Field(description="Benchmark ID.")],
+      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1649,8 +1648,8 @@ class DefaultApi:
     @validate_call
     def results_benchmarks_benchmark_id_tests_test_ids_get_with_http_info(
         self,
-        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
-        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of test IDs.")],
+      benchmark_id: Annotated[UUID, Field(description="Benchmark ID.")],
+      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1720,8 +1719,8 @@ class DefaultApi:
     @validate_call
     def results_benchmarks_benchmark_id_tests_test_ids_get_without_preload_content(
         self,
-        benchmark_id: Annotated[StrictStr, Field(description="Benchmark ID.")],
-        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of test IDs.")],
+      benchmark_id: Annotated[UUID, Field(description="Benchmark ID.")],
+      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1855,7 +1854,7 @@ class DefaultApi:
     @validate_call
     def results_benchmarks_benchmark_ids_get(
         self,
-        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of benchmark IDs.")],
+      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1922,7 +1921,7 @@ class DefaultApi:
     @validate_call
     def results_benchmarks_benchmark_ids_get_with_http_info(
         self,
-        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of benchmark IDs.")],
+      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1989,7 +1988,7 @@ class DefaultApi:
     @validate_call
     def results_benchmarks_benchmark_ids_get_without_preload_content(
         self,
-        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of benchmark IDs.")],
+      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2117,7 +2116,7 @@ class DefaultApi:
     @validate_call
     def results_campaign_items_benchmark_ids_get(
         self,
-        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of benchmark IDs.")],
+      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2184,7 +2183,7 @@ class DefaultApi:
     @validate_call
     def results_campaign_items_benchmark_ids_get_with_http_info(
         self,
-        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of benchmark IDs.")],
+      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2251,7 +2250,7 @@ class DefaultApi:
     @validate_call
     def results_campaign_items_benchmark_ids_get_without_preload_content(
         self,
-        benchmark_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of benchmark IDs.")],
+      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2379,7 +2378,7 @@ class DefaultApi:
     @validate_call
     def results_campaigns_group_ids_get(
         self,
-        group_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2446,7 +2445,7 @@ class DefaultApi:
     @validate_call
     def results_campaigns_group_ids_get_with_http_info(
         self,
-        group_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2513,7 +2512,7 @@ class DefaultApi:
     @validate_call
     def results_campaigns_group_ids_get_without_preload_content(
         self,
-        group_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2641,8 +2640,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_scenario_scenario_ids_get(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        scenario_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of scenario IDs.")],
+      submission_id: Annotated[UUID, Field(description="Submission ID.")],
+      scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of scenario IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2712,8 +2711,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_scenario_scenario_ids_get_with_http_info(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        scenario_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of scenario IDs.")],
+      submission_id: Annotated[UUID, Field(description="Submission ID.")],
+      scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of scenario IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2783,8 +2782,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_scenario_scenario_ids_get_without_preload_content(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        scenario_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of scenario IDs.")],
+      submission_id: Annotated[UUID, Field(description="Submission ID.")],
+      scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of scenario IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2918,8 +2917,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_tests_test_ids_get(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of Test IDs.")],
+      submission_id: Annotated[UUID, Field(description="Submission ID.")],
+      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of Test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2989,8 +2988,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_tests_test_ids_get_with_http_info(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of Test IDs.")],
+      submission_id: Annotated[UUID, Field(description="Submission ID.")],
+      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of Test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3060,8 +3059,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_tests_test_ids_get_without_preload_content(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of Test IDs.")],
+      submission_id: Annotated[UUID, Field(description="Submission ID.")],
+      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of Test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3195,8 +3194,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_tests_test_ids_post(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of test IDs.")],
+      submission_id: Annotated[UUID, Field(description="Submission ID.")],
+      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         results_submissions_submission_id_tests_test_ids_post_request: ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest,
         _request_timeout: Union[
             None,
@@ -3271,8 +3270,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_tests_test_ids_post_with_http_info(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of test IDs.")],
+      submission_id: Annotated[UUID, Field(description="Submission ID.")],
+      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         results_submissions_submission_id_tests_test_ids_post_request: ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest,
         _request_timeout: Union[
             None,
@@ -3347,8 +3346,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_tests_test_ids_post_without_preload_content(
         self,
-        submission_id: Annotated[StrictStr, Field(description="Submission ID.")],
-        test_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of test IDs.")],
+      submission_id: Annotated[UUID, Field(description="Submission ID.")],
+      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         results_submissions_submission_id_tests_test_ids_post_request: ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest,
         _request_timeout: Union[
             None,
@@ -3503,7 +3502,7 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_ids_get(
         self,
-        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
+      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3570,7 +3569,7 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_ids_get_with_http_info(
         self,
-        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
+      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3637,7 +3636,7 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_ids_get_without_preload_content(
         self,
-        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
+      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3765,8 +3764,9 @@ class DefaultApi:
     @validate_call
     def submissions_get(
         self,
-        benchmark_ids: Annotated[Optional[List[StrictStr]], Field(description="Filter submissions by benchmark.")] = None,
-        submitted_by: Annotated[Optional[StrictStr], Field(description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
+      benchmark_ids: Annotated[Optional[List[UUID]], Field(description="Filter submissions by benchmark.")] = None,
+      submitted_by: Annotated[Optional[UUID], Field(
+        description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3836,8 +3836,9 @@ class DefaultApi:
     @validate_call
     def submissions_get_with_http_info(
         self,
-        benchmark_ids: Annotated[Optional[List[StrictStr]], Field(description="Filter submissions by benchmark.")] = None,
-        submitted_by: Annotated[Optional[StrictStr], Field(description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
+      benchmark_ids: Annotated[Optional[List[UUID]], Field(description="Filter submissions by benchmark.")] = None,
+      submitted_by: Annotated[Optional[UUID], Field(
+        description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3907,8 +3908,9 @@ class DefaultApi:
     @validate_call
     def submissions_get_without_preload_content(
         self,
-        benchmark_ids: Annotated[Optional[List[StrictStr]], Field(description="Filter submissions by benchmark.")] = None,
-        submitted_by: Annotated[Optional[StrictStr], Field(description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
+      benchmark_ids: Annotated[Optional[List[UUID]], Field(description="Filter submissions by benchmark.")] = None,
+      submitted_by: Annotated[Optional[UUID], Field(
+        description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3999,13 +4001,13 @@ class DefaultApi:
         # process the path parameters
         # process the query parameters
         if benchmark_ids is not None:
-            
+
             _query_params.append(('benchmark_ids', benchmark_ids))
-            
+
         if submitted_by is not None:
-            
+
             _query_params.append(('submitted_by', submitted_by))
-            
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -4320,7 +4322,7 @@ class DefaultApi:
     @validate_call
     def submissions_submission_ids_get(
         self,
-        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
+      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4387,7 +4389,7 @@ class DefaultApi:
     @validate_call
     def submissions_submission_ids_get_with_http_info(
         self,
-        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
+      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4454,7 +4456,7 @@ class DefaultApi:
     @validate_call
     def submissions_submission_ids_get_without_preload_content(
         self,
-        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of submission IDs.")],
+      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4582,7 +4584,7 @@ class DefaultApi:
     @validate_call
     def submissions_submission_ids_patch(
         self,
-        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4648,7 +4650,7 @@ class DefaultApi:
     @validate_call
     def submissions_submission_ids_patch_with_http_info(
         self,
-        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4714,7 +4716,7 @@ class DefaultApi:
     @validate_call
     def submissions_submission_ids_patch_without_preload_content(
         self,
-        submission_ids: Annotated[List[StrictStr], Field(description="Comma-separated list of IDs.")],
+      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],

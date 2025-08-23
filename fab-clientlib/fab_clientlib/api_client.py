@@ -14,31 +14,27 @@
 
 
 import datetime
-from dateutil.parser import parse
-from enum import Enum
 import decimal
 import json
 import mimetypes
 import os
 import re
 import tempfile
-
-from urllib.parse import quote
+import uuid
+from enum import Enum
 from typing import Tuple, Optional, List, Dict, Union
+from urllib.parse import quote
+
+from dateutil.parser import parse
 from pydantic import SecretStr
 
-from fab_clientlib.configuration import Configuration
-from fab_clientlib.api_response import ApiResponse, T as ApiResponseT
 import fab_clientlib.models
 from fab_clientlib import rest
+from fab_clientlib.api_response import ApiResponse, T as ApiResponseT
+from fab_clientlib.configuration import Configuration
 from fab_clientlib.exceptions import (
-    ApiValueError,
-    ApiException,
-    BadRequestException,
-    UnauthorizedException,
-    ForbiddenException,
-    NotFoundException,
-    ServiceException
+  ApiValueError,
+  ApiException
 )
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
@@ -357,6 +353,8 @@ class ApiClient:
             return obj.get_secret_value()
         elif isinstance(obj, self.PRIMITIVE_TYPES):
             return obj
+        elif isinstance(obj, uuid.UUID):
+          return str(obj)
         elif isinstance(obj, list):
             return [
                 self.sanitize_for_serialization(sub_obj) for sub_obj in obj
@@ -409,7 +407,7 @@ class ApiClient:
                 data = json.loads(response_text)
             except ValueError:
                 data = response_text
-        elif re.match(r'^application/(json|[\w!#$&.+-^_]+\+json)\s*(;|$)', content_type, re.IGNORECASE):
+        elif re.match(r'^application/(json|[\w!#$&.+\-^_]+\+json)\s*(;|$)', content_type, re.IGNORECASE):
             if response_text == "":
                 data = ""
             else:

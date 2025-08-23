@@ -14,22 +14,25 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
-
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
+
 
 class ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner(BaseModel):
     """
     ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
     """ # noqa: E501
-    test_id: Optional[StrictStr] = Field(default=None, description="ID of test.")
+    test_id: Optional[UUID] = Field(default=None, description="ID of test.")
     scorings: Optional[Dict[str, Any]] = Field(default=None, description="Dictionary of test scores (best submission only).")
-    submission_id: Optional[StrictStr] = Field(default=None, description="ID of best submission.")
+    submission_id: Optional[UUID] = Field(default=None, description="ID of best submission.")
     __properties: ClassVar[List[str]] = ["test_id", "scorings", "submission_id"]
 
     model_config = ConfigDict(
