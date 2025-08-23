@@ -142,8 +142,8 @@ def test_submissions_get():
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
   response = fab.submissions_get(benchmark_ids=[uuid.UUID("20ccc7c1-034c-4880-8946-bffc3fed1359")])
   assert len(response.body) >= 1
-  assert response.body[0].id == "db5eaa85-3304-4804-b76f-14d23adb5d4c"
-  assert response.body[0].benchmark_id == "20ccc7c1-034c-4880-8946-bffc3fed1359"
+  assert response.body[0].id == uuid.UUID("db5eaa85-3304-4804-b76f-14d23adb5d4c")
+  assert response.body[0].benchmark_id == uuid.UUID("20ccc7c1-034c-4880-8946-bffc3fed1359")
   assert response.body[0].status == "SUCCESS"
   assert response.body[0].published == True
 
@@ -159,9 +159,9 @@ def test_submissions_uuid_get():
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
   response = fab.submissions_submission_ids_get(submission_ids=[uuid.UUID("db5eaa85-3304-4804-b76f-14d23adb5d4c")])
   assert len(response.body) == 1
-  assert response.body[0].id == "db5eaa85-3304-4804-b76f-14d23adb5d4c"
-  assert response.body[0].benchmark_id == "20ccc7c1-034c-4880-8946-bffc3fed1359"
-  assert response.body[0].test_ids == ["557d9a00-7e6d-410b-9bca-a017ca7fe3aa"]
+  assert response.body[0].id == uuid.UUID("db5eaa85-3304-4804-b76f-14d23adb5d4c")
+  assert response.body[0].benchmark_id == uuid.UUID("20ccc7c1-034c-4880-8946-bffc3fed1359")
+  assert response.body[0].test_ids == [uuid.UUID("557d9a00-7e6d-410b-9bca-a017ca7fe3aa")]
   assert response.body[0].status == "SUCCESS"
   assert response.body[0].published == True
 
@@ -184,7 +184,7 @@ def test_results_campaign_items_benchmark_id():
   assert response.body[0].benchmark_id == benchmark_id
   assert len(response.body[0].items) == 8  # KPIs
   assert response.body[0].items[0].test_id == first_test_id
-  assert response.body[0].items[0].submission_id == "cd4d44bc-d40e-4173-bccb-f04e0be1b2ae"
+  assert response.body[0].items[0].submission_id == uuid.UUID("cd4d44bc-d40e-4173-bccb-f04e0be1b2ae")
 
 
 # POST /submissions
@@ -271,7 +271,7 @@ def test_submission_roundtrip():
     scenario_ids=[uuid.UUID("1ae61e4f-201b-4e97-a399-5c33fb75c57e")]
   )
   assert len(scenario_results.body) == 1
-  assert scenario_results.body[0].scenario_id == "1ae61e4f-201b-4e97-a399-5c33fb75c57e"
+  assert scenario_results.body[0].scenario_id == uuid.UUID("1ae61e4f-201b-4e97-a399-5c33fb75c57e")
   assert scenario_results.body[0].scorings["primary"]["score"] == 100
   assert scenario_results.body[0].scorings["secondary"]["score"] == 1.0
 
@@ -280,7 +280,7 @@ def test_submission_roundtrip():
     scenario_ids=[uuid.UUID("564ebb54-48f0-4837-8066-b10bb832af9d")]
   )
   assert len(scenario_results2.body) == 1
-  assert scenario_results2.body[0].scenario_id == "564ebb54-48f0-4837-8066-b10bb832af9d"
+  assert scenario_results2.body[0].scenario_id == uuid.UUID("564ebb54-48f0-4837-8066-b10bb832af9d")
   assert scenario_results2.body[0].scorings["primary"]["score"] == 99
   assert scenario_results2.body[0].scorings["secondary"]["score"] == 0.8
 
@@ -307,7 +307,7 @@ def test_definitions_tests_ids_get():
   tests = fab.definitions_tests_test_ids_get(test_ids=[test_id])
   assert len(tests.body) == 1
   assert tests.body[0].id == test_id
-  assert tests.body[0].scenario_ids == ['1ae61e4f-201b-4e97-a399-5c33fb75c57e', '564ebb54-48f0-4837-8066-b10bb832af9d']
+  assert tests.body[0].scenario_ids == [uuid.UUID('1ae61e4f-201b-4e97-a399-5c33fb75c57e'), uuid.UUID('564ebb54-48f0-4837-8066-b10bb832af9d')]
   assert tests.body[0].name == 'Test 1'
   assert tests.body[0].description == 'Domain X benchmark'
 
@@ -327,7 +327,7 @@ def test_definitions_benchmarks_ids_get():
   benchmarks = fab.definitions_benchmarks_benchmark_ids_get(benchmark_ids=benchmark_ids)
   assert len(benchmarks.body) == 2
   assert benchmarks.body[0].id == benchmark_ids[0]
-  assert benchmarks.body[0].test_ids == ['557d9a00-7e6d-410b-9bca-a017ca7fe3aa']
+  assert benchmarks.body[0].test_ids == [uuid.UUID('557d9a00-7e6d-410b-9bca-a017ca7fe3aa')]
   assert benchmarks.body[0].name == 'Benchmark 1'
   assert benchmarks.body[0].description == 'Domain X benchmark'
 
@@ -344,7 +344,7 @@ def test_definitions_benchmarks_get():
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
   benchmarks = fab.definitions_benchmarks_get()
   assert len(benchmarks.body) == 7
-  assert benchmarks.body[0].id == "255fb1e8-af57-45a0-97dc-ecc3e6721b4f"
+  assert benchmarks.body[0].id == uuid.UUID("255fb1e8-af57-45a0-97dc-ecc3e6721b4f")
   assert benchmarks.body[0].test_ids == [uuid.UUID('99f5a8f8-38d9-4a8c-9630-4789b0225ec0'),
                                          uuid.UUID('f23794a2-dcf2-4699-bb5f-534bcea5ecf0'), ]
   assert benchmarks.body[0].name == 'AI-human learning curves'
