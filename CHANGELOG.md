@@ -3,6 +3,21 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.11.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.10.0...v0.11.0) (2025-08-25)
+
+
+### Features
+
+* **backend:** SQL errors are now thrown ([#381](https://github.com/flatland-association/flatland-benchmarks/issues/381)) ([0faf105](https://github.com/flatland-association/flatland-benchmarks/commit/0faf10573ae39d70b4bfb1627e2bd16d434885a4))
+* **frontend:** Feedback on http error response ([#376](https://github.com/flatland-association/flatland-benchmarks/issues/376)) ([602fdb8](https://github.com/flatland-association/flatland-benchmarks/commit/602fdb88f43277495188fce616f429fb3758fe6b))
+* **frontend:** Show user menu ([#369](https://github.com/flatland-association/flatland-benchmarks/issues/369)) ([871fbb0](https://github.com/flatland-association/flatland-benchmarks/commit/871fbb03140561d936ae2596a69b203a110bcbfc))
+* **frontend:** Start login flow on 401 response ([#373](https://github.com/flatland-association/flatland-benchmarks/issues/373)) ([6b44618](https://github.com/flatland-association/flatland-benchmarks/commit/6b446188fa17cc6770522b6f91f92083f1fae1b6))
+
+
+### Bug Fixes
+
+* **frontend:** Table not showing primary scorings ([#378](https://github.com/flatland-association/flatland-benchmarks/issues/378)) ([55172ed](https://github.com/flatland-association/flatland-benchmarks/commit/55172edcd8887b4c892e8d116638bee92a267de2))
+
 ## [0.10.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.9.3...v0.10.0) (2025-08-18)
 
 
