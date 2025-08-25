@@ -263,6 +263,7 @@ export class ResultsController extends Controller {
       return resultRows
     })
     // TODO: check that all defined fields are present
+    // see: https://github.com/flatland-association/flatland-benchmarks/issues/386
     // save in db
     const sql = SqlService.getInstance()
     try {

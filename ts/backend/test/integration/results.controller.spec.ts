@@ -28,6 +28,7 @@ describe.sequential('Results controller', () => {
         // b) the scenario has a field with that name in its fields array
         // c) the submission references the test or scenario
         // That's why this test works. If either of above change, update test.
+        // see: https://github.com/flatland-association/flatland-benchmarks/issues/386
         //@ts-expect-error type
         body: { data: [{ scenario_id: '8fba6834-cd86-4bca-b3b5-f14d6c54d92f', secondary: 1.0, tertiary: 3.14 }] },
       },
