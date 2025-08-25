@@ -14,24 +14,27 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List
+from typing import Optional, Set
+from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Optional, Set
 from typing_extensions import Self
+
 
 class SubmissionsPostRequest(BaseModel):
     """
     SubmissionsPostRequest
     """ # noqa: E501
     name: Optional[StrictStr] = Field(default=None, description="Display name of submission.")
-    benchmark_id: Optional[StrictStr] = Field(default=None, description="ID of benchmark this submission belongs to.")
+    benchmark_id: Optional[UUID] = Field(default=None, description="ID of benchmark this submission belongs to.")
     submission_data_url: Optional[StrictStr] = Field(default=None, description="URL of submission executable image.")
     code_repository: Optional[StrictStr] = Field(default=None, description="URL of submission code repository.")
-    test_ids: Optional[List[StrictStr]] = Field(default=None, description="IDs of tests to run.")
+    test_ids: Optional[List[UUID]] = Field(default=None, description="IDs of tests to run.")
     __properties: ClassVar[List[str]] = ["name", "benchmark_id", "submission_data_url", "code_repository", "test_ids"]
 
     model_config = ConfigDict(

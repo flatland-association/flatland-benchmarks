@@ -14,24 +14,27 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List
+from typing import Optional, Set
+from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Optional, Set
 from typing_extensions import Self
+
 
 class BenchmarkGroupsGet200ResponseAllOfBodyInner(BaseModel):
     """
     BenchmarkGroupsGet200ResponseAllOfBodyInner
     """ # noqa: E501
-    id: Optional[StrictStr] = Field(default=None, description="ID of benchmark-group.")
+    id: Optional[UUID] = Field(default=None, description="ID of benchmark-group.")
     name: Optional[StrictStr] = None
     description: Optional[StrictStr] = None
     setup: Optional[StrictStr] = None
-    benchmark_ids: Optional[List[StrictStr]] = None
+    benchmark_ids: Optional[List[UUID]] = None
     __properties: ClassVar[List[str]] = ["id", "name", "description", "setup", "benchmark_ids"]
 
     model_config = ConfigDict(

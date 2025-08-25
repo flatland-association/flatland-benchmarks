@@ -14,21 +14,26 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
-
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner_items_inner import ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
+
+from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner_items_inner import \
+  ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
+
 
 class ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner(BaseModel):
     """
     ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner
     """ # noqa: E501
-    benchmark_id: Optional[StrictStr] = Field(default=None, description="ID of benchmark.")
+    benchmark_id: Optional[UUID] = Field(default=None, description="ID of benchmark.")
     items: Optional[List[ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner]] = None
     __properties: ClassVar[List[str]] = ["benchmark_id", "items"]
 

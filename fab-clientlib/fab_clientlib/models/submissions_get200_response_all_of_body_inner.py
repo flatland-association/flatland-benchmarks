@@ -14,28 +14,31 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List
+from typing import Optional, Set
+from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Optional, Set
 from typing_extensions import Self
+
 
 class SubmissionsGet200ResponseAllOfBodyInner(BaseModel):
     """
     SubmissionsGet200ResponseAllOfBodyInner
     """ # noqa: E501
-    id: Optional[StrictStr] = None
-    benchmark_id: Optional[StrictStr] = None
-    test_ids: Optional[List[StrictStr]] = None
+    id: Optional[UUID] = None
+    benchmark_id: Optional[UUID] = None
+    test_ids: Optional[List[UUID]] = None
     name: Optional[StrictStr] = None
     description: Optional[StrictStr] = None
     submission_data_url: Optional[StrictStr] = None
     code_repository: Optional[StrictStr] = None
     submitted_at: Optional[StrictStr] = None
-    submitted_by: Optional[StrictStr] = None
+    submitted_by: Optional[UUID] = None
     submitted_by_username: Optional[StrictStr] = None
     status: Optional[StrictStr] = None
     published: Optional[StrictBool] = None
