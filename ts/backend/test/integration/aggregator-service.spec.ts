@@ -115,16 +115,10 @@ describe.sequential('Aggregator Service (with Postgres)', async () => {
           },
         ],
       } satisfies AggregatorPublicMethodTestCase<'getCampaignOverview'>,
-    ])('should fail graciously when calling $method', async (testCase) => {
+    ])('should throw when calling $method', async (testCase) => {
       const aggregator = AggregatorService.getInstance()
       //@ts-expect-error spread
-      const score = await aggregator[testCase.method](...testCase.args)
-      expect(score).toEqual(testCase.returns)
-      console.log(score)
-      // for the failed sql query:
-      expect(loggerErrorMock).toHaveBeenCalled()
-      // for the failed lookups afterwards:
-      expect(loggerWarnMock).toHaveBeenCalled()
+      await expect(aggregator[testCase.method](...testCase.args)).rejects.toThrow()
     })
   })
 })

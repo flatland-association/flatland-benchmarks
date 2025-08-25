@@ -19,11 +19,10 @@ describe('SQL Service', () => {
     expect(sql).toBeTruthy()
   })
 
-  it('does not abort query or throw error, writes to errors instead', async () => {
+  it('aborts and throws error on error', async () => {
     const sql = SqlService.getInstance()
-    expect(sql.errors).toBeUndefined()
-    const rows = await sql.query`SELECT * FROM field_definitions`
-    expect(rows).toEqual([])
-    expect(sql.errors).not.toEqual([])
+    await expect(async () => {
+      await sql.query`SELECT * FROM field_definitions`
+    }).rejects.toThrow()
   })
 })

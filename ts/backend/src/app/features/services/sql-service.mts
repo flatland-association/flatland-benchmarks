@@ -3,60 +3,67 @@ import { configuration } from '../config/config.mjs'
 import { Service } from './service.mjs'
 
 /**
+ * Interface wrapping postgres' sql template tag in `query`, which is itself
+ * also a template tag, but returns the resulting rows.
+ */
+export interface WrappedSql<SQL extends postgres.Sql> {
+  // must extends object | undefined otherwise it's not usable in RowList
+  /**
+   * Template tag to make SQL queries. Side effects depend on implementation.
+   * @throws postgres.Error
+   * @example
+   * ```ts
+   * sql.query`DROP DATABASE benchmarks`
+   * ```
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates | Tagged Templates}
+   */
+  query<T extends object | undefined>(
+    strings: TemplateStringsArray,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ...params: postgres.ParameterOrFragment<any>[]
+  ): Promise<postgres.RowList<T[]>>
+  fragment: SQL
+}
+
+/**
  * Service class providing common SQL functionality.
  */
-export class SqlService extends Service {
+export class SqlService extends Service implements WrappedSql<postgres.Sql> {
   /**
    * Postgres notices that occurred during `query`. Is reset to `undefined`
-   * upon invoking `query`.
+   * upon invoking `query` or `transaction`.
    */
   notices?: postgres.Notice[]
-  /**
-   * Postgres errors that occurred during `query`. Is reset to `undefined`
-   * upon invoking `query`.
-   */
-  errors?: postgres.Error[]
 
   /**
-   * Postgres statement from `query`. Is reset to `undefined` upon invoking
+   * Postgres statements from `query`. Is reset to `undefined` upon invoking
+   * `query` or `transaction`.
+   */
+  statements?: postgres.Statement[]
+
+  /**
+   * Template tag to make SQL queries. All notices raised during query execution
+   * are written to {@link notices}, which in turn are emptied at the start of
    * `query`.
-   */
-  statement?: postgres.Statement
-
-  /**
-   * Template tag to make SQL queries. All notices and errors raised during
-   * query execution are written to {@link notices} and {@link errors}
-   * respectively, which in turn are emptied at the start of `query`.
+   * @throws postgres.Error
    * @example
    * ```ts
    * sqlService.query`DROP DATABASE benchmarks`
    * ```
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates | Tagged Templates}
    */
-  query(
+  query<T extends object | undefined = postgres.Row>(
     strings: TemplateStringsArray,
-    // TypeScript won't infer fragment type if not using `any`
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ...params: postgres.ParameterOrFragment<any>[] // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ): Promise<postgres.RowList<postgres.Row[]> | any[]>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  query<T>(strings: TemplateStringsArray, ...params: postgres.ParameterOrFragment<any>[]): Promise<T[]>
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  query(strings: TemplateStringsArray, ...params: postgres.ParameterOrFragment<any>[]) {
+    ...params: postgres.ParameterOrFragment<any>[]
+  ): Promise<postgres.RowList<T[]>> {
     this.notices = undefined
-    this.errors = undefined
-    this.statement = undefined
-    return this._query(strings, ...params)
-      .then((q) => {
-        this.statement = q.statement
-        return q
-      })
-      .catch((error) => {
-        this.errors ??= []
-        this.errors.push(error)
-        return []
-      })
+    this.statements = undefined
+    return this._query<T[]>(strings, ...params).then((q) => {
+      this.statements ??= []
+      this.statements.push(q.statement)
+      return q
+    })
   }
 
   private _query
@@ -65,6 +72,43 @@ export class SqlService extends Service {
    * Alias for the original postgres template tag for nested queries.
    */
   fragment
+
+  /**
+   * Begins a transaction. The transaction queries are executed in the callback.
+   * The use of `sql.query` within the callback won't reset {@link notices} or
+   * {@link statements} for debugging purposes.
+   * @param transactions Callback with a WrappedSql object for this transaction.
+   * @example
+   * ```ts
+   * // The re-use of `sql` is intentional - prevents accidentally accessing
+   * // parent sql from within transaction.
+   * await sql.transaction(async (sql) => {
+   *   await sql.query`INSERT INTO results ${sql.fragment(results)}`
+   * })
+   * ```
+   */
+  async transaction(transactions: (sql: WrappedSql<postgres.TransactionSql>) => Promise<unknown>) {
+    this.notices = undefined
+    this.statements = undefined
+    await this._query.begin(async (postgresql) => {
+      const wrappedSql: WrappedSql<postgres.TransactionSql> = {
+        query: <T extends object | undefined>(
+          strings: TemplateStringsArray,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ...params: postgres.ParameterOrFragment<any>[]
+        ) => {
+          const query = postgresql<T[]>(strings, ...params).then((q) => {
+            this.statements ??= []
+            this.statements.push(q.statement)
+            return q
+          })
+          return query
+        },
+        fragment: postgresql,
+      }
+      await transactions(wrappedSql)
+    })
+  }
 
   constructor(config: configuration) {
     super(config)
@@ -95,7 +139,6 @@ export class SqlService extends Service {
 export function dbgSqlState(sql: SqlService) {
   return {
     notices: sql.notices,
-    errors: sql.errors,
-    statement: sql.statement,
+    statement: sql.statements,
   }
 }

@@ -263,18 +263,18 @@ export class ResultsController extends Controller {
       return resultRows
     })
     // TODO: check that all defined fields are present
+    // see: https://github.com/flatland-association/flatland-benchmarks/issues/386
     // save in db
     const sql = SqlService.getInstance()
-    // TODO: abstract transaction as `sql.transactionQuery` or similar...
-    await sql.query`BEGIN`
-    await sql.query`
-      INSERT INTO results ${sql.fragment(resultRows)}
-    `
-    const ok = !sql.errors
-    if (ok) {
-      await sql.query`COMMIT`
-      this.respond(req, res, {}, 201)
-    } else {
+    try {
+      await sql.transaction(async (sql) => {
+        await sql.query`
+          INSERT INTO results ${sql.fragment(resultRows)}
+        `
+      })
+      this.respond(req, res, {}, undefined, 201)
+    } catch (error) {
+      logger.error(error)
       this.requestError(req, res, { text: 'Some results could not be inserted, transaction aborted.' })
     }
   }

@@ -213,9 +213,6 @@ export class AggregatorService extends Service {
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = ${submissionId}
       WHERE scenario_definitions.id = ANY(${scenarioIds})
     `
-    if (this.sql.errors) {
-      logger.error(this.sql.errors)
-    }
     return (
       sources ??
       ({ scenario_definitions: [], field_definitions: [], results: [] } satisfies SubmissionScenarioScoreSources)
@@ -240,9 +237,6 @@ export class AggregatorService extends Service {
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = ${submissionId}
       WHERE test_definitions.id = ANY(${testIds})
     `
-    if (this.sql.errors) {
-      logger.error(this.sql.errors)
-    }
     return (
       sources ??
       ({
@@ -280,9 +274,6 @@ export class AggregatorService extends Service {
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
       WHERE submissions.id = ANY(${submissionIds})
     `
-    if (this.sql.errors) {
-      logger.error(this.sql.errors)
-    }
     return (
       sources ??
       ({
@@ -318,9 +309,6 @@ export class AggregatorService extends Service {
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
       WHERE benchmark_definitions.id = ANY(${benchmarkIds})
     `
-    if (this.sql.errors) {
-      logger.error(this.sql.errors)
-    }
     return (
       sources ??
       ({
@@ -356,9 +344,6 @@ export class AggregatorService extends Service {
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
       WHERE benchmark_definitions.id = ANY(${benchmarkIds})
     `
-    if (this.sql.errors) {
-      logger.error(this.sql.errors)
-    }
     return (
       sources ??
       ({
@@ -396,9 +381,6 @@ export class AggregatorService extends Service {
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
       WHERE benchmark_groups.id = ANY(${groupIds})
     `
-    if (this.sql.errors) {
-      logger.error(this.sql.errors)
-    }
     return (
       sources ??
       ({
