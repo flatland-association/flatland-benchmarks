@@ -13,8 +13,54 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+if __import__("typing").TYPE_CHECKING:
+  # import models into model package
+  from fab_clientlib.models.api_response import ApiResponse
+  from fab_clientlib.models.api_response_error import ApiResponseError
+  from fab_clientlib.models.benchmark_groups_get200_response import BenchmarkGroupsGet200Response
+  from fab_clientlib.models.benchmark_groups_get200_response_all_of_body_inner import BenchmarkGroupsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.definitions_benchmarks_get200_response import DefinitionsBenchmarksGet200Response
+  from fab_clientlib.models.definitions_benchmarks_get200_response_all_of_body_inner import DefinitionsBenchmarksGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.definitions_tests_test_ids_get200_response import DefinitionsTestsTestIdsGet200Response
+  from fab_clientlib.models.definitions_tests_test_ids_get200_response_all_of_body_inner import DefinitionsTestsTestIdsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.health_live_get200_response import HealthLiveGet200Response
+  from fab_clientlib.models.health_live_get200_response_all_of_body import HealthLiveGet200ResponseAllOfBody
+  from fab_clientlib.models.health_live_get200_response_all_of_body_checks_inner import HealthLiveGet200ResponseAllOfBodyChecksInner
+  from fab_clientlib.models.results_benchmarks_benchmark_ids_get200_response import ResultsBenchmarksBenchmarkIdsGet200Response
+  from fab_clientlib.models.results_benchmarks_benchmark_ids_get200_response_all_of_body_inner import ResultsBenchmarksBenchmarkIdsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response import ResultsCampaignItemsBenchmarkIdsGet200Response
+  from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner import \
+    ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner_items_inner import \
+    ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
+  from fab_clientlib.models.results_campaigns_group_ids_get200_response import ResultsCampaignsGroupIdsGet200Response
+  from fab_clientlib.models.results_campaigns_group_ids_get200_response_all_of_body_inner import ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.results_submissions_submission_id_scenario_scenario_ids_get200_response import \
+    ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response
+  from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_get200_response import ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response
+  from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_post_request import ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest
+  from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_post_request_data_inner import \
+    ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
+  from fab_clientlib.models.results_submissions_submission_ids_get200_response import ResultsSubmissionsSubmissionIdsGet200Response
+  from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner import \
+    ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner import \
+    ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
+  from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner import \
+    ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner
+  from fab_clientlib.models.submissions_get200_response import SubmissionsGet200Response
+  from fab_clientlib.models.submissions_get200_response_all_of_body_inner import SubmissionsGet200ResponseAllOfBodyInner
+  from fab_clientlib.models.submissions_post200_response import SubmissionsPost200Response
+  from fab_clientlib.models.submissions_post200_response_all_of_body import SubmissionsPost200ResponseAllOfBody
+  from fab_clientlib.models.submissions_post_request import SubmissionsPostRequest
 
-# import models into model package
+else:
+  from lazy_imports import LazyModule, as_package, load
+
+  load(
+    LazyModule(
+      *as_package(__file__),
+      """# import models into model package
 from fab_clientlib.models.api_response import ApiResponse
 from fab_clientlib.models.api_response_error import ApiResponseError
 from fab_clientlib.models.benchmark_groups_get200_response import BenchmarkGroupsGet200Response
@@ -46,3 +92,9 @@ from fab_clientlib.models.submissions_get200_response_all_of_body_inner import S
 from fab_clientlib.models.submissions_post200_response import SubmissionsPost200Response
 from fab_clientlib.models.submissions_post200_response_all_of_body import SubmissionsPost200ResponseAllOfBody
 from fab_clientlib.models.submissions_post_request import SubmissionsPostRequest
+
+""",
+      name=__name__,
+      doc=__doc__,
+    )
+  )

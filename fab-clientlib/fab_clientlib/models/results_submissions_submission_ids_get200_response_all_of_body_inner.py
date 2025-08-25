@@ -14,21 +14,26 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
-
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner import ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
+
+from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner import \
+  ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
+
 
 class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner(BaseModel):
     """
     ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner
     """ # noqa: E501
-    submission_id: Optional[StrictStr] = Field(default=None, description="ID of submission.")
+    submission_id: Optional[UUID] = Field(default=None, description="ID of submission.")
     scorings: Optional[Dict[str, Any]] = Field(default=None, description="Dictionary of submission scores.")
     test_scorings: Optional[List[ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner]] = None
     __properties: ClassVar[List[str]] = ["submission_id", "scorings", "test_scorings"]

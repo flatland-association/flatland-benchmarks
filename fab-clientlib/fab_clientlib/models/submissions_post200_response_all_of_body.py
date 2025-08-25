@@ -14,20 +14,23 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
-
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
+
 
 class SubmissionsPost200ResponseAllOfBody(BaseModel):
     """
     SubmissionsPost200ResponseAllOfBody
     """ # noqa: E501
-    id: Optional[StrictStr] = Field(default=None, description="ID of submission.")
+    id: Optional[UUID] = Field(default=None, description="ID of submission.")
     __properties: ClassVar[List[str]] = ["id"]
 
     model_config = ConfigDict(
