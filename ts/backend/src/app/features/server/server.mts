@@ -10,6 +10,7 @@ import { BenchmarkController } from '../controller/benchmark.controller.mjs'
 import { DebugController } from '../controller/debug.controller.mjs'
 import { FieldController } from '../controller/field.controller.mjs'
 import { HealthController } from '../controller/health.controller.mjs'
+import { InfoController } from '../controller/info.controller.mjs'
 import { ResultsController } from '../controller/results.controller.mjs'
 import { ScenarioController } from '../controller/scenario.controller.mjs'
 import { SubmissionController } from '../controller/submission.controller.mjs'
@@ -36,6 +37,7 @@ export class Server {
     // use routes from controllers
     this.app.use(new DebugController(this.config).router)
     this.app.use(new HealthController(this.config).router)
+    this.app.use(new InfoController(this.config).router)
     this.app.use(new BenchmarkController(this.config).router)
     this.app.use(new BenchmarkGroupController(this.config).router)
     this.app.use(new TestController(this.config).router)

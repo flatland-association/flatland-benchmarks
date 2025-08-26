@@ -62,6 +62,9 @@ interface ApiEndpointDefinitions {
   '/health/live': {
     GET: ApiEndpoint<Empty, Empty, json>
   }
+  '/info': {
+    GET: ApiEndpoint<Empty, Empty, json>
+  }
   '/whoami': {
     GET: ApiEndpoint<Empty, Empty, json>
   }
