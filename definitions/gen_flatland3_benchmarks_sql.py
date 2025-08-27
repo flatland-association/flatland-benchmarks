@@ -31,7 +31,7 @@ def gen_flatland3_benchmarks():
 
   NUM_BENCHMARKS = 15
   NUM_LEVELS_PER_BENCHMARK = 10
-  df_metadata = pd.read_csv("../../benchmarks/flatland3/metadata.csv.template")
+  df_metadata = pd.read_csv("../benchmarks/flatland3/metadata.csv.template")
   test_descriptions = [f"{v['n_agents']} agents,  {v['y_dim']}x{v['x_dim']}, 2 {v['n_cities']}" for k, v in
                        list(df_metadata.groupby("test_id").aggregate('first').iterrows())]
   benchmark_group_id = None
@@ -283,7 +283,7 @@ def gen_sqls(data):
 if __name__ == '__main__':
   # gen_ai4realnet_playground()
   # gen_flatland3_benchmarks()
-  data = extract_ai4realnet_from_csv(csv="/Users/che/workspaces/benchmarking/evaluation/ai4realnet/KPIs_database_cards.csv")
+  data = extract_ai4realnet_from_csv(csv="ai4realnet/KPIs_database_cards.csv")
 
   gen_sqls(data)
   # TODO separate/extract common ai4realnet/benchmarks and add test
