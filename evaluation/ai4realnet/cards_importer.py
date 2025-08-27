@@ -9,7 +9,7 @@ def main():
   BENCHMARK_GROUP_ID = '0ca46887-897a-463f-bf83-c6cd6269a977'
   BENCHMARK_GROUP_NAME = 'Beta Validation Campaign'
   BENCHMARK_GROUP_DESCRIPTION = 'The beta validation campaign runs until 30.11.2025'
-  agg_func = "SUM"
+  agg_func = "MEAN"
 
   with Path("KPIs_database_cards.json").open() as f:
     data = json.loads(f.read())
@@ -18,7 +18,7 @@ def main():
   for d in data:
     objectives[d["objective"]] = str(uuid4())
 
-  fields = {}
+  fields_tests = {}
 
   records = []
   for d in data:
@@ -34,21 +34,21 @@ def main():
       record["BENCHMARK_ID"] = objectives[d["objective"]]
       record["BENCHMARK_NAME"] = record["objective"]
       record["BENCHMARK_DESCRIPTION"] = record["objectiveDescription"]
-      record["BENCHMARK_FIELD_ID"] = fields.setdefault(record["BENCHMARK_ID"], str(uuid4()))
+      record["BENCHMARK_FIELD_ID"] = fields_tests.setdefault(record["BENCHMARK_ID"], str(uuid4()))
       record["BENCHMARK_FIELD_NAME"] = f'primary'
       record["BENCHMARK_FIELD_DESCRIPTION"] = f'Benchmark score ({agg_func} of test scores)'
       record["BENCHMARK_AGG"] = agg_func
-      record["TEST_ID"] = record["ID"]
+      record["TEST_ID"] = fields_tests.setdefault(record["ID"] + domain, str(uuid4()))
       record["TEST_NAME"] = f"{record['ID']}: {record['title']} ({domain})"
       record["TEST_DESCRIPTION"] = record['description']
-      record["TEST_FIELD_ID"] = fields.setdefault(record["TEST_ID"], str(uuid4()))
+      record["TEST_FIELD_ID"] = fields_tests.setdefault(record["TEST_ID"], str(uuid4()))
       record["TEST_FIELD_NAME"] = f'primary'
       record["TEST_FIELD_DESCRIPTION"] = f'Test score ({agg_func} of scenario scores)'
       record["TEST_AGG"] = agg_func
       record["SCENARIO_ID"] = str(uuid4())
       record["SCENARIO_NAME"] = f"Scenario 1 - {record['TEST_DESCRIPTION']}"
       record["SCENARIO_DESCRIPTION"] = record['objectiveDescription']
-      record["SCENARIO_FIELD_ID"] = fields.setdefault(record["SCENARIO_ID"], str(uuid4()))
+      record["SCENARIO_FIELD_ID"] = fields_tests.setdefault(record["SCENARIO_ID"], str(uuid4()))
       record["SCENARIO_FIELD_NAME"] = 'primary'
       record["SCENARIO_FIELD_DESCRIPTION"] = 'Scenario score (raw values)'
 
