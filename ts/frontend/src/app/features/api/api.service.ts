@@ -28,7 +28,7 @@ export class ApiService {
   // typed overload
   /**
    * Send GET request to API.
-   * @param endpoint String representation of the enpoint route.
+   * @param endpoint String representation of the endpoint route.
    * @param options Request options.
    * @see {@link ApiGetEndpoints}
    */
@@ -60,7 +60,7 @@ export class ApiService {
   // typed overload
   /**
    * Send POST request to API.
-   * @param endpoint String representation of the enpoint route.
+   * @param endpoint String representation of the endpoint route.
    * @param options Request options.
    * @see {@link ApiGetEndpoints}
    */
@@ -79,7 +79,7 @@ export class ApiService {
   // typed overload
   /**
    * Send PATCH request to API.
-   * @param endpoint String representation of the enpoint route.
+   * @param endpoint String representation of the endpoint route.
    * @param options Request options.
    * @see {@link ApiGetEndpoints}
    */
