@@ -17,28 +17,30 @@ export class CeleryService extends Service {
 
   /**
    * Sends data to Celery. https://github.com/actumn/celery.node/blob/5a1a412955ae757cf0bd36015a15f5b7d18c69eb/src/app/client.ts#L135
-   * @param benchmarkId Benchmark ID (equals Celery task name by convention).
+   * @param queue queue (equals Celery task name by convention).
    * @param payload Data to send.
    * @param uuid SubmissionID
    * @returns Promise of task result if connection to broker = backend can be established.
    */
-  async sendTask(benchmarkId: string, payload: json, uuid: string) {
+  async sendTask(queue: string, payload: json, uuid: string) {
     // fail fast if not connected
     await this.isReady()
     const client = celery.createClient(
       `amqp://${this.config.amqp.host}:${this.config.amqp.port}`,
       `amqp://${this.config.amqp.host}:${this.config.amqp.port}`,
       // queue
-      benchmarkId,
+      queue,
     )
-    console.log(`Sending payload ${payload} to amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
+    console.log(
+      `Sending payload ${payload} to amqp://${this.config.amqp.host}:${this.config.amqp.port} via queue ${queue}`,
+    )
     const result = client.sendTask(
-      benchmarkId, // taskName: string,
+      queue, // taskName: string,
       [], // args?: Array<any>,
       payload as object, // kwargs?: object,
       uuid, //     taskId?: string
     )
-    console.log(`Sent task to amqp://${this.config.amqp.host}:${this.config.amqp.port}`)
+    console.log(`Sent task to amqp://${this.config.amqp.host}:${this.config.amqp.port} via queue ${queue}`)
     // return promise
     return result.get().then((data) => {
       console.log(`Received result from queue: ${data}`)
@@ -49,9 +51,6 @@ export class CeleryService extends Service {
 
   /**
    * Checks whether connection to broker = backend is possible.
-   * @param benchmarkId Benchmark ID (equals Celery task name by convention).
-   * @param payload Data to send.
-   * @param options Publish options.
    * @returns {Promise} promise that continues if backend and broker connected.
    */
   // TODO use celery.createClient(...).isReady() instead
