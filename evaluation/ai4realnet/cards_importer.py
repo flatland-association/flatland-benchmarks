@@ -9,6 +9,8 @@ def main():
   BENCHMARK_GROUP_ID = '0ca46887-897a-463f-bf83-c6cd6269a976'
   BENCHMARK_GROUP_NAME = 'Beta Validation Campaign'
   BENCHMARK_GROUP_DESCRIPTION = 'The beta validation campaign runs until 30.11.2025'
+  agg_func = "SUM"
+
   with Path("KPIs_database_cards.json").open() as f:
     data = json.loads(f.read())
     print(json.dumps(data, indent=4))
@@ -33,19 +35,19 @@ def main():
       record["BENCHMARK_NAME"] = record["objective"]
       record["BENCHMARK_DESCRIPTION"] = record["objectiveDescription"]
       record["BENCHMARK_FIELD_ID"] = fields.setdefault(record["BENCHMARK_ID"], str(uuid4()))
-      record["BENCHMARK_AGG"] = "SUM"
+      record["BENCHMARK_FIELD_NAME"] = f'Benchmark score ({agg_func} of test scores)'
+      record["BENCHMARK_AGG"] = agg_func
       record["TEST_ID"] = record["ID"]
       record["TEST_NAME"] = f"{record['ID']}: {record['title']} ({domain})"
       record["TEST_DESCRIPTION"] = record['description']
       record["TEST_FIELD_ID"] = fields.setdefault(record["TEST_ID"], str(uuid4()))
-      record["TEST_AGG"] = "SUM"
+      record["TEST_FIELD_NAME"] = f'Test score ({agg_func} of scenario scores)'
+      record["TEST_AGG"] = agg_func
       record["SCENARIO_ID"] = str(uuid4())
       record["SCENARIO_NAME"] = f"Scenario 1 - {record['TEST_DESCRIPTION']}"
       record["SCENARIO_DESCRIPTION"] = record['objectiveDescription']
       record["SCENARIO_FIELD_ID"] = fields.setdefault(record["SCENARIO_ID"], str(uuid4()))
-
-      record["ID"] += f" ({domain})"
-      record["title"] += f" ({domain})"
+      record["SCENARIO_FIELD_NAME"] = 'Scenario score (raw values)'
 
       records.append(record)
   df = pd.DataFrame.from_records(records)
