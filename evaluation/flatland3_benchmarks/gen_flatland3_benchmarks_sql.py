@@ -160,13 +160,14 @@ def gen_sql_scenario(scenario_ids_for_test, scenario_names, scenario_description
   return scenario_definition
 
 
-def gen_sql_test(test_ids, test_names, test_descriptions, test_fields, scenario_ids_per_test, test_type):
+def gen_sql_test(test_ids, test_names, test_descriptions, test_fields, scenario_ids_per_test, test_type, queue=None):
   test_definitions = """INSERT INTO test_definitions
-    (id, name, description, field_ids, scenario_ids, loop)
+    (id, name, description, field_ids, scenario_ids, loop, queue)
     VALUES
   """
+  queue_ = "NULL" if queue is None else f"'{queue}'"
   for test_name, test_description, test_id, scenario_ids_for_test in zip(test_names, test_descriptions, test_ids, scenario_ids_per_test):
-    test_definitions += f"""  ('{test_id}', '{test_name}', '{escape_sql_string(test_description)}', array['{"\', \'".join(test_fields)}']::uuid[], array['{"', '".join(scenario_ids_for_test)}']::uuid[], '{test_type}'),
+    test_definitions += f"""  ('{test_id}', '{test_name}', '{escape_sql_string(test_description)}', array['{"\', \'".join(test_fields)}']::uuid[], array['{"', '".join(scenario_ids_for_test)}']::uuid[], '{test_type}', {queue_}),
 
 """
   test_definitions = re.sub(",\n$", ";\n", test_definitions)
@@ -230,6 +231,7 @@ def extract_ai4realnet_from_csv(csv):
     test["TEST_FIELD_DESCRIPTION"] = row["TEST_FIELD_DESCRIPTION"]
     test["TEST_AGG"] = row["TEST_AGG"]
     test["LOOP"] = SETUP_MAP[row["evaluation"]]
+    test["QUEUE"] = row["domain"]
 
     test["scenarios"] = test.get("scenarios", defaultdict(lambda: {}))
     scenarios = test["scenarios"]
@@ -265,7 +267,7 @@ def gen_sqls(data):
 
       for test_id, test in benchmark["tests"].items():
         sql += gen_sql_test([test["ID"]], [test["TEST_NAME"]], [test["TEST_DESCRIPTION"]], [test["TEST_FIELD_ID"]], [list(test["scenarios"].keys())],
-                            test["LOOP"])
+                            test["LOOP"], test.get("QUEUE", None))
         sql += gen_sql_test_benchmark_field(test["TEST_FIELD_ID"], test["TEST_FIELD_NAME"], test["TEST_AGG"])
         for scenario_id, scenario in test["scenarios"].items():
           sql += gen_sql_scenario([scenario["ID"]], [scenario["SCENARIO_FIELD_NAME"]], [scenario["SCENARIO_DESCRIPTION"]], [scenario["SCENARIO_FIELD_ID"]])
@@ -273,7 +275,7 @@ def gen_sqls(data):
 
   print(sql)
 
-  with Path("/Users/che/workspaces/benchmarking/ts/backend/src/migration/data/V8.1__ai4realnet.sql").open("w") as f:
+  with Path("/Users/che/workspaces/benchmarking/ts/backend/src/migration/data/V8.1__ai4realnet_example.sql").open("w") as f:
     f.write(sql)
   print(json.dumps(data, indent=4))
 
