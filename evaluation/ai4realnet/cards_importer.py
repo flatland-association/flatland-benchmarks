@@ -18,15 +18,23 @@ def main():
   for d in data:
     for domain in d["domain"]:
       record = json.loads(json.dumps(d))
-      record["ID"] += f" ({domain})"
-      record["title"] += f" ({domain})"
+
       record["domains"] = record["domain"]
       record["domain"] = domain
 
       record["BENCHMARK_GROUP_ID"] = BENCHMARK_GROUP_ID
       record["BENCHMARK_ID"] = objectives[d["objective"]]
-      record["TEST_ID"] = str(uuid4())
+      record["BENCHMARK_NAME"] = record["objective"]
+      record["BENCHMARK_DESCRIPTION"] = record["projectObjective"]
+      record["TEST_ID"] = record["ID"]
+      record["TEST_NAME"] = f"{record['ID']} {record['title']} ({domain})"
+      record["TEST_DESCRIPTION"] = record['objectiveDescription']
       record["SCENARIO_ID"] = str(uuid4())
+      record["SCENARIO_NAME"] = f"Scenario 1 - {record['TEST_DESCRIPTION']}"
+      record["SCENARIO_DESCRIPTION"] = record['objectiveDescription']
+
+      record["ID"] += f" ({domain})"
+      record["title"] += f" ({domain})"
 
       records.append(record)
   df = pd.DataFrame.from_records(records)
