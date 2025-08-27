@@ -6,8 +6,9 @@ import pandas as pd
 
 
 def main():
-  # '0ca46887-897a-463f-bf83-c6cd6269a976', 'CAMPAIGN', 'Beta Validation Campaign', 'The beta validation campaign runs until 30.11.2025'
   BENCHMARK_GROUP_ID = '0ca46887-897a-463f-bf83-c6cd6269a976'
+  BENCHMARK_GROUP_NAME = 'Beta Validation Campaign'
+  BENCHMARK_GROUP_DESCRIPTION = 'The beta validation campaign runs until 30.11.2025'
   with Path("KPIs_database_cards.json").open() as f:
     data = json.loads(f.read())
     print(json.dumps(data, indent=4))
@@ -23,12 +24,14 @@ def main():
       record["domain"] = domain
 
       record["BENCHMARK_GROUP_ID"] = BENCHMARK_GROUP_ID
+      record["BENCHMARK_GROUP_NAME"] = BENCHMARK_GROUP_NAME
+      record["BENCHMARK_GROUP_DESCRIPTION"] = BENCHMARK_GROUP_DESCRIPTION
       record["BENCHMARK_ID"] = objectives[d["objective"]]
       record["BENCHMARK_NAME"] = record["objective"]
-      record["BENCHMARK_DESCRIPTION"] = record["projectObjective"]
+      record["BENCHMARK_DESCRIPTION"] = record["objectiveDescription"]
       record["TEST_ID"] = record["ID"]
-      record["TEST_NAME"] = f"{record['ID']} {record['title']} ({domain})"
-      record["TEST_DESCRIPTION"] = record['objectiveDescription']
+      record["TEST_NAME"] = f"{record['ID']}: {record['title']} ({domain})"
+      record["TEST_DESCRIPTION"] = record['description']
       record["SCENARIO_ID"] = str(uuid4())
       record["SCENARIO_NAME"] = f"Scenario 1 - {record['TEST_DESCRIPTION']}"
       record["SCENARIO_DESCRIPTION"] = record['objectiveDescription']
