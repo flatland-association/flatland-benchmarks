@@ -10,9 +10,6 @@ describe('Info Controller Failing controller', () => {
     setupControllerTestEnvironment(testConfig)
     controller = new ControllerTestAdapter(InfoController, testConfig)
     const res = await controller.testGet('/info', {})
-    console.log('= /info =')
-    console.log(res.status)
-    console.log(res.body)
     expect(res.status).toBe(200)
     expect(res.body).toBeApiResponse()
     expect(res.body.body).toEqual({
