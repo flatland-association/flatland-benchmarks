@@ -3,6 +3,13 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.12.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.11.0...v0.12.0) (2025-08-27)
+
+
+### Features
+
+* add info service display FAB_VERSION. ([#391](https://github.com/flatland-association/flatland-benchmarks/issues/391)) ([d5b1237](https://github.com/flatland-association/flatland-benchmarks/commit/d5b12374c1dc49799fa285fec7defbcbb6a20892))
+
 ## [0.11.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.10.0...v0.11.0) (2025-08-25)
 
 
