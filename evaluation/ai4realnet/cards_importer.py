@@ -15,6 +15,9 @@ def main():
   objectives = {}
   for d in data:
     objectives[d["objective"]] = str(uuid4())
+
+  fields = {}
+
   records = []
   for d in data:
     for domain in d["domain"]:
@@ -29,12 +32,17 @@ def main():
       record["BENCHMARK_ID"] = objectives[d["objective"]]
       record["BENCHMARK_NAME"] = record["objective"]
       record["BENCHMARK_DESCRIPTION"] = record["objectiveDescription"]
+      record["BENCHMARK_FIELD_ID"] = fields.setdefault(record["BENCHMARK_ID"], str(uuid4()))
+      record["BENCHMARK_AGG"] = "SUM"
       record["TEST_ID"] = record["ID"]
       record["TEST_NAME"] = f"{record['ID']}: {record['title']} ({domain})"
       record["TEST_DESCRIPTION"] = record['description']
+      record["TEST_FIELD_ID"] = fields.setdefault(record["TEST_ID"], str(uuid4()))
+      record["TEST_AGG"] = "SUM"
       record["SCENARIO_ID"] = str(uuid4())
       record["SCENARIO_NAME"] = f"Scenario 1 - {record['TEST_DESCRIPTION']}"
       record["SCENARIO_DESCRIPTION"] = record['objectiveDescription']
+      record["SCENARIO_FIELD_ID"] = fields.setdefault(record["SCENARIO_ID"], str(uuid4()))
 
       record["ID"] += f" ({domain})"
       record["title"] += f" ({domain})"
