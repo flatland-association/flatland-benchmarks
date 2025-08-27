@@ -6,7 +6,7 @@ import { getTestConfig } from './setup.mjs'
 
 const testSubmission: StripLocator<SubmissionRow> = {
   benchmark_id: '20ccc7c1-034c-4880-8946-bffc3fed1359',
-  test_ids: ['79094281-35ff-484d-a687-cccb228a04a0'],
+  test_ids: ['557d9a00-7e6d-410b-9bca-a017ca7fe3aa'],
   name: 'test',
   submission_data_url: 'none',
 }

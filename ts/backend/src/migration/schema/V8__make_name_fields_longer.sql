@@ -1,5 +1,5 @@
 --
--- make name column longer
+-- make name column longer and add queue column in test definitions
 --
 
 ALTER TABLE field_definitions ALTER COLUMN key TYPE VARCHAR(128);
