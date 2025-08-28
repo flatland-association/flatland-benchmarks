@@ -132,6 +132,5 @@ if __name__ == '__main__':
   gen_flatland3_benchmarks()
 
   # TODO add tests for common
-  # TODO gen orchestrator code as well
   # TODO make upsert https://neon.com/postgresql/postgresql-tutorial/postgresql-upsert
   # TODO update orchestraotor for domain queue
