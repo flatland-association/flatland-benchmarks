@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router'
 import { ImpressumView, NotFoundView, PrivacyView } from '@flatland-association/flatland-ui'
 import { AuthGuard } from './guards/auth.guard'
+import { BenchmarkGroupView } from './views/benchmark-group/benchmark-group.view'
 import { BenchmarksDetailView } from './views/benchmarks-detail/benchmarks-detail.view'
 import { HomeView } from './views/home/home.view'
 import { MySubmissionsView } from './views/my-submissions/my-submissions.view'
@@ -18,7 +19,6 @@ import { VcSubmissionView } from './views/vc-submission/vc-submission.view'
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: HomeView },
-  { path: 'benchmarks', pathMatch: 'full', redirectTo: 'home' },
   {
     path: 'association',
     redirectTo: () => {
@@ -33,24 +33,29 @@ export const routes: Routes = [
       return 'home'
     },
   },
-  { path: 'benchmarks/:id', component: BenchmarksDetailView },
+  { path: 'benchmarks', pathMatch: 'full', redirectTo: 'home' },
+  { path: 'benchmarks/:group_id', component: BenchmarkGroupView, canActivate: [AuthGuard] },
+  // { path: 'benchmarks/:group_id/:benchmark_id', component: BenchmarkView },
+  // TODO: generalize/clean up
+  // see: https://github.com/flatland-association/flatland-benchmarks/issues/323
+  { path: 'fab-benchmarks/:id', component: BenchmarksDetailView },
   {
-    path: 'benchmarks/:id/participate',
+    path: 'fab-benchmarks/:id/participate',
     component: ParticipateView,
     canActivate: [AuthGuard],
   },
   {
-    path: 'benchmarks/:id/participate/new-submission',
+    path: 'fab-benchmarks/:id/participate/new-submission',
     component: NewSubmissionView,
     canActivate: [AuthGuard],
   },
   {
-    path: 'benchmarks/:id/participate/submissions',
+    path: 'fab-benchmarks/:id/participate/submissions',
     pathMatch: 'full',
-    redirectTo: 'benchmarks/:id/participate',
+    redirectTo: 'fab-benchmarks/:id/participate',
   },
   {
-    path: 'benchmarks/:id/participate/submissions/:submission',
+    path: 'fab-benchmarks/:id/participate/submissions/:submission',
     component: SubmissionView,
     canActivate: [AuthGuard],
   },
