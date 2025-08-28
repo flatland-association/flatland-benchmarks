@@ -61,10 +61,41 @@ SETUP_MAP = {
   'special evaluation setup': 'OFFLINE',
 }
 
+
+def gen_domain_orchestrator(data, domain):
+  s = f"""
+{domain.lower().replace(' ', '_')}_orchestrator = Orchestrator(
+    test_runners={{
+"""
+  for benchmark_group_id, benchmark_group in data.items():
+    for benchmark_id, benchmark in benchmark_group["benchmarks"].items():
+      for test_id, test in benchmark["tests"].items():
+        scenario_ids = [f"'{scenario_id}'" for scenario_id in test["scenarios"].keys()]
+        if test["QUEUE"] == domain:
+          s += f"""
+        // {test['TEST_NAME']}
+        "{test_id}": TestRunner_{test_id}(
+            test_id="{test_id}", scenario_ids=[{', '.join(scenario_ids)}]
+        ),
+"""
+  s += f"""
+    }}
+)
+"""
+  return s
+
+
 if __name__ == '__main__':
   # gen_ai4realnet_playground()
   # gen_flatland3_benchmarks()
   data = extract_ai4realnet_from_csv(csv="KPIs_database_cards.csv")
+
+  orchestrator_code = ""
+  for domain in ["Railway", "ATM", "Power Grid"]:
+    orchestrator_code += gen_domain_orchestrator(data, domain)
+
+  with Path("orchestrators.txt").open("w") as f:
+    f.write(orchestrator_code)
 
   sql = gen_sqls(data)
   with Path("V8.1__ai4realnet_example.json").open("w") as f:
