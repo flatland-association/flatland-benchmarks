@@ -132,6 +132,3 @@ def gen_sql(num_levels_per_test, benchmark_group_id, benchmark_name, fields, tes
 if __name__ == '__main__':
   # gen_ai4realnet_playground()
   gen_flatland3_benchmarks()
-
-  # TODO add tests for common
-  # TODO update orchestraotor for domain queue
