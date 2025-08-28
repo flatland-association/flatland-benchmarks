@@ -1,11 +1,8 @@
-import re
-
-
 def gen_sql_test_benchmark_field(test_or_benchmark_field, key, agg_func):
   return f"""INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES
-        ('{test_or_benchmark_field}', '{key}', 'Benchmark score ({agg_func} of test scores)', '{agg_func}', NULL);
+        VALUES ('{test_or_benchmark_field}', '{key}', 'Benchmark score ({agg_func} of test scores)', '{agg_func}', NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 """
 
@@ -13,40 +10,36 @@ def gen_sql_test_benchmark_field(test_or_benchmark_field, key, agg_func):
 def gen_sql_scenario_field(key, scenario_field):
   return f"""INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES
-        ('{scenario_field}', '{key}', 'Scenario score (raw values)', NULL, NULL);
+        VALUES ('{scenario_field}', '{key}', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 """
 
 
 def gen_sql_scenario(scenario_id, scenario_name, scenario_description, scenario_fields):
-  scenario_definition = f"""INSERT INTO scenario_definitions
+  return f"""INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES
-  ('{scenario_id}', '{scenario_name}', '{escape_sql_string(scenario_description)}', array['{"\', \'".join(scenario_fields)}']::uuid[]),
+    VALUES ('{scenario_id}', '{scenario_name}', '{escape_sql_string(scenario_description)}', array['{"\', \'".join(scenario_fields)}']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 """
-  scenario_definition = re.sub(",\n$", ";\n", scenario_definition)
-  return scenario_definition
 
 
 def gen_sql_test(test_id, test_name, test_description, test_fields, scenario_ids_for_test, test_type, queue=None):
   queue_ = "NULL" if queue is None else f"'{queue}'"
-  test_definitions = f"""INSERT INTO test_definitions
+  return f"""INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES
-    ('{test_id}', '{test_name}', '{escape_sql_string(test_description)}', array['{"\', \'".join(test_fields)}']::uuid[], array['{"', '".join(scenario_ids_for_test)}']::uuid[], '{test_type}', {queue_}),
+    VALUES ('{test_id}', '{test_name}', '{escape_sql_string(test_description)}', array['{"\', \'".join(test_fields)}']::uuid[], array['{"', '".join(scenario_ids_for_test)}']::uuid[], '{test_type}', {queue_})
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 """
-  test_definitions = re.sub(",\n$", ";\n", test_definitions)
-  return test_definitions
 
 
 def gen_sql_benchmark(benchmark_id, benchmark_name, benchmark_fields, test_ids):
   return f"""INSERT INTO benchmark_definitions
     (id, name, description, field_ids, test_ids)
-    VALUES
-    ('{benchmark_id}', '{benchmark_name}', '{benchmark_name}', array['{"\', \'".join(benchmark_fields)}']::uuid[], array['{"', '".join(test_ids)}']::uuid[]);
+    VALUES ('{benchmark_id}', '{benchmark_name}', '{benchmark_name}', array['{"\', \'".join(benchmark_fields)}']::uuid[], array['{"', '".join(test_ids)}']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 """
 
@@ -54,8 +47,8 @@ def gen_sql_benchmark(benchmark_id, benchmark_name, benchmark_fields, test_ids):
 def gen_sql_benchmark_group(benchmark_group_id, benchmark_group_setup, benchmark_group_name, benchmark_group_description, benchmark_ids):
   return f""" INSERT INTO benchmark_groups
     (id, setup, name, description, benchmark_ids)
-    VALUES
-    ('{benchmark_group_id}', '{benchmark_group_setup}', '{benchmark_group_name}', '{benchmark_group_description}', array['{"', '".join(benchmark_ids)}']::uuid[]);
+    VALUES ('{benchmark_group_id}', '{benchmark_group_setup}', '{benchmark_group_name}', '{benchmark_group_description}', array['{"', '".join(benchmark_ids)}']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET setup=EXCLUDED.setup, name=EXCLUDED.name, description=EXCLUDED.description, benchmark_ids=EXCLUDED.benchmark_ids;
 
 """
 
