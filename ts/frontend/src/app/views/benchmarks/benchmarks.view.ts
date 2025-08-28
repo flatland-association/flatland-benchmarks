@@ -2,12 +2,12 @@ import { Component, OnInit, inject } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { BenchmarkDefinitionRow } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
-import { BenchmarkCardComponent } from '../../components/benchmark-card/benchmark-card.component'
+import { BenchmarkGroupCardComponent } from '../../components/benchmark-group-card/benchmark-group-card.component'
 import { ApiService } from '../../features/api/api.service'
 
 @Component({
   selector: 'view-benchmarks',
-  imports: [ContentComponent, RouterModule, BenchmarkCardComponent],
+  imports: [ContentComponent, RouterModule, BenchmarkGroupCardComponent],
   templateUrl: './benchmarks.view.html',
   styleUrl: './benchmarks.view.scss',
 })
