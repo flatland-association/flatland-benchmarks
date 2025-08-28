@@ -86,8 +86,6 @@ def gen_domain_orchestrator(data, domain):
 
 
 if __name__ == '__main__':
-  # gen_ai4realnet_playground()
-  # gen_flatland3_benchmarks()
   data = extract_ai4realnet_from_csv(csv="KPIs_database_cards.csv")
 
   orchestrator_code = ""
@@ -98,8 +96,8 @@ if __name__ == '__main__':
     f.write(orchestrator_code)
 
   sql = gen_sqls(data)
-  with Path("V8.1__ai4realnet_example.json").open("w") as f:
+  with Path("V9.1__ai4realnet_example.json").open("w") as f:
     f.write(json.dumps(data, indent=4))
 
-  with Path("../../ts/backend/src/migration/data/V8.1__ai4realnet_example.sql").open("w") as f:
+  with Path("../../ts/backend/src/migration/data/V9.1__ai4realnet_example.sql").open("w") as f:
     f.write(sql)
