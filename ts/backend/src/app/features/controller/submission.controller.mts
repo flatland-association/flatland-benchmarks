@@ -121,10 +121,15 @@ export class SubmissionController extends Controller {
         // TODO we should only send non-OFFLINE tests
         tests: tests.map((test) => test.id),
       }
-      logger.info(`Sending ${payload} to celery.`)
+      let queue
+      if (tests.length == 1 && tests[0].queue) {
+        queue = tests[0].queue
+      } else {
+        queue = req.body.benchmark_id as string
+      }
+      logger.info(`Sending ${payload} to celery into queue ${queue}.`)
       try {
-        // the returned unsettled promise is ignored and continues running (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-        celery.sendTask(req.body.benchmark_id as string, payload, id)
+        celery.sendTask(queue, payload, id)
         // request succeeds once connection is checked ready and task sent
         this.respond(req, res, { id }, payload)
       } catch (error) {
