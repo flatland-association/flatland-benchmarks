@@ -82,13 +82,15 @@ def gen_sql(num_levels_per_test, benchmark_group_id, benchmark_name, fields, tes
     scenario_names = [f'Test {i} Level {j}' for j, scenario_id in enumerate(scenario_ids_for_test)]
     scenario_descriptions = [f'Test {i} Level {j}' for j, scenario_id in enumerate(scenario_ids_for_test)]
 
-    scenario_definition = gen_sql_scenario(scenario_ids_for_test, scenario_names, scenario_descriptions, scenario_fields)
-    scenario_definitions += scenario_definition
+    for scenario_id, scenario_name, scenario_description in zip(scenario_ids_for_test, scenario_names, scenario_descriptions):
+      scenario_definition = gen_sql_scenario(scenario_id, scenario_name, scenario_description, scenario_fields)
+      scenario_definitions += scenario_definition
 
   test_names = [f'Test {i}' for i, _ in enumerate(test_ids)]
   scenario_ids_per_test = [scenario_ids[test_id] for test_id in test_ids]
-
-  test_definitions = gen_sql_test(test_ids, test_names, test_descriptions, test_fields, scenario_ids_per_test, test_type)
+  test_definitions = ""
+  for test_name, test_description, test_id, scenario_ids_for_test in zip(test_names, test_descriptions, test_ids, scenario_ids_per_test):
+    test_definitions += gen_sql_test(test_id, test_name, test_description, test_field, scenario_ids_for_test, test_type)
   benchmark_id = str(uuid.uuid4())
   benchmark_definitions = gen_sql_benchmark(benchmark_id, benchmark_name, benchmark_fields, test_ids)
   print(field_definitions)
