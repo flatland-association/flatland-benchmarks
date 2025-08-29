@@ -34,7 +34,7 @@ export class ApiService {
    */
   public async get<E extends keyof ApiGetEndpoints, O extends BanEmpty<ApiGetOptions<E>>>(
     endpoint: E,
-    ...options: Empty extends O ? [options?: undefined] : [O]
+    ...options: Empty extends O ? [options?: O] : [O]
   ): Promise<ApiGetEndpoints[E]['response']>
   // un-typed fallback overload
   // (have to use the NotKeyOf approach here, otherwise typed calls with option
