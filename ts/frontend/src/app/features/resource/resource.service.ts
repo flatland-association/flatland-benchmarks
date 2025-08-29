@@ -1,7 +1,13 @@
 import { inject, Injectable } from '@angular/core'
-import { BenchmarkDefinitionRow, BenchmarkGroupDefinitionRow, FieldDefinitionRow } from '@common/interfaces'
+import { ApiGetEndpoints } from '@common/api-endpoints'
+import { ApiGetOptions } from '@common/api-types'
+import { interpolateEndpoint } from '@common/endpoint-utils'
+import { BanEmpty, Empty, OptionalEmpty } from '@common/utility-types'
+import { RouteParameters } from 'express-serve-static-core'
 import { ApiService } from '../api/api.service'
 
+// TODO: cache max-age
+// see: https://github.com/flatland-association/flatland-benchmarks/issues/66
 interface AsyncCacheItem<T> {
   value?: T
   promise: Promise<T>
@@ -9,13 +15,27 @@ interface AsyncCacheItem<T> {
   promiseReject: (reason?: unknown) => void
 }
 
+// like ApiGetOptions but allowing params to be of type string[]
+interface AugmentedApiGetOptions<E extends keyof ApiGetEndpoints> {
+  params: {
+    // [K in keyof RouteParameters<E>]: RouteParameters<E>[K] | RouteParameters<E>[K][]
+    [K in keyof RouteParameters<E>]: string | string[]
+  }
+  query?: ApiGetEndpoints[E]['request']['query']
+}
+
+interface RequestDescriptor<E extends keyof ApiGetEndpoints> {
+  endpoint: E
+  options?: Partial<AugmentedApiGetOptions<E>>
+}
+
 // TODO: Infer from GET endpoints?
 // see: https://github.com/flatland-association/flatland-benchmarks/issues/396
-export interface ResourceTypes {
-  '/definitions/benchmark-groups/': BenchmarkGroupDefinitionRow
-  '/definitions/benchmarks/': BenchmarkDefinitionRow
-  '/definitions/fields/': FieldDefinitionRow
-}
+// export interface ResourceTypes {
+//   '/definitions/benchmark-groups/': BenchmarkGroupDefinitionRow
+//   '/definitions/benchmarks/': BenchmarkDefinitionRow
+//   '/definitions/fields/': FieldDefinitionRow
+// }
 
 // TODO: unit test
 
@@ -25,47 +45,115 @@ export interface ResourceTypes {
 export class ResourceService {
   private apiService = inject(ApiService)
 
+  // maps "resource identifier" (interpolated endpoint + query params) to response
   private cache = new Map<string, AsyncCacheItem<unknown>>()
+
+  // NOTE: The `& {}` you see in types below is to pretty print the type (makes
+  // debugging type errors easier, as it resolves generics where possible)
 
   /**
    * Load resource from cache or backend, if not cached yet.
-   * @param dir
-   * @param id
-   * @returns
+   * @param endpoint String representation of the endpoint route.
+   * @param options Request options. Para
+   * @see {@link ApiGetEndpoints}
    */
-  async load<T extends keyof ResourceTypes>(dir: T, id: string): Promise<ResourceTypes[T]> {
-    return this.loadMultiOrdered(dir, [id]).then(([r]) => r)
+  async load<E extends keyof ApiGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
+    endpoint: E,
+    ..._options: Empty extends O ? [options?: O] : [O & {}]
+  ): Promise<ApiGetEndpoints[E]['response']['body']> {
+    return this.loadOrdered<E, O>(endpoint, ..._options)
   }
 
   /**
-   * Load multiple resources from cache or backend, if not cached yet.
+   * Load resources from cache or backend, if not cached yet.
    * Returned resources are not in order of passed ids.
+   * @param endpoint String representation of the endpoint route.
+   * @param options Request options. Params can be `string` or `string[]` - if
+   * latter, it will be interpreted as list of ids that can be spread for cache
+   * lookup but be joined with a comma for the API request.
    */
-  async loadMultiGrouped<T extends keyof ResourceTypes>(dir: T, ids: string[]): Promise<ResourceTypes[T][]> {
-    return this.loadMultiOrdered(dir, [...new Set(ids)])
+  async loadGrouped<E extends keyof ApiGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
+    endpoint: E,
+    // ids?: ResourceIds<E>,
+    ..._options: Empty extends O ? [o?: O] : [o: O & {}]
+  ): Promise<ApiGetEndpoints[E]['response']['body']> {
+    // This cast should not be necessary, but without, .params is obscured. It
+    // looks like the switch clause in OptionalEmpty can't determine statically
+    // whether `[K in keyof RouteParameters<E>]: string | string[]` is empty or
+    // not and skips it completely, omitting in from both branches...
+    // TODO: create TS bug report
+    // https://www.typescriptlang.org/play/?#code/KYDwDg9gTgLgBDAnmYcCiBbMS4F44BKwAxtACYA8AzjFAJYB2A5gDRwPABuwUAfALAAoIaEiwEyVAHlsdCAwCGAG0zZEFACq88QuHAD0+uGCjAYMOjwC0dJg2jBdcAN5O9huACMArnSVk4BQkUBAALBXg6KjDURhgeKhILeTgIADNApSU4ACJVJBy4NMt-aIwFMlQIWXllNwMjAAoiAEdfU0otOCi4Uza6DrYIGFCeAHcoqs8AKyToiZH2YdDGJi9veGrkxSV6j2LgUrgxiG9-L1RaYAjgAIVo4CwkADoASnqAbQBpboY4AGtgIh0nANIFovlEHBQPEGGRoq12rdNN8ALraAD8cB+AC52FweKiMXiNGinABfOAAMhce30zwZgThmWyywS4JsVE+P0YAKBILB93QTyhMOAcIRwH6HRRX3RcCxHG4UDgeLlJLJgj05KEQiQIQAwqNiP8NCsqABGPBwGTbZSQiiuLV6OBtHiIYlMxAsepgBRQBQYKh4p0usOBPEMbwYTw8erkn3OvR+gNBhgwEM6wTkgTCQT61BGkim80AJmttrkOwdoZdbqgHrxCgY3t9-sDwdpSfDH0BiDxNHozFRkejsag8cTYZTHfTmaEOd1+ckcCLJrNUQAzJpoSBYfCXAByBSHvEABjYh88p7gFpzFZq1ZFjvq9cbXqnLpnQZD9TD31+PlgQyDQR3YMc427BM21TKg5xcLMcyAA
+    const options = _options ? (_options[0] as Partial<AugmentedApiGetOptions<E>>) : undefined
+    // Group (make unique) all entries in array params
+    for (const key in options?.params) {
+      if (Array.isArray(options.params[key])) {
+        options.params[key] = [...new Set(options.params[key])]
+      }
+    }
+    return this.loadOrdered<E, O>(endpoint, ..._options)
   }
 
   /**
    * Load multiple resources from cache or backend, if not cached yet.
    * Returned resources are in order of passed ids.
-   * @param dir
-   * @param ids
-   * @returns
+   * @param endpoint String representation of the endpoint route.
+   * @param _options Request options. Params can be `string` or `string[]` - if
+   * latter, it will be interpreted as list of ids that can be spread for cache
+   * lookup but be joined with a comma for the API request.
    */
-  async loadMultiOrdered<T extends keyof ResourceTypes>(dir: T, ids: string[]): Promise<ResourceTypes[T][]> {
-    const toLoad = new Set<string>()
-    // go through all given ids (in order) and either
+  async loadOrdered<E extends keyof ApiGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
+    endpoint: E,
+    ..._options: Empty extends O ? [o?: O] : [o: O & {}]
+  ): Promise<ApiGetEndpoints[E]['response']['body']> {
+    // as for the cast: see above
+    const options = _options ? (_options[0] as Partial<AugmentedApiGetOptions<E>>) : undefined
+
+    let resourceRequests: RequestDescriptor<E>[]
+
+    // accept at max one spread param - derive that one from options (last
+    // listed array is spread param)
+    let spread: keyof RouteParameters<E> | undefined
+    if (options?.params) {
+      Object.entries(options.params).forEach(([param, value]) => {
+        if (Array.isArray(value)) {
+          spread = param as keyof RouteParameters<E>
+        }
+      })
+      //... all other array params: collapse
+      for (const key in options.params) {
+        if (key !== spread && Array.isArray(options.params[key])) {
+          options.params[key] = options.params[key].join(',')
+        }
+      }
+    }
+
+    // If spread params are passed, interpolate endpoint with options merged
+    // with entry for every spread param. For that to work, clone options and
+    // overwrite the id param for every request.
+    // Without spreading, simply use original options for interpolation.
+    if (spread) {
+      resourceRequests = (options!.params![spread] as string[]).map((id) => {
+        return { endpoint, options: this.cloneOptionsForId(options, spread!, id) }
+      })
+    } else {
+      resourceRequests = [{ endpoint, options }]
+    }
+
+    const apiRequests: RequestDescriptor<E>[] = []
+
+    // go through all resource requests (in order) and either
     // - return cached promise
-    // - prepare + return cached promise, then load and resolve later on
-    const promises = ids.map((id) => {
-      const item = this.cache.get(`${dir}${id}`)
+    // - prepare + return cached promise, make api request and resolve later on
+    const promises = resourceRequests.map((request) => {
+      const ckey = this.getCacheKey(request.endpoint, request.options)
+      const item = this.cache.get(ckey)
       if (item) {
         // this returns the same promise if the same id is duplicated in `ids`
         return item.promise
       } else {
         // create the cache item (with promise and executor) once
-        const cacheItem = {} as AsyncCacheItem<ResourceTypes[T]>
-        cacheItem.promise = new Promise<ResourceTypes[T]>((resolve, reject) => {
+        const cacheItem = {} as AsyncCacheItem<ApiGetEndpoints[E]['response']['body']>
+        cacheItem.promise = new Promise<ApiGetEndpoints[E]['response']['body']>((resolve, reject) => {
           cacheItem.promiseResolve = resolve
           cacheItem.promiseReject = reject
         }).then((value) => {
@@ -73,32 +161,71 @@ export class ResourceService {
           return value
         })
         //@ts-expect-error subtype
-        this.cache.set(`${dir}${id}`, cacheItem)
+        this.cache.set(ckey, cacheItem)
         // and remember to load once
-        toLoad.add(id)
+        apiRequests.push(request)
         return cacheItem.promise
       }
     })
-    if (toLoad.size) {
-      // trust the resource GET endpoint follows the pattern /dir/ids
-      const resources = (
-        await this.apiService.get<ResourceTypes[T][]>(`${dir}:ids`, { params: { ids: [...toLoad].join(',') } })
+
+    // Make actual API request - deliberately using the singular here, as per
+    // - function signature, all requested resources are of same type
+    // - dev.005, same-type GET requests can be pooled with comma separated ids
+    // which leads to the conclusion that all remaining requests can be merged
+    // into one. (And also: if there are actually multiple requests, they only
+    // differ by the id param)
+    if (apiRequests.length > 0) {
+      const actualRequest = window.structuredClone(apiRequests[0])
+      // merge request if necessary
+      if (apiRequests.length > 1) {
+        const actualIds = apiRequests.map((request) => request.options!.params![spread!])
+        actualRequest.options!.params![spread!] = actualIds.join(',')
+      }
+      const body = (
+        await this.apiService.get(actualRequest.endpoint, actualRequest.options as BanEmpty<ApiGetOptions<E>>)
       ).body
+      const resources = Array.isArray(body) ? body : [body]
       // go through all loaded resources and resolve the cached promise
       resources?.forEach((resource) => {
-        const item = this.cache.get(`${dir}${resource.id}`)
+        // The returned resource does not include the complete identifier,
+        // hence rebuild that from request merged with response id.
+        const resourceEndpoint = actualRequest.endpoint
+        let resourceOptions = actualRequest.options
+        if (spread) {
+          resourceOptions = this.cloneOptionsForId(resourceOptions, spread, resource.id)
+        }
+        const ckey = this.getCacheKey(resourceEndpoint, resourceOptions)
+        const item = this.cache.get(ckey)
         item?.promiseResolve(resource)
       })
     }
-    //@ts-expect-error type
+    // @ ts-expect-error type
     return Promise.all(promises)
   }
 
-  /**
-   * Tries to retrieve the resource from cache.
-   */
-  getSync<T extends keyof ResourceTypes>(dir: T, id: string): ResourceTypes[T] | undefined {
-    //@ts-expect-error type
-    return this.cache.get(`${dir}${id}`)?.value
+  // TODO: doc
+  private cloneOptionsForId<E extends keyof ApiGetEndpoints & {}>(
+    options: Partial<AugmentedApiGetOptions<E>> | undefined,
+    param: keyof RouteParameters<E>,
+    id: string,
+  ) {
+    const opts = (window.structuredClone(options) ?? {}) as Partial<AugmentedApiGetOptions<E>>
+    opts.params ??= {} as AugmentedApiGetOptions<E>['params']
+    opts.params[param] = id
+    return opts
+  }
+
+  // TODO: doc
+  private getCacheKey<E extends keyof ApiGetEndpoints & {}, O extends Partial<AugmentedApiGetOptions<E>>>(
+    endpoint: E,
+    options?: O | undefined,
+  ) {
+    if (!options?.query) {
+      return interpolateEndpoint(endpoint, (options?.params ?? {}) as RouteParameters<E>)
+    } else {
+      return (
+        interpolateEndpoint(endpoint, (options?.params ?? {}) as RouteParameters<E>) + JSON.stringify(options.query)
+      )
+    }
   }
 }

@@ -39,9 +39,11 @@ export class BenchmarkGroupView implements OnInit, OnDestroy {
       this.customization = customization
     })
     this.paramsSubscription = this.route.params.subscribe(({ group_id }) => {
-      this.resourceService.load('/definitions/benchmark-groups/', group_id).then((group) => {
-        this.group = group
-      })
+      this.resourceService
+        .load('/definitions/benchmark-groups/:group_ids', { params: { group_ids: group_id } })
+        .then((group) => {
+          this.group = group?.at(0)
+        })
     })
   }
 

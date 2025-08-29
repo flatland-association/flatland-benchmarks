@@ -1,8 +1,6 @@
 import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { BenchmarkGroupDefinitionRow } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
-import { ApiService } from '../../features/api/api.service'
-import { CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
 
@@ -15,9 +13,7 @@ import { TableColumn, TableComponent, TableRow } from '../table/table.component'
 export class BenchmarkOverviewComponent implements OnChanges {
   @Input() group?: BenchmarkGroupDefinitionRow
 
-  resourceService = inject(ResourceService)
-  apiService = inject(ApiService)
-  customizationService = inject(CustomizationService)
+  private resourceService = inject(ResourceService)
 
   columns: TableColumn[] = [
     { title: 'Benchmark' },
@@ -34,17 +30,25 @@ export class BenchmarkOverviewComponent implements OnChanges {
 
   async buildBoard() {
     if (this.group) {
+      // pre-fetch all required benchmarks
+      this.resourceService.loadGrouped('/definitions/benchmarks/:benchmark_ids', {
+        params: { benchmark_ids: this.group.benchmark_ids ?? [] },
+      })
       this.rows = await Promise.all(
         this.group.benchmark_ids?.map(async (benchmarkId) => {
-          const benchmark = await this.resourceService.load('/definitions/benchmarks/', benchmarkId)
-          const fields = await this.resourceService.loadMultiOrdered('/definitions/fields/', benchmark.field_ids)
-          // TODO: load via resource service as well
-          // see: https://github.com/flatland-association/flatland-benchmarks/issues/395
-          const leaderboard = (
-            await this.apiService.get('/results/benchmarks/:benchmark_ids', {
+          const benchmark = (
+            await this.resourceService.load('/definitions/benchmarks/:benchmark_ids', {
               params: { benchmark_ids: benchmarkId },
             })
-          ).body?.at(0)
+          )?.at(0)
+          const fields = await this.resourceService.loadGrouped('/definitions/fields/:field_ids', {
+            params: { field_ids: benchmark?.field_ids ?? [] },
+          })
+          const leaderboard = (
+            await this.resourceService.load('/results/benchmarks/:benchmark_ids', {
+              params: { benchmark_ids: benchmarkId },
+            })
+          )?.at(0)
           return {
             // TODO: route to generalized page
             // see: https://github.com/flatland-association/flatland-benchmarks/issues/323
