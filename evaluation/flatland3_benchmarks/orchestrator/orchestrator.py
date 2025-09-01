@@ -23,11 +23,9 @@ S3_BUCKET = os.environ.get("S3_BUCKET", None)
 S3_UPLOAD_PATH_TEMPLATE = os.getenv("S3_UPLOAD_PATH_TEMPLATE", None)
 S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.getenv("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
 ACTIVE_DEADLINE_SECONDS = os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)
-SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.3")
-TEST_RUNNER_EVALUATOR_IMAGE = os.environ.get("EVALUATOR_IMAGE", "ghcr.io/flatland-association/fab-flatland-evaluator:latest")
+SUPPORTED_CLIENT_VERSIONS_RANGE = os.environ.get("SUPPORTED_CLIENT_VERSION_RANGE", ">=4.2.0")
+TEST_RUNNER_EVALUATOR_IMAGE = os.environ.get("EVALUATOR_IMAGE", "ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:latest")
 BENCHMARK_ID = os.environ.get("BENCHMARK_ID", "flatland3-evaluation")
-
-
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
@@ -76,8 +74,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       evaluator_container_definition["env"].append({"name": "S3_UPLOAD_PATH_TEMPLATE", "value": s3_upload_path_template})
     if s3_upload_path_template_use_submission_id:
       evaluator_container_definition["env"].append({"name": "S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", "value": s3_upload_path_template_use_submission_id})
-    if SUPPORTED_CLIENT_VERSIONS is not None:
-      evaluator_container_definition["env"].append({"name": "SUPPORTED_CLIENT_VERSIONS", "value": SUPPORTED_CLIENT_VERSIONS})
+    if SUPPORTED_CLIENT_VERSIONS_RANGE is not None:
+      evaluator_container_definition["env"].append({"name": "SUPPORTED_CLIENT_VERSION_RANGE", "value": SUPPORTED_CLIENT_VERSIONS_RANGE})
     evaluator_container_definition["env"].append({"name": "AICROWD_IS_GRADING", "value": "True"})
     if tests is not None:
       evaluator_container_definition["env"].append({"name": "TEST_ID_FILTER", "value": ','.join(tests)})
