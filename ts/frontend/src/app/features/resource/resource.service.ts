@@ -77,13 +77,7 @@ export class ResourceService {
     // ids?: ResourceIds<E>,
     ..._options: Empty extends O ? [o?: O] : [o: O & {}]
   ): Promise<ApiGetEndpoints[E]['response']['body']> {
-    // This cast should not be necessary, but without, .params is obscured. It
-    // looks like the switch clause in OptionalEmpty can't determine statically
-    // whether `[K in keyof RouteParameters<E>]: string | string[]` is empty or
-    // not and skips it completely, omitting in from both branches...
-    // TODO: create TS bug report
-    // https://www.typescriptlang.org/play/?#code/KYDwDg9gTgLgBDAnmYcCiBbMS4F44BKwAxtACYA8AzjFAJYB2A5gDRwPABuwUAfALAAoIaEiwEyVAHlsdCAwCGAG0zZEFACq88QuHAD0+uGCjAYMOjwC0dJg2jBdcAN5O9huACMArnSVk4BQkUBAALBXg6KjDURhgeKhILeTgIADNApSU4ACJVJBy4NMt-aIwFMlQIWXllNwMjAAoiAEdfU0otOCi4Uza6DrYIGFCeAHcoqs8AKyToiZH2YdDGJi9veGrkxSV6j2LgUrgxiG9-L1RaYAjgAIVo4CwkADoASnqAbQBpboY4AGtgIh0nANIFovlEHBQPEGGRoq12rdNN8ALraAD8cB+AC52FweKiMXiNGinABfOAAMhce30zwZgThmWyywS4JsVE+P0YAKBILB93QTyhMOAcIRwH6HRRX3RcCxHG4UDgeLlJLJgj05KEQiQIQAwqNiP8NCsqABGPBwGTbZSQiiuLV6OBtHiIYlMxAsepgBRQBQYKh4p0usOBPEMbwYTw8erkn3OvR+gNBhgwEM6wTkgTCQT61BGkim80AJmttrkOwdoZdbqgHrxCgY3t9-sDwdpSfDH0BiDxNHozFRkejsag8cTYZTHfTmaEOd1+ckcCLJrNUQAzJpoSBYfCXAByBSHvEABjYh88p7gFpzFZq1ZFjvq9cbXqnLpnQZD9TD31+PlgQyDQR3YMc427BM21TKg5xcLMcyAA
-    const options = _options ? (_options[0] as Partial<AugmentedApiGetOptions<E>>) : undefined
+    const options = _options[0]
     // Group (make unique) all entries in array params
     for (const key in options?.params) {
       if (Array.isArray(options.params[key])) {
@@ -105,8 +99,7 @@ export class ResourceService {
     endpoint: E,
     ..._options: Empty extends O ? [o?: O] : [o: O & {}]
   ): Promise<ApiGetEndpoints[E]['response']['body']> {
-    // as for the cast: see above
-    const options = _options ? (_options[0] as Partial<AugmentedApiGetOptions<E>>) : undefined
+    const options = _options[0]
 
     let resourceRequests: RequestDescriptor<E>[]
 

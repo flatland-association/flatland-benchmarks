@@ -10,14 +10,18 @@ export type Empty = Record<string, never>
  */
 export type OptionalEmpty<T> =
   // prettier-ignore
+  // build a type that is the intersection of all "Empty" fields made optional
   {
-    // build a type that is the intersection of all "Empty" fields made optional
     // Required<T> is required, otherwise objects with nothing but optional
     // fields would be treated as empty.
-    [K in keyof T as Empty extends Required<T[K]> ? K : never]?: T[K]
-  } & {
-    //... and all others as-is
-    [K in keyof T as Empty extends Required<T[K]> ? never : K]: T[K]
+    // Union distribution is disabled (`[T[K]]`) i.o.t. make the extends clause
+    // work - I don't know if this is a (un)safe workaround or expected behavior
+    // see: https://github.com/microsoft/TypeScript/issues/62370
+    [K in keyof T as Empty extends Required<[T[K]]> ? K : never]?: T[K]
+  }
+  //... and all others as-is
+  & {
+    [K in keyof T as Empty extends Required<[T[K]]> ? never : K]: T[K]
   }
 
 /**
