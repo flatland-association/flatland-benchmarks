@@ -85,7 +85,7 @@ Manual triggering via RabbitMQ web triggers `orchestrator`:
 [
   [],
   {
-    "docker_image": "ghcr.io/flatland-association/fab-flatland-evaluator:latest",
+    "docker_image": "ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:latest",
     "submission_image": "ghcr.io/flatland-association/flatland-benchmarks-f3-starterkit:latest"
   },
   {

@@ -39,7 +39,7 @@ class FlatlandBenchmarksOrchestrator:
   def orchestrator(self,
                    submission_data_url: str,
                    tests: List[str] = None,
-                   test_runner_evaluator_image="ghcr.io/flatland-association/fab-flatland-evaluator:latest",
+                   test_runner_evaluator_image="ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:latest",
                    aws_endpoint_url=None,
                    aws_access_key_id=None,
                    aws_secret_access_key=None,

@@ -140,7 +140,7 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
   assert ret["f3-evaluator"]["job_status"] == "Complete"
   assert ret["f3-submission"]["job_status"] == "Complete"
 
-  assert ret["f3-evaluator"]["image_id"] == "ghcr.io/flatland-association/fab-flatland-evaluator:latest"
+  assert ret["f3-evaluator"]["image_id"] == "ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:latest"
   assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/flatland-baselines:latest"
 
   assert "end evaluator/run.sh" in str(ret["f3-evaluator"]["log"])

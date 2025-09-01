@@ -175,7 +175,7 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
 def orchestrator(self,
                  submission_data_url: str,
                  tests: List[str] = None,
-                 TEST_RUNNER_EVALUATOR_IMAGE="ghcr.io/flatland-association/fab-flatland-evaluator:latest",
+                 TEST_RUNNER_EVALUATOR_IMAGE="ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:latest",
                  AWS_ENDPOINT_URL=None,
                  AWS_ACCESS_KEY_ID=None,
                  AWS_SECRET_ACCESS_KEY=None,
