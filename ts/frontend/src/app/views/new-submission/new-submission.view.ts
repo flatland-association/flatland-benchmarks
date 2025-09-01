@@ -69,7 +69,7 @@ export class NewSubmissionView implements OnInit {
     })
     if (response.body?.id) {
       // navigate to that submissions' detail view
-      this.router.navigateByUrl(`benchmarks/${this.benchmark?.id ?? 0}/participate/submissions/${response.body.id}`)
+      this.router.navigateByUrl(`fab-benchmarks/${this.benchmark?.id ?? 0}/participate/submissions/${response.body.id}`)
     }
   }
 }
