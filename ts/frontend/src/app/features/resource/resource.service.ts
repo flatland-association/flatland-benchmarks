@@ -18,7 +18,6 @@ interface AsyncCacheItem<T> {
 // like ApiGetOptions but allowing params to be of type string[]
 interface AugmentedApiGetOptions<E extends keyof ApiGetEndpoints> {
   params: {
-    // [K in keyof RouteParameters<E>]: RouteParameters<E>[K] | RouteParameters<E>[K][]
     [K in keyof RouteParameters<E>]: string | string[]
   }
   query?: ApiGetEndpoints[E]['request']['query']
@@ -28,14 +27,6 @@ interface RequestDescriptor<E extends keyof ApiGetEndpoints> {
   endpoint: E
   options?: Partial<AugmentedApiGetOptions<E>>
 }
-
-// TODO: Infer from GET endpoints?
-// see: https://github.com/flatland-association/flatland-benchmarks/issues/396
-// export interface ResourceTypes {
-//   '/definitions/benchmark-groups/': BenchmarkGroupDefinitionRow
-//   '/definitions/benchmarks/': BenchmarkDefinitionRow
-//   '/definitions/fields/': FieldDefinitionRow
-// }
 
 // TODO: unit test
 
@@ -138,8 +129,8 @@ export class ResourceService {
     // - return cached promise
     // - prepare + return cached promise, make api request and resolve later on
     const promises = resourceRequests.map((request) => {
-      const ckey = this.getCacheKey(request.endpoint, request.options)
-      const item = this.cache.get(ckey)
+      const identifier = this.getResourceIdentifier(request.endpoint, request.options)
+      const item = this.cache.get(identifier)
       if (item) {
         // this returns the same promise if the same id is duplicated in `ids`
         return item.promise
@@ -154,7 +145,7 @@ export class ResourceService {
           return value
         })
         //@ts-expect-error subtype
-        this.cache.set(ckey, cacheItem)
+        this.cache.set(identifier, cacheItem)
         // and remember to load once
         apiRequests.push(request)
         return cacheItem.promise
@@ -187,8 +178,8 @@ export class ResourceService {
         if (spread) {
           resourceOptions = this.cloneOptionsForId(resourceOptions, spread, resource.id)
         }
-        const ckey = this.getCacheKey(resourceEndpoint, resourceOptions)
-        const item = this.cache.get(ckey)
+        const identifier = this.getResourceIdentifier(resourceEndpoint, resourceOptions)
+        const item = this.cache.get(identifier)
         item?.promiseResolve(resource)
       })
     }
@@ -196,7 +187,10 @@ export class ResourceService {
     return Promise.all(promises)
   }
 
-  // TODO: doc
+  /**
+   * Returns a copy of a `AugmentedApiGetOptions` object with the specified
+   * `param` (from `options.params`) replaced by `id`.
+   */
   private cloneOptionsForId<E extends keyof ApiGetEndpoints & {}>(
     options: Partial<AugmentedApiGetOptions<E>> | undefined,
     param: keyof RouteParameters<E>,
@@ -208,8 +202,11 @@ export class ResourceService {
     return opts
   }
 
-  // TODO: doc
-  private getCacheKey<E extends keyof ApiGetEndpoints & {}, O extends Partial<AugmentedApiGetOptions<E>>>(
+  /**
+   * Returns a resource identifier, which is derived from its endpoint (with
+   * interpolated parameters) and optional query.
+   */
+  private getResourceIdentifier<E extends keyof ApiGetEndpoints & {}, O extends Partial<AugmentedApiGetOptions<E>>>(
     endpoint: E,
     options?: O | undefined,
   ) {
