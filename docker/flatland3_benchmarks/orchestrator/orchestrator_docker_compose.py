@@ -32,7 +32,7 @@ app = Celery(
 DOCKERCOMPOSE_HOST_DIRECTORY = os.environ.get("DOCKERCOMPOSE_HOST_DIRECTORY", "/tmp/codabench/")
 
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
-SUPPORTED_CLIENT_VERSIONS = os.environ.get("SUPPORTED_CLIENT_VERSIONS", "4.0.3,4.0.4,4.1.0,4.1.1,4.1.2,4.1.3,4.1.4")
+SUPPORTED_CLIENT_VERSION_RANGE = os.environ.get("SUPPORTED_CLIENT_VERSION_RANGE", ">=4.2.0")
 
 FAB_API_URL = os.environ.get("FAB_API_URL")
 CLIENT_ID = os.environ.get("CLIENT_ID")
@@ -84,8 +84,8 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
       evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE={s3_upload_path_template}"])
     if s3_upload_path_template_use_submission_id:
       evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID={s3_upload_path_template_use_submission_id}"])
-    if SUPPORTED_CLIENT_VERSIONS is not None:
-      evaluator_exec_args.extend(["-e", f"SUPPORTED_CLIENT_VERSIONS={SUPPORTED_CLIENT_VERSIONS}"])
+    if SUPPORTED_CLIENT_VERSION_RANGE is not None:
+      evaluator_exec_args.extend(["-e", f"SUPPORTED_CLIENT_VERSIONS={SUPPORTED_CLIENT_VERSION_RANGE}"])
     if tests is not None:
       test_names = [REVERSE_TEST_IDS[test_id] for test_id in tests]
       evaluator_exec_args.extend(["-e", f"TEST_ID_FILTER={','.join(test_names)}"])
@@ -175,7 +175,7 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
 def orchestrator(self,
                  submission_data_url: str,
                  tests: List[str] = None,
-                 TEST_RUNNER_EVALUATOR_IMAGE="ghcr.io/flatland-association/fab-flatland-evaluator:latest",
+                 TEST_RUNNER_EVALUATOR_IMAGE="ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:latest",
                  AWS_ENDPOINT_URL=None,
                  AWS_ACCESS_KEY_ID=None,
                  AWS_SECRET_ACCESS_KEY=None,

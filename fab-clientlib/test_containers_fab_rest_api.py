@@ -343,9 +343,13 @@ def test_definitions_benchmarks_get():
   print(token)
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
   benchmarks = fab.definitions_benchmarks_get()
-  assert len(benchmarks.body) == 7
-  assert benchmarks.body[0].id == uuid.UUID("255fb1e8-af57-45a0-97dc-ecc3e6721b4f")
-  assert benchmarks.body[0].test_ids == [uuid.UUID('99f5a8f8-38d9-4a8c-9630-4789b0225ec0'),
-                                         uuid.UUID('f23794a2-dcf2-4699-bb5f-534bcea5ecf0'), ]
-  assert benchmarks.body[0].name == 'AI-human learning curves'
-  assert benchmarks.body[0].description == 'AI-human learning curves'
+  assert len(benchmarks.body) == 7 + 12
+
+  filtered_bodies = [body for body in benchmarks.body if body.id == uuid.UUID("255fb1e8-af57-45a0-97dc-ecc3e6721b4f")]
+  assert len(filtered_bodies) == 1
+  body = filtered_bodies[0]
+  assert body.id == uuid.UUID("255fb1e8-af57-45a0-97dc-ecc3e6721b4f")
+  assert body.test_ids == [uuid.UUID('99f5a8f8-38d9-4a8c-9630-4789b0225ec0'),
+                           uuid.UUID('f23794a2-dcf2-4699-bb5f-534bcea5ecf0'), ]
+  assert body.name == 'AI-human learning curves'
+  assert body.description == 'AI-human learning curves'

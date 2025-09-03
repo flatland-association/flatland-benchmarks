@@ -84,6 +84,7 @@ export interface TestDefinitionRow extends Resource<'/definitions/tests/'> {
   field_ids: string[]
   scenario_ids: string[]
   loop: Loop
+  queue: string | null
 }
 
 export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmarks/'> {

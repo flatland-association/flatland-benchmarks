@@ -1,24 +1,34 @@
 import { SubmissionRow } from '@common/interfaces'
 import { StripLocator } from '@common/utility-types'
+import { MockInstance } from 'vitest'
 import { SubmissionController } from '../../src/app/features/controller/submission.controller.mjs'
+import { CeleryService } from '../../src/app/features/services/celery-client-service.mjs'
 import { ControllerTestAdapter, setupControllerTestEnvironment, testUserJwt } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
 
 const testSubmission: StripLocator<SubmissionRow> = {
   benchmark_id: '20ccc7c1-034c-4880-8946-bffc3fed1359',
-  test_ids: ['79094281-35ff-484d-a687-cccb228a04a0'],
+  test_ids: ['557d9a00-7e6d-410b-9bca-a017ca7fe3aa'],
   name: 'test',
   submission_data_url: 'none',
 }
 
+const testQueue = 'blabla' // Set in ts\backend\src\migration\data\V8.1__override_queue.sql
+
 describe.sequential('Submission controller', () => {
   let controller: ControllerTestAdapter
   let submissionUuid: string
+  let celeryMock: MockInstance
 
   beforeAll(async () => {
     const testConfig = await getTestConfig()
     setupControllerTestEnvironment(testConfig)
     controller = new ControllerTestAdapter(SubmissionController, testConfig)
+    celeryMock = vi.spyOn(CeleryService.prototype, 'sendTask')
+  })
+
+  afterAll(() => {
+    celeryMock.mockReset()
   })
 
   test('should reject post submissions from unauthorized users', async () => {
@@ -33,6 +43,16 @@ describe.sequential('Submission controller', () => {
     expect(res.body).toBeApiResponse()
     expect(res.body.body?.id).toBeTruthy()
     submissionUuid = res.body.body!.id
+    // Asserting this after setting submissionUuid, otherwise failing this would
+    // cause other tests relying on it to fail too:
+    expect(celeryMock).toHaveBeenCalledWith(
+      testQueue,
+      expect.objectContaining({
+        submission_data_url: testSubmission.submission_data_url,
+        tests: testSubmission.test_ids,
+      }),
+      expect.anything(),
+    )
   })
 
   test('should reject get submissions from unauthorized users', async () => {
