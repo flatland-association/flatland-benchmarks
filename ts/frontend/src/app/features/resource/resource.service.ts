@@ -45,7 +45,9 @@ export class ResourceService {
   /**
    * Load resource from cache or backend, if not cached yet.
    * @param endpoint String representation of the endpoint route.
-   * @param options Request options. Para
+   * @param _options Request options. Last param can be `string` or `string[]` -
+   * if latter, it will be interpreted as list of ids that can be spread for
+   * cache lookup but be joined with a comma for the API request.
    * @see {@link ApiGetEndpoints}
    */
   async load<E extends keyof ApiGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
@@ -59,9 +61,10 @@ export class ResourceService {
    * Load resources from cache or backend, if not cached yet.
    * Returned resources are not in order of passed ids.
    * @param endpoint String representation of the endpoint route.
-   * @param options Request options. Params can be `string` or `string[]` - if
-   * latter, it will be interpreted as list of ids that can be spread for cache
-   * lookup but be joined with a comma for the API request.
+   * @param _options Request options. Last param can be `string` or `string[]` -
+   * if latter, it will be interpreted as list of ids that can be spread for
+   * cache lookup but be joined with a comma for the API request.
+   * @see {@link ApiGetEndpoints}
    */
   async loadGrouped<E extends keyof ApiGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
     endpoint: E,
@@ -82,9 +85,10 @@ export class ResourceService {
    * Load multiple resources from cache or backend, if not cached yet.
    * Returned resources are in order of passed ids.
    * @param endpoint String representation of the endpoint route.
-   * @param _options Request options. Params can be `string` or `string[]` - if
-   * latter, it will be interpreted as list of ids that can be spread for cache
-   * lookup but be joined with a comma for the API request.
+   * @param _options Request options. Last param can be `string` or `string[]` -
+   * if latter, it will be interpreted as list of ids that can be spread for
+   * cache lookup but be joined with a comma for the API request.
+   * @see {@link ApiGetEndpoints}
    */
   async loadOrdered<E extends keyof ApiGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
     endpoint: E,
