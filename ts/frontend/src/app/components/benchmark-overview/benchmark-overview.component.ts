@@ -12,6 +12,7 @@ import { TableColumn, TableComponent, TableRow } from '../table/table.component'
 })
 export class BenchmarkOverviewComponent implements OnChanges {
   @Input() group?: BenchmarkGroupDefinitionRow
+  @Input() benchmarksTitle?: string
 
   private resourceService = inject(ResourceService)
 
@@ -25,6 +26,9 @@ export class BenchmarkOverviewComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['group']) {
       this.buildBoard()
+    }
+    if (changes['benchmarksTitle']) {
+      this.columns[0].title = this.benchmarksTitle ?? 'Benchmark'
     }
   }
 

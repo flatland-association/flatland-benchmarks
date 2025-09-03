@@ -12,6 +12,8 @@
 
 @if (group?.setup === 'CAMPAIGN') {
   <app-campaign-overview [group]="group"></app-campaign-overview>
+} @else if (group?.setup === 'COMPETITION') {
+  <app-benchmark-overview [group]="group" benchmarksTitle="Round"></app-benchmark-overview>
 } @else {
   <app-benchmark-overview [group]="group"></app-benchmark-overview>
 }
