@@ -28,8 +28,6 @@ interface RequestDescriptor<E extends keyof ApiGetEndpoints> {
   options?: Partial<AugmentedApiGetOptions<E>>
 }
 
-// TODO: unit test
-
 @Injectable({
   providedIn: 'root',
 })
