@@ -29,7 +29,9 @@ INSERT INTO benchmark_definitions
 VALUES
   ('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', 'Round 1', 'Round 1', array['e9680c38-4e79-4950-a555-469b156d9ca2', '0128f4b5-71b2-4ee4-b6db-f566a7e88e62']::uuid[], array['4ecdb9f4-e2ff-41ff-9857-abe649c19c50', '5206f2ee-d0a9-405b-8da3-93625e169811']::uuid[]);
 
--- TODO https://github.com/flatland-association/flatland-benchmarks/issues/347 currently use CAMPAIGN as BENCHMARK seems not to work yet in frontend.
+-- currently use CAMPAIGN as BENCHMARK seems not to work yet in frontend
+-- see https://github.com/flatland-association/flatland-benchmarks/issues/347
+-- fixed V7.2__fix_fab_example_setup.sql
 INSERT INTO benchmark_groups
   (id, setup, name, description, benchmark_ids)
 VALUES
