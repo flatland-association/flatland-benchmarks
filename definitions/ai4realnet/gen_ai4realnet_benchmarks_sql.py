@@ -33,6 +33,7 @@ def extract_ai4realnet_from_csv(csv):
     tests = benchmark["tests"]
     test = tests[row["TEST_ID"]]
     test["ID"] = row["TEST_ID"]
+    test["TEST_KPI"] = row["ID"]
     test["TEST_NAME"] = row["TEST_NAME"]
     test["TEST_DESCRIPTION"] = row["TEST_DESCRIPTION"]
     test["TEST_FIELD_ID"] = row["TEST_FIELD_ID"]
@@ -62,6 +63,9 @@ SETUP_MAP = {
 }
 
 
+def sanitize_string_for_python_name(s: str):
+  return s.replace('-', '_').replace(' ', '_')
+
 def gen_domain_orchestrator(data, domain):
   s = f"""
 {domain.lower().replace(' ', '_')}_orchestrator = Orchestrator(
@@ -74,7 +78,7 @@ def gen_domain_orchestrator(data, domain):
         if test["QUEUE"] == domain:
           s += f"""
         // {test['TEST_NAME']}
-        "{test_id}": TestRunner_{test_id}(
+        "{test_id}": TestRunner_{sanitize_string_for_python_name(test['TEST_KPI'])}_{sanitize_string_for_python_name(test['QUEUE'])}(
             test_id="{test_id}", scenario_ids=[{', '.join(scenario_ids)}]
         ),
 """
