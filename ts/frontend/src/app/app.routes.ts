@@ -35,7 +35,6 @@ export const routes: Routes = [
   },
   { path: 'benchmarks', pathMatch: 'full', redirectTo: 'home' },
   { path: 'benchmarks/:group_id', component: BenchmarkGroupView, canActivate: [AuthGuard] },
-  // { path: 'benchmarks/:group_id/:benchmark_id', component: BenchmarkView },
   // TODO: generalize/clean up
   // see: https://github.com/flatland-association/flatland-benchmarks/issues/323
   { path: 'fab-benchmarks/:id', component: BenchmarksDetailView },
