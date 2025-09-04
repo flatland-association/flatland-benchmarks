@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router'
 import { BenchmarkGroupDefinitionRow } from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
-import { BenchmarkOverviewComponent } from '../../components/benchmark-overview/benchmark-overview.component'
+import { BenchmarkGroupOverviewComponent } from '../../components/benchmark-group-overview/benchmark-group-overview.component'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { CampaignOverviewComponent } from '../../components/campaign-overview/campaign-overview.component'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
@@ -20,7 +20,7 @@ import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.
     PublicResourcePipe,
     SectionComponent,
     CampaignOverviewComponent,
-    BenchmarkOverviewComponent,
+    BenchmarkGroupOverviewComponent,
   ],
   templateUrl: './benchmark-group.view.html',
   styleUrl: './benchmark-group.view.scss',

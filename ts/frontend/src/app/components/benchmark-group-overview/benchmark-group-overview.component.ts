@@ -5,12 +5,12 @@ import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
 
 @Component({
-  selector: 'app-benchmark-overview',
+  selector: 'app-benchmark-group-overview',
   imports: [ContentComponent, TableComponent],
-  templateUrl: './benchmark-overview.component.html',
-  styleUrl: './benchmark-overview.component.scss',
+  templateUrl: './benchmark-group-overview.component.html',
+  styleUrl: './benchmark-group-overview.component.scss',
 })
-export class BenchmarkOverviewComponent implements OnChanges {
+export class BenchmarkGroupOverviewComponent implements OnChanges {
   @Input() group?: BenchmarkGroupDefinitionRow
   @Input() benchmarksTitle?: string
 
