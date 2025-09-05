@@ -7,7 +7,7 @@ import { RouteParameters } from 'express-serve-static-core'
 import { ApiService } from '../api/api.service'
 
 // TODO: cache max-age
-// see: https://github.com/flatland-association/flatland-benchmarks/issues/66
+// see: https://github.com/flatland-association/flatland-benchmarks/issues/399
 interface AsyncCacheItem<T> {
   value?: T
   promise: Promise<T>
