@@ -85,7 +85,7 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
     if s3_upload_path_template_use_submission_id:
       evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID={s3_upload_path_template_use_submission_id}"])
     if SUPPORTED_CLIENT_VERSION_RANGE is not None:
-      evaluator_exec_args.extend(["-e", f"SUPPORTED_CLIENT_VERSIONS={SUPPORTED_CLIENT_VERSION_RANGE}"])
+      evaluator_exec_args.extend(["-e", f"SUPPORTED_CLIENT_VERSION_RANGE={SUPPORTED_CLIENT_VERSION_RANGE}"])
     if tests is not None:
       test_names = [REVERSE_TEST_IDS[test_id] for test_id in tests]
       evaluator_exec_args.extend(["-e", f"TEST_ID_FILTER={','.join(test_names)}"])
