@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router'
 import { ImpressumView, NotFoundView, PrivacyView } from '@flatland-association/flatland-ui'
+import { Breadcrumb, BreadcrumbData } from './components/breadcrumbs/breadcrumbs.component'
 import { AuthGuard } from './guards/auth.guard'
 import { BenchmarkGroupView } from './views/benchmark-group/benchmark-group.view'
 import { BenchmarksDetailView } from './views/benchmarks-detail/benchmarks-detail.view'
@@ -34,7 +35,12 @@ export const routes: Routes = [
     },
   },
   { path: 'benchmarks', pathMatch: 'full', redirectTo: 'home' },
-  { path: 'benchmarks/:group_id', component: BenchmarkGroupView, canActivate: [AuthGuard] },
+  {
+    path: 'benchmarks/:group_id',
+    component: BenchmarkGroupView,
+    canActivate: [AuthGuard],
+    data: { breadcrumbs: [Breadcrumb.HIDDEN, Breadcrumb.benchmark_group] } satisfies BreadcrumbData,
+  },
   // TODO: generalize/clean up
   // see: https://github.com/flatland-association/flatland-benchmarks/issues/323
   { path: 'fab-benchmarks/:id', component: BenchmarksDetailView },
@@ -85,6 +91,7 @@ export const routes: Routes = [
     path: 'my-submissions',
     component: MySubmissionsView,
     canActivate: [AuthGuard],
+    data: { breadcrumbs: ['My Submissions'] } satisfies BreadcrumbData,
   },
   { path: 'impressum', component: ImpressumView },
   { path: 'privacy', component: PrivacyView },

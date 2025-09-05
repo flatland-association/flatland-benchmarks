@@ -9,6 +9,7 @@ import {
 } from '@flatland-association/flatland-ui'
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
 import { OAuthModule } from 'angular-oauth2-oidc'
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component'
 import { ApiService } from './features/api/api.service'
 import { AuthService } from './features/auth/auth.service'
 import { CustomizationService } from './features/customization/customization.service'
@@ -16,7 +17,7 @@ import { ErrorMessage, ErrorMessageService } from './features/error-message/erro
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, LayoutComponent, ModalComponent, OAuthModule],
+  imports: [RouterOutlet, LayoutComponent, ModalComponent, OAuthModule, BreadcrumbsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
