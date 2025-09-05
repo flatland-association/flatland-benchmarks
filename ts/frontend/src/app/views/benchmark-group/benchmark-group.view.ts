@@ -4,7 +4,6 @@ import { BenchmarkGroupDefinitionRow } from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
 import { BenchmarkGroupOverviewComponent } from '../../components/benchmark-group-overview/benchmark-group-overview.component'
-import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { CampaignOverviewComponent } from '../../components/campaign-overview/campaign-overview.component'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
@@ -15,7 +14,6 @@ import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.
   selector: 'view-benchmark-group',
   imports: [
     ContentComponent,
-    BreadcrumbsComponent,
     SiteHeadingComponent,
     PublicResourcePipe,
     SectionComponent,
