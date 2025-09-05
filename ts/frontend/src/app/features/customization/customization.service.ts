@@ -45,7 +45,7 @@ export class CustomizationService {
   getCustomization() {
     // customization already loading, do not re-trigger loading
     if (this.customizationPromise) return this.customizationPromise
-    // customization already loaded, return
+    // customization already loaded, return promise
     if (this.customization) return Promise.resolve(this.customization)
     // no customization loaded, load
     this.customizationPromise = firstValueFrom(
