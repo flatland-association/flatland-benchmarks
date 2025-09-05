@@ -111,63 +111,57 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
         submission_data_url,
       ])
     )
-    loop.run_until_complete(gathered_tasks)
-    ret_evaluator = evaluator_future.result()
-    ret_evaluator["image_id"] = docker_image
-    ret_submission = submission_future.result()
-    ret_submission["image_id"] = submission_data_url
-    ret = {"f3-evaluator": ret_evaluator, "f3-submission": ret_submission}
-    logger.debug("Task with submission_id=%s got results from docker run: %s.", submission_id, ret)
-    if ret_evaluator["job_status"] != "Complete" or ret_submission["job_status"] != "Complete":
-      raise Exception(f"Evaluator or submission failed, aborting: {ret}")
-
-    exec_with_logging(["sudo", "docker", "ps"])
     try:
-      logger.info("/ Logs from container %s", f"flatland3-evaluator-{submission_id}")
-      exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{submission_id}", ])
-      logger.info("\\ Logs from container %s", f"flatland3-evaluator-{submission_id}")
-    except:
-      logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{submission_id}")
-    try:
-      logger.info("/ Logs from container %s", f"flatland3-submission-{submission_id}")
-      exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{submission_id}", ])
-      logger.info("\\ Logs from container %s", f"flatland3-submission-{submission_id}")
-    except:
-      logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{submission_id}")
+      loop.run_until_complete(gathered_tasks)
+      ret_evaluator = evaluator_future.result()
+      ret_evaluator["image_id"] = docker_image
+      ret_submission = submission_future.result()
+      ret_submission["image_id"] = submission_data_url
+      ret = {"f3-evaluator": ret_evaluator, "f3-submission": ret_submission}
+      logger.debug("Task with submission_id=%s got results from docker run: %s.", submission_id, ret)
 
-    # logger.info(f"Get logs from containers...")
-    # exec_with_logging(["sudo", "docker", "ps"])
-    # try:
-    #   logger.info("/ Logs from container %s", f"flatland3-evaluator-{submission_id}")
-    #   stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{submission_id}", ], collect=True)
-    #   stdo = "\n".join(stdo)
-    #   file_name = S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + "_evaluator_stdout.log"
-    #   response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stdo)
-    #   logger.info("upload %s got response %s", file_name, response)
-    #   stde = "\n".join(stde)
-    #   file_name = S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + "_evaluator_stderr.log"
-    #   response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stde)
-    #   logger.info("upload %s got response %s", file_name, response)
-    #   exec_with_logging(["sudo", "docker", "rm", f"flatland3-evaluator-{submission_id}", ])
-    #   logger.info("\\ Logs from container %s", f"flatland3-evaluator-{submission_id}")
-    # except Exception as e:
-    #   logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{submission_id}", exc_info=e)
-    # try:
-    #   logger.info("/ Logs from container %s", f"flatland3-submission-{submission_id}")
-    #   stdo, stde = exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{submission_id}", ], collect=True)
-    #   stdo = "\n".join(stdo)
-    #   file_name = S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + "_submission_stdout.log"
-    #   response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stdo)
-    #   logger.info("upload %s got response %s", file_name, response)
-    #   stde = "\n".join(stde)
-    #   file_name = S3_UPLOAD_PATH_TEMPLATE.format(submission_id) + "_submission_stderr.log"
-    #   response = s3.put_object(Bucket=S3_BUCKET, Key=file_name, Body=stde)
-    #   logger.info("upload %s got response %s", file_name, response)
-    #   exec_with_logging(["sudo", "docker", "rm", f"flatland3-submission-{submission_id}", ])
-    #   logger.info("\\ Logs from container %s", f"flatland3-submission-{submission_id}")
-    # except Exception as e:
-    #   logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{submission_id}", exc_info=e)
-    return ret
+      exec_with_logging(["sudo", "docker", "ps"])
+      try:
+        logger.info("/ Logs from container %s", f"flatland3-evaluator-{submission_id}")
+        exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{submission_id}", ])
+        logger.info("\\ Logs from container %s", f"flatland3-evaluator-{submission_id}")
+      except:
+        logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{submission_id}")
+      try:
+        logger.info("/ Logs from container %s", f"flatland3-submission-{submission_id}")
+        exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{submission_id}", ])
+        logger.info("\\ Logs from container %s", f"flatland3-submission-{submission_id}")
+      except:
+        logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{submission_id}")
+
+      if ret_evaluator["job_status"] != "Complete" or ret_submission["job_status"] != "Complete":
+        raise Exception(f"Evaluator or submission failed, aborting: {ret}")
+      return ret
+    except Exception as e:
+      exec_with_logging(["sudo", "docker", "ps"])
+      debug = []
+      try:
+        logger.info("/ Logs from container %s", f"flatland3-evaluator-{submission_id}")
+        stdo, stderr = exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{submission_id}", ], log_level_stdout=logging.INFO,
+                                         log_level_stderr=logging.WARN,
+                                         collect=True)
+        debug += stdo
+        debug += stderr
+        logger.info("\\ Logs from container %s", f"flatland3-evaluator-{submission_id}")
+      except:
+        logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{submission_id}")
+      try:
+        logger.info("/ Logs from container %s", f"flatland3-submission-{submission_id}")
+        stdo, stderr = exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{submission_id}", ], log_level_stdout=logging.INFO,
+                                         log_level_stderr=logging.WARN,
+                                         collect=True)
+        debug += stdo
+        debug += stderr
+        logger.info("\\ Logs from container %s", f"flatland3-submission-{submission_id}")
+      except:
+        logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{submission_id}")
+
+      raise Exception(str(e) + ": " + '\n'.join(debug)) from e
 
 
 # N.B. name to be used by send_task
