@@ -34,12 +34,39 @@ export const routes: Routes = [
       return 'home'
     },
   },
-  { path: 'benchmarks', pathMatch: 'full', redirectTo: 'home' },
+  // TODO: rename to suites?
+  // see: https://github.com/flatland-association/flatland-benchmarks/issues/402
   {
-    path: 'benchmarks/:group_id',
-    component: BenchmarkGroupView,
-    canActivate: [AuthGuard],
-    data: { breadcrumbs: [Breadcrumb.HIDDEN, Breadcrumb.benchmark_group] } satisfies BreadcrumbData,
+    path: 'benchmarks',
+    data: { breadcrumbs: [Breadcrumb.HIDDEN] } satisfies BreadcrumbData,
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: '/home' },
+      {
+        path: ':group_id',
+        component: BenchmarkGroupView,
+        canActivate: [AuthGuard],
+        data: { breadcrumbs: [Breadcrumb.benchmark_group] } satisfies BreadcrumbData,
+      },
+      {
+        path: ':group_id/:benchmark_id',
+        component: VcEvaluationObjectiveView,
+        canActivate: [AuthGuard],
+        data: { breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark] } satisfies BreadcrumbData,
+      },
+      {
+        path: ':group_id/:benchmark_id/tests',
+        pathMatch: 'full',
+        redirectTo: ':group_id/:benchmark_id',
+      },
+      {
+        path: ':group_id/:benchmark_id/tests/:test_id',
+        component: VcKpiView,
+        canActivate: [AuthGuard],
+        data: {
+          breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.test],
+        } satisfies BreadcrumbData,
+      },
+    ],
   },
   // TODO: generalize/clean up
   // see: https://github.com/flatland-association/flatland-benchmarks/issues/323

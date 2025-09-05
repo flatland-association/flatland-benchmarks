@@ -17,6 +17,9 @@ export const Breadcrumb = {
   EXACT: Symbol(),
   HIDDEN: Symbol(),
   benchmark_group: Symbol(),
+  benchmark: Symbol(),
+  test: Symbol(),
+  submission: Symbol(),
 }
 
 // resolvers are async functions that either return
@@ -100,6 +103,33 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
       )?.at(0)
       // return resource name, fall back to uuid[0...8]
       return group?.name ?? segment.slice(0, 8)
+    },
+    [Breadcrumb.benchmark]: async (segment: string) => {
+      const benchmark = (
+        await this.resourceService.load('/definitions/benchmarks/:benchmark_ids', {
+          params: { benchmark_ids: segment },
+        })
+      )?.at(0)
+      // return resource name, fall back to uuid[0...8]
+      return benchmark?.name ?? segment.slice(0, 8)
+    },
+    [Breadcrumb.test]: async (segment: string) => {
+      const test = (
+        await this.resourceService.load('/definitions/tests/:test_ids', {
+          params: { test_ids: segment },
+        })
+      )?.at(0)
+      // return resource name, fall back to uuid[0...8]
+      return test?.name ?? segment.slice(0, 8)
+    },
+    [Breadcrumb.submission]: async (segment: string) => {
+      const submission = (
+        await this.resourceService.load('/submissions/:submission_ids', {
+          params: { submission_ids: segment },
+        })
+      )?.at(0)
+      // return resource name, fall back to uuid[0...8]
+      return submission?.name ?? segment.slice(0, 8)
     },
   }
 }
