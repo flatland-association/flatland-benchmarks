@@ -1,0 +1,19 @@
+<app-breadcrumbs></app-breadcrumbs>
+
+<lib-content>
+  <app-site-heading class="bp-8 flex w-full" [title]="group?.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
+
+  <lib-section class="w-full">
+    <p>
+      {{ group?.description }}
+    </p>
+  </lib-section>
+</lib-content>
+
+@if (group?.setup === 'CAMPAIGN') {
+  <app-campaign-overview [group]="group"></app-campaign-overview>
+} @else if (group?.setup === 'COMPETITION') {
+  <app-benchmark-group-overview [group]="group" benchmarksTitle="Round"></app-benchmark-group-overview>
+} @else {
+  <app-benchmark-group-overview [group]="group"></app-benchmark-group-overview>
+}

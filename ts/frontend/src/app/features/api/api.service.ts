@@ -28,13 +28,13 @@ export class ApiService {
   // typed overload
   /**
    * Send GET request to API.
-   * @param endpoint String representation of the enpoint route.
+   * @param endpoint String representation of the endpoint route.
    * @param options Request options.
    * @see {@link ApiGetEndpoints}
    */
   public async get<E extends keyof ApiGetEndpoints, O extends BanEmpty<ApiGetOptions<E>>>(
     endpoint: E,
-    ...options: Empty extends O ? [options?: undefined] : [O]
+    ...options: Empty extends O ? [options?: O] : [O]
   ): Promise<ApiGetEndpoints[E]['response']>
   // un-typed fallback overload
   // (have to use the NotKeyOf approach here, otherwise typed calls with option
@@ -60,7 +60,7 @@ export class ApiService {
   // typed overload
   /**
    * Send POST request to API.
-   * @param endpoint String representation of the enpoint route.
+   * @param endpoint String representation of the endpoint route.
    * @param options Request options.
    * @see {@link ApiGetEndpoints}
    */
@@ -79,7 +79,7 @@ export class ApiService {
   // typed overload
   /**
    * Send PATCH request to API.
-   * @param endpoint String representation of the enpoint route.
+   * @param endpoint String representation of the endpoint route.
    * @param options Request options.
    * @see {@link ApiGetEndpoints}
    */

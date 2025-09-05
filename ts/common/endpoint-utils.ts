@@ -18,6 +18,7 @@ export function interpolateEndpoint<E extends string>(
   endpoint: E,
   params: AcceptNumberAsString<RouteParameters<E>>,
 ): string
+export function interpolateEndpoint(endpoint: string, params: Record<string, string | number>): string
 
 export function interpolateEndpoint(endpoint: string, params: Record<string, string | number>) {
   Object.entries(params).forEach(([key, value]) => {

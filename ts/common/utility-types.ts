@@ -6,6 +6,22 @@ import { Resource } from './interfaces'
 export type Empty = Record<string, never>
 
 /**
+ * Utility type making all `Empty` typed fields in T optional.
+ */
+export type OptionalEmpty<T> =
+  // prettier-ignore
+  // build a type that is the intersection of all properties made optional
+  {
+    [K in keyof T]?: T[K]
+  }
+  //... and all non-empty properties put back to as-is
+  & {
+    // Required<T> is required, otherwise objects with nothing but optional
+    // fields would be treated as empty.
+    [K in keyof T as Empty extends Required<T[K]> ? never : K]: T[K]
+  }
+
+/**
  * Utility type making all `Empty` typed fields in T optional and re-type them
  * as `undefined`, effectively banning them from T.
  */

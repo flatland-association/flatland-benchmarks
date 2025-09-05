@@ -98,7 +98,7 @@ export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmark
 
 export type BenchmarkGroupSetup = 'BENCHMARK' | 'COMPETITION' | 'CAMPAIGN'
 
-export interface BenchmarkGroupDefinitionRow extends Resource<'/benchmark-groups/'> {
+export interface BenchmarkGroupDefinitionRow extends Resource<'/definitions/benchmark-groups/'> {
   id: string
   name: string
   description: string

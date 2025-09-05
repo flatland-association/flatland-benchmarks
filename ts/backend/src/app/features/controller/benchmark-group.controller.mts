@@ -55,7 +55,7 @@ export class BenchmarkGroupController extends Controller {
       SELECT * FROM benchmark_groups
       ORDER BY name ASC
     `
-    const resources = appendDir('/benchmark-groups/', rows)
+    const resources = appendDir('/definitions/benchmark-groups/', rows)
     this.respond(req, res, resources)
   }
 
@@ -114,7 +114,7 @@ export class BenchmarkGroupController extends Controller {
       WHERE id=ANY(${ids})
       LIMIT ${ids.length}
     `
-    const benchmarks = appendDir('/benchmark-groups/', rows)
+    const benchmarks = appendDir('/definitions/benchmark-groups/', rows)
     this.respond(req, res, benchmarks)
   }
 }
