@@ -1,4 +1,7 @@
 <!-- TODO: move <lib-content> out of component -->
 <lib-content>
+  @if (customization?.content?.vcEvaluationObjective?.lead) {
+    <p class="pb-8">{{ customization?.content?.vcEvaluationObjective?.lead }}</p>
+  }
   <app-table [columns]="columns" [rows]="rows" class="w-full"></app-table>
 </lib-content>

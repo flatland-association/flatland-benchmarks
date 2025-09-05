@@ -6,6 +6,8 @@ import { ContentComponent } from '@flatland-association/flatland-ui'
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
 import { ApiService } from '../../features/api/api.service'
 
+// TODO: refactor
+
 @Component({
   selector: 'view-new-submission',
   imports: [FormsModule, ContentComponent, BreadcrumbsComponent],
@@ -28,7 +30,7 @@ export class NewSubmissionView implements OnInit {
   constructor() {
     const route = inject(ActivatedRoute)
 
-    this.id = route.snapshot.params['id']
+    this.id = route.snapshot.params['benchmark_id']
   }
 
   async ngOnInit() {

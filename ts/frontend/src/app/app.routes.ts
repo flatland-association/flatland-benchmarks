@@ -3,14 +3,11 @@ import { ImpressumView, NotFoundView, PrivacyView } from '@flatland-association/
 import { Breadcrumb, BreadcrumbData } from './components/breadcrumbs/breadcrumbs.component'
 import { AuthGuard } from './guards/auth.guard'
 import { BenchmarkGroupView } from './views/benchmark-group/benchmark-group.view'
-import { BenchmarksDetailView } from './views/benchmarks-detail/benchmarks-detail.view'
+import { BenchmarkView } from './views/benchmark/benchmark.view'
 import { HomeView } from './views/home/home.view'
 import { MySubmissionsView } from './views/my-submissions/my-submissions.view'
 import { NewSubmissionView } from './views/new-submission/new-submission.view'
-import { ParticipateView } from './views/participate/participate.view'
 import { SubmissionView } from './views/submission/submission.view'
-import { VcCampaignView } from './views/vc-campaign/vc-campaign.view'
-import { VcEvaluationObjectiveView } from './views/vc-evaluation-objective/vc-evaluation-objective.view'
 import { VcKpiView } from './views/vc-kpi/vc-kpi.view'
 import { VcMySubmissionsView } from './views/vc-my-submissions/vc-my-submissions.view'
 import { VcNewSubmissionView } from './views/vc-new-submission/vc-new-submission.view'
@@ -49,7 +46,7 @@ export const routes: Routes = [
       },
       {
         path: ':group_id/:benchmark_id',
-        component: VcEvaluationObjectiveView,
+        component: BenchmarkView,
         canActivate: [AuthGuard],
         data: { breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark] } satisfies BreadcrumbData,
       },
@@ -66,33 +63,23 @@ export const routes: Routes = [
           breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.test],
         } satisfies BreadcrumbData,
       },
+      {
+        path: ':group_id/:benchmark_id/new-submission',
+        component: NewSubmissionView,
+        canActivate: [AuthGuard],
+        data: {
+          breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, 'New Submission'],
+        } satisfies BreadcrumbData,
+      },
     ],
   },
   // TODO: generalize/clean up
   // see: https://github.com/flatland-association/flatland-benchmarks/issues/323
-  { path: 'fab-benchmarks/:id', component: BenchmarksDetailView },
-  {
-    path: 'fab-benchmarks/:id/participate',
-    component: ParticipateView,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'fab-benchmarks/:id/participate/new-submission',
-    component: NewSubmissionView,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'fab-benchmarks/:id/participate/submissions',
-    pathMatch: 'full',
-    redirectTo: 'fab-benchmarks/:id/participate',
-  },
   {
     path: 'fab-benchmarks/:id/participate/submissions/:submission',
     component: SubmissionView,
     canActivate: [AuthGuard],
   },
-  { path: 'vc-campaign/:group_id', component: VcCampaignView, canActivate: [AuthGuard] },
-  { path: 'vc-evaluation-objective/:benchmark_id', component: VcEvaluationObjectiveView, canActivate: [AuthGuard] },
   {
     path: 'vc-evaluation-objective/:benchmark_id/my-submissions',
     component: VcMySubmissionsView,
