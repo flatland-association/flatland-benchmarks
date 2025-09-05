@@ -58,9 +58,7 @@ export class CampaignOverviewComponent implements OnInit, OnChanges {
             params: { field_ids: benchmark?.field_ids ?? [] },
           })
           return {
-            // TODO: route to generalized page
-            // see: https://github.com/flatland-association/flatland-benchmarks/issues/323
-            routerLink: ['/', 'vc-evaluation-objective', item.benchmark_id],
+            routerLink: ['/', 'benchmarks', this.group!.id, item.benchmark_id],
             cells: [
               { text: benchmark?.name ?? 'NA' },
               { text: benchmark?.test_ids.length ?? 'NA' },

@@ -111,7 +111,7 @@ export class VcEvaluationObjectiveView implements OnInit {
         const test = this.tests?.get(item.test_id)
         const fields = test?.field_ids.map((fieldId) => this.fields?.get(fieldId))
         return {
-          routerLink: item.test_id,
+          routerLink: ['tests', item.test_id],
           cells: [{ text: test?.name ?? 'NA' }, { scorings: item.scorings, fieldDefinitions: fields }],
         }
       }) ?? []
