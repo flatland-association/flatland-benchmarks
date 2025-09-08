@@ -1,13 +1,12 @@
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { BenchmarkDefinitionRow, BenchmarkGroupDefinitionRow } from '@common/interfaces'
-import { ContentComponent } from '@flatland-association/flatland-ui'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
 
 @Component({
   selector: 'app-benchmark-overview',
-  imports: [ContentComponent, TableComponent],
+  imports: [TableComponent],
   templateUrl: './benchmark-overview.component.html',
   styleUrl: './benchmark-overview.component.scss',
 })

@@ -9,9 +9,15 @@
 </lib-content>
 
 @if (group?.setup === 'CAMPAIGN') {
-  <app-campaign-overview [group]="group"></app-campaign-overview>
+  <lib-content>
+    <app-campaign-overview [group]="group"></app-campaign-overview>
+  </lib-content>
 } @else if (group?.setup === 'COMPETITION') {
-  <app-benchmark-group-overview [group]="group" benchmarksTitle="Round"></app-benchmark-group-overview>
+  <lib-content>
+    <app-benchmark-group-overview [group]="group" benchmarksTitle="Round"></app-benchmark-group-overview>
+  </lib-content>
 } @else {
-  <app-benchmark-group-overview [group]="group"></app-benchmark-group-overview>
+  <lib-content>
+    <app-benchmark-group-overview [group]="group"></app-benchmark-group-overview>
+  </lib-content>
 }

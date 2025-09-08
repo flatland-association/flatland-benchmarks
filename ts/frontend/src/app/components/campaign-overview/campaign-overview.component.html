@@ -1,7 +1,4 @@
-<!-- TODO: move <lib-content> out of component -->
-<lib-content>
-  @if (customization?.content?.vcCampaign?.lead) {
-    <p class="pb-8">{{ customization?.content?.vcCampaign?.lead }}</p>
-  }
-  <app-table [columns]="columns" [rows]="rows" class="w-full"></app-table>
-</lib-content>
+@if (customization?.content?.vcCampaign?.lead) {
+  <p class="pb-8">{{ customization?.content?.vcCampaign?.lead }}</p>
+}
+<app-table [columns]="columns" [rows]="rows" class="w-full"></app-table>
