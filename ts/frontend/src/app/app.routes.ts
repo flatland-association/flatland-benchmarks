@@ -10,7 +10,6 @@ import { NewSubmissionView } from './views/new-submission/new-submission.view'
 import { SubmissionView } from './views/submission/submission.view'
 import { TestView } from './views/test/test.view'
 import { VcMySubmissionsView } from './views/vc-my-submissions/vc-my-submissions.view'
-import { VcNewSubmissionView } from './views/vc-new-submission/vc-new-submission.view'
 import { VcResultsView } from './views/vc-results/vc-results.view'
 import { VcSubmissionView } from './views/vc-submission/vc-submission.view'
 
@@ -64,6 +63,20 @@ export const routes: Routes = [
         } satisfies BreadcrumbData,
       },
       {
+        path: ':group_id/:benchmark_id/tests/:test_id/new-submission',
+        component: NewSubmissionView,
+        canActivate: [AuthGuard],
+        data: {
+          breadcrumbs: [
+            Breadcrumb.benchmark_group,
+            Breadcrumb.benchmark,
+            Breadcrumb.HIDDEN,
+            Breadcrumb.test,
+            'New Submission',
+          ],
+        } satisfies BreadcrumbData,
+      },
+      {
         path: ':group_id/:benchmark_id/new-submission',
         component: NewSubmissionView,
         canActivate: [AuthGuard],
@@ -83,11 +96,6 @@ export const routes: Routes = [
   {
     path: 'vc-evaluation-objective/:benchmark_id/my-submissions',
     component: VcMySubmissionsView,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'vc-evaluation-objective/:benchmark_id/:test_id/new-submission',
-    component: VcNewSubmissionView,
     canActivate: [AuthGuard],
   },
   {
