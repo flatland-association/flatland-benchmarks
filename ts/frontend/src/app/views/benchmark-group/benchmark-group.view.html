@@ -10,14 +10,14 @@
 
 @if (group?.setup === 'CAMPAIGN') {
   <lib-content>
-    <app-campaign-overview [group]="group"></app-campaign-overview>
+    <app-campaign-overview class="w-full my-8" [group]="group"></app-campaign-overview>
   </lib-content>
 } @else if (group?.setup === 'COMPETITION') {
   <lib-content>
-    <app-benchmark-group-overview [group]="group" benchmarksTitle="Round"></app-benchmark-group-overview>
+    <app-benchmark-group-overview class="w-full my-8" [group]="group" benchmarksTitle="Round"></app-benchmark-group-overview>
   </lib-content>
 } @else {
   <lib-content>
-    <app-benchmark-group-overview [group]="group"></app-benchmark-group-overview>
+    <app-benchmark-group-overview class="w-full my-8" [group]="group"></app-benchmark-group-overview>
   </lib-content>
 }
