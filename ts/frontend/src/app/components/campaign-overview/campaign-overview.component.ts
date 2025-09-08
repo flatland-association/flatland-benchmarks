@@ -1,13 +1,12 @@
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { BenchmarkGroupDefinitionRow } from '@common/interfaces'
-import { ContentComponent } from '@flatland-association/flatland-ui'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
 
 @Component({
   selector: 'app-campaign-overview',
-  imports: [ContentComponent, TableComponent],
+  imports: [TableComponent],
   templateUrl: './campaign-overview.component.html',
   styleUrl: './campaign-overview.component.scss',
 })
