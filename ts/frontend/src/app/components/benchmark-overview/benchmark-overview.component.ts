@@ -51,15 +51,6 @@ export class BenchmarkOverviewComponent implements OnInit, OnChanges {
         this.resourceService.loadGrouped('/submissions/:submission_ids', {
           params: { submission_ids: benchmarkOverview?.items.map((item) => item.submission_id) ?? [] },
         }),
-        this.resourceService
-          .loadGrouped('/definitions/tests/:test_ids', {
-            params: { test_ids: this.benchmark.test_ids ?? [] },
-          })
-          .then((tests) =>
-            this.resourceService.loadGrouped('/definitions/fields/:field_ids', {
-              params: { field_ids: tests?.flatMap((test) => test.field_ids) ?? [] },
-            }),
-          ),
       ])
       this.rows = await Promise.all(
         benchmarkOverview?.items.map(async (item) => {
