@@ -8,7 +8,7 @@ import { HomeView } from './views/home/home.view'
 import { MySubmissionsView } from './views/my-submissions/my-submissions.view'
 import { NewSubmissionView } from './views/new-submission/new-submission.view'
 import { SubmissionView } from './views/submission/submission.view'
-import { VcKpiView } from './views/vc-kpi/vc-kpi.view'
+import { TestView } from './views/test/test.view'
 import { VcMySubmissionsView } from './views/vc-my-submissions/vc-my-submissions.view'
 import { VcNewSubmissionView } from './views/vc-new-submission/vc-new-submission.view'
 import { VcResultsView } from './views/vc-results/vc-results.view'
@@ -57,7 +57,7 @@ export const routes: Routes = [
       },
       {
         path: ':group_id/:benchmark_id/tests/:test_id',
-        component: VcKpiView,
+        component: TestView,
         canActivate: [AuthGuard],
         data: {
           breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.test],
@@ -85,7 +85,6 @@ export const routes: Routes = [
     component: VcMySubmissionsView,
     canActivate: [AuthGuard],
   },
-  { path: 'vc-evaluation-objective/:benchmark_id/:test_id', component: VcKpiView, canActivate: [AuthGuard] },
   {
     path: 'vc-evaluation-objective/:benchmark_id/:test_id/new-submission',
     component: VcNewSubmissionView,
