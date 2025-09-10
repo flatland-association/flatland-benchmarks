@@ -1,0 +1,25 @@
+<lib-content>
+  <app-site-heading class="bp-8 flex w-full" [title]="benchmark?.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
+
+  <lib-section class="w-full">
+    <p>
+      {{ benchmark?.description }}
+    </p>
+  </lib-section>
+</lib-content>
+
+@if (group?.setup === 'CAMPAIGN') {
+  <lib-content>
+    <app-campaign-item-overview class="w-full my-8" [group]="group" [benchmark]="benchmark"></app-campaign-item-overview>
+  </lib-content>
+} @else if (group?.setup === 'COMPETITION') {
+  <lib-content>
+    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'new-submission'">Submit solution</button>
+    <app-benchmark-overview class="w-full my-8" [group]="group" [benchmark]="benchmark"></app-benchmark-overview>
+  </lib-content>
+} @else {
+  <lib-content>
+    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'new-submission'">Submit solution</button>
+    <app-benchmark-overview class="w-full my-8" [group]="group" [benchmark]="benchmark"></app-benchmark-overview>
+  </lib-content>
+}

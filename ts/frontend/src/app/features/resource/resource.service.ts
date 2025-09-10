@@ -6,13 +6,12 @@ import { BanEmpty, Empty, OptionalEmpty } from '@common/utility-types'
 import { RouteParameters } from 'express-serve-static-core'
 import { ApiService } from '../api/api.service'
 
-// TODO: cache max-age
-// see: https://github.com/flatland-association/flatland-benchmarks/issues/399
 interface AsyncCacheItem<T> {
   value?: T
   promise: Promise<T>
   promiseResolve: (value: T) => void
   promiseReject: (reason?: unknown) => void
+  timestamp?: number
 }
 
 // like ApiGetOptions but allowing params to be of type string[]
@@ -26,6 +25,18 @@ interface AugmentedApiGetOptions<E extends keyof ApiGetEndpoints> {
 interface RequestDescriptor<E extends keyof ApiGetEndpoints> {
   endpoint: E
   options?: Partial<AugmentedApiGetOptions<E>>
+}
+
+// TODO: ideally define where endpoints are defined
+// see: https://github.com/flatland-association/flatland-benchmarks/issues/413
+const maxAges: Partial<Record<keyof ApiGetEndpoints, number>> = {
+  '/results/benchmarks/:benchmark_id/tests/:test_ids': 0,
+  '/results/benchmarks/:benchmark_ids': 0,
+  '/results/campaign-items/:benchmark_ids': 0,
+  '/results/campaigns/:group_ids': 0,
+  '/results/submissions/:submission_id/scenario/:scenario_ids': 0,
+  '/results/submissions/:submission_id/tests/:test_ids': 0,
+  '/results/submissions/:submission_ids': 0,
 }
 
 @Injectable({
@@ -66,7 +77,6 @@ export class ResourceService {
    */
   async loadGrouped<E extends keyof ApiGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
     endpoint: E,
-    // ids?: ResourceIds<E>,
     ..._options: Empty extends O ? [o?: O] : [o: O & {}]
   ): Promise<ApiGetEndpoints[E]['response']['body']> {
     const options = _options[0]
@@ -93,6 +103,9 @@ export class ResourceService {
     ..._options: Empty extends O ? [o?: O] : [o: O & {}]
   ): Promise<ApiGetEndpoints[E]['response']['body']> {
     const options = _options[0]
+    const now = Date.now()
+    const maxAge = maxAges[endpoint]
+    const tcutoff = typeof maxAge !== 'undefined' ? now - maxAge : undefined
 
     let resourceRequests: RequestDescriptor<E>[]
 
@@ -133,7 +146,10 @@ export class ResourceService {
     const promises = resourceRequests.map((request) => {
       const identifier = this.getResourceIdentifier(request.endpoint, request.options)
       const item = this.cache.get(identifier)
-      if (item) {
+      if (
+        item &&
+        (typeof item.timestamp === 'undefined' || typeof tcutoff === 'undefined' || item.timestamp >= tcutoff)
+      ) {
         // this returns the same promise if the same id is duplicated in `ids`
         return item.promise
       } else {
@@ -143,6 +159,8 @@ export class ResourceService {
           cacheItem.promiseResolve = resolve
           cacheItem.promiseReject = reject
         }).then((value) => {
+          // start item lifetime only once it has been resolved
+          cacheItem.timestamp = now
           cacheItem.value = value
           return value
         })

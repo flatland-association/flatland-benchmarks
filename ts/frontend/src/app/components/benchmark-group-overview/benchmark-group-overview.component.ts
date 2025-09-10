@@ -1,12 +1,11 @@
 import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { BenchmarkGroupDefinitionRow } from '@common/interfaces'
-import { ContentComponent } from '@flatland-association/flatland-ui'
 import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
 
 @Component({
   selector: 'app-benchmark-group-overview',
-  imports: [ContentComponent, TableComponent],
+  imports: [TableComponent],
   templateUrl: './benchmark-group-overview.component.html',
   styleUrl: './benchmark-group-overview.component.scss',
 })
@@ -34,10 +33,19 @@ export class BenchmarkGroupOverviewComponent implements OnChanges {
 
   async buildBoard() {
     if (this.group) {
-      // pre-fetch all required benchmarks
-      this.resourceService.loadGrouped('/definitions/benchmarks/:benchmark_ids', {
-        params: { benchmark_ids: this.group.benchmark_ids ?? [] },
-      })
+      const group = this.group
+      // pre-fetch linked resources
+      Promise.all([
+        this.resourceService
+          .loadGrouped('/definitions/benchmarks/:benchmark_ids', {
+            params: { benchmark_ids: this.group.benchmark_ids ?? [] },
+          })
+          .then((benchmarks) =>
+            this.resourceService.loadGrouped('/definitions/fields/:field_ids', {
+              params: { field_ids: benchmarks?.flatMap((benchmark) => benchmark.field_ids) ?? [] },
+            }),
+          ),
+      ])
       this.rows = await Promise.all(
         this.group.benchmark_ids?.map(async (benchmarkId) => {
           const benchmark = (
@@ -54,9 +62,7 @@ export class BenchmarkGroupOverviewComponent implements OnChanges {
             })
           )?.at(0)
           return {
-            // TODO: route to generalized page
-            // see: https://github.com/flatland-association/flatland-benchmarks/issues/323
-            routerLink: ['/', 'fab-benchmarks', benchmarkId],
+            routerLink: ['/', 'benchmarks', group.id, benchmarkId],
             cells: [
               { text: benchmark?.name ?? 'NA' },
               { text: leaderboard?.items.length ?? 0 },

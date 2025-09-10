@@ -3,19 +3,13 @@ import { ImpressumView, NotFoundView, PrivacyView } from '@flatland-association/
 import { Breadcrumb, BreadcrumbData } from './components/breadcrumbs/breadcrumbs.component'
 import { AuthGuard } from './guards/auth.guard'
 import { BenchmarkGroupView } from './views/benchmark-group/benchmark-group.view'
-import { BenchmarksDetailView } from './views/benchmarks-detail/benchmarks-detail.view'
+import { BenchmarkView } from './views/benchmark/benchmark.view'
 import { HomeView } from './views/home/home.view'
 import { MySubmissionsView } from './views/my-submissions/my-submissions.view'
 import { NewSubmissionView } from './views/new-submission/new-submission.view'
-import { ParticipateView } from './views/participate/participate.view'
+import { SubmissionScenarioResultsView } from './views/submission-scenario-results/submission-scenario-results.view'
 import { SubmissionView } from './views/submission/submission.view'
-import { VcCampaignView } from './views/vc-campaign/vc-campaign.view'
-import { VcEvaluationObjectiveView } from './views/vc-evaluation-objective/vc-evaluation-objective.view'
-import { VcKpiView } from './views/vc-kpi/vc-kpi.view'
-import { VcMySubmissionsView } from './views/vc-my-submissions/vc-my-submissions.view'
-import { VcNewSubmissionView } from './views/vc-new-submission/vc-new-submission.view'
-import { VcResultsView } from './views/vc-results/vc-results.view'
-import { VcSubmissionView } from './views/vc-submission/vc-submission.view'
+import { TestView } from './views/test/test.view'
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -34,58 +28,94 @@ export const routes: Routes = [
       return 'home'
     },
   },
-  { path: 'benchmarks', pathMatch: 'full', redirectTo: 'home' },
+  // TODO: rename to suites?
+  // see: https://github.com/flatland-association/flatland-benchmarks/issues/402
   {
-    path: 'benchmarks/:group_id',
-    component: BenchmarkGroupView,
-    canActivate: [AuthGuard],
-    data: { breadcrumbs: [Breadcrumb.HIDDEN, Breadcrumb.benchmark_group] } satisfies BreadcrumbData,
-  },
-  // TODO: generalize/clean up
-  // see: https://github.com/flatland-association/flatland-benchmarks/issues/323
-  { path: 'fab-benchmarks/:id', component: BenchmarksDetailView },
-  {
-    path: 'fab-benchmarks/:id/participate',
-    component: ParticipateView,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'fab-benchmarks/:id/participate/new-submission',
-    component: NewSubmissionView,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'fab-benchmarks/:id/participate/submissions',
-    pathMatch: 'full',
-    redirectTo: 'fab-benchmarks/:id/participate',
-  },
-  {
-    path: 'fab-benchmarks/:id/participate/submissions/:submission',
-    component: SubmissionView,
-    canActivate: [AuthGuard],
-  },
-  { path: 'vc-campaign/:group_id', component: VcCampaignView, canActivate: [AuthGuard] },
-  { path: 'vc-evaluation-objective/:benchmark_id', component: VcEvaluationObjectiveView, canActivate: [AuthGuard] },
-  {
-    path: 'vc-evaluation-objective/:benchmark_id/my-submissions',
-    component: VcMySubmissionsView,
-    canActivate: [AuthGuard],
-  },
-  { path: 'vc-evaluation-objective/:benchmark_id/:test_id', component: VcKpiView, canActivate: [AuthGuard] },
-  {
-    path: 'vc-evaluation-objective/:benchmark_id/:test_id/new-submission',
-    component: VcNewSubmissionView,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'submissions/:submission_id',
-    component: VcSubmissionView,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'submissions/:submission_id/results/:test_id/:scenario_id',
-    component: VcResultsView,
-    canActivate: [AuthGuard],
+    path: 'benchmarks',
+    data: { breadcrumbs: [Breadcrumb.HIDDEN] } satisfies BreadcrumbData,
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: '/home' },
+      {
+        path: ':group_id',
+        component: BenchmarkGroupView,
+        canActivate: [AuthGuard],
+        data: { breadcrumbs: [Breadcrumb.benchmark_group] } satisfies BreadcrumbData,
+      },
+      {
+        path: ':group_id/:benchmark_id',
+        component: BenchmarkView,
+        canActivate: [AuthGuard],
+        data: { breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark] } satisfies BreadcrumbData,
+      },
+      {
+        path: ':group_id/:benchmark_id/tests',
+        pathMatch: 'full',
+        redirectTo: ':group_id/:benchmark_id',
+      },
+      {
+        path: ':group_id/:benchmark_id/tests/:test_id',
+        component: TestView,
+        canActivate: [AuthGuard],
+        data: {
+          breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.test],
+        } satisfies BreadcrumbData,
+      },
+      {
+        path: ':group_id/:benchmark_id/tests/:test_id/new-submission',
+        component: NewSubmissionView,
+        canActivate: [AuthGuard],
+        data: {
+          breadcrumbs: [
+            Breadcrumb.benchmark_group,
+            Breadcrumb.benchmark,
+            Breadcrumb.HIDDEN,
+            Breadcrumb.test,
+            'New Submission',
+          ],
+        } satisfies BreadcrumbData,
+      },
+      {
+        path: ':group_id/:benchmark_id/new-submission',
+        component: NewSubmissionView,
+        canActivate: [AuthGuard],
+        data: {
+          breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, 'New Submission'],
+        } satisfies BreadcrumbData,
+      },
+      {
+        path: ':group_id/:benchmark_id/submissions',
+        pathMatch: 'full',
+        redirectTo: ':group_id/:benchmark_id',
+      },
+      {
+        path: ':group_id/:benchmark_id/submissions/:submission_id',
+        component: SubmissionView,
+        canActivate: [AuthGuard],
+        data: {
+          breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.submission],
+        } satisfies BreadcrumbData,
+      },
+      {
+        path: ':group_id/:benchmark_id/submissions/:submission_id/:test_id',
+        pathMatch: 'full',
+        redirectTo: ':group_id/:benchmark_id/submissions/:submission_id',
+      },
+      {
+        path: ':group_id/:benchmark_id/submissions/:submission_id/:test_id/:scenario_id',
+        component: SubmissionScenarioResultsView,
+        canActivate: [AuthGuard],
+        data: {
+          breadcrumbs: [
+            Breadcrumb.benchmark_group,
+            Breadcrumb.benchmark,
+            Breadcrumb.HIDDEN,
+            Breadcrumb.submission,
+            Breadcrumb.test,
+            Breadcrumb.scenario,
+          ],
+        } satisfies BreadcrumbData,
+      },
+    ],
   },
   {
     path: 'my-submissions',

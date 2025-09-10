@@ -1,5 +1,3 @@
-<app-breadcrumbs></app-breadcrumbs>
-
 <lib-content>
   <app-site-heading class="bp-8 flex w-full" [title]="group?.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
 
@@ -11,9 +9,15 @@
 </lib-content>
 
 @if (group?.setup === 'CAMPAIGN') {
-  <app-campaign-overview [group]="group"></app-campaign-overview>
+  <lib-content>
+    <app-campaign-overview class="w-full my-8" [group]="group"></app-campaign-overview>
+  </lib-content>
 } @else if (group?.setup === 'COMPETITION') {
-  <app-benchmark-group-overview [group]="group" benchmarksTitle="Round"></app-benchmark-group-overview>
+  <lib-content>
+    <app-benchmark-group-overview class="w-full my-8" [group]="group" benchmarksTitle="Round"></app-benchmark-group-overview>
+  </lib-content>
 } @else {
-  <app-benchmark-group-overview [group]="group"></app-benchmark-group-overview>
+  <lib-content>
+    <app-benchmark-group-overview class="w-full my-8" [group]="group"></app-benchmark-group-overview>
+  </lib-content>
 }

@@ -1,0 +1,25 @@
+@if (test && scenario && submission) {
+  <lib-content>
+    <app-site-heading class="bp-8 flex w-full" title="{{ submission.name }}, Scenario {{ scenario.name }}" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
+  </lib-content>
+
+  <lib-content>
+    @if (isScenarioScored()) {
+      <p>This scenario has been successfully scored.</p>
+    } @else {
+      <p>This scenario has not yet been scored completely.</p>
+    }
+    <div class="my-8 w-full flex flex font-bold">
+      <span class="basis-full">Scenario score</span>
+      <span>{{ totalScore }}</span>
+    </div>
+    <app-table [columns]="columns" [rows]="rows" class="w-full"></app-table>
+  </lib-content>
+
+  @if (needsManualScoring()) {
+    <lib-content>
+      <p class="pb-8">Please fill in all fields and submit for manual scoring.</p>
+      <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-primary-100" type="button" [attr.disabled]="canSubmitManualScoring() ? null : true" (click)="submitManualScoring()">Submit scoring</button>
+    </lib-content>
+  }
+}
