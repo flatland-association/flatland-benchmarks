@@ -406,64 +406,154 @@ Inspired by [LIPS](https://github.com/IRT-SystemX/LIPS), high-level data model i
 
 ![DataModel.drawio.png](img/architecture/DataModel.drawio.png)
 
-Here's an overview of the aggregation in Pseudo-SQL style. More details below in API description.
+Here's an overview of the aggregation:
+
+![Aggregation.drawio.png](img/architecture/Aggregation.drawio.png)
 
 * A submission is always with respect to a benchmark.
 * Raw result data is always with respect to submission and scenario.
 * Benchmark definition contains
-  * `f_t1`, `agg_t_1`: field `f_t1` of scenarios s1,..,s3 is aggregated by function `agg_t_1` into field `agg_field_t1`
-  * `f_b1`, `agg_b_1`: field `f_b1` of tests t1,t2 is aggregated by function `agg_b_1` into field `agg_field_b1`
 * Available aggregation functions: `SUM`, `NANSUM`, (weighted or equal weights if undefined) `MEAN`, (weighted or equal weights if undefined) `NANMEDIAN`, `MEDIAN`, `NANMEDIAN`
 
+### Level 3
+
+**Remarks**
+
+* The definitions are linked top-down (could be normalized). ⚠️ Although we do not enforce it in the DB schema, benchmarks/tests/scenarios are never used by more than one parent.
+* Field definitions can be re-used, but often they will be 1:1 with benchmark
+* We accept the following slight inconsistencies:
+  * we use `key` instead of `name` in `results` and `field_defintitions`
+  * we use `key` instead of uuid in results API as unique key
+  * for historical reasons, some tables are suffixed `_definitions` while others are not.
+  * Accepting the above convention, we could drop (marked `*` below)
+    * `test_id` in `results`
+    * `benchmark_id` in `submissions`
+
 ```mermaid
-stateDiagram-v2
-  state t1 <<join>>
-  state t2 <<join>>
-  state t3 <<join>>
-  state b1 <<join>>
-  state b2 <<join>>
-  state c1 <<join>>
-  state "| <code>f_t1</code> | submission_id |" as s1
-  state "| <code>agg_field_t1</code> | <code>submission_id</code> |" as t1
-  state "| <code>agg_field_b1</code> | <code>submission_id</code> |" as b1
-  state "| <code>agg_field_b1</code> |" as c1
-  s1 --> t1: <code>f_t1</code>
-  note left of s1
-    s1 scenario results: SELECT <code>f_t1</code> FROM s1 // submission_id unique key
-  end note
-  s2 --> t1: <code>f_t1</code>
-  s3 --> t1: <code>f_t1</code>
-  s4 --> t2: <code>f_t2</code>
-  s5 --> t2: <code>f_t2</code>
-  s6 --> t3: <code>f_t3</code>
-  s7 --> t3: <code>f_t3</code>
-  t1 --> b1: <code>f_b1</code>
-  t2 --> b1: <code>f_b1</code>
-  t3 --> b1: <code>f_b1</code>
-  note right of t1
-    t1 (test aggregation): <br/>SELECT <code>agg_t1</code>(agg_field_t1) FROM s1,s2,s3 AS <code>agg_field_t1</code> GROUP BY submission_id
-  end note
-  note left of t2
-    t2
-  end note
-  note left of t3
-    t3
-  end note
-  note right of b1
-    b1 (benchmark aggregation - leaderboard): <br/>SELECT <code>agg_field_b1</code>(<code>f_b1</code>) AS <code>agg_field_b1</code> FROM t1,t2,t3 GROUP BY submission_id ORDER BY <code>agg_field_b1</code> ASCENDING
-  end note
-  t1 --> c1: <code>agg_field_b1</code>
-  t2 --> c1: <code>agg_field_b2</code>
-  note right of c1
-    c1 (campaign overview): <br/>SELECT <code>agg_field_b1</code>(<code>agg_field_t1_max</code>,...) AS <code>agg_field_b1</code> <br/>FROM <br/>[ SELECT MAX(<code>agg_field_t1</code>) AS <code>agg_field_t1_max</code>,... FROM t1,...]
-  end note
+erDiagram
+  benchmark_groups one to zero or more benchmark_definitions: benchmark_ids
+  benchmark_definitions one to zero or more field_definitions: field_ids
+  benchmark_definitions one to zero or more field_definitions: campaign_field_ids
+  benchmark_definitions one to zero or more test_definitions: test_ids
+  test_definitions one to zero or more field_definitions: field_ids
+  scenario_definitions one to zero or more field_definitions: field_ids
+  results many to many test_definitions: "test_id*"
+  results many to 1 scenario_definitions: scenario_id
+  results many to 1 submissions: submission_id
+  results many to one field_definitions: key
+  submissions many to 1 benchmark_definitions: "benchmark_id*"
+  submissions many to many test_definitions: test_ids
+
+  field_definitions {
+    uuid id PK
+    character key
+    text description
+    agg_func agg_func
+    json agg_fields
+    double agg_weights
+    boolean agg_lateral
+  }
+
+  results {
+    uuid scenario_id PK, FK
+    uuid test_id PK, FK "*"
+    uuid submission_id PK, FK
+    character key FK
+    double value
+  }
+
+  submissions {
+    uuid id PK
+    uuid benchmark_id FK "*"
+    uuid[] test_ids FK
+    character name
+    text description
+    character submission_data_url
+    character code_repository
+    timestamp submitted_at
+    uuid submitted_by FK
+    character submitted_by_username
+    submission_status status
+    boolean published
+  }
+
+  benchmark_groups {
+    uuid id PK
+    character name
+    text description
+    benchmark_group_setup setup
+    uuid[] benchmark_ids FK
+  }
+
+  benchmark_definitions {
+    uuid id PK
+    character name
+    text description
+    uuid[] field_ids FK
+    uuid[] test_ids FK
+    character docker_image
+    json evaluator_data
+    uuid[] campaign_field_ids FK
+  }
+
+  test_definitions {
+    uuid id PK
+    character name
+    text description
+    uuid[] field_ids FK
+    uuid[] scenario_ids FK
+    loop loop
+    character queue
+  }
+
+  scenario_definitions {
+    uuid id PK
+    character name
+    text description
+    uuid[] field_ids FK
+  }
+
+```
+
+Regarding `campaign_field_ids`, see aggregation above and [Aggregation.drawio.png](img/architecture/Aggregation.drawio.png).
+
+Types:
+
+```mermaid
+erDiagram
+  "TYPE agg_func AS ENUM" {
+    v SUM
+    v NANSUM
+    v MEAN
+    v NANMEAN
+    v MEADIAN
+    v NANMEDIAN
+  }
+  "TYPE benchmark_group_setup AS ENUM" {
+    v BENCHMARK
+    v COMPETITION
+    v CAMPAIGN
+  }
+
+  "TYPE loop AS ENUM" {
+    v CLOSED
+    v INTERACTIVE
+    v OFFLINE
+  }
+
+  "TYPE submission_status AS ENUM" {
+    v SUBMITTED
+    v RUNNING
+    v SUCCESS
+    v FAILURE
+  }
 ```
 
 ### API Roles
 
-- `user`: can submit and view results
+- `--`: can view results
+- `user`: can submit and upload results
 - `admin`: can define benchmarks
-- `results-uploader`: can upload results (for all benchmarks)
 
 ### Setups
 
@@ -482,219 +572,20 @@ stateDiagram-v2
 
 ### Interface 1: Benchmark definition API
 
-* `PUT /benchmarks`: create benchmark (JSON does not contain IDs)
-* `DELETE /benchmarks/{benchmark_id}`: delete benchmark
-* `GET /benchmarks/{benchmark_id}`: get benchmark definition (incl. generated IDs)
-* `POST /benchmarks/{benchmark_id}`: update existing benchmark definition (unreferenced tests/scenarios will be removed from the benchmark and left dangling)
-* `POST /tests/{test_id}`: same at test level
-* `POST /scenarios/{scenario_id}`: same at scenario level
-* `DELETE /tests/{test_id}/`: remove one test from the benchmark definition
-* `DELETE /scenarios/{scenario_id}`: remove one scenario from the test definition
-
-Optional:
-
-* `PUT /tests/{test_id}/scenarios`: add scenario(s) under test
-* `PUT /benchmarks/{benchmark_id}/tests`: add test(s) under benchmark
-
-
-Add/delete individual scenarios:
-
-Remarks:
-
-* `{ "definition": ...}` allows for future backwards-compatible addition of optional attributes
-* `fields` defines tabular or form view of results at the hierarchy level (benchmark/test/scenario)
-* `agg_func` must be one of a pre-defined enum of values e.g. `sum`, `mean`, `nanmean` etc.
-* handling of nan-values depends on the aggregation function, similar to numpy:
-  * https://numpy.org/doc/stable/reference/generated/numpy.mean.html -> result is nan if values are missing are reported as nan
-  * https://numpy.org/doc/stable/reference/generated/numpy.nanmean.html -> result is mean of non-nan values
-* The definition must be consistent, i.e. `agg_field` must be one of the fields defined in the underlying elements.
-* Versioning: we keep `valid_from` and `valid_to` to allow to for future revert operations.
-* Note that we adhere to functional data processing paradigm: we re-process the data according to the current processing definition;
-  the raw data is kept on S3 and we could in principle re-process cached data at every level from S3 to the UI.
-* Scenario IDs are global IDs, not only relative to their parent benchmark/test.
-
-| Aggregation function | weights allowed | Description                                                                                                                              |
-|----------------------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| `SUM`                | yes             | If one value is NaN, the sum will be NaN. Empty sum defaulting to 0.                                                                     |
-| `NANSUM`             | yes             | Sum over all non-NaN scores. Empty sum defaulting to 0.                                                                                  |
-| `MEAN`               | yes             | If one value is NaN, the mean will be NaN. Empty mean defaulting to NaN. If weights are present, then the mean is weighted mean.         |
-| `NANMEAN`            | yes             | Mean over all non-NaN scores, defaulting to 0.  Empty nanmean defaulting to NaN. If weights are present, then the mean is weighted mean. |
-| `MEDIAN`             | no              | If one value is NaN, the median will be NaN, defaulting to 0. Empty median defaulting to NaN.                                            |
-| `NANMEDIAN`          | no              | Median over all non-NaN scores, defaulting to 0. Empty nanmedian defaulting to NaN.                                                      |
-
-Relational schema:
-
-```mermaid
-erDiagram
-  SCENARIO_DEFINITION {
-    uuid benchmark_id PK, FK
-    uuid test_id PK, FK
-    uuid scenario_id PK
-    date valid_from
-    date valid_to
-    string[] view_field
-  }
-```
-
-```mermaid
-erDiagram
-  TEST_DEFINITION {
-    uuid benchmark_id PK, FK
-    uuid test_id PK
-    string agg_func FK
-    string agg_field
-    Optional[float[]] weights
-    date valid_from
-    date valid_to
-    string[] view_agg_func
-    string[] view_agg_field
-    Optional[float[]][] view_weights
-  }
-```
-
-```mermaid
-erDiagram
-  BENCHMARK_DEFINITION {
-    uuid benchmark_id PK
-    string agg_func FK
-    string agg_field
-    Optional[float[]] weights
-    date valid_from
-    date valid_to
-    string[] view_agg_func
-    string[] view_agg_field
-    Optional[float[]][] view_weights
-  }
-```
-
-Note:
-
-* We assume the `agg_field` to be the same for all children.
-* Additional view fields can be defined together with their aggregation function
-
-### Interface 1b: Benchmark group definition API
-
-* `PUT /benchmark_groups`: create benchmark group
-* `POST /benchmark_groups/{benchmark_group_id}`: create validation campaign/competition/benchmark with the list of the underlying benchmarks
-* `DELETE /benchmark_groups/{benchmark_group_id}`: delete idem
-* `GET /benchmark_groups/{benchmark_group_id}`: retrieve list of benchmarks in this group along with metadata (type, campaign name/competition name); different UI dependening on type
-
-```mermaid
-erDiagram
-  BENCHMARK_GROUP {
-    UUID id PK
-    UUID setup FK
-  }
-```
-
-```mermaid
-erDiagram
-  BENCHMARK_SETUPS {
-    UUID id PK
-    string description "BENCHMARK|COMPETITION|CAMPAIGN"
-  }
-```
-
-```mermaid
-erDiagram
-  BENCHMARK_GROUP_MEMBERS {
-    UUID benchmark_group_id PK, FK
-    UUID benchmark_id PK, FK
-  }
-
-```
-
-Remarks:
-
-* General model grouping
-* multiple benchmarks as rounds of the same competition
-* multiple benchmarks as evaluation objects of the same validation campaign
-* different evolutions/flavours/objectives of a benchmark under the same common heading
-* The UI might be different in the different setups, but not necessarily so:
-  * tabs for different rounds of a competition or different versions of a benchmark
-  * table with different benchmarks of a validation campaign
-  * no tabs if a benchmark has only one version
-* If a definition is updated, we lazily assume results already uploaded still comply with the updated definition - upon aggregation, the UI might display NaN where data is missing. We assume the definition is validated at the begin of a campaign.
-
-Open Questions:
-
-* We might implement `SETUP` without enumeration, but with a UI configuration instead.
+See [api-docs](https://benchmarks.flatland.cloud:8000/api-docs/) generated from [openapi.json](../fab-clientlib/openapi.json).
 
 ### Interface 2: Submission and results APIs
 
-* `PUT /submissions`: create a submission with initial status and owner
-* `GET /submissions/{submission_id}`: status and owner of a submission
-* `POST /submissions/{submission_id}/status`: update status or make public of a submission
-
-* `GET /results/submission/{submission_id}/scenario/{scenario_id}`: raw scores of submission for single scenario
-* `POST /results/submission/{submission_id}/scenario/{scenario_id}`: live update for single scenario
-
-* `GET /results/submission/{submission_id}/tests/{test_id}`: aggregated scores of submission for single test
-* `POST /results/submission/{submission_id}/tests/{test_id}`: batch upload for subset of scenarios of a single test (scenarios not included will be NaN)
-
-* `GET /results/submission/{submission_id}/benchmarks/{benchmark_id}`: aggregated scores of submission for single benchmark
-* `POST /results/submission/{submission_id}/benchmarks/{benchmark_id}`: batch upload for subset of tests of a single benchmark
-
-* `GET /results/benchmark_group/{benchmark_group}?num_submissions`: get benchmarks with their num_submissions best submission(s)
-* `GET /results/benchmark/{benchmark_id}`: get submissions ordered by primary benchmark score (leaderboard in competition and benchmarks settings)
-* `GET /results/test/{test_id}`: get submissions ordered by primary test score
-* `GET /results/scenario/{scenario_id}`: get submissions ordered by primary scenario score
-
-Remarks:
-
-* An uploader can be a user or a group. Let's start with only users.
-* `{"data": ...}` allows for future backwards-compatible addition of optional attributes, like submitting on behalf of a group.
-* Partial results (aka. live update): Same evaluation during evaluations as afterwards: goes over benchmark/test definition and all scenarios below; missing values interpreted as nan; whether intermediate result is nan or an intermediate value depends on aggregation (e.g. `nansum` vs. `sum`).
-* Store only the raw results, do the aggregation upon GET request of the aggregated scores, either in backend (preferred) or (if implementation much simpler) in frontend
-* The campaign setup does not use the full-benchmark scores API.
-
-Constraints:
-
-* all fields defined in `SCENARIO_DEFINITION` must be present
-* all scenarios defined in `SCENARIO_DEFINITION` must be present
-
-Relational schema (multi-key-value based, i.e. multiple "raw" scores per scenario possible):
-
-```mermaid
-erDiagram
-  RESULTS {
-    UUID scenario_id PK, FK
-    UUID submission_id PK, FK
-    string key PK
-    float score
-  }
-```
-
-```mermaid
-erDiagram
-  SUBMISSIONS {
-    UUID submission_id PK
-    STATUS status "SUBMITTED|RUNNING|SUCCESS|FAILURE"
-    UUID benchmark_id FK
-    string description
-    boolean published
-  }
-```
-
-Future extensions:
-
-* `SUBMISSION_VERSIONS`: allows to group submissions with a version in order to re-use same description/heading for the same team/submitter:
-
-```mermaid
-erDiagram
-  SUBMISSION_VERSIONS {
-    UUID id PK
-    UUID submission_id FK
-    int version
-  }
-```
+See [api-docs](https://benchmarks.flatland.cloud:8000/api-docs/) generated from [openapi.json](../fab-clientlib/openapi.json).
 
 ### Interface 3: Orchestrator
 
 We use Celery with the following configuration:
 
 * Broker and backend is RabbitMQ
-* Queue name: Benchmark ID (UUID)
+* Queue name:
+  * `COMPETITION`/`DEFAULT` setups: Benchmark ID (UUID)
+  * `CAMPAIGN`: domain
 * Task name: Benchmark ID (UUD)
 * Payload:
 
