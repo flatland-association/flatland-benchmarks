@@ -41,6 +41,7 @@ export class CampaignItemOverviewComponent implements OnInit, OnChanges {
       const campaignItemOverview = (
         await this.resourceService.load('/results/campaign-items/:benchmark_ids', {
           params: { benchmark_ids: this.benchmark.id },
+          maxAge: 0,
         })
       )?.at(0)
       // pre-fetch linked resources

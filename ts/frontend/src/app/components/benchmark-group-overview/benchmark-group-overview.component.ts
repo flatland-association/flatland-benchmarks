@@ -59,6 +59,7 @@ export class BenchmarkGroupOverviewComponent implements OnChanges {
           const leaderboard = (
             await this.resourceService.load('/results/benchmarks/:benchmark_ids', {
               params: { benchmark_ids: benchmarkId },
+              maxAge: 0,
             })
           )?.at(0)
           return {

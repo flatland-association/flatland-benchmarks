@@ -53,6 +53,7 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
       const submissionScore = (
         await this.resourceService.load('/results/submissions/:submission_ids', {
           params: { submission_ids: submission.id },
+          maxAge: 0,
         })
       )?.at(0)
       const fields = await this.resourceService.loadGrouped('/definitions/fields/:field_ids', {

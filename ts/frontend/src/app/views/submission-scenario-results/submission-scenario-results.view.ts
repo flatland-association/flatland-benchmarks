@@ -78,12 +78,12 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
             this.submission = submissions?.at(0)
             this.ownSubmission = this.submission?.submitted_by === this.authService.userUuid
           }),
-        this.apiService
-          .get('/results/submissions/:submission_id/scenario/:scenario_ids', {
+        this.resourceService
+          .load('/results/submissions/:submission_id/scenario/:scenario_ids', {
             params: { submission_id: submission_id, scenario_ids: scenario_id },
           })
-          .then(({ body }) => {
-            this.scenarioScore = body?.at(0)
+          .then((scores) => {
+            this.scenarioScore = scores?.at(0)
           }),
       ]).then(() => {
         this.buildBoard()
@@ -178,12 +178,13 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
       })
       .then(() => {
         // reload results from backend
-        return this.apiService
-          .get('/results/submissions/:submission_id/scenario/:scenario_ids', {
+        return this.resourceService
+          .load('/results/submissions/:submission_id/scenario/:scenario_ids', {
             params: { submission_id: this.submission!.id, scenario_ids: this.scenario!.id },
+            maxAge: 0,
           })
-          .then(({ body }) => {
-            this.scenarioScore = body?.at(0)
+          .then((scores) => {
+            this.scenarioScore = scores?.at(0)
             this.buildBoard()
           })
       })

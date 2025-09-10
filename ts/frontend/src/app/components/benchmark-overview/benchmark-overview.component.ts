@@ -41,6 +41,7 @@ export class BenchmarkOverviewComponent implements OnInit, OnChanges {
       const benchmarkOverview = (
         await this.resourceService.load('/results/benchmarks/:benchmark_ids', {
           params: { benchmark_ids: this.benchmark.id },
+          maxAge: 0,
         })
       )?.at(0)
       const fields = await this.resourceService.loadGrouped('/definitions/fields/:field_ids', {
