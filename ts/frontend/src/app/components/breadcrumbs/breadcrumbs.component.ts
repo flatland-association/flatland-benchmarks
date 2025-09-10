@@ -19,6 +19,7 @@ export const Breadcrumb = {
   benchmark_group: Symbol(),
   benchmark: Symbol(),
   test: Symbol(),
+  scenario: Symbol(),
   submission: Symbol(),
 }
 
@@ -117,6 +118,15 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
       const test = (
         await this.resourceService.load('/definitions/tests/:test_ids', {
           params: { test_ids: segment },
+        })
+      )?.at(0)
+      // return resource name, fall back to uuid[0...8]
+      return test?.name ?? segment.slice(0, 8)
+    },
+    [Breadcrumb.scenario]: async (segment: string) => {
+      const test = (
+        await this.resourceService.load('/definitions/scenarios/:scenario_ids', {
+          params: { scenario_ids: segment },
         })
       )?.at(0)
       // return resource name, fall back to uuid[0...8]
