@@ -42,7 +42,7 @@ More details, see [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ### Nomenclature
 
-| Technical naming | `CAMPAIGN` setup     | `COMPETITION` setup   | `LONGTERM` setup  |
+| Technical naming | `CAMPAIGN` setup     | `COMPETITION` setup   | `DEFAULT` setup  |
 |------------------|----------------------|-----------------------|-------------------|
 | `suite`          | Validation Campaign  | Competition/Challenge | (Benchmark) Suite |
 | `benchmark`      | Evaluation Objective | Round                 | Benchmark         |
