@@ -9,9 +9,7 @@ import { MySubmissionsView } from './views/my-submissions/my-submissions.view'
 import { NewSubmissionView } from './views/new-submission/new-submission.view'
 import { SubmissionView } from './views/submission/submission.view'
 import { TestView } from './views/test/test.view'
-import { VcMySubmissionsView } from './views/vc-my-submissions/vc-my-submissions.view'
 import { VcResultsView } from './views/vc-results/vc-results.view'
-import { VcSubmissionView } from './views/vc-submission/vc-submission.view'
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -118,23 +116,6 @@ export const routes: Routes = [
         } satisfies BreadcrumbData,
       },
     ],
-  },
-  // TODO: generalize/clean up
-  // see: https://github.com/flatland-association/flatland-benchmarks/issues/323
-  {
-    path: 'vc-evaluation-objective/:benchmark_id/my-submissions',
-    component: VcMySubmissionsView,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'submissions/:submission_id',
-    component: VcSubmissionView,
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'submissions/:submission_id/results/:test_id/:scenario_id',
-    component: VcResultsView,
-    canActivate: [AuthGuard],
   },
   {
     path: 'my-submissions',
