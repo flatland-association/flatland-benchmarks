@@ -13,6 +13,7 @@ interface AsyncCacheItem<T> {
   promise: Promise<T>
   promiseResolve: (value: T) => void
   promiseReject: (reason?: unknown) => void
+  timestamp?: number
 }
 
 // like ApiGetOptions but allowing params to be of type string[]
@@ -21,6 +22,7 @@ interface AugmentedApiGetOptions<E extends keyof ApiGetEndpoints> {
     [K in keyof RouteParameters<E>]: string | string[]
   }
   query?: ApiGetEndpoints[E]['request']['query']
+  maxAge?: number
 }
 
 interface RequestDescriptor<E extends keyof ApiGetEndpoints> {
@@ -66,7 +68,6 @@ export class ResourceService {
    */
   async loadGrouped<E extends keyof ApiGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
     endpoint: E,
-    // ids?: ResourceIds<E>,
     ..._options: Empty extends O ? [o?: O] : [o: O & {}]
   ): Promise<ApiGetEndpoints[E]['response']['body']> {
     const options = _options[0]
@@ -93,6 +94,8 @@ export class ResourceService {
     ..._options: Empty extends O ? [o?: O] : [o: O & {}]
   ): Promise<ApiGetEndpoints[E]['response']['body']> {
     const options = _options[0]
+    const now = Date.now()
+    const tcutoff = typeof options?.maxAge !== 'undefined' ? now - options.maxAge : undefined
 
     let resourceRequests: RequestDescriptor<E>[]
 
@@ -133,7 +136,10 @@ export class ResourceService {
     const promises = resourceRequests.map((request) => {
       const identifier = this.getResourceIdentifier(request.endpoint, request.options)
       const item = this.cache.get(identifier)
-      if (item) {
+      if (
+        item &&
+        (typeof item.timestamp === 'undefined' || typeof tcutoff === 'undefined' || item.timestamp >= tcutoff)
+      ) {
         // this returns the same promise if the same id is duplicated in `ids`
         return item.promise
       } else {
@@ -143,6 +149,7 @@ export class ResourceService {
           cacheItem.promiseResolve = resolve
           cacheItem.promiseReject = reject
         }).then((value) => {
+          cacheItem.timestamp = now
           cacheItem.value = value
           return value
         })

@@ -40,7 +40,10 @@ export class CampaignOverviewComponent implements OnInit, OnChanges {
   async buildBoard() {
     if (this.group) {
       const campaignOverview = (
-        await this.resourceService.load('/results/campaigns/:group_ids', { params: { group_ids: this.group.id } })
+        await this.resourceService.load('/results/campaigns/:group_ids', {
+          params: { group_ids: this.group.id },
+          maxAge: 0,
+        })
       )?.at(0)
       // pre-fetch all required benchmarks
       this.resourceService.loadGrouped('/definitions/benchmarks/:benchmark_ids', {
