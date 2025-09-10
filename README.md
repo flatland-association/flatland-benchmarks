@@ -22,7 +22,6 @@ Experiments are run in the following loops:
 * interactive-loop: the evaluation is carried out by a human Operator interacting with a UI, the results are uploaded automatically or/and manually
 * offline-loop: the evaluation is done completely offline, the results are uploaded manually at the end of the experiment
 
-
 ## FAB Scope and Context
 
 ![SystemContext.drawio.png](docs/img/architecture/SystemContext.drawio.png)
@@ -40,6 +39,15 @@ More details, see [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 ![DataModel.drawio.png](docs/img/architecture/DataModel.drawio.png)
 
 More details, see [ARCHITECTURE.md](docs/ARCHITECTURE.md).
+
+### Nomenclature
+
+| Technical naming | `CAMPAIGN` setup     | `COMPETITION` setup   | `LONGTERM` setup  |
+|------------------|----------------------|-----------------------|-------------------|
+| `suite`          | Validation Campaign  | Competition/Challenge | (Benchmark) Suite |
+| `benchmark`      | Evaluation Objective | Round                 | Benchmark         |
+| `test`           | KPI                  | Test                  | Test              |
+| `scenario`       | Scenario             | Scenario              | Scenario          |
 
 📦 TL; DR;
 ----------
