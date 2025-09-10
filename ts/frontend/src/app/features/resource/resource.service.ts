@@ -6,8 +6,6 @@ import { BanEmpty, Empty, OptionalEmpty } from '@common/utility-types'
 import { RouteParameters } from 'express-serve-static-core'
 import { ApiService } from '../api/api.service'
 
-// TODO: cache max-age
-// see: https://github.com/flatland-association/flatland-benchmarks/issues/399
 interface AsyncCacheItem<T> {
   value?: T
   promise: Promise<T>
@@ -149,6 +147,7 @@ export class ResourceService {
           cacheItem.promiseResolve = resolve
           cacheItem.promiseReject = reject
         }).then((value) => {
+          // start item lifetime only once it has been resolved
           cacheItem.timestamp = now
           cacheItem.value = value
           return value
