@@ -7,9 +7,9 @@ import { BenchmarkView } from './views/benchmark/benchmark.view'
 import { HomeView } from './views/home/home.view'
 import { MySubmissionsView } from './views/my-submissions/my-submissions.view'
 import { NewSubmissionView } from './views/new-submission/new-submission.view'
+import { SubmissionScenarioResultsView } from './views/submission-scenario-results/submission-scenario-results.view'
 import { SubmissionView } from './views/submission/submission.view'
 import { TestView } from './views/test/test.view'
-import { VcResultsView } from './views/vc-results/vc-results.view'
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -102,7 +102,7 @@ export const routes: Routes = [
       },
       {
         path: ':group_id/:benchmark_id/submissions/:submission_id/:test_id/:scenario_id',
-        component: VcResultsView,
+        component: SubmissionScenarioResultsView,
         canActivate: [AuthGuard],
         data: {
           breadcrumbs: [
