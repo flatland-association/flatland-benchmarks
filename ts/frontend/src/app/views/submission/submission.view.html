@@ -1,58 +1,27 @@
-<app-breadcrumbs></app-breadcrumbs>
+@if (group && benchmark && submission) {
+  <lib-content>
+    <app-site-heading class="bp-8 flex w-full" [title]="submission.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
 
-<lib-content>
-  @if (result && submission) {
-    <h4 class="pb-8 text-2xl font-bold text-neutral-500">Your results</h4>
-    @if (!result) {
-      <div class="text-center">Please wait while your submission is being evaluated.</div>
+    <lib-section class="w-full">
+      <p>
+        {{ submission.description }}
+      </p>
+    </lib-section>
+  </lib-content>
+
+  <lib-content>
+    @if (isSubmissionScored()) {
+      <p>This submission has been successfully scored.</p>
     } @else {
-      <table class="w-full">
-        <thead>
-          <tr class="font-medium bg-neutral-100">
-            <td>Level</td>
-            <td class="text-center">Score</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-b">
-            <td>Overall</td>
-            <td class="text-center">
-              <div>{{ getPrimaryScoring(result.scorings)?.score }}</div>
-              <div class="text-xs">
-                @for (scoring of getSecondaryScorings(result.scorings); track $index) {
-                  <span class="pl-2 pr-2">{{ scoring?.score ?? '-' }}</span>
-                }
-              </div>
-            </td>
-          </tr>
-          @for (test of result.test_scorings; track $index) {
-            <tr class="border-b">
-              <td class="pl-4">Test {{ $index + 1 }}</td>
-              <td class="text-center">
-                <div>{{ getPrimaryScoring(test.scorings)?.score }}</div>
-                <div class="text-xs">
-                  @for (scoring of getSecondaryScorings(test.scorings); track $index) {
-                    <span class="pl-2 pr-2">{{ scoring?.score ?? '-' }}</span>
-                  }
-                </div>
-              </td>
-            </tr>
-            @for (scenario of test.scenario_scorings; track $index) {
-              <tr class="border-b">
-                <td class="pl-8">Scenario {{ $index + 1 }}</td>
-                <td class="text-center">
-                  <div>{{ getPrimaryScoring(scenario.scorings)?.score }}</div>
-                  <div class="text-xs">
-                    @for (scoring of getSecondaryScorings(scenario.scorings); track $index) {
-                      <span class="pl-2 pr-2">{{ scoring?.score ?? '-' }}</span>
-                    }
-                  </div>
-                </td>
-              </tr>
-            }
-          }
-        </tbody>
-      </table>
+      <p>This submission has not yet been scored completely.</p>
     }
+    <app-submission-results class="w-full my-8" [group]="group" [benchmark]="benchmark" [submission]="submission"></app-submission-results>
+  </lib-content>
+
+  @if (canPublishSubmission()) {
+    <lib-content>
+      <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-primary-100" type="button" (click)="publish()">Publish submission</button>
+    </lib-content>
   }
-</lib-content>
+
+}

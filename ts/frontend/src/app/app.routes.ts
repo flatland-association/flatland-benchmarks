@@ -84,15 +84,43 @@ export const routes: Routes = [
           breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, 'New Submission'],
         } satisfies BreadcrumbData,
       },
+      {
+        path: ':group_id/:benchmark_id/submissions',
+        pathMatch: 'full',
+        redirectTo: ':group_id/:benchmark_id',
+      },
+      {
+        path: ':group_id/:benchmark_id/submissions/:submission_id',
+        component: SubmissionView,
+        canActivate: [AuthGuard],
+        data: {
+          breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.submission],
+        } satisfies BreadcrumbData,
+      },
+      {
+        path: ':group_id/:benchmark_id/submissions/:submission_id/:test_id',
+        pathMatch: 'full',
+        redirectTo: ':group_id/:benchmark_id/submissions/:submission_id',
+      },
+      {
+        path: ':group_id/:benchmark_id/submissions/:submission_id/:test_id/:scenario_id',
+        component: VcResultsView,
+        canActivate: [AuthGuard],
+        data: {
+          breadcrumbs: [
+            Breadcrumb.benchmark_group,
+            Breadcrumb.benchmark,
+            Breadcrumb.HIDDEN,
+            Breadcrumb.submission,
+            Breadcrumb.test,
+            Breadcrumb.scenario,
+          ],
+        } satisfies BreadcrumbData,
+      },
     ],
   },
   // TODO: generalize/clean up
   // see: https://github.com/flatland-association/flatland-benchmarks/issues/323
-  {
-    path: 'fab-benchmarks/:id/participate/submissions/:submission',
-    component: SubmissionView,
-    canActivate: [AuthGuard],
-  },
   {
     path: 'vc-evaluation-objective/:benchmark_id/my-submissions',
     component: VcMySubmissionsView,
