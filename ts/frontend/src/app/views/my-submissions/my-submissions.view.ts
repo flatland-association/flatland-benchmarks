@@ -59,7 +59,10 @@ export class MySubmissionsView implements OnInit, OnDestroy {
           })
         ).body
         // TODO: load only linked groups
-        const groups = await this.resourceService.load('/definitions/benchmark-groups')
+        // see: https://github.com/flatland-association/flatland-benchmarks/issues/410
+        // TODO: load via resource service
+        // see: https://github.com/flatland-association/flatland-benchmarks/issues/395
+        const groups = (await this.apiService.get('/definitions/benchmark-groups'))?.body
         const benchmarks = await this.resourceService.loadGrouped('/definitions/benchmarks/:benchmark_ids', {
           params: { benchmark_ids: submissions?.map((s) => s.benchmark_id) ?? [] },
         })
