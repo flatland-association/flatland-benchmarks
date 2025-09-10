@@ -1,77 +1,101 @@
-import { Component, inject, OnInit } from '@angular/core'
+import { DatePipe } from '@angular/common'
+import { Component, inject, OnDestroy, OnInit } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import { BenchmarkDefinitionRow, SubmissionRow, TestDefinitionRow } from '@common/interfaces'
-import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
-import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
+import { isSubmissionCompletelyScored } from '@common/scoring-utils'
+import { ContentComponent } from '@flatland-association/flatland-ui'
+import { Subscription } from 'rxjs'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { TableColumn, TableComponent, TableRow } from '../../components/table/table.component'
 import { ApiService } from '../../features/api/api.service'
 import { AuthService } from '../../features/auth/auth.service'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
+import { ResourceService } from '../../features/resource/resource.service'
 import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.pipe'
 
 @Component({
   selector: 'view-my-submissions',
-  imports: [
-    RouterModule,
-    ContentComponent,
-    SectionComponent,
-    BreadcrumbsComponent,
-    PublicResourcePipe,
-    SiteHeadingComponent,
-    TableComponent,
-  ],
+  imports: [RouterModule, ContentComponent, PublicResourcePipe, SiteHeadingComponent, TableComponent],
+  providers: [DatePipe],
   templateUrl: './my-submissions.view.html',
   styleUrl: './my-submissions.view.scss',
 })
-export class MySubmissionsView implements OnInit {
-  apiService = inject(ApiService)
-  authService = inject(AuthService)
-  customizationService = inject(CustomizationService)
+export class MySubmissionsView implements OnInit, OnDestroy {
+  private authService = inject(AuthService)
+  private apiService = inject(ApiService)
+  private resourceService = inject(ResourceService)
+  private customizationService = inject(CustomizationService)
+  private paramsSubscription?: Subscription
+  private datePipe = inject(DatePipe)
 
-  submissions?: SubmissionRow[]
-  benchmarks?: Map<string, BenchmarkDefinitionRow>
-  tests?: Map<string, TestDefinitionRow>
   customization?: Customization
 
-  columns: TableColumn[] = [{ title: 'Submission' }, { title: 'Objective' }, { title: 'KPI' }]
+  columns: TableColumn[] = [
+    { title: 'Submission' },
+    { title: 'Submitted for' },
+    { title: 'Started' },
+    { title: 'Score', align: 'right' },
+  ]
   rows: TableRow[] = []
 
-  async ngOnInit() {
-    this.customization = await this.customizationService.getCustomization()
-    // load all my submissions
-    this.submissions = (
-      await this.apiService.get('/submissions', { query: { submitted_by: this.authService.userUuid } })
-    ).body
-    // load linked resources
-    // TODO: offload this to service with caching
-    const benchmarkIds = Array.from(new Set(this.submissions?.map((submission) => submission.benchmark_id)))
-    if (benchmarkIds) {
-      const benchmarks = (
-        await this.apiService.get('/definitions/benchmarks/:benchmark_ids', {
-          params: { benchmark_ids: benchmarkIds.join(',') },
-        })
-      ).body
-      this.benchmarks = new Map(benchmarks?.map((benchmark) => [benchmark.id, benchmark]))
-    }
-    const testIds = Array.from(new Set(this.submissions?.flatMap((submission) => submission.test_ids)))
-    if (testIds) {
-      const tests = (
-        await this.apiService.get('/definitions/tests/:test_ids', { params: { test_ids: testIds.join(',') } })
-      ).body
-      this.tests = new Map(tests?.map((test) => [test.id, test]))
-    }
-    // build table
-    this.rows =
-      this.submissions?.map((submission) => {
-        return {
-          routerLink: ['/', 'vc-evaluation-objective', submission.benchmark_id, 'my-submissions'],
-          cells: [
-            { text: submission.name },
-            { text: this.benchmarks?.get(submission.benchmark_id)?.name ?? 'NA' },
-            { text: this.tests?.get(submission.test_ids[0])?.name ?? 'NA' },
-          ],
+  ngOnInit(): void {
+    this.customizationService.getCustomization().then((customization) => {
+      this.customization = customization
+    })
+    // TODO: load via resource service
+    // see: https://github.com/flatland-association/flatland-benchmarks/issues/395
+    this.apiService
+      .get('/submissions', { query: { submitted_by: this.authService.userUuid } })
+      .then(async (resonse) => {
+        const submissions = resonse.body
+        if (!submissions) {
+          this.rows = []
+          return
         }
-      }) ?? []
+        // TODO: load via resource service
+        // see: https://github.com/flatland-association/flatland-benchmarks/issues/395
+        const scores = (
+          await this.apiService.get('/results/submissions/:submission_ids', {
+            params: { submission_ids: submissions.map((s) => s.id).join(',') },
+          })
+        ).body
+        // TODO: load only linked groups
+        const groups = await this.resourceService.load('/definitions/benchmark-groups')
+        const benchmarks = await this.resourceService.loadGrouped('/definitions/benchmarks/:benchmark_ids', {
+          params: { benchmark_ids: submissions?.map((s) => s.benchmark_id) ?? [] },
+        })
+        await this.resourceService.load('/definitions/fields/:field_ids', {
+          params: { field_ids: benchmarks?.flatMap((b) => b.field_ids) ?? [] },
+        })
+        this.rows = await Promise.all(
+          submissions?.map(async (submission) => {
+            const score = scores?.find((s) => s?.submission_id === submission.id)
+            const benchmark = benchmarks?.find((b) => b.id === submission.benchmark_id)
+            const group = benchmark?.id ? groups?.find((g) => g.benchmark_ids.includes(benchmark.id)) : undefined
+            const fields = await this.resourceService.load('/definitions/fields/:field_ids', {
+              params: { field_ids: benchmark?.field_ids ?? [] },
+            })
+            const startedAtStr = submission.submitted_at
+              ? this.datePipe.transform(submission.submitted_at, 'dd/MM/yyyy HH:mm')
+              : ''
+            const isScored = isSubmissionCompletelyScored(score)
+            return {
+              routerLink:
+                group && benchmark
+                  ? ['/', 'benchmarks', group.id, benchmark.id, 'submissions', submission.id]
+                  : undefined,
+              cells: [
+                { text: submission.name },
+                { text: `${group?.name ?? 'NA'} / ${benchmark?.name ?? 'NA'}` },
+                { text: startedAtStr },
+                isScored ? { scorings: score!.scorings, fieldDefinitions: fields } : { text: '⚠️' },
+              ],
+            }
+          }) ?? [],
+        )
+      })
+  }
+
+  ngOnDestroy(): void {
+    this.paramsSubscription?.unsubscribe()
   }
 }

@@ -2,99 +2,98 @@ import { CommonModule } from '@angular/common'
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
-import { Scorings, SubmissionRow, SubmissionScore } from '@common/interfaces'
-import { ContentComponent } from '@flatland-association/flatland-ui'
-import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs.component'
+import {
+  BenchmarkDefinitionRow,
+  BenchmarkGroupDefinitionRow,
+  SubmissionRow,
+  SubmissionScore,
+  TestDefinitionRow,
+} from '@common/interfaces'
+import { isSubmissionCompletelyScored } from '@common/scoring-utils'
+import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
+import { Subscription } from 'rxjs'
+import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
+import { SubmissionResultsComponent } from '../../components/submission-results/submission-results.component'
 import { ApiService } from '../../features/api/api.service'
-
-const CHECK_RESULT_INTERVAL = 10000 // [ms]
+import { AuthService } from '../../features/auth/auth.service'
+import { Customization, CustomizationService } from '../../features/customization/customization.service'
+import { ResourceService } from '../../features/resource/resource.service'
+import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.pipe'
 
 @Component({
   selector: 'view-submission',
-  imports: [CommonModule, FormsModule, ContentComponent, BreadcrumbsComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ContentComponent,
+    SectionComponent,
+    SiteHeadingComponent,
+    PublicResourcePipe,
+    SubmissionResultsComponent,
+  ],
   templateUrl: './submission.view.html',
   styleUrl: './submission.view.scss',
 })
 export class SubmissionView implements OnInit, OnDestroy {
-  apiService = inject(ApiService)
+  private apiService = inject(ApiService)
+  private authService = inject(AuthService)
+  private resourceService = inject(ResourceService)
+  private customizationService = inject(CustomizationService)
+  private route = inject(ActivatedRoute)
+  private paramsSubscription?: Subscription
 
-  submissionUuid?: string
-
+  group?: BenchmarkGroupDefinitionRow
+  benchmark?: BenchmarkDefinitionRow
+  test?: TestDefinitionRow
   submission?: SubmissionRow
+  submissionScore?: SubmissionScore
+  ownSubmission = false
+  customization?: Customization
 
-  result?: SubmissionScore
-
-  isLive = false
-  timeout?: number
-
-  constructor() {
-    const route = inject(ActivatedRoute)
-
-    this.submissionUuid = route.snapshot.params['submission']
-  }
-
-  ngOnInit() {
-    // load submission details
-    if (this.submissionUuid) {
-      this.apiService
-        .get('/submissions/:submission_ids', { params: { submission_ids: this.submissionUuid } })
-        .then(({ body }) => {
-          this.submission = body?.at(0)
+  ngOnInit(): void {
+    this.customizationService.getCustomization().then((customization) => {
+      this.customization = customization
+    })
+    this.paramsSubscription = this.route.params.subscribe(({ group_id, benchmark_id, submission_id }) => {
+      this.resourceService
+        .load('/definitions/benchmark-groups/:group_ids', { params: { group_ids: group_id } })
+        .then((group) => {
+          this.group = group?.at(0)
         })
-    }
-    // try loading result directly
-    this.isLive = true
-    this.watchResult()
-  }
-
-  ngOnDestroy() {
-    this.isLive = false
-    if (this.timeout) {
-      window.clearTimeout(this.timeout)
-    }
-  }
-
-  // tries to load the result and if its not available schedules a reload
-  // (can't work with window.setInterval as the request might take longer than the interval)
-  async watchResult() {
-    // try loading result
-    await this.loadResult()
-    // schedule next load if
-    // - result is not available
-    // - component is still live (could have been destroyed during load)
-    if (!this.result && this.isLive) {
-      this.timeout = window.setTimeout(() => {
-        this.watchResult()
-      }, CHECK_RESULT_INTERVAL)
-    }
-  }
-
-  async loadResult() {
-    if (this.submissionUuid) {
-      await this.apiService
-        .get('/results/submissions/:submission_ids', { params: { submission_ids: this.submissionUuid } })
-        .then((res) => {
-          this.result = res.body?.at(0)
-          console.log(this.result)
+      this.resourceService
+        .load('/definitions/benchmarks/:benchmark_ids', { params: { benchmark_ids: benchmark_id } })
+        .then((benchmark) => {
+          this.benchmark = benchmark?.at(0)
         })
-    }
+      this.resourceService
+        .load('/submissions/:submission_ids', { params: { submission_ids: submission_id } })
+        .then((submissions) => {
+          this.submission = submissions?.at(0)
+          this.ownSubmission = this.submission?.submitted_by === this.authService.userUuid
+        })
+      this.resourceService
+        .load('/results/submissions/:submission_ids', { params: { submission_ids: submission_id } })
+        .then((scores) => {
+          this.submissionScore = scores?.at(0)
+        })
+    })
   }
 
-  async publishResult() {
-    // TODO
+  ngOnDestroy(): void {
+    this.paramsSubscription?.unsubscribe()
   }
 
-  getPrimaryScoring(scorings: Scorings) {
-    const key = Object.keys(scorings)[0]
-    return scorings[key]
+  isSubmissionScored() {
+    return isSubmissionCompletelyScored(this.submissionScore)
   }
 
-  getSecondaryScorings(scorings: Scorings) {
-    const keys = Object.keys(scorings).slice(1)
-    return keys.map((key) => scorings[key])
+  canPublishSubmission() {
+    return this.isSubmissionScored() && this.submission?.published === false && this.ownSubmission
   }
 
-  getScoringKeys(scorings: unknown) {
-    return Object.keys(scorings as object)
+  async publish() {
+    this.submission = (
+      await this.apiService.patch('/submissions/:submission_ids', { params: { submission_ids: this.submission!.id } })
+    ).body?.at(0)
   }
 }
