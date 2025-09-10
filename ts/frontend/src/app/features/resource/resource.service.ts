@@ -20,12 +20,23 @@ interface AugmentedApiGetOptions<E extends keyof ApiGetEndpoints> {
     [K in keyof RouteParameters<E>]: string | string[]
   }
   query?: ApiGetEndpoints[E]['request']['query']
-  maxAge?: number
 }
 
 interface RequestDescriptor<E extends keyof ApiGetEndpoints> {
   endpoint: E
   options?: Partial<AugmentedApiGetOptions<E>>
+}
+
+// TODO: ideally define where endpoints are defined
+// see: https://github.com/flatland-association/flatland-benchmarks/issues/413
+const maxAges: Partial<Record<keyof ApiGetEndpoints, number>> = {
+  '/results/benchmarks/:benchmark_id/tests/:test_ids': 0,
+  '/results/benchmarks/:benchmark_ids': 0,
+  '/results/campaign-items/:benchmark_ids': 0,
+  '/results/campaigns/:group_ids': 0,
+  '/results/submissions/:submission_id/scenario/:scenario_ids': 0,
+  '/results/submissions/:submission_id/tests/:test_ids': 0,
+  '/results/submissions/:submission_ids': 0,
 }
 
 @Injectable({
@@ -93,7 +104,8 @@ export class ResourceService {
   ): Promise<ApiGetEndpoints[E]['response']['body']> {
     const options = _options[0]
     const now = Date.now()
-    const tcutoff = typeof options?.maxAge !== 'undefined' ? now - options.maxAge : undefined
+    const maxAge = maxAges[endpoint]
+    const tcutoff = typeof maxAge !== 'undefined' ? now - maxAge : undefined
 
     let resourceRequests: RequestDescriptor<E>[]
 

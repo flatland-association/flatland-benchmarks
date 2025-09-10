@@ -181,7 +181,6 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
         return this.resourceService
           .load('/results/submissions/:submission_id/scenario/:scenario_ids', {
             params: { submission_id: this.submission!.id, scenario_ids: this.scenario!.id },
-            maxAge: 0,
           })
           .then((scores) => {
             this.scenarioScore = scores?.at(0)

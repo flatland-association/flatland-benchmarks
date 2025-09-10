@@ -44,7 +44,6 @@ export class TestOverviewComponent implements OnInit, OnChanges {
       const testOverview = (
         await this.resourceService.load('/results/benchmarks/:benchmark_id/tests/:test_ids', {
           params: { benchmark_id: benchmark.id, test_ids: test.id },
-          maxAge: 0,
         })
       )?.at(0)
       const fields = await this.resourceService.loadGrouped('/definitions/fields/:field_ids', {

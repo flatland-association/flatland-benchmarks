@@ -72,7 +72,7 @@ export class SubmissionView implements OnInit, OnDestroy {
           this.ownSubmission = this.submission?.submitted_by === this.authService.userUuid
         })
       this.resourceService
-        .load('/results/submissions/:submission_ids', { params: { submission_ids: submission_id }, maxAge: 0 })
+        .load('/results/submissions/:submission_ids', { params: { submission_ids: submission_id } })
         .then((scores) => {
           this.submissionScore = scores?.at(0)
         })
