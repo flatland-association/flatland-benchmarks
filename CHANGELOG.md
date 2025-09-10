@@ -3,6 +3,33 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.12.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.11.0...v0.12.0) (2025-09-10)
+
+
+### Features
+
+* add agg at benchmark/test level. ([7fbca10](https://github.com/flatland-association/flatland-benchmarks/commit/7fbca1052df98b5e36c1d77a9e5d27c35ee9808e))
+* add gen fields at benchmark/test/scenario level. ([c4c4520](https://github.com/flatland-association/flatland-benchmarks/commit/c4c45202dfa9f784a841abdb8a6b756749380596))
+* add info service display FAB_VERSION. ([#391](https://github.com/flatland-association/flatland-benchmarks/issues/391)) ([d5b1237](https://github.com/flatland-association/flatland-benchmarks/commit/d5b12374c1dc49799fa285fec7defbcbb6a20892))
+* add queue column to test definition to override taking benchmark_id. ([4bec0ac](https://github.com/flatland-association/flatland-benchmarks/commit/4bec0ac6e1b253552b35cf519d400c62c95a63d7))
+* distinguish field name and description at benchmark/test/scenario level. ([0979284](https://github.com/flatland-association/flatland-benchmarks/commit/09792840712c23992915cad0452cd4880132e467))
+* fix test ids in cards importer. ([ba0bf80](https://github.com/flatland-association/flatland-benchmarks/commit/ba0bf802829571c2efb43fb85aa0d99ad7e84581))
+* **frontend:** Add breadcrumbs name resolver ([#405](https://github.com/flatland-association/flatland-benchmarks/issues/405)) ([2b4efd9](https://github.com/flatland-association/flatland-benchmarks/commit/2b4efd9e1329e336cb7ef58b2687b62b64f7cfd3))
+* **frontend:** Unify benchmark group flow ([#400](https://github.com/flatland-association/flatland-benchmarks/issues/400)) ([1560109](https://github.com/flatland-association/flatland-benchmarks/commit/156010950d1798ff9a4571627875d5064e2cd6d7))
+* **frontent:** Generalize routing ([#412](https://github.com/flatland-association/flatland-benchmarks/issues/412)) ([8b2a78f](https://github.com/flatland-association/flatland-benchmarks/commit/8b2a78fd4f47a0422683426c6252b60bdca08816))
+* gen ai4realnet orchestrator code. ([8111046](https://github.com/flatland-association/flatland-benchmarks/commit/81110463813cfeed83c89f04b03c340118ff4ea1))
+* KPI database cards importer. ([c88c708](https://github.com/flatland-association/flatland-benchmarks/commit/c88c708f009103aac76dad2704cf1c2650834960))
+* make example sql idempotent (add ON CONFLICT to INSERT). ([fa7fb4e](https://github.com/flatland-association/flatland-benchmarks/commit/fa7fb4e59fc41838ee5e65364727593d7b6eb025))
+* use domain as queue for ai4realnet. ([33cef94](https://github.com/flatland-association/flatland-benchmarks/commit/33cef94d0316e0526123ae84c0a5721e48c7104e))
+* use domain as queue for ai4realnet. ([72d2d75](https://github.com/flatland-association/flatland-benchmarks/commit/72d2d759830743a332b9d90e13cc8ab4d27a7b58))
+* use SUPPORTED_CLIENT_VERSION_RANGE. ([#397](https://github.com/flatland-association/flatland-benchmarks/issues/397)) ([8e61773](https://github.com/flatland-association/flatland-benchmarks/commit/8e61773f24df9d8d9cfecdf825942c10268f0ca8))
+
+
+### Bug Fixes
+
+* pass `SUPPORTED_CLIENT_VERSION_RANGE` correctly to integration tests. ([3e58b86](https://github.com/flatland-association/flatland-benchmarks/commit/3e58b8642dc24780c45038f8fea53c54b0e3a84c))
+* pass SUPPORTED_CLIENT_VERSION_RANGE correctly to integration tests. ([be708d0](https://github.com/flatland-association/flatland-benchmarks/commit/be708d02e621a7cc153b6a4e744b76d7fedb6351))
+
 ## [0.11.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.10.0...v0.11.0) (2025-08-25)
 
 
