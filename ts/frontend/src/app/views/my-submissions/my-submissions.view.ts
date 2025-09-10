@@ -1,9 +1,8 @@
 import { DatePipe } from '@angular/common'
-import { Component, inject, OnDestroy, OnInit } from '@angular/core'
+import { Component, inject, OnInit } from '@angular/core'
 import { RouterModule } from '@angular/router'
 import { isSubmissionCompletelyScored } from '@common/scoring-utils'
 import { ContentComponent } from '@flatland-association/flatland-ui'
-import { Subscription } from 'rxjs'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { TableColumn, TableComponent, TableRow } from '../../components/table/table.component'
 import { ApiService } from '../../features/api/api.service'
@@ -19,12 +18,11 @@ import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.
   templateUrl: './my-submissions.view.html',
   styleUrl: './my-submissions.view.scss',
 })
-export class MySubmissionsView implements OnInit, OnDestroy {
+export class MySubmissionsView implements OnInit {
   private authService = inject(AuthService)
   private apiService = inject(ApiService)
   private resourceService = inject(ResourceService)
   private customizationService = inject(CustomizationService)
-  private paramsSubscription?: Subscription
   private datePipe = inject(DatePipe)
 
   customization?: Customization
@@ -96,9 +94,5 @@ export class MySubmissionsView implements OnInit, OnDestroy {
           }) ?? [],
         )
       })
-  }
-
-  ngOnDestroy(): void {
-    this.paramsSubscription?.unsubscribe()
   }
 }
