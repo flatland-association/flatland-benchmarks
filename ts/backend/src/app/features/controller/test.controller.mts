@@ -17,8 +17,6 @@ export class TestController extends Controller {
    * /definitions/tests/{test_ids}:
    *  get:
    *    description: Returns tests with ID in `ids`.
-   *    security:
-   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: test_ids

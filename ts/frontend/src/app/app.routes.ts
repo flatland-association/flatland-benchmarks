@@ -38,13 +38,11 @@ export const routes: Routes = [
       {
         path: ':group_id',
         component: BenchmarkGroupView,
-        canActivate: [AuthGuard],
         data: { breadcrumbs: [Breadcrumb.benchmark_group] } satisfies BreadcrumbData,
       },
       {
         path: ':group_id/:benchmark_id',
         component: BenchmarkView,
-        canActivate: [AuthGuard],
         data: { breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark] } satisfies BreadcrumbData,
       },
       {
@@ -55,7 +53,6 @@ export const routes: Routes = [
       {
         path: ':group_id/:benchmark_id/tests/:test_id',
         component: TestView,
-        canActivate: [AuthGuard],
         data: {
           breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.test],
         } satisfies BreadcrumbData,
@@ -90,7 +87,6 @@ export const routes: Routes = [
       {
         path: ':group_id/:benchmark_id/submissions/:submission_id',
         component: SubmissionView,
-        canActivate: [AuthGuard],
         data: {
           breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.submission],
         } satisfies BreadcrumbData,
@@ -103,7 +99,6 @@ export const routes: Routes = [
       {
         path: ':group_id/:benchmark_id/submissions/:submission_id/:test_id/:scenario_id',
         component: SubmissionScenarioResultsView,
-        canActivate: [AuthGuard],
         data: {
           breadcrumbs: [
             Breadcrumb.benchmark_group,

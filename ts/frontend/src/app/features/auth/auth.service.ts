@@ -102,7 +102,7 @@ export class AuthService {
    */
   get userUuid(): string | undefined {
     const claims = this.oauthService.getIdentityClaims()
-    return claims['sub']
+    return claims?.['sub']
   }
 
   get claims(): { email: string; name: string; roles: string[] } {
