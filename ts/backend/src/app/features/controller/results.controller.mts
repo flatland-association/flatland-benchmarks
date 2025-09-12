@@ -199,8 +199,10 @@ export class ResultsController extends Controller {
    *                      type: string
    *                      format: uuid
    *                      description: ID of scenario
-   *                  additionalProperties:
-   *                    type: number
+   *                    scores:
+   *                      type: object
+   *                      additionalProperties:
+   *                        type: number
    *    responses:
    *      201:
    *        description: All results inserted.
@@ -230,17 +232,15 @@ export class ResultsController extends Controller {
     const testId = req.params.test_ids
     const resultRows = req.body.data.flatMap((score) => {
       const resultRows: ResultRow[] = []
-      // score's keys are keys of score, except for the one being scenario_id, which is scenario_id
-      for (const key in score) {
-        if (key != 'scenario_id') {
-          resultRows.push({
-            scenario_id: score.scenario_id,
-            test_id: testId,
-            submission_id: submissionId,
-            key,
-            value: score[key],
-          })
-        }
+      // the keys in score correspond to the key used in results table
+      for (const key in score.scores) {
+        resultRows.push({
+          scenario_id: score.scenario_id,
+          test_id: testId,
+          submission_id: submissionId,
+          key,
+          value: score.scores[key],
+        })
       }
       return resultRows
     })
