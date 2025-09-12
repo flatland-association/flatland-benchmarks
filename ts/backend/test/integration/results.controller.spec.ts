@@ -1,7 +1,12 @@
 import { CampaignItemOverview, CampaignOverview, Leaderboard } from '@common/interfaces'
 import { ResultsController } from '../../src/app/features/controller/results.controller.mjs'
 import { Logger } from '../../src/app/features/logger/logger.mjs'
-import { ControllerTestAdapter, setupControllerTestEnvironment, testUserJwt } from '../controller.test-adapter.mjs'
+import {
+  assertApiResponse,
+  ControllerTestAdapter,
+  setupControllerTestEnvironment,
+  testUserJwt,
+} from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
 
 Logger.setOptions({ '--log-level': 'ERROR' })
@@ -34,7 +39,7 @@ describe.sequential('Results controller', () => {
       },
       testUserJwt,
     )
-    expect(res.status).toBe(201)
+    assertApiResponse(res, 201)
     expect(res.body.body).toEqual({})
   })
 
@@ -51,8 +56,8 @@ describe.sequential('Results controller', () => {
       },
       testUserJwt,
     )
-    expect(res.status).toBe(400)
-    expect(res.body.error?.text).toContain('results could not be inserted')
+    assertApiResponse(res, 400)
+    expect(res.body.error.text).toContain('results could not be inserted')
   })
 
   test('should reject posting results that partially exist', async () => {
@@ -69,8 +74,8 @@ describe.sequential('Results controller', () => {
       },
       testUserJwt,
     )
-    expect(res.status).toBe(400)
-    expect(res.body.error?.text).toContain('results could not be inserted')
+    assertApiResponse(res, 400)
+    expect(res.body.error.text).toContain('results could not be inserted')
   })
 
   test('should return submission total score', async () => {
@@ -79,9 +84,8 @@ describe.sequential('Results controller', () => {
       { params: { submission_ids: 'cd4d44bc-d40e-4173-bccb-f04e0be1b2ae' } },
       testUserJwt,
     )
-    expect(res.status).toBe(200)
-    expect(res.body).toBeApiResponse()
-    expect(res.body.body?.at(0)?.scorings['primary']?.score).toBeCloseTo(0.86, 2)
+    assertApiResponse(res, 200)
+    expect(res.body.body.at(0)?.scorings['primary']?.score).toBeCloseTo(0.86, 2)
   })
 
   test('should return submission test score', async () => {
@@ -95,11 +99,10 @@ describe.sequential('Results controller', () => {
       },
       testUserJwt,
     )
-    expect(res.status).toBe(200)
-    expect(res.body).toBeApiResponse()
+    assertApiResponse(res, 200)
     // TOFIX: body should be array, see
     // https://github.com/flatland-association/flatland-benchmarks/issues/352
-    expect(res.body.body?.scorings['primary']?.score).toBeCloseTo(0.86)
+    expect(res.body.body.scorings['primary']?.score).toBeCloseTo(0.86)
   })
 
   test('should return submission scenario score', async () => {
@@ -113,10 +116,9 @@ describe.sequential('Results controller', () => {
       },
       testUserJwt,
     )
-    expect(res.status).toBe(200)
-    expect(res.body).toBeApiResponse()
+    assertApiResponse(res, 200)
     expect(res.body.body).toHaveLength(1)
-    expect(res.body.body?.at(0)?.scorings['primary']?.score).toBeCloseTo(0.45, 2)
+    expect(res.body.body.at(0)?.scorings['primary']?.score).toBeCloseTo(0.45, 2)
   })
 
   // Benchmark leaderboard does not make valid sense with campaign test data,
@@ -135,9 +137,8 @@ describe.sequential('Results controller', () => {
         },
         testUserJwt,
       )
-      expect(res.status).toBe(200)
-      expect(res.body).toBeApiResponse()
-      board = res.body.body?.at(0)
+      assertApiResponse(res)
+      board = res.body.body.at(0)
       // benchmark leaderboard contains more than one per test
       expect(board?.items).toHaveLength(9)
     })
@@ -176,9 +177,8 @@ describe.sequential('Results controller', () => {
         },
         testUserJwt,
       )
-      expect(res.status).toBe(200)
-      expect(res.body).toBeApiResponse()
-      board = res.body.body?.at(0)
+      assertApiResponse(res)
+      board = res.body.body.at(0)
       expect(board?.items).toHaveLength(2)
     })
 
@@ -213,9 +213,8 @@ describe.sequential('Results controller', () => {
         },
         testUserJwt,
       )
-      expect(res.status).toBe(200)
-      expect(res.body).toBeApiResponse()
-      board = res.body.body?.at(0)
+      assertApiResponse(res)
+      board = res.body.body.at(0)
       expect(board?.items).toHaveLength(8)
     })
 
@@ -248,12 +247,11 @@ describe.sequential('Results controller', () => {
       },
       testUserJwt,
     )
-    expect(res.status).toBe(200)
-    expect(res.body).toBeApiResponse()
+    assertApiResponse(res)
     // five tests for benchmark defined,
-    expect(res.body.body?.at(0)?.items).toHaveLength(5)
+    expect(res.body.body.at(0)?.items).toHaveLength(5)
     //... all of them having no submission (and therefore no score)
-    expect(res.body.body?.at(0)?.items.every((scoring) => scoring.scorings === null)).toBeTruthy()
+    expect(res.body.body.at(0)?.items.every((scoring) => scoring.scorings === null)).toBeTruthy()
   })
 
   describe('should return aggregated campaign leaderboard', () => {
@@ -267,9 +265,8 @@ describe.sequential('Results controller', () => {
         },
         testUserJwt,
       )
-      expect(res.status).toBe(200)
-      expect(res.body).toBeApiResponse()
-      overview = res.body.body?.at(0)
+      assertApiResponse(res)
+      overview = res.body.body.at(0)
       expect(overview).toBeTruthy()
     })
 

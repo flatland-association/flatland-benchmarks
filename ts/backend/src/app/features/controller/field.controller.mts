@@ -17,8 +17,6 @@ export class FieldController extends Controller {
    * /definitions/fields/{field_ids}:
    *  get:
    *    description: Returns fields with ID in `ids`.
-   *    security:
-   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: field_ids

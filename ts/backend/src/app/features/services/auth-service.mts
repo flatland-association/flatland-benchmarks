@@ -59,7 +59,10 @@ export class AuthService extends Service {
 
     const token = req.headers.authorization?.split(' ')[1]
 
-    if (!token) return null
+    if (!token) {
+      logger.debug(`no token provided`)
+      return null
+    }
 
     return new Promise<JwtPayload | null>((resolve) => {
       const verifyCallback: VerifyCallback<JwtPayload | string> = (
@@ -72,6 +75,7 @@ export class AuthService extends Service {
           return resolve(null)
         }
         logger.debug(`token verification successful for request on ${req.method} ${req.originalUrl}.`)
+        logger.trace(`authenticated subject ${(decoded as JwtPayload).sub}`)
         return resolve(decoded as JwtPayload)
       }
       logger.debug(`verifying token for request on ${req.method} ${req.originalUrl}`)

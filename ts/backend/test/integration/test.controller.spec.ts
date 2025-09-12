@@ -1,5 +1,9 @@
 import { TestController } from '../../src/app/features/controller/test.controller.mjs'
-import { ControllerTestAdapter, setupControllerTestEnvironment } from '../controller.test-adapter.mjs'
+import {
+  assertApiResponse,
+  ControllerTestAdapter,
+  setupControllerTestEnvironment,
+} from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
 
 describe.sequential('Test controller', () => {
@@ -15,7 +19,6 @@ describe.sequential('Test controller', () => {
     const res = await controller.testGet('/definitions/tests/:test_ids', {
       params: { test_ids: 'aeabd5b9-4e86-4c7a-859f-a32ff1be5516' },
     })
-    expect(res.status).toBe(200)
-    expect(res.body).toBeApiResponse()
+    assertApiResponse(res)
   })
 })

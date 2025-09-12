@@ -18,8 +18,6 @@ export class BenchmarkController extends Controller {
    * /definitions/benchmarks/:
    *  get:
    *    description: Returns benchmarks.
-   *    security:
-   *      - oauth2: [user]
    *    responses:
    *      200:
    *        description: Benchmarks.
@@ -68,8 +66,6 @@ export class BenchmarkController extends Controller {
    * /definitions/benchmarks/{benchmark_ids}:
    *  get:
    *    description: Returns tests with ID in `ids`.
-   *    security:
-   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: benchmark_ids

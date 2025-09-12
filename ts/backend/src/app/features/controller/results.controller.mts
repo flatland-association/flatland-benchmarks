@@ -27,8 +27,6 @@ export class ResultsController extends Controller {
    * /results/submissions/{submission_ids}:
    *  get:
    *    description: Get aggregated submission overall results.
-   *    security:
-   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: submission_ids
@@ -87,13 +85,6 @@ export class ResultsController extends Controller {
    *                                        description: Dictionary of scores.
    */
   getSubmissionResults: GetHandler<'/results/submissions/:submission_ids'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
-
     const submissionIds = req.params.submission_ids.split(',')
 
     const aggregator = AggregatorService.getInstance()
@@ -106,8 +97,6 @@ export class ResultsController extends Controller {
    * /results/submissions/{submission_id}/tests/{test_ids}:
    *  get:
    *    description: Get submission results aggregated by test.
-   *    security:
-   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: submission_id
@@ -159,13 +148,6 @@ export class ResultsController extends Controller {
    *                                description: Dictionary of scores.
    */
   getTestResults: GetHandler<'/results/submissions/:submission_id/tests/:test_ids'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
-
     const submissionId = req.params.submission_id
     const testIds = req.params.test_ids.split(',')
 
@@ -284,8 +266,6 @@ export class ResultsController extends Controller {
    * /results/submissions/{submission_id}/scenario/{scenario_ids}:
    *  get:
    *    description: Get submission results for specific scenario.
-   *    security:
-   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: submission_id
@@ -327,13 +307,6 @@ export class ResultsController extends Controller {
    *                            description: Dictionary of scores.
    */
   getScenarioResults: GetHandler<'/results/submissions/:submission_id/scenario/:scenario_ids'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
-
     const submissionId = req.params.submission_id
     const scenarioIds = req.params.scenario_ids.split(',')
 
@@ -347,8 +320,6 @@ export class ResultsController extends Controller {
    * /results/benchmarks/{benchmark_ids}:
    *  get:
    *    description: Get benchmark leaderboard.
-   *    security:
-   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: benchmark_ids
@@ -416,13 +387,6 @@ export class ResultsController extends Controller {
    *                                              description: Dictionary of scores.
    */
   getLeaderboard: GetHandler<'/results/benchmarks/:benchmark_ids'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
-
     const benchmarkIds = req.params.benchmark_ids.split(',')
 
     const aggregator = AggregatorService.getInstance()
@@ -435,8 +399,6 @@ export class ResultsController extends Controller {
    * /results/campaign-items/{benchmark_ids}:
    *  get:
    *    description: Returns campaign-item overviews (i.e. all tests in benchmark with score of top submission per test).
-   *    security:
-   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: benchmark_ids
@@ -484,12 +446,6 @@ export class ResultsController extends Controller {
    *                                  description: ID of best submission.
    */
   getCampaignItemOverview: GetHandler<'/results/campaign-items/:benchmark_ids'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
     const benchmarkIds = req.params.benchmark_ids.split(',')
 
     const aggregator = AggregatorService.getInstance()
@@ -502,8 +458,6 @@ export class ResultsController extends Controller {
    * /results/campaigns/{group_ids}:
    *  get:
    *    description: Returns campaign overviews (i.e. all benchmarks in the group with score aggregated from their top submission per test).
-   *    security:
-   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: group_ids
@@ -563,13 +517,6 @@ export class ResultsController extends Controller {
    *                            description: Dictionary of group scores
    */
   getCampaignOverview: GetHandler<'/results/campaigns/:group_ids'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
-
     const groupIds = req.params.group_ids.split(',')
 
     const aggregator = AggregatorService.getInstance()
@@ -582,8 +529,6 @@ export class ResultsController extends Controller {
    * /results/benchmarks/{benchmark_id}/tests/{test_ids}:
    *  get:
    *    description: Get test leaderboard.
-   *    security:
-   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: benchmark_id
@@ -658,13 +603,6 @@ export class ResultsController extends Controller {
    *                                              description: Dictionary of scores.
    */
   getTestLeaderboard: GetHandler<'/results/benchmarks/:benchmark_id/tests/:test_ids'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
-
     const benchmarkId = req.params.benchmark_id
     const testIds = req.params.test_ids.split(',')
 

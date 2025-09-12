@@ -148,6 +148,7 @@ export class SubmissionController extends Controller {
    *  get:
    *    description: Lists all published submissions.
    *    security:
+   *      - {}
    *      - oauth2: [user]
    *    parameters:
    *      - in: query
@@ -213,10 +214,6 @@ export class SubmissionController extends Controller {
   getSubmissions: GetHandler<'/submissions'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
 
     const benchmarkId = req.query['benchmark_ids']
     const submittedBy = req.query['submitted_by']
@@ -233,7 +230,7 @@ export class SubmissionController extends Controller {
     }
     if (submittedBy) {
       // turn off public requirement if submitter matches authorized user
-      if (submittedBy === auth.sub) {
+      if (submittedBy === auth?.sub) {
         wherePublic = sql.fragment`1=1`
       }
       whereSubmittedBy = sql.fragment`submitted_by=${submittedBy}`
@@ -256,6 +253,7 @@ export class SubmissionController extends Controller {
    *  get:
    *    description: Get submissions.
    *    security:
+   *      - {}
    *      - oauth2: [user]
    *    parameters:
    *      - in: path
@@ -316,16 +314,19 @@ export class SubmissionController extends Controller {
   getSubmissionByUuid: GetHandler<'/submissions/:submission_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
     const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
     const uuids = req.params.submission_ids.split(',')
     const sql = SqlService.getInstance()
+    // per default, list only public submissions
+    let wherePublic = sql.fragment`published = true`
+    if (auth?.sub) {
+      wherePublic = sql.fragment`(published = true OR submitted_by = ${auth.sub})`
+    }
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<SubmissionRow>>`
         SELECT * FROM submissions
-        WHERE id=ANY(${uuids})
+        WHERE
+          id=ANY(${uuids}) AND
+          ${wherePublic}
         LIMIT ${uuids.length}
       `
     const submissions = appendDir('/submissions/', rows)

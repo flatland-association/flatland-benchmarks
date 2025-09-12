@@ -17,8 +17,6 @@ export class ScenarioController extends Controller {
    * /definitions/scenarios/{scenario_ids}:
    *  get:
    *    description: Returns scenarios with ID in `ids`.
-   *    security:
-   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: scenario_ids
