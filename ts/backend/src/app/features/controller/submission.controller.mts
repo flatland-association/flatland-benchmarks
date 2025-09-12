@@ -147,6 +147,9 @@ export class SubmissionController extends Controller {
    * /submissions:
    *  get:
    *    description: Lists all published submissions.
+   *    security:
+   *      - {}
+   *      - oauth2: [user]
    *    parameters:
    *      - in: query
    *        name: benchmark_ids
@@ -249,6 +252,9 @@ export class SubmissionController extends Controller {
    * /submissions/{submission_ids}:
    *  get:
    *    description: Get submissions.
+   *    security:
+   *      - {}
+   *      - oauth2: [user]
    *    parameters:
    *      - in: path
    *        name: submission_ids
