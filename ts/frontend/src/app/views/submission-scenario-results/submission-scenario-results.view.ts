@@ -114,7 +114,8 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
     // find out which fields need manual scoring (not having numerical score)
     this.manualFields = []
     this.fields?.forEach((field) => {
-      const isScored = typeof this.scenarioScore?.scorings[field.key]?.score === 'number'
+      const scoring = this.scenarioScore?.scorings.find((s) => s.field_id === field.id)
+      const isScored = typeof scoring?.score === 'number'
       if (!isScored) {
         this.manualFields.push(field.key)
       }
@@ -123,7 +124,11 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
     this.rows =
       this.fields?.map((field) => {
         // take existing scoring or prepare one for manual submission
-        const scoring: Scoring = this.scenarioScore?.scorings[field.key] ?? { score: null }
+        const scoring: Scoring = this.scenarioScore?.scorings.find((s) => s.field_id === field.id) ?? {
+          field_id: '',
+          field_key: field.key,
+          score: null,
+        }
         const isScored = typeof scoring.score === 'number'
         return {
           cells: [
@@ -157,7 +162,9 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
   }
 
   canSubmitManualScoring() {
-    return this.manualFields.every((key) => typeof this.scenarioScore?.scorings[key]?.score === 'number')
+    return this.manualFields.every(
+      (key) => typeof this.scenarioScore?.scorings.find((s) => s.field_key === key)?.score === 'number',
+    )
   }
 
   async submitManualScoring() {
@@ -168,7 +175,7 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
     }
     // append manual scores
     this.manualFields.forEach((key) => {
-      results[key] = this.scenarioScore?.scorings[key]?.score ?? 0
+      results[key] = this.scenarioScore?.scorings.find((s) => s.field_key === key)?.score ?? 0
     })
     // submit
     this.apiService

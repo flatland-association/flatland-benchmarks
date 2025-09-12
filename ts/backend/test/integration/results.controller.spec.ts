@@ -85,7 +85,7 @@ describe.sequential('Results controller', () => {
       testUserJwt,
     )
     assertApiResponse(res, 200)
-    expect(res.body.body.at(0)?.scorings['primary']?.score).toBeCloseTo(0.86, 2)
+    expect(res.body.body.at(0)?.scorings[0]?.score).toBeCloseTo(0.86, 2)
   })
 
   test('should return submission test score', async () => {
@@ -102,7 +102,7 @@ describe.sequential('Results controller', () => {
     assertApiResponse(res, 200)
     // TOFIX: body should be array, see
     // https://github.com/flatland-association/flatland-benchmarks/issues/352
-    expect(res.body.body.scorings['primary']?.score).toBeCloseTo(0.86)
+    expect(res.body.body.scorings[0]?.score).toBeCloseTo(0.86)
   })
 
   test('should return submission scenario score', async () => {
@@ -118,7 +118,7 @@ describe.sequential('Results controller', () => {
     )
     assertApiResponse(res, 200)
     expect(res.body.body).toHaveLength(1)
-    expect(res.body.body.at(0)?.scorings['primary']?.score).toBeCloseTo(0.45, 2)
+    expect(res.body.body.at(0)?.scorings[0]?.score).toBeCloseTo(0.45, 2)
   })
 
   // Benchmark leaderboard does not make valid sense with campaign test data,
@@ -158,8 +158,8 @@ describe.sequential('Results controller', () => {
       // rank must match index (off by one)
       const submission = board?.items[testCase.rank - 1]
       expect(submission?.submission_id).toBe(testCase.submission_id)
-      expect(submission?.scorings['primary']?.score).toBeCloseTo(testCase.score, 2)
-      expect(submission?.scorings['primary']?.rank).toBe(testCase.rank)
+      expect(submission?.scorings[0]?.score).toBeCloseTo(testCase.score, 2)
+      expect(submission?.scorings[0]?.rank).toBe(testCase.rank)
     })
   })
 
@@ -195,8 +195,8 @@ describe.sequential('Results controller', () => {
       // only requested test should be present
       expect(submission?.test_scorings).toHaveLength(1)
       expect(submission?.test_scorings.at(0)?.test_id).toBe('aeabd5b9-4e86-4c7a-859f-a32ff1be5516')
-      expect(submission?.test_scorings.at(0)?.scorings['primary']?.score).toBeCloseTo(testCase.score, 2)
-      expect(submission?.test_scorings.at(0)?.scorings['primary']?.rank).toBe(testCase.rank)
+      expect(submission?.test_scorings.at(0)?.scorings[0]?.score).toBeCloseTo(testCase.score, 2)
+      expect(submission?.test_scorings.at(0)?.scorings[0]?.rank).toBe(testCase.rank)
     })
   })
 
@@ -231,9 +231,9 @@ describe.sequential('Results controller', () => {
     ])('having $score for kpi $test_id', (testCase) => {
       const kpi = board?.items[testCase.index]
       expect(kpi?.test_id).toBe(testCase.test_id)
-      expect(kpi?.scorings!['primary']?.score).toBeCloseTo(testCase.score, 2)
+      expect(kpi?.scorings![0]?.score).toBeCloseTo(testCase.score, 2)
       // per definition, items only ever contain top submission
-      expect(kpi?.scorings!['primary']?.rank).toBe(1)
+      expect(kpi?.scorings![0]?.rank).toBe(1)
     })
   })
 
@@ -282,7 +282,7 @@ describe.sequential('Results controller', () => {
         (item) => item.benchmark_id === testCase.uuid,
       )
       expect(benchmark).toBeTruthy()
-      expect(benchmark?.scorings['primary']?.score).toBeCloseTo(testCase.score, 2)
+      expect(benchmark?.scorings[0]?.score).toBeCloseTo(testCase.score, 2)
     })
   })
 })
