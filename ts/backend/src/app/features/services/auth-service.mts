@@ -72,6 +72,7 @@ export class AuthService extends Service {
           return resolve(null)
         }
         logger.debug(`token verification successful for request on ${req.method} ${req.originalUrl}.`)
+        logger.trace(`authenticated subject ${(decoded as JwtPayload).sub}`)
         return resolve(decoded as JwtPayload)
       }
       logger.debug(`verifying token for request on ${req.method} ${req.originalUrl}`)
