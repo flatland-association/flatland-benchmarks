@@ -3,7 +3,12 @@ import { StripLocator } from '@common/utility-types'
 import { MockInstance } from 'vitest'
 import { SubmissionController } from '../../src/app/features/controller/submission.controller.mjs'
 import { CeleryService } from '../../src/app/features/services/celery-client-service.mjs'
-import { ControllerTestAdapter, setupControllerTestEnvironment, testUserJwt } from '../controller.test-adapter.mjs'
+import {
+  assertApiResponse,
+  ControllerTestAdapter,
+  setupControllerTestEnvironment,
+  testUserJwt,
+} from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
 
 const testSubmission: StripLocator<SubmissionRow> = {
@@ -33,16 +38,13 @@ describe.sequential('Submission controller', () => {
 
   test('should reject post submissions from unauthorized users', async () => {
     const res = await controller.testPost('/submissions', { body: testSubmission })
-    expect(res.status).toBe(401)
-    expect(res.body).toBeApiResponse()
+    assertApiResponse(res, 401)
   })
 
   test('should allow post submissions', async () => {
     const res = await controller.testPost('/submissions', { body: testSubmission }, testUserJwt)
-    expect(res.status).toBe(200)
-    expect(res.body).toBeApiResponse()
-    expect(res.body.body?.id).toBeTruthy()
-    submissionUuid = res.body.body!.id
+    assertApiResponse(res)
+    submissionUuid = res.body.body.id
     // Asserting this after setting submissionUuid, otherwise failing this would
     // cause other tests relying on it to fail too:
     expect(celeryMock).toHaveBeenCalledWith(
@@ -55,20 +57,36 @@ describe.sequential('Submission controller', () => {
     )
   })
 
-  test('should reject get submissions from unauthorized users', async () => {
-    const res = await controller.testGet('/submissions/:submission_ids', { params: { submission_ids: submissionUuid } })
-    expect(res.status).toBe(401)
-    expect(res.body).toBeApiResponse()
+  // data set in
+  // - ts\backend\src\migration\data\V4.1__ai4realnet_example.sql
+  // - ts\backend\src\migration\data\V5.2__publishable_submission.sql
+  test('should list published submissions (no user)', async () => {
+    const res = await controller.testGet('/submissions', {})
+    assertApiResponse(res)
+    const submissionIds = res.body.body.map((s) => s.id)
+    // Have faith that if one published is contained and one unpublished not
+    // contained the controller is sufficiently tested
+    expect(submissionIds).toContain('cd4d44bc-d40e-4173-bccb-f04e0be1b2ae')
+    expect(submissionIds).not.toContain('06ad18b5-e697-4684-aa7b-76b5c82c4307')
   })
 
-  test('should allow get submissions', async () => {
+  test('should return published submission (no user)', async () => {
+    const res = await controller.testGet('/submissions/:submission_ids', { params: { submission_ids: submissionUuid } })
+    assertApiResponse(res)
+  })
+
+  test('should deny returning unpublished submission (no user)', async () => {
+    const res = await controller.testGet('/submissions/:submission_ids', { params: { submission_ids: submissionUuid } })
+    assertApiResponse(res)
+    expect(res.body.body).toHaveLength(0)
+  })
+
+  test('should return unpublished own submission (user required)', async () => {
     const res = await controller.testGet(
       '/submissions/:submission_ids',
       { params: { submission_ids: submissionUuid } },
       testUserJwt,
     )
-    expect(res.status).toBe(200)
-    expect(res.body).toBeApiResponse()
-    expect(res.body.body?.at(0)).toBeTruthy()
+    assertApiResponse(res)
   })
 })

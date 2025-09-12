@@ -1,4 +1,5 @@
 import { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints'
+import { ApiResponse } from '@common/api-response'
 import { ApiGetOptions, ApiPostOptions } from '@common/api-types'
 import { interpolateEndpoint } from '@common/endpoint-utils'
 import { BanEmpty } from '@common/utility-types'
@@ -62,6 +63,27 @@ expect.extend({
   },
 })
 
+export interface TestResponse<T> {
+  status: number
+  body: ApiResponse<T>['body']
+}
+
+export interface TestResponseWithBody<T> extends TestResponse<T> {
+  body: Exclude<Required<ApiResponse<T>['body']>, undefined>
+}
+
+export function assertApiResponse<T>(
+  response: TestResponse<T>,
+  status = 200,
+): asserts response is TestResponseWithBody<T> {
+  expect(response.status).toBe(status)
+  expect(response.body).toBeApiResponse()
+  if (status === 200) {
+    //@ts-expect-error body
+    expect(response.body?.body).toBeTruthy()
+  }
+}
+
 /**
  * Adapter class putting `Controller` under test.
  */
@@ -96,10 +118,7 @@ export class ControllerTestAdapter {
     endpoint: E,
     options: BanEmpty<ApiGetOptions<E>>,
     jwt: JwtPayload | null = null,
-  ): Promise<{
-    status: number
-    body: ApiGetEndpoints[E]['response']
-  }> {
+  ): Promise<TestResponse<ApiGetEndpoints[E]['response']>> {
     return this.withMockedAuth(() => {
       // @ts-expect-error params
       return this.request.get(this.buildEndpoint(endpoint, options?.params))
@@ -113,10 +132,7 @@ export class ControllerTestAdapter {
     endpoint: E,
     options: BanEmpty<ApiPostOptions<E>>,
     jwt: JwtPayload | null = null,
-  ): Promise<{
-    status: number
-    body: ApiPostEndpoints[E]['response']
-  }> {
+  ): Promise<TestResponse<ApiPostEndpoints[E]['response']>> {
     return this.withMockedAuth(() => {
       return (
         this.request
