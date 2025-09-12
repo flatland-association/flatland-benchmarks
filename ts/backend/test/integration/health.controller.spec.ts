@@ -1,5 +1,9 @@
 import { HealthController } from '../../src/app/features/controller/health.controller.mjs'
-import { ControllerTestAdapter, setupControllerTestEnvironment } from '../controller.test-adapter.mjs'
+import {
+  assertApiResponse,
+  ControllerTestAdapter,
+  setupControllerTestEnvironment,
+} from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
 
 describe('Health Controller Failing controller', () => {
@@ -32,8 +36,7 @@ describe('Health Controller Failing controller', () => {
     setupControllerTestEnvironment(testConfig)
     controller = new ControllerTestAdapter(HealthController, testConfig)
     const res = await controller.testGet('/health/live', {})
-    expect(res.status).toBe(200)
-    expect(res.body).toBeApiResponse()
+    assertApiResponse(res)
     expect(res.body.body).toEqual({
       status: 'UP',
       checks: [

@@ -1,6 +1,10 @@
 import { ApiGetEndpoints } from '@common/api-endpoints'
 import { BenchmarkController } from '../../src/app/features/controller/benchmark.controller.mjs'
-import { ControllerTestAdapter, setupControllerTestEnvironment } from '../controller.test-adapter.mjs'
+import {
+  assertApiResponse,
+  ControllerTestAdapter,
+  setupControllerTestEnvironment,
+} from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
 
 const protoBenchmark = [
@@ -27,8 +31,7 @@ describe('Benchmark controller', () => {
 
   test('should return list of benchmarks', async () => {
     const res = await controller.testGet('/definitions/benchmarks', {})
-    expect(res.status).toBe(200)
-    expect(res.body).toBeApiResponse()
+    assertApiResponse(res)
     // TODO: test interface equality only
     // relies on https://github.com/flatland-association/flatland-benchmarks/issues/181
     // Using toContainEqual with protoBenchmark[0] here, because demo data might
@@ -40,8 +43,7 @@ describe('Benchmark controller', () => {
     const res = await controller.testGet('/definitions/benchmarks/:benchmark_ids', {
       params: { benchmark_ids: '20ccc7c1-034c-4880-8946-bffc3fed1359' },
     })
-    expect(res.status).toBe(200)
-    expect(res.body).toBeApiResponse()
+    assertApiResponse(res)
     // TODO: test interface equality only
     // relies on https://github.com/flatland-association/flatland-benchmarks/issues/181
     expect(res.body.body).toEqual(protoBenchmark)
