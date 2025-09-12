@@ -3,6 +3,13 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.13.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.12.1...v0.13.0) (2025-09-12)
+
+
+### Features
+
+* Change route visibility ([#415](https://github.com/flatland-association/flatland-benchmarks/issues/415)) ([267088c](https://github.com/flatland-association/flatland-benchmarks/commit/267088c45a4fe275d450a0c6b28a4c35dfb173f5))
+
 ## [0.12.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.12.0...v0.12.1) (2025-09-12)
 
 
