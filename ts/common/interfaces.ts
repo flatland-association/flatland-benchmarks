@@ -131,11 +131,11 @@ export interface ResultRow {
   value: number
 }
 
-// TODO: merge with resource pattern, find a way to use same interface for transport as for computation
 export interface PostTestResultsBody {
-  data: ({
+  data: {
     scenario_id: string
-  } & Record<string, number>)[]
+    scores: Record<string, number>
+  }[]
 }
 
 export interface Scoring {
