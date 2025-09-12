@@ -95,7 +95,8 @@ export class NewSubmissionView implements OnInit, OnDestroy {
     if (!this.group || !this.benchmark || !this.tests) return false
     if (!this.submissionName) return false
     if (this.requiresSubmissionDataUrl()) {
-      if (!this.isValidUrl(this.submissionDataUrl)) return false
+      // url must only be non-blank - validity check is left for orchestrator
+      if (!this.submissionDataUrl) return false
     }
     if (this.requiresCodeRepository()) {
       if (!this.isValidUrl(this.codeRepositoryUrl)) return false
