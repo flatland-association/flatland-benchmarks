@@ -15,7 +15,7 @@ export class ResultsController extends Controller {
     this.attachGet('/results/submissions/:submission_ids', this.getSubmissionResults)
     this.attachGet('/results/submissions/:submission_id/tests/:test_ids', this.getTestResults)
     this.attachPost('/results/submissions/:submission_id/tests/:test_ids', this.postTestResults)
-    this.attachGet('/results/submissions/:submission_id/scenario/:scenario_ids', this.getScenarioResults)
+    this.attachGet('/results/submissions/:submission_id/scenarios/:scenario_ids', this.getScenarioResults)
     this.attachGet('/results/benchmarks/:benchmark_ids', this.getLeaderboard)
     this.attachGet('/results/campaign-items/:benchmark_ids', this.getCampaignItemOverview)
     this.attachGet('/results/campaigns/:group_ids', this.getCampaignOverview)
@@ -263,7 +263,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}/scenario/{scenario_ids}:
+   * /results/submissions/{submission_id}/scenarios/{scenario_ids}:
    *  get:
    *    description: Get submission results for specific scenario.
    *    parameters:
@@ -306,7 +306,7 @@ export class ResultsController extends Controller {
    *                            type: object
    *                            description: Dictionary of scores.
    */
-  getScenarioResults: GetHandler<'/results/submissions/:submission_id/scenario/:scenario_ids'> = async (req, res) => {
+  getScenarioResults: GetHandler<'/results/submissions/:submission_id/scenarios/:scenario_ids'> = async (req, res) => {
     const submissionId = req.params.submission_id
     const scenarioIds = req.params.scenario_ids.split(',')
 
