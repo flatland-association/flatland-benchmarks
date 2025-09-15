@@ -1,13 +1,13 @@
 import { Component, OnInit, inject } from '@angular/core'
 import { SuiteDefinitionRow } from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
-import { BenchmarkGroupCardComponent } from '../../components/benchmark-group-card/benchmark-group-card.component'
+import { SuiteCardComponent } from '../../components/suite-card/suite-card.component'
 import { ApiService } from '../../features/api/api.service'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 
 @Component({
   selector: 'view-home',
-  imports: [ContentComponent, SectionComponent, BenchmarkGroupCardComponent],
+  imports: [ContentComponent, SectionComponent, SuiteCardComponent],
   templateUrl: './home.view.html',
   styleUrl: './home.view.scss',
 })

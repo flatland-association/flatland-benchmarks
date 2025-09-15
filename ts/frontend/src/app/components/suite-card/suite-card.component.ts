@@ -3,12 +3,12 @@ import { RouterModule } from '@angular/router'
 import { SuiteDefinitionRow } from '@common/interfaces'
 
 @Component({
-  selector: 'app-benchmark-group-card',
+  selector: 'app-suite-card',
   imports: [RouterModule],
-  templateUrl: './benchmark-group-card.component.html',
-  styleUrl: './benchmark-group-card.component.scss',
+  templateUrl: './suite-card.component.html',
+  styleUrl: './suite-card.component.scss',
 })
-export class BenchmarkGroupCardComponent implements OnChanges {
+export class SuiteCardComponent implements OnChanges {
   @Input() suite?: SuiteDefinitionRow
 
   routerLink: string[] | null = null

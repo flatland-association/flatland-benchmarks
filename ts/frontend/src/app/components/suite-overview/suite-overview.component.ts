@@ -4,12 +4,12 @@ import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
 
 @Component({
-  selector: 'app-benchmark-group-overview',
+  selector: 'app-suite-overview',
   imports: [TableComponent],
-  templateUrl: './benchmark-group-overview.component.html',
-  styleUrl: './benchmark-group-overview.component.scss',
+  templateUrl: './suite-overview.component.html',
+  styleUrl: './suite-overview.component.scss',
 })
-export class BenchmarkGroupOverviewComponent implements OnChanges {
+export class SuiteOverviewComponent implements OnChanges {
   @Input() suite?: SuiteDefinitionRow
   @Input() benchmarksTitle?: string
 

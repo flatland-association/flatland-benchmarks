@@ -8,7 +8,7 @@
   <h2 class="text-center text-2xl font-bold text-neutral-500">{{ customization?.content?.home?.benchmarksHeading }}</h2>
   <div class="flex flex-wrap justify-center gap-8">
     @for (suite of suites; track $index) {
-      <app-benchmark-group-card class="md:size-80 flex" [suite]="suite"></app-benchmark-group-card>
+      <app-suite-card class="md:size-80 flex" [suite]="suite"></app-suite-card>
     }
   </div>
 </lib-content>

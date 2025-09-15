@@ -2,13 +2,13 @@ import { Routes } from '@angular/router'
 import { ImpressumView, NotFoundView, PrivacyView } from '@flatland-association/flatland-ui'
 import { Breadcrumb, BreadcrumbData } from './components/breadcrumbs/breadcrumbs.component'
 import { AuthGuard } from './guards/auth.guard'
-import { BenchmarkGroupView } from './views/benchmark-group/benchmark-group.view'
 import { BenchmarkView } from './views/benchmark/benchmark.view'
 import { HomeView } from './views/home/home.view'
 import { MySubmissionsView } from './views/my-submissions/my-submissions.view'
 import { NewSubmissionView } from './views/new-submission/new-submission.view'
 import { SubmissionScenarioResultsView } from './views/submission-scenario-results/submission-scenario-results.view'
 import { SubmissionView } from './views/submission/submission.view'
+import { SuiteView } from './views/suite/suite.view'
 import { TestView } from './views/test/test.view'
 
 export const routes: Routes = [
@@ -37,7 +37,7 @@ export const routes: Routes = [
       { path: '', pathMatch: 'full', redirectTo: '/home' },
       {
         path: ':group_id',
-        component: BenchmarkGroupView,
+        component: SuiteView,
         data: { breadcrumbs: [Breadcrumb.suite] } satisfies BreadcrumbData,
       },
       {
