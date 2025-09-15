@@ -13,13 +13,13 @@ def extract_ai4realnet_from_csv(csv):
   data = defaultdict(lambda: {})
 
   for _, row in df.iterrows():
-    benchmark_group = data[row["BENCHMARK_GROUP_ID"]]
-    benchmark_group["ID"] = row["BENCHMARK_GROUP_ID"]
-    benchmark_group["BENCHMARK_GROUP_NAME"] = row["BENCHMARK_GROUP_NAME"]
-    benchmark_group["BENCHMARK_GROUP_DESCRIPTION"] = row["BENCHMARK_GROUP_DESCRIPTION"]
+    suite = data[row["SUITE_ID"]]
+    suite["ID"] = row["SUITE_ID"]
+    suite["SUITE_NAME"] = row["SUITE_NAME"]
+    suite["SUITE_DESCRIPTION"] = row["SUITE_DESCRIPTION"]
 
-    benchmark_group["benchmarks"] = benchmark_group.get("benchmarks", defaultdict(lambda: {}))
-    benchmarks = benchmark_group["benchmarks"]
+    suite["benchmarks"] = suite.get("benchmarks", defaultdict(lambda: {}))
+    benchmarks = suite["benchmarks"]
     benchmark = benchmarks[row["BENCHMARK_ID"]]
     benchmark["ID"] = row["BENCHMARK_ID"]
     benchmark["BENCHMARK_NAME"] = row["BENCHMARK_NAME"]
@@ -71,8 +71,8 @@ def gen_domain_orchestrator(data, domain):
 {domain.lower().replace(' ', '_')}_orchestrator = Orchestrator(
     test_runners={{
 """
-  for benchmark_group_id, benchmark_group in data.items():
-    for benchmark_id, benchmark in benchmark_group["benchmarks"].items():
+  for suite_id, suite in data.items():
+    for benchmark_id, benchmark in suite["benchmarks"].items():
       for test_id, test in benchmark["tests"].items():
         scenario_ids = [f"'{scenario_id}'" for scenario_id in test["scenarios"].keys()]
         if test["QUEUE"] == domain:
