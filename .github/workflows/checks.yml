@@ -81,7 +81,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-
+      - name: Install ai4realnet Orchestrators Integration Tests Dependencies
+        working-directory: evaluation/ai4realnet_orchestrators
+        run: |
+          python -m pip install -r requirements.txt -r requirements-dev.txt -r ai4realnet_orchestrators/railway/requirements.txt
       - name: Regenerate client lib
         working-directory: fab-clientlib
         run: |
@@ -91,6 +94,7 @@ jobs:
         working-directory: fab-clientlib
         run: |
           python -m pip install .
+          python -m pip list
       - name: Clone ai4realnet-orchestrators for integration tests
         uses: actions/checkout@v4
         with:
@@ -100,7 +104,6 @@ jobs:
       - name: Run ai4realnet Orchestrators Integration Tests
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
-          python -m pip install -r requirements.txt -r requirements-dev.txt -r ai4realnet_orchestrators/railway/requirements.txt
           export OAUTHLIB_INSECURE_TRANSPORT=1
           pytest -s -m integration
 
