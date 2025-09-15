@@ -125,36 +125,36 @@ export class ResultsController extends Controller {
    *                - type: object
    *                  properties:
    *                    body:
-   *                      type: object
-   *                      properties:
-   *                        test_id:
-   *                          type: string
-   *                          format: uuid
-   *                          description: ID of test.
-   *                        scorings:
-   *                          type: object
-   *                          description: Dictionary of test scores.
-   *                        scenario_scorings:
-   *                          type: array
-   *                          items:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          test_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of test.
+   *                          scorings:
    *                            type: object
-   *                            properties:
-   *                              scenario_id:
-   *                               type: string
-   *                               format: uuid
-   *                               description: ID of scenario.
-   *                              scorings:
-   *                                type: object
-   *                                description: Dictionary of scores.
+   *                            description: Dictionary of test scores.
+   *                          scenario_scorings:
+   *                            type: array
+   *                            items:
+   *                              type: object
+   *                              properties:
+   *                                scenario_id:
+   *                                 type: string
+   *                                 format: uuid
+   *                                 description: ID of scenario.
+   *                                scorings:
+   *                                  type: object
+   *                                  description: Dictionary of scores.
    */
   getTestResults: GetHandler<'/results/submissions/:submission_id/tests/:test_ids'> = async (req, res) => {
     const submissionId = req.params.submission_id
     const testIds = req.params.test_ids.split(',')
 
     const aggregator = AggregatorService.getInstance()
-    // TOFIX: should return whole array
-    // https://github.com/flatland-association/flatland-benchmarks/issues/352
-    const [score] = await aggregator.getSubmissionTestScore(submissionId, testIds)
+    const score = await aggregator.getSubmissionTestScore(submissionId, testIds)
     this.respond(req, res, score)
   }
 
