@@ -81,11 +81,17 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Clone ai4realnet-orchestrators for integration tests
+        uses: actions/checkout@v4
+        with:
+          repository: flatland-association/ai4realnet-orchestrators
+          path: evaluation/ai4realnet_orchestrators
+          ref: feature/integration-api-changes
       - name: Install ai4realnet Orchestrators Integration Tests Dependencies
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
           python -m pip install -r requirements.txt -r requirements-dev.txt -r ai4realnet_orchestrators/railway/requirements.txt
-      - name: Regenerate client lib
+      - name: Regenerate client lib locally overwriting dependency.
         working-directory: fab-clientlib
         run: |
           python -m pip install openapi-generator-cli==7.15.0
@@ -95,12 +101,6 @@ jobs:
         run: |
           python -m pip install .
           python -m pip list
-      - name: Clone ai4realnet-orchestrators for integration tests
-        uses: actions/checkout@v4
-        with:
-          repository: flatland-association/ai4realnet-orchestrators
-          path: evaluation/ai4realnet_orchestrators
-          ref: feature/integration-api-changes
       - name: Run ai4realnet Orchestrators Integration Tests
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
