@@ -113,7 +113,7 @@ class FlatlandBenchmarksOrchestrator:
             data=[
               ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
                 scenario_id=row["fab_scenario_id"],
-                additional_properties={
+                scores={
                   "normalized_reward": row["normalized_reward"],
                   "percentage_complete": row["percentage_complete"]
                 },

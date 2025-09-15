@@ -15,7 +15,9 @@
 
 import unittest
 
-from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_post_request_data_inner import ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
+from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_post_request_data_inner import \
+    ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
+
 
 class TestResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(unittest.TestCase):
     """ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner unit test stubs"""
@@ -36,7 +38,10 @@ class TestResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(unittes
         model = ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner()
         if include_optional:
             return ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
-                scenario_id = ''
+                scenario_id = '',
+                scores = {
+                    'key' : 1.337
+                    }
             )
         else:
             return ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(

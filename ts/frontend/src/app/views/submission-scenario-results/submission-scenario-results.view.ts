@@ -3,6 +3,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import {
   FieldDefinitionRow,
+  PostTestResultsBody,
   ScenarioDefinitionRow,
   Scoring,
   SubmissionRow,
@@ -169,19 +170,23 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
 
   async submitManualScoring() {
     // prepare body data object
-    //@ts-expect-error type
-    const results: PostTestResultsBody['data'][0] = {
-      scenario_id: this.scenario?.id,
+    const results: PostTestResultsBody = {
+      data: [
+        {
+          scenario_id: this.scenario!.id,
+          scores: {},
+        },
+      ],
     }
     // append manual scores
     this.manualFields.forEach((key) => {
-      results[key] = this.scenarioScore?.scorings.find((s) => s.field_key === key)?.score ?? 0
+      results.data[0].scores[key] = this.scenarioScore?.scorings.find((s) => s.field_key === key)?.score ?? 0
     })
     // submit
     this.apiService
       .post('/results/submissions/:submission_id/tests/:test_ids', {
         params: { submission_id: this.submission!.id, test_ids: this.test!.id },
-        body: { data: [results] },
+        body: results,
       })
       .then(() => {
         // reload results from backend

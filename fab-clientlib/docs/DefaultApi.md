@@ -2,30 +2,33 @@
 
 All URIs are relative to *http://localhost*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**benchmark_groups_get**](DefaultApi.md#benchmark_groups_get) | **GET** /benchmark-groups | 
-[**benchmark_groups_group_ids_get**](DefaultApi.md#benchmark_groups_group_ids_get) | **GET** /benchmark-groups/{group_ids} | 
-[**definitions_benchmarks_benchmark_ids_get**](DefaultApi.md#definitions_benchmarks_benchmark_ids_get) | **GET** /definitions/benchmarks/{benchmark_ids} | 
-[**definitions_benchmarks_get**](DefaultApi.md#definitions_benchmarks_get) | **GET** /definitions/benchmarks/ | 
-[**definitions_tests_test_ids_get**](DefaultApi.md#definitions_tests_test_ids_get) | **GET** /definitions/tests/{test_ids} | 
-[**health_live_get**](DefaultApi.md#health_live_get) | **GET** /health/live | 
-[**results_benchmarks_benchmark_id_tests_test_ids_get**](DefaultApi.md#results_benchmarks_benchmark_id_tests_test_ids_get) | **GET** /results/benchmarks/{benchmark_id}/tests/{test_ids} | 
-[**results_benchmarks_benchmark_ids_get**](DefaultApi.md#results_benchmarks_benchmark_ids_get) | **GET** /results/benchmarks/{benchmark_ids} | 
-[**results_campaign_items_benchmark_ids_get**](DefaultApi.md#results_campaign_items_benchmark_ids_get) | **GET** /results/campaign-items/{benchmark_ids} | 
-[**results_campaigns_group_ids_get**](DefaultApi.md#results_campaigns_group_ids_get) | **GET** /results/campaigns/{group_ids} | 
-[**results_submissions_submission_id_scenario_scenario_ids_get**](DefaultApi.md#results_submissions_submission_id_scenario_scenario_ids_get) | **GET** /results/submissions/{submission_id}/scenario/{scenario_ids} | 
-[**results_submissions_submission_id_tests_test_ids_get**](DefaultApi.md#results_submissions_submission_id_tests_test_ids_get) | **GET** /results/submissions/{submission_id}/tests/{test_ids} | 
-[**results_submissions_submission_id_tests_test_ids_post**](DefaultApi.md#results_submissions_submission_id_tests_test_ids_post) | **POST** /results/submissions/{submission_id}/tests/{test_ids} | 
-[**results_submissions_submission_ids_get**](DefaultApi.md#results_submissions_submission_ids_get) | **GET** /results/submissions/{submission_ids} | 
-[**submissions_get**](DefaultApi.md#submissions_get) | **GET** /submissions | 
-[**submissions_post**](DefaultApi.md#submissions_post) | **POST** /submissions | 
-[**submissions_submission_ids_get**](DefaultApi.md#submissions_submission_ids_get) | **GET** /submissions/{submission_ids} | 
-[**submissions_submission_ids_patch**](DefaultApi.md#submissions_submission_ids_patch) | **PATCH** /submissions/{submission_ids} | 
+ Method                                                                                                                                       | HTTP request                                                         | Description 
+----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|-------------
+ [**definitions_benchmark_groups_get**](DefaultApi.md#definitions_benchmark_groups_get)                                                       | **GET** /definitions/benchmark-groups                                |
+ [**definitions_benchmark_groups_group_ids_get**](DefaultApi.md#definitions_benchmark_groups_group_ids_get)                                   | **GET** /definitions/benchmark-groups/{group_ids}                    |
+ [**definitions_benchmarks_benchmark_ids_get**](DefaultApi.md#definitions_benchmarks_benchmark_ids_get)                                       | **GET** /definitions/benchmarks/{benchmark_ids}                      | 
+ [**definitions_benchmarks_get**](DefaultApi.md#definitions_benchmarks_get)                                                                   | **GET** /definitions/benchmarks/                                     |
+ [**definitions_fields_field_ids_get**](DefaultApi.md#definitions_fields_field_ids_get)                                                       | **GET** /definitions/fields/{field_ids}                              |
+ [**definitions_scenarios_scenario_ids_get**](DefaultApi.md#definitions_scenarios_scenario_ids_get)                                           | **GET** /definitions/scenarios/{scenario_ids}                        |
+ [**definitions_tests_test_ids_get**](DefaultApi.md#definitions_tests_test_ids_get)                                                           | **GET** /definitions/tests/{test_ids}                                | 
+ [**health_live_get**](DefaultApi.md#health_live_get)                                                                                         | **GET** /health/live                                                 |
+ [**info_get**](DefaultApi.md#info_get)                                                                                                       | **GET** /info                                                        |
+ [**results_benchmarks_benchmark_id_tests_test_ids_get**](DefaultApi.md#results_benchmarks_benchmark_id_tests_test_ids_get)                   | **GET** /results/benchmarks/{benchmark_id}/tests/{test_ids}          | 
+ [**results_benchmarks_benchmark_ids_get**](DefaultApi.md#results_benchmarks_benchmark_ids_get)                                               | **GET** /results/benchmarks/{benchmark_ids}                          | 
+ [**results_campaign_items_benchmark_ids_get**](DefaultApi.md#results_campaign_items_benchmark_ids_get)                                       | **GET** /results/campaign-items/{benchmark_ids}                      | 
+ [**results_campaigns_group_ids_get**](DefaultApi.md#results_campaigns_group_ids_get)                                                         | **GET** /results/campaigns/{group_ids}                               | 
+ [**results_submissions_submission_id_scenario_scenario_ids_get**](DefaultApi.md#results_submissions_submission_id_scenario_scenario_ids_get) | **GET** /results/submissions/{submission_id}/scenario/{scenario_ids} | 
+ [**results_submissions_submission_id_tests_test_ids_get**](DefaultApi.md#results_submissions_submission_id_tests_test_ids_get)               | **GET** /results/submissions/{submission_id}/tests/{test_ids}        | 
+ [**results_submissions_submission_id_tests_test_ids_post**](DefaultApi.md#results_submissions_submission_id_tests_test_ids_post)             | **POST** /results/submissions/{submission_id}/tests/{test_ids}       | 
+ [**results_submissions_submission_ids_get**](DefaultApi.md#results_submissions_submission_ids_get)                                           | **GET** /results/submissions/{submission_ids}                        | 
+ [**submissions_get**](DefaultApi.md#submissions_get)                                                                                         | **GET** /submissions                                                 | 
+ [**submissions_post**](DefaultApi.md#submissions_post)                                                                                       | **POST** /submissions                                                | 
+ [**submissions_submission_ids_get**](DefaultApi.md#submissions_submission_ids_get)                                                           | **GET** /submissions/{submission_ids}                                | 
+ [**submissions_submission_ids_patch**](DefaultApi.md#submissions_submission_ids_patch)                                                       | **PATCH** /submissions/{submission_ids}                              |
 
+# **definitions_benchmark_groups_get**
 
-# **benchmark_groups_get**
-> BenchmarkGroupsGet200Response benchmark_groups_get()
+> DefinitionsBenchmarkGroupsGet200Response definitions_benchmark_groups_get()
 
 Lists benchmark-groups.
 
@@ -34,7 +37,7 @@ Lists benchmark-groups.
 
 ```python
 import fab_clientlib
-from fab_clientlib.models.benchmark_groups_get200_response import BenchmarkGroupsGet200Response
+from fab_clientlib.models.definitions_benchmark_groups_get200_response import DefinitionsBenchmarkGroupsGet200Response
 from fab_clientlib.rest import ApiException
 from pprint import pprint
 
@@ -51,11 +54,11 @@ with fab_clientlib.ApiClient(configuration) as api_client:
     api_instance = fab_clientlib.DefaultApi(api_client)
 
     try:
-        api_response = api_instance.benchmark_groups_get()
-        print("The response of DefaultApi->benchmark_groups_get:\n")
+      api_response = api_instance.definitions_benchmark_groups_get()
+      print("The response of DefaultApi->definitions_benchmark_groups_get:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DefaultApi->benchmark_groups_get: %s\n" % e)
+      print("Exception when calling DefaultApi->definitions_benchmark_groups_get: %s\n" % e)
 ```
 
 
@@ -66,7 +69,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**BenchmarkGroupsGet200Response**](BenchmarkGroupsGet200Response.md)
+[**DefinitionsBenchmarkGroupsGet200Response**](DefinitionsBenchmarkGroupsGet200Response.md)
 
 ### Authorization
 
@@ -85,8 +88,9 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **benchmark_groups_group_ids_get**
-> BenchmarkGroupsGet200Response benchmark_groups_group_ids_get(group_ids)
+# **definitions_benchmark_groups_group_ids_get**
+
+> DefinitionsBenchmarkGroupsGet200Response definitions_benchmark_groups_group_ids_get(group_ids)
 
 Returns benchmark-groups with ID in `group_id`.
 
@@ -95,7 +99,7 @@ Returns benchmark-groups with ID in `group_id`.
 
 ```python
 import fab_clientlib
-from fab_clientlib.models.benchmark_groups_get200_response import BenchmarkGroupsGet200Response
+from fab_clientlib.models.definitions_benchmark_groups_get200_response import DefinitionsBenchmarkGroupsGet200Response
 from fab_clientlib.rest import ApiException
 from pprint import pprint
 
@@ -113,11 +117,11 @@ with fab_clientlib.ApiClient(configuration) as api_client:
     group_ids = ['group_ids_example'] # List[str] | Comma-separated list of IDs.
 
     try:
-        api_response = api_instance.benchmark_groups_group_ids_get(group_ids)
-        print("The response of DefaultApi->benchmark_groups_group_ids_get:\n")
+      api_response = api_instance.definitions_benchmark_groups_group_ids_get(group_ids)
+      print("The response of DefaultApi->definitions_benchmark_groups_group_ids_get:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DefaultApi->benchmark_groups_group_ids_get: %s\n" % e)
+      print("Exception when calling DefaultApi->definitions_benchmark_groups_group_ids_get: %s\n" % e)
 ```
 
 
@@ -131,7 +135,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**BenchmarkGroupsGet200Response**](BenchmarkGroupsGet200Response.md)
+[**DefinitionsBenchmarkGroupsGet200Response**](DefinitionsBenchmarkGroupsGet200Response.md)
 
 ### Authorization
 
@@ -157,7 +161,6 @@ Returns tests with ID in `ids`.
 
 ### Example
 
-* OAuth Authentication (oauth2):
 
 ```python
 import fab_clientlib
@@ -171,12 +174,6 @@ configuration = fab_clientlib.Configuration(
     host = "http://localhost"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
@@ -207,7 +204,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[oauth2](../README.md#oauth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -229,7 +226,6 @@ Returns benchmarks.
 
 ### Example
 
-* OAuth Authentication (oauth2):
 
 ```python
 import fab_clientlib
@@ -243,12 +239,6 @@ configuration = fab_clientlib.Configuration(
     host = "http://localhost"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
@@ -275,7 +265,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[oauth2](../README.md#oauth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -290,6 +280,128 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **definitions_fields_field_ids_get**
+
+> DefinitionsFieldsFieldIdsGet200Response definitions_fields_field_ids_get(field_ids)
+
+Returns fields with ID in `ids`.
+
+### Example
+
+```python
+import fab_clientlib
+from fab_clientlib.models.definitions_fields_field_ids_get200_response import DefinitionsFieldsFieldIdsGet200Response
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+  host="http://localhost"
+)
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+  # Create an instance of the API class
+  api_instance = fab_clientlib.DefaultApi(api_client)
+  field_ids = ['field_ids_example']  # List[str] | Comma-separated list of IDs.
+
+  try:
+    api_response = api_instance.definitions_fields_field_ids_get(field_ids)
+    print("The response of DefaultApi->definitions_fields_field_ids_get:\n")
+    pprint(api_response)
+  except Exception as e:
+    print("Exception when calling DefaultApi->definitions_fields_field_ids_get: %s\n" % e)
+```
+
+### Parameters
+
+ Name          | Type                    | Description                  | Notes 
+---------------|-------------------------|------------------------------|-------
+ **field_ids** | [**List[str]**](str.md) | Comma-separated list of IDs. |
+
+### Return type
+
+[**DefinitionsFieldsFieldIdsGet200Response**](DefinitionsFieldsFieldIdsGet200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description       | Response headers |
+|-------------|-------------------|------------------|
+ **200**     | Requested fields. | -                |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **definitions_scenarios_scenario_ids_get**
+
+> DefinitionsScenariosScenarioIdsGet200Response definitions_scenarios_scenario_ids_get(scenario_ids)
+
+Returns scenarios with ID in `ids`.
+
+### Example
+
+```python
+import fab_clientlib
+from fab_clientlib.models.definitions_scenarios_scenario_ids_get200_response import DefinitionsScenariosScenarioIdsGet200Response
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+  host="http://localhost"
+)
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+  # Create an instance of the API class
+  api_instance = fab_clientlib.DefaultApi(api_client)
+  scenario_ids = ['scenario_ids_example']  # List[str] | Comma-separated list of IDs.
+
+  try:
+    api_response = api_instance.definitions_scenarios_scenario_ids_get(scenario_ids)
+    print("The response of DefaultApi->definitions_scenarios_scenario_ids_get:\n")
+    pprint(api_response)
+  except Exception as e:
+    print("Exception when calling DefaultApi->definitions_scenarios_scenario_ids_get: %s\n" % e)
+```
+
+### Parameters
+
+ Name             | Type                    | Description                  | Notes 
+------------------|-------------------------|------------------------------|-------
+ **scenario_ids** | [**List[str]**](str.md) | Comma-separated list of IDs. |
+
+### Return type
+
+[**DefinitionsScenariosScenarioIdsGet200Response**](DefinitionsScenariosScenarioIdsGet200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description          | Response headers |
+|-------------|----------------------|------------------|
+ **200**     | Requested scenarios. | -                |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **definitions_tests_test_ids_get**
 > DefinitionsTestsTestIdsGet200Response definitions_tests_test_ids_get(test_ids)
 
@@ -297,7 +409,6 @@ Returns tests with ID in `ids`.
 
 ### Example
 
-* OAuth Authentication (oauth2):
 
 ```python
 import fab_clientlib
@@ -311,12 +422,6 @@ configuration = fab_clientlib.Configuration(
     host = "http://localhost"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
@@ -347,7 +452,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[oauth2](../README.md#oauth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -423,6 +528,64 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **info_get**
+
+> InfoGet200Response info_get()
+
+Returns info.
+
+### Example
+
+```python
+import fab_clientlib
+from fab_clientlib.models.info_get200_response import InfoGet200Response
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+  host="http://localhost"
+)
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+  # Create an instance of the API class
+  api_instance = fab_clientlib.DefaultApi(api_client)
+
+  try:
+    api_response = api_instance.info_get()
+    print("The response of DefaultApi->info_get:\n")
+    pprint(api_response)
+  except Exception as e:
+    print("Exception when calling DefaultApi->info_get: %s\n" % e)
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**InfoGet200Response**](InfoGet200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+ **200**     | Info        | -                |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **results_benchmarks_benchmark_id_tests_test_ids_get**
 > ResultsBenchmarksBenchmarkIdsGet200Response results_benchmarks_benchmark_id_tests_test_ids_get(benchmark_id, test_ids)
 
@@ -430,7 +593,6 @@ Get test leaderboard.
 
 ### Example
 
-* OAuth Authentication (oauth2):
 
 ```python
 import fab_clientlib
@@ -444,12 +606,6 @@ configuration = fab_clientlib.Configuration(
     host = "http://localhost"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
@@ -482,7 +638,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[oauth2](../README.md#oauth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -504,7 +660,6 @@ Get benchmark leaderboard.
 
 ### Example
 
-* OAuth Authentication (oauth2):
 
 ```python
 import fab_clientlib
@@ -518,12 +673,6 @@ configuration = fab_clientlib.Configuration(
     host = "http://localhost"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
@@ -554,7 +703,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[oauth2](../README.md#oauth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -576,7 +725,6 @@ Returns campaign-item overviews (i.e. all tests in benchmark with score of top s
 
 ### Example
 
-* OAuth Authentication (oauth2):
 
 ```python
 import fab_clientlib
@@ -590,12 +738,6 @@ configuration = fab_clientlib.Configuration(
     host = "http://localhost"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
@@ -626,7 +768,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[oauth2](../README.md#oauth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -648,7 +790,6 @@ Returns campaign overviews (i.e. all benchmarks in the group with score aggregat
 
 ### Example
 
-* OAuth Authentication (oauth2):
 
 ```python
 import fab_clientlib
@@ -662,12 +803,6 @@ configuration = fab_clientlib.Configuration(
     host = "http://localhost"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
@@ -698,7 +833,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[oauth2](../README.md#oauth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -720,7 +855,6 @@ Get submission results for specific scenario.
 
 ### Example
 
-* OAuth Authentication (oauth2):
 
 ```python
 import fab_clientlib
@@ -734,12 +868,6 @@ configuration = fab_clientlib.Configuration(
     host = "http://localhost"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
@@ -772,7 +900,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[oauth2](../README.md#oauth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -794,7 +922,6 @@ Get submission results aggregated by test.
 
 ### Example
 
-* OAuth Authentication (oauth2):
 
 ```python
 import fab_clientlib
@@ -808,19 +935,13 @@ configuration = fab_clientlib.Configuration(
     host = "http://localhost"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fab_clientlib.DefaultApi(api_client)
     submission_id = 'submission_id_example' # str | Submission ID.
-    test_ids = ['test_ids_example'] # List[str] | Comma-separated list of Test IDs.
+    test_ids = ['test_ids_example']  # List[str] | Comma-separated list of test IDs.
 
     try:
         api_response = api_instance.results_submissions_submission_id_tests_test_ids_get(submission_id, test_ids)
@@ -835,10 +956,10 @@ with fab_clientlib.ApiClient(configuration) as api_client:
 ### Parameters
 
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **submission_id** | **str**| Submission ID. | 
- **test_ids** | [**List[str]**](str.md)| Comma-separated list of Test IDs. | 
+ Name              | Type                    | Description                       | Notes 
+-------------------|-------------------------|-----------------------------------|-------
+ **submission_id** | **str**                 | Submission ID.                    |
+ **test_ids**      | [**List[str]**](str.md) | Comma-separated list of test IDs. |
 
 ### Return type
 
@@ -846,7 +967,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[oauth2](../README.md#oauth2)
+No authorization required
 
 ### HTTP request headers
 
@@ -946,7 +1067,6 @@ Get aggregated submission overall results.
 
 ### Example
 
-* OAuth Authentication (oauth2):
 
 ```python
 import fab_clientlib
@@ -960,12 +1080,6 @@ configuration = fab_clientlib.Configuration(
     host = "http://localhost"
 )
 
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-configuration.access_token = os.environ["ACCESS_TOKEN"]
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
@@ -996,7 +1110,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[oauth2](../README.md#oauth2)
+No authorization required
 
 ### HTTP request headers
 
