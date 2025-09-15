@@ -46,6 +46,7 @@ jobs:
         with:
           repository: flatland-association/ai4realnet-orchestrators
           path: evaluation/ai4realnet_orchestrators
+          ref: feature/integration-api-changes
       - name: Run Flatland 3 Benchmarks Integration Tests
         working-directory: evaluation/flatland3_benchmarks
         run: |
@@ -95,6 +96,7 @@ jobs:
         with:
           repository: flatland-association/ai4realnet-orchestrators
           path: evaluation/ai4realnet_orchestrators
+          ref: feature/integration-api-changes
       - name: Run ai4realnet Orchestrators Integration Tests
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
@@ -147,6 +149,7 @@ jobs:
         with:
           repository: flatland-association/ai4realnet-orchestrators
           path: evaluation/ai4realnet_orchestrators
+          ref: feature/integration-api-changes
       - name: Run fab-clientlib integration tests
         working-directory: fab-clientlib
         run: |
