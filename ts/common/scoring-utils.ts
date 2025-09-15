@@ -1,19 +1,4 @@
-import {
-  FieldDefinitionRow,
-  Scoring,
-  SubmissionScenarioScore,
-  SubmissionScore,
-  SubmissionTestScore,
-} from './interfaces'
-
-// TODO: remove
-/**
- * Returns the `Scoring` object that represents the primary scoring in scorings.
- * Requires field definitions to determine primary field.
- */
-export function getPrimaryScoring(scorings: Scoring[], _fields?: FieldDefinitionRow[]) {
-  return scorings[0]
-}
+import { SubmissionScenarioScore, SubmissionScore, SubmissionTestScore } from './interfaces'
 
 /**
  * Returns whether all submission's scenarios have non-null scores only.

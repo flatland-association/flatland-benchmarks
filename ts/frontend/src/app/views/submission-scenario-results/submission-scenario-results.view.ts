@@ -10,7 +10,7 @@ import {
   SubmissionScore,
   TestDefinitionRow,
 } from '@common/interfaces'
-import { getPrimaryScoring, isScenarioCompletelyScored } from '@common/scoring-utils'
+import { isScenarioCompletelyScored } from '@common/scoring-utils'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
@@ -103,7 +103,7 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
     this.totalScore = '-'
     if (isScenarioCompletelyScored(this.scenarioScore)) {
       if (this.scenarioScore?.scorings) {
-        const primaryScoring = getPrimaryScoring(this.scenarioScore?.scorings, this.fields)
+        const primaryScoring = this.scenarioScore.scorings[0]
         if (primaryScoring) {
           this.totalScore = this.decimalPipe.transform(primaryScoring.score, '1.2-2') ?? '-'
         }

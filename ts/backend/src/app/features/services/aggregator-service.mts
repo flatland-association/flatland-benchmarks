@@ -466,21 +466,6 @@ export class AggregatorService extends Service {
     return group ?? undefined
   }
 
-  /**
-   * Returns the `FieldDefinitionRow` from `sources` that is the primary field
-   * in `entity` (a benchmark, test or scenario definition).
-   */
-  findPrimaryField(
-    sources: { field_definitions: (FieldDefinitionRow | null)[] },
-    entity: { field_ids: string[] },
-  ): FieldDefinitionRow | undefined {
-    const primary = sources.field_definitions.find((fieldDefRow) => fieldDefRow?.id === entity.field_ids[0])
-    if (!primary) {
-      logger.warn(`field ${entity.field_ids[0]} (primary score) not found in sources`, sources.field_definitions)
-    }
-    return primary ?? undefined
-  }
-
   // Score calculation
 
   /**
@@ -703,7 +688,13 @@ export class AggregatorService extends Service {
 
   // Internals
 
-  prepareScoringsForFields(sources: { field_definitions: (FieldDefinitionRow | null)[] }, fieldIds: string[]) {
+  /**
+   * Returns an array of `Scoring` objects for given `fieldIds`.
+   */
+  prepareScoringsForFields(
+    sources: { field_definitions: (FieldDefinitionRow | null)[] },
+    fieldIds: string[],
+  ): Scoring[] {
     return fieldIds.map((fieldId) => {
       const field = this.findField(sources, fieldId)
       return {
