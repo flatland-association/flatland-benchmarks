@@ -28,37 +28,35 @@ export const routes: Routes = [
       return 'home'
     },
   },
-  // TODO: rename to suites?
-  // see: https://github.com/flatland-association/flatland-benchmarks/issues/402
   {
-    path: 'benchmarks',
+    path: 'suites',
     data: { breadcrumbs: [Breadcrumb.HIDDEN] } satisfies BreadcrumbData,
     children: [
       { path: '', pathMatch: 'full', redirectTo: '/home' },
       {
-        path: ':group_id',
+        path: ':suite_id',
         component: SuiteView,
         data: { breadcrumbs: [Breadcrumb.suite] } satisfies BreadcrumbData,
       },
       {
-        path: ':group_id/:benchmark_id',
+        path: ':suite_id/:benchmark_id',
         component: BenchmarkView,
         data: { breadcrumbs: [Breadcrumb.suite, Breadcrumb.benchmark] } satisfies BreadcrumbData,
       },
       {
-        path: ':group_id/:benchmark_id/tests',
+        path: ':suite_id/:benchmark_id/tests',
         pathMatch: 'full',
-        redirectTo: ':group_id/:benchmark_id',
+        redirectTo: ':suite_id/:benchmark_id',
       },
       {
-        path: ':group_id/:benchmark_id/tests/:test_id',
+        path: ':suite_id/:benchmark_id/tests/:test_id',
         component: TestView,
         data: {
           breadcrumbs: [Breadcrumb.suite, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.test],
         } satisfies BreadcrumbData,
       },
       {
-        path: ':group_id/:benchmark_id/tests/:test_id/new-submission',
+        path: ':suite_id/:benchmark_id/tests/:test_id/new-submission',
         component: NewSubmissionView,
         canActivate: [AuthGuard],
         data: {
@@ -66,7 +64,7 @@ export const routes: Routes = [
         } satisfies BreadcrumbData,
       },
       {
-        path: ':group_id/:benchmark_id/new-submission',
+        path: ':suite_id/:benchmark_id/new-submission',
         component: NewSubmissionView,
         canActivate: [AuthGuard],
         data: {
@@ -74,24 +72,24 @@ export const routes: Routes = [
         } satisfies BreadcrumbData,
       },
       {
-        path: ':group_id/:benchmark_id/submissions',
+        path: ':suite_id/:benchmark_id/submissions',
         pathMatch: 'full',
-        redirectTo: ':group_id/:benchmark_id',
+        redirectTo: ':suite_id/:benchmark_id',
       },
       {
-        path: ':group_id/:benchmark_id/submissions/:submission_id',
+        path: ':suite_id/:benchmark_id/submissions/:submission_id',
         component: SubmissionView,
         data: {
           breadcrumbs: [Breadcrumb.suite, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.submission],
         } satisfies BreadcrumbData,
       },
       {
-        path: ':group_id/:benchmark_id/submissions/:submission_id/:test_id',
+        path: ':suite_id/:benchmark_id/submissions/:submission_id/:test_id',
         pathMatch: 'full',
-        redirectTo: ':group_id/:benchmark_id/submissions/:submission_id',
+        redirectTo: ':suite_id/:benchmark_id/submissions/:submission_id',
       },
       {
-        path: ':group_id/:benchmark_id/submissions/:submission_id/:test_id/:scenario_id',
+        path: ':suite_id/:benchmark_id/submissions/:submission_id/:test_id/:scenario_id',
         component: SubmissionScenarioResultsView,
         data: {
           breadcrumbs: [

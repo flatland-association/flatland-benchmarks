@@ -62,7 +62,7 @@ export class SuiteOverviewComponent implements OnChanges {
             })
           )?.at(0)
           return {
-            routerLink: ['/', 'benchmarks', suite.id, benchmarkId],
+            routerLink: ['/', 'suites', suite.id, benchmarkId],
             cells: [
               { text: benchmark?.name ?? 'NA' },
               { text: leaderboard?.items.length ?? 0 },

@@ -60,7 +60,7 @@ export class BenchmarkOverviewComponent implements OnInit, OnChanges {
             })
           )?.at(0)
           return {
-            routerLink: ['/', 'benchmarks', suite.id, benchmark.id, 'submissions', item.submission_id],
+            routerLink: ['/', 'suites', suite.id, benchmark.id, 'submissions', item.submission_id],
             cells: [{ text: submission?.name ?? 'NA' }, { scorings: item.scorings, fieldDefinitions: fields }],
           }
         }) ?? [],

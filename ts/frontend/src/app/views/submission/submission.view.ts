@@ -54,9 +54,9 @@ export class SubmissionView implements OnInit, OnDestroy {
     this.customizationService.getCustomization().then((customization) => {
       this.customization = customization
     })
-    this.paramsSubscription = this.route.params.subscribe(({ group_id, benchmark_id, submission_id }) => {
+    this.paramsSubscription = this.route.params.subscribe(({ suite_id, benchmark_id, submission_id }) => {
       this.resourceService
-        .load('/definitions/suites/:suite_ids', { params: { suite_ids: group_id } })
+        .load('/definitions/suites/:suite_ids', { params: { suite_ids: suite_id } })
         .then((suites) => {
           this.suite = suites?.at(0)
         })

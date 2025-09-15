@@ -16,7 +16,7 @@ export class SuiteCardComponent implements OnChanges {
   async ngOnChanges(changes: SimpleChanges) {
     if (changes['suite']) {
       if (this.suite) {
-        this.routerLink = ['/', 'benchmarks', this.suite.id]
+        this.routerLink = ['/', 'suites', this.suite.id]
       } else {
         this.routerLink = null
       }

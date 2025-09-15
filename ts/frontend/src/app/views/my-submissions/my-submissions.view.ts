@@ -81,9 +81,7 @@ export class MySubmissionsView implements OnInit {
             const isScored = isSubmissionCompletelyScored(score)
             return {
               routerLink:
-                suite && benchmark
-                  ? ['/', 'benchmarks', suite.id, benchmark.id, 'submissions', submission.id]
-                  : undefined,
+                suite && benchmark ? ['/', 'suites', suite.id, benchmark.id, 'submissions', submission.id] : undefined,
               cells: [
                 { text: submission.name },
                 { text: `${suite?.name ?? 'NA'} / ${benchmark?.name ?? 'NA'}` },

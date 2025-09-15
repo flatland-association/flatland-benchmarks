@@ -66,7 +66,7 @@ export class TestOverviewComponent implements OnInit, OnChanges {
           const scorings = item.test_scorings.find((testScorings) => testScorings.test_id === test.id)!.scorings
           const primary = getPrimaryScoring(scorings, fields)
           return {
-            routerLink: ['/', 'benchmarks', suite.id, benchmark.id, 'submissions', item.submission_id],
+            routerLink: ['/', 'suites', suite.id, benchmark.id, 'submissions', item.submission_id],
             cells: [
               { text: primary?.rank ?? '-' },
               { text: submission?.name ?? 'NA' },

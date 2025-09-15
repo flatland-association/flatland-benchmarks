@@ -66,7 +66,7 @@ export class CampaignItemOverviewComponent implements OnInit, OnChanges {
             params: { field_ids: test?.field_ids ?? [] },
           })
           return {
-            routerLink: ['/', 'benchmarks', suite.id, benchmark.id, 'tests', item.test_id],
+            routerLink: ['/', 'suites', suite.id, benchmark.id, 'tests', item.test_id],
             cells: [{ text: test?.name ?? 'NA' }, { scorings: item.scorings, fieldDefinitions: fields }],
           }
         }) ?? [],

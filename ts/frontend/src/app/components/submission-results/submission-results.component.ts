@@ -103,7 +103,7 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
           rows.push({
             routerLink: [
               '/',
-              'benchmarks',
+              'suites',
               suite.id,
               benchmark.id,
               'submissions',

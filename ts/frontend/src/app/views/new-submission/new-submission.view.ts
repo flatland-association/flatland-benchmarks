@@ -38,9 +38,9 @@ export class NewSubmissionView implements OnInit, OnDestroy {
     this.customizationService.getCustomization().then((customization) => {
       this.customization = customization
     })
-    this.paramsSubscription = this.route.params.subscribe(({ group_id, benchmark_id, test_id }) => {
+    this.paramsSubscription = this.route.params.subscribe(({ suite_id, benchmark_id, test_id }) => {
       this.resourceService
-        .load('/definitions/suites/:suite_ids', { params: { suite_ids: group_id } })
+        .load('/definitions/suites/:suite_ids', { params: { suite_ids: suite_id } })
         .then((suites) => {
           this.suite = suites?.at(0)
         })
@@ -137,7 +137,7 @@ export class NewSubmissionView implements OnInit, OnDestroy {
     })
     if (response.body?.id) {
       // navigate to that submissions' detail view
-      this.router.navigateByUrl(`benchmarks/${this.suite!.id}/${this.benchmark!.id}/submissions/${response.body.id}`)
+      this.router.navigateByUrl(`suites/${this.suite!.id}/${this.benchmark!.id}/submissions/${response.body.id}`)
     }
   }
 }
