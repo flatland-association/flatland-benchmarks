@@ -88,7 +88,7 @@ export class NewSubmissionView implements OnInit, OnDestroy {
 
   requiresTestSelection() {
     // tests selection can only be made manually in benchmark setup
-    return this.group?.setup === 'BENCHMARK'
+    return this.group?.setup === 'DEFAULT'
   }
 
   canSubmit() {
@@ -121,7 +121,7 @@ export class NewSubmissionView implements OnInit, OnDestroy {
     let test_ids: string[] = []
     if (this.group?.setup === 'CAMPAIGN') {
       test_ids = [this.tests![0].id]
-    } else if (this.group?.setup === 'BENCHMARK') {
+    } else if (this.group?.setup === 'DEFAULT') {
       test_ids = this.tests!.filter((t, i) => this.testsSelection[i]).map((t) => t.id)
     } else {
       test_ids = this.tests!.map((t) => t.id)

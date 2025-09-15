@@ -52,7 +52,7 @@ export class BenchmarkGroupController extends Controller {
   getBenchmarkGroups: GetHandler<'/definitions/benchmark-groups'> = async (req, res) => {
     const sql = SqlService.getInstance()
     const rows = await sql.query<StripDir<BenchmarkGroupDefinitionRow>>`
-      SELECT * FROM benchmark_groups
+      SELECT * FROM suites
       ORDER BY name ASC
     `
     const resources = appendDir('/definitions/benchmark-groups/', rows)
@@ -110,7 +110,7 @@ export class BenchmarkGroupController extends Controller {
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<BenchmarkGroupDefinitionRow>>`
-      SELECT * FROM benchmark_groups
+      SELECT * FROM suites
       WHERE id=ANY(${ids})
       LIMIT ${ids.length}
     `

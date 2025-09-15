@@ -41,7 +41,7 @@ interface SubmissionScoreSources extends SubmissionTestScoreSources {
 }
 
 interface CampaignOverviewSources extends SubmissionScoreSources {
-  benchmark_groups: (BenchmarkGroupDefinitionRow | null)[]
+  suites: (BenchmarkGroupDefinitionRow | null)[]
 }
 
 /**
@@ -365,27 +365,27 @@ export class AggregatorService extends Service {
     // load relevant sources (relevant means: referenced from benchmark)
     const [sources] = await this.sql.query<CampaignOverviewSources>`
       SELECT
-        json_agg(DISTINCT to_jsonb(benchmark_groups)) AS benchmark_groups,
+        json_agg(DISTINCT to_jsonb(suites)) AS suites,
         json_agg(DISTINCT to_jsonb(benchmark_definitions)) AS benchmark_definitions,
         json_agg(DISTINCT to_jsonb(submissions)) AS submissions,
         json_agg(DISTINCT to_jsonb(test_definitions)) AS test_definitions,
         json_agg(DISTINCT to_jsonb(scenario_definitions)) AS scenario_definitions,
         json_agg(DISTINCT to_jsonb(field_definitions)) AS field_definitions,
         json_agg(DISTINCT to_jsonb(results)) AS results
-      FROM benchmark_groups
-      LEFT JOIN benchmark_definitions ON benchmark_definitions.id = ANY(benchmark_groups.benchmark_ids)
+      FROM suites
+      LEFT JOIN benchmark_definitions ON benchmark_definitions.id = ANY(suites.benchmark_ids)
       LEFT JOIN submissions ON submissions.benchmark_id = benchmark_definitions.id AND submissions.published = true
       LEFT JOIN test_definitions ON test_definitions.id = ANY(benchmark_definitions.test_ids)
       LEFT JOIN scenario_definitions ON scenario_definitions.id = ANY(test_definitions.scenario_ids)
       LEFT JOIN field_definitions ON field_definitions.id = ANY(scenario_definitions.field_ids || test_definitions.field_ids || benchmark_definitions.field_ids || benchmark_definitions.campaign_field_ids)
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
-      WHERE benchmark_groups.id = ANY(${groupIds})
+      WHERE suites.id = ANY(${groupIds})
     `
     return (
       sources ??
       ({
         submissions: [],
-        benchmark_groups: [],
+        suites: [],
         benchmark_definitions: [],
         test_definitions: [],
         scenario_definitions: [],
@@ -463,12 +463,12 @@ export class AggregatorService extends Service {
    * Returns the `BenchmarkGroupDefinitionRow` from `sources` matching `groupId`.
    */
   findGroup(
-    sources: { benchmark_groups: (BenchmarkGroupDefinitionRow | null)[] },
+    sources: { suites: (BenchmarkGroupDefinitionRow | null)[] },
     groupId: string,
   ): BenchmarkGroupDefinitionRow | undefined {
-    const group = sources.benchmark_groups.find((groupDefRow) => groupDefRow?.id === groupId)
+    const group = sources.suites.find((groupDefRow) => groupDefRow?.id === groupId)
     if (!group) {
-      logger.warn(`group ${groupId} not found in sources`, sources.benchmark_groups)
+      logger.warn(`group ${groupId} not found in sources`, sources.suites)
     }
     return group ?? undefined
   }
