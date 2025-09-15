@@ -34,8 +34,9 @@ describe.sequential('Results controller', () => {
         // c) the submission references the test or scenario
         // That's why this test works. If either of above change, update test.
         // see: https://github.com/flatland-association/flatland-benchmarks/issues/386
-        //@ts-expect-error type
-        body: { data: [{ scenario_id: '8fba6834-cd86-4bca-b3b5-f14d6c54d92f', secondary: 1.0, tertiary: 3.14 }] },
+        body: {
+          data: [{ scenario_id: '8fba6834-cd86-4bca-b3b5-f14d6c54d92f', scores: { secondary: 1.0, tertiary: 3.14 } }],
+        },
       },
       testUserJwt,
     )
@@ -69,8 +70,11 @@ describe.sequential('Results controller', () => {
           test_ids: 'aeabd5b9-4e86-4c7a-859f-a32ff1be5516',
         },
         // see also comment above in 'should allow posting new results'
-        //@ts-expect-error type
-        body: { data: [{ scenario_id: '8fba6834-cd86-4bca-b3b5-f14d6c54d92f', primary: 1.0, totally_new_score: 7.0 }] },
+        body: {
+          data: [
+            { scenario_id: '8fba6834-cd86-4bca-b3b5-f14d6c54d92f', scores: { primary: 1.0, totally_new_score: 7.0 } },
+          ],
+        },
       },
       testUserJwt,
     )
