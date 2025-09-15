@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
-import { BenchmarkDefinitionRow, BenchmarkGroupDefinitionRow, TestDefinitionRow } from '@common/interfaces'
+import { BenchmarkDefinitionRow, SuiteDefinitionRow, TestDefinitionRow } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
@@ -24,7 +24,7 @@ export class NewSubmissionView implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute)
   private paramsSubscription?: Subscription
 
-  group?: BenchmarkGroupDefinitionRow
+  suite?: SuiteDefinitionRow
   benchmark?: BenchmarkDefinitionRow
   tests?: TestDefinitionRow[]
   customization?: Customization
@@ -40,9 +40,9 @@ export class NewSubmissionView implements OnInit, OnDestroy {
     })
     this.paramsSubscription = this.route.params.subscribe(({ group_id, benchmark_id, test_id }) => {
       this.resourceService
-        .load('/definitions/benchmark-groups/:group_ids', { params: { group_ids: group_id } })
-        .then((group) => {
-          this.group = group?.at(0)
+        .load('/definitions/suites/:suite_ids', { params: { suite_ids: group_id } })
+        .then((suites) => {
+          this.suite = suites?.at(0)
         })
       // In campaign setting, test_id will be passed and only that test needs
       // to be loaded. In other settings, all tests need to be loaded.
@@ -72,7 +72,7 @@ export class NewSubmissionView implements OnInit, OnDestroy {
   }
 
   requiresSubmissionDataUrl() {
-    if (this.group?.setup === 'CAMPAIGN') {
+    if (this.suite?.setup === 'CAMPAIGN') {
       // data url only required if not OFFLINE
       return this.tests?.at(0)?.loop !== 'OFFLINE'
     } else {
@@ -83,16 +83,16 @@ export class NewSubmissionView implements OnInit, OnDestroy {
 
   requiresCodeRepository() {
     // code repository is not required in campaign setup
-    return this.group?.setup !== 'CAMPAIGN'
+    return this.suite?.setup !== 'CAMPAIGN'
   }
 
   requiresTestSelection() {
     // tests selection can only be made manually in benchmark setup
-    return this.group?.setup === 'DEFAULT'
+    return this.suite?.setup === 'DEFAULT'
   }
 
   canSubmit() {
-    if (!this.group || !this.benchmark || !this.tests) return false
+    if (!this.suite || !this.benchmark || !this.tests) return false
     if (!this.submissionName) return false
     if (this.requiresSubmissionDataUrl()) {
       // url must only be non-blank - validity check is left for orchestrator
@@ -119,9 +119,9 @@ export class NewSubmissionView implements OnInit, OnDestroy {
 
   async submit() {
     let test_ids: string[] = []
-    if (this.group?.setup === 'CAMPAIGN') {
+    if (this.suite?.setup === 'CAMPAIGN') {
       test_ids = [this.tests![0].id]
-    } else if (this.group?.setup === 'DEFAULT') {
+    } else if (this.suite?.setup === 'DEFAULT') {
       test_ids = this.tests!.filter((t, i) => this.testsSelection[i]).map((t) => t.id)
     } else {
       test_ids = this.tests!.map((t) => t.id)
@@ -137,7 +137,7 @@ export class NewSubmissionView implements OnInit, OnDestroy {
     })
     if (response.body?.id) {
       // navigate to that submissions' detail view
-      this.router.navigateByUrl(`benchmarks/${this.group!.id}/${this.benchmark!.id}/submissions/${response.body.id}`)
+      this.router.navigateByUrl(`benchmarks/${this.suite!.id}/${this.benchmark!.id}/submissions/${response.body.id}`)
     }
   }
 }

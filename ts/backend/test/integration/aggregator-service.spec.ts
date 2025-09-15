@@ -110,7 +110,7 @@ describe.sequential('Aggregator Service (with Postgres)', async () => {
         args: [[dummyGroupId]],
         returns: [
           {
-            group_id: dummyGroupId,
+            suite_id: dummyGroupId,
             items: [],
           },
         ],

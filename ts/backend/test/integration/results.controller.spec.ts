@@ -259,9 +259,9 @@ describe.sequential('Results controller', () => {
 
     beforeAll(async () => {
       const res = await controller.testGet(
-        '/results/campaigns/:group_ids',
+        '/results/campaigns/:suite_ids',
         {
-          params: { group_ids: '0ca46887-897a-463f-bf83-c6cd6269a976' },
+          params: { suite_ids: '0ca46887-897a-463f-bf83-c6cd6269a976' },
         },
         testUserJwt,
       )
@@ -270,7 +270,7 @@ describe.sequential('Results controller', () => {
       expect(overview).toBeTruthy()
     })
 
-    // group might contain additional benchmarks - for test, check that
+    // suite might contain additional benchmarks - for test, check that
     // "effectiveness" and "resilience" are present and are scored correctly
     test.each([
       // comparing by something else than uuid would require additional calls

@@ -1,6 +1,6 @@
 import { DecimalPipe } from '@angular/common'
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
-import { BenchmarkDefinitionRow, BenchmarkGroupDefinitionRow, SubmissionRow } from '@common/interfaces'
+import { BenchmarkDefinitionRow, SubmissionRow, SuiteDefinitionRow } from '@common/interfaces'
 import {
   getPrimaryScoring,
   isScenarioCompletelyScored,
@@ -19,7 +19,7 @@ import { TableColumn, TableComponent, TableRow } from '../table/table.component'
   styleUrl: './submission-results.component.scss',
 })
 export class SubmissionResultsComponent implements OnInit, OnChanges {
-  @Input() group?: BenchmarkGroupDefinitionRow
+  @Input() suite?: SuiteDefinitionRow
   @Input() benchmark?: BenchmarkDefinitionRow
   @Input() submission?: SubmissionRow
 
@@ -46,8 +46,8 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
   }
 
   async buildBoard() {
-    if (this.group && this.benchmark && this.submission) {
-      const group = this.group
+    if (this.suite && this.benchmark && this.submission) {
+      const suite = this.suite
       const benchmark = this.benchmark
       const submission = this.submission
       const submissionScore = (
@@ -104,7 +104,7 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
             routerLink: [
               '/',
               'benchmarks',
-              group.id,
+              suite.id,
               benchmark.id,
               'submissions',
               submission.id,

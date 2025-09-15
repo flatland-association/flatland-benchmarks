@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnChanges, SimpleChanges } from '@angular/core'
-import { BenchmarkGroupDefinitionRow } from '@common/interfaces'
+import { SuiteDefinitionRow } from '@common/interfaces'
 import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
 
@@ -10,7 +10,7 @@ import { TableColumn, TableComponent, TableRow } from '../table/table.component'
   styleUrl: './benchmark-group-overview.component.scss',
 })
 export class BenchmarkGroupOverviewComponent implements OnChanges {
-  @Input() group?: BenchmarkGroupDefinitionRow
+  @Input() suite?: SuiteDefinitionRow
   @Input() benchmarksTitle?: string
 
   private resourceService = inject(ResourceService)
@@ -23,7 +23,7 @@ export class BenchmarkGroupOverviewComponent implements OnChanges {
   rows: TableRow[] = []
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['group']) {
+    if (changes['suite']) {
       this.buildBoard()
     }
     if (changes['benchmarksTitle']) {
@@ -32,13 +32,13 @@ export class BenchmarkGroupOverviewComponent implements OnChanges {
   }
 
   async buildBoard() {
-    if (this.group) {
-      const group = this.group
+    if (this.suite) {
+      const suite = this.suite
       // pre-fetch linked resources
       Promise.all([
         this.resourceService
           .loadGrouped('/definitions/benchmarks/:benchmark_ids', {
-            params: { benchmark_ids: this.group.benchmark_ids ?? [] },
+            params: { benchmark_ids: this.suite.benchmark_ids ?? [] },
           })
           .then((benchmarks) =>
             this.resourceService.loadGrouped('/definitions/fields/:field_ids', {
@@ -47,7 +47,7 @@ export class BenchmarkGroupOverviewComponent implements OnChanges {
           ),
       ])
       this.rows = await Promise.all(
-        this.group.benchmark_ids?.map(async (benchmarkId) => {
+        this.suite.benchmark_ids?.map(async (benchmarkId) => {
           const benchmark = (
             await this.resourceService.load('/definitions/benchmarks/:benchmark_ids', {
               params: { benchmark_ids: benchmarkId },
@@ -62,7 +62,7 @@ export class BenchmarkGroupOverviewComponent implements OnChanges {
             })
           )?.at(0)
           return {
-            routerLink: ['/', 'benchmarks', group.id, benchmarkId],
+            routerLink: ['/', 'benchmarks', suite.id, benchmarkId],
             cells: [
               { text: benchmark?.name ?? 'NA' },
               { text: leaderboard?.items.length ?? 0 },

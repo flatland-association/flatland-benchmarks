@@ -8,20 +8,20 @@
   </lib-section>
 </lib-content>
 
-@if (group?.setup === 'CAMPAIGN') {
+@if (suite?.setup === 'CAMPAIGN') {
   <lib-content>
     @if (customization?.content?.vcKpi?.lead) {
       <p>{{ customization?.content?.vcKpi?.lead }}</p>
     }
-    <app-test-overview class="w-full my-8" [group]="group" [benchmark]="benchmark" [test]="test"></app-test-overview>
+    <app-test-overview class="w-full my-8" [suite]="suite" [benchmark]="benchmark" [test]="test"></app-test-overview>
     <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'new-submission'">Submit solution</button>
   </lib-content>
-} @else if (group?.setup === 'COMPETITION') {
+} @else if (suite?.setup === 'COMPETITION') {
   <lib-content>
-    <app-test-overview class="w-full my-8" [group]="group" [benchmark]="benchmark" [test]="test"></app-test-overview>
+    <app-test-overview class="w-full my-8" [suite]="suite" [benchmark]="benchmark" [test]="test"></app-test-overview>
   </lib-content>
 } @else {
   <lib-content>
-    <app-test-overview class="w-full my-8" [group]="group" [benchmark]="benchmark" [test]="test"></app-test-overview>
+    <app-test-overview class="w-full my-8" [suite]="suite" [benchmark]="benchmark" [test]="test"></app-test-overview>
   </lib-content>
 }

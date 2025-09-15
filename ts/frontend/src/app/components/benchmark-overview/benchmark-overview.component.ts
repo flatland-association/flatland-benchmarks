@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
-import { BenchmarkDefinitionRow, BenchmarkGroupDefinitionRow } from '@common/interfaces'
+import { BenchmarkDefinitionRow, SuiteDefinitionRow } from '@common/interfaces'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
@@ -11,7 +11,7 @@ import { TableColumn, TableComponent, TableRow } from '../table/table.component'
   styleUrl: './benchmark-overview.component.scss',
 })
 export class BenchmarkOverviewComponent implements OnInit, OnChanges {
-  @Input() group?: BenchmarkGroupDefinitionRow
+  @Input() suite?: SuiteDefinitionRow
   @Input() benchmark?: BenchmarkDefinitionRow
 
   private resourceService = inject(ResourceService)
@@ -29,14 +29,14 @@ export class BenchmarkOverviewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['group'] || changes['benchmark']) {
+    if (changes['suite'] || changes['benchmark']) {
       this.buildBoard()
     }
   }
 
   async buildBoard() {
-    if (this.group && this.benchmark) {
-      const group = this.group
+    if (this.suite && this.benchmark) {
+      const suite = this.suite
       const benchmark = this.benchmark
       const benchmarkOverview = (
         await this.resourceService.load('/results/benchmarks/:benchmark_ids', {
@@ -60,7 +60,7 @@ export class BenchmarkOverviewComponent implements OnInit, OnChanges {
             })
           )?.at(0)
           return {
-            routerLink: ['/', 'benchmarks', group.id, benchmark.id, 'submissions', item.submission_id],
+            routerLink: ['/', 'benchmarks', suite.id, benchmark.id, 'submissions', item.submission_id],
             cells: [{ text: submission?.name ?? 'NA' }, { scorings: item.scorings, fieldDefinitions: fields }],
           }
         }) ?? [],

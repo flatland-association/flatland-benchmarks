@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core'
-import { BenchmarkGroupDefinitionRow } from '@common/interfaces'
+import { SuiteDefinitionRow } from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { BenchmarkGroupCardComponent } from '../../components/benchmark-group-card/benchmark-group-card.component'
 import { ApiService } from '../../features/api/api.service'
@@ -15,13 +15,13 @@ export class HomeView implements OnInit {
   apiService = inject(ApiService)
   customizationService = inject(CustomizationService)
 
-  groups?: BenchmarkGroupDefinitionRow[]
+  suites?: SuiteDefinitionRow[]
   customization?: Customization
   leadHtml?: string
 
   async ngOnInit() {
     this.customization = await this.customizationService.getCustomization()
-    this.groups = (await this.apiService.get('/definitions/benchmark-groups')).body
+    this.suites = (await this.apiService.get('/definitions/suites')).body
     this.leadHtml = this.customization.content.home.lead
   }
 }

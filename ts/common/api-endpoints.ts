@@ -2,7 +2,6 @@ import { ApiRequest } from './api-request'
 import { ApiResponse } from './api-response'
 import {
   BenchmarkDefinitionRow,
-  BenchmarkGroupDefinitionRow,
   CampaignItemOverview,
   CampaignOverview,
   FieldDefinitionRow,
@@ -13,6 +12,7 @@ import {
   SubmissionScenarioScore,
   SubmissionScore,
   SubmissionTestScore,
+  SuiteDefinitionRow,
   Test,
   TestDefinitionRow,
 } from './interfaces'
@@ -68,11 +68,11 @@ interface ApiEndpointDefinitions {
   '/whoami': {
     GET: ApiEndpoint<Empty, Empty, json>
   }
-  '/definitions/benchmark-groups': {
-    GET: ApiEndpoint<Empty, Empty, BenchmarkGroupDefinitionRow[]>
+  '/definitions/suites': {
+    GET: ApiEndpoint<Empty, Empty, SuiteDefinitionRow[]>
   }
-  '/definitions/benchmark-groups/:group_ids': {
-    GET: ApiEndpoint<Empty, Empty, BenchmarkGroupDefinitionRow[]>
+  '/definitions/suites/:suite_ids': {
+    GET: ApiEndpoint<Empty, Empty, SuiteDefinitionRow[]>
   }
   '/test': {
     GET: ApiEndpoint<Empty, Empty, Test>
@@ -116,7 +116,7 @@ interface ApiEndpointDefinitions {
   '/results/campaign-items/:benchmark_ids': {
     GET: ApiEndpoint<Empty, Empty, CampaignItemOverview[]>
   }
-  '/results/campaigns/:group_ids': {
+  '/results/campaigns/:suite_ids': {
     GET: ApiEndpoint<Empty, Empty, CampaignOverview[]>
   }
   '/results/benchmarks/:benchmark_id/tests/:test_ids': {

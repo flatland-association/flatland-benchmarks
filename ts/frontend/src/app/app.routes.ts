@@ -38,12 +38,12 @@ export const routes: Routes = [
       {
         path: ':group_id',
         component: BenchmarkGroupView,
-        data: { breadcrumbs: [Breadcrumb.benchmark_group] } satisfies BreadcrumbData,
+        data: { breadcrumbs: [Breadcrumb.suite] } satisfies BreadcrumbData,
       },
       {
         path: ':group_id/:benchmark_id',
         component: BenchmarkView,
-        data: { breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark] } satisfies BreadcrumbData,
+        data: { breadcrumbs: [Breadcrumb.suite, Breadcrumb.benchmark] } satisfies BreadcrumbData,
       },
       {
         path: ':group_id/:benchmark_id/tests',
@@ -54,7 +54,7 @@ export const routes: Routes = [
         path: ':group_id/:benchmark_id/tests/:test_id',
         component: TestView,
         data: {
-          breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.test],
+          breadcrumbs: [Breadcrumb.suite, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.test],
         } satisfies BreadcrumbData,
       },
       {
@@ -62,13 +62,7 @@ export const routes: Routes = [
         component: NewSubmissionView,
         canActivate: [AuthGuard],
         data: {
-          breadcrumbs: [
-            Breadcrumb.benchmark_group,
-            Breadcrumb.benchmark,
-            Breadcrumb.HIDDEN,
-            Breadcrumb.test,
-            'New Submission',
-          ],
+          breadcrumbs: [Breadcrumb.suite, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.test, 'New Submission'],
         } satisfies BreadcrumbData,
       },
       {
@@ -76,7 +70,7 @@ export const routes: Routes = [
         component: NewSubmissionView,
         canActivate: [AuthGuard],
         data: {
-          breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, 'New Submission'],
+          breadcrumbs: [Breadcrumb.suite, Breadcrumb.benchmark, 'New Submission'],
         } satisfies BreadcrumbData,
       },
       {
@@ -88,7 +82,7 @@ export const routes: Routes = [
         path: ':group_id/:benchmark_id/submissions/:submission_id',
         component: SubmissionView,
         data: {
-          breadcrumbs: [Breadcrumb.benchmark_group, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.submission],
+          breadcrumbs: [Breadcrumb.suite, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.submission],
         } satisfies BreadcrumbData,
       },
       {
@@ -101,7 +95,7 @@ export const routes: Routes = [
         component: SubmissionScenarioResultsView,
         data: {
           breadcrumbs: [
-            Breadcrumb.benchmark_group,
+            Breadcrumb.suite,
             Breadcrumb.benchmark,
             Breadcrumb.HIDDEN,
             Breadcrumb.submission,

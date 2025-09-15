@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { BenchmarkGroupDefinitionRow } from '@common/interfaces'
+import { SuiteDefinitionRow } from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
 import { BenchmarkGroupOverviewComponent } from '../../components/benchmark-group-overview/benchmark-group-overview.component'
@@ -29,7 +29,7 @@ export class BenchmarkGroupView implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute)
   private paramsSubscription?: Subscription
 
-  group?: BenchmarkGroupDefinitionRow
+  suite?: SuiteDefinitionRow
   customization?: Customization
 
   ngOnInit(): void {
@@ -38,9 +38,9 @@ export class BenchmarkGroupView implements OnInit, OnDestroy {
     })
     this.paramsSubscription = this.route.params.subscribe(({ group_id }) => {
       this.resourceService
-        .load('/definitions/benchmark-groups/:group_ids', { params: { group_ids: group_id } })
-        .then((group) => {
-          this.group = group?.at(0)
+        .load('/definitions/suites/:suite_ids', { params: { suite_ids: group_id } })
+        .then((suites) => {
+          this.suite = suites?.at(0)
         })
     })
   }

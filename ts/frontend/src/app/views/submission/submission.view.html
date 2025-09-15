@@ -1,4 +1,4 @@
-@if (group && benchmark && submission) {
+@if (suite && benchmark && submission) {
   <lib-content>
     <app-site-heading class="bp-8 flex w-full" [title]="submission.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
 
@@ -15,7 +15,7 @@
     } @else {
       <p>This submission has not yet been scored completely.</p>
     }
-    <app-submission-results class="w-full my-8" [group]="group" [benchmark]="benchmark" [submission]="submission"></app-submission-results>
+    <app-submission-results class="w-full my-8" [suite]="suite" [benchmark]="benchmark" [submission]="submission"></app-submission-results>
   </lib-content>
 
   @if (canPublishSubmission()) {

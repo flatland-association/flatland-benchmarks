@@ -1,23 +1,23 @@
 <lib-content>
-  <app-site-heading class="bp-8 flex w-full" [title]="group?.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
+  <app-site-heading class="bp-8 flex w-full" [title]="suite?.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
 
   <lib-section class="w-full">
     <p>
-      {{ group?.description }}
+      {{ suite?.description }}
     </p>
   </lib-section>
 </lib-content>
 
-@if (group?.setup === 'CAMPAIGN') {
+@if (suite?.setup === 'CAMPAIGN') {
   <lib-content>
-    <app-campaign-overview class="w-full my-8" [group]="group"></app-campaign-overview>
+    <app-campaign-overview class="w-full my-8" [suite]="suite"></app-campaign-overview>
   </lib-content>
-} @else if (group?.setup === 'COMPETITION') {
+} @else if (suite?.setup === 'COMPETITION') {
   <lib-content>
-    <app-benchmark-group-overview class="w-full my-8" [group]="group" benchmarksTitle="Round"></app-benchmark-group-overview>
+    <app-benchmark-group-overview class="w-full my-8" [suite]="suite" benchmarksTitle="Round"></app-benchmark-group-overview>
   </lib-content>
 } @else {
   <lib-content>
-    <app-benchmark-group-overview class="w-full my-8" [group]="group"></app-benchmark-group-overview>
+    <app-benchmark-group-overview class="w-full my-8" [suite]="suite"></app-benchmark-group-overview>
   </lib-content>
 }

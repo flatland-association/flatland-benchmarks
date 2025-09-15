@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import { BenchmarkGroupDefinitionRow } from '@common/interfaces'
+import { SuiteDefinitionRow } from '@common/interfaces'
 
 @Component({
   selector: 'app-benchmark-group-card',
@@ -9,14 +9,14 @@ import { BenchmarkGroupDefinitionRow } from '@common/interfaces'
   styleUrl: './benchmark-group-card.component.scss',
 })
 export class BenchmarkGroupCardComponent implements OnChanges {
-  @Input() group?: BenchmarkGroupDefinitionRow
+  @Input() suite?: SuiteDefinitionRow
 
   routerLink: string[] | null = null
 
   async ngOnChanges(changes: SimpleChanges) {
-    if (changes['group']) {
-      if (this.group) {
-        this.routerLink = ['/', 'benchmarks', this.group.id]
+    if (changes['suite']) {
+      if (this.suite) {
+        this.routerLink = ['/', 'benchmarks', this.suite.id]
       } else {
         this.routerLink = null
       }
