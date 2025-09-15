@@ -85,8 +85,8 @@ class ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-          "scenario_id": obj.get("scenario_id"),
-          "scores": obj.get("scores")
+            "scenario_id": obj.get("scenario_id"),
+            "scores": obj.get("scores")
         })
         return _obj
 

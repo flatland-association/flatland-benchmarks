@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **submission_id** | **str** | ID of submission. | [optional] 
-**scorings** | **object** | Dictionary of submission scores. | [optional] 
+**scorings** | [**List[Scoring]**](Scoring.md) | Submission scores. | [optional] 
 **test_scorings** | [**List[ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner]**](ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner.md) |  | [optional] 
 
 ## Example

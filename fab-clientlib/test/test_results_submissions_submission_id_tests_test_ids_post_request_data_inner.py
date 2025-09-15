@@ -16,7 +16,7 @@
 import unittest
 
 from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_post_request_data_inner import \
-    ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
+  ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
 
 
 class TestResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(unittest.TestCase):

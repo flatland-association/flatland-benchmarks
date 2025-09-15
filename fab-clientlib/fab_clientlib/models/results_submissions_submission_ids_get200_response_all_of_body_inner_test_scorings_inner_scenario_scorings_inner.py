@@ -25,13 +25,15 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
 
+from fab_clientlib.models.scoring import Scoring
+
 
 class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner(BaseModel):
     """
     ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner
     """ # noqa: E501
     scenario_id: Optional[UUID] = Field(default=None, description="ID of scenario.")
-    scorings: Optional[Dict[str, Any]] = Field(default=None, description="Dictionary of scores.")
+    scorings: Optional[List[Scoring]] = Field(default=None, description="Scenario scores.")
     __properties: ClassVar[List[str]] = ["scenario_id", "scorings"]
 
     model_config = ConfigDict(
@@ -73,6 +75,13 @@ class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInn
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in scorings (list)
+        _items = []
+        if self.scorings:
+            for _item_scorings in self.scorings:
+                if _item_scorings:
+                    _items.append(_item_scorings.to_dict())
+            _dict['scorings'] = _items
         return _dict
 
     @classmethod
@@ -86,7 +95,7 @@ class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInn
 
         _obj = cls.model_validate({
             "scenario_id": obj.get("scenario_id"),
-            "scorings": obj.get("scorings")
+            "scorings": [Scoring.from_dict(_item) for _item in obj["scorings"]] if obj.get("scorings") is not None else None
         })
         return _obj
 

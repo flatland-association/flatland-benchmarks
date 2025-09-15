@@ -2,32 +2,32 @@
 
 All URIs are relative to *http://localhost*
 
- Method                                                                                                                                       | HTTP request                                                         | Description 
-----------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------|-------------
- [**definitions_benchmark_groups_get**](DefaultApi.md#definitions_benchmark_groups_get)                                                       | **GET** /definitions/benchmark-groups                                |
- [**definitions_benchmark_groups_group_ids_get**](DefaultApi.md#definitions_benchmark_groups_group_ids_get)                                   | **GET** /definitions/benchmark-groups/{group_ids}                    |
- [**definitions_benchmarks_benchmark_ids_get**](DefaultApi.md#definitions_benchmarks_benchmark_ids_get)                                       | **GET** /definitions/benchmarks/{benchmark_ids}                      | 
- [**definitions_benchmarks_get**](DefaultApi.md#definitions_benchmarks_get)                                                                   | **GET** /definitions/benchmarks/                                     |
- [**definitions_fields_field_ids_get**](DefaultApi.md#definitions_fields_field_ids_get)                                                       | **GET** /definitions/fields/{field_ids}                              |
- [**definitions_scenarios_scenario_ids_get**](DefaultApi.md#definitions_scenarios_scenario_ids_get)                                           | **GET** /definitions/scenarios/{scenario_ids}                        |
- [**definitions_tests_test_ids_get**](DefaultApi.md#definitions_tests_test_ids_get)                                                           | **GET** /definitions/tests/{test_ids}                                | 
- [**health_live_get**](DefaultApi.md#health_live_get)                                                                                         | **GET** /health/live                                                 |
- [**info_get**](DefaultApi.md#info_get)                                                                                                       | **GET** /info                                                        |
- [**results_benchmarks_benchmark_id_tests_test_ids_get**](DefaultApi.md#results_benchmarks_benchmark_id_tests_test_ids_get)                   | **GET** /results/benchmarks/{benchmark_id}/tests/{test_ids}          | 
- [**results_benchmarks_benchmark_ids_get**](DefaultApi.md#results_benchmarks_benchmark_ids_get)                                               | **GET** /results/benchmarks/{benchmark_ids}                          | 
- [**results_campaign_items_benchmark_ids_get**](DefaultApi.md#results_campaign_items_benchmark_ids_get)                                       | **GET** /results/campaign-items/{benchmark_ids}                      | 
- [**results_campaigns_group_ids_get**](DefaultApi.md#results_campaigns_group_ids_get)                                                         | **GET** /results/campaigns/{group_ids}                               | 
- [**results_submissions_submission_id_scenario_scenario_ids_get**](DefaultApi.md#results_submissions_submission_id_scenario_scenario_ids_get) | **GET** /results/submissions/{submission_id}/scenario/{scenario_ids} | 
- [**results_submissions_submission_id_tests_test_ids_get**](DefaultApi.md#results_submissions_submission_id_tests_test_ids_get)               | **GET** /results/submissions/{submission_id}/tests/{test_ids}        | 
- [**results_submissions_submission_id_tests_test_ids_post**](DefaultApi.md#results_submissions_submission_id_tests_test_ids_post)             | **POST** /results/submissions/{submission_id}/tests/{test_ids}       | 
- [**results_submissions_submission_ids_get**](DefaultApi.md#results_submissions_submission_ids_get)                                           | **GET** /results/submissions/{submission_ids}                        | 
- [**submissions_get**](DefaultApi.md#submissions_get)                                                                                         | **GET** /submissions                                                 | 
- [**submissions_post**](DefaultApi.md#submissions_post)                                                                                       | **POST** /submissions                                                | 
- [**submissions_submission_ids_get**](DefaultApi.md#submissions_submission_ids_get)                                                           | **GET** /submissions/{submission_ids}                                | 
- [**submissions_submission_ids_patch**](DefaultApi.md#submissions_submission_ids_patch)                                                       | **PATCH** /submissions/{submission_ids}                              |
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**definitions_benchmark_groups_get**](DefaultApi.md#definitions_benchmark_groups_get) | **GET** /definitions/benchmark-groups | 
+[**definitions_benchmark_groups_group_ids_get**](DefaultApi.md#definitions_benchmark_groups_group_ids_get) | **GET** /definitions/benchmark-groups/{group_ids} | 
+[**definitions_benchmarks_benchmark_ids_get**](DefaultApi.md#definitions_benchmarks_benchmark_ids_get) | **GET** /definitions/benchmarks/{benchmark_ids} | 
+[**definitions_benchmarks_get**](DefaultApi.md#definitions_benchmarks_get) | **GET** /definitions/benchmarks/ | 
+[**definitions_fields_field_ids_get**](DefaultApi.md#definitions_fields_field_ids_get) | **GET** /definitions/fields/{field_ids} | 
+[**definitions_scenarios_scenario_ids_get**](DefaultApi.md#definitions_scenarios_scenario_ids_get) | **GET** /definitions/scenarios/{scenario_ids} | 
+[**definitions_tests_test_ids_get**](DefaultApi.md#definitions_tests_test_ids_get) | **GET** /definitions/tests/{test_ids} | 
+[**health_live_get**](DefaultApi.md#health_live_get) | **GET** /health/live | 
+[**info_get**](DefaultApi.md#info_get) | **GET** /info | 
+[**results_benchmarks_benchmark_id_tests_test_ids_get**](DefaultApi.md#results_benchmarks_benchmark_id_tests_test_ids_get) | **GET** /results/benchmarks/{benchmark_id}/tests/{test_ids} | 
+[**results_benchmarks_benchmark_ids_get**](DefaultApi.md#results_benchmarks_benchmark_ids_get) | **GET** /results/benchmarks/{benchmark_ids} | 
+[**results_campaign_items_benchmark_ids_get**](DefaultApi.md#results_campaign_items_benchmark_ids_get) | **GET** /results/campaign-items/{benchmark_ids} | 
+[**results_campaigns_group_ids_get**](DefaultApi.md#results_campaigns_group_ids_get) | **GET** /results/campaigns/{group_ids} | 
+[**results_submissions_submission_id_scenario_scenario_ids_get**](DefaultApi.md#results_submissions_submission_id_scenario_scenario_ids_get) | **GET** /results/submissions/{submission_id}/scenario/{scenario_ids} | 
+[**results_submissions_submission_id_tests_test_ids_get**](DefaultApi.md#results_submissions_submission_id_tests_test_ids_get) | **GET** /results/submissions/{submission_id}/tests/{test_ids} | 
+[**results_submissions_submission_id_tests_test_ids_post**](DefaultApi.md#results_submissions_submission_id_tests_test_ids_post) | **POST** /results/submissions/{submission_id}/tests/{test_ids} | 
+[**results_submissions_submission_ids_get**](DefaultApi.md#results_submissions_submission_ids_get) | **GET** /results/submissions/{submission_ids} | 
+[**submissions_get**](DefaultApi.md#submissions_get) | **GET** /submissions | 
+[**submissions_post**](DefaultApi.md#submissions_post) | **POST** /submissions | 
+[**submissions_submission_ids_get**](DefaultApi.md#submissions_submission_ids_get) | **GET** /submissions/{submission_ids} | 
+[**submissions_submission_ids_patch**](DefaultApi.md#submissions_submission_ids_patch) | **PATCH** /submissions/{submission_ids} | 
+
 
 # **definitions_benchmark_groups_get**
-
 > DefinitionsBenchmarkGroupsGet200Response definitions_benchmark_groups_get()
 
 Lists benchmark-groups.
@@ -54,11 +54,11 @@ with fab_clientlib.ApiClient(configuration) as api_client:
     api_instance = fab_clientlib.DefaultApi(api_client)
 
     try:
-      api_response = api_instance.definitions_benchmark_groups_get()
-      print("The response of DefaultApi->definitions_benchmark_groups_get:\n")
+        api_response = api_instance.definitions_benchmark_groups_get()
+        print("The response of DefaultApi->definitions_benchmark_groups_get:\n")
         pprint(api_response)
     except Exception as e:
-      print("Exception when calling DefaultApi->definitions_benchmark_groups_get: %s\n" % e)
+        print("Exception when calling DefaultApi->definitions_benchmark_groups_get: %s\n" % e)
 ```
 
 
@@ -89,7 +89,6 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **definitions_benchmark_groups_group_ids_get**
-
 > DefinitionsBenchmarkGroupsGet200Response definitions_benchmark_groups_group_ids_get(group_ids)
 
 Returns benchmark-groups with ID in `group_id`.
@@ -117,11 +116,11 @@ with fab_clientlib.ApiClient(configuration) as api_client:
     group_ids = ['group_ids_example'] # List[str] | Comma-separated list of IDs.
 
     try:
-      api_response = api_instance.definitions_benchmark_groups_group_ids_get(group_ids)
-      print("The response of DefaultApi->definitions_benchmark_groups_group_ids_get:\n")
+        api_response = api_instance.definitions_benchmark_groups_group_ids_get(group_ids)
+        print("The response of DefaultApi->definitions_benchmark_groups_group_ids_get:\n")
         pprint(api_response)
     except Exception as e:
-      print("Exception when calling DefaultApi->definitions_benchmark_groups_group_ids_get: %s\n" % e)
+        print("Exception when calling DefaultApi->definitions_benchmark_groups_group_ids_get: %s\n" % e)
 ```
 
 
@@ -281,12 +280,12 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **definitions_fields_field_ids_get**
-
 > DefinitionsFieldsFieldIdsGet200Response definitions_fields_field_ids_get(field_ids)
 
 Returns fields with ID in `ids`.
 
 ### Example
+
 
 ```python
 import fab_clientlib
@@ -297,28 +296,32 @@ from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = fab_clientlib.Configuration(
-  host="http://localhost"
+    host = "http://localhost"
 )
+
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
-  # Create an instance of the API class
-  api_instance = fab_clientlib.DefaultApi(api_client)
-  field_ids = ['field_ids_example']  # List[str] | Comma-separated list of IDs.
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
+    field_ids = ['field_ids_example'] # List[str] | Comma-separated list of IDs.
 
-  try:
-    api_response = api_instance.definitions_fields_field_ids_get(field_ids)
-    print("The response of DefaultApi->definitions_fields_field_ids_get:\n")
-    pprint(api_response)
-  except Exception as e:
-    print("Exception when calling DefaultApi->definitions_fields_field_ids_get: %s\n" % e)
+    try:
+        api_response = api_instance.definitions_fields_field_ids_get(field_ids)
+        print("The response of DefaultApi->definitions_fields_field_ids_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->definitions_fields_field_ids_get: %s\n" % e)
 ```
+
+
 
 ### Parameters
 
- Name          | Type                    | Description                  | Notes 
----------------|-------------------------|------------------------------|-------
- **field_ids** | [**List[str]**](str.md) | Comma-separated list of IDs. |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **field_ids** | [**List[str]**](str.md)| Comma-separated list of IDs. | 
 
 ### Return type
 
@@ -330,24 +333,24 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
-| Status code | Description       | Response headers |
-|-------------|-------------------|------------------|
- **200**     | Requested fields. | -                |
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Requested fields. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **definitions_scenarios_scenario_ids_get**
-
 > DefinitionsScenariosScenarioIdsGet200Response definitions_scenarios_scenario_ids_get(scenario_ids)
 
 Returns scenarios with ID in `ids`.
 
 ### Example
+
 
 ```python
 import fab_clientlib
@@ -358,28 +361,32 @@ from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = fab_clientlib.Configuration(
-  host="http://localhost"
+    host = "http://localhost"
 )
+
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
-  # Create an instance of the API class
-  api_instance = fab_clientlib.DefaultApi(api_client)
-  scenario_ids = ['scenario_ids_example']  # List[str] | Comma-separated list of IDs.
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
+    scenario_ids = ['scenario_ids_example'] # List[str] | Comma-separated list of IDs.
 
-  try:
-    api_response = api_instance.definitions_scenarios_scenario_ids_get(scenario_ids)
-    print("The response of DefaultApi->definitions_scenarios_scenario_ids_get:\n")
-    pprint(api_response)
-  except Exception as e:
-    print("Exception when calling DefaultApi->definitions_scenarios_scenario_ids_get: %s\n" % e)
+    try:
+        api_response = api_instance.definitions_scenarios_scenario_ids_get(scenario_ids)
+        print("The response of DefaultApi->definitions_scenarios_scenario_ids_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->definitions_scenarios_scenario_ids_get: %s\n" % e)
 ```
+
+
 
 ### Parameters
 
- Name             | Type                    | Description                  | Notes 
-------------------|-------------------------|------------------------------|-------
- **scenario_ids** | [**List[str]**](str.md) | Comma-separated list of IDs. |
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **scenario_ids** | [**List[str]**](str.md)| Comma-separated list of IDs. | 
 
 ### Return type
 
@@ -391,14 +398,14 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
-| Status code | Description          | Response headers |
-|-------------|----------------------|------------------|
- **200**     | Requested scenarios. | -                |
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Requested scenarios. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -529,12 +536,12 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **info_get**
-
 > InfoGet200Response info_get()
 
 Returns info.
 
 ### Example
+
 
 ```python
 import fab_clientlib
@@ -545,21 +552,24 @@ from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = fab_clientlib.Configuration(
-  host="http://localhost"
+    host = "http://localhost"
 )
+
 
 # Enter a context with an instance of the API client
 with fab_clientlib.ApiClient(configuration) as api_client:
-  # Create an instance of the API class
-  api_instance = fab_clientlib.DefaultApi(api_client)
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
 
-  try:
-    api_response = api_instance.info_get()
-    print("The response of DefaultApi->info_get:\n")
-    pprint(api_response)
-  except Exception as e:
-    print("Exception when calling DefaultApi->info_get: %s\n" % e)
+    try:
+        api_response = api_instance.info_get()
+        print("The response of DefaultApi->info_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->info_get: %s\n" % e)
 ```
+
+
 
 ### Parameters
 
@@ -575,14 +585,14 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 ### HTTP response details
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
- **200**     | Info        | -                |
+**200** | Info |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -941,7 +951,7 @@ with fab_clientlib.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fab_clientlib.DefaultApi(api_client)
     submission_id = 'submission_id_example' # str | Submission ID.
-    test_ids = ['test_ids_example']  # List[str] | Comma-separated list of test IDs.
+    test_ids = ['test_ids_example'] # List[str] | Comma-separated list of test IDs.
 
     try:
         api_response = api_instance.results_submissions_submission_id_tests_test_ids_get(submission_id, test_ids)
@@ -956,10 +966,10 @@ with fab_clientlib.ApiClient(configuration) as api_client:
 ### Parameters
 
 
- Name              | Type                    | Description                       | Notes 
--------------------|-------------------------|-----------------------------------|-------
- **submission_id** | **str**                 | Submission ID.                    |
- **test_ids**      | [**List[str]**](str.md) | Comma-separated list of test IDs. |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **submission_id** | **str**| Submission ID. | 
+ **test_ids** | [**List[str]**](str.md)| Comma-separated list of test IDs. | 
 
 ### Return type
 

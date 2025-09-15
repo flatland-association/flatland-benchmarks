@@ -6,8 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **group_id** | **str** | ID of benchmark group. | [optional] 
-**items** | [**List[ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner]**](ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner.md) |  | [optional] 
-**scorings** | **object** | Dictionary of group scores | [optional] 
+**items** | [**List[ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner]**](ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner.md) |  | [optional] 
 
 ## Example
 
