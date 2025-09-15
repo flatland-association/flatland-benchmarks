@@ -234,7 +234,7 @@ def test_submission_roundtrip():
     results_submissions_submission_id_tests_test_ids_post_request=ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest(
       data=[ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
         scenario_id=scenario_id,
-        additional_properties={key: value}
+        scores={key: value}
       ) for scenario_id, test_id, submission_id, key, value in results]
     )
   )

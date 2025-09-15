@@ -6,7 +6,7 @@
     "description": "Python client lib to access Flatland Association Benchmarks / AI4REALNET Campaign Hub Backend API, generated with openapi-generator"
   },
   "paths": {
-    "/benchmark-groups": {
+    "/definitions/benchmark-groups": {
       "get": {
         "description": "Lists benchmark-groups.",
         "responses": {
@@ -61,7 +61,7 @@
         }
       }
     },
-    "/benchmark-groups/{group_ids}": {
+    "/definitions/benchmark-groups/{group_ids}": {
       "get": {
         "description": "Returns benchmark-groups with ID in `group_id`.",
         "parameters": [
@@ -134,13 +134,6 @@
     "/definitions/benchmarks/": {
       "get": {
         "description": "Returns benchmarks.",
-        "security": [
-          {
-            "oauth2": [
-              "user"
-            ]
-          }
-        ],
         "responses": {
           "200": {
             "description": "Benchmarks.",
@@ -199,13 +192,6 @@
     "/definitions/benchmarks/{benchmark_ids}": {
       "get": {
         "description": "Returns tests with ID in `ids`.",
-        "security": [
-          {
-            "oauth2": [
-              "user"
-            ]
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -276,6 +262,68 @@
         }
       }
     },
+    "/definitions/fields/{field_ids}": {
+      "get": {
+        "description": "Returns fields with ID in `ids`.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "field_ids",
+            "description": "Comma-separated list of IDs.",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requested fields.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "dir": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "key": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/health/live": {
       "get": {
         "description": "Returns liveness.",
@@ -327,16 +375,43 @@
         }
       }
     },
+    "/info": {
+      "get": {
+        "description": "Returns info.",
+        "responses": {
+          "200": {
+            "description": "Info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "object",
+                          "properties": {
+                            "version": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/results/submissions/{submission_ids}": {
       "get": {
         "description": "Get aggregated submission overall results.",
-        "security": [
-          {
-            "oauth2": [
-              "user"
-            ]
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -429,13 +504,6 @@
     "/results/submissions/{submission_id}/tests/{test_ids}": {
       "get": {
         "description": "Get submission results aggregated by test.",
-        "security": [
-          {
-            "oauth2": [
-              "user"
-            ]
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -450,7 +518,7 @@
           {
             "in": "path",
             "name": "test_ids",
-            "description": "Comma-separated list of Test IDs.",
+            "description": "Comma-separated list of test IDs.",
             "required": true,
             "schema": {
               "type": "array",
@@ -565,10 +633,13 @@
                           "type": "string",
                           "format": "uuid",
                           "description": "ID of scenario"
+                        },
+                        "scores": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "number"
+                          }
                         }
-                      },
-                      "additionalProperties": {
-                        "type": "number"
                       }
                     }
                   }
@@ -612,13 +683,6 @@
     "/results/submissions/{submission_id}/scenario/{scenario_ids}": {
       "get": {
         "description": "Get submission results for specific scenario.",
-        "security": [
-          {
-            "oauth2": [
-              "user"
-            ]
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -687,13 +751,6 @@
     "/results/benchmarks/{benchmark_ids}": {
       "get": {
         "description": "Get benchmark leaderboard.",
-        "security": [
-          {
-            "oauth2": [
-              "user"
-            ]
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -799,13 +856,6 @@
     "/results/campaign-items/{benchmark_ids}": {
       "get": {
         "description": "Returns campaign-item overviews (i.e. all tests in benchmark with score of top submission per test).",
-        "security": [
-          {
-            "oauth2": [
-              "user"
-            ]
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -882,13 +932,6 @@
     "/results/campaigns/{group_ids}": {
       "get": {
         "description": "Returns campaign overviews (i.e. all benchmarks in the group with score aggregated from their top submission per test).",
-        "security": [
-          {
-            "oauth2": [
-              "user"
-            ]
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -982,13 +1025,6 @@
     "/results/benchmarks/{benchmark_id}/tests/{test_ids}": {
       "get": {
         "description": "Get test leaderboard.",
-        "security": [
-          {
-            "oauth2": [
-              "user"
-            ]
-          }
-        ],
         "parameters": [
           {
             "in": "path",
@@ -1101,6 +1137,68 @@
         }
       }
     },
+    "/definitions/scenarios/{scenario_ids}": {
+      "get": {
+        "description": "Returns scenarios with ID in `ids`.",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "scenario_ids",
+            "description": "Comma-separated list of IDs.",
+            "required": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Requested scenarios.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "dir": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "name": {
+                                "type": "string"
+                              },
+                              "description": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/submissions": {
       "post": {
         "description": "Inserts new submission.",
@@ -1183,6 +1281,7 @@
       "get": {
         "description": "Lists all published submissions.",
         "security": [
+          {},
           {
             "oauth2": [
               "user"
@@ -1290,6 +1389,7 @@
       "get": {
         "description": "Get submissions.",
         "security": [
+          {},
           {
             "oauth2": [
               "user"
@@ -1485,13 +1585,6 @@
     "/definitions/tests/{test_ids}": {
       "get": {
         "description": "Returns tests with ID in `ids`.",
-        "security": [
-          {
-            "oauth2": [
-              "user"
-            ]
-          }
-        ],
         "parameters": [
           {
             "in": "path",

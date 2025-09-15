@@ -15,10 +15,11 @@
 
 import unittest
 
-from fab_clientlib.models.benchmark_groups_get200_response import BenchmarkGroupsGet200Response
+from fab_clientlib.models.definitions_fields_field_ids_get200_response import DefinitionsFieldsFieldIdsGet200Response
 
-class TestBenchmarkGroupsGet200Response(unittest.TestCase):
-    """BenchmarkGroupsGet200Response unit test stubs"""
+
+class TestDefinitionsFieldsFieldIdsGet200Response(unittest.TestCase):
+    """DefinitionsFieldsFieldIdsGet200Response unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,36 +27,33 @@ class TestBenchmarkGroupsGet200Response(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> BenchmarkGroupsGet200Response:
-        """Test BenchmarkGroupsGet200Response
+    def make_instance(self, include_optional) -> DefinitionsFieldsFieldIdsGet200Response:
+        """Test DefinitionsFieldsFieldIdsGet200Response
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `BenchmarkGroupsGet200Response`
+        # uncomment below to create an instance of `DefinitionsFieldsFieldIdsGet200Response`
         """
-        model = BenchmarkGroupsGet200Response()
+        model = DefinitionsFieldsFieldIdsGet200Response()
         if include_optional:
-            return BenchmarkGroupsGet200Response(
+            return DefinitionsFieldsFieldIdsGet200Response(
                 error = fab_clientlib.models.api_response_error.ApiResponse_error(
                     text = '', ),
                 body = [
-                    fab_clientlib.models._benchmark_groups_get_200_response_all_of_body_inner._benchmark_groups_get_200_response_allOf_body_inner(
-                        id = '', 
-                        name = '', 
-                        description = '', 
-                        setup = '', 
-                        benchmark_ids = [
-                            ''
-                            ], )
+                    fab_clientlib.models._definitions_fields__field_ids__get_200_response_all_of_body_inner._definitions_fields__field_ids__get_200_response_allOf_body_inner(
+                        dir = '',
+                        id = '',
+                        key = '',
+                        description = '', )
                     ]
             )
         else:
-            return BenchmarkGroupsGet200Response(
+            return DefinitionsFieldsFieldIdsGet200Response(
         )
         """
 
-    def testBenchmarkGroupsGet200Response(self):
-        """Test BenchmarkGroupsGet200Response"""
+    def testDefinitionsFieldsFieldIdsGet200Response(self):
+        """Test DefinitionsFieldsFieldIdsGet200Response"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 
