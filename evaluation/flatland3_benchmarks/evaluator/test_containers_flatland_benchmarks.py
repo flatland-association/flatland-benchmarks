@@ -11,10 +11,11 @@ import pandas as pd
 import pytest
 from celery import Celery
 from dotenv import dotenv_values
+from oauthlib.oauth2 import BackendApplicationClient
+from requests_oauthlib import OAuth2Session
 from testcontainers.compose import DockerCompose
 
 from fab_clientlib import DefaultApi, ApiClient, Configuration
-from fab_oauth_utils import backend_application_flow
 
 TRACE = 5
 logger = logging.getLogger(__name__)
@@ -221,3 +222,24 @@ def test_failing_run():
   with pytest.raises(Exception) as exc_info:
     run_task('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', submission_id, "asdfasdf")
     assert str(exc_info.value).startswith(f"Failed execution ['sudo', 'docker', 'run', '--name', 'flatland3-submission-{submission_id}'")
+
+
+def backend_application_flow(
+  client_id='fab',
+  client_secret='top-secret',
+  token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token'
+):
+  """
+  Resource Owner Client Credentials Grant Type (grant_type=client_credentials) flow aka. Backend Application Flow.
+  https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#backend-application-flow
+  """
+  # Create OAuth session
+  client = BackendApplicationClient(client_id=client_id)
+  oauth = OAuth2Session(client=client)
+  # After user authorization, fetch token
+  token = oauth.fetch_token(
+    token_url,
+    client_id=client_id,
+    client_secret=client_secret,
+  )
+  return token

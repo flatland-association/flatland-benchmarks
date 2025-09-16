@@ -12,10 +12,11 @@ import boto3
 import celery.exceptions
 import numpy as np
 import pandas as pd
+from oauthlib.oauth2 import BackendApplicationClient
+from requests_oauthlib import OAuth2Session
 
 from fab_clientlib import DefaultApi, ApiClient, Configuration, ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest, \
   ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
-from fab_oauth_utils import backend_application_flow
 
 logger = logging.getLogger(__name__)
 
@@ -131,3 +132,24 @@ class FlatlandBenchmarksOrchestrator:
   def run_flatland(self, test_runner_evaluator_image, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key,
                    s3_bucket, s3_upload_path_template, s3_upload_path_template_use_submission_id, **kwargs):
     raise NotImplementedError()
+
+
+def backend_application_flow(
+  client_id='fab',
+  client_secret='top-secret',
+  token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token'
+):
+  """
+  Resource Owner Client Credentials Grant Type (grant_type=client_credentials) flow aka. Backend Application Flow.
+  https://requests-oauthlib.readthedocs.io/en/latest/oauth2_workflow.html#backend-application-flow
+  """
+  # Create OAuth session
+  client = BackendApplicationClient(client_id=client_id)
+  oauth = OAuth2Session(client=client)
+  # After user authorization, fetch token
+  token = oauth.fetch_token(
+    token_url,
+    client_id=client_id,
+    client_secret=client_secret,
+  )
+  return token
