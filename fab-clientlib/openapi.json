@@ -451,8 +451,11 @@
                                 "description": "ID of submission."
                               },
                               "scorings": {
-                                "type": "object",
-                                "description": "Dictionary of submission scores."
+                                "type": "array",
+                                "description": "Submission scores.",
+                                "items": {
+                                  "$ref": "#/components/schemas/Scoring"
+                                }
                               },
                               "test_scorings": {
                                 "type": "array",
@@ -465,8 +468,11 @@
                                       "description": "ID of test."
                                     },
                                     "scorings": {
-                                      "type": "object",
-                                      "description": "Dictionary of test scores."
+                                      "type": "array",
+                                      "description": "Test scores.",
+                                      "items": {
+                                        "$ref": "#/components/schemas/Scoring"
+                                      }
                                     },
                                     "scenario_scorings": {
                                       "type": "array",
@@ -479,8 +485,11 @@
                                             "description": "ID of scenario."
                                           },
                                           "scorings": {
-                                            "type": "object",
-                                            "description": "Dictionary of scores."
+                                            "type": "array",
+                                            "description": "Scenario scores.",
+                                            "items": {
+                                              "$ref": "#/components/schemas/Scoring"
+                                            }
                                           }
                                         }
                                       }
@@ -551,8 +560,11 @@
                               "description": "ID of test."
                             },
                             "scorings": {
-                              "type": "object",
-                              "description": "Dictionary of test scores."
+                              "type": "array",
+                              "description": "Test scores.",
+                              "items": {
+                                "$ref": "#/components/schemas/Scoring"
+                              }
                             },
                             "scenario_scorings": {
                               "type": "array",
@@ -565,8 +577,11 @@
                                     "description": "ID of scenario."
                                   },
                                   "scorings": {
-                                    "type": "object",
-                                    "description": "Dictionary of scores."
+                                    "type": "array",
+                                    "description": "Scenario scores.",
+                                    "items": {
+                                      "$ref": "#/components/schemas/Scoring"
+                                    }
                                   }
                                 }
                               }
@@ -732,8 +747,11 @@
                                 "description": "ID of scenario."
                               },
                               "scorings": {
-                                "type": "object",
-                                "description": "Dictionary of scores."
+                                "type": "array",
+                                "description": "Scenario scores.",
+                                "items": {
+                                  "$ref": "#/components/schemas/Scoring"
+                                }
                               }
                             }
                           }
@@ -800,8 +818,11 @@
                                       "description": "ID of submission."
                                     },
                                     "scorings": {
-                                      "type": "object",
-                                      "description": "Dictionary of submission scores."
+                                      "type": "array",
+                                      "description": "Submission scores.",
+                                      "items": {
+                                        "$ref": "#/components/schemas/Scoring"
+                                      }
                                     },
                                     "test_scorings": {
                                       "type": "array",
@@ -814,8 +835,11 @@
                                             "description": "ID of test."
                                           },
                                           "scorings": {
-                                            "type": "object",
-                                            "description": "Dictionary of test scores."
+                                            "type": "array",
+                                            "description": "Test scores.",
+                                            "items": {
+                                              "$ref": "#/components/schemas/Scoring"
+                                            }
                                           },
                                           "scenario_scorings": {
                                             "type": "array",
@@ -828,8 +852,11 @@
                                                   "description": "ID of scenario."
                                                 },
                                                 "scorings": {
-                                                  "type": "object",
-                                                  "description": "Dictionary of scores."
+                                                  "type": "array",
+                                                  "description": "Scenario scores.",
+                                                  "items": {
+                                                    "$ref": "#/components/schemas/Scoring"
+                                                  }
                                                 }
                                               }
                                             }
@@ -905,8 +932,11 @@
                                       "description": "ID of test."
                                     },
                                     "scorings": {
-                                      "type": "object",
-                                      "description": "Dictionary of test scores (best submission only)."
+                                      "type": "array",
+                                      "description": "Test scores (best submission only).",
+                                      "items": {
+                                        "$ref": "#/components/schemas/Scoring"
+                                      }
                                     },
                                     "submission_id": {
                                       "type": "string",
@@ -991,8 +1021,11 @@
                                             "description": "ID of test."
                                           },
                                           "scorings": {
-                                            "type": "object",
-                                            "description": "Dictionary of test scores (best submission only)."
+                                            "type": "array",
+                                            "description": "Test scores (best submission only).",
+                                            "items": {
+                                              "$ref": "#/components/schemas/Scoring"
+                                            }
                                           },
                                           "submission_id": {
                                             "type": "string",
@@ -1001,13 +1034,16 @@
                                           }
                                         }
                                       }
+                                    },
+                                    "scorings": {
+                                      "type": "array",
+                                      "description": "Campaign item scores.",
+                                      "items": {
+                                        "$ref": "#/components/schemas/Scoring"
+                                      }
                                     }
                                   }
                                 }
-                              },
-                              "scorings": {
-                                "type": "object",
-                                "description": "Dictionary of group scores"
                               }
                             }
                           }
@@ -1084,8 +1120,11 @@
                                       "description": "ID of submission."
                                     },
                                     "scorings": {
-                                      "type": "object",
-                                      "description": "Dictionary of submission scores."
+                                      "type": "array",
+                                      "description": "Submission scores.",
+                                      "items": {
+                                        "$ref": "#/components/schemas/Scoring"
+                                      }
                                     },
                                     "test_scorings": {
                                       "type": "array",
@@ -1098,8 +1137,11 @@
                                             "description": "ID of test."
                                           },
                                           "scorings": {
-                                            "type": "object",
-                                            "description": "Dictionary of test scores."
+                                            "type": "array",
+                                            "description": "Test scores.",
+                                            "items": {
+                                              "$ref": "#/components/schemas/Scoring"
+                                            }
                                           },
                                           "scenario_scorings": {
                                             "type": "array",
@@ -1112,8 +1154,11 @@
                                                   "description": "ID of scenario."
                                                 },
                                                 "scorings": {
-                                                  "type": "object",
-                                                  "description": "Dictionary of scores."
+                                                  "type": "array",
+                                                  "description": "Scenario scores.",
+                                                  "items": {
+                                                    "$ref": "#/components/schemas/Scoring"
+                                                  }
                                                 }
                                               }
                                             }
@@ -1663,6 +1708,36 @@
                 "type": "string"
               }
             }
+          }
+        }
+      },
+      "Scoring": {
+        "properties": {
+          "field_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of field definition."
+          },
+          "field_key": {
+            "type": "string",
+            "description": "Key of field."
+          },
+          "score": {
+            "type": "number",
+            "nullable": true,
+            "description": "Numerical score."
+          },
+          "rank": {
+            "type": "number",
+            "description": "Item's rank in category."
+          },
+          "highest": {
+            "type": "number",
+            "description": "Highest score in category."
+          },
+          "lowest": {
+            "type": "number",
+            "description": "Lowest score in category."
           }
         }
       }

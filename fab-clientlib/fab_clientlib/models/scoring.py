@@ -14,24 +14,29 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
-
-from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List, Optional
-from fab_clientlib.models.api_response_error import ApiResponseError
-from fab_clientlib.models.benchmark_groups_get200_response_all_of_body_inner import BenchmarkGroupsGet200ResponseAllOfBodyInner
+from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
+from uuid import UUID
+
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing_extensions import Self
 
-class BenchmarkGroupsGet200Response(BaseModel):
+
+class Scoring(BaseModel):
     """
-    BenchmarkGroupsGet200Response
+    Scoring
     """ # noqa: E501
-    error: Optional[ApiResponseError] = None
-    body: Optional[List[BenchmarkGroupsGet200ResponseAllOfBodyInner]] = None
-    __properties: ClassVar[List[str]] = ["error", "body"]
+    field_id: Optional[UUID] = Field(default=None, description="ID of field definition.")
+    field_key: Optional[StrictStr] = Field(default=None, description="Key of field.")
+    score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Numerical score.")
+    rank: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Item's rank in category.")
+    highest: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Highest score in category.")
+    lowest: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Lowest score in category.")
+    __properties: ClassVar[List[str]] = ["field_id", "field_key", "score", "rank", "highest", "lowest"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -51,7 +56,7 @@ class BenchmarkGroupsGet200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of BenchmarkGroupsGet200Response from a JSON string"""
+        """Create an instance of Scoring from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -72,21 +77,16 @@ class BenchmarkGroupsGet200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of error
-        if self.error:
-            _dict['error'] = self.error.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in body (list)
-        _items = []
-        if self.body:
-            for _item_body in self.body:
-                if _item_body:
-                    _items.append(_item_body.to_dict())
-            _dict['body'] = _items
+        # set to None if score (nullable) is None
+        # and model_fields_set contains the field
+        if self.score is None and "score" in self.model_fields_set:
+            _dict['score'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of BenchmarkGroupsGet200Response from a dict"""
+        """Create an instance of Scoring from a dict"""
         if obj is None:
             return None
 
@@ -94,8 +94,12 @@ class BenchmarkGroupsGet200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "error": ApiResponseError.from_dict(obj["error"]) if obj.get("error") is not None else None,
-            "body": [BenchmarkGroupsGet200ResponseAllOfBodyInner.from_dict(_item) for _item in obj["body"]] if obj.get("body") is not None else None
+            "field_id": obj.get("field_id"),
+            "field_key": obj.get("field_key"),
+            "score": obj.get("score"),
+            "rank": obj.get("rank"),
+            "highest": obj.get("highest"),
+            "lowest": obj.get("lowest")
         })
         return _obj
 

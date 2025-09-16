@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **test_id** | **str** | ID of test. | [optional] 
-**scorings** | **object** | Dictionary of test scores. | [optional] 
+**scorings** | [**List[Scoring]**](Scoring.md) | Test scores. | [optional] 
 **scenario_scorings** | [**List[ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner]**](ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner.md) |  | [optional] 
 
 ## Example
