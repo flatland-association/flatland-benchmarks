@@ -55,11 +55,8 @@ export class CampaignOverviewComponent implements OnInit, OnChanges {
               params: { benchmark_ids: item.benchmark_id },
             })
           )?.at(0)
-          // TOFIX: in campaign, the relevant field ids are stored in
-          // campaign_field_ids, which needs to be included
-          // see: https://github.com/flatland-association/flatland-benchmarks/issues/364
           const fields = await this.resourceService.loadOrdered('/definitions/fields/:field_ids', {
-            params: { field_ids: benchmark?.field_ids ?? [] },
+            params: { field_ids: benchmark?.campaign_field_ids ?? [] },
           })
           return {
             routerLink: ['/', 'benchmarks', this.group!.id, item.benchmark_id],
