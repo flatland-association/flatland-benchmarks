@@ -2,7 +2,7 @@ name: Checks
 
 env:
   # DEPENDENCY SWITCH:
-  ai4realnet-orchestrators-ref: 'feature/integration-api-changes'
+  ai4realnet-orchestrators-ref: 'main'
 
 on:
   workflow_dispatch:
