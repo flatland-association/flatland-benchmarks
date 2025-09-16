@@ -3,6 +3,25 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.12.2](https://github.com/flatland-association/flatland-benchmarks/compare/v0.12.1...v0.12.2) (2025-09-16)
+
+
+### Features
+
+* Change interface PostTestResultsBody ([#419](https://github.com/flatland-association/flatland-benchmarks/issues/419)) ([952736f](https://github.com/flatland-association/flatland-benchmarks/commit/952736f16db5885fec74471e0c8c58a84c3fbff4))
+* Change interface Scorings ([86a6654](https://github.com/flatland-association/flatland-benchmarks/commit/86a66540aa0423226695f92a14531595908062a9))
+* Change route visibility ([#415](https://github.com/flatland-association/flatland-benchmarks/issues/415)) ([267088c](https://github.com/flatland-association/flatland-benchmarks/commit/267088c45a4fe275d450a0c6b28a4c35dfb173f5))
+
+
+### Bug Fixes
+
+* Endpoint plurals ([374e019](https://github.com/flatland-association/flatland-benchmarks/commit/374e019a922efcf9d81ff3037d5ff8c35c64d3eb))
+
+
+### Miscellaneous Chores
+
+* release 0.12.2 ([3a1faae](https://github.com/flatland-association/flatland-benchmarks/commit/3a1faaefcda7d5ff6b129e61ecdd9096b38f68c4))
+
 ## [0.12.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.12.0...v0.12.1) (2025-09-12)
 
 
