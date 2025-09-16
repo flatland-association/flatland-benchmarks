@@ -77,7 +77,7 @@ def gen_domain_orchestrator(data, domain):
         scenario_ids = [f"'{scenario_id}'" for scenario_id in test["scenarios"].keys()]
         if test["QUEUE"] == domain:
           s += f"""
-        // {test['TEST_NAME']}
+        # {test['TEST_NAME']}
         "{test_id}": TestRunner_{sanitize_string_for_python_name(test['TEST_KPI'])}_{sanitize_string_for_python_name(test['QUEUE'])}(
             test_id="{test_id}", scenario_ids=[{', '.join(scenario_ids)}]
         ),
