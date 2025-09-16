@@ -3,6 +3,19 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.13.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.12.2...v0.13.0) (2025-09-16)
+
+
+### Features
+
+* **frontend:** Render descriptions as html ([#426](https://github.com/flatland-association/flatland-benchmarks/issues/426)) ([02ba6bf](https://github.com/flatland-association/flatland-benchmarks/commit/02ba6bf3bbc6605b1610fecc04ad3ed91d17a603))
+
+
+### Bug Fixes
+
+* campaign fields not included in returned benchmark definitions ([29c084a](https://github.com/flatland-association/flatland-benchmarks/commit/29c084a08e51ca8b13125fa4982fb318457332f0))
+* gen ai4realnet benchmarks SQL. ([#430](https://github.com/flatland-association/flatland-benchmarks/issues/430)) ([f1fa68b](https://github.com/flatland-association/flatland-benchmarks/commit/f1fa68b3d001dacefc55e55cf8210f89c3b8f7d2))
+
 ## [0.12.2](https://github.com/flatland-association/flatland-benchmarks/compare/v0.12.1...v0.12.2) (2025-09-16)
 
 
