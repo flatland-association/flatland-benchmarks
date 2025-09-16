@@ -142,8 +142,8 @@ export class ResultsController extends Controller {
    *                          scorings:
    *                            type: array
    *                            description: Test scores.
-   *                          items:
-   *                            $ref: "#/components/schemas/Scoring"
+   *                            items:
+   *                              $ref: "#/components/schemas/Scoring"
    *                          scenario_scorings:
    *                            type: array
    *                            items:
@@ -156,8 +156,8 @@ export class ResultsController extends Controller {
    *                                scorings:
    *                                  type: array
    *                                  description: Scenario scores.
-   *                                items:
-   *                                  $ref: "#/components/schemas/Scoring"
+   *                                  items:
+   *                                    $ref: "#/components/schemas/Scoring"
    */
   getTestResults: GetHandler<'/results/submissions/:submission_id/tests/:test_ids'> = async (req, res) => {
     const submissionId = req.params.submission_id
