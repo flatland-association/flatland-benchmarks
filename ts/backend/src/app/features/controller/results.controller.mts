@@ -268,10 +268,10 @@ export class ResultsController extends Controller {
     } catch (error) {
       logger.error(error)
       this.requestError(req, res, { text: 'Some results could not be inserted, transaction aborted.' })
-      logger.error(req.body.data)
-      logger.error(req.body)
-      logger.error(sql.notices)
-      logger.error(sql.statements)
+      logger.error(`${error} req.body.data=${req.body.data}`)
+      logger.error(`${error} req.body=${req.body}`)
+      logger.error(`${error} sql.notices=${sql.notices}`)
+      logger.error(`${error} sql.statements=${sql.statements}`)
     }
   }
 
