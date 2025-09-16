@@ -15,7 +15,7 @@ export class ResultsController extends Controller {
     this.attachGet('/results/submissions/:submission_ids', this.getSubmissionResults)
     this.attachGet('/results/submissions/:submission_id/tests/:test_ids', this.getTestResults)
     this.attachPost('/results/submissions/:submission_id/tests/:test_ids', this.postTestResults)
-    this.attachGet('/results/submissions/:submission_id/scenario/:scenario_ids', this.getScenarioResults)
+    this.attachGet('/results/submissions/:submission_id/scenarios/:scenario_ids', this.getScenarioResults)
     this.attachGet('/results/benchmarks/:benchmark_ids', this.getLeaderboard)
     this.attachGet('/results/campaign-items/:benchmark_ids', this.getCampaignItemOverview)
     this.attachGet('/results/campaigns/:group_ids', this.getCampaignOverview)
@@ -131,40 +131,40 @@ export class ResultsController extends Controller {
    *                - type: object
    *                  properties:
    *                    body:
-   *                      type: object
-   *                      properties:
-   *                        test_id:
-   *                          type: string
-   *                          format: uuid
-   *                          description: ID of test.
-   *                        scorings:
-   *                          type: array
-   *                          description: Test scores.
-   *                          items:
-   *                            $ref: "#/components/schemas/Scoring"
-   *                        scenario_scorings:
-   *                          type: array
-   *                          items:
-   *                            type: object
-   *                            properties:
-   *                              scenario_id:
-   *                               type: string
-   *                               format: uuid
-   *                               description: ID of scenario.
-   *                              scorings:
-   *                                type: array
-   *                                description: Scenario scores.
-   *                                items:
-   *                                  $ref: "#/components/schemas/Scoring"
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          test_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of test.
+   *                          scorings:
+   *                            type: array
+   *                            description: Test scores.
+   *                            items:
+   *                              $ref: "#/components/schemas/Scoring"
+   *                          scenario_scorings:
+   *                            type: array
+   *                            items:
+   *                              type: object
+   *                              properties:
+   *                                scenario_id:
+   *                                 type: string
+   *                                 format: uuid
+   *                                 description: ID of scenario.
+   *                                scorings:
+   *                                  type: array
+   *                                  description: Scenario scores.
+   *                                  items:
+   *                                    $ref: "#/components/schemas/Scoring"
    */
   getTestResults: GetHandler<'/results/submissions/:submission_id/tests/:test_ids'> = async (req, res) => {
     const submissionId = req.params.submission_id
     const testIds = req.params.test_ids.split(',')
 
     const aggregator = AggregatorService.getInstance()
-    // TOFIX: should return whole array
-    // https://github.com/flatland-association/flatland-benchmarks/issues/352
-    const [score] = await aggregator.getSubmissionTestScore(submissionId, testIds)
+    const score = await aggregator.getSubmissionTestScore(submissionId, testIds)
     this.respond(req, res, score)
   }
 
@@ -277,7 +277,7 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}/scenario/{scenario_ids}:
+   * /results/submissions/{submission_id}/scenarios/{scenario_ids}:
    *  get:
    *    description: Get submission results for specific scenario.
    *    parameters:
@@ -322,7 +322,7 @@ export class ResultsController extends Controller {
    *                            items:
    *                              $ref: "#/components/schemas/Scoring"
    */
-  getScenarioResults: GetHandler<'/results/submissions/:submission_id/scenario/:scenario_ids'> = async (req, res) => {
+  getScenarioResults: GetHandler<'/results/submissions/:submission_id/scenarios/:scenario_ids'> = async (req, res) => {
     const submissionId = req.params.submission_id
     const scenarioIds = req.params.scenario_ids.split(',')
 

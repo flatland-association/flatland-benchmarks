@@ -33,8 +33,8 @@ from fab_clientlib import rest
 from fab_clientlib.api_response import ApiResponse, T as ApiResponseT
 from fab_clientlib.configuration import Configuration
 from fab_clientlib.exceptions import (
-  ApiValueError,
-  ApiException
+    ApiValueError,
+    ApiException
 )
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]

@@ -17,6 +17,7 @@ import unittest
 
 from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_get200_response import ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response
 
+
 class TestResultsSubmissionsSubmissionIdTestsTestIdsGet200Response(unittest.TestCase):
     """ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response unit test stubs"""
 
@@ -38,14 +39,23 @@ class TestResultsSubmissionsSubmissionIdTestsTestIdsGet200Response(unittest.Test
             return ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response(
                 error = fab_clientlib.models.api_response_error.ApiResponse_error(
                     text = '', ),
-                body = fab_clientlib.models._results_submissions__submission_ids__get_200_response_all_of_body_inner_test_scorings_inner._results_submissions__submission_ids__get_200_response_allOf_body_inner_test_scorings_inner(
-                    test_id = '', 
-                    scorings = fab_clientlib.models.scorings.scorings(), 
-                    scenario_scorings = [
-                        fab_clientlib.models._results_submissions__submission_ids__get_200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner._results_submissions__submission_ids__get_200_response_allOf_body_inner_test_scorings_inner_scenario_scorings_inner(
-                            scenario_id = '', 
-                            scorings = fab_clientlib.models.scorings.scorings(), )
-                        ], )
+                body = [
+                    fab_clientlib.models._results_submissions__submission_ids__get_200_response_all_of_body_inner_test_scorings_inner._results_submissions__submission_ids__get_200_response_allOf_body_inner_test_scorings_inner(
+                        test_id = '',
+                        scorings = [
+                            fab_clientlib.models.scoring.Scoring(
+                                field_id = '',
+                                field_key = '',
+                                score = 1.337,
+                                rank = 1.337,
+                                highest = 1.337,
+                                lowest = 1.337, )
+                            ],
+                        scenario_scorings = [
+                            fab_clientlib.models._results_submissions__submission_ids__get_200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner._results_submissions__submission_ids__get_200_response_allOf_body_inner_test_scorings_inner_scenario_scorings_inner(
+                                scenario_id = '', )
+                            ], )
+                    ]
             )
         else:
             return ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response(

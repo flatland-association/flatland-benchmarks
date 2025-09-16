@@ -96,7 +96,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**results_benchmarks_benchmark_ids_get**](docs/DefaultApi.md#results_benchmarks_benchmark_ids_get) | **GET** /results/benchmarks/{benchmark_ids} | 
 *DefaultApi* | [**results_campaign_items_benchmark_ids_get**](docs/DefaultApi.md#results_campaign_items_benchmark_ids_get) | **GET** /results/campaign-items/{benchmark_ids} | 
 *DefaultApi* | [**results_campaigns_group_ids_get**](docs/DefaultApi.md#results_campaigns_group_ids_get) | **GET** /results/campaigns/{group_ids} | 
-*DefaultApi* | [**results_submissions_submission_id_scenario_scenario_ids_get**](docs/DefaultApi.md#results_submissions_submission_id_scenario_scenario_ids_get) | **GET** /results/submissions/{submission_id}/scenario/{scenario_ids} | 
+*DefaultApi* | [**results_submissions_submission_id_scenarios_scenario_ids_get**](docs/DefaultApi.md#results_submissions_submission_id_scenarios_scenario_ids_get) | **GET** /results/submissions/{submission_id}/scenarios/{scenario_ids} | 
 *DefaultApi* | [**results_submissions_submission_id_tests_test_ids_get**](docs/DefaultApi.md#results_submissions_submission_id_tests_test_ids_get) | **GET** /results/submissions/{submission_id}/tests/{test_ids} | 
 *DefaultApi* | [**results_submissions_submission_id_tests_test_ids_post**](docs/DefaultApi.md#results_submissions_submission_id_tests_test_ids_post) | **POST** /results/submissions/{submission_id}/tests/{test_ids} | 
 *DefaultApi* | [**results_submissions_submission_ids_get**](docs/DefaultApi.md#results_submissions_submission_ids_get) | **GET** /results/submissions/{submission_ids} | 
@@ -133,7 +133,7 @@ Class | Method | HTTP request | Description
  - [ResultsCampaignsGroupIdsGet200Response](docs/ResultsCampaignsGroupIdsGet200Response.md)
  - [ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner](docs/ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner.md)
  - [ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner](docs/ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner.md)
- - [ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response](docs/ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response.md)
+ - [ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response](docs/ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response.md)
  - [ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response](docs/ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response.md)
  - [ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest](docs/ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest.md)
  - [ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner](docs/ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner.md)

@@ -105,8 +105,8 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
-    def test_results_submissions_submission_id_scenario_scenario_ids_get(self) -> None:
-        """Test case for results_submissions_submission_id_scenario_scenario_ids_get
+    def test_results_submissions_submission_id_scenarios_scenario_ids_get(self) -> None:
+        """Test case for results_submissions_submission_id_scenarios_scenario_ids_get
 
         """
         pass

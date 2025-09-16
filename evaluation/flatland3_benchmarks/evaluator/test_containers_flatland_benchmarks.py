@@ -205,14 +205,14 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
     print("results_uploaded")
     print(test_results)
     for i in range(len(primary_scenario_scores)):
-      assert test_results.body.scenario_scorings[i].scorings[0].field_key == "normalized_reward"
-      assert test_results.body.scenario_scorings[i].scorings[0].score == primary_scenario_scores[i]
-      assert test_results.body.scenario_scorings[i].scorings[1].field_key == "percentage_complete"
-      assert test_results.body.scenario_scorings[i].scorings[1].score == secondary_scenario_scores[i]
-    assert test_results.body.scorings[0].field_key == "sum_normalized_reward"
-    assert test_results.body.scorings[0].score == primary_test_score
-    assert test_results.body.scorings[1].field_key == "mean_percentage_complete"
-    assert test_results.body.scorings[1].score == secondary_test_score
+      assert test_results.body[0].scenario_scorings[i].scorings[0].field_key == "normalized_reward"
+      assert test_results.body[0].scenario_scorings[i].scorings[0].score == primary_scenario_scores[i]
+      assert test_results.body[0].scenario_scorings[i].scorings[1].field_key == "percentage_complete"
+      assert test_results.body[0].scenario_scorings[i].scorings[1].score == secondary_scenario_scores[i]
+    assert test_results.body[0].scorings[0].field_key == "sum_normalized_reward"
+    assert test_results.body[0].scorings[0].score == primary_test_score
+    assert test_results.body[0].scorings[1].field_key == "mean_percentage_complete"
+    assert test_results.body[0].scorings[1].score == secondary_test_score
 
 
 @pytest.mark.usefixtures("test_containers_fixture")

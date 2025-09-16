@@ -17,6 +17,7 @@ import unittest
 
 from fab_clientlib.models.results_campaigns_group_ids_get200_response_all_of_body_inner import ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner
 
+
 class TestResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner(unittest.TestCase):
     """ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner unit test stubs"""
 
@@ -38,16 +39,32 @@ class TestResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner(unittest.TestCase
             return ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner(
                 group_id = '',
                 items = [
-                    fab_clientlib.models._results_campaign_items__benchmark_ids__get_200_response_all_of_body_inner._results_campaign_items__benchmark_ids__get_200_response_allOf_body_inner(
-                        benchmark_id = '', 
+                    fab_clientlib.models._results_campaigns__group_ids__get_200_response_all_of_body_inner_items_inner._results_campaigns__group_ids__get_200_response_allOf_body_inner_items_inner(
+                        benchmark_id = '',
                         items = [
                             fab_clientlib.models._results_campaign_items__benchmark_ids__get_200_response_all_of_body_inner_items_inner._results_campaign_items__benchmark_ids__get_200_response_allOf_body_inner_items_inner(
-                                test_id = '', 
-                                scorings = fab_clientlib.models.scorings.scorings(), 
+                                test_id = '',
+                                scorings = [
+                                    fab_clientlib.models.scoring.Scoring(
+                                        field_id = '',
+                                        field_key = '',
+                                        score = 1.337,
+                                        rank = 1.337,
+                                        highest = 1.337,
+                                        lowest = 1.337, )
+                                    ],
                                 submission_id = '', )
+                            ],
+                        scorings = [
+                            fab_clientlib.models.scoring.Scoring(
+                                field_id = '',
+                                field_key = '',
+                                score = 1.337,
+                                rank = 1.337,
+                                highest = 1.337,
+                                lowest = 1.337, )
                             ], )
-                    ],
-                scorings = None
+                    ]
             )
         else:
             return ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner(

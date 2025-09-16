@@ -17,7 +17,7 @@ Method | HTTP request | Description
 [**results_benchmarks_benchmark_ids_get**](DefaultApi.md#results_benchmarks_benchmark_ids_get) | **GET** /results/benchmarks/{benchmark_ids} | 
 [**results_campaign_items_benchmark_ids_get**](DefaultApi.md#results_campaign_items_benchmark_ids_get) | **GET** /results/campaign-items/{benchmark_ids} | 
 [**results_campaigns_group_ids_get**](DefaultApi.md#results_campaigns_group_ids_get) | **GET** /results/campaigns/{group_ids} | 
-[**results_submissions_submission_id_scenario_scenario_ids_get**](DefaultApi.md#results_submissions_submission_id_scenario_scenario_ids_get) | **GET** /results/submissions/{submission_id}/scenario/{scenario_ids} | 
+[**results_submissions_submission_id_scenarios_scenario_ids_get**](DefaultApi.md#results_submissions_submission_id_scenarios_scenario_ids_get) | **GET** /results/submissions/{submission_id}/scenarios/{scenario_ids} | 
 [**results_submissions_submission_id_tests_test_ids_get**](DefaultApi.md#results_submissions_submission_id_tests_test_ids_get) | **GET** /results/submissions/{submission_id}/tests/{test_ids} | 
 [**results_submissions_submission_id_tests_test_ids_post**](DefaultApi.md#results_submissions_submission_id_tests_test_ids_post) | **POST** /results/submissions/{submission_id}/tests/{test_ids} | 
 [**results_submissions_submission_ids_get**](DefaultApi.md#results_submissions_submission_ids_get) | **GET** /results/submissions/{submission_ids} | 
@@ -858,8 +858,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **results_submissions_submission_id_scenario_scenario_ids_get**
-> ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response results_submissions_submission_id_scenario_scenario_ids_get(submission_id, scenario_ids)
+# **results_submissions_submission_id_scenarios_scenario_ids_get**
+> ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response results_submissions_submission_id_scenarios_scenario_ids_get(submission_id, scenario_ids)
 
 Get submission results for specific scenario.
 
@@ -868,7 +868,7 @@ Get submission results for specific scenario.
 
 ```python
 import fab_clientlib
-from fab_clientlib.models.results_submissions_submission_id_scenario_scenario_ids_get200_response import ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response
+from fab_clientlib.models.results_submissions_submission_id_scenarios_scenario_ids_get200_response import ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response
 from fab_clientlib.rest import ApiException
 from pprint import pprint
 
@@ -887,11 +887,11 @@ with fab_clientlib.ApiClient(configuration) as api_client:
     scenario_ids = ['scenario_ids_example'] # List[str] | Comma-separated list of scenario IDs.
 
     try:
-        api_response = api_instance.results_submissions_submission_id_scenario_scenario_ids_get(submission_id, scenario_ids)
-        print("The response of DefaultApi->results_submissions_submission_id_scenario_scenario_ids_get:\n")
+        api_response = api_instance.results_submissions_submission_id_scenarios_scenario_ids_get(submission_id, scenario_ids)
+        print("The response of DefaultApi->results_submissions_submission_id_scenarios_scenario_ids_get:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DefaultApi->results_submissions_submission_id_scenario_scenario_ids_get: %s\n" % e)
+        print("Exception when calling DefaultApi->results_submissions_submission_id_scenarios_scenario_ids_get: %s\n" % e)
 ```
 
 
@@ -906,7 +906,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response**](ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response.md)
+[**ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response**](ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response.md)
 
 ### Authorization
 

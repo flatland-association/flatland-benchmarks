@@ -104,14 +104,12 @@ describe.sequential('Results controller', () => {
       testUserJwt,
     )
     assertApiResponse(res, 200)
-    // TOFIX: body should be array, see
-    // https://github.com/flatland-association/flatland-benchmarks/issues/352
-    expect(res.body.body.scorings[0]?.score).toBeCloseTo(0.86)
+    expect(res.body.body.at(0)?.scorings[0]?.score).toBeCloseTo(0.86)
   })
 
   test('should return submission scenario score', async () => {
     const res = await controller.testGet(
-      '/results/submissions/:submission_id/scenario/:scenario_ids',
+      '/results/submissions/:submission_id/scenarios/:scenario_ids',
       {
         params: {
           submission_id: 'ca001ce9-f10f-4dea-a299-2a0efce0f00d',

@@ -17,6 +17,7 @@ import unittest
 
 from fab_clientlib.models.results_benchmarks_benchmark_ids_get200_response_all_of_body_inner import ResultsBenchmarksBenchmarkIdsGet200ResponseAllOfBodyInner
 
+
 class TestResultsBenchmarksBenchmarkIdsGet200ResponseAllOfBodyInner(unittest.TestCase):
     """ResultsBenchmarksBenchmarkIdsGet200ResponseAllOfBodyInner unit test stubs"""
 
@@ -39,16 +40,22 @@ class TestResultsBenchmarksBenchmarkIdsGet200ResponseAllOfBodyInner(unittest.Tes
                 benchmark_id = '',
                 items = [
                     fab_clientlib.models._results_submissions__submission_ids__get_200_response_all_of_body_inner._results_submissions__submission_ids__get_200_response_allOf_body_inner(
-                        submission_id = '', 
-                        scorings = fab_clientlib.models.scorings.scorings(), 
+                        submission_id = '',
+                        scorings = [
+                            fab_clientlib.models.scoring.Scoring(
+                                field_id = '',
+                                field_key = '',
+                                score = 1.337,
+                                rank = 1.337,
+                                highest = 1.337,
+                                lowest = 1.337, )
+                            ],
                         test_scorings = [
                             fab_clientlib.models._results_submissions__submission_ids__get_200_response_all_of_body_inner_test_scorings_inner._results_submissions__submission_ids__get_200_response_allOf_body_inner_test_scorings_inner(
-                                test_id = '', 
-                                scorings = fab_clientlib.models.scorings.scorings(), 
+                                test_id = '',
                                 scenario_scorings = [
                                     fab_clientlib.models._results_submissions__submission_ids__get_200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner._results_submissions__submission_ids__get_200_response_allOf_body_inner_test_scorings_inner_scenario_scorings_inner(
-                                        scenario_id = '', 
-                                        scorings = fab_clientlib.models.scorings.scorings(), )
+                                        scenario_id = '', )
                                     ], )
                             ], )
                     ]

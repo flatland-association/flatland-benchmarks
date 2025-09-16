@@ -26,7 +26,7 @@ from typing_extensions import Self
 
 from fab_clientlib.models.api_response_error import ApiResponseError
 from fab_clientlib.models.definitions_scenarios_scenario_ids_get200_response_all_of_body_inner import \
-  DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner
+    DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner
 
 
 class DefinitionsScenariosScenarioIdsGet200Response(BaseModel):

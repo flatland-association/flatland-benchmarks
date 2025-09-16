@@ -15,7 +15,9 @@
 
 import unittest
 
-from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner_items_inner import ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
+from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner_items_inner import \
+  ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
+
 
 class TestResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner(unittest.TestCase):
     """ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner unit test stubs"""
@@ -37,7 +39,15 @@ class TestResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
         if include_optional:
             return ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner(
                 test_id = '',
-                scorings = None,
+                scorings = [
+                    fab_clientlib.models.scoring.Scoring(
+                        field_id = '',
+                        field_key = '',
+                        score = 1.337,
+                        rank = 1.337,
+                        highest = 1.337,
+                        lowest = 1.337, )
+                    ],
                 submission_id = ''
             )
         else:

@@ -26,7 +26,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
 
 from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner import \
-  ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
+    ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
 from fab_clientlib.models.scoring import Scoring
 
 

@@ -15,12 +15,12 @@
 
 import unittest
 
-from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner import \
-  ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
+from fab_clientlib.models.results_submissions_submission_id_scenarios_scenario_ids_get200_response import \
+  ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response
 
 
-class TestResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner(unittest.TestCase):
-    """ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner unit test stubs"""
+class TestResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response(unittest.TestCase):
+    """ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response unit test stubs"""
 
     def setUp(self):
         pass
@@ -28,27 +28,19 @@ class TestResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoring
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner:
-        """Test ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
+    def make_instance(self, include_optional) -> ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response:
+        """Test ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner`
+        # uncomment below to create an instance of `ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response`
         """
-        model = ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner()
+        model = ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response()
         if include_optional:
-            return ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner(
-                test_id = '',
-                scorings = [
-                    fab_clientlib.models.scoring.Scoring(
-                        field_id = '',
-                        field_key = '',
-                        score = 1.337,
-                        rank = 1.337,
-                        highest = 1.337,
-                        lowest = 1.337, )
-                    ],
-                scenario_scorings = [
+            return ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response(
+                error = fab_clientlib.models.api_response_error.ApiResponse_error(
+                    text = '', ),
+                body = [
                     fab_clientlib.models._results_submissions__submission_ids__get_200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner._results_submissions__submission_ids__get_200_response_allOf_body_inner_test_scorings_inner_scenario_scorings_inner(
                         scenario_id = '',
                         scorings = [
@@ -63,12 +55,12 @@ class TestResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoring
                     ]
             )
         else:
-            return ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner(
+            return ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response(
         )
         """
 
-    def testResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner(self):
-        """Test ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner"""
+    def testResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response(self):
+        """Test ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

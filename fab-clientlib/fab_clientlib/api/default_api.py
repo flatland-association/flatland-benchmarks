@@ -32,8 +32,8 @@ from fab_clientlib.models.info_get200_response import InfoGet200Response
 from fab_clientlib.models.results_benchmarks_benchmark_ids_get200_response import ResultsBenchmarksBenchmarkIdsGet200Response
 from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response import ResultsCampaignItemsBenchmarkIdsGet200Response
 from fab_clientlib.models.results_campaigns_group_ids_get200_response import ResultsCampaignsGroupIdsGet200Response
-from fab_clientlib.models.results_submissions_submission_id_scenario_scenario_ids_get200_response import \
-  ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response
+from fab_clientlib.models.results_submissions_submission_id_scenarios_scenario_ids_get200_response import \
+  ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response
 from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_get200_response import ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response
 from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_post_request import ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest
 from fab_clientlib.models.results_submissions_submission_ids_get200_response import ResultsSubmissionsSubmissionIdsGet200Response
@@ -3401,7 +3401,7 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_scenario_scenario_ids_get(
+    def results_submissions_submission_id_scenarios_scenario_ids_get(
         self,
         submission_id: Annotated[UUID, Field(description="Submission ID.")],
         scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of scenario IDs.")],
@@ -3417,8 +3417,8 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response:
-        """results_submissions_submission_id_scenario_scenario_ids_get
+    ) -> ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response:
+        """results_submissions_submission_id_scenarios_scenario_ids_get
 
         Get submission results for specific scenario.
 
@@ -3448,7 +3448,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_scenario_scenario_ids_get_serialize(
+        _param = self._results_submissions_submission_id_scenarios_scenario_ids_get_serialize(
             submission_id=submission_id,
             scenario_ids=scenario_ids,
             _request_auth=_request_auth,
@@ -3458,7 +3458,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response",
+            '200': "ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3472,7 +3472,7 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_scenario_scenario_ids_get_with_http_info(
+    def results_submissions_submission_id_scenarios_scenario_ids_get_with_http_info(
         self,
         submission_id: Annotated[UUID, Field(description="Submission ID.")],
         scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of scenario IDs.")],
@@ -3488,8 +3488,8 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response]:
-        """results_submissions_submission_id_scenario_scenario_ids_get
+    ) -> ApiResponse[ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response]:
+        """results_submissions_submission_id_scenarios_scenario_ids_get
 
         Get submission results for specific scenario.
 
@@ -3519,7 +3519,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_scenario_scenario_ids_get_serialize(
+        _param = self._results_submissions_submission_id_scenarios_scenario_ids_get_serialize(
             submission_id=submission_id,
             scenario_ids=scenario_ids,
             _request_auth=_request_auth,
@@ -3529,7 +3529,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response",
+            '200': "ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3543,7 +3543,7 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_scenario_scenario_ids_get_without_preload_content(
+    def results_submissions_submission_id_scenarios_scenario_ids_get_without_preload_content(
         self,
         submission_id: Annotated[UUID, Field(description="Submission ID.")],
         scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of scenario IDs.")],
@@ -3560,7 +3560,7 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """results_submissions_submission_id_scenario_scenario_ids_get
+        """results_submissions_submission_id_scenarios_scenario_ids_get
 
         Get submission results for specific scenario.
 
@@ -3590,7 +3590,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_scenario_scenario_ids_get_serialize(
+        _param = self._results_submissions_submission_id_scenarios_scenario_ids_get_serialize(
             submission_id=submission_id,
             scenario_ids=scenario_ids,
             _request_auth=_request_auth,
@@ -3600,7 +3600,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response",
+            '200': "ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3609,7 +3609,7 @@ class DefaultApi:
         return response_data.response
 
 
-    def _results_submissions_submission_id_scenario_scenario_ids_get_serialize(
+    def _results_submissions_submission_id_scenarios_scenario_ids_get_serialize(
         self,
         submission_id,
         scenario_ids,
@@ -3660,7 +3660,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/results/submissions/{submission_id}/scenario/{scenario_ids}',
+            resource_path='/results/submissions/{submission_id}/scenarios/{scenario_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

@@ -26,7 +26,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
 
 from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner_items_inner import \
-  ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
+    ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
 from fab_clientlib.models.scoring import Scoring
 
 

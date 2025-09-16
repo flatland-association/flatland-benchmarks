@@ -12,47 +12,47 @@
     Do not edit the class manually.
 """  # noqa: E501
 
+
 import unittest
 
 from fab_clientlib.models.scoring import Scoring
 
 
 class TestScoring(unittest.TestCase):
-  """Scoring unit test stubs"""
+    """Scoring unit test stubs"""
 
-  def setUp(self):
-    pass
+    def setUp(self):
+        pass
 
-  def tearDown(self):
-    pass
+    def tearDown(self):
+        pass
 
-  def make_instance(self, include_optional) -> Scoring:
-    """Test Scoring
-        include_optional is a boolean, when False only required
-        params are included, when True both required and
-        optional params are included """
-    # uncomment below to create an instance of `Scoring`
-    """
-    model = Scoring()
-    if include_optional:
-        return Scoring(
-            field_id = '',
-            field_key = '',
-            score = 1.337,
-            rank = 1.337,
-            highest = 1.337,
-            lowest = 1.337
+    def make_instance(self, include_optional) -> Scoring:
+        """Test Scoring
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `Scoring`
+        """
+        model = Scoring()
+        if include_optional:
+            return Scoring(
+                field_id = '',
+                field_key = '',
+                score = 1.337,
+                rank = 1.337,
+                highest = 1.337,
+                lowest = 1.337
+            )
+        else:
+            return Scoring(
         )
-    else:
-        return Scoring(
-    )
-    """
+        """
 
-  def testScoring(self):
-    """Test Scoring"""
-    # inst_req_only = self.make_instance(include_optional=False)
-    # inst_req_and_optional = self.make_instance(include_optional=True)
-
+    def testScoring(self):
+        """Test Scoring"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
-  unittest.main()
+    unittest.main()

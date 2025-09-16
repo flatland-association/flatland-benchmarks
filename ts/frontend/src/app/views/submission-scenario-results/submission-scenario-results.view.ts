@@ -80,7 +80,7 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
             this.ownSubmission = this.submission?.submitted_by === this.authService.userUuid
           }),
         this.resourceService
-          .load('/results/submissions/:submission_id/scenario/:scenario_ids', {
+          .load('/results/submissions/:submission_id/scenarios/:scenario_ids', {
             params: { submission_id: submission_id, scenario_ids: scenario_id },
           })
           .then((scores) => {
@@ -191,7 +191,7 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
       .then(() => {
         // reload results from backend
         return this.resourceService
-          .load('/results/submissions/:submission_id/scenario/:scenario_ids', {
+          .load('/results/submissions/:submission_id/scenarios/:scenario_ids', {
             params: { submission_id: this.submission!.id, scenario_ids: this.scenario!.id },
           })
           .then((scores) => {
