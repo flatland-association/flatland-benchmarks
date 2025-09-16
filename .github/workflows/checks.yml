@@ -41,11 +41,13 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements-dev.txt
           python -m pip install -r orchestrator/requirements.txt
+          python -m pip list
       - name: Clone ai4realnet-orchestrators for integration tests
         uses: actions/checkout@v4
         with:
           repository: flatland-association/ai4realnet-orchestrators
           path: evaluation/ai4realnet_orchestrators
+          ref: feature/integration-api-changes
       - name: Run Flatland 3 Benchmarks Integration Tests
         working-directory: evaluation/flatland3_benchmarks
         run: |
@@ -80,8 +82,17 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-
-      - name: Regenerate client lib
+      - name: Clone ai4realnet-orchestrators for integration tests
+        uses: actions/checkout@v4
+        with:
+          repository: flatland-association/ai4realnet-orchestrators
+          path: evaluation/ai4realnet_orchestrators
+          ref: feature/integration-api-changes
+      - name: Install ai4realnet Orchestrators Integration Tests Dependencies
+        working-directory: evaluation/ai4realnet_orchestrators
+        run: |
+          python -m pip install -r requirements.txt -r requirements-dev.txt -r ai4realnet_orchestrators/railway/requirements.txt
+      - name: Regenerate client lib locally overwriting dependency.
         working-directory: fab-clientlib
         run: |
           python -m pip install openapi-generator-cli==7.15.0
@@ -90,15 +101,10 @@ jobs:
         working-directory: fab-clientlib
         run: |
           python -m pip install .
-      - name: Clone ai4realnet-orchestrators for integration tests
-        uses: actions/checkout@v4
-        with:
-          repository: flatland-association/ai4realnet-orchestrators
-          path: evaluation/ai4realnet_orchestrators
+          python -m pip list
       - name: Run ai4realnet Orchestrators Integration Tests
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
-          python -m pip install -r requirements.txt -r requirements-dev.txt -r ai4realnet_orchestrators/railway/requirements.txt
           export OAUTHLIB_INSECURE_TRANSPORT=1
           pytest -s -m integration
 
@@ -147,6 +153,7 @@ jobs:
         with:
           repository: flatland-association/ai4realnet-orchestrators
           path: evaluation/ai4realnet_orchestrators
+          ref: feature/integration-api-changes
       - name: Run fab-clientlib integration tests
         working-directory: fab-clientlib
         run: |

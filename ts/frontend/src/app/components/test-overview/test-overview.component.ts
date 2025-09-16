@@ -1,6 +1,5 @@
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { BenchmarkDefinitionRow, BenchmarkGroupDefinitionRow, TestDefinitionRow } from '@common/interfaces'
-import { getPrimaryScoring } from '@common/scoring-utils'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
@@ -64,7 +63,7 @@ export class TestOverviewComponent implements OnInit, OnChanges {
           )?.at(0)
           // only consider scorings for this test
           const scorings = item.test_scorings.find((testScorings) => testScorings.test_id === test.id)!.scorings
-          const primary = getPrimaryScoring(scorings, fields)
+          const primary = scorings[0]
           return {
             routerLink: ['/', 'benchmarks', group.id, benchmark.id, 'submissions', item.submission_id],
             cells: [

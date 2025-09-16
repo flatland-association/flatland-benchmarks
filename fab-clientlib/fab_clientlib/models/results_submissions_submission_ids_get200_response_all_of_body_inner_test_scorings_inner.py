@@ -27,6 +27,7 @@ from typing_extensions import Self
 
 from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner import \
   ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner
+from fab_clientlib.models.scoring import Scoring
 
 
 class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner(BaseModel):
@@ -34,7 +35,7 @@ class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInn
     ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
     """ # noqa: E501
     test_id: Optional[UUID] = Field(default=None, description="ID of test.")
-    scorings: Optional[Dict[str, Any]] = Field(default=None, description="Dictionary of test scores.")
+    scorings: Optional[List[Scoring]] = Field(default=None, description="Test scores.")
     scenario_scorings: Optional[List[ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner]] = None
     __properties: ClassVar[List[str]] = ["test_id", "scorings", "scenario_scorings"]
 
@@ -77,6 +78,13 @@ class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInn
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in scorings (list)
+        _items = []
+        if self.scorings:
+            for _item_scorings in self.scorings:
+                if _item_scorings:
+                    _items.append(_item_scorings.to_dict())
+            _dict['scorings'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in scenario_scorings (list)
         _items = []
         if self.scenario_scorings:
@@ -97,7 +105,7 @@ class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInn
 
         _obj = cls.model_validate({
             "test_id": obj.get("test_id"),
-            "scorings": obj.get("scorings"),
+            "scorings": [Scoring.from_dict(_item) for _item in obj["scorings"]] if obj.get("scorings") is not None else None,
             "scenario_scorings": [ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner.from_dict(_item) for _item in obj["scenario_scorings"]] if obj.get("scenario_scorings") is not None else None
         })
         return _obj

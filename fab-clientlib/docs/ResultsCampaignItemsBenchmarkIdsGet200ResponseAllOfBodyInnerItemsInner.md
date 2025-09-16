@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **test_id** | **str** | ID of test. | [optional] 
-**scorings** | **object** | Dictionary of test scores (best submission only). | [optional] 
+**scorings** | [**List[Scoring]**](Scoring.md) | Test scores (best submission only). | [optional] 
 **submission_id** | **str** | ID of best submission. | [optional] 
 
 ## Example

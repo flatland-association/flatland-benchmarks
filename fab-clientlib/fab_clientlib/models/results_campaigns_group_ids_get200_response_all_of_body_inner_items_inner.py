@@ -25,19 +25,19 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
 
-from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner import \
-  ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
+from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner_items_inner import \
+  ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
 from fab_clientlib.models.scoring import Scoring
 
 
-class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner(BaseModel):
+class ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner(BaseModel):
     """
-    ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner
+    ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner
     """ # noqa: E501
-    submission_id: Optional[UUID] = Field(default=None, description="ID of submission.")
-    scorings: Optional[List[Scoring]] = Field(default=None, description="Submission scores.")
-    test_scorings: Optional[List[ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner]] = None
-    __properties: ClassVar[List[str]] = ["submission_id", "scorings", "test_scorings"]
+    benchmark_id: Optional[UUID] = Field(default=None, description="ID of benchmark.")
+    items: Optional[List[ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner]] = None
+    scorings: Optional[List[Scoring]] = Field(default=None, description="Campaign item scores.")
+    __properties: ClassVar[List[str]] = ["benchmark_id", "items", "scorings"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -57,7 +57,7 @@ class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner from a JSON string"""
+        """Create an instance of ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,6 +78,13 @@ class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in items (list)
+        _items = []
+        if self.items:
+            for _item_items in self.items:
+                if _item_items:
+                    _items.append(_item_items.to_dict())
+            _dict['items'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in scorings (list)
         _items = []
         if self.scorings:
@@ -85,18 +92,11 @@ class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner(BaseModel):
                 if _item_scorings:
                     _items.append(_item_scorings.to_dict())
             _dict['scorings'] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in test_scorings (list)
-        _items = []
-        if self.test_scorings:
-            for _item_test_scorings in self.test_scorings:
-                if _item_test_scorings:
-                    _items.append(_item_test_scorings.to_dict())
-            _dict['test_scorings'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner from a dict"""
+        """Create an instance of ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner from a dict"""
         if obj is None:
             return None
 
@@ -104,9 +104,9 @@ class ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "submission_id": obj.get("submission_id"),
-            "scorings": [Scoring.from_dict(_item) for _item in obj["scorings"]] if obj.get("scorings") is not None else None,
-            "test_scorings": [ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner.from_dict(_item) for _item in obj["test_scorings"]] if obj.get("test_scorings") is not None else None
+            "benchmark_id": obj.get("benchmark_id"),
+            "items": [ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner.from_dict(_item) for _item in obj["items"]] if obj.get("items") is not None else None,
+            "scorings": [Scoring.from_dict(_item) for _item in obj["scorings"]] if obj.get("scorings") is not None else None
         })
         return _obj
 

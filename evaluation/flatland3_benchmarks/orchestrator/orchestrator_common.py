@@ -113,7 +113,7 @@ class FlatlandBenchmarksOrchestrator:
             data=[
               ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
                 scenario_id=row["fab_scenario_id"],
-                additional_properties={
+                scores={
                   "normalized_reward": row["normalized_reward"],
                   "percentage_complete": row["percentage_complete"]
                 },
@@ -125,7 +125,7 @@ class FlatlandBenchmarksOrchestrator:
 
     except celery.exceptions.SoftTimeLimitExceeded as e:
       logger.info("Hit %s - getting logs from containers", e)
-    raise e
+      raise e
 
   @abstractmethod
   def run_flatland(self, test_runner_evaluator_image, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key,

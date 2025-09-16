@@ -18,24 +18,25 @@ from __future__ import annotations
 import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Union
 from typing import Optional, Set
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing_extensions import Self
 
-from fab_clientlib.models.scoring import Scoring
 
-
-class ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner(BaseModel):
+class Scoring(BaseModel):
     """
-    ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
+    Scoring
     """ # noqa: E501
-    test_id: Optional[UUID] = Field(default=None, description="ID of test.")
-    scorings: Optional[List[Scoring]] = Field(default=None, description="Test scores (best submission only).")
-    submission_id: Optional[UUID] = Field(default=None, description="ID of best submission.")
-    __properties: ClassVar[List[str]] = ["test_id", "scorings", "submission_id"]
+    field_id: Optional[UUID] = Field(default=None, description="ID of field definition.")
+    field_key: Optional[StrictStr] = Field(default=None, description="Key of field.")
+    score: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Numerical score.")
+    rank: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Item's rank in category.")
+    highest: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Highest score in category.")
+    lowest: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Lowest score in category.")
+    __properties: ClassVar[List[str]] = ["field_id", "field_key", "score", "rank", "highest", "lowest"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,7 +56,7 @@ class ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner(Bas
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner from a JSON string"""
+        """Create an instance of Scoring from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,18 +77,16 @@ class ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner(Bas
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in scorings (list)
-        _items = []
-        if self.scorings:
-            for _item_scorings in self.scorings:
-                if _item_scorings:
-                    _items.append(_item_scorings.to_dict())
-            _dict['scorings'] = _items
+        # set to None if score (nullable) is None
+        # and model_fields_set contains the field
+        if self.score is None and "score" in self.model_fields_set:
+            _dict['score'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner from a dict"""
+        """Create an instance of Scoring from a dict"""
         if obj is None:
             return None
 
@@ -95,9 +94,12 @@ class ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner(Bas
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "test_id": obj.get("test_id"),
-            "scorings": [Scoring.from_dict(_item) for _item in obj["scorings"]] if obj.get("scorings") is not None else None,
-            "submission_id": obj.get("submission_id")
+            "field_id": obj.get("field_id"),
+            "field_key": obj.get("field_key"),
+            "score": obj.get("score"),
+            "rank": obj.get("rank"),
+            "highest": obj.get("highest"),
+            "lowest": obj.get("lowest")
         })
         return _obj
 

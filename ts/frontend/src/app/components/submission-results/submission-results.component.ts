@@ -1,12 +1,7 @@
 import { DecimalPipe } from '@angular/common'
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { BenchmarkDefinitionRow, BenchmarkGroupDefinitionRow, SubmissionRow } from '@common/interfaces'
-import {
-  getPrimaryScoring,
-  isScenarioCompletelyScored,
-  isSubmissionCompletelyScored,
-  isTestCompletelyScored,
-} from '@common/scoring-utils'
+import { isScenarioCompletelyScored, isSubmissionCompletelyScored, isTestCompletelyScored } from '@common/scoring-utils'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
@@ -55,13 +50,10 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
           params: { submission_ids: submission.id },
         })
       )?.at(0)
-      const fields = await this.resourceService.loadGrouped('/definitions/fields/:field_ids', {
-        params: { field_ids: this.benchmark.field_ids },
-      })
       this.totalScore = '-'
       if (isSubmissionCompletelyScored(submissionScore)) {
         if (submissionScore?.scorings) {
-          const primaryScoring = getPrimaryScoring(submissionScore?.scorings, fields)
+          const primaryScoring = submissionScore.scorings[0]
           if (primaryScoring) {
             this.totalScore = this.decimalPipe.transform(primaryScoring.score, '1.2-2') ?? '-'
           }

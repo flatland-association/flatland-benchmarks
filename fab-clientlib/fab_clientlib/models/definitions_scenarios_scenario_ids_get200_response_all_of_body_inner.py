@@ -22,20 +22,19 @@ from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing_extensions import Self
 
 
-class BenchmarkGroupsGet200ResponseAllOfBodyInner(BaseModel):
+class DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner(BaseModel):
     """
-    BenchmarkGroupsGet200ResponseAllOfBodyInner
+    DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner
     """ # noqa: E501
-    id: Optional[UUID] = Field(default=None, description="ID of benchmark-group.")
+    dir: Optional[StrictStr] = None
+    id: Optional[UUID] = None
     name: Optional[StrictStr] = None
     description: Optional[StrictStr] = None
-    setup: Optional[StrictStr] = None
-    benchmark_ids: Optional[List[UUID]] = None
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "setup", "benchmark_ids"]
+    __properties: ClassVar[List[str]] = ["dir", "id", "name", "description"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,7 +54,7 @@ class BenchmarkGroupsGet200ResponseAllOfBodyInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of BenchmarkGroupsGet200ResponseAllOfBodyInner from a JSON string"""
+        """Create an instance of DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -80,7 +79,7 @@ class BenchmarkGroupsGet200ResponseAllOfBodyInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of BenchmarkGroupsGet200ResponseAllOfBodyInner from a dict"""
+        """Create an instance of DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner from a dict"""
         if obj is None:
             return None
 
@@ -88,11 +87,10 @@ class BenchmarkGroupsGet200ResponseAllOfBodyInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "dir": obj.get("dir"),
             "id": obj.get("id"),
             "name": obj.get("name"),
-            "description": obj.get("description"),
-            "setup": obj.get("setup"),
-            "benchmark_ids": obj.get("benchmark_ids")
+            "description": obj.get("description")
         })
         return _obj
 
