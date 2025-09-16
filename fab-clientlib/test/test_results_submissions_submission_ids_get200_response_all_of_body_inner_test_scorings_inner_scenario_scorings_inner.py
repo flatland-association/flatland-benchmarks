@@ -15,7 +15,9 @@
 
 import unittest
 
-from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner import ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner
+from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner import \
+  ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner
+
 
 class TestResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner(unittest.TestCase):
     """ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner unit test stubs"""
@@ -37,7 +39,15 @@ class TestResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoring
         if include_optional:
             return ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner(
                 scenario_id = '',
-                scorings = None
+                scorings = [
+                    fab_clientlib.models.scoring.Scoring(
+                        field_id = '',
+                        field_key = '',
+                        score = 1.337,
+                        rank = 1.337,
+                        highest = 1.337,
+                        lowest = 1.337, )
+                    ]
             )
         else:
             return ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner(

@@ -26,7 +26,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
 
 from fab_clientlib.models.results_campaigns_group_ids_get200_response_all_of_body_inner_items_inner import \
-  ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner
+    ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner
 
 
 class ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner(BaseModel):

@@ -3,4 +3,4 @@ kubernetes==31.0.0
 pandas==2.2.3
 boto3==1.35.49
 python-dotenv==1.0.1
-git+https://github.com/flatland-association/flatland-benchmarks.git@change-getresults-format#subdirectory=fab-clientlib
+git+https://github.com/flatland-association/flatland-benchmarks.git@fix-endpoint-plurals#subdirectory=fab-clientlib

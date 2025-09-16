@@ -14,20 +14,24 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List
+from typing import Optional, Set
 
 from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List, Optional
-from fab_clientlib.models.api_response_error import ApiResponseError
-from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner import ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner
-from typing import Optional, Set
 from typing_extensions import Self
 
-class ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response(BaseModel):
+from fab_clientlib.models.api_response_error import ApiResponseError
+from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner_scenario_scorings_inner import \
+  ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner
+
+
+class ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response(BaseModel):
     """
-    ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response
+    ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response
     """ # noqa: E501
     error: Optional[ApiResponseError] = None
     body: Optional[List[ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInnerScenarioScoringsInner]] = None
@@ -51,7 +55,7 @@ class ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response(BaseModel)
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response from a JSON string"""
+        """Create an instance of ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,7 +90,7 @@ class ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response(BaseModel)
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response from a dict"""
+        """Create an instance of ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response from a dict"""
         if obj is None:
             return None
 

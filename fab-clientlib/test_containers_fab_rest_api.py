@@ -251,7 +251,7 @@ def test_submission_roundtrip():
     test_ids=[test_id])
   print("results_uploaded")
   print(test_results.body)
-  scenario_scorings = test_results.body.scenario_scorings
+  scenario_scorings = test_results.body[0].scenario_scorings
   assert scenario_scorings[0].scorings[0].field_key == "primary"
   assert scenario_scorings[0].scorings[0].score == 100
   assert scenario_scorings[0].scorings[1].field_key == "secondary"
@@ -261,10 +261,10 @@ def test_submission_roundtrip():
   assert scenario_scorings[1].scorings[1].field_key == "secondary"
   assert scenario_scorings[1].scorings[1].score == 0.8
 
-  assert test_results.body.scorings[0].field_key == "primary"
-  assert test_results.body.scorings[0].score == 199
-  assert test_results.body.scorings[1].field_key == "secondary"
-  assert test_results.body.scorings[1].score == 0.9
+  assert test_results.body[0].scorings[0].field_key == "primary"
+  assert test_results.body[0].scorings[0].score == 199
+  assert test_results.body[0].scorings[1].field_key == "secondary"
+  assert test_results.body[0].scorings[1].score == 0.9
 
   submission_results = fab.results_submissions_submission_ids_get(
     submission_ids=[submission_id],
@@ -288,7 +288,7 @@ def test_submission_roundtrip():
   assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings[1].field_key == 'secondary'
   assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings[1].score == 0.8
 
-  scenario_results = fab.results_submissions_submission_id_scenario_scenario_ids_get(
+  scenario_results = fab.results_submissions_submission_id_scenarios_scenario_ids_get(
     submission_id=submission_id,
     scenario_ids=[uuid.UUID("1ae61e4f-201b-4e97-a399-5c33fb75c57e")]
   )
@@ -300,7 +300,7 @@ def test_submission_roundtrip():
   assert scenario_results.body[0].scorings[1].field_key == "secondary"
   assert scenario_results.body[0].scorings[1].score == 1.0
 
-  scenario_results2 = fab.results_submissions_submission_id_scenario_scenario_ids_get(
+  scenario_results2 = fab.results_submissions_submission_id_scenarios_scenario_ids_get(
     submission_id=submission_id,
     scenario_ids=[uuid.UUID("564ebb54-48f0-4837-8066-b10bb832af9d")]
   )

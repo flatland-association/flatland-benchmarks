@@ -552,35 +552,38 @@
                       "type": "object",
                       "properties": {
                         "body": {
-                          "type": "object",
-                          "properties": {
-                            "test_id": {
-                              "type": "string",
-                              "format": "uuid",
-                              "description": "ID of test."
-                            },
-                            "scorings": {
-                              "type": "array",
-                              "description": "Test scores.",
-                              "items": {
-                                "$ref": "#/components/schemas/Scoring"
-                              }
-                            },
-                            "scenario_scorings": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "scenario_id": {
-                                    "type": "string",
-                                    "format": "uuid",
-                                    "description": "ID of scenario."
-                                  },
-                                  "scorings": {
-                                    "type": "array",
-                                    "description": "Scenario scores.",
-                                    "items": {
-                                      "$ref": "#/components/schemas/Scoring"
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "test_id": {
+                                "type": "string",
+                                "format": "uuid",
+                                "description": "ID of test."
+                              },
+                              "scorings": {
+                                "type": "array",
+                                "description": "Test scores.",
+                                "items": {
+                                  "$ref": "#/components/schemas/Scoring"
+                                }
+                              },
+                              "scenario_scorings": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "scenario_id": {
+                                      "type": "string",
+                                      "format": "uuid",
+                                      "description": "ID of scenario."
+                                    },
+                                    "scorings": {
+                                      "type": "array",
+                                      "description": "Scenario scores.",
+                                      "items": {
+                                        "$ref": "#/components/schemas/Scoring"
+                                      }
                                     }
                                   }
                                 }
@@ -695,7 +698,7 @@
         }
       }
     },
-    "/results/submissions/{submission_id}/scenario/{scenario_ids}": {
+    "/results/submissions/{submission_id}/scenarios/{scenario_ids}": {
       "get": {
         "description": "Get submission results for specific scenario.",
         "parameters": [

@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **error** | [**ApiResponseError**](ApiResponseError.md) |  | [optional] 
-**body** | [**ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner**](ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner.md) |  | [optional] 
+**body** | [**List[ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner]**](ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner.md) |  | [optional] 
 
 ## Example
 
