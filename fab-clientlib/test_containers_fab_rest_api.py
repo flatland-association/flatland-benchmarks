@@ -104,11 +104,18 @@ def test_results_benchmark():
   assert len(benchmark_results.body) == 1
   assert benchmark_results.body[0].benchmark_id == benchmark_id
   assert len(benchmark_results.body[0].items) >= 1
-  assert benchmark_results.body[0].items[0].submission_id == uuid.UUID("db5eaa85-3304-4804-b76f-14d23adb5d4c")
-  assert len(benchmark_results.body[0].items[0].scorings) == 2
-  assert benchmark_results.body[0].items[0].scorings["primary"]["score"] == 200
-  assert benchmark_results.body[0].items[0].scorings["secondary"]["score"] == 0.9
-  assert len(benchmark_results.body[0].items[0].test_scorings) == 1
+  done = False
+  for item in benchmark_results.body[0].items:
+    if item.submission_id == uuid.UUID("db5eaa85-3304-4804-b76f-14d23adb5d4c"):
+      done = True
+      scorings = item.scorings
+      assert len(scorings) == 2
+      assert scorings[0].field_key == "primary"
+      assert scorings[0].score == 200
+      assert scorings[1].field_key == "secondary"
+      assert scorings[1].score == 0.9
+      assert len(item.test_scorings) == 1
+  assert done
 
 
 # GET /results/benchmarks/{benchmark_id}/tests/{test_id}
@@ -234,7 +241,7 @@ def test_submission_roundtrip():
     results_submissions_submission_id_tests_test_ids_post_request=ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest(
       data=[ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
         scenario_id=scenario_id,
-        additional_properties={key: value}
+        scores={key: value}
       ) for scenario_id, test_id, submission_id, key, value in results]
     )
   )
@@ -244,12 +251,20 @@ def test_submission_roundtrip():
     test_ids=[test_id])
   print("results_uploaded")
   print(test_results.body)
-  assert test_results.body.scenario_scorings[0].scorings["primary"]["score"] == 100
-  assert test_results.body.scenario_scorings[0].scorings["secondary"]["score"] == 1.0
-  assert test_results.body.scenario_scorings[1].scorings["primary"]["score"] == 99
-  assert test_results.body.scenario_scorings[1].scorings["secondary"]["score"] == 0.8
-  assert test_results.body.scorings["primary"]["score"] == 199
-  assert test_results.body.scorings["secondary"]["score"] == 0.9
+  scenario_scorings = test_results.body[0].scenario_scorings
+  assert scenario_scorings[0].scorings[0].field_key == "primary"
+  assert scenario_scorings[0].scorings[0].score == 100
+  assert scenario_scorings[0].scorings[1].field_key == "secondary"
+  assert scenario_scorings[0].scorings[1].score == 1.0
+  assert scenario_scorings[1].scorings[0].field_key == "primary"
+  assert scenario_scorings[1].scorings[0].score == 99
+  assert scenario_scorings[1].scorings[1].field_key == "secondary"
+  assert scenario_scorings[1].scorings[1].score == 0.8
+
+  assert test_results.body[0].scorings[0].field_key == "primary"
+  assert test_results.body[0].scorings[0].score == 199
+  assert test_results.body[0].scorings[1].field_key == "secondary"
+  assert test_results.body[0].scorings[1].score == 0.9
 
   submission_results = fab.results_submissions_submission_ids_get(
     submission_ids=[submission_id],
@@ -257,32 +272,44 @@ def test_submission_roundtrip():
   assert len(submission_results.body) == 1
   assert submission_results.body[0].submission_id == submission_id
   assert len(submission_results.body[0].scorings) == 2
-  assert submission_results.body[0].scorings["primary"]["score"] == 199
-  assert submission_results.body[0].scorings["secondary"]["score"] == 0.9
+  assert submission_results.body[0].scorings[0].field_key == 'primary'
+  assert submission_results.body[0].scorings[0].score == 199
+  assert submission_results.body[0].scorings[1].field_key == 'secondary'
+  assert submission_results.body[0].scorings[1].score == 0.9
   assert len(submission_results.body[0].test_scorings) == 1
   assert len(submission_results.body[0].test_scorings[0].scenario_scorings) == 2
-  assert submission_results.body[0].test_scorings[0].scenario_scorings[0].scorings["primary"]["score"] == 100
-  assert submission_results.body[0].test_scorings[0].scenario_scorings[0].scorings["secondary"]["score"] == 1.0
-  assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings["primary"]["score"] == 99
-  assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings["secondary"]["score"] == 0.8
 
-  scenario_results = fab.results_submissions_submission_id_scenario_scenario_ids_get(
+  assert submission_results.body[0].test_scorings[0].scenario_scorings[0].scorings[0].field_key == 'primary'
+  assert submission_results.body[0].test_scorings[0].scenario_scorings[0].scorings[0].score == 100
+  assert submission_results.body[0].test_scorings[0].scenario_scorings[0].scorings[1].field_key == 'secondary'
+  assert submission_results.body[0].test_scorings[0].scenario_scorings[0].scorings[1].score == 1.0
+  assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings[0].field_key == 'primary'
+  assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings[0].score == 99
+  assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings[1].field_key == 'secondary'
+  assert submission_results.body[0].test_scorings[0].scenario_scorings[1].scorings[1].score == 0.8
+
+  scenario_results = fab.results_submissions_submission_id_scenarios_scenario_ids_get(
     submission_id=submission_id,
     scenario_ids=[uuid.UUID("1ae61e4f-201b-4e97-a399-5c33fb75c57e")]
   )
   assert len(scenario_results.body) == 1
   assert scenario_results.body[0].scenario_id == uuid.UUID("1ae61e4f-201b-4e97-a399-5c33fb75c57e")
-  assert scenario_results.body[0].scorings["primary"]["score"] == 100
-  assert scenario_results.body[0].scorings["secondary"]["score"] == 1.0
 
-  scenario_results2 = fab.results_submissions_submission_id_scenario_scenario_ids_get(
+  assert scenario_results.body[0].scorings[0].field_key == "primary"
+  assert scenario_results.body[0].scorings[0].score == 100
+  assert scenario_results.body[0].scorings[1].field_key == "secondary"
+  assert scenario_results.body[0].scorings[1].score == 1.0
+
+  scenario_results2 = fab.results_submissions_submission_id_scenarios_scenario_ids_get(
     submission_id=submission_id,
     scenario_ids=[uuid.UUID("564ebb54-48f0-4837-8066-b10bb832af9d")]
   )
   assert len(scenario_results2.body) == 1
   assert scenario_results2.body[0].scenario_id == uuid.UUID("564ebb54-48f0-4837-8066-b10bb832af9d")
-  assert scenario_results2.body[0].scorings["primary"]["score"] == 99
-  assert scenario_results2.body[0].scorings["secondary"]["score"] == 0.8
+  assert scenario_results2.body[0].scorings[0].field_key == "primary"
+  assert scenario_results2.body[0].scorings[0].score == 99
+  assert scenario_results2.body[0].scorings[1].field_key == "secondary"
+  assert scenario_results2.body[0].scorings[1].score == 0.8
 
   published_submission = fab.submissions_submission_ids_patch(submission_ids=[submission_id])
   assert len(published_submission.body) >= 1

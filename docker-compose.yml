@@ -310,9 +310,12 @@ services:
     command:
       - |
         set -euxo pipefail
+        whoami
+        chmod a+rwx -R /vol
         cp /tmp/submission_data_entrypoint.sh /vol/submission_data_entrypoint.sh
         chmod a=rx /vol/submission_data_entrypoint.sh
         cat /vol/submission_data_entrypoint.sh
+
 
   ai4realnet-orchestrator-railway:
     profiles: [ tsdev, full ]
@@ -322,6 +325,7 @@ services:
     command:
       - |
         set -euxo pipefail
+        whoami
         # fail fast checking permissions
         ls -al /app/data
         mkdir -p /app/data/1234/

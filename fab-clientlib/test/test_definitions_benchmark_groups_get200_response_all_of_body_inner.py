@@ -15,10 +15,11 @@
 
 import unittest
 
-from fab_clientlib.models.benchmark_groups_get200_response_all_of_body_inner import BenchmarkGroupsGet200ResponseAllOfBodyInner
+from fab_clientlib.models.definitions_benchmark_groups_get200_response_all_of_body_inner import DefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner
 
-class TestBenchmarkGroupsGet200ResponseAllOfBodyInner(unittest.TestCase):
-    """BenchmarkGroupsGet200ResponseAllOfBodyInner unit test stubs"""
+
+class TestDefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner(unittest.TestCase):
+    """DefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,16 +27,16 @@ class TestBenchmarkGroupsGet200ResponseAllOfBodyInner(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> BenchmarkGroupsGet200ResponseAllOfBodyInner:
-        """Test BenchmarkGroupsGet200ResponseAllOfBodyInner
+    def make_instance(self, include_optional) -> DefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner:
+        """Test DefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `BenchmarkGroupsGet200ResponseAllOfBodyInner`
+        # uncomment below to create an instance of `DefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner`
         """
-        model = BenchmarkGroupsGet200ResponseAllOfBodyInner()
+        model = DefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner()
         if include_optional:
-            return BenchmarkGroupsGet200ResponseAllOfBodyInner(
+            return DefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner(
                 id = '',
                 name = '',
                 description = '',
@@ -45,12 +46,12 @@ class TestBenchmarkGroupsGet200ResponseAllOfBodyInner(unittest.TestCase):
                     ]
             )
         else:
-            return BenchmarkGroupsGet200ResponseAllOfBodyInner(
+            return DefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner(
         )
         """
 
-    def testBenchmarkGroupsGet200ResponseAllOfBodyInner(self):
-        """Test BenchmarkGroupsGet200ResponseAllOfBodyInner"""
+    def testDefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner(self):
+        """Test DefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

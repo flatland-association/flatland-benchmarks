@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **scenario_id** | **str** | ID of scenario. | [optional] 
-**scorings** | **object** | Dictionary of scores. | [optional] 
+**scorings** | [**List[Scoring]**](Scoring.md) | Scenario scores. | [optional] 
 
 ## Example
 

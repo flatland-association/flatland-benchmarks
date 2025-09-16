@@ -14,23 +14,27 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List
+from typing import Optional, Set
 
 from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List, Optional
-from fab_clientlib.models.api_response_error import ApiResponseError
-from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner import ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
-from typing import Optional, Set
 from typing_extensions import Self
+
+from fab_clientlib.models.api_response_error import ApiResponseError
+from fab_clientlib.models.results_submissions_submission_ids_get200_response_all_of_body_inner_test_scorings_inner import \
+  ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner
+
 
 class ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response(BaseModel):
     """
     ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response
     """ # noqa: E501
     error: Optional[ApiResponseError] = None
-    body: Optional[ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner] = None
+    body: Optional[List[ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner]] = None
     __properties: ClassVar[List[str]] = ["error", "body"]
 
     model_config = ConfigDict(
@@ -75,9 +79,13 @@ class ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of error
         if self.error:
             _dict['error'] = self.error.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of body
+        # override the default output from pydantic by calling `to_dict()` of each item in body (list)
+        _items = []
         if self.body:
-            _dict['body'] = self.body.to_dict()
+            for _item_body in self.body:
+                if _item_body:
+                    _items.append(_item_body.to_dict())
+            _dict['body'] = _items
         return _dict
 
     @classmethod
@@ -91,7 +99,7 @@ class ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response(BaseModel):
 
         _obj = cls.model_validate({
             "error": ApiResponseError.from_dict(obj["error"]) if obj.get("error") is not None else None,
-            "body": ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner.from_dict(obj["body"]) if obj.get("body") is not None else None
+            "body": [ResultsSubmissionsSubmissionIdsGet200ResponseAllOfBodyInnerTestScoringsInner.from_dict(_item) for _item in obj["body"]] if obj.get("body") is not None else None
         })
         return _obj
 

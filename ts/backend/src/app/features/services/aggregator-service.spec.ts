@@ -21,31 +21,32 @@ const dummyBoard: { items: SubmissionScore[] } = {
     {
       submission_id: 'fcf1dcd0-eddb-4485-a415-66b680b136be',
       test_scorings: [],
-      scorings: {
-        all_asc: { score: 0.8 },
-        some_asc: { score: 0.8 },
-        some_null: { score: 0.8 },
-        negative: { score: -800 },
-      },
+      scorings: [
+        // field_ids are not relevant for testing, but required in type
+        { field_id: '077e3d77-5609-427c-9ae0-d0099cae6259', field_key: 'all_asc', score: 0.8 },
+        { field_id: '077e3d77-5609-427c-9ae0-d0099cae6259', field_key: 'some_asc', score: 0.8 },
+        { field_id: '077e3d77-5609-427c-9ae0-d0099cae6259', field_key: 'some_null', score: 0.8 },
+        { field_id: '077e3d77-5609-427c-9ae0-d0099cae6259', field_key: 'negative', score: -800 },
+      ],
     },
     {
       submission_id: '5b711a38-1e16-4883-be2d-cd5902b9c8ee',
       test_scorings: [],
-      scorings: {
-        all_asc: { score: 0.9 },
-        some_asc: { score: 0.8 },
-        negative: { score: -900 },
-      },
+      scorings: [
+        { field_id: '077e3d77-5609-427c-9ae0-d0099cae6259', field_key: 'all_asc', score: 0.9 },
+        { field_id: '077e3d77-5609-427c-9ae0-d0099cae6259', field_key: 'some_asc', score: 0.8 },
+        { field_id: '077e3d77-5609-427c-9ae0-d0099cae6259', field_key: 'negative', score: -900 },
+      ],
     },
     {
       submission_id: 'fce5162c-8288-40c5-b72b-cc7252afb28c',
       test_scorings: [],
-      scorings: {
-        all_asc: { score: 0.7 },
-        some_asc: { score: 0.7 },
-        some_null: { score: 0.7 },
-        negative: { score: -700 },
-      },
+      scorings: [
+        { field_id: '077e3d77-5609-427c-9ae0-d0099cae6259', field_key: 'all_asc', score: 0.7 },
+        { field_id: '077e3d77-5609-427c-9ae0-d0099cae6259', field_key: 'some_asc', score: 0.7 },
+        { field_id: '077e3d77-5609-427c-9ae0-d0099cae6259', field_key: 'some_null', score: 0.7 },
+        { field_id: '077e3d77-5609-427c-9ae0-d0099cae6259', field_key: 'negative', score: -700 },
+      ],
     },
   ],
 }
@@ -189,7 +190,7 @@ describe('Aggregator Service', () => {
       { case: 'negative scores', field: 'negative', ranks: [2, 3, 1], highest: 0, lowest: -900 },
     ])('in case $case', (testCase) => {
       board.items.forEach((submissionScore, index) => {
-        const scoring = submissionScore.scorings[testCase.field]
+        const scoring = submissionScore.scorings.find((s) => s.field_key === testCase.field)
         if (scoring) {
           expect(scoring.rank).toBe(testCase.ranks[index])
           expect(scoring.highest).toBe(testCase.highest)

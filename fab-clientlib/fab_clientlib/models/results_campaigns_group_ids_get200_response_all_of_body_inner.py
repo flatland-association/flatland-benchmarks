@@ -25,8 +25,8 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
 
-from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner import \
-  ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner
+from fab_clientlib.models.results_campaigns_group_ids_get200_response_all_of_body_inner_items_inner import \
+    ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner
 
 
 class ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner(BaseModel):
@@ -34,9 +34,8 @@ class ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner(BaseModel):
     ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner
     """ # noqa: E501
     group_id: Optional[UUID] = Field(default=None, description="ID of benchmark group.")
-    items: Optional[List[ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner]] = None
-    scorings: Optional[Dict[str, Any]] = Field(default=None, description="Dictionary of group scores")
-    __properties: ClassVar[List[str]] = ["group_id", "items", "scorings"]
+    items: Optional[List[ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner]] = None
+    __properties: ClassVar[List[str]] = ["group_id", "items"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -97,8 +96,7 @@ class ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner(BaseModel):
 
         _obj = cls.model_validate({
             "group_id": obj.get("group_id"),
-            "items": [ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner.from_dict(_item) for _item in obj["items"]] if obj.get("items") is not None else None,
-            "scorings": obj.get("scorings")
+            "items": [ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner.from_dict(_item) for _item in obj["items"]] if obj.get("items") is not None else None
         })
         return _obj
 

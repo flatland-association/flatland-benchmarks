@@ -131,14 +131,16 @@ export interface ResultRow {
   value: number
 }
 
-// TODO: merge with resource pattern, find a way to use same interface for transport as for computation
 export interface PostTestResultsBody {
-  data: ({
+  data: {
     scenario_id: string
-  } & Record<string, number>)[]
+    scores: Record<string, number>
+  }[]
 }
 
 export interface Scoring {
+  field_id: string
+  field_key: string
   score: number | null
   // rank, highest and lowest score will only be populated after scoring,
   // on demand, when it's possible to compare submissions/scoring.
@@ -149,23 +151,20 @@ export interface Scoring {
   lowest?: number
 }
 
-// TODO: naming?
-export type Scorings = Record<string, Scoring | null>
-
 export interface SubmissionScenarioScore {
   scenario_id: string
-  scorings: Scorings
+  scorings: Scoring[]
 }
 
 export interface SubmissionTestScore {
   test_id: string
-  scorings: Scorings
+  scorings: Scoring[]
   scenario_scorings: SubmissionScenarioScore[]
 }
 
 export interface SubmissionScore {
   submission_id: string
-  scorings: Scorings
+  scorings: Scoring[]
   test_scorings: SubmissionTestScore[]
 }
 
@@ -177,14 +176,14 @@ export interface Leaderboard {
 
 export interface OverviewItem {
   test_id: string
-  scorings: Scorings | null
+  scorings: Scoring[] | null
   submission_id: string | null
 }
 
 export interface CampaignItemOverview {
   benchmark_id: string
   items: OverviewItem[]
-  scorings: Scorings
+  scorings: Scoring[]
 }
 
 export interface CampaignOverview {
