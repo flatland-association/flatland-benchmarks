@@ -3,9 +3,7 @@
     <app-site-heading class="bp-8 flex w-full" [title]="submission.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
 
     <lib-section class="w-full">
-      <p>
-        {{ submission.description }}
-      </p>
+      <div [innerHTML]="submission.description"></div>
     </lib-section>
   </lib-content>
 
