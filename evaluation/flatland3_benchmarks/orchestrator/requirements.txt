@@ -5,5 +5,5 @@ boto3==1.35.49
 python-dotenv==1.0.1
 # DEPENDENCY SWITCH:
 #git+https://github.com/flatland-association/flatland-benchmarks.git@feature/domain-queues#subdirectory=fab-clientlib
-fab-clientlib==0.13.0
+fab-clientlib==0.13.1
 
