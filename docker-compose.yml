@@ -331,7 +331,7 @@ services:
         mkdir -p /app/data/1234/
         touch /app/data/1234/nix.txt
         cd ai4realnet_orchestrators
-        python -m celery -A ai4realnet_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${BENCHMARK_ID}
+        python -m celery -A ai4realnet_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${DOMAIN}
     build:
       dockerfile: evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/integrationtests/Dockerfile
     depends_on:
