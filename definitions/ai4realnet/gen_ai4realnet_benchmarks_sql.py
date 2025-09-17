@@ -100,8 +100,8 @@ if __name__ == '__main__':
     f.write(orchestrator_code)
 
   sql = gen_sqls(data)
-  with Path("V9.1__ai4realnet_example.json").open("w") as f:
+  with Path("V10.1__ai4realnet_example.json").open("w") as f:
     f.write(json.dumps(data, indent=4))
 
-  with Path("../../ts/backend/src/migration/data/V9.1__ai4realnet_example.sql").open("w") as f:
+  with Path("../../ts/backend/src/migration/data/V10.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
     f.write(sql)
