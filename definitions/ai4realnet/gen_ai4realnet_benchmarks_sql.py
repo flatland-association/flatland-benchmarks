@@ -90,7 +90,7 @@ def gen_domain_orchestrator(data, domain):
 
 
 if __name__ == '__main__':
-  # download from from https://flatlandassociation.sharepoint.com/:x:/s/FlatlandAssociation/EanEj4dEBHBDsGzo5WyygCsBIBH7jo502okMbMybT6Bx0g?e=6DotJy
+  # download from https://flatlandassociation.sharepoint.com/:x:/s/FlatlandAssociation/EanEj4dEBHBDsGzo5WyygCsBIBH7jo502okMbMybT6Bx0g?e=6DotJy
   data = extract_ai4realnet_from_csv(csv="KPIs_database_cards.csv")
 
   orchestrator_code = ""
