@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router'
 import {
   BenchmarkDefinitionRow,
-  BenchmarkGroupDefinitionRow,
   SubmissionRow,
   SubmissionScore,
+  SuiteDefinitionRow,
   TestDefinitionRow,
 } from '@common/interfaces'
 import { isSubmissionCompletelyScored } from '@common/scoring-utils'
@@ -42,7 +42,7 @@ export class SubmissionView implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute)
   private paramsSubscription?: Subscription
 
-  group?: BenchmarkGroupDefinitionRow
+  suite?: SuiteDefinitionRow
   benchmark?: BenchmarkDefinitionRow
   test?: TestDefinitionRow
   submission?: SubmissionRow
@@ -54,11 +54,11 @@ export class SubmissionView implements OnInit, OnDestroy {
     this.customizationService.getCustomization().then((customization) => {
       this.customization = customization
     })
-    this.paramsSubscription = this.route.params.subscribe(({ group_id, benchmark_id, submission_id }) => {
+    this.paramsSubscription = this.route.params.subscribe(({ suite_id, benchmark_id, submission_id }) => {
       this.resourceService
-        .load('/definitions/benchmark-groups/:group_ids', { params: { group_ids: group_id } })
-        .then((group) => {
-          this.group = group?.at(0)
+        .load('/definitions/suites/:suite_ids', { params: { suite_ids: suite_id } })
+        .then((suites) => {
+          this.suite = suites?.at(0)
         })
       this.resourceService
         .load('/definitions/benchmarks/:benchmark_ids', { params: { benchmark_ids: benchmark_id } })

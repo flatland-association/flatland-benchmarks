@@ -16,7 +16,7 @@ export interface BreadcrumbData {
 export const Breadcrumb = {
   EXACT: Symbol(),
   HIDDEN: Symbol(),
-  benchmark_group: Symbol(),
+  suite: Symbol(),
   benchmark: Symbol(),
   test: Symbol(),
   scenario: Symbol(),
@@ -98,12 +98,12 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   breadcrumbNameResolvers: BreadcrumbNameResolvers = {
     [Breadcrumb.EXACT]: async (segment: string) => segment,
     [Breadcrumb.HIDDEN]: async (_segment: string) => null,
-    [Breadcrumb.benchmark_group]: async (segment: string) => {
-      const group = (
-        await this.resourceService.load('/definitions/benchmark-groups/:group_ids', { params: { group_ids: segment } })
+    [Breadcrumb.suite]: async (segment: string) => {
+      const suite = (
+        await this.resourceService.load('/definitions/suites/:suite_ids', { params: { suite_ids: segment } })
       )?.at(0)
       // return resource name, fall back to uuid[0...8]
-      return group?.name ?? segment.slice(0, 8)
+      return suite?.name ?? segment.slice(0, 8)
     },
     [Breadcrumb.benchmark]: async (segment: string) => {
       const benchmark = (

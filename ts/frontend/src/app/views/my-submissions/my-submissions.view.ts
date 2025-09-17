@@ -56,11 +56,11 @@ export class MySubmissionsView implements OnInit {
             params: { submission_ids: submissions.map((s) => s.id).join(',') },
           })
         ).body
-        // TODO: load only linked groups
+        // TODO: load only linked suites
         // see: https://github.com/flatland-association/flatland-benchmarks/issues/410
         // TODO: load via resource service
         // see: https://github.com/flatland-association/flatland-benchmarks/issues/395
-        const groups = (await this.apiService.get('/definitions/benchmark-groups'))?.body
+        const suites = (await this.apiService.get('/definitions/suites'))?.body
         const benchmarks = await this.resourceService.loadGrouped('/definitions/benchmarks/:benchmark_ids', {
           params: { benchmark_ids: submissions?.map((s) => s.benchmark_id) ?? [] },
         })
@@ -71,7 +71,7 @@ export class MySubmissionsView implements OnInit {
           submissions?.map(async (submission) => {
             const score = scores?.find((s) => s?.submission_id === submission.id)
             const benchmark = benchmarks?.find((b) => b.id === submission.benchmark_id)
-            const group = benchmark?.id ? groups?.find((g) => g.benchmark_ids.includes(benchmark.id)) : undefined
+            const suite = benchmark?.id ? suites?.find((s) => s.benchmark_ids.includes(benchmark.id)) : undefined
             const fields = await this.resourceService.load('/definitions/fields/:field_ids', {
               params: { field_ids: benchmark?.field_ids ?? [] },
             })
@@ -81,12 +81,10 @@ export class MySubmissionsView implements OnInit {
             const isScored = isSubmissionCompletelyScored(score)
             return {
               routerLink:
-                group && benchmark
-                  ? ['/', 'benchmarks', group.id, benchmark.id, 'submissions', submission.id]
-                  : undefined,
+                suite && benchmark ? ['/', 'suites', suite.id, benchmark.id, 'submissions', submission.id] : undefined,
               cells: [
                 { text: submission.name },
-                { text: `${group?.name ?? 'NA'} / ${benchmark?.name ?? 'NA'}` },
+                { text: `${suite?.name ?? 'NA'} / ${benchmark?.name ?? 'NA'}` },
                 { text: startedAtStr },
                 isScored ? { scorings: score!.scorings, fieldDefinitions: fields } : { text: '⚠️' },
               ],

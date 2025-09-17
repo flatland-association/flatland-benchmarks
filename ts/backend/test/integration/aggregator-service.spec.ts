@@ -27,7 +27,7 @@ const dummySubmissionId = '00927bb7-d5ec-4949-9265-6134efa246f7'
 const dummyScenarioId = '0add02a3-fa2a-44f2-8d28-5671074d73a7'
 const dummyTestId = '67717de0-0d2b-4f51-81a3-5f6f038941b7'
 const dummyBenchmarkId = '12350c74-2dda-4ded-9ffe-fb20e188264a'
-const dummyGroupId = 'cebb08fa-ff09-4eab-ac3e-b2f84db7c46b'
+const dummySuiteId = 'cebb08fa-ff09-4eab-ac3e-b2f84db7c46b'
 
 describe.sequential('Aggregator Service (with Postgres)', async () => {
   describe('offline', async () => {
@@ -107,10 +107,10 @@ describe.sequential('Aggregator Service (with Postgres)', async () => {
       } satisfies AggregatorPublicMethodTestCase<'getCampaignItemOverview'>,
       {
         method: 'getCampaignOverview',
-        args: [[dummyGroupId]],
+        args: [[dummySuiteId]],
         returns: [
           {
-            group_id: dummyGroupId,
+            suite_id: dummySuiteId,
             items: [],
           },
         ],

@@ -6,9 +6,9 @@ import pandas as pd
 
 
 def main():
-  BENCHMARK_GROUP_ID = '0ca46887-897a-463f-bf83-c6cd6269a977'
-  BENCHMARK_GROUP_NAME = 'Beta Validation Campaign'
-  BENCHMARK_GROUP_DESCRIPTION = 'The beta validation campaign runs until 30.11.2025'
+  SUITE_ID = '0ca46887-897a-463f-bf83-c6cd6269a977'
+  SUITE_NAME = 'Beta Validation Campaign'
+  SUITE_DESCRIPTION = 'The beta validation campaign runs until 30.11.2025'
   agg_func = "MEAN"
 
   # from https://github.com/AI4REALNET/KPIs-cards/blob/main/data/card-data.ts
@@ -29,9 +29,9 @@ def main():
       record["domains"] = record["domain"]
       record["domain"] = domain
 
-      record["BENCHMARK_GROUP_ID"] = BENCHMARK_GROUP_ID
-      record["BENCHMARK_GROUP_NAME"] = BENCHMARK_GROUP_NAME
-      record["BENCHMARK_GROUP_DESCRIPTION"] = BENCHMARK_GROUP_DESCRIPTION
+      record["SUITE_ID"] = SUITE_ID
+      record["SUITE_NAME"] = SUITE_NAME
+      record["SUITE_DESCRIPTION"] = SUITE_DESCRIPTION
       record["BENCHMARK_ID"] = objectives[d["objective"]]
       record["BENCHMARK_NAME"] = record["objective"]
       record["BENCHMARK_DESCRIPTION"] = record["objectiveDescription"]

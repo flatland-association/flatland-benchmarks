@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
-import { BenchmarkGroupDefinitionRow } from '@common/interfaces'
+import { SuiteDefinitionRow } from '@common/interfaces'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
@@ -11,7 +11,7 @@ import { TableColumn, TableComponent, TableRow } from '../table/table.component'
   styleUrl: './campaign-overview.component.scss',
 })
 export class CampaignOverviewComponent implements OnInit, OnChanges {
-  @Input() group?: BenchmarkGroupDefinitionRow
+  @Input() suite?: SuiteDefinitionRow
 
   private resourceService = inject(ResourceService)
   private customizationService = inject(CustomizationService)
@@ -32,21 +32,21 @@ export class CampaignOverviewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['group']) {
+    if (changes['suite']) {
       this.buildBoard()
     }
   }
 
   async buildBoard() {
-    if (this.group) {
+    if (this.suite) {
       const campaignOverview = (
-        await this.resourceService.load('/results/campaigns/:group_ids', {
-          params: { group_ids: this.group.id },
+        await this.resourceService.load('/results/campaigns/:suite_ids', {
+          params: { suite_ids: this.suite.id },
         })
       )?.at(0)
       // pre-fetch all required benchmarks
       this.resourceService.loadGrouped('/definitions/benchmarks/:benchmark_ids', {
-        params: { benchmark_ids: this.group.benchmark_ids ?? [] },
+        params: { benchmark_ids: this.suite.benchmark_ids ?? [] },
       })
       this.rows = await Promise.all(
         campaignOverview?.items.map(async (item) => {
@@ -59,7 +59,7 @@ export class CampaignOverviewComponent implements OnInit, OnChanges {
             params: { field_ids: benchmark?.campaign_field_ids ?? [] },
           })
           return {
-            routerLink: ['/', 'benchmarks', this.group!.id, item.benchmark_id],
+            routerLink: ['/', 'suites', this.suite!.id, item.benchmark_id],
             cells: [
               { text: benchmark?.name ?? 'NA' },
               { text: benchmark?.test_ids.length ?? 'NA' },

@@ -18,7 +18,7 @@ export class ResultsController extends Controller {
     this.attachGet('/results/submissions/:submission_id/scenarios/:scenario_ids', this.getScenarioResults)
     this.attachGet('/results/benchmarks/:benchmark_ids', this.getLeaderboard)
     this.attachGet('/results/campaign-items/:benchmark_ids', this.getCampaignItemOverview)
-    this.attachGet('/results/campaigns/:group_ids', this.getCampaignOverview)
+    this.attachGet('/results/campaigns/:suite_ids', this.getCampaignOverview)
     this.attachGet('/results/benchmarks/:benchmark_id/tests/:test_ids', this.getTestLeaderboard)
   }
 
@@ -479,12 +479,12 @@ export class ResultsController extends Controller {
 
   /**
    * @swagger
-   * /results/campaigns/{group_ids}:
+   * /results/campaigns/{suite_ids}:
    *  get:
-   *    description: Returns campaign overviews (i.e. all benchmarks in the group with score aggregated from their top submission per test).
+   *    description: Returns campaign overviews (i.e. all benchmarks in the suite with score aggregated from their top submission per test).
    *    parameters:
    *      - in: path
-   *        name: group_ids
+   *        name: suite_ids
    *        description: Comma-separated list of IDs.
    *        required: true
    *        schema:
@@ -507,10 +507,10 @@ export class ResultsController extends Controller {
    *                      items:
    *                        type: object
    *                        properties:
-   *                          group_id:
+   *                          suite_id:
    *                            type: string
    *                            format: uuid
-   *                            description: ID of benchmark group.
+   *                            description: ID of suite.
    *                          items:
    *                            type: array
    *                            items:
@@ -544,11 +544,11 @@ export class ResultsController extends Controller {
    *                                  items:
    *                                    $ref: "#/components/schemas/Scoring"
    */
-  getCampaignOverview: GetHandler<'/results/campaigns/:group_ids'> = async (req, res) => {
-    const groupIds = req.params.group_ids.split(',')
+  getCampaignOverview: GetHandler<'/results/campaigns/:suite_ids'> = async (req, res) => {
+    const suiteIds = req.params.suite_ids.split(',')
 
     const aggregator = AggregatorService.getInstance()
-    const board = await aggregator.getCampaignOverview(groupIds)
+    const board = await aggregator.getCampaignOverview(suiteIds)
     this.respond(req, res, board)
   }
 

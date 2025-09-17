@@ -1,6 +1,5 @@
 import {
   BenchmarkDefinitionRow,
-  BenchmarkGroupDefinitionRow,
   CampaignItemOverview,
   CampaignOverview,
   FieldDefinitionRow,
@@ -12,6 +11,7 @@ import {
   SubmissionScenarioScore,
   SubmissionScore,
   SubmissionTestScore,
+  SuiteDefinitionRow,
   TestDefinitionRow,
 } from '@common/interfaces'
 import { configuration } from '../config/config.mjs'
@@ -40,7 +40,7 @@ interface SubmissionScoreSources extends SubmissionTestScoreSources {
 }
 
 interface CampaignOverviewSources extends SubmissionScoreSources {
-  benchmark_groups: (BenchmarkGroupDefinitionRow | null)[]
+  suites: (SuiteDefinitionRow | null)[]
 }
 
 /**
@@ -173,15 +173,15 @@ export class AggregatorService extends Service {
   }
 
   /**
-   * Returns `CampaignOverview` for one or more specified benchmark groups.
+   * Returns `CampaignOverview` for one or more specified suites.
    * Only published submissions are considered.
    */
-  async getCampaignOverview(groupIds: string[]): Promise<CampaignOverview[]> {
-    logger.trace('getCampaignOverview', { groupIds })
+  async getCampaignOverview(suiteIds: string[]): Promise<CampaignOverview[]> {
+    logger.trace('getCampaignOverview', { suiteIds })
     // load relevant sources
-    const sources = await this.loadCampaignOverviewSources(groupIds)
-    // build overview for all groups
-    return groupIds.map((groupId) => this.buildCampaignOverview(sources, groupId))
+    const sources = await this.loadCampaignOverviewSources(suiteIds)
+    // build overview for all suites
+    return suiteIds.map((suiteId) => this.buildCampaignOverview(sources, suiteId))
   }
 
   // Source loading and lookup
@@ -353,32 +353,32 @@ export class AggregatorService extends Service {
   /**
    * Loads sources required to build `CampaignOverview`s.
    */
-  async loadCampaignOverviewSources(groupIds: string[]): Promise<CampaignOverviewSources> {
+  async loadCampaignOverviewSources(suiteIds: string[]): Promise<CampaignOverviewSources> {
     this.sql = SqlService.getInstance()
     // load relevant sources (relevant means: referenced from benchmark)
     const [sources] = await this.sql.query<CampaignOverviewSources>`
       SELECT
-        json_agg(DISTINCT to_jsonb(benchmark_groups)) AS benchmark_groups,
+        json_agg(DISTINCT to_jsonb(suites)) AS suites,
         json_agg(DISTINCT to_jsonb(benchmark_definitions)) AS benchmark_definitions,
         json_agg(DISTINCT to_jsonb(submissions)) AS submissions,
         json_agg(DISTINCT to_jsonb(test_definitions)) AS test_definitions,
         json_agg(DISTINCT to_jsonb(scenario_definitions)) AS scenario_definitions,
         json_agg(DISTINCT to_jsonb(field_definitions)) AS field_definitions,
         json_agg(DISTINCT to_jsonb(results)) AS results
-      FROM benchmark_groups
-      LEFT JOIN benchmark_definitions ON benchmark_definitions.id = ANY(benchmark_groups.benchmark_ids)
+      FROM suites
+      LEFT JOIN benchmark_definitions ON benchmark_definitions.id = ANY(suites.benchmark_ids)
       LEFT JOIN submissions ON submissions.benchmark_id = benchmark_definitions.id AND submissions.published = true
       LEFT JOIN test_definitions ON test_definitions.id = ANY(benchmark_definitions.test_ids)
       LEFT JOIN scenario_definitions ON scenario_definitions.id = ANY(test_definitions.scenario_ids)
       LEFT JOIN field_definitions ON field_definitions.id = ANY(scenario_definitions.field_ids || test_definitions.field_ids || benchmark_definitions.field_ids || benchmark_definitions.campaign_field_ids)
       LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
-      WHERE benchmark_groups.id = ANY(${groupIds})
+      WHERE suites.id = ANY(${suiteIds})
     `
     return (
       sources ??
       ({
         submissions: [],
-        benchmark_groups: [],
+        suites: [],
         benchmark_definitions: [],
         test_definitions: [],
         scenario_definitions: [],
@@ -453,17 +453,14 @@ export class AggregatorService extends Service {
   }
 
   /**
-   * Returns the `BenchmarkGroupDefinitionRow` from `sources` matching `groupId`.
+   * Returns the `SuiteDefinitionRow` from `sources` matching `suiteId`.
    */
-  findGroup(
-    sources: { benchmark_groups: (BenchmarkGroupDefinitionRow | null)[] },
-    groupId: string,
-  ): BenchmarkGroupDefinitionRow | undefined {
-    const group = sources.benchmark_groups.find((groupDefRow) => groupDefRow?.id === groupId)
-    if (!group) {
-      logger.warn(`group ${groupId} not found in sources`, sources.benchmark_groups)
+  findSuite(sources: { suites: (SuiteDefinitionRow | null)[] }, suiteId: string): SuiteDefinitionRow | undefined {
+    const suite = sources.suites.find((suiteDefRow) => suiteDefRow?.id === suiteId)
+    if (!suite) {
+      logger.warn(`suite ${suiteId} not found in sources`, sources.suites)
     }
-    return group ?? undefined
+    return suite ?? undefined
   }
 
   // Score calculation
@@ -666,20 +663,20 @@ export class AggregatorService extends Service {
   /**
    * Builds `CampaignOverview` from results according to definitions.
    * @param sources at least all relevant `CampaignOverviewSources`
-   * @param groupId requested group ID
+   * @param suiteId requested suite ID
    */
-  buildCampaignOverview(sources: CampaignOverviewSources, groupId: string): CampaignOverview {
-    logger.trace('buildCampaignOverview', { groupId })
+  buildCampaignOverview(sources: CampaignOverviewSources, suiteId: string): CampaignOverview {
+    logger.trace('buildCampaignOverview', { suiteId })
     // prepare node
     const campaignOverview: CampaignOverview = {
-      group_id: groupId,
+      suite_id: suiteId,
       items: [],
     }
     // fill node with available data
-    const group = this.findGroup(sources, groupId)
-    if (group) {
-      // build item overviews for all benchmarks in group
-      campaignOverview.items = group.benchmark_ids.map((benchmarkId) =>
+    const suite = this.findSuite(sources, suiteId)
+    if (suite) {
+      // build item overviews for all benchmarks in suite
+      campaignOverview.items = suite.benchmark_ids.map((benchmarkId) =>
         this.buildCampaignItemOverview(sources, benchmarkId),
       )
     }

@@ -431,7 +431,7 @@ Here's an overview of the aggregation:
 
 ```mermaid
 erDiagram
-  benchmark_groups one to zero or more benchmark_definitions: benchmark_ids
+  suites one to zero or more benchmark_definitions: benchmark_ids
   benchmark_definitions one to zero or more field_definitions: field_ids
   benchmark_definitions one to zero or more field_definitions: campaign_field_ids
   benchmark_definitions one to zero or more test_definitions: test_ids
@@ -477,11 +477,11 @@ erDiagram
     boolean published
   }
 
-  benchmark_groups {
+  suites {
     uuid id PK
     character name
     text description
-    benchmark_group_setup setup
+    suite_setup setup
     uuid[] benchmark_ids FK
   }
 
@@ -529,8 +529,8 @@ erDiagram
     v MEADIAN
     v NANMEDIAN
   }
-  "TYPE benchmark_group_setup AS ENUM" {
-    v BENCHMARK
+  "TYPE suite_setup AS ENUM" {
+    v DEFAULT
     v COMPETITION
     v CAMPAIGN
   }

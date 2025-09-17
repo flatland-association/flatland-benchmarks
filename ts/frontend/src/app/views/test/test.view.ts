@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
-import { BenchmarkDefinitionRow, BenchmarkGroupDefinitionRow, TestDefinitionRow } from '@common/interfaces'
+import { BenchmarkDefinitionRow, SuiteDefinitionRow, TestDefinitionRow } from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
@@ -28,7 +28,7 @@ export class TestView implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute)
   private paramsSubscription?: Subscription
 
-  group?: BenchmarkGroupDefinitionRow
+  suite?: SuiteDefinitionRow
   benchmark?: BenchmarkDefinitionRow
   test?: TestDefinitionRow
   customization?: Customization
@@ -37,11 +37,11 @@ export class TestView implements OnInit, OnDestroy {
     this.customizationService.getCustomization().then((customization) => {
       this.customization = customization
     })
-    this.paramsSubscription = this.route.params.subscribe(({ group_id, benchmark_id, test_id }) => {
+    this.paramsSubscription = this.route.params.subscribe(({ suite_id, benchmark_id, test_id }) => {
       this.resourceService
-        .load('/definitions/benchmark-groups/:group_ids', { params: { group_ids: group_id } })
-        .then((group) => {
-          this.group = group?.at(0)
+        .load('/definitions/suites/:suite_ids', { params: { suite_ids: suite_id } })
+        .then((suites) => {
+          this.suite = suites?.at(0)
         })
       this.resourceService
         .load('/definitions/benchmarks/:benchmark_ids', { params: { benchmark_ids: benchmark_id } })

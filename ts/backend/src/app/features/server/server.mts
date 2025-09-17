@@ -5,7 +5,6 @@ import fs from 'node:fs/promises'
 import * as swaggerUi from 'swagger-ui-express'
 import swaggerDocument from '../../../swagger/swagger.json'
 import { configuration } from '../config/config.mjs'
-import { BenchmarkGroupController } from '../controller/benchmark-group.controller.mjs'
 import { BenchmarkController } from '../controller/benchmark.controller.mjs'
 import { DebugController } from '../controller/debug.controller.mjs'
 import { FieldController } from '../controller/field.controller.mjs'
@@ -14,6 +13,7 @@ import { InfoController } from '../controller/info.controller.mjs'
 import { ResultsController } from '../controller/results.controller.mjs'
 import { ScenarioController } from '../controller/scenario.controller.mjs'
 import { SubmissionController } from '../controller/submission.controller.mjs'
+import { SuiteController } from '../controller/suite.controller.mjs'
 import { TestController } from '../controller/test.controller.mjs'
 import { Logger } from '../logger/logger.mjs'
 
@@ -39,7 +39,7 @@ export class Server {
     this.app.use(new HealthController(this.config).router)
     this.app.use(new InfoController(this.config).router)
     this.app.use(new BenchmarkController(this.config).router)
-    this.app.use(new BenchmarkGroupController(this.config).router)
+    this.app.use(new SuiteController(this.config).router)
     this.app.use(new TestController(this.config).router)
     this.app.use(new ScenarioController(this.config).router)
     this.app.use(new FieldController(this.config).router)
