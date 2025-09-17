@@ -27,14 +27,14 @@ class TestDefaultApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
-    def test_benchmark_groups_get(self) -> None:
-        """Test case for benchmark_groups_get
+    def test_definitions_benchmark_groups_get(self) -> None:
+        """Test case for definitions_benchmark_groups_get
 
         """
         pass
 
-    def test_benchmark_groups_group_ids_get(self) -> None:
-        """Test case for benchmark_groups_group_ids_get
+    def test_definitions_benchmark_groups_group_ids_get(self) -> None:
+        """Test case for definitions_benchmark_groups_group_ids_get
 
         """
         pass
@@ -51,6 +51,18 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
+    def test_definitions_fields_field_ids_get(self) -> None:
+        """Test case for definitions_fields_field_ids_get
+
+        """
+        pass
+
+    def test_definitions_scenarios_scenario_ids_get(self) -> None:
+        """Test case for definitions_scenarios_scenario_ids_get
+
+        """
+        pass
+
     def test_definitions_tests_test_ids_get(self) -> None:
         """Test case for definitions_tests_test_ids_get
 
@@ -59,6 +71,12 @@ class TestDefaultApi(unittest.TestCase):
 
     def test_health_live_get(self) -> None:
         """Test case for health_live_get
+
+        """
+        pass
+
+    def test_info_get(self) -> None:
+        """Test case for info_get
 
         """
         pass
@@ -87,8 +105,8 @@ class TestDefaultApi(unittest.TestCase):
         """
         pass
 
-    def test_results_submissions_submission_id_scenario_scenario_ids_get(self) -> None:
-        """Test case for results_submissions_submission_id_scenario_scenario_ids_get
+    def test_results_submissions_submission_id_scenarios_scenario_ids_get(self) -> None:
+        """Test case for results_submissions_submission_id_scenarios_scenario_ids_get
 
         """
         pass

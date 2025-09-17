@@ -14,23 +14,27 @@
 
 
 from __future__ import annotations
+
+import json
 import pprint
 import re  # noqa: F401
-import json
+from typing import Any, ClassVar, Dict, List
+from typing import Optional, Set
 
 from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List, Optional
-from fab_clientlib.models.api_response_error import ApiResponseError
-from fab_clientlib.models.benchmark_groups_get200_response_all_of_body_inner import BenchmarkGroupsGet200ResponseAllOfBodyInner
-from typing import Optional, Set
 from typing_extensions import Self
 
-class BenchmarkGroupsGet200Response(BaseModel):
+from fab_clientlib.models.api_response_error import ApiResponseError
+from fab_clientlib.models.definitions_scenarios_scenario_ids_get200_response_all_of_body_inner import \
+    DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner
+
+
+class DefinitionsScenariosScenarioIdsGet200Response(BaseModel):
     """
-    BenchmarkGroupsGet200Response
+    DefinitionsScenariosScenarioIdsGet200Response
     """ # noqa: E501
     error: Optional[ApiResponseError] = None
-    body: Optional[List[BenchmarkGroupsGet200ResponseAllOfBodyInner]] = None
+    body: Optional[List[DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner]] = None
     __properties: ClassVar[List[str]] = ["error", "body"]
 
     model_config = ConfigDict(
@@ -51,7 +55,7 @@ class BenchmarkGroupsGet200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of BenchmarkGroupsGet200Response from a JSON string"""
+        """Create an instance of DefinitionsScenariosScenarioIdsGet200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -86,7 +90,7 @@ class BenchmarkGroupsGet200Response(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of BenchmarkGroupsGet200Response from a dict"""
+        """Create an instance of DefinitionsScenariosScenarioIdsGet200Response from a dict"""
         if obj is None:
             return None
 
@@ -95,7 +99,7 @@ class BenchmarkGroupsGet200Response(BaseModel):
 
         _obj = cls.model_validate({
             "error": ApiResponseError.from_dict(obj["error"]) if obj.get("error") is not None else None,
-            "body": [BenchmarkGroupsGet200ResponseAllOfBodyInner.from_dict(_item) for _item in obj["body"]] if obj.get("body") is not None else None
+            "body": [DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner.from_dict(_item) for _item in obj["body"]] if obj.get("body") is not None else None
         })
         return _obj
 

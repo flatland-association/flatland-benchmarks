@@ -15,7 +15,7 @@ export class ResultsController extends Controller {
     this.attachGet('/results/submissions/:submission_ids', this.getSubmissionResults)
     this.attachGet('/results/submissions/:submission_id/tests/:test_ids', this.getTestResults)
     this.attachPost('/results/submissions/:submission_id/tests/:test_ids', this.postTestResults)
-    this.attachGet('/results/submissions/:submission_id/scenario/:scenario_ids', this.getScenarioResults)
+    this.attachGet('/results/submissions/:submission_id/scenarios/:scenario_ids', this.getScenarioResults)
     this.attachGet('/results/benchmarks/:benchmark_ids', this.getLeaderboard)
     this.attachGet('/results/campaign-items/:benchmark_ids', this.getCampaignItemOverview)
     this.attachGet('/results/campaigns/:suite_ids', this.getCampaignOverview)
@@ -57,8 +57,10 @@ export class ResultsController extends Controller {
    *                            format: uuid
    *                            description: ID of submission.
    *                          scorings:
-   *                            type: object
-   *                            description: Dictionary of submission scores.
+   *                            type: array
+   *                            description: Submission scores.
+   *                            items:
+   *                              $ref: "#/components/schemas/Scoring"
    *                          test_scorings:
    *                            type: array
    *                            items:
@@ -69,8 +71,10 @@ export class ResultsController extends Controller {
    *                                  format: uuid
    *                                  description: ID of test.
    *                                scorings:
-   *                                  type: object
-   *                                  description: Dictionary of test scores.
+   *                                  type: array
+   *                                  description: Test scores.
+   *                                  items:
+   *                                    $ref: "#/components/schemas/Scoring"
    *                                scenario_scorings:
    *                                  type: array
    *                                  items:
@@ -81,8 +85,10 @@ export class ResultsController extends Controller {
    *                                        format: uuid
    *                                        description: ID of scenario.
    *                                      scorings:
-   *                                        type: object
-   *                                        description: Dictionary of scores.
+   *                                        type: array
+   *                                        description: Scenario scores.
+   *                                        items:
+   *                                          $ref: "#/components/schemas/Scoring"
    */
   getSubmissionResults: GetHandler<'/results/submissions/:submission_ids'> = async (req, res) => {
     const submissionIds = req.params.submission_ids.split(',')
@@ -125,36 +131,40 @@ export class ResultsController extends Controller {
    *                - type: object
    *                  properties:
    *                    body:
-   *                      type: object
-   *                      properties:
-   *                        test_id:
-   *                          type: string
-   *                          format: uuid
-   *                          description: ID of test.
-   *                        scorings:
-   *                          type: object
-   *                          description: Dictionary of test scores.
-   *                        scenario_scorings:
-   *                          type: array
-   *                          items:
-   *                            type: object
-   *                            properties:
-   *                              scenario_id:
-   *                               type: string
-   *                               format: uuid
-   *                               description: ID of scenario.
-   *                              scorings:
-   *                                type: object
-   *                                description: Dictionary of scores.
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          test_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of test.
+   *                          scorings:
+   *                            type: array
+   *                            description: Test scores.
+   *                            items:
+   *                              $ref: "#/components/schemas/Scoring"
+   *                          scenario_scorings:
+   *                            type: array
+   *                            items:
+   *                              type: object
+   *                              properties:
+   *                                scenario_id:
+   *                                 type: string
+   *                                 format: uuid
+   *                                 description: ID of scenario.
+   *                                scorings:
+   *                                  type: array
+   *                                  description: Scenario scores.
+   *                                  items:
+   *                                    $ref: "#/components/schemas/Scoring"
    */
   getTestResults: GetHandler<'/results/submissions/:submission_id/tests/:test_ids'> = async (req, res) => {
     const submissionId = req.params.submission_id
     const testIds = req.params.test_ids.split(',')
 
     const aggregator = AggregatorService.getInstance()
-    // TOFIX: should return whole array
-    // https://github.com/flatland-association/flatland-benchmarks/issues/352
-    const [score] = await aggregator.getSubmissionTestScore(submissionId, testIds)
+    const score = await aggregator.getSubmissionTestScore(submissionId, testIds)
     this.respond(req, res, score)
   }
 
@@ -199,8 +209,10 @@ export class ResultsController extends Controller {
    *                      type: string
    *                      format: uuid
    *                      description: ID of scenario
-   *                  additionalProperties:
-   *                    type: number
+   *                    scores:
+   *                      type: object
+   *                      additionalProperties:
+   *                        type: number
    *    responses:
    *      201:
    *        description: All results inserted.
@@ -230,17 +242,15 @@ export class ResultsController extends Controller {
     const testId = req.params.test_ids
     const resultRows = req.body.data.flatMap((score) => {
       const resultRows: ResultRow[] = []
-      // score's keys are keys of score, except for the one being scenario_id, which is scenario_id
-      for (const key in score) {
-        if (key != 'scenario_id') {
-          resultRows.push({
-            scenario_id: score.scenario_id,
-            test_id: testId,
-            submission_id: submissionId,
-            key,
-            value: score[key],
-          })
-        }
+      // the keys in score correspond to the key used in results table
+      for (const key in score.scores) {
+        resultRows.push({
+          scenario_id: score.scenario_id,
+          test_id: testId,
+          submission_id: submissionId,
+          key,
+          value: score.scores[key],
+        })
       }
       return resultRows
     })
@@ -258,12 +268,16 @@ export class ResultsController extends Controller {
     } catch (error) {
       logger.error(error)
       this.requestError(req, res, { text: 'Some results could not be inserted, transaction aborted.' })
+      logger.error(`${error} req.body.data=${req.body.data}`)
+      logger.error(`${error} req.body=${req.body}`)
+      logger.error(`${error} sql.notices=${sql.notices}`)
+      logger.error(`${error} sql.statements=${sql.statements}`)
     }
   }
 
   /**
    * @swagger
-   * /results/submissions/{submission_id}/scenario/{scenario_ids}:
+   * /results/submissions/{submission_id}/scenarios/{scenario_ids}:
    *  get:
    *    description: Get submission results for specific scenario.
    *    parameters:
@@ -303,10 +317,12 @@ export class ResultsController extends Controller {
    *                            format: uuid
    *                            description: ID of scenario.
    *                          scorings:
-   *                            type: object
-   *                            description: Dictionary of scores.
+   *                            type: array
+   *                            description: Scenario scores.
+   *                            items:
+   *                              $ref: "#/components/schemas/Scoring"
    */
-  getScenarioResults: GetHandler<'/results/submissions/:submission_id/scenario/:scenario_ids'> = async (req, res) => {
+  getScenarioResults: GetHandler<'/results/submissions/:submission_id/scenarios/:scenario_ids'> = async (req, res) => {
     const submissionId = req.params.submission_id
     const scenarioIds = req.params.scenario_ids.split(',')
 
@@ -359,8 +375,10 @@ export class ResultsController extends Controller {
    *                                  format: uuid
    *                                  description: ID of submission.
    *                                scorings:
-   *                                  type: object
-   *                                  description: Dictionary of submission scores.
+   *                                  type: array
+   *                                  description: Submission scores.
+   *                                  items:
+   *                                    $ref: "#/components/schemas/Scoring"
    *                                test_scorings:
    *                                  type: array
    *                                  items:
@@ -371,8 +389,10 @@ export class ResultsController extends Controller {
    *                                        format: uuid
    *                                        description: ID of test.
    *                                      scorings:
-   *                                        type: object
-   *                                        description: Dictionary of test scores.
+   *                                        type: array
+   *                                        description: Test scores.
+   *                                        items:
+   *                                          $ref: "#/components/schemas/Scoring"
    *                                      scenario_scorings:
    *                                        type: array
    *                                        items:
@@ -383,8 +403,10 @@ export class ResultsController extends Controller {
    *                                              format: uuid
    *                                              description: ID of scenario.
    *                                            scorings:
-   *                                              type: object
-   *                                              description: Dictionary of scores.
+   *                                              type: array
+   *                                              description: Scenario scores.
+   *                                              items:
+   *                                                $ref: "#/components/schemas/Scoring"
    */
   getLeaderboard: GetHandler<'/results/benchmarks/:benchmark_ids'> = async (req, res) => {
     const benchmarkIds = req.params.benchmark_ids.split(',')
@@ -438,8 +460,10 @@ export class ResultsController extends Controller {
    *                                  format: uuid
    *                                  description: ID of test.
    *                                scorings:
-   *                                  type: object
-   *                                  description: Dictionary of test scores (best submission only).
+   *                                  type: array
+   *                                  description: Test scores (best submission only).
+   *                                  items:
+   *                                    $ref: "#/components/schemas/Scoring"
    *                                submission_id:
    *                                  type: string
    *                                  format: uuid
@@ -506,15 +530,19 @@ export class ResultsController extends Controller {
    *                                        format: uuid
    *                                        description: ID of test.
    *                                      scorings:
-   *                                        type: object
-   *                                        description: Dictionary of test scores (best submission only).
+   *                                        type: array
+   *                                        description: Test scores (best submission only).
+   *                                        items:
+   *                                          $ref: "#/components/schemas/Scoring"
    *                                      submission_id:
    *                                        type: string
    *                                        format: uuid
    *                                        description: ID of best submission.
-   *                          scorings:
-   *                            type: object
-   *                            description: Dictionary of group scores
+   *                                scorings:
+   *                                  type: array
+   *                                  description: Campaign item scores.
+   *                                  items:
+   *                                    $ref: "#/components/schemas/Scoring"
    */
   getCampaignOverview: GetHandler<'/results/campaigns/:suite_ids'> = async (req, res) => {
     const suiteIds = req.params.suite_ids.split(',')
@@ -575,8 +603,10 @@ export class ResultsController extends Controller {
    *                                  format: uuid
    *                                  description: ID of submission.
    *                                scorings:
-   *                                  type: object
-   *                                  description: Dictionary of submission scores.
+   *                                  type: array
+   *                                  description: Submission scores.
+   *                                  items:
+   *                                    $ref: "#/components/schemas/Scoring"
    *                                test_scorings:
    *                                  type: array
    *                                  items:
@@ -587,8 +617,10 @@ export class ResultsController extends Controller {
    *                                        format: uuid
    *                                        description: ID of test.
    *                                      scorings:
-   *                                        type: object
-   *                                        description: Dictionary of test scores.
+   *                                        type: array
+   *                                        description: Test scores.
+   *                                        items:
+   *                                          $ref: "#/components/schemas/Scoring"
    *                                      scenario_scorings:
    *                                        type: array
    *                                        items:
@@ -599,8 +631,10 @@ export class ResultsController extends Controller {
    *                                              format: uuid
    *                                              description: ID of scenario.
    *                                            scorings:
-   *                                              type: object
-   *                                              description: Dictionary of scores.
+   *                                              type: array
+   *                                              description: Scenario scores.
+   *                                              items:
+   *                                                $ref: "#/components/schemas/Scoring"
    */
   getTestLeaderboard: GetHandler<'/results/benchmarks/:benchmark_id/tests/:test_ids'> = async (req, res) => {
     const benchmarkId = req.params.benchmark_id

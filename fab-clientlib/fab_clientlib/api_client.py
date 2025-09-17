@@ -33,8 +33,8 @@ from fab_clientlib import rest
 from fab_clientlib.api_response import ApiResponse, T as ApiResponseT
 from fab_clientlib.configuration import Configuration
 from fab_clientlib.exceptions import (
-  ApiValueError,
-  ApiException
+    ApiValueError,
+    ApiException
 )
 
 RequestSerialized = Tuple[str, str, Dict[str, str], Optional[str], List[str]]
@@ -354,7 +354,7 @@ class ApiClient:
         elif isinstance(obj, self.PRIMITIVE_TYPES):
             return obj
         elif isinstance(obj, uuid.UUID):
-          return str(obj)
+            return str(obj)
         elif isinstance(obj, list):
             return [
                 self.sanitize_for_serialization(sub_obj) for sub_obj in obj

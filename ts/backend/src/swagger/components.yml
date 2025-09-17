@@ -7,6 +7,28 @@ components:
           properties:
             text:
               type: string
+    Scoring:
+      properties:
+        field_id:
+          type: string
+          format: uuid
+          description: ID of field definition.
+        field_key:
+          type: string
+          description: Key of field.
+        score:
+          type: number
+          nullable: true
+          description: Numerical score.
+        rank:
+          type: number
+          description: Item's rank in category.
+        highest:
+          type: number
+          description: Highest score in category.
+        lowest:
+          type: number
+          description: Lowest score in category.
   securitySchemes:
     oauth2:
       type: oauth2

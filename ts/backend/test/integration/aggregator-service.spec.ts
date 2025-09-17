@@ -59,7 +59,7 @@ describe.sequential('Aggregator Service (with Postgres)', async () => {
         returns: [
           {
             scenario_id: dummyScenarioId,
-            scorings: {},
+            scorings: [],
           },
         ],
       } satisfies AggregatorPublicMethodTestCase<'getSubmissionScenarioScore'>,
@@ -70,7 +70,7 @@ describe.sequential('Aggregator Service (with Postgres)', async () => {
           {
             test_id: dummyTestId,
             scenario_scorings: [],
-            scorings: {},
+            scorings: [],
           },
         ],
       } satisfies AggregatorPublicMethodTestCase<'getSubmissionTestScore'>,
@@ -81,7 +81,7 @@ describe.sequential('Aggregator Service (with Postgres)', async () => {
           {
             submission_id: dummySubmissionId,
             test_scorings: [],
-            scorings: {},
+            scorings: [],
           },
         ],
       } satisfies AggregatorPublicMethodTestCase<'getSubmissionScore'>,
@@ -103,7 +103,7 @@ describe.sequential('Aggregator Service (with Postgres)', async () => {
       {
         method: 'getCampaignItemOverview',
         args: [[dummyBenchmarkId]],
-        returns: [{ benchmark_id: dummyBenchmarkId, items: [], scorings: {} }],
+        returns: [{ benchmark_id: dummyBenchmarkId, items: [], scorings: [] }],
       } satisfies AggregatorPublicMethodTestCase<'getCampaignItemOverview'>,
       {
         method: 'getCampaignOverview',

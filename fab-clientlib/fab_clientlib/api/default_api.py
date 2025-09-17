@@ -22,15 +22,18 @@ from typing_extensions import Annotated
 
 from fab_clientlib.api_client import ApiClient, RequestSerialized
 from fab_clientlib.api_response import ApiResponse
-from fab_clientlib.models.benchmark_groups_get200_response import BenchmarkGroupsGet200Response
+from fab_clientlib.models.definitions_benchmark_groups_get200_response import DefinitionsBenchmarkGroupsGet200Response
 from fab_clientlib.models.definitions_benchmarks_get200_response import DefinitionsBenchmarksGet200Response
+from fab_clientlib.models.definitions_fields_field_ids_get200_response import DefinitionsFieldsFieldIdsGet200Response
+from fab_clientlib.models.definitions_scenarios_scenario_ids_get200_response import DefinitionsScenariosScenarioIdsGet200Response
 from fab_clientlib.models.definitions_tests_test_ids_get200_response import DefinitionsTestsTestIdsGet200Response
 from fab_clientlib.models.health_live_get200_response import HealthLiveGet200Response
+from fab_clientlib.models.info_get200_response import InfoGet200Response
 from fab_clientlib.models.results_benchmarks_benchmark_ids_get200_response import ResultsBenchmarksBenchmarkIdsGet200Response
 from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response import ResultsCampaignItemsBenchmarkIdsGet200Response
 from fab_clientlib.models.results_campaigns_group_ids_get200_response import ResultsCampaignsGroupIdsGet200Response
-from fab_clientlib.models.results_submissions_submission_id_scenario_scenario_ids_get200_response import \
-  ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response
+from fab_clientlib.models.results_submissions_submission_id_scenarios_scenario_ids_get200_response import \
+  ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response
 from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_get200_response import ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response
 from fab_clientlib.models.results_submissions_submission_id_tests_test_ids_post_request import ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest
 from fab_clientlib.models.results_submissions_submission_ids_get200_response import ResultsSubmissionsSubmissionIdsGet200Response
@@ -54,7 +57,7 @@ class DefaultApi:
 
 
     @validate_call
-    def benchmark_groups_get(
+    def definitions_benchmark_groups_get(
         self,
         _request_timeout: Union[
             None,
@@ -68,8 +71,8 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> BenchmarkGroupsGet200Response:
-        """benchmark_groups_get
+    ) -> DefinitionsBenchmarkGroupsGet200Response:
+        """definitions_benchmark_groups_get
 
         Lists benchmark-groups.
 
@@ -95,7 +98,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._benchmark_groups_get_serialize(
+        _param = self._definitions_benchmark_groups_get_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -103,7 +106,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "BenchmarkGroupsGet200Response",
+            '200': "DefinitionsBenchmarkGroupsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -117,7 +120,7 @@ class DefaultApi:
 
 
     @validate_call
-    def benchmark_groups_get_with_http_info(
+    def definitions_benchmark_groups_get_with_http_info(
         self,
         _request_timeout: Union[
             None,
@@ -131,8 +134,8 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[BenchmarkGroupsGet200Response]:
-        """benchmark_groups_get
+    ) -> ApiResponse[DefinitionsBenchmarkGroupsGet200Response]:
+        """definitions_benchmark_groups_get
 
         Lists benchmark-groups.
 
@@ -158,7 +161,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._benchmark_groups_get_serialize(
+        _param = self._definitions_benchmark_groups_get_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -166,7 +169,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "BenchmarkGroupsGet200Response",
+            '200': "DefinitionsBenchmarkGroupsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -180,7 +183,7 @@ class DefaultApi:
 
 
     @validate_call
-    def benchmark_groups_get_without_preload_content(
+    def definitions_benchmark_groups_get_without_preload_content(
         self,
         _request_timeout: Union[
             None,
@@ -195,7 +198,7 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """benchmark_groups_get
+        """definitions_benchmark_groups_get
 
         Lists benchmark-groups.
 
@@ -221,7 +224,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._benchmark_groups_get_serialize(
+        _param = self._definitions_benchmark_groups_get_serialize(
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -229,7 +232,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "BenchmarkGroupsGet200Response",
+            '200': "DefinitionsBenchmarkGroupsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -238,7 +241,7 @@ class DefaultApi:
         return response_data.response
 
 
-    def _benchmark_groups_get_serialize(
+    def _definitions_benchmark_groups_get_serialize(
         self,
         _request_auth,
         _content_type,
@@ -282,7 +285,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/benchmark-groups',
+            resource_path='/definitions/benchmark-groups',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -299,9 +302,9 @@ class DefaultApi:
 
 
     @validate_call
-    def benchmark_groups_group_ids_get(
+    def definitions_benchmark_groups_group_ids_get(
         self,
-      group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -314,8 +317,8 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> BenchmarkGroupsGet200Response:
-        """benchmark_groups_group_ids_get
+    ) -> DefinitionsBenchmarkGroupsGet200Response:
+        """definitions_benchmark_groups_group_ids_get
 
         Returns benchmark-groups with ID in `group_id`.
 
@@ -343,7 +346,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._benchmark_groups_group_ids_get_serialize(
+        _param = self._definitions_benchmark_groups_group_ids_get_serialize(
             group_ids=group_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -352,7 +355,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "BenchmarkGroupsGet200Response",
+            '200': "DefinitionsBenchmarkGroupsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -366,9 +369,9 @@ class DefaultApi:
 
 
     @validate_call
-    def benchmark_groups_group_ids_get_with_http_info(
+    def definitions_benchmark_groups_group_ids_get_with_http_info(
         self,
-      group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -381,8 +384,8 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[BenchmarkGroupsGet200Response]:
-        """benchmark_groups_group_ids_get
+    ) -> ApiResponse[DefinitionsBenchmarkGroupsGet200Response]:
+        """definitions_benchmark_groups_group_ids_get
 
         Returns benchmark-groups with ID in `group_id`.
 
@@ -410,7 +413,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._benchmark_groups_group_ids_get_serialize(
+        _param = self._definitions_benchmark_groups_group_ids_get_serialize(
             group_ids=group_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -419,7 +422,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "BenchmarkGroupsGet200Response",
+            '200': "DefinitionsBenchmarkGroupsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -433,9 +436,9 @@ class DefaultApi:
 
 
     @validate_call
-    def benchmark_groups_group_ids_get_without_preload_content(
+    def definitions_benchmark_groups_group_ids_get_without_preload_content(
         self,
-      group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -449,7 +452,7 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """benchmark_groups_group_ids_get
+        """definitions_benchmark_groups_group_ids_get
 
         Returns benchmark-groups with ID in `group_id`.
 
@@ -477,7 +480,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._benchmark_groups_group_ids_get_serialize(
+        _param = self._definitions_benchmark_groups_group_ids_get_serialize(
             group_ids=group_ids,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -486,7 +489,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "BenchmarkGroupsGet200Response",
+            '200': "DefinitionsBenchmarkGroupsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -495,7 +498,7 @@ class DefaultApi:
         return response_data.response
 
 
-    def _benchmark_groups_group_ids_get_serialize(
+    def _definitions_benchmark_groups_group_ids_get_serialize(
         self,
         group_ids,
         _request_auth,
@@ -543,7 +546,7 @@ class DefaultApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/benchmark-groups/{group_ids}',
+            resource_path='/definitions/benchmark-groups/{group_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -562,7 +565,7 @@ class DefaultApi:
     @validate_call
     def definitions_benchmarks_benchmark_ids_get(
         self,
-      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -629,7 +632,7 @@ class DefaultApi:
     @validate_call
     def definitions_benchmarks_benchmark_ids_get_with_http_info(
         self,
-      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -696,7 +699,7 @@ class DefaultApi:
     @validate_call
     def definitions_benchmarks_benchmark_ids_get_without_preload_content(
         self,
-      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -800,7 +803,6 @@ class DefaultApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'oauth2'
         ]
 
         return self.api_client.param_serialize(
@@ -1046,7 +1048,6 @@ class DefaultApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'oauth2'
         ]
 
         return self.api_client.param_serialize(
@@ -1068,9 +1069,531 @@ class DefaultApi:
 
 
     @validate_call
+    def definitions_fields_field_ids_get(
+        self,
+        field_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> DefinitionsFieldsFieldIdsGet200Response:
+        """definitions_fields_field_ids_get
+
+        Returns fields with ID in `ids`.
+
+        :param field_ids: Comma-separated list of IDs. (required)
+        :type field_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._definitions_fields_field_ids_get_serialize(
+            field_ids=field_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DefinitionsFieldsFieldIdsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def definitions_fields_field_ids_get_with_http_info(
+        self,
+        field_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[DefinitionsFieldsFieldIdsGet200Response]:
+        """definitions_fields_field_ids_get
+
+        Returns fields with ID in `ids`.
+
+        :param field_ids: Comma-separated list of IDs. (required)
+        :type field_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._definitions_fields_field_ids_get_serialize(
+            field_ids=field_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DefinitionsFieldsFieldIdsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def definitions_fields_field_ids_get_without_preload_content(
+        self,
+        field_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """definitions_fields_field_ids_get
+
+        Returns fields with ID in `ids`.
+
+        :param field_ids: Comma-separated list of IDs. (required)
+        :type field_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._definitions_fields_field_ids_get_serialize(
+            field_ids=field_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DefinitionsFieldsFieldIdsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _definitions_fields_field_ids_get_serialize(
+        self,
+        field_ids,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'field_ids': 'csv',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if field_ids is not None:
+            _path_params['field_ids'] = field_ids
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/definitions/fields/{field_ids}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def definitions_scenarios_scenario_ids_get(
+        self,
+        scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> DefinitionsScenariosScenarioIdsGet200Response:
+        """definitions_scenarios_scenario_ids_get
+
+        Returns scenarios with ID in `ids`.
+
+        :param scenario_ids: Comma-separated list of IDs. (required)
+        :type scenario_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._definitions_scenarios_scenario_ids_get_serialize(
+            scenario_ids=scenario_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DefinitionsScenariosScenarioIdsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def definitions_scenarios_scenario_ids_get_with_http_info(
+        self,
+        scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[DefinitionsScenariosScenarioIdsGet200Response]:
+        """definitions_scenarios_scenario_ids_get
+
+        Returns scenarios with ID in `ids`.
+
+        :param scenario_ids: Comma-separated list of IDs. (required)
+        :type scenario_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._definitions_scenarios_scenario_ids_get_serialize(
+            scenario_ids=scenario_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DefinitionsScenariosScenarioIdsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def definitions_scenarios_scenario_ids_get_without_preload_content(
+        self,
+        scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """definitions_scenarios_scenario_ids_get
+
+        Returns scenarios with ID in `ids`.
+
+        :param scenario_ids: Comma-separated list of IDs. (required)
+        :type scenario_ids: List[str]
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._definitions_scenarios_scenario_ids_get_serialize(
+            scenario_ids=scenario_ids,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "DefinitionsScenariosScenarioIdsGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _definitions_scenarios_scenario_ids_get_serialize(
+        self,
+        scenario_ids,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'scenario_ids': 'csv',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if scenario_ids is not None:
+            _path_params['scenario_ids'] = scenario_ids
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/definitions/scenarios/{scenario_ids}',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def definitions_tests_test_ids_get(
         self,
-      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        test_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1137,7 +1660,7 @@ class DefaultApi:
     @validate_call
     def definitions_tests_test_ids_get_with_http_info(
         self,
-      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        test_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1204,7 +1727,7 @@ class DefaultApi:
     @validate_call
     def definitions_tests_test_ids_get_without_preload_content(
         self,
-      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        test_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1308,7 +1831,6 @@ class DefaultApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'oauth2'
         ]
 
         return self.api_client.param_serialize(
@@ -1575,10 +2097,255 @@ class DefaultApi:
 
 
     @validate_call
+    def info_get(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> InfoGet200Response:
+        """info_get
+
+        Returns info.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._info_get_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "InfoGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def info_get_with_http_info(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[InfoGet200Response]:
+        """info_get
+
+        Returns info.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._info_get_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "InfoGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def info_get_without_preload_content(
+        self,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """info_get
+
+        Returns info.
+
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._info_get_serialize(
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "InfoGet200Response",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _info_get_serialize(
+        self,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/info',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def results_benchmarks_benchmark_id_tests_test_ids_get(
         self,
-      benchmark_id: Annotated[UUID, Field(description="Benchmark ID.")],
-      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
+        benchmark_id: Annotated[UUID, Field(description="Benchmark ID.")],
+        test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1648,8 +2415,8 @@ class DefaultApi:
     @validate_call
     def results_benchmarks_benchmark_id_tests_test_ids_get_with_http_info(
         self,
-      benchmark_id: Annotated[UUID, Field(description="Benchmark ID.")],
-      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
+        benchmark_id: Annotated[UUID, Field(description="Benchmark ID.")],
+        test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1719,8 +2486,8 @@ class DefaultApi:
     @validate_call
     def results_benchmarks_benchmark_id_tests_test_ids_get_without_preload_content(
         self,
-      benchmark_id: Annotated[UUID, Field(description="Benchmark ID.")],
-      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
+        benchmark_id: Annotated[UUID, Field(description="Benchmark ID.")],
+        test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1830,7 +2597,6 @@ class DefaultApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'oauth2'
         ]
 
         return self.api_client.param_serialize(
@@ -1854,7 +2620,7 @@ class DefaultApi:
     @validate_call
     def results_benchmarks_benchmark_ids_get(
         self,
-      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
+        benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1921,7 +2687,7 @@ class DefaultApi:
     @validate_call
     def results_benchmarks_benchmark_ids_get_with_http_info(
         self,
-      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
+        benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1988,7 +2754,7 @@ class DefaultApi:
     @validate_call
     def results_benchmarks_benchmark_ids_get_without_preload_content(
         self,
-      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
+        benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2092,7 +2858,6 @@ class DefaultApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'oauth2'
         ]
 
         return self.api_client.param_serialize(
@@ -2116,7 +2881,7 @@ class DefaultApi:
     @validate_call
     def results_campaign_items_benchmark_ids_get(
         self,
-      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
+        benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2183,7 +2948,7 @@ class DefaultApi:
     @validate_call
     def results_campaign_items_benchmark_ids_get_with_http_info(
         self,
-      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
+        benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2250,7 +3015,7 @@ class DefaultApi:
     @validate_call
     def results_campaign_items_benchmark_ids_get_without_preload_content(
         self,
-      benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
+        benchmark_ids: Annotated[List[UUID], Field(description="Comma-separated list of benchmark IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2354,7 +3119,6 @@ class DefaultApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'oauth2'
         ]
 
         return self.api_client.param_serialize(
@@ -2378,7 +3142,7 @@ class DefaultApi:
     @validate_call
     def results_campaigns_group_ids_get(
         self,
-      group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2445,7 +3209,7 @@ class DefaultApi:
     @validate_call
     def results_campaigns_group_ids_get_with_http_info(
         self,
-      group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2512,7 +3276,7 @@ class DefaultApi:
     @validate_call
     def results_campaigns_group_ids_get_without_preload_content(
         self,
-      group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        group_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2616,7 +3380,6 @@ class DefaultApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'oauth2'
         ]
 
         return self.api_client.param_serialize(
@@ -2638,10 +3401,10 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_scenario_scenario_ids_get(
+    def results_submissions_submission_id_scenarios_scenario_ids_get(
         self,
-      submission_id: Annotated[UUID, Field(description="Submission ID.")],
-      scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of scenario IDs.")],
+        submission_id: Annotated[UUID, Field(description="Submission ID.")],
+        scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of scenario IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2654,8 +3417,8 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response:
-        """results_submissions_submission_id_scenario_scenario_ids_get
+    ) -> ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response:
+        """results_submissions_submission_id_scenarios_scenario_ids_get
 
         Get submission results for specific scenario.
 
@@ -2685,7 +3448,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_scenario_scenario_ids_get_serialize(
+        _param = self._results_submissions_submission_id_scenarios_scenario_ids_get_serialize(
             submission_id=submission_id,
             scenario_ids=scenario_ids,
             _request_auth=_request_auth,
@@ -2695,7 +3458,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response",
+            '200': "ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2709,10 +3472,10 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_scenario_scenario_ids_get_with_http_info(
+    def results_submissions_submission_id_scenarios_scenario_ids_get_with_http_info(
         self,
-      submission_id: Annotated[UUID, Field(description="Submission ID.")],
-      scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of scenario IDs.")],
+        submission_id: Annotated[UUID, Field(description="Submission ID.")],
+        scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of scenario IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2725,8 +3488,8 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response]:
-        """results_submissions_submission_id_scenario_scenario_ids_get
+    ) -> ApiResponse[ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response]:
+        """results_submissions_submission_id_scenarios_scenario_ids_get
 
         Get submission results for specific scenario.
 
@@ -2756,7 +3519,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_scenario_scenario_ids_get_serialize(
+        _param = self._results_submissions_submission_id_scenarios_scenario_ids_get_serialize(
             submission_id=submission_id,
             scenario_ids=scenario_ids,
             _request_auth=_request_auth,
@@ -2766,7 +3529,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response",
+            '200': "ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2780,10 +3543,10 @@ class DefaultApi:
 
 
     @validate_call
-    def results_submissions_submission_id_scenario_scenario_ids_get_without_preload_content(
+    def results_submissions_submission_id_scenarios_scenario_ids_get_without_preload_content(
         self,
-      submission_id: Annotated[UUID, Field(description="Submission ID.")],
-      scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of scenario IDs.")],
+        submission_id: Annotated[UUID, Field(description="Submission ID.")],
+        scenario_ids: Annotated[List[UUID], Field(description="Comma-separated list of scenario IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2797,7 +3560,7 @@ class DefaultApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """results_submissions_submission_id_scenario_scenario_ids_get
+        """results_submissions_submission_id_scenarios_scenario_ids_get
 
         Get submission results for specific scenario.
 
@@ -2827,7 +3590,7 @@ class DefaultApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._results_submissions_submission_id_scenario_scenario_ids_get_serialize(
+        _param = self._results_submissions_submission_id_scenarios_scenario_ids_get_serialize(
             submission_id=submission_id,
             scenario_ids=scenario_ids,
             _request_auth=_request_auth,
@@ -2837,7 +3600,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ResultsSubmissionsSubmissionIdScenarioScenarioIdsGet200Response",
+            '200': "ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2846,7 +3609,7 @@ class DefaultApi:
         return response_data.response
 
 
-    def _results_submissions_submission_id_scenario_scenario_ids_get_serialize(
+    def _results_submissions_submission_id_scenarios_scenario_ids_get_serialize(
         self,
         submission_id,
         scenario_ids,
@@ -2893,12 +3656,11 @@ class DefaultApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'oauth2'
         ]
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/results/submissions/{submission_id}/scenario/{scenario_ids}',
+            resource_path='/results/submissions/{submission_id}/scenarios/{scenario_ids}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2917,8 +3679,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_tests_test_ids_get(
         self,
-      submission_id: Annotated[UUID, Field(description="Submission ID.")],
-      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of Test IDs.")],
+        submission_id: Annotated[UUID, Field(description="Submission ID.")],
+        test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2938,7 +3700,7 @@ class DefaultApi:
 
         :param submission_id: Submission ID. (required)
         :type submission_id: str
-        :param test_ids: Comma-separated list of Test IDs. (required)
+        :param test_ids: Comma-separated list of test IDs. (required)
         :type test_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2988,8 +3750,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_tests_test_ids_get_with_http_info(
         self,
-      submission_id: Annotated[UUID, Field(description="Submission ID.")],
-      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of Test IDs.")],
+        submission_id: Annotated[UUID, Field(description="Submission ID.")],
+        test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3009,7 +3771,7 @@ class DefaultApi:
 
         :param submission_id: Submission ID. (required)
         :type submission_id: str
-        :param test_ids: Comma-separated list of Test IDs. (required)
+        :param test_ids: Comma-separated list of test IDs. (required)
         :type test_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3059,8 +3821,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_tests_test_ids_get_without_preload_content(
         self,
-      submission_id: Annotated[UUID, Field(description="Submission ID.")],
-      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of Test IDs.")],
+        submission_id: Annotated[UUID, Field(description="Submission ID.")],
+        test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3080,7 +3842,7 @@ class DefaultApi:
 
         :param submission_id: Submission ID. (required)
         :type submission_id: str
-        :param test_ids: Comma-separated list of Test IDs. (required)
+        :param test_ids: Comma-separated list of test IDs. (required)
         :type test_ids: List[str]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3170,7 +3932,6 @@ class DefaultApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'oauth2'
         ]
 
         return self.api_client.param_serialize(
@@ -3194,8 +3955,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_tests_test_ids_post(
         self,
-      submission_id: Annotated[UUID, Field(description="Submission ID.")],
-      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
+        submission_id: Annotated[UUID, Field(description="Submission ID.")],
+        test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         results_submissions_submission_id_tests_test_ids_post_request: ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest,
         _request_timeout: Union[
             None,
@@ -3270,8 +4031,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_tests_test_ids_post_with_http_info(
         self,
-      submission_id: Annotated[UUID, Field(description="Submission ID.")],
-      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
+        submission_id: Annotated[UUID, Field(description="Submission ID.")],
+        test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         results_submissions_submission_id_tests_test_ids_post_request: ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest,
         _request_timeout: Union[
             None,
@@ -3346,8 +4107,8 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_id_tests_test_ids_post_without_preload_content(
         self,
-      submission_id: Annotated[UUID, Field(description="Submission ID.")],
-      test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
+        submission_id: Annotated[UUID, Field(description="Submission ID.")],
+        test_ids: Annotated[List[UUID], Field(description="Comma-separated list of test IDs.")],
         results_submissions_submission_id_tests_test_ids_post_request: ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest,
         _request_timeout: Union[
             None,
@@ -3502,7 +4263,7 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_ids_get(
         self,
-      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
+        submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3569,7 +4330,7 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_ids_get_with_http_info(
         self,
-      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
+        submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3636,7 +4397,7 @@ class DefaultApi:
     @validate_call
     def results_submissions_submission_ids_get_without_preload_content(
         self,
-      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
+        submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3740,7 +4501,6 @@ class DefaultApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'oauth2'
         ]
 
         return self.api_client.param_serialize(
@@ -3764,9 +4524,8 @@ class DefaultApi:
     @validate_call
     def submissions_get(
         self,
-      benchmark_ids: Annotated[Optional[List[UUID]], Field(description="Filter submissions by benchmark.")] = None,
-      submitted_by: Annotated[Optional[UUID], Field(
-        description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
+        benchmark_ids: Annotated[Optional[List[UUID]], Field(description="Filter submissions by benchmark.")] = None,
+        submitted_by: Annotated[Optional[UUID], Field(description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3836,9 +4595,8 @@ class DefaultApi:
     @validate_call
     def submissions_get_with_http_info(
         self,
-      benchmark_ids: Annotated[Optional[List[UUID]], Field(description="Filter submissions by benchmark.")] = None,
-      submitted_by: Annotated[Optional[UUID], Field(
-        description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
+        benchmark_ids: Annotated[Optional[List[UUID]], Field(description="Filter submissions by benchmark.")] = None,
+        submitted_by: Annotated[Optional[UUID], Field(description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3908,9 +4666,8 @@ class DefaultApi:
     @validate_call
     def submissions_get_without_preload_content(
         self,
-      benchmark_ids: Annotated[Optional[List[UUID]], Field(description="Filter submissions by benchmark.")] = None,
-      submitted_by: Annotated[Optional[UUID], Field(
-        description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
+        benchmark_ids: Annotated[Optional[List[UUID]], Field(description="Filter submissions by benchmark.")] = None,
+        submitted_by: Annotated[Optional[UUID], Field(description="Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4322,7 +5079,7 @@ class DefaultApi:
     @validate_call
     def submissions_submission_ids_get(
         self,
-      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
+        submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4389,7 +5146,7 @@ class DefaultApi:
     @validate_call
     def submissions_submission_ids_get_with_http_info(
         self,
-      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
+        submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4456,7 +5213,7 @@ class DefaultApi:
     @validate_call
     def submissions_submission_ids_get_without_preload_content(
         self,
-      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
+        submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of submission IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4584,7 +5341,7 @@ class DefaultApi:
     @validate_call
     def submissions_submission_ids_patch(
         self,
-      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4650,7 +5407,7 @@ class DefaultApi:
     @validate_call
     def submissions_submission_ids_patch_with_http_info(
         self,
-      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4716,7 +5473,7 @@ class DefaultApi:
     @validate_call
     def submissions_submission_ids_patch_without_preload_content(
         self,
-      submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
+        submission_ids: Annotated[List[UUID], Field(description="Comma-separated list of IDs.")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],

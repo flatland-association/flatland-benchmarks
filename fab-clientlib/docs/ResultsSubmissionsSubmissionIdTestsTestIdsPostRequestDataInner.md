@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **scenario_id** | **str** | ID of scenario | [optional] 
+**scores** | **Dict[str, float]** |  | [optional] 
 
 ## Example
 

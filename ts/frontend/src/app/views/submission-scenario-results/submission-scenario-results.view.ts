@@ -3,6 +3,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import {
   FieldDefinitionRow,
+  PostTestResultsBody,
   ScenarioDefinitionRow,
   Scoring,
   SubmissionRow,
@@ -10,7 +11,7 @@ import {
   SubmissionScore,
   TestDefinitionRow,
 } from '@common/interfaces'
-import { getPrimaryScoring, isScenarioCompletelyScored } from '@common/scoring-utils'
+import { isScenarioCompletelyScored } from '@common/scoring-utils'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
@@ -79,7 +80,7 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
             this.ownSubmission = this.submission?.submitted_by === this.authService.userUuid
           }),
         this.resourceService
-          .load('/results/submissions/:submission_id/scenario/:scenario_ids', {
+          .load('/results/submissions/:submission_id/scenarios/:scenario_ids', {
             params: { submission_id: submission_id, scenario_ids: scenario_id },
           })
           .then((scores) => {
@@ -103,7 +104,7 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
     this.totalScore = '-'
     if (isScenarioCompletelyScored(this.scenarioScore)) {
       if (this.scenarioScore?.scorings) {
-        const primaryScoring = getPrimaryScoring(this.scenarioScore?.scorings, this.fields)
+        const primaryScoring = this.scenarioScore.scorings[0]
         if (primaryScoring) {
           this.totalScore = this.decimalPipe.transform(primaryScoring.score, '1.2-2') ?? '-'
         }
@@ -114,7 +115,8 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
     // find out which fields need manual scoring (not having numerical score)
     this.manualFields = []
     this.fields?.forEach((field) => {
-      const isScored = typeof this.scenarioScore?.scorings[field.key]?.score === 'number'
+      const scoring = this.scenarioScore?.scorings.find((s) => s.field_id === field.id)
+      const isScored = typeof scoring?.score === 'number'
       if (!isScored) {
         this.manualFields.push(field.key)
       }
@@ -123,7 +125,11 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
     this.rows =
       this.fields?.map((field) => {
         // take existing scoring or prepare one for manual submission
-        const scoring: Scoring = this.scenarioScore?.scorings[field.key] ?? { score: null }
+        const scoring: Scoring = this.scenarioScore?.scorings.find((s) => s.field_id === field.id) ?? {
+          field_id: '',
+          field_key: field.key,
+          score: null,
+        }
         const isScored = typeof scoring.score === 'number'
         return {
           cells: [
@@ -157,29 +163,35 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
   }
 
   canSubmitManualScoring() {
-    return this.manualFields.every((key) => typeof this.scenarioScore?.scorings[key]?.score === 'number')
+    return this.manualFields.every(
+      (key) => typeof this.scenarioScore?.scorings.find((s) => s.field_key === key)?.score === 'number',
+    )
   }
 
   async submitManualScoring() {
     // prepare body data object
-    //@ts-expect-error type
-    const results: PostTestResultsBody['data'][0] = {
-      scenario_id: this.scenario?.id,
+    const results: PostTestResultsBody = {
+      data: [
+        {
+          scenario_id: this.scenario!.id,
+          scores: {},
+        },
+      ],
     }
     // append manual scores
     this.manualFields.forEach((key) => {
-      results[key] = this.scenarioScore?.scorings[key]?.score ?? 0
+      results.data[0].scores[key] = this.scenarioScore?.scorings.find((s) => s.field_key === key)?.score ?? 0
     })
     // submit
     this.apiService
       .post('/results/submissions/:submission_id/tests/:test_ids', {
         params: { submission_id: this.submission!.id, test_ids: this.test!.id },
-        body: { data: [results] },
+        body: results,
       })
       .then(() => {
         // reload results from backend
         return this.resourceService
-          .load('/results/submissions/:submission_id/scenario/:scenario_ids', {
+          .load('/results/submissions/:submission_id/scenarios/:scenario_ids', {
             params: { submission_id: this.submission!.id, scenario_ids: this.scenario!.id },
           })
           .then((scores) => {

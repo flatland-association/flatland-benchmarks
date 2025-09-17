@@ -22,20 +22,22 @@ from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from uuid import UUID
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import Self
 
+from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner_items_inner import \
+    ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
+from fab_clientlib.models.scoring import Scoring
 
-class BenchmarkGroupsGet200ResponseAllOfBodyInner(BaseModel):
+
+class ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner(BaseModel):
     """
-    BenchmarkGroupsGet200ResponseAllOfBodyInner
+    ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner
     """ # noqa: E501
-    id: Optional[UUID] = Field(default=None, description="ID of benchmark-group.")
-    name: Optional[StrictStr] = None
-    description: Optional[StrictStr] = None
-    setup: Optional[StrictStr] = None
-    benchmark_ids: Optional[List[UUID]] = None
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "setup", "benchmark_ids"]
+    benchmark_id: Optional[UUID] = Field(default=None, description="ID of benchmark.")
+    items: Optional[List[ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner]] = None
+    scorings: Optional[List[Scoring]] = Field(default=None, description="Campaign item scores.")
+    __properties: ClassVar[List[str]] = ["benchmark_id", "items", "scorings"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,7 +57,7 @@ class BenchmarkGroupsGet200ResponseAllOfBodyInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of BenchmarkGroupsGet200ResponseAllOfBodyInner from a JSON string"""
+        """Create an instance of ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,11 +78,25 @@ class BenchmarkGroupsGet200ResponseAllOfBodyInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in items (list)
+        _items = []
+        if self.items:
+            for _item_items in self.items:
+                if _item_items:
+                    _items.append(_item_items.to_dict())
+            _dict['items'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in scorings (list)
+        _items = []
+        if self.scorings:
+            for _item_scorings in self.scorings:
+                if _item_scorings:
+                    _items.append(_item_scorings.to_dict())
+            _dict['scorings'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of BenchmarkGroupsGet200ResponseAllOfBodyInner from a dict"""
+        """Create an instance of ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner from a dict"""
         if obj is None:
             return None
 
@@ -88,11 +104,9 @@ class BenchmarkGroupsGet200ResponseAllOfBodyInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "id": obj.get("id"),
-            "name": obj.get("name"),
-            "description": obj.get("description"),
-            "setup": obj.get("setup"),
-            "benchmark_ids": obj.get("benchmark_ids")
+            "benchmark_id": obj.get("benchmark_id"),
+            "items": [ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner.from_dict(_item) for _item in obj["items"]] if obj.get("items") is not None else None,
+            "scorings": [Scoring.from_dict(_item) for _item in obj["scorings"]] if obj.get("scorings") is not None else None
         })
         return _obj
 

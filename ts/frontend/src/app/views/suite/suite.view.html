@@ -2,9 +2,7 @@
   <app-site-heading class="bp-8 flex w-full" [title]="suite?.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
 
   <lib-section class="w-full">
-    <p>
-      {{ suite?.description }}
-    </p>
+    <div [innerHTML]="suite?.description"></div>
   </lib-section>
 </lib-content>
 

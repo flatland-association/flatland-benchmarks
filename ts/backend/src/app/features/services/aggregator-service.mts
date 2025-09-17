@@ -7,7 +7,6 @@ import {
   ResultRow,
   ScenarioDefinitionRow,
   Scoring,
-  Scorings,
   SubmissionRow,
   SubmissionScenarioScore,
   SubmissionScore,
@@ -125,16 +124,13 @@ export class AggregatorService extends Service {
       // sort leaderboard items by primary test score
       const test = this.findTest(sources, testId)
       if (test) {
-        const primary = this.findPrimaryField(sources, test)
-        if (primary) {
-          leaderboard.items.sort((a, b) => {
-            const testA = a.test_scorings.find((score) => score.test_id === testId)!
-            const testB = b.test_scorings.find((score) => score.test_id === testId)!
-            const rankA = testA.scorings[primary.key]?.rank ?? Number.POSITIVE_INFINITY
-            const rankB = testB.scorings[primary.key]?.rank ?? Number.POSITIVE_INFINITY
-            return rankA - rankB
-          })
-        }
+        leaderboard.items.sort((a, b) => {
+          const testA = a.test_scorings.find((score) => score.test_id === testId)!
+          const testB = b.test_scorings.find((score) => score.test_id === testId)!
+          const rankA = testA.scorings[0]?.rank ?? Number.POSITIVE_INFINITY
+          const rankB = testB.scorings[0]?.rank ?? Number.POSITIVE_INFINITY
+          return rankA - rankB
+        })
       }
       return leaderboard
     })
@@ -154,14 +150,11 @@ export class AggregatorService extends Service {
       // sort leaderboard items by primary submission score
       const benchmark = this.findBenchmark(sources, benchmarkId)
       if (benchmark) {
-        const primary = this.findPrimaryField(sources, benchmark)
-        if (primary) {
-          leaderboard.items.sort((a, b) => {
-            const rankA = a.scorings[primary.key]?.rank ?? Number.POSITIVE_INFINITY
-            const rankB = b.scorings[primary.key]?.rank ?? Number.POSITIVE_INFINITY
-            return rankA - rankB
-          })
-        }
+        leaderboard.items.sort((a, b) => {
+          const rankA = a.scorings[0]?.rank ?? Number.POSITIVE_INFINITY
+          const rankB = b.scorings[0]?.rank ?? Number.POSITIVE_INFINITY
+          return rankA - rankB
+        })
       }
       return leaderboard
     })
@@ -470,21 +463,6 @@ export class AggregatorService extends Service {
     return suite ?? undefined
   }
 
-  /**
-   * Returns the `FieldDefinitionRow` from `sources` that is the primary field
-   * in `entity` (a benchmark, test or scenario definition).
-   */
-  findPrimaryField(
-    sources: { field_definitions: (FieldDefinitionRow | null)[] },
-    entity: { field_ids: string[] },
-  ): FieldDefinitionRow | undefined {
-    const primary = sources.field_definitions.find((fieldDefRow) => fieldDefRow?.id === entity.field_ids[0])
-    if (!primary) {
-      logger.warn(`field ${entity.field_ids[0]} (primary score) not found in sources`, sources.field_definitions)
-    }
-    return primary ?? undefined
-  }
-
   // Score calculation
 
   /**
@@ -503,11 +481,12 @@ export class AggregatorService extends Service {
     const scenarioScored: SubmissionScenarioScore = {
       // submission_id: submissionId,
       scenario_id: scenarioId,
-      scorings: {},
+      scorings: [],
     }
     // fill node with available data
     const scenario = this.findScenario(sources, scenarioId)
     if (scenario) {
+      scenarioScored.scorings = this.prepareScoringsForFields(sources, scenario.field_ids)
       const results = sources.results
         .filter((r) => !!r)
         .filter((resultRow) => resultRow.scenario_id === scenarioId && resultRow.submission_id === submissionId)
@@ -537,12 +516,13 @@ export class AggregatorService extends Service {
     const testScored: SubmissionTestScore = {
       // submission_id: submissionId,
       test_id: testId,
-      scorings: {},
+      scorings: [],
       scenario_scorings: [],
     }
     // fill node with available data
     const test = this.findTest(sources, testId)
     if (test) {
+      testScored.scorings = this.prepareScoringsForFields(sources, test.field_ids)
       // aggregate child score first
       testScored.scenario_scorings = test.scenario_ids.map((scenarioId) =>
         this.calculateSubmissionScenarioScore(sources, submissionId, scenarioId),
@@ -568,7 +548,7 @@ export class AggregatorService extends Service {
     // prepare node
     const submissionScored: SubmissionScore = {
       submission_id: submissionId,
-      scorings: {},
+      scorings: [],
       test_scorings: [],
     }
     // fill node with available data
@@ -577,6 +557,7 @@ export class AggregatorService extends Service {
       const benchmarkId = submission.benchmark_id
       const benchmark = this.findBenchmark(sources, benchmarkId)
       if (benchmark) {
+        submissionScored.scorings = this.prepareScoringsForFields(sources, benchmark.field_ids)
         // aggregate child score first
         submissionScored.test_scorings = submission.test_ids.map((testId) =>
           this.calculateSubmissionTestScore(sources, submissionId, testId),
@@ -634,11 +615,12 @@ export class AggregatorService extends Service {
     const campaignItemOverview: CampaignItemOverview = {
       benchmark_id: benchmarkId,
       items: [],
-      scorings: {},
+      scorings: [],
     }
     // fill node with available data
     const benchmark = this.findBenchmark(sources, benchmarkId)
     if (benchmark) {
+      campaignItemOverview.scorings = this.prepareScoringsForFields(sources, benchmark.campaign_field_ids)
       // build leaderboard first
       const board = this.buildLeaderboard(sources, benchmarkId)
       //... then extract top submissions from there
@@ -648,14 +630,11 @@ export class AggregatorService extends Service {
         const test = this.findTest(sources, testId)
         if (test) {
           // then find the one top ranked in test's primary score
-          const primary = this.findPrimaryField(sources, test)
-          if (primary) {
-            top = board.items.find((item) => {
-              // there's exactly one test per item in campaign setting
-              const testScoring = item.test_scorings[0]
-              return testScoring.test_id === testId && testScoring.scorings[primary.key]?.rank === 1
-            })
-          }
+          top = board.items.find((item) => {
+            // there's exactly one test per item in campaign setting
+            const testScoring = item.test_scorings[0]
+            return testScoring.test_id === testId && testScoring.scorings[0]?.rank === 1
+          })
         }
         return {
           test_id: testId,
@@ -707,20 +686,40 @@ export class AggregatorService extends Service {
   // Internals
 
   /**
+   * Returns an array of `Scoring` objects for given `fieldIds`.
+   */
+  prepareScoringsForFields(
+    sources: { field_definitions: (FieldDefinitionRow | null)[] },
+    fieldIds: string[],
+  ): Scoring[] {
+    return fieldIds.map((fieldId) => {
+      const field = this.findField(sources, fieldId)
+      return {
+        field_id: fieldId,
+        field_key: field?.key ?? '',
+        score: null,
+      }
+    })
+  }
+
+  /**
    * Aggregates scores from subordinate scorings (`children` or `results`) into
    * `scorings` using the defined aggregation in `field`.
    */
   aggregateScore(
-    scorings: Scorings,
+    scorings: Scoring[],
     field: FieldDefinitionRow,
-    children: { scorings?: Scorings }[],
+    children: { scorings?: Scoring[] }[],
     results: ResultRow[] = [],
   ) {
     // if agg_func is nullish, take first match from results
     if (!field.agg_func) {
       const fieldName = this.getInFieldName(field, 0)
-      scorings[field.key] = {
-        score: results.find((result) => result.key === fieldName)?.value ?? null,
+      const scoring = scorings.find((s) => s.field_id === field.id)
+      if (scoring) {
+        scoring.score = results.find((result) => result.key === fieldName)?.value ?? null
+      } else {
+        logger.debug(`scoring for field ${field.id} (${fieldName}) not found in scorings`, scorings)
       }
     }
     // otherwise, aggregate accordingly
@@ -731,7 +730,13 @@ export class AggregatorService extends Service {
         // REMARK: error when number of fields doesn't match number of scores?
         values = children.map((child, index) => {
           const fieldName = this.getInFieldName(field, index)
-          return fieldName ? (child.scorings?.[fieldName]?.score ?? null) : null
+          const scoring = child.scorings?.find((s) => s.field_key === fieldName)
+          if (scoring) {
+            return scoring.score
+          } else {
+            logger.debug(`child scoring "${fieldName}" not found in scorings`, child.scorings)
+          }
+          return null
         })
       }
       // collect scores from collected scores matching in_field
@@ -739,7 +744,13 @@ export class AggregatorService extends Service {
         values = []
         for (let index = 0; index < (Array.isArray(field.agg_fields) ? field.agg_fields.length : 1); index++) {
           const fieldName = this.getInFieldName(field, index)
-          values.push(fieldName ? (scorings[fieldName]?.score ?? null) : null)
+          const scoring = scorings?.find((s) => s.field_key === fieldName)
+          if (scoring) {
+            values.push(scoring.score)
+          } else {
+            values.push(null)
+            logger.debug(`scoring "${fieldName}" not found in scorings`, scorings)
+          }
         }
       }
       // weigh
@@ -752,8 +763,11 @@ export class AggregatorService extends Service {
         }
       }
       // aggregate values
-      scorings[field.key] = {
-        score: this.runAggregationFunction(values, field.agg_func),
+      const scoring = scorings?.find((s) => s.field_key === field.key)
+      if (scoring) {
+        scoring.score = this.runAggregationFunction(values, field.agg_func)
+      } else {
+        logger.debug(`scoring "${field.key}" not found in scorings`, scorings)
       }
     }
   }
@@ -870,14 +884,11 @@ export class AggregatorService extends Service {
 
     // First: flatten items and determine column names
     const columns = new Set<string>()
-    const addToRow = (row: Record<string, Scoring>, item: { scorings: Scorings }, prefix = '') => {
-      for (const key in item.scorings) {
-        const column = prefix + key
+    const addToRow = (row: Record<string, Scoring>, item: { scorings: Scoring[] }, prefix = '') => {
+      for (const scoring of item.scorings) {
+        const column = prefix + scoring.field_key
         columns.add(column)
-        const scoring = item.scorings[key]
-        if (scoring) {
-          row[column] = scoring
-        }
+        row[column] = scoring
       }
     }
     const rows = board.items.map((item) => {
