@@ -25,8 +25,8 @@ def gen_sql_scenario(scenario_id, scenario_name, scenario_description, scenario_
 """
 
 
-def gen_sql_test(test_id, test_name, test_description, test_fields, scenario_ids_for_test, test_type, queue=None):
-  queue_ = "NULL" if queue is None else f"'{queue}'"
+def gen_sql_test(test_id, test_name, test_description, test_fields, scenario_ids_for_test, test_type, queue: str = None):
+  queue_ = "NULL" if queue is None else f"'{queue.replace(' ', '')}'"
   return f"""INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
     VALUES ('{test_id}', '{test_name}', '{escape_sql_string(test_description)}', array['{"\', \'".join(test_fields)}']::uuid[], array['{"', '".join(scenario_ids_for_test)}']::uuid[], '{test_type}', {queue_})

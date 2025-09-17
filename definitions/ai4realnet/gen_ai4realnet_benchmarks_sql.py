@@ -79,7 +79,7 @@ def gen_domain_orchestrator(data, domain):
           s += f"""
         # {test['TEST_NAME']}
         "{test_id}": TestRunner_{sanitize_string_for_python_name(test['TEST_KPI'])}_{sanitize_string_for_python_name(test['QUEUE'])}(
-            test_id="{test_id}", scenario_ids=[{', '.join(scenario_ids)}]
+            test_id="{test_id}", scenario_ids=[{', '.join(scenario_ids)}], benchmark_id="{benchmark_id}"
         ),
 """
   s += f"""
@@ -90,6 +90,7 @@ def gen_domain_orchestrator(data, domain):
 
 
 if __name__ == '__main__':
+  # download from https://flatlandassociation.sharepoint.com/:x:/s/FlatlandAssociation/EanEj4dEBHBDsGzo5WyygCsBIBH7jo502okMbMybT6Bx0g?e=6DotJy
   data = extract_ai4realnet_from_csv(csv="KPIs_database_cards.csv")
 
   orchestrator_code = ""

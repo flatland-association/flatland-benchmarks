@@ -35,7 +35,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('98413684-d114-4f88-a5e9-1e118b106d67', 'KPI-AS-001: Ability to anticipate (Power Grid)', '“The ability to anticipate. Knowing what to expect or being able to anticipate developments further into the future, such as potential disruptions, novel demands or constraints, new opportunities, or changing operating conditions” (Hollnagel, 2015, p. 4). <br/>The human operator’s ability to anticipate further into the future can be measured by calculating the ratio of (proactively) prevented deviations to actual deviations. In addition, the extent to which the anticipatory sensemaking process of the human operator is supported by AI-based assistants can be measured using the Rigor-Metric for Sensemaking (Zelik et al., 2018) or similar. The instrument needs to be further developed and adapted to the AI context. ', array['02890e30-6f7b-4ed3-80a1-abf2e169e43f']::uuid[], array['ef0af7e2-0212-454d-9391-41de03bd7e57']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('98413684-d114-4f88-a5e9-1e118b106d67', 'KPI-AS-001: Ability to anticipate (Power Grid)', '“The ability to anticipate. Knowing what to expect or being able to anticipate developments further into the future, such as potential disruptions, novel demands or constraints, new opportunities, or changing operating conditions” (Hollnagel, 2015, p. 4). <br/>The human operator’s ability to anticipate further into the future can be measured by calculating the ratio of (proactively) prevented deviations to actual deviations. In addition, the extent to which the anticipatory sensemaking process of the human operator is supported by AI-based assistants can be measured using the Rigor-Metric for Sensemaking (Zelik et al., 2018) or similar. The instrument needs to be further developed and adapted to the AI context. ', array['02890e30-6f7b-4ed3-80a1-abf2e169e43f']::uuid[], array['ef0af7e2-0212-454d-9391-41de03bd7e57']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -95,7 +95,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('6e005336-6c4c-43ae-ac8d-330d51ab48d4', 'KPI-AS-009: Assistant disturbance (Power Grid)', 'Assistant disturbance KPI aims to measure if the AI assistant''s notifications are disturbing the human operator''s activity. ', array['17130cde-b2a7-44b9-9681-d95bb943ec51']::uuid[], array['57c11d6d-0001-4623-9c1e-fbfc0744c8d5']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('6e005336-6c4c-43ae-ac8d-330d51ab48d4', 'KPI-AS-009: Assistant disturbance (Power Grid)', 'Assistant disturbance KPI aims to measure if the AI assistant''s notifications are disturbing the human operator''s activity. ', array['17130cde-b2a7-44b9-9681-d95bb943ec51']::uuid[], array['57c11d6d-0001-4623-9c1e-fbfc0744c8d5']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -155,7 +155,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('4a9db7b3-0dd9-4ac2-a211-ef5a991e4ab9', 'KPI-DS-015: Decision support satisfaction (Power Grid)', 'This KPI represents human operators’ self-reported satisfaction with the system’s support for their decision-making process when working with the AI assistant measured with a questionnaire. ', array['8474f229-ee4f-4e15-b633-ca313e08d852']::uuid[], array['3ac00dab-5671-4e60-bf35-99309075ee76']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('4a9db7b3-0dd9-4ac2-a211-ef5a991e4ab9', 'KPI-DS-015: Decision support satisfaction (Power Grid)', 'This KPI represents human operators’ self-reported satisfaction with the system’s support for their decision-making process when working with the AI assistant measured with a questionnaire. ', array['8474f229-ee4f-4e15-b633-ca313e08d852']::uuid[], array['3ac00dab-5671-4e60-bf35-99309075ee76']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -215,7 +215,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('d1ba73c3-6796-44db-8d87-129558e3535d', 'KPI-HS-022: Human motivation (Power Grid)', '“Intrinsic motivation is defined as doing an activity for its inherent satisfaction rather than for some separable consequence. When intrinsically motivated, a person is moved to act for the fun or challenge entailed rather than because of external products, pressures, or rewards” (Ryan & Deci, 2000, p. 56). ', array['78e3f5c5-32b8-4787-bf40-5623e573861b']::uuid[], array['ee4e4f46-9bc1-4da8-94b5-371ffddfab7e']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('d1ba73c3-6796-44db-8d87-129558e3535d', 'KPI-HS-022: Human motivation (Power Grid)', '“Intrinsic motivation is defined as doing an activity for its inherent satisfaction rather than for some separable consequence. When intrinsically motivated, a person is moved to act for the fun or challenge entailed rather than because of external products, pressures, or rewards” (Ryan & Deci, 2000, p. 56). ', array['78e3f5c5-32b8-4787-bf40-5623e573861b']::uuid[], array['ee4e4f46-9bc1-4da8-94b5-371ffddfab7e']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -275,7 +275,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('dbd85bfb-2e78-4646-b2da-b4d16e90e657', 'KPI-HS-023: Human response time (Power Grid)', 'Human response time KPI evaluates time needed to react to AI advisory/information. ', array['bd729f10-2260-4959-b416-5d8c9d04648e']::uuid[], array['d64548d6-2eb6-4e1e-8069-73c0ece64318']::uuid[], 'INTERACTIVE', 'Power Grid')
+    VALUES ('dbd85bfb-2e78-4646-b2da-b4d16e90e657', 'KPI-HS-023: Human response time (Power Grid)', 'Human response time KPI evaluates time needed to react to AI advisory/information. ', array['bd729f10-2260-4959-b416-5d8c9d04648e']::uuid[], array['d64548d6-2eb6-4e1e-8069-73c0ece64318']::uuid[], 'INTERACTIVE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -335,7 +335,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('4166c200-b50e-4e2e-a3a7-05f31e7f78f8', 'KPI-SS-031: Situation awareness (Power Grid)', '“Situation Awareness is the perception of the elements in the environment within a volume of time and space, the comprehension of their meaning, and the projection of their status in the near future” (Endsley, 1988). ', array['9c0de891-220a-4bd6-be4d-598fbcc898d0']::uuid[], array['5096d57a-00a3-4018-bdc3-02cd28443a85']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('4166c200-b50e-4e2e-a3a7-05f31e7f78f8', 'KPI-SS-031: Situation awareness (Power Grid)', '“Situation Awareness is the perception of the elements in the environment within a volume of time and space, the comprehension of their meaning, and the projection of their status in the near future” (Endsley, 1988). ', array['9c0de891-220a-4bd6-be4d-598fbcc898d0']::uuid[], array['5096d57a-00a3-4018-bdc3-02cd28443a85']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -395,7 +395,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('66c08000-9a5e-42ca-a328-8e6295069142', 'KPI-WS-040: Workload (Power Grid)', 'Workload KPI is based on the workload assessment of human operators of the AI assistant. <br/>After each testing session using the system, the workload of human operators due to the AI assistant will be evaluated to understand in which scenarios (and depending on the AI level of support) it contributes for a higher workload. ', array['be9cbb52-ef44-4679-8c8d-f1b3c12e9aaa']::uuid[], array['06f61acd-da79-493c-8da0-4a1327b5fe6a']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('66c08000-9a5e-42ca-a328-8e6295069142', 'KPI-WS-040: Workload (Power Grid)', 'Workload KPI is based on the workload assessment of human operators of the AI assistant. <br/>After each testing session using the system, the workload of human operators due to the AI assistant will be evaluated to understand in which scenarios (and depending on the AI level of support) it contributes for a higher workload. ', array['be9cbb52-ef44-4679-8c8d-f1b3c12e9aaa']::uuid[], array['06f61acd-da79-493c-8da0-4a1327b5fe6a']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -455,7 +455,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('62bcfa08-99ce-4bfe-b7a4-08343ef3a316', 'KPI-CS-049: Cognitive Performance & Stress (Power Grid)', 'Cognitive Performance & Stress KPI performs an implicit assessment of the human cognitive performance status and stress levels along the different task that will be performed. The output provides information about the operator mental status and aims to be used to integrate the AI system to contribute as a reward to better adapt decision system. ', array['d839a03d-c127-4c01-84cb-09b3845f8775']::uuid[], array['6ae869dc-40e3-4cd0-a02c-6541a838b5b3']::uuid[], 'INTERACTIVE', 'Power Grid')
+    VALUES ('62bcfa08-99ce-4bfe-b7a4-08343ef3a316', 'KPI-CS-049: Cognitive Performance & Stress (Power Grid)', 'Cognitive Performance & Stress KPI performs an implicit assessment of the human cognitive performance status and stress levels along the different task that will be performed. The output provides information about the operator mental status and aims to be used to integrate the AI system to contribute as a reward to better adapt decision system. ', array['d839a03d-c127-4c01-84cb-09b3845f8775']::uuid[], array['6ae869dc-40e3-4cd0-a02c-6541a838b5b3']::uuid[], 'INTERACTIVE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -525,7 +525,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('de7f38de-1f0b-450e-9951-b925523a563d', 'KPI-AS-002: Acceptance (Power Grid)', 'Acceptance of the system by a human user.', array['99f95a40-b75c-47f1-8fd5-b3dc9c5a42c0']::uuid[], array['b4b167ff-56be-43a1-9a80-121eaaf8108f']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('de7f38de-1f0b-450e-9951-b925523a563d', 'KPI-AS-002: Acceptance (Power Grid)', 'Acceptance of the system by a human user.', array['99f95a40-b75c-47f1-8fd5-b3dc9c5a42c0']::uuid[], array['b4b167ff-56be-43a1-9a80-121eaaf8108f']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -585,7 +585,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('923fddc9-99f6-4195-a857-00d1493886e6', 'KPI-AS-005: Agreement score (Power Grid)', 'This KPI represents human operators’ self-reported agreement with individual AI-generated solutions/decisions on a scale of 0–100. ', array['ec13012a-5c41-4c30-964d-fca2599efc94']::uuid[], array['631244e4-ade3-4cbb-afd6-a19e56c001d6']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('923fddc9-99f6-4195-a857-00d1493886e6', 'KPI-AS-005: Agreement score (Power Grid)', 'This KPI represents human operators’ self-reported agreement with individual AI-generated solutions/decisions on a scale of 0–100. ', array['ec13012a-5c41-4c30-964d-fca2599efc94']::uuid[], array['631244e4-ade3-4cbb-afd6-a19e56c001d6']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -645,7 +645,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('66d9dc9e-a163-4afc-b293-9ece9d45f3cf', 'KPI-CS-013: Comprehensibility (Power Grid)', 'This KPI represents human operators’ self-reported ability to understand and thus make use of the AI-generated solution/decision, measured with a questionnaire. ', array['f257dde6-66c6-415e-b1de-96f965c5f39a']::uuid[], array['9d6c321f-25c4-4b31-91e6-0208c1da3455']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('66d9dc9e-a163-4afc-b293-9ece9d45f3cf', 'KPI-CS-013: Comprehensibility (Power Grid)', 'This KPI represents human operators’ self-reported ability to understand and thus make use of the AI-generated solution/decision, measured with a questionnaire. ', array['f257dde6-66c6-415e-b1de-96f965c5f39a']::uuid[], array['9d6c321f-25c4-4b31-91e6-0208c1da3455']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -705,7 +705,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('b10a5c41-7f19-414c-9ffe-3b73774ce1d9', 'KPI-TS-038: Trust in AI solutions score (Power Grid)', 'This KPI represents human operators’ self-reported trust (attitude) for individual AI-generated solutions measured with a questionnaire. ', array['f3e3b428-5df4-4e6b-af10-430adacdae1b']::uuid[], array['5314d4ab-35d4-4bc3-ade8-3b17bd39dd82']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('b10a5c41-7f19-414c-9ffe-3b73774ce1d9', 'KPI-TS-038: Trust in AI solutions score (Power Grid)', 'This KPI represents human operators’ self-reported trust (attitude) for individual AI-generated solutions measured with a questionnaire. ', array['f3e3b428-5df4-4e6b-af10-430adacdae1b']::uuid[], array['5314d4ab-35d4-4bc3-ade8-3b17bd39dd82']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -765,7 +765,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('9db74767-f2c3-4f04-aa83-cab1746ab83f', 'KPI-TS-039: Trust towards the AI tool (Power Grid)', '(Dis)trust is defined here as a sentiment resulting from knowledge, beliefs, emotions, and other elements derived from lived or transmitted experience, which generates positive or negative expectations concerning the reactions of a system and the interaction with it (whether it is a question of another human being, an organization or a technology)” (Cahour & Forzy, 2009, p. 1261). ', array['e7d279ae-33b4-4664-ad89-a479462fd579']::uuid[], array['2d5f2c8a-5cfd-4f32-9174-7ae81a82f0be']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('9db74767-f2c3-4f04-aa83-cab1746ab83f', 'KPI-TS-039: Trust towards the AI tool (Power Grid)', '(Dis)trust is defined here as a sentiment resulting from knowledge, beliefs, emotions, and other elements derived from lived or transmitted experience, which generates positive or negative expectations concerning the reactions of a system and the interaction with it (whether it is a question of another human being, an organization or a technology)” (Cahour & Forzy, 2009, p. 1261). ', array['e7d279ae-33b4-4664-ad89-a479462fd579']::uuid[], array['2d5f2c8a-5cfd-4f32-9174-7ae81a82f0be']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -835,7 +835,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('bc503fa3-b1ea-4de5-8760-21bd3ede927f', 'KPI-HS-003: Human intervention frequency (Power Grid)', 'The Human Intervention Frequency KPI measures the proportion of instances in which a human operator intervenes in an automated decision-making process. While this KPI was initially developed for railway traffic control scenarios, it has been generalized to assess the reliability and autonomy of any AI-assisted system. It reflects the trust placed in the AI by quantifying how often human corrections are required during routine operations. ', array['6e50a7c4-d178-4561-800b-71d0771365c8']::uuid[], array['81cb1769-35b5-4b97-aff0-b0d070dd6e50']::uuid[], 'INTERACTIVE', 'Power Grid')
+    VALUES ('bc503fa3-b1ea-4de5-8760-21bd3ede927f', 'KPI-HS-003: Human intervention frequency (Power Grid)', 'The Human Intervention Frequency KPI measures the proportion of instances in which a human operator intervenes in an automated decision-making process. While this KPI was initially developed for railway traffic control scenarios, it has been generalized to assess the reliability and autonomy of any AI-assisted system. It reflects the trust placed in the AI by quantifying how often human corrections are required during routine operations. ', array['6e50a7c4-d178-4561-800b-71d0771365c8']::uuid[], array['81cb1769-35b5-4b97-aff0-b0d070dd6e50']::uuid[], 'INTERACTIVE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -895,7 +895,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('f22c4c5d-1957-4262-b763-12736dd692f9', 'KPI-SS-030: Significance of human revisions (Power Grid)', 'This KPI represents human operators’ subjective assessment of necessary revisions for the AI-generated solutions by the human operator, self-reported by the operator with Likert-scale questions. ', array['61d44975-5de9-41f4-99b0-dd6e29c48f60']::uuid[], array['79f0ed9e-094f-4637-921c-814707f3b02e']::uuid[], 'INTERACTIVE', 'Power Grid')
+    VALUES ('f22c4c5d-1957-4262-b763-12736dd692f9', 'KPI-SS-030: Significance of human revisions (Power Grid)', 'This KPI represents human operators’ subjective assessment of necessary revisions for the AI-generated solutions by the human operator, self-reported by the operator with Likert-scale questions. ', array['61d44975-5de9-41f4-99b0-dd6e29c48f60']::uuid[], array['79f0ed9e-094f-4637-921c-814707f3b02e']::uuid[], 'INTERACTIVE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -955,7 +955,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('44758e37-c1d5-4932-8c17-54147903f214', 'KPI-PS-089: Perceived decision novelty (Power Grid)', 'This KPI represents human operators’ self-reported subjective assessment of nontriviality for the AI-generated solutions measured with a questionnaire. ', array['2dd6e12b-eb87-47c5-9954-18a7ffeedc61']::uuid[], array['b3b52505-caa6-4438-90b8-6ac84e9880d9']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('44758e37-c1d5-4932-8c17-54147903f214', 'KPI-PS-089: Perceived decision novelty (Power Grid)', 'This KPI represents human operators’ self-reported subjective assessment of nontriviality for the AI-generated solutions measured with a questionnaire. ', array['2dd6e12b-eb87-47c5-9954-18a7ffeedc61']::uuid[], array['b3b52505-caa6-4438-90b8-6ac84e9880d9']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1025,7 +1025,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('b2213a56-7841-41e1-afbc-6ef541d1597c', 'KPI-AS-006: AI co-learning capability (Power Grid)', 'This KPI represents human operators’ self-reported assessment of the AI ability to adapt to the operators’ preferences measured with a questionnaire. ', array['4c6e01fe-e8db-40ab-ac1c-88d8068bfccd']::uuid[], array['91b63e8f-7cf1-461c-98ea-0269b26bb3b4']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('b2213a56-7841-41e1-afbc-6ef541d1597c', 'KPI-AS-006: AI co-learning capability (Power Grid)', 'This KPI represents human operators’ self-reported assessment of the AI ability to adapt to the operators’ preferences measured with a questionnaire. ', array['4c6e01fe-e8db-40ab-ac1c-88d8068bfccd']::uuid[], array['91b63e8f-7cf1-461c-98ea-0269b26bb3b4']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1085,7 +1085,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('67f77d51-0893-4cbd-b349-b73bd2f73db2', 'KPI-HS-021: Human learning (Power Grid)', 'Human learning is a complex process that leads to lasting changes in humans, influencing their perceptions of the world and their interactions with it across physical, psychological, and social dimensions. It is fundamentally shaped by the ongoing, interactive relationship between the learner''s characteristics and the learning content, all situated within the specific environmental context of time and place and the continuity over time. ', array['d2ac280c-7583-480a-99c5-7e51b9894f19']::uuid[], array['6958bf4c-39ff-484f-b609-25500e9e314a']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('67f77d51-0893-4cbd-b349-b73bd2f73db2', 'KPI-HS-021: Human learning (Power Grid)', 'Human learning is a complex process that leads to lasting changes in humans, influencing their perceptions of the world and their interactions with it across physical, psychological, and social dimensions. It is fundamentally shaped by the ongoing, interactive relationship between the learner''s characteristics and the learning content, all situated within the specific environmental context of time and place and the continuity over time. ', array['d2ac280c-7583-480a-99c5-7e51b9894f19']::uuid[], array['6958bf4c-39ff-484f-b609-25500e9e314a']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1135,7 +1135,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('aba10b3f-0d5c-4f90-aec4-69460bbb098b', 'KPI-AF-008: Assistant alert accuracy (Power Grid)', 'Assistant alert accuracy is based on the number of times the AI assistant agent is right about forecasted issues ahead of time. <br/>Even if forecasted issues concern all events that lead to a grid state out of acceptable limits (set by operation policy), use cases of the project focus on managing overloads only: this KPI therefore only focuses on alerts related to line overloads. <br/>The calculation of KPI relies on simulation of 2 parallel paths (starting from the moment the alert is raised): <br/>- Simulation of the “do nothing” path, to assess the truth values<br/>- Application of remedial actions to the “do nothing” path, to assess solved cases <br/>To calculate the KPI, all interventions by an agent or operator are fixed to a specific plan since every alert is related to a specific plan (e.g. remedial actions). <br/>Note: line contingencies for which alerts can be raised are the lines that can be attacked in the environment (env.alertable_line_ids in grid2Op), so this should be properly configured beforehand. ', array['fcabd61d-91bc-45dc-8bf8-7aeb9724cb67']::uuid[], array['729cc815-ac93-4209-9f62-b57b920c2d0a']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('aba10b3f-0d5c-4f90-aec4-69460bbb098b', 'KPI-AF-008: Assistant alert accuracy (Power Grid)', 'Assistant alert accuracy is based on the number of times the AI assistant agent is right about forecasted issues ahead of time. <br/>Even if forecasted issues concern all events that lead to a grid state out of acceptable limits (set by operation policy), use cases of the project focus on managing overloads only: this KPI therefore only focuses on alerts related to line overloads. <br/>The calculation of KPI relies on simulation of 2 parallel paths (starting from the moment the alert is raised): <br/>- Simulation of the “do nothing” path, to assess the truth values<br/>- Application of remedial actions to the “do nothing” path, to assess solved cases <br/>To calculate the KPI, all interventions by an agent or operator are fixed to a specific plan since every alert is related to a specific plan (e.g. remedial actions). <br/>Note: line contingencies for which alerts can be raised are the lines that can be attacked in the environment (env.alertable_line_ids in grid2Op), so this should be properly configured beforehand. ', array['fcabd61d-91bc-45dc-8bf8-7aeb9724cb67']::uuid[], array['729cc815-ac93-4209-9f62-b57b920c2d0a']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1175,7 +1175,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('5d1db79c-a7a4-4060-bb03-4629d64b1a43', 'KPI-NF-024: Network utilization (Power Grid)', 'Network utilization KPI is based on the relative line loads of the network, indicating to what extent the network and its components are utilized.', array['63e93356-5033-451f-a3c2-cd607721661f']::uuid[], array['ed8ba2fc-853e-4e79-a984-b1986b9b6e97']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('5d1db79c-a7a4-4060-bb03-4629d64b1a43', 'KPI-NF-024: Network utilization (Power Grid)', 'Network utilization KPI is based on the relative line loads of the network, indicating to what extent the network and its components are utilized.', array['63e93356-5033-451f-a3c2-cd607721661f']::uuid[], array['ed8ba2fc-853e-4e79-a984-b1986b9b6e97']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1275,7 +1275,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('58ce79e0-5c14-4c51-8d09-89f856361259', 'KPI-TS-035: Total decision time (Power Grid)', 'It is based on the overall time needed to decide, thus including the respective time taken by the AI assistant and human operator. This KPI can be detailed to specifically distinguish the time needed by the AI assistant to provide a recommendation. <br/>An assumption is that a Human Machine Interaction (HMI) module is available.  ', array['10aadaaf-daa4-4098-bd9d-2042ecb488e9']::uuid[], array['1294d425-66bd-4510-b4b3-d9f64ca0e4f9']::uuid[], 'INTERACTIVE', 'Power Grid')
+    VALUES ('58ce79e0-5c14-4c51-8d09-89f856361259', 'KPI-TS-035: Total decision time (Power Grid)', 'It is based on the overall time needed to decide, thus including the respective time taken by the AI assistant and human operator. This KPI can be detailed to specifically distinguish the time needed by the AI assistant to provide a recommendation. <br/>An assumption is that a Human Machine Interaction (HMI) module is available.  ', array['10aadaaf-daa4-4098-bd9d-2042ecb488e9']::uuid[], array['1294d425-66bd-4510-b4b3-d9f64ca0e4f9']::uuid[], 'INTERACTIVE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1305,7 +1305,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('ab91af79-ffc3-4da7-916a-6574609dc1b6', 'KPI-CF-012: Carbon intensity (Power Grid)', 'Carbon intensity selectivity estimates the overall carbon intensity of the action recommendation provided by the AI assistant to the human operator: goal of carbon intensity KPI is to measure how much the actions will directly contribute to greenhouse gases emission, by focusing on CO2 (which is unfortunately not the only greenhouse gas).  <br/><br/>which is calculated as the weighted averaged emission factor of generation variation, including: <br/><br/>Redispatching actions, <br/><br/>Curtailment actions. ', array['d63f9bce-a639-4d20-aece-c98a16ed1e7d']::uuid[], array['75d20248-740b-4d84-86e7-1de89f10fc1e']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('ab91af79-ffc3-4da7-916a-6574609dc1b6', 'KPI-CF-012: Carbon intensity (Power Grid)', 'Carbon intensity selectivity estimates the overall carbon intensity of the action recommendation provided by the AI assistant to the human operator: goal of carbon intensity KPI is to measure how much the actions will directly contribute to greenhouse gases emission, by focusing on CO2 (which is unfortunately not the only greenhouse gas).  <br/><br/>which is calculated as the weighted averaged emission factor of generation variation, including: <br/><br/>Redispatching actions, <br/><br/>Curtailment actions. ', array['d63f9bce-a639-4d20-aece-c98a16ed1e7d']::uuid[], array['75d20248-740b-4d84-86e7-1de89f10fc1e']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1325,7 +1325,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('0b8c02c6-0120-431c-872f-0fb4bc8d5fba', 'KPI-TF-034: Topological action complexity (Power Grid)', 'Topological action complexity KPI quantifies the topological utilization of the grid and gives insights into how many topological actions are utilized: performing too complex or too many topology actions can indeed navigate the grid into topologies that are either unknown or hard to recover from for operators. ', array['93dc6748-4349-42ed-9bf1-e8541e768dea']::uuid[], array['5dd33cc9-a4aa-4a61-bd3f-5fae1c1bf701']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('0b8c02c6-0120-431c-872f-0fb4bc8d5fba', 'KPI-TF-034: Topological action complexity (Power Grid)', 'Topological action complexity KPI quantifies the topological utilization of the grid and gives insights into how many topological actions are utilized: performing too complex or too many topology actions can indeed navigate the grid into topologies that are either unknown or hard to recover from for operators. ', array['93dc6748-4349-42ed-9bf1-e8541e768dea']::uuid[], array['5dd33cc9-a4aa-4a61-bd3f-5fae1c1bf701']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1345,7 +1345,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('ae4dcac7-c559-457e-902d-ee35d064bb3f', 'KPI-OF-036: Operation score (Power Grid)', 'The operation score KPI for operating a power grid includes the cost of a blackout, the cost of energy losses on the grid, and the cost of remedial actions. ', array['abe274f7-3401-4fdc-a79c-25c2a4659928']::uuid[], array['fc090c38-8740-4911-96aa-2defd06f8715']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('ae4dcac7-c559-457e-902d-ee35d064bb3f', 'KPI-OF-036: Operation score (Power Grid)', 'The operation score KPI for operating a power grid includes the cost of a blackout, the cost of energy losses on the grid, and the cost of remedial actions. ', array['abe274f7-3401-4fdc-a79c-25c2a4659928']::uuid[], array['fc090c38-8740-4911-96aa-2defd06f8715']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1385,7 +1385,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('c69ff5e9-497b-41e8-adff-2221bb823365', 'KPI-AS-068: Assistant adaptation to user preferences (Power Grid)', 'Assistant adaptation to user preferences assesses how the AI assistant adapts to operator’s choices and preferences. <br/>The assistant provides several recommendations which represent different trade-offs of different objectives, and the operator eventually makes one single choice. <br/>This KPI assume that an estimation of epistemic uncertainty is calculated for each action recommendation, which can be used later by the human to select the action in a multi-objective setting. <br/>This KPIs thus aims at measuring: <br/>- Whether the choice that the operator makes is in the set of recommendations proposed by the assistant, <br/>- How is the recommendation chosen by the operator ranked compared to the other ones, <br/>- Whether the recommendation chosen by the operator has a high epistemic uncertainty compared to the other recommendations. ', array['c428c0f7-85d3-4f40-9710-6f8690f5cc9c']::uuid[], array['a68e7062-1329-4a34-ac44-4f6075929902']::uuid[], 'INTERACTIVE', 'Power Grid')
+    VALUES ('c69ff5e9-497b-41e8-adff-2221bb823365', 'KPI-AS-068: Assistant adaptation to user preferences (Power Grid)', 'Assistant adaptation to user preferences assesses how the AI assistant adapts to operator’s choices and preferences. <br/>The assistant provides several recommendations which represent different trade-offs of different objectives, and the operator eventually makes one single choice. <br/>This KPI assume that an estimation of epistemic uncertainty is calculated for each action recommendation, which can be used later by the human to select the action in a multi-objective setting. <br/>This KPIs thus aims at measuring: <br/>- Whether the choice that the operator makes is in the set of recommendations proposed by the assistant, <br/>- How is the recommendation chosen by the operator ranked compared to the other ones, <br/>- Whether the recommendation chosen by the operator has a high epistemic uncertainty compared to the other recommendations. ', array['c428c0f7-85d3-4f40-9710-6f8690f5cc9c']::uuid[], array['a68e7062-1329-4a34-ac44-4f6075929902']::uuid[], 'INTERACTIVE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1435,7 +1435,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('ed250353-1f97-413e-9971-de83937fe4d9', 'KPI-HS-018: Human control/autonomy over the process (Power Grid)', 'This KPI represents human operators’ perceived autonomy over the process when working with the AI assistant measured with a questionnaire. ', array['bfdfa6cc-9491-4cd4-9aa3-99d0e9eea7bd']::uuid[], array['edcf64a8-f1b8-48ec-ab6a-229d5abc1be4']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('ed250353-1f97-413e-9971-de83937fe4d9', 'KPI-HS-018: Human control/autonomy over the process (Power Grid)', 'This KPI represents human operators’ perceived autonomy over the process when working with the AI assistant measured with a questionnaire. ', array['bfdfa6cc-9491-4cd4-9aa3-99d0e9eea7bd']::uuid[], array['edcf64a8-f1b8-48ec-ab6a-229d5abc1be4']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1495,7 +1495,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('6d372248-1221-4996-ad99-628f056f0799', 'KPI-IS-041: Impact on workload (Power Grid)', 'Impact on the workload KPI assesses operators’ perception of the system impact on their workload (either positive or negative)  ', array['df9918ae-1bb3-4407-8240-6aaa6d67a5ea']::uuid[], array['df02b09a-b431-49ee-af6b-ffd709d47670']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('6d372248-1221-4996-ad99-628f056f0799', 'KPI-IS-041: Impact on workload (Power Grid)', 'Impact on the workload KPI assesses operators’ perception of the system impact on their workload (either positive or negative)  ', array['df9918ae-1bb3-4407-8240-6aaa6d67a5ea']::uuid[], array['df02b09a-b431-49ee-af6b-ffd709d47670']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1565,7 +1565,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('5af6ffd9-b0a6-4f53-94bf-058fc1383ecd', 'KPI-AF-050: AI-Agent Scalability Training (Power Grid)', 'AI-Agent Scalability Training measures the elapsed time required by an AI-agent to reach a predefined performance threshold. Time measured both as wallclock time (seconds) as well as steps or episodes according to the domain needs. The performance is defined by the native reward formulation defined by the digital environment or by domain experts. <br/>The time to threshold is measured across:  <br/>(i) Different instance complexities; <br/>(ii) Different hardware availability. <br/>The performance threshold is set empirically and is defined by the cumulative reward formulation specific to the application domain. Note that the reward formulation used to train the agent may differ. For case (i), the type of hardware used should be logged to interpret the wallclock time measurements. ', array['a7c2bf7f-7845-4127-8c18-5eb820f5d317']::uuid[], array['7d2d75c8-49e0-433d-809d-b0811c8e2f06']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('5af6ffd9-b0a6-4f53-94bf-058fc1383ecd', 'KPI-AF-050: AI-Agent Scalability Training (Power Grid)', 'AI-Agent Scalability Training measures the elapsed time required by an AI-agent to reach a predefined performance threshold. Time measured both as wallclock time (seconds) as well as steps or episodes according to the domain needs. The performance is defined by the native reward formulation defined by the digital environment or by domain experts. <br/>The time to threshold is measured across:  <br/>(i) Different instance complexities; <br/>(ii) Different hardware availability. <br/>The performance threshold is set empirically and is defined by the cumulative reward formulation specific to the application domain. Note that the reward formulation used to train the agent may differ. For case (i), the type of hardware used should be logged to interpret the wallclock time measurements. ', array['a7c2bf7f-7845-4127-8c18-5eb820f5d317']::uuid[], array['7d2d75c8-49e0-433d-809d-b0811c8e2f06']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1625,7 +1625,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('1409dbf6-0f66-4570-97df-fda84c46c71d', 'KPI-AF-051: AI-Agent Scalability Testing (Power Grid)', 'Compare multiple trained agents, RL-based or not, based on the average inference time to sample one or multiple actions while increasing the complexity of the scenario analysed. Complexity is a domain-relevant concept that must be defined. ', array['c6f944e3-9937-453c-95da-9b69681b023e']::uuid[], array['547f8244-d091-40da-892d-ee24a26ee29f']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('1409dbf6-0f66-4570-97df-fda84c46c71d', 'KPI-AF-051: AI-Agent Scalability Testing (Power Grid)', 'Compare multiple trained agents, RL-based or not, based on the average inference time to sample one or multiple actions while increasing the complexity of the scenario analysed. Complexity is a domain-relevant concept that must be defined. ', array['c6f944e3-9937-453c-95da-9b69681b023e']::uuid[], array['547f8244-d091-40da-892d-ee24a26ee29f']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1695,7 +1695,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('855729a4-6729-4ae2-bb8d-443ef4867d94', 'KPI-DF-052: Domain shift adaptation time (Power Grid)', 'The time or number of episodes required for the agent to regain a specific level of performance in the shifted domain after the domain shift has occurred. It can be used to evaluate how quickly an agent can adapt to new environmental conditions.  ', array['fc6b934f-8cea-4126-a835-6f1450b423ec']::uuid[], array['81f18394-0164-4896-9408-4315bcfcc5e0']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('855729a4-6729-4ae2-bb8d-443ef4867d94', 'KPI-DF-052: Domain shift adaptation time (Power Grid)', 'The time or number of episodes required for the agent to regain a specific level of performance in the shifted domain after the domain shift has occurred. It can be used to evaluate how quickly an agent can adapt to new environmental conditions.  ', array['fc6b934f-8cea-4126-a835-6f1450b423ec']::uuid[], array['81f18394-0164-4896-9408-4315bcfcc5e0']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1755,7 +1755,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('17b805b2-b773-4c22-8ba9-598780e7a40d', 'KPI-DF-053: Domain shift generalization gap (Power Grid)', 'Domain shift – generalization gap evaluates the absolute difference between the performance (e.g., rewards) in the training domain and the shifted domain. This metrics quantifies the extent of performance loss due to domain shift. ', array['a7321e2a-6c39-4464-a53d-9d6352b14cb9']::uuid[], array['9fdfbb00-0754-444a-88c8-c8549e2cc6f9']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('17b805b2-b773-4c22-8ba9-598780e7a40d', 'KPI-DF-053: Domain shift generalization gap (Power Grid)', 'Domain shift – generalization gap evaluates the absolute difference between the performance (e.g., rewards) in the training domain and the shifted domain. This metrics quantifies the extent of performance loss due to domain shift. ', array['a7321e2a-6c39-4464-a53d-9d6352b14cb9']::uuid[], array['9fdfbb00-0754-444a-88c8-c8549e2cc6f9']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1815,7 +1815,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('7149a428-b0a7-48f7-ba55-4d553932af41', 'KPI-DF-054: Domain shift out of domain detection accuracy (Power Grid)', 'Domain shift – out of domain detection accuracy measures the accuracy with which the agent can detect whether it is operating in a domain that is different from the one it was trained on. It is useful for systems that need to switch strategies or request human intervention when a domain shift is detected. A recent paper proposed by Nasvytis et al. (2024) introduce various approaches for detection of OOD in RL. ', array['0cdc2df8-7dd6-4e59-b9c8-01d2434ed49b']::uuid[], array['747cba94-8353-4982-9964-ba0b8361e689']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('7149a428-b0a7-48f7-ba55-4d553932af41', 'KPI-DF-054: Domain shift out of domain detection accuracy (Power Grid)', 'Domain shift – out of domain detection accuracy measures the accuracy with which the agent can detect whether it is operating in a domain that is different from the one it was trained on. It is useful for systems that need to switch strategies or request human intervention when a domain shift is detected. A recent paper proposed by Nasvytis et al. (2024) introduce various approaches for detection of OOD in RL. ', array['0cdc2df8-7dd6-4e59-b9c8-01d2434ed49b']::uuid[], array['747cba94-8353-4982-9964-ba0b8361e689']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1875,7 +1875,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('115d6c9d-c0d1-423d-b74e-140f9e5608c5', 'KPI-DF-055: Domain shift policy robustness (Power Grid)', 'Domain shift – Policy robustness KPI calculates a ratio of the performance in the shifted domain to the performance in the original domain. A score close to 1 indicates high robustness, while a lower score indicates reduced performance due to the domain shift. It can be used to assess the generalization of a policy learned in a simulated environment when applied to a real-world scenario. ', array['8c9d7ce4-0162-472d-88fb-2c19b811ad34']::uuid[], array['f393653b-850e-4c17-bed1-7fe1ca51c854']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('115d6c9d-c0d1-423d-b74e-140f9e5608c5', 'KPI-DF-055: Domain shift policy robustness (Power Grid)', 'Domain shift – Policy robustness KPI calculates a ratio of the performance in the shifted domain to the performance in the original domain. A score close to 1 indicates high robustness, while a lower score indicates reduced performance due to the domain shift. It can be used to assess the generalization of a policy learned in a simulated environment when applied to a real-world scenario. ', array['8c9d7ce4-0162-472d-88fb-2c19b811ad34']::uuid[], array['f393653b-850e-4c17-bed1-7fe1ca51c854']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1935,7 +1935,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('07f8625d-c39a-4fd1-9633-012f342352e9', 'KPI-DF-056: Domain shift robustness to domain parameters (Power Grid)', 'Robustness to domain parameters KPI evaluates the sensitivity of the agent’s performance (e.g., Reward) to changes in specific domain parameters (e.g., generators type including renewables in power grid domain). It helps to identify which environmental factors most affect the agent’s performance. ', array['26c6119e-12dc-44cd-b862-8f95f1420fa0']::uuid[], array['82aed30d-9b28-4b8f-ba9a-fd05d6defec6']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('07f8625d-c39a-4fd1-9633-012f342352e9', 'KPI-DF-056: Domain shift robustness to domain parameters (Power Grid)', 'Robustness to domain parameters KPI evaluates the sensitivity of the agent’s performance (e.g., Reward) to changes in specific domain parameters (e.g., generators type including renewables in power grid domain). It helps to identify which environmental factors most affect the agent’s performance. ', array['26c6119e-12dc-44cd-b862-8f95f1420fa0']::uuid[], array['82aed30d-9b28-4b8f-ba9a-fd05d6defec6']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1995,7 +1995,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('c5e4f893-4302-47e8-98d6-b5fbcb10963a', 'KPI-DF-057: Domain shift success rate drop (Power Grid)', 'Domain shift – success rate drop KPI measures drop in the performance of the agent after the occurrence of a shift in the source domain. ', array['123c3ec2-1cf5-4d73-b86e-7ff4d1671d80']::uuid[], array['4d2b00cd-447a-4c7e-8cab-863f0402cb67']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('c5e4f893-4302-47e8-98d6-b5fbcb10963a', 'KPI-DF-057: Domain shift success rate drop (Power Grid)', 'Domain shift – success rate drop KPI measures drop in the performance of the agent after the occurrence of a shift in the source domain. ', array['123c3ec2-1cf5-4d73-b86e-7ff4d1671d80']::uuid[], array['4d2b00cd-447a-4c7e-8cab-863f0402cb67']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2055,7 +2055,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('648afbec-80ad-4490-869f-6c3d8088d50f', 'KPI-DF-090: Domain shift forgetting rate (Power Grid)', 'The rate at which an agent forgets its performance in the original domain after being exposed to a shifted domain. It helps to measure the extent to which learning in the new domain negatively impacts the agent’s ability to perform in the original domain. ', array['42c553a8-37f1-4abe-a0fd-14daec0078e0']::uuid[], array['99dfde1e-2798-4741-b3eb-610a3e847bc8']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('648afbec-80ad-4490-869f-6c3d8088d50f', 'KPI-DF-090: Domain shift forgetting rate (Power Grid)', 'The rate at which an agent forgets its performance in the original domain after being exposed to a shifted domain. It helps to measure the extent to which learning in the new domain negatively impacts the agent’s ability to perform in the original domain. ', array['42c553a8-37f1-4abe-a0fd-14daec0078e0']::uuid[], array['99dfde1e-2798-4741-b3eb-610a3e847bc8']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2125,7 +2125,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('75cc9343-9371-4eb1-9613-22a26c67fc00', 'KPI-RS-058: Robustness to operator input (Power Grid)', 'The KPI should measure or evaluate how the trained agent behaves in terms of robustness if, during the decision-making process where a human operator makes the final decisions, a human operator occasionally intervenes and significantly overrides the autonomous decisions of the trained agent. <br/>For agents trained using machine learning methods, this can cause an offset between the type of states encountered in the training data and during deployment, especially for agents trained using reinforcement learning or similar methods where the agent itself decides which actions to execute. As a consequence of this offset, the agent might make poorer decisions if the human operator does not always follow the proposed actions of the agents. <br/>To measure how sensitive the agent is to such offsets, this KPI proposes to use a “simulated operator” that does not fully follow the course of actions suggested by the agents, and instead overwrites certain action variables set by the agents in a fraction of time steps. ', array['6e222adc-3153-4763-8bca-256cbb3d8716']::uuid[], array['0c0730f2-e795-4c9d-8220-9bee29c46dc6']::uuid[], 'INTERACTIVE', 'Power Grid')
+    VALUES ('75cc9343-9371-4eb1-9613-22a26c67fc00', 'KPI-RS-058: Robustness to operator input (Power Grid)', 'The KPI should measure or evaluate how the trained agent behaves in terms of robustness if, during the decision-making process where a human operator makes the final decisions, a human operator occasionally intervenes and significantly overrides the autonomous decisions of the trained agent. <br/>For agents trained using machine learning methods, this can cause an offset between the type of states encountered in the training data and during deployment, especially for agents trained using reinforcement learning or similar methods where the agent itself decides which actions to execute. As a consequence of this offset, the agent might make poorer decisions if the human operator does not always follow the proposed actions of the agents. <br/>To measure how sensitive the agent is to such offsets, this KPI proposes to use a “simulated operator” that does not fully follow the course of actions suggested by the agents, and instead overwrites certain action variables set by the agents in a fraction of time steps. ', array['6e222adc-3153-4763-8bca-256cbb3d8716']::uuid[], array['0c0730f2-e795-4c9d-8220-9bee29c46dc6']::uuid[], 'INTERACTIVE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2185,7 +2185,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('1cbb7783-47b4-4289-9abf-27939da69a2f', 'KPI-DF-069: Drop-off in reward (Power Grid)', 'Drop-off in reward calculates difference in reward between situation with perfect information and imperfect information either through natural malfunctions while measuring data or through intentional perturbations by an attacker. ', array['5cf53de4-c331-4fc6-a54e-a93834b23fef']::uuid[], array['900d5489-2539-4a49-b3fb-3ae2039be92f']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('1cbb7783-47b4-4289-9abf-27939da69a2f', 'KPI-DF-069: Drop-off in reward (Power Grid)', 'Drop-off in reward calculates difference in reward between situation with perfect information and imperfect information either through natural malfunctions while measuring data or through intentional perturbations by an attacker. ', array['5cf53de4-c331-4fc6-a54e-a93834b23fef']::uuid[], array['900d5489-2539-4a49-b3fb-3ae2039be92f']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2245,7 +2245,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('acaf712a-c06c-4a04-a00f-0e7feeefb60c', 'KPI-FF-070: Frequency changed output AI agent (Power Grid)', 'Frequency changed output AI agent calculates the number of times the output of the AI agent (i.e. the action the agent chooses) is changed due to perturbations ', array['64208759-4b1b-415c-ae2e-d5244b328e68']::uuid[], array['fdaac433-3ef0-4667-afb8-8014d0c1afa3']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('acaf712a-c06c-4a04-a00f-0e7feeefb60c', 'KPI-FF-070: Frequency changed output AI agent (Power Grid)', 'Frequency changed output AI agent calculates the number of times the output of the AI agent (i.e. the action the agent chooses) is changed due to perturbations ', array['64208759-4b1b-415c-ae2e-d5244b328e68']::uuid[], array['fdaac433-3ef0-4667-afb8-8014d0c1afa3']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2305,7 +2305,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('3d033ec6-942a-4b03-b26e-f8152ba48022', 'KPI-SF-071: Severity of changed output AI agent (Power Grid)', 'Severity of changed output AI agent KPI measures similarity of the action chosen by AI agent based on a perturbed input to the action chosen with perfect information. Average pre-defined similarity score per changed action indicating how different the new action is from the original one. ', array['861dc5e2-f3ce-4c74-829b-9c50c891a610']::uuid[], array['70d937d5-742b-4838-a456-4a95ff994788']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('3d033ec6-942a-4b03-b26e-f8152ba48022', 'KPI-SF-071: Severity of changed output AI agent (Power Grid)', 'Severity of changed output AI agent KPI measures similarity of the action chosen by AI agent based on a perturbed input to the action chosen with perfect information. Average pre-defined similarity score per changed action indicating how different the new action is from the original one. ', array['861dc5e2-f3ce-4c74-829b-9c50c891a610']::uuid[], array['70d937d5-742b-4838-a456-4a95ff994788']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2365,7 +2365,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('a121d8bd-1943-41ba-b3a7-472a0154f8f9', 'KPI-SF-072: Steps survived with perturbations (Power Grid)', 'Steps survived with perturbations KPI calculates the number of steps the AI agent is able to survive in environment with perturbation agent ', array['7b373f1a-e892-44f7-a76d-7b93e73f745b']::uuid[], array['9cd1a5e0-8445-4b9d-859b-76b096d33049']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('a121d8bd-1943-41ba-b3a7-472a0154f8f9', 'KPI-SF-072: Steps survived with perturbations (Power Grid)', 'Steps survived with perturbations KPI calculates the number of steps the AI agent is able to survive in environment with perturbation agent ', array['7b373f1a-e892-44f7-a76d-7b93e73f745b']::uuid[], array['9cd1a5e0-8445-4b9d-859b-76b096d33049']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2425,7 +2425,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('b8a9a411-7cfe-4c1d-b9a6-eef1c0efe920', 'KPI-VF-073: Vulnerability to perturbation (Power Grid)', 'Vulnerability to perturbation KPI measures vulnerability of specific value in observed state to perturbations, i.e. how likely it is that perturbing the value will result in a change in action chosen by the AI agent ', array['cad90039-f91d-4883-9937-8671f8363766']::uuid[], array['61063867-df62-4024-be42-c57507a15d7c']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('b8a9a411-7cfe-4c1d-b9a6-eef1c0efe920', 'KPI-VF-073: Vulnerability to perturbation (Power Grid)', 'Vulnerability to perturbation KPI measures vulnerability of specific value in observed state to perturbations, i.e. how likely it is that perturbing the value will result in a change in action chosen by the AI agent ', array['cad90039-f91d-4883-9937-8671f8363766']::uuid[], array['61063867-df62-4024-be42-c57507a15d7c']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2485,7 +2485,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('95ba1e9a-8d72-4c0e-9526-7676f70ff067', 'KPI-RF-078: Reward per action (Power Grid)', 'Reward per action KPI calculates average reward obtained for each action performed by the AI agent ', array['e248e90c-65e0-4e36-89df-2e3232ed430d']::uuid[], array['a999eb93-2efe-4f73-a2d8-eab51f158ae8']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('95ba1e9a-8d72-4c0e-9526-7676f70ff067', 'KPI-RF-078: Reward per action (Power Grid)', 'Reward per action KPI calculates average reward obtained for each action performed by the AI agent ', array['e248e90c-65e0-4e36-89df-2e3232ed430d']::uuid[], array['a999eb93-2efe-4f73-a2d8-eab51f158ae8']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2525,7 +2525,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('89919375-8b53-4e3f-8382-a97e0af7eb56', 'KPI-EF-086: Explainability Robustness (Power Grid)', 'The Explainability Robustness KPI evaluates the stability of explanations against small input perturbations, assuming the model’s output remains relatively unchanged. A robust explanation should not fluctuate significantly when the input is slightly modified. The Average Sensitivity Metric quantifies this stability by applying small perturbations to the input data and measuring how much the explanation changes. Since computing sensitivity over all possible perturbations is impractical, Monte Carlo sampling is used to estimate these variations efficiently. ', array['a1d636fb-9525-4796-85f6-565ecc4dc2a3']::uuid[], array['e36d1ef8-939c-4cd8-a660-0a224ce24aa0']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('89919375-8b53-4e3f-8382-a97e0af7eb56', 'KPI-EF-086: Explainability Robustness (Power Grid)', 'The Explainability Robustness KPI evaluates the stability of explanations against small input perturbations, assuming the model’s output remains relatively unchanged. A robust explanation should not fluctuate significantly when the input is slightly modified. The Average Sensitivity Metric quantifies this stability by applying small perturbations to the input data and measuring how much the explanation changes. Since computing sensitivity over all possible perturbations is impractical, Monte Carlo sampling is used to estimate these variations efficiently. ', array['a1d636fb-9525-4796-85f6-565ecc4dc2a3']::uuid[], array['e36d1ef8-939c-4cd8-a660-0a224ce24aa0']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2545,7 +2545,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('ce7d0394-1aa0-41c2-84b7-dfcfe006eb8b', 'KPI-EF-087: Explainability Faithfulness (Power Grid)', 'The Faithfulness KPI assesses whether the feature importance scores provided by an explanation method accurately reflect the model’s decision-making process. It systematically removes or alters features and measures the impact on the model’s predictions. The assumption is that if a feature is truly important, removing or altering it should significantly affect the model’s output. ', array['92eb89c5-a934-4f62-b64b-9ff63c3189fc']::uuid[], array['53b0db0e-7092-455b-9e2c-327ee017f776']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('ce7d0394-1aa0-41c2-84b7-dfcfe006eb8b', 'KPI-EF-087: Explainability Faithfulness (Power Grid)', 'The Faithfulness KPI assesses whether the feature importance scores provided by an explanation method accurately reflect the model’s decision-making process. It systematically removes or alters features and measures the impact on the model’s predictions. The assumption is that if a feature is truly important, removing or altering it should significantly affect the model’s output. ', array['92eb89c5-a934-4f62-b64b-9ff63c3189fc']::uuid[], array['53b0db0e-7092-455b-9e2c-327ee017f776']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2595,7 +2595,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('534f5a1f-7115-48a5-b58c-4deb044d425d', 'KPI-AF-074: Area between reward curves (Power Grid)', 'Area between reward curves calculates area between the curve corresponding to the reward obtained in each step in an environment where the AI agent has perfect information and the curve for an environment where the agent''s input is perturbed ', array['00fb1d4c-a9b4-4a3f-88ab-eec7f4eb1a76']::uuid[], array['bbcf8224-c768-4469-8ff5-939d977383b4']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('534f5a1f-7115-48a5-b58c-4deb044d425d', 'KPI-AF-074: Area between reward curves (Power Grid)', 'Area between reward curves calculates area between the curve corresponding to the reward obtained in each step in an environment where the AI agent has perfect information and the curve for an environment where the agent''s input is perturbed ', array['00fb1d4c-a9b4-4a3f-88ab-eec7f4eb1a76']::uuid[], array['bbcf8224-c768-4469-8ff5-939d977383b4']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2655,7 +2655,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('04a23bfc-fc44-4ec4-a732-c29214130a83', 'KPI-DF-075: Degradation time (Power Grid)', 'Number of steps/episodes until reward reaches its lowest point after introducing perturbations to the input of the AI agent ', array['805cc0df-c8f5-4e7d-8a1c-9a1600e18479']::uuid[], array['b355482b-30a2-431e-9536-8e3dd29d06d1']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('04a23bfc-fc44-4ec4-a732-c29214130a83', 'KPI-DF-075: Degradation time (Power Grid)', 'Number of steps/episodes until reward reaches its lowest point after introducing perturbations to the input of the AI agent ', array['805cc0df-c8f5-4e7d-8a1c-9a1600e18479']::uuid[], array['b355482b-30a2-431e-9536-8e3dd29d06d1']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2715,7 +2715,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('225aaee8-7c7f-4faf-810b-407b551e9f2a', 'KPI-RF-076: Restorative time (Power Grid)', 'Number of steps/episodes until reward recovers to its highest point after reaching the lowest point after introducing perturbations to the input of the AI agent ', array['a6fcdd38-158e-4865-9300-4b061553dcab']::uuid[], array['2eaf04e3-090a-4c13-b923-ac86de1b6db1']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('225aaee8-7c7f-4faf-810b-407b551e9f2a', 'KPI-RF-076: Restorative time (Power Grid)', 'Number of steps/episodes until reward recovers to its highest point after reaching the lowest point after introducing perturbations to the input of the AI agent ', array['a6fcdd38-158e-4865-9300-4b061553dcab']::uuid[], array['2eaf04e3-090a-4c13-b923-ac86de1b6db1']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2775,7 +2775,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('7fe4210f-1253-411c-ba03-49d8b37c71fa', 'KPI-SF-077: Similarity state to unperturbed situation (Power Grid)', 'Similarity state to unperturbed situation KPI measures similarity of the state in an environment where AI agent''s input is perturbed to the state in the same context of an environment with perfect information ', array['36601f97-1681-43ac-a07c-c4cfbb4b3ede']::uuid[], array['4523d73e-427a-42a1-b841-c9668373fafb']::uuid[], 'CLOSED', 'Power Grid')
+    VALUES ('7fe4210f-1253-411c-ba03-49d8b37c71fa', 'KPI-SF-077: Similarity state to unperturbed situation (Power Grid)', 'Similarity state to unperturbed situation KPI measures similarity of the state in an environment where AI agent''s input is perturbed to the state in the same context of an environment with perfect information ', array['36601f97-1681-43ac-a07c-c4cfbb4b3ede']::uuid[], array['4523d73e-427a-42a1-b841-c9668373fafb']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2845,7 +2845,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('0eb49c18-fbf7-4797-b4c5-6dabc9795ddb', 'KPI-RS-091: Reflection on operator trust  (Power Grid)', 'This KPI represents self-reported human operators’ perception of the changes in their trust for the AI assistant over time (increased/decreased) on a Likert scale. ', array['955e3993-0196-477e-8362-adcb2cc929e0']::uuid[], array['b26f54c0-146a-473c-82a6-fcecbedc9cbc']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('0eb49c18-fbf7-4797-b4c5-6dabc9795ddb', 'KPI-RS-091: Reflection on operator trust  (Power Grid)', 'This KPI represents self-reported human operators’ perception of the changes in their trust for the AI assistant over time (increased/decreased) on a Likert scale. ', array['955e3993-0196-477e-8362-adcb2cc929e0']::uuid[], array['b26f54c0-146a-473c-82a6-fcecbedc9cbc']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2905,7 +2905,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('b7d124f7-998a-416e-81a0-424cb6192755', 'KPI-RS-092: Reflection on operator agency  (Power Grid)', 'This KPI represents self-reported human operators’ perception of the changes in their agency working with the AI assistant over time (increased/decreased) on a Likert scale. ', array['1ac0bc44-71c0-427b-bc1e-b7a177809ad7']::uuid[], array['284e2178-d34c-4dcb-8868-21b4d2310744']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('b7d124f7-998a-416e-81a0-424cb6192755', 'KPI-RS-092: Reflection on operator agency  (Power Grid)', 'This KPI represents self-reported human operators’ perception of the changes in their agency working with the AI assistant over time (increased/decreased) on a Likert scale. ', array['1ac0bc44-71c0-427b-bc1e-b7a177809ad7']::uuid[], array['284e2178-d34c-4dcb-8868-21b4d2310744']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2965,7 +2965,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('e860b491-42b1-416a-b2fb-bea9bd8a249d', 'KPI-RS-093: Reflection on operator de-skilling  (Power Grid)', 'This KPI represents self-reported human operators’ perception of the changes in their own skills working with the AI assistant over time (increased/decreased) on a Likert scale. ', array['43e38b85-6b62-4898-a0c6-6b1b5e9b7e83']::uuid[], array['f253c68c-bd5e-43a2-8d72-77ab9caccb0d']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('e860b491-42b1-416a-b2fb-bea9bd8a249d', 'KPI-RS-093: Reflection on operator de-skilling  (Power Grid)', 'This KPI represents self-reported human operators’ perception of the changes in their own skills working with the AI assistant over time (increased/decreased) on a Likert scale. ', array['43e38b85-6b62-4898-a0c6-6b1b5e9b7e83']::uuid[], array['f253c68c-bd5e-43a2-8d72-77ab9caccb0d']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -3025,7 +3025,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('ff1099da-8b25-4dff-8f64-c7ce1d5c9d9d', 'KPI-RS-094: Reflection on over-reliance  (Power Grid)', 'This KPI represents self-reported human operators’ perception of their potential over-reliance on the AI assistant on a Likert scale. ', array['43eebab4-d111-4f5d-8c3d-1abdaafb2a4b']::uuid[], array['44daf1f7-1449-408e-baa6-9d5c29dc50f0']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('ff1099da-8b25-4dff-8f64-c7ce1d5c9d9d', 'KPI-RS-094: Reflection on over-reliance  (Power Grid)', 'This KPI represents self-reported human operators’ perception of their potential over-reliance on the AI assistant on a Likert scale. ', array['43eebab4-d111-4f5d-8c3d-1abdaafb2a4b']::uuid[], array['44daf1f7-1449-408e-baa6-9d5c29dc50f0']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -3085,7 +3085,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('afa5288f-3a6f-4933-8bd9-1761d4c97c34', 'KPI-RS-095: Reflection on additional training  (Power Grid)', 'This KPI represents self-reported human operators’ perception of the additional training necessary to adopt the AI assistant on a Likert scale. ', array['69721968-c18b-4bf4-9223-2ed001231c7f']::uuid[], array['9cfb4458-2418-4a83-a7f3-0c27758c4752']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('afa5288f-3a6f-4933-8bd9-1761d4c97c34', 'KPI-RS-095: Reflection on additional training  (Power Grid)', 'This KPI represents self-reported human operators’ perception of the additional training necessary to adopt the AI assistant on a Likert scale. ', array['69721968-c18b-4bf4-9223-2ed001231c7f']::uuid[], array['9cfb4458-2418-4a83-a7f3-0c27758c4752']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -3145,7 +3145,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('b67c3a5a-c157-420c-9d3c-8c949413a79b', 'KPI-RS-096: Reflection on biases  (Power Grid)', 'This KPI represents self-reported human operators’ perception of biased decisions potentially produced by the AI assistant with respect to gender/ethnicity/age or commercial interests on a Likert scale. ', array['f16522e3-b973-4b1d-bf7a-b728885a0b29']::uuid[], array['7dfff29e-c251-459e-b591-295d796b328a']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('b67c3a5a-c157-420c-9d3c-8c949413a79b', 'KPI-RS-096: Reflection on biases  (Power Grid)', 'This KPI represents self-reported human operators’ perception of biased decisions potentially produced by the AI assistant with respect to gender/ethnicity/age or commercial interests on a Likert scale. ', array['f16522e3-b973-4b1d-bf7a-b728885a0b29']::uuid[], array['7dfff29e-c251-459e-b591-295d796b328a']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -3205,7 +3205,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('f322d495-95e0-49ab-9439-156228593328', 'KPI-PS-097: Predicted long-term adoption  (Power Grid)', 'This KPI represents predicted adoption of the AI assistant by users, stakeholders, or experts on a Likert scale. ', array['929eb222-48b9-4652-bb0f-8b71899a02da']::uuid[], array['d885d30d-408c-4b88-9a25-add134aca45b']::uuid[], 'OFFLINE', 'Power Grid')
+    VALUES ('f322d495-95e0-49ab-9439-156228593328', 'KPI-PS-097: Predicted long-term adoption  (Power Grid)', 'This KPI represents predicted adoption of the AI assistant by users, stakeholders, or experts on a Likert scale. ', array['929eb222-48b9-4652-bb0f-8b71899a02da']::uuid[], array['d885d30d-408c-4b88-9a25-add134aca45b']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
