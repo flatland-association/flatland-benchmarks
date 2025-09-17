@@ -8,6 +8,8 @@
     "build": "ng build",
     "check": "ng lint",
     "test": "ng test --watch=false --browsers=ChromeHeadless",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
     "private:serve": "ng serve",
     "private:test": "ng test --browsers=ChromeHeadless"
   }

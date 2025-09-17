@@ -48,6 +48,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 coverage/
+**/cypress/screenshots
 
 # Translations
 *.mo
