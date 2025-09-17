@@ -109,6 +109,17 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+## E2E Testing
+
+To run end-to-end tests locally, make sure the following "services" are running
+- Docker (e.g. `npm run docker:up`)
+- backend, AI4REALNET flavor (i.e. `npm run start.ai4realnet` from `ts/backend`)
+- frontend (i.e. `npm run start` from `ts/frontend`)
+
+Then, to actually run the tests, run `npm run cypress:run` from `ts/frontend`.
+
+To debug the tests, run `npm run cypress:open` from `ts/frontend`, select "E2E Testing" in the GUI and then select Chrome or Edge (the tests won't pass in Electron or FireFox).
+
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
