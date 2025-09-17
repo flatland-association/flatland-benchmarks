@@ -11,6 +11,7 @@ def main():
   BENCHMARK_GROUP_DESCRIPTION = 'The beta validation campaign runs until 30.11.2025'
   agg_func = "MEAN"
 
+  # from https://github.com/AI4REALNET/KPIs-cards/blob/main/data/card-data.ts
   with Path("KPIs_database_cards.json").open() as f:
     data = json.loads(f.read())
     print(json.dumps(data, indent=4))
