@@ -25,20 +25,20 @@ describe('Complete roundtrip', () => {
     // navigate to KPI
     cy.contains('tr', 'KPI-AS-006').click()
     // start submission
-    cy.contains('button', 'Submit').click()
+    cy.contains('button', 'Submit').click() // TODO: identify by data-* attribute
     // enter details and submit
     cy.get('input#submission-name').type(submissionName)
-    cy.contains('button', 'Submit').click()
+    cy.contains('button', 'Submit').click() // TODO: identify by data-* attribute
     // navigate to scenario
     cy.contains('tr', 'KPI-AS-006-1').click()
     // enter score and submit
     cy.get('input[type=number]').type('500')
-    cy.contains('button', 'Submit').click()
+    cy.contains('button', 'Submit').click() // TODO: identify by data-* attribute
     // navigate back to submission via breadcrumb
     cy.get('app-breadcrumbs').contains('a', submissionName).click()
     // assert it's been successfully score and publish
     cy.contains('This submission has been successfully scored.')
-    cy.contains('button', 'Publish').click()
+    cy.contains('button', 'Publish').click() // TODO: identify by data-* attribute
     // navigate back to KPI via breadcrumb
     cy.get('app-breadcrumbs').contains('a', 'AI-human learning curves').click()
     // assert it's been published by visiting the KPI and looking for it
