@@ -5,10 +5,7 @@ import { configuration } from '../config/config.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import { Controller, GetHandler } from './controller.mjs'
 
-// TODO: rename file to suite.controller.mts after changes from
-// feature/integration-api-changes have been merged
-
-export class BenchmarkGroupController extends Controller {
+export class SuiteController extends Controller {
   constructor(config: configuration) {
     super(config)
 
