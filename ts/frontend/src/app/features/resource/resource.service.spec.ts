@@ -4,11 +4,11 @@ import { SuiteDefinitionRow } from '@common/interfaces'
 import { ApiService } from '../api/api.service'
 import { ResourceService } from './resource.service'
 
-const dummyBenchmarkGroups: SuiteDefinitionRow[] = [
+const dummySuites: SuiteDefinitionRow[] = [
   {
     dir: '/definitions/suites/',
     id: 'a',
-    name: 'Group A',
+    name: 'Suite A',
     description: 'For testing',
     setup: 'DEFAULT',
     benchmark_ids: [],
@@ -16,7 +16,7 @@ const dummyBenchmarkGroups: SuiteDefinitionRow[] = [
   {
     dir: '/definitions/suites/',
     id: 'b',
-    name: 'Group B',
+    name: 'Suite B',
     description: 'For testing',
     setup: 'DEFAULT',
     benchmark_ids: [],
@@ -78,10 +78,10 @@ describe('ResourceService', async () => {
         description: 'should load resource from api',
         method: 'load',
         request: { suite_ids: 'a' },
-        response: [dummyBenchmarkGroups[0]],
+        response: [dummySuites[0]],
         apiMock: {
           request: { suite_ids: 'a' },
-          response: [dummyBenchmarkGroups[0]],
+          response: [dummySuites[0]],
         },
       },
       {
@@ -89,11 +89,11 @@ describe('ResourceService', async () => {
         method: 'loadGrouped',
         // response will be requested resources but grouped
         request: { suite_ids: ['a', 'b', 'a'] },
-        response: [dummyBenchmarkGroups[0], dummyBenchmarkGroups[1]],
+        response: [dummySuites[0], dummySuites[1]],
         // api request should already be consolidated
         apiMock: {
           request: { suite_ids: 'a,b' },
-          response: [dummyBenchmarkGroups[0], dummyBenchmarkGroups[1]],
+          response: [dummySuites[0], dummySuites[1]],
         },
       },
       {
@@ -101,11 +101,11 @@ describe('ResourceService', async () => {
         method: 'loadOrdered',
         // response will be requested resources in exact order
         request: { suite_ids: ['a', 'b', 'a'] },
-        response: [dummyBenchmarkGroups[0], dummyBenchmarkGroups[1], dummyBenchmarkGroups[0]],
+        response: [dummySuites[0], dummySuites[1], dummySuites[0]],
         // api request should already be consolidated
         apiMock: {
           request: { suite_ids: 'a,b' },
-          response: [dummyBenchmarkGroups[0], dummyBenchmarkGroups[1]],
+          response: [dummySuites[0], dummySuites[1]],
         },
       },
     ]
@@ -134,35 +134,35 @@ describe('ResourceService', async () => {
         description: 'should load resource from api',
         method: 'load',
         request: { suite_ids: 'a' },
-        response: [dummyBenchmarkGroups[0]],
+        response: [dummySuites[0]],
         apiMock: {
           request: { suite_ids: 'a' },
-          response: [dummyBenchmarkGroups[0]],
+          response: [dummySuites[0]],
         },
       },
       {
         description: 'should then return resource from cache',
         method: 'load',
         request: { suite_ids: 'a' },
-        response: [dummyBenchmarkGroups[0]],
+        response: [dummySuites[0]],
       },
       {
         description: 'should respect cache in multi-requests',
         method: 'loadGrouped',
         // response will be requested resources but grouped
         request: { suite_ids: ['a', 'b'] },
-        response: [dummyBenchmarkGroups[0], dummyBenchmarkGroups[1]],
+        response: [dummySuites[0], dummySuites[1]],
         // api request should only request non-cached resources
         apiMock: {
           request: { suite_ids: 'b' },
-          response: [dummyBenchmarkGroups[1]],
+          response: [dummySuites[1]],
         },
       },
       {
         description: 'should respect cache in single requests after multi-request',
         method: 'loadGrouped',
         request: { suite_ids: 'b' },
-        response: [dummyBenchmarkGroups[1]],
+        response: [dummySuites[1]],
         // api request should not be made as all resources are already cached
       },
     ]
