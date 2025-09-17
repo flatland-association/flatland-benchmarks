@@ -3,6 +3,24 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.13.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.13.0...v0.13.1) (2025-09-17)
+
+
+### Features
+
+* csv importer refinements. ([02d0396](https://github.com/flatland-association/flatland-benchmarks/commit/02d03964f5cd6281e785d8bbaaeeab9b3e3c6511))
+
+
+### Bug Fixes
+
+* New terminology benchmark and suite ([#428](https://github.com/flatland-association/flatland-benchmarks/issues/428)) ([3c055a3](https://github.com/flatland-association/flatland-benchmarks/commit/3c055a331b5247de17e88c4560d4486d1b142832))
+* python comment in generated orchestrator Python snippets. ([1ba58f1](https://github.com/flatland-association/flatland-benchmarks/commit/1ba58f1ae5dc3ef088e174b7446fe66bd12d63a0))
+
+
+### Miscellaneous Chores
+
+* release 0.13.1 ([18adb17](https://github.com/flatland-association/flatland-benchmarks/commit/18adb17f92ac73ed76177c0f125f48fc1e45055e))
+
 ## [0.13.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.12.2...v0.13.0) (2025-09-16)
 
 
