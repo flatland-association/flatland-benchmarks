@@ -2,259 +2,259 @@
 railway_orchestrator = Orchestrator(
     test_runners={
 
-        // KPI-AS-001: Ability to anticipate (Railway)
+        # KPI-AS-001: Ability to anticipate (Railway)
         "8edbf9a1-09b4-478a-ac53-8fc903e70cc1": TestRunner_KPI_AS_001_Railway(
-            test_id="8edbf9a1-09b4-478a-ac53-8fc903e70cc1", scenario_ids=['c7159f8d-781b-40fc-9efa-cd0e3a8b8d21']
+            test_id="8edbf9a1-09b4-478a-ac53-8fc903e70cc1", scenario_ids=['c7159f8d-781b-40fc-9efa-cd0e3a8b8d21'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-AS-009: Assistant disturbance (Railway)
+        # KPI-AS-009: Assistant disturbance (Railway)
         "d4bcbd11-740a-478f-8dbc-6d9b53fa6059": TestRunner_KPI_AS_009_Railway(
-            test_id="d4bcbd11-740a-478f-8dbc-6d9b53fa6059", scenario_ids=['59d015ca-ca8a-4015-a113-35c182b301e4']
+            test_id="d4bcbd11-740a-478f-8dbc-6d9b53fa6059", scenario_ids=['59d015ca-ca8a-4015-a113-35c182b301e4'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-DS-015: Decision support satisfaction (Railway)
+        # KPI-DS-015: Decision support satisfaction (Railway)
         "22c590e5-01ad-4e96-9040-29a13ac9118f": TestRunner_KPI_DS_015_Railway(
-            test_id="22c590e5-01ad-4e96-9040-29a13ac9118f", scenario_ids=['cbfe8dd3-e8df-464f-92cd-0adeab4a18b8']
+            test_id="22c590e5-01ad-4e96-9040-29a13ac9118f", scenario_ids=['cbfe8dd3-e8df-464f-92cd-0adeab4a18b8'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-HS-022: Human motivation (Railway)
+        # KPI-HS-022: Human motivation (Railway)
         "05e91ee6-744b-47ea-85a0-005e26b578e0": TestRunner_KPI_HS_022_Railway(
-            test_id="05e91ee6-744b-47ea-85a0-005e26b578e0", scenario_ids=['ab770463-5832-4edd-9ab2-178b7ee46b74']
+            test_id="05e91ee6-744b-47ea-85a0-005e26b578e0", scenario_ids=['ab770463-5832-4edd-9ab2-178b7ee46b74'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-HS-023: Human response time (Railway)
+        # KPI-HS-023: Human response time (Railway)
         "40398221-b288-46d9-895c-45d278f1b6a3": TestRunner_KPI_HS_023_Railway(
-            test_id="40398221-b288-46d9-895c-45d278f1b6a3", scenario_ids=['35cf47d4-83f4-4eb7-ab9b-40c6fe7679a8']
+            test_id="40398221-b288-46d9-895c-45d278f1b6a3", scenario_ids=['35cf47d4-83f4-4eb7-ab9b-40c6fe7679a8'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-SS-031: Situation awareness (Railway)
+        # KPI-SS-031: Situation awareness (Railway)
         "307bce4c-635f-44c3-9ed2-6d4d45d1bbb2": TestRunner_KPI_SS_031_Railway(
-            test_id="307bce4c-635f-44c3-9ed2-6d4d45d1bbb2", scenario_ids=['3131063f-5d0e-42bd-955d-5e875ceaac94']
+            test_id="307bce4c-635f-44c3-9ed2-6d4d45d1bbb2", scenario_ids=['3131063f-5d0e-42bd-955d-5e875ceaac94'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-WS-040: Workload (Railway)
+        # KPI-WS-040: Workload (Railway)
         "343bc5cf-0bab-4fdf-9760-266c5a738b08": TestRunner_KPI_WS_040_Railway(
-            test_id="343bc5cf-0bab-4fdf-9760-266c5a738b08", scenario_ids=['c3ab2e6b-e8ed-420e-b6d2-4fd5dd407288']
+            test_id="343bc5cf-0bab-4fdf-9760-266c5a738b08", scenario_ids=['c3ab2e6b-e8ed-420e-b6d2-4fd5dd407288'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-CS-049: Cognitive Performance & Stress (Railway)
+        # KPI-CS-049: Cognitive Performance & Stress (Railway)
         "452bb0df-9a9d-4475-ac7b-8e62659c0b13": TestRunner_KPI_CS_049_Railway(
-            test_id="452bb0df-9a9d-4475-ac7b-8e62659c0b13", scenario_ids=['76d73b49-ff52-4b9a-96e2-cc664582c8e4']
+            test_id="452bb0df-9a9d-4475-ac7b-8e62659c0b13", scenario_ids=['76d73b49-ff52-4b9a-96e2-cc664582c8e4'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-AS-002: Acceptance (Railway)
+        # KPI-AS-002: Acceptance (Railway)
         "ba7fabe3-6f42-4cc5-875e-b8fb45aa17f3": TestRunner_KPI_AS_002_Railway(
-            test_id="ba7fabe3-6f42-4cc5-875e-b8fb45aa17f3", scenario_ids=['0d85a097-9170-42aa-99ea-d56b833c27cf']
+            test_id="ba7fabe3-6f42-4cc5-875e-b8fb45aa17f3", scenario_ids=['0d85a097-9170-42aa-99ea-d56b833c27cf'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-AS-005: Agreement score (Railway)
+        # KPI-AS-005: Agreement score (Railway)
         "fd01a013-c5aa-4ab2-9c01-ec608013c929": TestRunner_KPI_AS_005_Railway(
-            test_id="fd01a013-c5aa-4ab2-9c01-ec608013c929", scenario_ids=['9db20a76-763a-4597-9586-cb217981e191']
+            test_id="fd01a013-c5aa-4ab2-9c01-ec608013c929", scenario_ids=['9db20a76-763a-4597-9586-cb217981e191'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-CS-013: Comprehensibility (Railway)
+        # KPI-CS-013: Comprehensibility (Railway)
         "3c249970-1e83-4faa-bcf4-9fdb63ed904d": TestRunner_KPI_CS_013_Railway(
-            test_id="3c249970-1e83-4faa-bcf4-9fdb63ed904d", scenario_ids=['0ee42e0f-a284-4979-86e8-4e50c9bfcef7']
+            test_id="3c249970-1e83-4faa-bcf4-9fdb63ed904d", scenario_ids=['0ee42e0f-a284-4979-86e8-4e50c9bfcef7'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-TS-038: Trust in AI solutions score (Railway)
+        # KPI-TS-038: Trust in AI solutions score (Railway)
         "57134a8f-d2bb-4a49-975c-4f6e1e07eb09": TestRunner_KPI_TS_038_Railway(
-            test_id="57134a8f-d2bb-4a49-975c-4f6e1e07eb09", scenario_ids=['7b07ae08-9153-42cd-b1e9-6c03f3c1df31']
+            test_id="57134a8f-d2bb-4a49-975c-4f6e1e07eb09", scenario_ids=['7b07ae08-9153-42cd-b1e9-6c03f3c1df31'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-TS-039: Trust towards the AI tool (Railway)
+        # KPI-TS-039: Trust towards the AI tool (Railway)
         "51780641-4f2a-4095-b230-fdddc4bf31af": TestRunner_KPI_TS_039_Railway(
-            test_id="51780641-4f2a-4095-b230-fdddc4bf31af", scenario_ids=['0e9f4bb5-6e39-4ccb-b5ae-81b9a1f91607']
+            test_id="51780641-4f2a-4095-b230-fdddc4bf31af", scenario_ids=['0e9f4bb5-6e39-4ccb-b5ae-81b9a1f91607'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-HS-003: Human intervention frequency (Railway)
+        # KPI-HS-003: Human intervention frequency (Railway)
         "22b1dc11-7d3f-4219-adc9-b1eba58562a7": TestRunner_KPI_HS_003_Railway(
-            test_id="22b1dc11-7d3f-4219-adc9-b1eba58562a7", scenario_ids=['6c383eec-31cd-4f3c-9296-cc5bb0d7f4c9']
+            test_id="22b1dc11-7d3f-4219-adc9-b1eba58562a7", scenario_ids=['6c383eec-31cd-4f3c-9296-cc5bb0d7f4c9'], benchmark_id="8d5c876e-22c2-49e7-bdd5-4c1840d309f0"
         ),
 
-        // KPI-SS-030: Significance of human revisions (Railway)
+        # KPI-SS-030: Significance of human revisions (Railway)
         "24eecb84-e881-459c-8116-a224b0253b70": TestRunner_KPI_SS_030_Railway(
-            test_id="24eecb84-e881-459c-8116-a224b0253b70", scenario_ids=['eee4453e-477f-4057-ad7b-c1c2233ed108']
+            test_id="24eecb84-e881-459c-8116-a224b0253b70", scenario_ids=['eee4453e-477f-4057-ad7b-c1c2233ed108'], benchmark_id="8d5c876e-22c2-49e7-bdd5-4c1840d309f0"
         ),
 
-        // KPI-PS-089: Perceived decision novelty (Railway)
+        # KPI-PS-089: Perceived decision novelty (Railway)
         "74c88d9b-f61b-4162-aefc-75a9d538b8a6": TestRunner_KPI_PS_089_Railway(
-            test_id="74c88d9b-f61b-4162-aefc-75a9d538b8a6", scenario_ids=['b228ee9c-de35-4efd-b59a-7c4bb95ca127']
+            test_id="74c88d9b-f61b-4162-aefc-75a9d538b8a6", scenario_ids=['b228ee9c-de35-4efd-b59a-7c4bb95ca127'], benchmark_id="8d5c876e-22c2-49e7-bdd5-4c1840d309f0"
         ),
 
-        // KPI-AS-006: AI co-learning capability (Railway)
+        # KPI-AS-006: AI co-learning capability (Railway)
         "a38618ca-6e9f-437d-a177-270f721ad1c6": TestRunner_KPI_AS_006_Railway(
-            test_id="a38618ca-6e9f-437d-a177-270f721ad1c6", scenario_ids=['9fdd3565-45d6-4d83-9cda-478c56e94f26']
+            test_id="a38618ca-6e9f-437d-a177-270f721ad1c6", scenario_ids=['9fdd3565-45d6-4d83-9cda-478c56e94f26'], benchmark_id="65547935-f436-49fa-8d20-f320c6bd46dc"
         ),
 
-        // KPI-HS-021: Human learning (Railway)
+        # KPI-HS-021: Human learning (Railway)
         "c258c64f-1905-4d7f-93f0-d696c133978e": TestRunner_KPI_HS_021_Railway(
-            test_id="c258c64f-1905-4d7f-93f0-d696c133978e", scenario_ids=['b4c9184c-c0d1-4a0c-bab1-9210bf8cb548']
+            test_id="c258c64f-1905-4d7f-93f0-d696c133978e", scenario_ids=['b4c9184c-c0d1-4a0c-bab1-9210bf8cb548'], benchmark_id="65547935-f436-49fa-8d20-f320c6bd46dc"
         ),
 
-        // KPI-DF-016: Delay reduction efficiency (Railway)
+        # KPI-DF-016: Delay reduction efficiency (Railway)
         "6ff3c588-357c-41a6-a45a-2bd946b158c8": TestRunner_KPI_DF_016_Railway(
-            test_id="6ff3c588-357c-41a6-a45a-2bd946b158c8", scenario_ids=['ba7f9aac-5e96-4436-bae1-23629c4d153b']
+            test_id="6ff3c588-357c-41a6-a45a-2bd946b158c8", scenario_ids=['ba7f9aac-5e96-4436-bae1-23629c4d153b'], benchmark_id="3b1bdca6-ed90-4938-bd63-fd657aa7dcd7"
         ),
 
-        // KPI-PF-026: Punctuality (Railway)
+        # KPI-PF-026: Punctuality (Railway)
         "98ceb866-5479-47e6-a735-81292de8ca65": TestRunner_KPI_PF_026_Railway(
-            test_id="98ceb866-5479-47e6-a735-81292de8ca65", scenario_ids=['5a60713d-01f2-4d32-9867-21904629e254']
+            test_id="98ceb866-5479-47e6-a735-81292de8ca65", scenario_ids=['5a60713d-01f2-4d32-9867-21904629e254'], benchmark_id="3b1bdca6-ed90-4938-bd63-fd657aa7dcd7"
         ),
 
-        // KPI-AF-029: AI Response time (Railway)
+        # KPI-AF-029: AI Response time (Railway)
         "1e226684-a836-468d-9929-b95bbf2f88dc": TestRunner_KPI_AF_029_Railway(
-            test_id="1e226684-a836-468d-9929-b95bbf2f88dc", scenario_ids=['c5219c2e-c3b9-4e7a-aefc-b767a9b3005d']
+            test_id="1e226684-a836-468d-9929-b95bbf2f88dc", scenario_ids=['c5219c2e-c3b9-4e7a-aefc-b767a9b3005d'], benchmark_id="3b1bdca6-ed90-4938-bd63-fd657aa7dcd7"
         ),
 
-        // KPI-NF-045: Network Impact Propagation (Railway)
+        # KPI-NF-045: Network Impact Propagation (Railway)
         "e075d4a7-5cda-4d3c-83ac-69a0db1d74dd": TestRunner_KPI_NF_045_Railway(
-            test_id="e075d4a7-5cda-4d3c-83ac-69a0db1d74dd", scenario_ids=['bb6302f1-0dc2-43ed-976b-4e5d3126006a']
+            test_id="e075d4a7-5cda-4d3c-83ac-69a0db1d74dd", scenario_ids=['bb6302f1-0dc2-43ed-976b-4e5d3126006a'], benchmark_id="4b0be731-8371-4e4e-a673-b630187b0bb8"
         ),
 
-        // KPI-HS-018: Human control/autonomy over the process (Railway)
+        # KPI-HS-018: Human control/autonomy over the process (Railway)
         "6a896809-dad8-4248-a2f3-d54373953fe6": TestRunner_KPI_HS_018_Railway(
-            test_id="6a896809-dad8-4248-a2f3-d54373953fe6", scenario_ids=['dddb0b01-6bab-408e-9b12-4d7ab8e3b542']
+            test_id="6a896809-dad8-4248-a2f3-d54373953fe6", scenario_ids=['dddb0b01-6bab-408e-9b12-4d7ab8e3b542'], benchmark_id="d65cd37a-4830-468c-9100-0f60ee9ff72e"
         ),
 
-        // KPI-IS-041: Impact on workload (Railway)
+        # KPI-IS-041: Impact on workload (Railway)
         "0d901459-427d-43ea-9c97-3815eaa52bf6": TestRunner_KPI_IS_041_Railway(
-            test_id="0d901459-427d-43ea-9c97-3815eaa52bf6", scenario_ids=['e967a3b5-6d9b-41c2-9897-4e40a186e879']
+            test_id="0d901459-427d-43ea-9c97-3815eaa52bf6", scenario_ids=['e967a3b5-6d9b-41c2-9897-4e40a186e879'], benchmark_id="d65cd37a-4830-468c-9100-0f60ee9ff72e"
         ),
 
-        // KPI-AF-050: AI-Agent Scalability Training (Railway)
+        # KPI-AF-050: AI-Agent Scalability Training (Railway)
         "dff7e358-ff14-45e7-bc22-aac2b50500f3": TestRunner_KPI_AF_050_Railway(
-            test_id="dff7e358-ff14-45e7-bc22-aac2b50500f3", scenario_ids=['d7cea956-6803-488c-b402-079d13b892c6']
+            test_id="dff7e358-ff14-45e7-bc22-aac2b50500f3", scenario_ids=['d7cea956-6803-488c-b402-079d13b892c6'], benchmark_id="16706c82-75df-4969-932d-a7f5c941eca2"
         ),
 
-        // KPI-AF-051: AI-Agent Scalability Testing (Railway)
+        # KPI-AF-051: AI-Agent Scalability Testing (Railway)
         "b2e91a79-1390-414f-bf5d-8a6fd93c6080": TestRunner_KPI_AF_051_Railway(
-            test_id="b2e91a79-1390-414f-bf5d-8a6fd93c6080", scenario_ids=['1f2b1af1-dc36-49ae-9322-e61656951545']
+            test_id="b2e91a79-1390-414f-bf5d-8a6fd93c6080", scenario_ids=['1f2b1af1-dc36-49ae-9322-e61656951545'], benchmark_id="16706c82-75df-4969-932d-a7f5c941eca2"
         ),
 
-        // KPI-DF-052: Domain shift adaptation time (Railway)
+        # KPI-DF-052: Domain shift adaptation time (Railway)
         "0c3b9843-1940-45ef-943a-dc13ec1d090a": TestRunner_KPI_DF_052_Railway(
-            test_id="0c3b9843-1940-45ef-943a-dc13ec1d090a", scenario_ids=['adb8b61b-6203-436d-9b40-8d4f95af7f43']
+            test_id="0c3b9843-1940-45ef-943a-dc13ec1d090a", scenario_ids=['adb8b61b-6203-436d-9b40-8d4f95af7f43'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-053: Domain shift generalization gap (Railway)
+        # KPI-DF-053: Domain shift generalization gap (Railway)
         "fba17d1f-2eb7-4c06-8f77-5da14e7b875a": TestRunner_KPI_DF_053_Railway(
-            test_id="fba17d1f-2eb7-4c06-8f77-5da14e7b875a", scenario_ids=['d741cc0b-7dd9-4c2e-b23c-805b622c3878']
+            test_id="fba17d1f-2eb7-4c06-8f77-5da14e7b875a", scenario_ids=['d741cc0b-7dd9-4c2e-b23c-805b622c3878'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-054: Domain shift out of domain detection accuracy (Railway)
+        # KPI-DF-054: Domain shift out of domain detection accuracy (Railway)
         "69259fb3-bba8-4e62-9103-552b439ebaf4": TestRunner_KPI_DF_054_Railway(
-            test_id="69259fb3-bba8-4e62-9103-552b439ebaf4", scenario_ids=['8d292cff-0409-4ec7-83fb-3034c3a4106c']
+            test_id="69259fb3-bba8-4e62-9103-552b439ebaf4", scenario_ids=['8d292cff-0409-4ec7-83fb-3034c3a4106c'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-055: Domain shift policy robustness (Railway)
+        # KPI-DF-055: Domain shift policy robustness (Railway)
         "dce1c0e9-f2ae-4faa-a6b3-76d037c082d0": TestRunner_KPI_DF_055_Railway(
-            test_id="dce1c0e9-f2ae-4faa-a6b3-76d037c082d0", scenario_ids=['4b42d9b8-9f27-4247-8bef-47ad3ce3a978']
+            test_id="dce1c0e9-f2ae-4faa-a6b3-76d037c082d0", scenario_ids=['4b42d9b8-9f27-4247-8bef-47ad3ce3a978'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-056: Domain shift robustness to domain parameters (Railway)
+        # KPI-DF-056: Domain shift robustness to domain parameters (Railway)
         "03e1fcaf-a933-4ad1-abf2-5541574298a2": TestRunner_KPI_DF_056_Railway(
-            test_id="03e1fcaf-a933-4ad1-abf2-5541574298a2", scenario_ids=['2238fa19-e337-49ce-a3b3-08abf85f1453']
+            test_id="03e1fcaf-a933-4ad1-abf2-5541574298a2", scenario_ids=['2238fa19-e337-49ce-a3b3-08abf85f1453'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-057: Domain shift success rate drop (Railway)
+        # KPI-DF-057: Domain shift success rate drop (Railway)
         "d795c7bd-f8be-43c2-ae6e-a931194d3fc5": TestRunner_KPI_DF_057_Railway(
-            test_id="d795c7bd-f8be-43c2-ae6e-a931194d3fc5", scenario_ids=['5d017ca4-f062-44c9-821c-31f85928903a']
+            test_id="d795c7bd-f8be-43c2-ae6e-a931194d3fc5", scenario_ids=['5d017ca4-f062-44c9-821c-31f85928903a'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-090: Domain shift forgetting rate (Railway)
+        # KPI-DF-090: Domain shift forgetting rate (Railway)
         "511f2ab0-da90-4d55-a23f-af5eda0baf7d": TestRunner_KPI_DF_090_Railway(
-            test_id="511f2ab0-da90-4d55-a23f-af5eda0baf7d", scenario_ids=['cf7bb259-0ad4-4454-a9c8-eb8add0bec57']
+            test_id="511f2ab0-da90-4d55-a23f-af5eda0baf7d", scenario_ids=['cf7bb259-0ad4-4454-a9c8-eb8add0bec57'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-RS-058: Robustness to operator input (Railway)
+        # KPI-RS-058: Robustness to operator input (Railway)
         "1cbf44c3-0c82-4f9e-9857-c7c1d96d3ab9": TestRunner_KPI_RS_058_Railway(
-            test_id="1cbf44c3-0c82-4f9e-9857-c7c1d96d3ab9", scenario_ids=['7a1c9dac-ec75-42e1-9355-34d88eabc52f']
+            test_id="1cbf44c3-0c82-4f9e-9857-c7c1d96d3ab9", scenario_ids=['7a1c9dac-ec75-42e1-9355-34d88eabc52f'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-DF-069: Drop-off in reward (Railway)
+        # KPI-DF-069: Drop-off in reward (Railway)
         "a94c858e-4bc3-4d67-bd78-5c81506e39f7": TestRunner_KPI_DF_069_Railway(
-            test_id="a94c858e-4bc3-4d67-bd78-5c81506e39f7", scenario_ids=['74dd5830-6e59-423f-89f4-b050319db14e']
+            test_id="a94c858e-4bc3-4d67-bd78-5c81506e39f7", scenario_ids=['74dd5830-6e59-423f-89f4-b050319db14e'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-FF-070: Frequency changed output AI agent (Railway)
+        # KPI-FF-070: Frequency changed output AI agent (Railway)
         "5abadf6b-991c-4d37-810f-f77bb71d490d": TestRunner_KPI_FF_070_Railway(
-            test_id="5abadf6b-991c-4d37-810f-f77bb71d490d", scenario_ids=['ffcadd8d-207a-49af-8b09-54e922642f01']
+            test_id="5abadf6b-991c-4d37-810f-f77bb71d490d", scenario_ids=['ffcadd8d-207a-49af-8b09-54e922642f01'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-SF-071: Severity of changed output AI agent (Railway)
+        # KPI-SF-071: Severity of changed output AI agent (Railway)
         "dce32e78-e827-4994-a0a2-06feee2528cc": TestRunner_KPI_SF_071_Railway(
-            test_id="dce32e78-e827-4994-a0a2-06feee2528cc", scenario_ids=['588ae37c-f583-47df-9154-ca12c9ac134a']
+            test_id="dce32e78-e827-4994-a0a2-06feee2528cc", scenario_ids=['588ae37c-f583-47df-9154-ca12c9ac134a'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-SF-072: Steps survived with perturbations (Railway)
+        # KPI-SF-072: Steps survived with perturbations (Railway)
         "e5206c56-75a0-41fa-9db3-bec66359337e": TestRunner_KPI_SF_072_Railway(
-            test_id="e5206c56-75a0-41fa-9db3-bec66359337e", scenario_ids=['8011c7bd-6082-4653-8d9d-887d23f1ec5c']
+            test_id="e5206c56-75a0-41fa-9db3-bec66359337e", scenario_ids=['8011c7bd-6082-4653-8d9d-887d23f1ec5c'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-VF-073: Vulnerability to perturbation (Railway)
+        # KPI-VF-073: Vulnerability to perturbation (Railway)
         "0ddba8a7-5ef8-45d1-b0d6-0842bc44d2cc": TestRunner_KPI_VF_073_Railway(
-            test_id="0ddba8a7-5ef8-45d1-b0d6-0842bc44d2cc", scenario_ids=['47a11418-fad5-4d55-a637-6b90a8351500']
+            test_id="0ddba8a7-5ef8-45d1-b0d6-0842bc44d2cc", scenario_ids=['47a11418-fad5-4d55-a637-6b90a8351500'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-RF-078: Reward per action (Railway)
+        # KPI-RF-078: Reward per action (Railway)
         "8ebc88f0-896c-4910-8997-a44d107e7eb7": TestRunner_KPI_RF_078_Railway(
-            test_id="8ebc88f0-896c-4910-8997-a44d107e7eb7", scenario_ids=['dc8195e4-266d-4afb-ba60-2659f59acfa4']
+            test_id="8ebc88f0-896c-4910-8997-a44d107e7eb7", scenario_ids=['dc8195e4-266d-4afb-ba60-2659f59acfa4'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-AF-074: Area between reward curves (Railway)
+        # KPI-AF-074: Area between reward curves (Railway)
         "707a1a4e-7073-432b-94fc-af4a5ee9f07d": TestRunner_KPI_AF_074_Railway(
-            test_id="707a1a4e-7073-432b-94fc-af4a5ee9f07d", scenario_ids=['a9e3fbf7-b5d5-477d-a0c8-d23880237d2d']
+            test_id="707a1a4e-7073-432b-94fc-af4a5ee9f07d", scenario_ids=['a9e3fbf7-b5d5-477d-a0c8-d23880237d2d'], benchmark_id="31ea606b-681a-437a-85b9-7c81d4ccc287"
         ),
 
-        // KPI-DF-075: Degradation time (Railway)
+        # KPI-DF-075: Degradation time (Railway)
         "2c4be118-6108-43b3-b09f-a4bee842167a": TestRunner_KPI_DF_075_Railway(
-            test_id="2c4be118-6108-43b3-b09f-a4bee842167a", scenario_ids=['dc03b9f1-bfb2-44b8-b124-f7eede10e0a7']
+            test_id="2c4be118-6108-43b3-b09f-a4bee842167a", scenario_ids=['dc03b9f1-bfb2-44b8-b124-f7eede10e0a7'], benchmark_id="31ea606b-681a-437a-85b9-7c81d4ccc287"
         ),
 
-        // KPI-RF-076: Restorative time (Railway)
+        # KPI-RF-076: Restorative time (Railway)
         "2cac54e0-aaf3-4f22-8307-f23878c432f0": TestRunner_KPI_RF_076_Railway(
-            test_id="2cac54e0-aaf3-4f22-8307-f23878c432f0", scenario_ids=['56160b90-a287-4dec-acc7-f40967d60fa0']
+            test_id="2cac54e0-aaf3-4f22-8307-f23878c432f0", scenario_ids=['56160b90-a287-4dec-acc7-f40967d60fa0'], benchmark_id="31ea606b-681a-437a-85b9-7c81d4ccc287"
         ),
 
-        // KPI-SF-077: Similarity state to unperturbed situation (Railway)
+        # KPI-SF-077: Similarity state to unperturbed situation (Railway)
         "d432299f-dbee-46ba-9e15-77954086440a": TestRunner_KPI_SF_077_Railway(
-            test_id="d432299f-dbee-46ba-9e15-77954086440a", scenario_ids=['367a8b12-1b87-42f1-9400-4ecf96d6b617']
+            test_id="d432299f-dbee-46ba-9e15-77954086440a", scenario_ids=['367a8b12-1b87-42f1-9400-4ecf96d6b617'], benchmark_id="31ea606b-681a-437a-85b9-7c81d4ccc287"
         ),
 
-        // KPI-RS-091: Reflection on operator trust  (Railway)
+        # KPI-RS-091: Reflection on operator trust  (Railway)
         "9e680ab9-c861-4dd7-a5ea-abbdc1a91088": TestRunner_KPI_RS_091_Railway(
-            test_id="9e680ab9-c861-4dd7-a5ea-abbdc1a91088", scenario_ids=['e9e537cc-a8d0-4864-9460-9098c72b269f']
+            test_id="9e680ab9-c861-4dd7-a5ea-abbdc1a91088", scenario_ids=['e9e537cc-a8d0-4864-9460-9098c72b269f'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-092: Reflection on operator agency  (Railway)
+        # KPI-RS-092: Reflection on operator agency  (Railway)
         "8eb804ef-d122-4c59-a6b3-53f3c9664d2b": TestRunner_KPI_RS_092_Railway(
-            test_id="8eb804ef-d122-4c59-a6b3-53f3c9664d2b", scenario_ids=['1ce89667-c4c2-483d-8ed1-c7add0a24b4b']
+            test_id="8eb804ef-d122-4c59-a6b3-53f3c9664d2b", scenario_ids=['1ce89667-c4c2-483d-8ed1-c7add0a24b4b'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-093: Reflection on operator de-skilling  (Railway)
+        # KPI-RS-093: Reflection on operator de-skilling  (Railway)
         "8f5a1908-6319-4e2a-a43b-6528c7c5e92e": TestRunner_KPI_RS_093_Railway(
-            test_id="8f5a1908-6319-4e2a-a43b-6528c7c5e92e", scenario_ids=['e283be95-96da-4f69-8869-06ab82ee2c45']
+            test_id="8f5a1908-6319-4e2a-a43b-6528c7c5e92e", scenario_ids=['e283be95-96da-4f69-8869-06ab82ee2c45'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-094: Reflection on over-reliance  (Railway)
+        # KPI-RS-094: Reflection on over-reliance  (Railway)
         "a6a54b1d-54bf-4b09-9887-706eed3e1a57": TestRunner_KPI_RS_094_Railway(
-            test_id="a6a54b1d-54bf-4b09-9887-706eed3e1a57", scenario_ids=['fbe33158-fb85-492d-9015-62b95f4658e8']
+            test_id="a6a54b1d-54bf-4b09-9887-706eed3e1a57", scenario_ids=['fbe33158-fb85-492d-9015-62b95f4658e8'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-095: Reflection on additional training  (Railway)
+        # KPI-RS-095: Reflection on additional training  (Railway)
         "0d898adb-7378-4ddd-8afa-a7136f13e3fa": TestRunner_KPI_RS_095_Railway(
-            test_id="0d898adb-7378-4ddd-8afa-a7136f13e3fa", scenario_ids=['4a6d19a8-0d27-42d8-97af-9197987e64ce']
+            test_id="0d898adb-7378-4ddd-8afa-a7136f13e3fa", scenario_ids=['4a6d19a8-0d27-42d8-97af-9197987e64ce'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-096: Reflection on biases  (Railway)
+        # KPI-RS-096: Reflection on biases  (Railway)
         "be770a02-c8be-4774-97b6-bc15e91b2fd8": TestRunner_KPI_RS_096_Railway(
-            test_id="be770a02-c8be-4774-97b6-bc15e91b2fd8", scenario_ids=['b646c5dd-20e5-4628-984c-0b6ab3156538']
+            test_id="be770a02-c8be-4774-97b6-bc15e91b2fd8", scenario_ids=['b646c5dd-20e5-4628-984c-0b6ab3156538'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-PS-097: Predicted long-term adoption  (Railway)
+        # KPI-PS-097: Predicted long-term adoption  (Railway)
         "2c71e014-3994-4413-a469-e27b0d1e121d": TestRunner_KPI_PS_097_Railway(
-            test_id="2c71e014-3994-4413-a469-e27b0d1e121d", scenario_ids=['691ab2fd-9827-45f9-8d03-0878c1005144']
+            test_id="2c71e014-3994-4413-a469-e27b0d1e121d", scenario_ids=['691ab2fd-9827-45f9-8d03-0878c1005144'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
     }
@@ -263,249 +263,249 @@ railway_orchestrator = Orchestrator(
 atm_orchestrator = Orchestrator(
     test_runners={
 
-        // KPI-AS-001: Ability to anticipate (ATM)
+        # KPI-AS-001: Ability to anticipate (ATM)
         "9a9b85fb-6b8b-4b42-af5d-1d81d515e6b1": TestRunner_KPI_AS_001_ATM(
-            test_id="9a9b85fb-6b8b-4b42-af5d-1d81d515e6b1", scenario_ids=['4cc07a90-fca8-4e96-b670-563c1e8f42fa']
+            test_id="9a9b85fb-6b8b-4b42-af5d-1d81d515e6b1", scenario_ids=['4cc07a90-fca8-4e96-b670-563c1e8f42fa'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-AS-009: Assistant disturbance (ATM)
+        # KPI-AS-009: Assistant disturbance (ATM)
         "c2a22379-524a-4294-80b2-c751be726b70": TestRunner_KPI_AS_009_ATM(
-            test_id="c2a22379-524a-4294-80b2-c751be726b70", scenario_ids=['76a0cad5-40fd-4b92-b904-5841aadf8a7d']
+            test_id="c2a22379-524a-4294-80b2-c751be726b70", scenario_ids=['76a0cad5-40fd-4b92-b904-5841aadf8a7d'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-DS-015: Decision support satisfaction (ATM)
+        # KPI-DS-015: Decision support satisfaction (ATM)
         "290debb4-eeff-408c-a680-28fce5b376e7": TestRunner_KPI_DS_015_ATM(
-            test_id="290debb4-eeff-408c-a680-28fce5b376e7", scenario_ids=['22846c4e-e703-46c7-8069-38a6b6027a7d']
+            test_id="290debb4-eeff-408c-a680-28fce5b376e7", scenario_ids=['22846c4e-e703-46c7-8069-38a6b6027a7d'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-HS-022: Human motivation (ATM)
+        # KPI-HS-022: Human motivation (ATM)
         "ebd2a832-1c69-4d87-9de2-4a283e7c7f37": TestRunner_KPI_HS_022_ATM(
-            test_id="ebd2a832-1c69-4d87-9de2-4a283e7c7f37", scenario_ids=['4f81efc4-4c7d-4973-9fb6-1fccbe11fcd4']
+            test_id="ebd2a832-1c69-4d87-9de2-4a283e7c7f37", scenario_ids=['4f81efc4-4c7d-4973-9fb6-1fccbe11fcd4'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-HS-023: Human response time (ATM)
+        # KPI-HS-023: Human response time (ATM)
         "e52b585d-0da8-4a88-97ff-0953a62a548c": TestRunner_KPI_HS_023_ATM(
-            test_id="e52b585d-0da8-4a88-97ff-0953a62a548c", scenario_ids=['f1278028-1c96-485c-bd6b-046d4356c335']
+            test_id="e52b585d-0da8-4a88-97ff-0953a62a548c", scenario_ids=['f1278028-1c96-485c-bd6b-046d4356c335'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-SS-031: Situation awareness (ATM)
+        # KPI-SS-031: Situation awareness (ATM)
         "26bf1860-4b1c-4fed-8f81-53dac6a8f8f7": TestRunner_KPI_SS_031_ATM(
-            test_id="26bf1860-4b1c-4fed-8f81-53dac6a8f8f7", scenario_ids=['f8fc8712-e092-458e-a1e6-3733f5bc65ea']
+            test_id="26bf1860-4b1c-4fed-8f81-53dac6a8f8f7", scenario_ids=['f8fc8712-e092-458e-a1e6-3733f5bc65ea'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-WS-040: Workload (ATM)
+        # KPI-WS-040: Workload (ATM)
         "96396992-ab9a-45b8-9833-124b46925da6": TestRunner_KPI_WS_040_ATM(
-            test_id="96396992-ab9a-45b8-9833-124b46925da6", scenario_ids=['88a26ad8-bd41-4c4b-9f10-ee7876550752']
+            test_id="96396992-ab9a-45b8-9833-124b46925da6", scenario_ids=['88a26ad8-bd41-4c4b-9f10-ee7876550752'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-CS-049: Cognitive Performance & Stress (ATM)
+        # KPI-CS-049: Cognitive Performance & Stress (ATM)
         "ebd44326-8c9b-4144-8e31-8c360b148dd3": TestRunner_KPI_CS_049_ATM(
-            test_id="ebd44326-8c9b-4144-8e31-8c360b148dd3", scenario_ids=['4b04f1b7-a4b0-4b71-8f75-6a222bb05284']
+            test_id="ebd44326-8c9b-4144-8e31-8c360b148dd3", scenario_ids=['4b04f1b7-a4b0-4b71-8f75-6a222bb05284'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-AS-002: Acceptance (ATM)
+        # KPI-AS-002: Acceptance (ATM)
         "125cc932-43c2-40db-8fb3-e523557b98df": TestRunner_KPI_AS_002_ATM(
-            test_id="125cc932-43c2-40db-8fb3-e523557b98df", scenario_ids=['91da4c1c-3011-4f70-809f-8204cd3824ba']
+            test_id="125cc932-43c2-40db-8fb3-e523557b98df", scenario_ids=['91da4c1c-3011-4f70-809f-8204cd3824ba'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-AS-005: Agreement score (ATM)
+        # KPI-AS-005: Agreement score (ATM)
         "7a1e72fb-942c-4f54-bc72-adba7d941a0e": TestRunner_KPI_AS_005_ATM(
-            test_id="7a1e72fb-942c-4f54-bc72-adba7d941a0e", scenario_ids=['5ec8e7f8-a26d-4263-95ea-6c7a0832f61d']
+            test_id="7a1e72fb-942c-4f54-bc72-adba7d941a0e", scenario_ids=['5ec8e7f8-a26d-4263-95ea-6c7a0832f61d'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-CS-013: Comprehensibility (ATM)
+        # KPI-CS-013: Comprehensibility (ATM)
         "4795ec75-5e16-432a-9a5c-580d649471e2": TestRunner_KPI_CS_013_ATM(
-            test_id="4795ec75-5e16-432a-9a5c-580d649471e2", scenario_ids=['2057f6f2-015b-4370-a4db-40bb8cd9b244']
+            test_id="4795ec75-5e16-432a-9a5c-580d649471e2", scenario_ids=['2057f6f2-015b-4370-a4db-40bb8cd9b244'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-TS-038: Trust in AI solutions score (ATM)
+        # KPI-TS-038: Trust in AI solutions score (ATM)
         "626c4984-069a-4c6d-8bc6-b63d8eb91d4f": TestRunner_KPI_TS_038_ATM(
-            test_id="626c4984-069a-4c6d-8bc6-b63d8eb91d4f", scenario_ids=['e5063e27-d81b-499b-8827-b2a8ab0ff8d8']
+            test_id="626c4984-069a-4c6d-8bc6-b63d8eb91d4f", scenario_ids=['e5063e27-d81b-499b-8827-b2a8ab0ff8d8'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-TS-039: Trust towards the AI tool (ATM)
+        # KPI-TS-039: Trust towards the AI tool (ATM)
         "d3313fc9-8865-49c8-b3a2-ed0742bbcb8d": TestRunner_KPI_TS_039_ATM(
-            test_id="d3313fc9-8865-49c8-b3a2-ed0742bbcb8d", scenario_ids=['a5785b63-ccee-4108-ad34-32f861beeadf']
+            test_id="d3313fc9-8865-49c8-b3a2-ed0742bbcb8d", scenario_ids=['a5785b63-ccee-4108-ad34-32f861beeadf'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-HS-003: Human intervention frequency (ATM)
+        # KPI-HS-003: Human intervention frequency (ATM)
         "8936e99a-3667-404d-97b7-eab2791c0cdc": TestRunner_KPI_HS_003_ATM(
-            test_id="8936e99a-3667-404d-97b7-eab2791c0cdc", scenario_ids=['0db9f3ea-ac49-4914-b491-ecf3f1f35263']
+            test_id="8936e99a-3667-404d-97b7-eab2791c0cdc", scenario_ids=['0db9f3ea-ac49-4914-b491-ecf3f1f35263'], benchmark_id="8d5c876e-22c2-49e7-bdd5-4c1840d309f0"
         ),
 
-        // KPI-SS-030: Significance of human revisions (ATM)
+        # KPI-SS-030: Significance of human revisions (ATM)
         "a5cebe71-030b-4d3c-be27-d8c01a862952": TestRunner_KPI_SS_030_ATM(
-            test_id="a5cebe71-030b-4d3c-be27-d8c01a862952", scenario_ids=['a365a4df-98d6-4c7b-83bb-63b5ccb68581']
+            test_id="a5cebe71-030b-4d3c-be27-d8c01a862952", scenario_ids=['a365a4df-98d6-4c7b-83bb-63b5ccb68581'], benchmark_id="8d5c876e-22c2-49e7-bdd5-4c1840d309f0"
         ),
 
-        // KPI-PS-089: Perceived decision novelty (ATM)
+        # KPI-PS-089: Perceived decision novelty (ATM)
         "c489fc51-158f-4224-baba-8d18c34c19d3": TestRunner_KPI_PS_089_ATM(
-            test_id="c489fc51-158f-4224-baba-8d18c34c19d3", scenario_ids=['ab1d9b2b-b91f-440f-ad16-54ccabb25230']
+            test_id="c489fc51-158f-4224-baba-8d18c34c19d3", scenario_ids=['ab1d9b2b-b91f-440f-ad16-54ccabb25230'], benchmark_id="8d5c876e-22c2-49e7-bdd5-4c1840d309f0"
         ),
 
-        // KPI-AS-006: AI co-learning capability (ATM)
+        # KPI-AS-006: AI co-learning capability (ATM)
         "452bff66-df55-47fd-9ad8-725f327bedf3": TestRunner_KPI_AS_006_ATM(
-            test_id="452bff66-df55-47fd-9ad8-725f327bedf3", scenario_ids=['af91490d-d1cf-4644-aaec-887e320e4a36']
+            test_id="452bff66-df55-47fd-9ad8-725f327bedf3", scenario_ids=['af91490d-d1cf-4644-aaec-887e320e4a36'], benchmark_id="65547935-f436-49fa-8d20-f320c6bd46dc"
         ),
 
-        // KPI-HS-021: Human learning (ATM)
+        # KPI-HS-021: Human learning (ATM)
         "15de95cc-0ad4-4b78-9984-9bdeac8503dd": TestRunner_KPI_HS_021_ATM(
-            test_id="15de95cc-0ad4-4b78-9984-9bdeac8503dd", scenario_ids=['dd069d03-4ff6-4c9a-b3a6-bf1f1471e640']
+            test_id="15de95cc-0ad4-4b78-9984-9bdeac8503dd", scenario_ids=['dd069d03-4ff6-4c9a-b3a6-bf1f1471e640'], benchmark_id="65547935-f436-49fa-8d20-f320c6bd46dc"
         ),
 
-        // KPI-RF-027: Reduction in delay (ATM)
+        # KPI-RF-027: Reduction in delay (ATM)
         "9b6bc151-9f25-4d85-bee1-919753934521": TestRunner_KPI_RF_027_ATM(
-            test_id="9b6bc151-9f25-4d85-bee1-919753934521", scenario_ids=['437971ac-6616-429b-ad27-f8796772c570']
+            test_id="9b6bc151-9f25-4d85-bee1-919753934521", scenario_ids=['437971ac-6616-429b-ad27-f8796772c570'], benchmark_id="3b1bdca6-ed90-4938-bd63-fd657aa7dcd7"
         ),
 
-        // KPI-SS-032: System efficiency (ATM)
+        # KPI-SS-032: System efficiency (ATM)
         "a6cb2703-be7f-44da-a3d8-652fa8797627": TestRunner_KPI_SS_032_ATM(
-            test_id="a6cb2703-be7f-44da-a3d8-652fa8797627", scenario_ids=['22ef21e7-d00d-4c3b-8484-7110e024a4f5']
+            test_id="a6cb2703-be7f-44da-a3d8-652fa8797627", scenario_ids=['22ef21e7-d00d-4c3b-8484-7110e024a4f5'], benchmark_id="3b1bdca6-ed90-4938-bd63-fd657aa7dcd7"
         ),
 
-        // KPI-HS-018: Human control/autonomy over the process (ATM)
+        # KPI-HS-018: Human control/autonomy over the process (ATM)
         "5be9d1d9-535a-4940-a29d-d32d087cb197": TestRunner_KPI_HS_018_ATM(
-            test_id="5be9d1d9-535a-4940-a29d-d32d087cb197", scenario_ids=['3324347e-e4cb-42a2-9f53-430421090075']
+            test_id="5be9d1d9-535a-4940-a29d-d32d087cb197", scenario_ids=['3324347e-e4cb-42a2-9f53-430421090075'], benchmark_id="d65cd37a-4830-468c-9100-0f60ee9ff72e"
         ),
 
-        // KPI-IS-041: Impact on workload (ATM)
+        # KPI-IS-041: Impact on workload (ATM)
         "18ae6ae9-d0b4-4af8-bf37-4b7cbdb31a85": TestRunner_KPI_IS_041_ATM(
-            test_id="18ae6ae9-d0b4-4af8-bf37-4b7cbdb31a85", scenario_ids=['fddeb18e-789e-40e0-9680-ca58ae10851f']
+            test_id="18ae6ae9-d0b4-4af8-bf37-4b7cbdb31a85", scenario_ids=['fddeb18e-789e-40e0-9680-ca58ae10851f'], benchmark_id="d65cd37a-4830-468c-9100-0f60ee9ff72e"
         ),
 
-        // KPI-AF-050: AI-Agent Scalability Training (ATM)
+        # KPI-AF-050: AI-Agent Scalability Training (ATM)
         "4cba45eb-2512-4e8e-87da-d39a45e529f8": TestRunner_KPI_AF_050_ATM(
-            test_id="4cba45eb-2512-4e8e-87da-d39a45e529f8", scenario_ids=['89bbf582-bb03-4039-9318-1178da706760']
+            test_id="4cba45eb-2512-4e8e-87da-d39a45e529f8", scenario_ids=['89bbf582-bb03-4039-9318-1178da706760'], benchmark_id="16706c82-75df-4969-932d-a7f5c941eca2"
         ),
 
-        // KPI-AF-051: AI-Agent Scalability Testing (ATM)
+        # KPI-AF-051: AI-Agent Scalability Testing (ATM)
         "bf76b70f-77ee-4cc0-9c4c-4165eca347d2": TestRunner_KPI_AF_051_ATM(
-            test_id="bf76b70f-77ee-4cc0-9c4c-4165eca347d2", scenario_ids=['b63f9a44-68e0-4850-b622-bac55d980b30']
+            test_id="bf76b70f-77ee-4cc0-9c4c-4165eca347d2", scenario_ids=['b63f9a44-68e0-4850-b622-bac55d980b30'], benchmark_id="16706c82-75df-4969-932d-a7f5c941eca2"
         ),
 
-        // KPI-DF-052: Domain shift adaptation time (ATM)
+        # KPI-DF-052: Domain shift adaptation time (ATM)
         "68412020-58d7-4180-8cae-99f2ffa4dbf5": TestRunner_KPI_DF_052_ATM(
-            test_id="68412020-58d7-4180-8cae-99f2ffa4dbf5", scenario_ids=['c60afe79-dbc6-4c44-893e-387adf7bc02c']
+            test_id="68412020-58d7-4180-8cae-99f2ffa4dbf5", scenario_ids=['c60afe79-dbc6-4c44-893e-387adf7bc02c'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-053: Domain shift generalization gap (ATM)
+        # KPI-DF-053: Domain shift generalization gap (ATM)
         "aecbfe66-c49f-42cb-b624-d98c3d74fcb1": TestRunner_KPI_DF_053_ATM(
-            test_id="aecbfe66-c49f-42cb-b624-d98c3d74fcb1", scenario_ids=['1f8238f7-f6b6-482c-96ad-f4e0880b801d']
+            test_id="aecbfe66-c49f-42cb-b624-d98c3d74fcb1", scenario_ids=['1f8238f7-f6b6-482c-96ad-f4e0880b801d'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-054: Domain shift out of domain detection accuracy (ATM)
+        # KPI-DF-054: Domain shift out of domain detection accuracy (ATM)
         "a34741a1-d279-4b5b-a327-2a0f94bea125": TestRunner_KPI_DF_054_ATM(
-            test_id="a34741a1-d279-4b5b-a327-2a0f94bea125", scenario_ids=['5b92361c-927e-4aaa-83c5-4413989282a2']
+            test_id="a34741a1-d279-4b5b-a327-2a0f94bea125", scenario_ids=['5b92361c-927e-4aaa-83c5-4413989282a2'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-055: Domain shift policy robustness (ATM)
+        # KPI-DF-055: Domain shift policy robustness (ATM)
         "a3adb18d-3b44-4498-8c2c-728d5ff40248": TestRunner_KPI_DF_055_ATM(
-            test_id="a3adb18d-3b44-4498-8c2c-728d5ff40248", scenario_ids=['33e32b92-51a9-4531-8b5d-8655b758a958']
+            test_id="a3adb18d-3b44-4498-8c2c-728d5ff40248", scenario_ids=['33e32b92-51a9-4531-8b5d-8655b758a958'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-056: Domain shift robustness to domain parameters (ATM)
+        # KPI-DF-056: Domain shift robustness to domain parameters (ATM)
         "defac2f8-5b3b-4de9-ae1b-8e2f74380257": TestRunner_KPI_DF_056_ATM(
-            test_id="defac2f8-5b3b-4de9-ae1b-8e2f74380257", scenario_ids=['3f521f00-d5f7-4883-923a-1ec2a3022dcb']
+            test_id="defac2f8-5b3b-4de9-ae1b-8e2f74380257", scenario_ids=['3f521f00-d5f7-4883-923a-1ec2a3022dcb'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-057: Domain shift success rate drop (ATM)
+        # KPI-DF-057: Domain shift success rate drop (ATM)
         "e75c588d-276f-4c6f-a329-90d570da9b67": TestRunner_KPI_DF_057_ATM(
-            test_id="e75c588d-276f-4c6f-a329-90d570da9b67", scenario_ids=['3ba0619c-8073-4e94-9c34-c3d5e17bcde8']
+            test_id="e75c588d-276f-4c6f-a329-90d570da9b67", scenario_ids=['3ba0619c-8073-4e94-9c34-c3d5e17bcde8'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-090: Domain shift forgetting rate (ATM)
+        # KPI-DF-090: Domain shift forgetting rate (ATM)
         "9c6f7e45-b966-4b55-8315-790577683344": TestRunner_KPI_DF_090_ATM(
-            test_id="9c6f7e45-b966-4b55-8315-790577683344", scenario_ids=['3c03cc5e-f94e-4573-90a3-924b217442e6']
+            test_id="9c6f7e45-b966-4b55-8315-790577683344", scenario_ids=['3c03cc5e-f94e-4573-90a3-924b217442e6'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-RS-058: Robustness to operator input (ATM)
+        # KPI-RS-058: Robustness to operator input (ATM)
         "07881948-f5e0-4772-83c9-3ca517ac245f": TestRunner_KPI_RS_058_ATM(
-            test_id="07881948-f5e0-4772-83c9-3ca517ac245f", scenario_ids=['2d805705-e6b1-45e2-8511-39d3d23a9994']
+            test_id="07881948-f5e0-4772-83c9-3ca517ac245f", scenario_ids=['2d805705-e6b1-45e2-8511-39d3d23a9994'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-DF-069: Drop-off in reward (ATM)
+        # KPI-DF-069: Drop-off in reward (ATM)
         "4819e8f6-a2d4-497f-9b61-fc90883a0dfb": TestRunner_KPI_DF_069_ATM(
-            test_id="4819e8f6-a2d4-497f-9b61-fc90883a0dfb", scenario_ids=['532a18a1-5e58-45a4-830e-b5ca016499f9']
+            test_id="4819e8f6-a2d4-497f-9b61-fc90883a0dfb", scenario_ids=['532a18a1-5e58-45a4-830e-b5ca016499f9'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-FF-070: Frequency changed output AI agent (ATM)
+        # KPI-FF-070: Frequency changed output AI agent (ATM)
         "f0f94fb1-2aef-44f6-ba80-5b8320725fb0": TestRunner_KPI_FF_070_ATM(
-            test_id="f0f94fb1-2aef-44f6-ba80-5b8320725fb0", scenario_ids=['12c63b69-e6b1-4316-999b-7112e0b0c1d2']
+            test_id="f0f94fb1-2aef-44f6-ba80-5b8320725fb0", scenario_ids=['12c63b69-e6b1-4316-999b-7112e0b0c1d2'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-SF-071: Severity of changed output AI agent (ATM)
+        # KPI-SF-071: Severity of changed output AI agent (ATM)
         "02bfbe09-6e9b-4243-a376-1a51b1beef19": TestRunner_KPI_SF_071_ATM(
-            test_id="02bfbe09-6e9b-4243-a376-1a51b1beef19", scenario_ids=['af261375-7fd2-4a89-92b6-3477b018a09d']
+            test_id="02bfbe09-6e9b-4243-a376-1a51b1beef19", scenario_ids=['af261375-7fd2-4a89-92b6-3477b018a09d'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-SF-072: Steps survived with perturbations (ATM)
+        # KPI-SF-072: Steps survived with perturbations (ATM)
         "c466661d-12dc-4d1e-81a4-1db1623e3cc1": TestRunner_KPI_SF_072_ATM(
-            test_id="c466661d-12dc-4d1e-81a4-1db1623e3cc1", scenario_ids=['f903201d-a631-46c9-997f-f32bf7e3ff5d']
+            test_id="c466661d-12dc-4d1e-81a4-1db1623e3cc1", scenario_ids=['f903201d-a631-46c9-997f-f32bf7e3ff5d'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-VF-073: Vulnerability to perturbation (ATM)
+        # KPI-VF-073: Vulnerability to perturbation (ATM)
         "5cfc7e4d-024b-4dd1-82a5-c3d9bf25ba50": TestRunner_KPI_VF_073_ATM(
-            test_id="5cfc7e4d-024b-4dd1-82a5-c3d9bf25ba50", scenario_ids=['3ced691e-d23c-47de-9967-5cf5d7be3e9e']
+            test_id="5cfc7e4d-024b-4dd1-82a5-c3d9bf25ba50", scenario_ids=['3ced691e-d23c-47de-9967-5cf5d7be3e9e'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-RF-078: Reward per action (ATM)
+        # KPI-RF-078: Reward per action (ATM)
         "885cab0d-d4fc-4d93-95db-243870506405": TestRunner_KPI_RF_078_ATM(
-            test_id="885cab0d-d4fc-4d93-95db-243870506405", scenario_ids=['eeb9b483-616d-4508-85b8-812a09f93d23']
+            test_id="885cab0d-d4fc-4d93-95db-243870506405", scenario_ids=['eeb9b483-616d-4508-85b8-812a09f93d23'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-AF-074: Area between reward curves (ATM)
+        # KPI-AF-074: Area between reward curves (ATM)
         "5372decd-6a2a-4c50-bf7a-cd57cfebe3de": TestRunner_KPI_AF_074_ATM(
-            test_id="5372decd-6a2a-4c50-bf7a-cd57cfebe3de", scenario_ids=['e80a5e55-dc60-459f-bf22-26f196a4711a']
+            test_id="5372decd-6a2a-4c50-bf7a-cd57cfebe3de", scenario_ids=['e80a5e55-dc60-459f-bf22-26f196a4711a'], benchmark_id="31ea606b-681a-437a-85b9-7c81d4ccc287"
         ),
 
-        // KPI-DF-075: Degradation time (ATM)
+        # KPI-DF-075: Degradation time (ATM)
         "2baef867-c1f2-4b6e-b13c-0eac9463c2fa": TestRunner_KPI_DF_075_ATM(
-            test_id="2baef867-c1f2-4b6e-b13c-0eac9463c2fa", scenario_ids=['2aaed2a4-7dd9-4ea6-a2df-e3ef2207680a']
+            test_id="2baef867-c1f2-4b6e-b13c-0eac9463c2fa", scenario_ids=['2aaed2a4-7dd9-4ea6-a2df-e3ef2207680a'], benchmark_id="31ea606b-681a-437a-85b9-7c81d4ccc287"
         ),
 
-        // KPI-RF-076: Restorative time (ATM)
+        # KPI-RF-076: Restorative time (ATM)
         "7b15a7b3-2413-4953-b91a-24f5c0c5b6da": TestRunner_KPI_RF_076_ATM(
-            test_id="7b15a7b3-2413-4953-b91a-24f5c0c5b6da", scenario_ids=['00e749d7-baa3-4b24-8092-d3dd69cdea58']
+            test_id="7b15a7b3-2413-4953-b91a-24f5c0c5b6da", scenario_ids=['00e749d7-baa3-4b24-8092-d3dd69cdea58'], benchmark_id="31ea606b-681a-437a-85b9-7c81d4ccc287"
         ),
 
-        // KPI-SF-077: Similarity state to unperturbed situation (ATM)
+        # KPI-SF-077: Similarity state to unperturbed situation (ATM)
         "e3fb76a2-2121-4889-adf2-b60ca29c5c71": TestRunner_KPI_SF_077_ATM(
-            test_id="e3fb76a2-2121-4889-adf2-b60ca29c5c71", scenario_ids=['afc812fc-e4f3-4380-a856-9987bc557d5c']
+            test_id="e3fb76a2-2121-4889-adf2-b60ca29c5c71", scenario_ids=['afc812fc-e4f3-4380-a856-9987bc557d5c'], benchmark_id="31ea606b-681a-437a-85b9-7c81d4ccc287"
         ),
 
-        // KPI-RS-091: Reflection on operator trust  (ATM)
+        # KPI-RS-091: Reflection on operator trust  (ATM)
         "4847c6f6-123d-4f5c-ab7c-6ff63b5407e5": TestRunner_KPI_RS_091_ATM(
-            test_id="4847c6f6-123d-4f5c-ab7c-6ff63b5407e5", scenario_ids=['12e1531b-8525-408d-b800-1d0df54f84bb']
+            test_id="4847c6f6-123d-4f5c-ab7c-6ff63b5407e5", scenario_ids=['12e1531b-8525-408d-b800-1d0df54f84bb'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-092: Reflection on operator agency  (ATM)
+        # KPI-RS-092: Reflection on operator agency  (ATM)
         "1f368c52-2c18-4658-a5b7-c2524e90b9dc": TestRunner_KPI_RS_092_ATM(
-            test_id="1f368c52-2c18-4658-a5b7-c2524e90b9dc", scenario_ids=['5afb6acf-df83-47e9-9e7e-cdfb85a3c5de']
+            test_id="1f368c52-2c18-4658-a5b7-c2524e90b9dc", scenario_ids=['5afb6acf-df83-47e9-9e7e-cdfb85a3c5de'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-093: Reflection on operator de-skilling  (ATM)
+        # KPI-RS-093: Reflection on operator de-skilling  (ATM)
         "8de9a511-8d9e-4289-a78b-0004737443c9": TestRunner_KPI_RS_093_ATM(
-            test_id="8de9a511-8d9e-4289-a78b-0004737443c9", scenario_ids=['e62d0769-c481-4641-b9d4-ad5586008e38']
+            test_id="8de9a511-8d9e-4289-a78b-0004737443c9", scenario_ids=['e62d0769-c481-4641-b9d4-ad5586008e38'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-094: Reflection on over-reliance  (ATM)
+        # KPI-RS-094: Reflection on over-reliance  (ATM)
         "7ce3a25e-219c-4146-b2a7-c4f46bc7b137": TestRunner_KPI_RS_094_ATM(
-            test_id="7ce3a25e-219c-4146-b2a7-c4f46bc7b137", scenario_ids=['a65a72e0-5ac4-4182-a919-da70d1241a59']
+            test_id="7ce3a25e-219c-4146-b2a7-c4f46bc7b137", scenario_ids=['a65a72e0-5ac4-4182-a919-da70d1241a59'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-095: Reflection on additional training  (ATM)
+        # KPI-RS-095: Reflection on additional training  (ATM)
         "81b57209-24e3-4213-a93f-8129b3ca1c1c": TestRunner_KPI_RS_095_ATM(
-            test_id="81b57209-24e3-4213-a93f-8129b3ca1c1c", scenario_ids=['e82bc94e-ed5e-403a-8dce-a4ed9c7cb63d']
+            test_id="81b57209-24e3-4213-a93f-8129b3ca1c1c", scenario_ids=['e82bc94e-ed5e-403a-8dce-a4ed9c7cb63d'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-096: Reflection on biases  (ATM)
+        # KPI-RS-096: Reflection on biases  (ATM)
         "733c3705-a1a3-45e1-9fd6-b19e9627bf50": TestRunner_KPI_RS_096_ATM(
-            test_id="733c3705-a1a3-45e1-9fd6-b19e9627bf50", scenario_ids=['3c3dd29c-67f1-49fa-8aef-384c957acaa4']
+            test_id="733c3705-a1a3-45e1-9fd6-b19e9627bf50", scenario_ids=['3c3dd29c-67f1-49fa-8aef-384c957acaa4'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-PS-097: Predicted long-term adoption  (ATM)
+        # KPI-PS-097: Predicted long-term adoption  (ATM)
         "de69aa29-4aa0-4473-918e-14004116a9dc": TestRunner_KPI_PS_097_ATM(
-            test_id="de69aa29-4aa0-4473-918e-14004116a9dc", scenario_ids=['664cd46e-7eac-480f-92da-79574b470da4']
+            test_id="de69aa29-4aa0-4473-918e-14004116a9dc", scenario_ids=['664cd46e-7eac-480f-92da-79574b470da4'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
     }
@@ -514,284 +514,284 @@ atm_orchestrator = Orchestrator(
 power_grid_orchestrator = Orchestrator(
     test_runners={
 
-        // KPI-AS-001: Ability to anticipate (Power Grid)
+        # KPI-AS-001: Ability to anticipate (Power Grid)
         "98413684-d114-4f88-a5e9-1e118b106d67": TestRunner_KPI_AS_001_Power_Grid(
-            test_id="98413684-d114-4f88-a5e9-1e118b106d67", scenario_ids=['ef0af7e2-0212-454d-9391-41de03bd7e57']
+            test_id="98413684-d114-4f88-a5e9-1e118b106d67", scenario_ids=['ef0af7e2-0212-454d-9391-41de03bd7e57'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-AS-009: Assistant disturbance (Power Grid)
+        # KPI-AS-009: Assistant disturbance (Power Grid)
         "6e005336-6c4c-43ae-ac8d-330d51ab48d4": TestRunner_KPI_AS_009_Power_Grid(
-            test_id="6e005336-6c4c-43ae-ac8d-330d51ab48d4", scenario_ids=['57c11d6d-0001-4623-9c1e-fbfc0744c8d5']
+            test_id="6e005336-6c4c-43ae-ac8d-330d51ab48d4", scenario_ids=['57c11d6d-0001-4623-9c1e-fbfc0744c8d5'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-DS-015: Decision support satisfaction (Power Grid)
+        # KPI-DS-015: Decision support satisfaction (Power Grid)
         "4a9db7b3-0dd9-4ac2-a211-ef5a991e4ab9": TestRunner_KPI_DS_015_Power_Grid(
-            test_id="4a9db7b3-0dd9-4ac2-a211-ef5a991e4ab9", scenario_ids=['3ac00dab-5671-4e60-bf35-99309075ee76']
+            test_id="4a9db7b3-0dd9-4ac2-a211-ef5a991e4ab9", scenario_ids=['3ac00dab-5671-4e60-bf35-99309075ee76'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-HS-022: Human motivation (Power Grid)
+        # KPI-HS-022: Human motivation (Power Grid)
         "d1ba73c3-6796-44db-8d87-129558e3535d": TestRunner_KPI_HS_022_Power_Grid(
-            test_id="d1ba73c3-6796-44db-8d87-129558e3535d", scenario_ids=['ee4e4f46-9bc1-4da8-94b5-371ffddfab7e']
+            test_id="d1ba73c3-6796-44db-8d87-129558e3535d", scenario_ids=['ee4e4f46-9bc1-4da8-94b5-371ffddfab7e'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-HS-023: Human response time (Power Grid)
+        # KPI-HS-023: Human response time (Power Grid)
         "dbd85bfb-2e78-4646-b2da-b4d16e90e657": TestRunner_KPI_HS_023_Power_Grid(
-            test_id="dbd85bfb-2e78-4646-b2da-b4d16e90e657", scenario_ids=['d64548d6-2eb6-4e1e-8069-73c0ece64318']
+            test_id="dbd85bfb-2e78-4646-b2da-b4d16e90e657", scenario_ids=['d64548d6-2eb6-4e1e-8069-73c0ece64318'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-SS-031: Situation awareness (Power Grid)
+        # KPI-SS-031: Situation awareness (Power Grid)
         "4166c200-b50e-4e2e-a3a7-05f31e7f78f8": TestRunner_KPI_SS_031_Power_Grid(
-            test_id="4166c200-b50e-4e2e-a3a7-05f31e7f78f8", scenario_ids=['5096d57a-00a3-4018-bdc3-02cd28443a85']
+            test_id="4166c200-b50e-4e2e-a3a7-05f31e7f78f8", scenario_ids=['5096d57a-00a3-4018-bdc3-02cd28443a85'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-WS-040: Workload (Power Grid)
+        # KPI-WS-040: Workload (Power Grid)
         "66c08000-9a5e-42ca-a328-8e6295069142": TestRunner_KPI_WS_040_Power_Grid(
-            test_id="66c08000-9a5e-42ca-a328-8e6295069142", scenario_ids=['06f61acd-da79-493c-8da0-4a1327b5fe6a']
+            test_id="66c08000-9a5e-42ca-a328-8e6295069142", scenario_ids=['06f61acd-da79-493c-8da0-4a1327b5fe6a'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-CS-049: Cognitive Performance & Stress (Power Grid)
+        # KPI-CS-049: Cognitive Performance & Stress (Power Grid)
         "62bcfa08-99ce-4bfe-b7a4-08343ef3a316": TestRunner_KPI_CS_049_Power_Grid(
-            test_id="62bcfa08-99ce-4bfe-b7a4-08343ef3a316", scenario_ids=['6ae869dc-40e3-4cd0-a02c-6541a838b5b3']
+            test_id="62bcfa08-99ce-4bfe-b7a4-08343ef3a316", scenario_ids=['6ae869dc-40e3-4cd0-a02c-6541a838b5b3'], benchmark_id="3237ba20-ccff-45b0-af23-44719e584f41"
         ),
 
-        // KPI-AS-002: Acceptance (Power Grid)
+        # KPI-AS-002: Acceptance (Power Grid)
         "de7f38de-1f0b-450e-9951-b925523a563d": TestRunner_KPI_AS_002_Power_Grid(
-            test_id="de7f38de-1f0b-450e-9951-b925523a563d", scenario_ids=['b4b167ff-56be-43a1-9a80-121eaaf8108f']
+            test_id="de7f38de-1f0b-450e-9951-b925523a563d", scenario_ids=['b4b167ff-56be-43a1-9a80-121eaaf8108f'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-AS-005: Agreement score (Power Grid)
+        # KPI-AS-005: Agreement score (Power Grid)
         "923fddc9-99f6-4195-a857-00d1493886e6": TestRunner_KPI_AS_005_Power_Grid(
-            test_id="923fddc9-99f6-4195-a857-00d1493886e6", scenario_ids=['631244e4-ade3-4cbb-afd6-a19e56c001d6']
+            test_id="923fddc9-99f6-4195-a857-00d1493886e6", scenario_ids=['631244e4-ade3-4cbb-afd6-a19e56c001d6'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-CS-013: Comprehensibility (Power Grid)
+        # KPI-CS-013: Comprehensibility (Power Grid)
         "66d9dc9e-a163-4afc-b293-9ece9d45f3cf": TestRunner_KPI_CS_013_Power_Grid(
-            test_id="66d9dc9e-a163-4afc-b293-9ece9d45f3cf", scenario_ids=['9d6c321f-25c4-4b31-91e6-0208c1da3455']
+            test_id="66d9dc9e-a163-4afc-b293-9ece9d45f3cf", scenario_ids=['9d6c321f-25c4-4b31-91e6-0208c1da3455'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-TS-038: Trust in AI solutions score (Power Grid)
+        # KPI-TS-038: Trust in AI solutions score (Power Grid)
         "b10a5c41-7f19-414c-9ffe-3b73774ce1d9": TestRunner_KPI_TS_038_Power_Grid(
-            test_id="b10a5c41-7f19-414c-9ffe-3b73774ce1d9", scenario_ids=['5314d4ab-35d4-4bc3-ade8-3b17bd39dd82']
+            test_id="b10a5c41-7f19-414c-9ffe-3b73774ce1d9", scenario_ids=['5314d4ab-35d4-4bc3-ade8-3b17bd39dd82'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-TS-039: Trust towards the AI tool (Power Grid)
+        # KPI-TS-039: Trust towards the AI tool (Power Grid)
         "9db74767-f2c3-4f04-aa83-cab1746ab83f": TestRunner_KPI_TS_039_Power_Grid(
-            test_id="9db74767-f2c3-4f04-aa83-cab1746ab83f", scenario_ids=['2d5f2c8a-5cfd-4f32-9174-7ae81a82f0be']
+            test_id="9db74767-f2c3-4f04-aa83-cab1746ab83f", scenario_ids=['2d5f2c8a-5cfd-4f32-9174-7ae81a82f0be'], benchmark_id="2da3781a-25a9-4c89-8b43-9269844f3fef"
         ),
 
-        // KPI-HS-003: Human intervention frequency (Power Grid)
+        # KPI-HS-003: Human intervention frequency (Power Grid)
         "bc503fa3-b1ea-4de5-8760-21bd3ede927f": TestRunner_KPI_HS_003_Power_Grid(
-            test_id="bc503fa3-b1ea-4de5-8760-21bd3ede927f", scenario_ids=['81cb1769-35b5-4b97-aff0-b0d070dd6e50']
+            test_id="bc503fa3-b1ea-4de5-8760-21bd3ede927f", scenario_ids=['81cb1769-35b5-4b97-aff0-b0d070dd6e50'], benchmark_id="8d5c876e-22c2-49e7-bdd5-4c1840d309f0"
         ),
 
-        // KPI-SS-030: Significance of human revisions (Power Grid)
+        # KPI-SS-030: Significance of human revisions (Power Grid)
         "f22c4c5d-1957-4262-b763-12736dd692f9": TestRunner_KPI_SS_030_Power_Grid(
-            test_id="f22c4c5d-1957-4262-b763-12736dd692f9", scenario_ids=['79f0ed9e-094f-4637-921c-814707f3b02e']
+            test_id="f22c4c5d-1957-4262-b763-12736dd692f9", scenario_ids=['79f0ed9e-094f-4637-921c-814707f3b02e'], benchmark_id="8d5c876e-22c2-49e7-bdd5-4c1840d309f0"
         ),
 
-        // KPI-PS-089: Perceived decision novelty (Power Grid)
+        # KPI-PS-089: Perceived decision novelty (Power Grid)
         "44758e37-c1d5-4932-8c17-54147903f214": TestRunner_KPI_PS_089_Power_Grid(
-            test_id="44758e37-c1d5-4932-8c17-54147903f214", scenario_ids=['b3b52505-caa6-4438-90b8-6ac84e9880d9']
+            test_id="44758e37-c1d5-4932-8c17-54147903f214", scenario_ids=['b3b52505-caa6-4438-90b8-6ac84e9880d9'], benchmark_id="8d5c876e-22c2-49e7-bdd5-4c1840d309f0"
         ),
 
-        // KPI-AS-006: AI co-learning capability (Power Grid)
+        # KPI-AS-006: AI co-learning capability (Power Grid)
         "b2213a56-7841-41e1-afbc-6ef541d1597c": TestRunner_KPI_AS_006_Power_Grid(
-            test_id="b2213a56-7841-41e1-afbc-6ef541d1597c", scenario_ids=['91b63e8f-7cf1-461c-98ea-0269b26bb3b4']
+            test_id="b2213a56-7841-41e1-afbc-6ef541d1597c", scenario_ids=['91b63e8f-7cf1-461c-98ea-0269b26bb3b4'], benchmark_id="65547935-f436-49fa-8d20-f320c6bd46dc"
         ),
 
-        // KPI-HS-021: Human learning (Power Grid)
+        # KPI-HS-021: Human learning (Power Grid)
         "67f77d51-0893-4cbd-b349-b73bd2f73db2": TestRunner_KPI_HS_021_Power_Grid(
-            test_id="67f77d51-0893-4cbd-b349-b73bd2f73db2", scenario_ids=['6958bf4c-39ff-484f-b609-25500e9e314a']
+            test_id="67f77d51-0893-4cbd-b349-b73bd2f73db2", scenario_ids=['6958bf4c-39ff-484f-b609-25500e9e314a'], benchmark_id="65547935-f436-49fa-8d20-f320c6bd46dc"
         ),
 
-        // KPI-AF-008: Assistant alert accuracy (Power Grid)
+        # KPI-AF-008: Assistant alert accuracy (Power Grid)
         "aba10b3f-0d5c-4f90-aec4-69460bbb098b": TestRunner_KPI_AF_008_Power_Grid(
-            test_id="aba10b3f-0d5c-4f90-aec4-69460bbb098b", scenario_ids=['729cc815-ac93-4209-9f62-b57b920c2d0a']
+            test_id="aba10b3f-0d5c-4f90-aec4-69460bbb098b", scenario_ids=['729cc815-ac93-4209-9f62-b57b920c2d0a'], benchmark_id="3b1bdca6-ed90-4938-bd63-fd657aa7dcd7"
         ),
 
-        // KPI-NF-024: Network utilization (Power Grid)
+        # KPI-NF-024: Network utilization (Power Grid)
         "5d1db79c-a7a4-4060-bb03-4629d64b1a43": TestRunner_KPI_NF_024_Power_Grid(
-            test_id="5d1db79c-a7a4-4060-bb03-4629d64b1a43", scenario_ids=['ed8ba2fc-853e-4e79-a984-b1986b9b6e97']
+            test_id="5d1db79c-a7a4-4060-bb03-4629d64b1a43", scenario_ids=['ed8ba2fc-853e-4e79-a984-b1986b9b6e97'], benchmark_id="3b1bdca6-ed90-4938-bd63-fd657aa7dcd7"
         ),
 
-        // KPI-TS-035: Total decision time (Power Grid)
+        # KPI-TS-035: Total decision time (Power Grid)
         "58ce79e0-5c14-4c51-8d09-89f856361259": TestRunner_KPI_TS_035_Power_Grid(
-            test_id="58ce79e0-5c14-4c51-8d09-89f856361259", scenario_ids=['1294d425-66bd-4510-b4b3-d9f64ca0e4f9']
+            test_id="58ce79e0-5c14-4c51-8d09-89f856361259", scenario_ids=['1294d425-66bd-4510-b4b3-d9f64ca0e4f9'], benchmark_id="3b1bdca6-ed90-4938-bd63-fd657aa7dcd7"
         ),
 
-        // KPI-CF-012: Carbon intensity (Power Grid)
+        # KPI-CF-012: Carbon intensity (Power Grid)
         "ab91af79-ffc3-4da7-916a-6574609dc1b6": TestRunner_KPI_CF_012_Power_Grid(
-            test_id="ab91af79-ffc3-4da7-916a-6574609dc1b6", scenario_ids=['75d20248-740b-4d84-86e7-1de89f10fc1e']
+            test_id="ab91af79-ffc3-4da7-916a-6574609dc1b6", scenario_ids=['75d20248-740b-4d84-86e7-1de89f10fc1e'], benchmark_id="4b0be731-8371-4e4e-a673-b630187b0bb8"
         ),
 
-        // KPI-TF-034: Topological action complexity (Power Grid)
+        # KPI-TF-034: Topological action complexity (Power Grid)
         "0b8c02c6-0120-431c-872f-0fb4bc8d5fba": TestRunner_KPI_TF_034_Power_Grid(
-            test_id="0b8c02c6-0120-431c-872f-0fb4bc8d5fba", scenario_ids=['5dd33cc9-a4aa-4a61-bd3f-5fae1c1bf701']
+            test_id="0b8c02c6-0120-431c-872f-0fb4bc8d5fba", scenario_ids=['5dd33cc9-a4aa-4a61-bd3f-5fae1c1bf701'], benchmark_id="4b0be731-8371-4e4e-a673-b630187b0bb8"
         ),
 
-        // KPI-OF-036: Operation score (Power Grid)
+        # KPI-OF-036: Operation score (Power Grid)
         "ae4dcac7-c559-457e-902d-ee35d064bb3f": TestRunner_KPI_OF_036_Power_Grid(
-            test_id="ae4dcac7-c559-457e-902d-ee35d064bb3f", scenario_ids=['fc090c38-8740-4911-96aa-2defd06f8715']
+            test_id="ae4dcac7-c559-457e-902d-ee35d064bb3f", scenario_ids=['fc090c38-8740-4911-96aa-2defd06f8715'], benchmark_id="4b0be731-8371-4e4e-a673-b630187b0bb8"
         ),
 
-        // KPI-AS-068: Assistant adaptation to user preferences (Power Grid)
+        # KPI-AS-068: Assistant adaptation to user preferences (Power Grid)
         "c69ff5e9-497b-41e8-adff-2221bb823365": TestRunner_KPI_AS_068_Power_Grid(
-            test_id="c69ff5e9-497b-41e8-adff-2221bb823365", scenario_ids=['a68e7062-1329-4a34-ac44-4f6075929902']
+            test_id="c69ff5e9-497b-41e8-adff-2221bb823365", scenario_ids=['a68e7062-1329-4a34-ac44-4f6075929902'], benchmark_id="4b0be731-8371-4e4e-a673-b630187b0bb8"
         ),
 
-        // KPI-HS-018: Human control/autonomy over the process (Power Grid)
+        # KPI-HS-018: Human control/autonomy over the process (Power Grid)
         "ed250353-1f97-413e-9971-de83937fe4d9": TestRunner_KPI_HS_018_Power_Grid(
-            test_id="ed250353-1f97-413e-9971-de83937fe4d9", scenario_ids=['edcf64a8-f1b8-48ec-ab6a-229d5abc1be4']
+            test_id="ed250353-1f97-413e-9971-de83937fe4d9", scenario_ids=['edcf64a8-f1b8-48ec-ab6a-229d5abc1be4'], benchmark_id="d65cd37a-4830-468c-9100-0f60ee9ff72e"
         ),
 
-        // KPI-IS-041: Impact on workload (Power Grid)
+        # KPI-IS-041: Impact on workload (Power Grid)
         "6d372248-1221-4996-ad99-628f056f0799": TestRunner_KPI_IS_041_Power_Grid(
-            test_id="6d372248-1221-4996-ad99-628f056f0799", scenario_ids=['df02b09a-b431-49ee-af6b-ffd709d47670']
+            test_id="6d372248-1221-4996-ad99-628f056f0799", scenario_ids=['df02b09a-b431-49ee-af6b-ffd709d47670'], benchmark_id="d65cd37a-4830-468c-9100-0f60ee9ff72e"
         ),
 
-        // KPI-AF-050: AI-Agent Scalability Training (Power Grid)
+        # KPI-AF-050: AI-Agent Scalability Training (Power Grid)
         "5af6ffd9-b0a6-4f53-94bf-058fc1383ecd": TestRunner_KPI_AF_050_Power_Grid(
-            test_id="5af6ffd9-b0a6-4f53-94bf-058fc1383ecd", scenario_ids=['7d2d75c8-49e0-433d-809d-b0811c8e2f06']
+            test_id="5af6ffd9-b0a6-4f53-94bf-058fc1383ecd", scenario_ids=['7d2d75c8-49e0-433d-809d-b0811c8e2f06'], benchmark_id="16706c82-75df-4969-932d-a7f5c941eca2"
         ),
 
-        // KPI-AF-051: AI-Agent Scalability Testing (Power Grid)
+        # KPI-AF-051: AI-Agent Scalability Testing (Power Grid)
         "1409dbf6-0f66-4570-97df-fda84c46c71d": TestRunner_KPI_AF_051_Power_Grid(
-            test_id="1409dbf6-0f66-4570-97df-fda84c46c71d", scenario_ids=['547f8244-d091-40da-892d-ee24a26ee29f']
+            test_id="1409dbf6-0f66-4570-97df-fda84c46c71d", scenario_ids=['547f8244-d091-40da-892d-ee24a26ee29f'], benchmark_id="16706c82-75df-4969-932d-a7f5c941eca2"
         ),
 
-        // KPI-DF-052: Domain shift adaptation time (Power Grid)
+        # KPI-DF-052: Domain shift adaptation time (Power Grid)
         "855729a4-6729-4ae2-bb8d-443ef4867d94": TestRunner_KPI_DF_052_Power_Grid(
-            test_id="855729a4-6729-4ae2-bb8d-443ef4867d94", scenario_ids=['81f18394-0164-4896-9408-4315bcfcc5e0']
+            test_id="855729a4-6729-4ae2-bb8d-443ef4867d94", scenario_ids=['81f18394-0164-4896-9408-4315bcfcc5e0'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-053: Domain shift generalization gap (Power Grid)
+        # KPI-DF-053: Domain shift generalization gap (Power Grid)
         "17b805b2-b773-4c22-8ba9-598780e7a40d": TestRunner_KPI_DF_053_Power_Grid(
-            test_id="17b805b2-b773-4c22-8ba9-598780e7a40d", scenario_ids=['9fdfbb00-0754-444a-88c8-c8549e2cc6f9']
+            test_id="17b805b2-b773-4c22-8ba9-598780e7a40d", scenario_ids=['9fdfbb00-0754-444a-88c8-c8549e2cc6f9'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-054: Domain shift out of domain detection accuracy (Power Grid)
+        # KPI-DF-054: Domain shift out of domain detection accuracy (Power Grid)
         "7149a428-b0a7-48f7-ba55-4d553932af41": TestRunner_KPI_DF_054_Power_Grid(
-            test_id="7149a428-b0a7-48f7-ba55-4d553932af41", scenario_ids=['747cba94-8353-4982-9964-ba0b8361e689']
+            test_id="7149a428-b0a7-48f7-ba55-4d553932af41", scenario_ids=['747cba94-8353-4982-9964-ba0b8361e689'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-055: Domain shift policy robustness (Power Grid)
+        # KPI-DF-055: Domain shift policy robustness (Power Grid)
         "115d6c9d-c0d1-423d-b74e-140f9e5608c5": TestRunner_KPI_DF_055_Power_Grid(
-            test_id="115d6c9d-c0d1-423d-b74e-140f9e5608c5", scenario_ids=['f393653b-850e-4c17-bed1-7fe1ca51c854']
+            test_id="115d6c9d-c0d1-423d-b74e-140f9e5608c5", scenario_ids=['f393653b-850e-4c17-bed1-7fe1ca51c854'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-056: Domain shift robustness to domain parameters (Power Grid)
+        # KPI-DF-056: Domain shift robustness to domain parameters (Power Grid)
         "07f8625d-c39a-4fd1-9633-012f342352e9": TestRunner_KPI_DF_056_Power_Grid(
-            test_id="07f8625d-c39a-4fd1-9633-012f342352e9", scenario_ids=['82aed30d-9b28-4b8f-ba9a-fd05d6defec6']
+            test_id="07f8625d-c39a-4fd1-9633-012f342352e9", scenario_ids=['82aed30d-9b28-4b8f-ba9a-fd05d6defec6'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-057: Domain shift success rate drop (Power Grid)
+        # KPI-DF-057: Domain shift success rate drop (Power Grid)
         "c5e4f893-4302-47e8-98d6-b5fbcb10963a": TestRunner_KPI_DF_057_Power_Grid(
-            test_id="c5e4f893-4302-47e8-98d6-b5fbcb10963a", scenario_ids=['4d2b00cd-447a-4c7e-8cab-863f0402cb67']
+            test_id="c5e4f893-4302-47e8-98d6-b5fbcb10963a", scenario_ids=['4d2b00cd-447a-4c7e-8cab-863f0402cb67'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-DF-090: Domain shift forgetting rate (Power Grid)
+        # KPI-DF-090: Domain shift forgetting rate (Power Grid)
         "648afbec-80ad-4490-869f-6c3d8088d50f": TestRunner_KPI_DF_090_Power_Grid(
-            test_id="648afbec-80ad-4490-869f-6c3d8088d50f", scenario_ids=['99dfde1e-2798-4741-b3eb-610a3e847bc8']
+            test_id="648afbec-80ad-4490-869f-6c3d8088d50f", scenario_ids=['99dfde1e-2798-4741-b3eb-610a3e847bc8'], benchmark_id="43040944-39ac-47c9-b91d-bc8ca5693b3c"
         ),
 
-        // KPI-RS-058: Robustness to operator input (Power Grid)
+        # KPI-RS-058: Robustness to operator input (Power Grid)
         "75cc9343-9371-4eb1-9613-22a26c67fc00": TestRunner_KPI_RS_058_Power_Grid(
-            test_id="75cc9343-9371-4eb1-9613-22a26c67fc00", scenario_ids=['0c0730f2-e795-4c9d-8220-9bee29c46dc6']
+            test_id="75cc9343-9371-4eb1-9613-22a26c67fc00", scenario_ids=['0c0730f2-e795-4c9d-8220-9bee29c46dc6'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-DF-069: Drop-off in reward (Power Grid)
+        # KPI-DF-069: Drop-off in reward (Power Grid)
         "1cbb7783-47b4-4289-9abf-27939da69a2f": TestRunner_KPI_DF_069_Power_Grid(
-            test_id="1cbb7783-47b4-4289-9abf-27939da69a2f", scenario_ids=['900d5489-2539-4a49-b3fb-3ae2039be92f']
+            test_id="1cbb7783-47b4-4289-9abf-27939da69a2f", scenario_ids=['900d5489-2539-4a49-b3fb-3ae2039be92f'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-FF-070: Frequency changed output AI agent (Power Grid)
+        # KPI-FF-070: Frequency changed output AI agent (Power Grid)
         "acaf712a-c06c-4a04-a00f-0e7feeefb60c": TestRunner_KPI_FF_070_Power_Grid(
-            test_id="acaf712a-c06c-4a04-a00f-0e7feeefb60c", scenario_ids=['fdaac433-3ef0-4667-afb8-8014d0c1afa3']
+            test_id="acaf712a-c06c-4a04-a00f-0e7feeefb60c", scenario_ids=['fdaac433-3ef0-4667-afb8-8014d0c1afa3'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-SF-071: Severity of changed output AI agent (Power Grid)
+        # KPI-SF-071: Severity of changed output AI agent (Power Grid)
         "3d033ec6-942a-4b03-b26e-f8152ba48022": TestRunner_KPI_SF_071_Power_Grid(
-            test_id="3d033ec6-942a-4b03-b26e-f8152ba48022", scenario_ids=['70d937d5-742b-4838-a456-4a95ff994788']
+            test_id="3d033ec6-942a-4b03-b26e-f8152ba48022", scenario_ids=['70d937d5-742b-4838-a456-4a95ff994788'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-SF-072: Steps survived with perturbations (Power Grid)
+        # KPI-SF-072: Steps survived with perturbations (Power Grid)
         "a121d8bd-1943-41ba-b3a7-472a0154f8f9": TestRunner_KPI_SF_072_Power_Grid(
-            test_id="a121d8bd-1943-41ba-b3a7-472a0154f8f9", scenario_ids=['9cd1a5e0-8445-4b9d-859b-76b096d33049']
+            test_id="a121d8bd-1943-41ba-b3a7-472a0154f8f9", scenario_ids=['9cd1a5e0-8445-4b9d-859b-76b096d33049'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-VF-073: Vulnerability to perturbation (Power Grid)
+        # KPI-VF-073: Vulnerability to perturbation (Power Grid)
         "b8a9a411-7cfe-4c1d-b9a6-eef1c0efe920": TestRunner_KPI_VF_073_Power_Grid(
-            test_id="b8a9a411-7cfe-4c1d-b9a6-eef1c0efe920", scenario_ids=['61063867-df62-4024-be42-c57507a15d7c']
+            test_id="b8a9a411-7cfe-4c1d-b9a6-eef1c0efe920", scenario_ids=['61063867-df62-4024-be42-c57507a15d7c'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-RF-078: Reward per action (Power Grid)
+        # KPI-RF-078: Reward per action (Power Grid)
         "95ba1e9a-8d72-4c0e-9526-7676f70ff067": TestRunner_KPI_RF_078_Power_Grid(
-            test_id="95ba1e9a-8d72-4c0e-9526-7676f70ff067", scenario_ids=['a999eb93-2efe-4f73-a2d8-eab51f158ae8']
+            test_id="95ba1e9a-8d72-4c0e-9526-7676f70ff067", scenario_ids=['a999eb93-2efe-4f73-a2d8-eab51f158ae8'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-EF-086: Explainability Robustness (Power Grid)
+        # KPI-EF-086: Explainability Robustness (Power Grid)
         "89919375-8b53-4e3f-8382-a97e0af7eb56": TestRunner_KPI_EF_086_Power_Grid(
-            test_id="89919375-8b53-4e3f-8382-a97e0af7eb56", scenario_ids=['e36d1ef8-939c-4cd8-a660-0a224ce24aa0']
+            test_id="89919375-8b53-4e3f-8382-a97e0af7eb56", scenario_ids=['e36d1ef8-939c-4cd8-a660-0a224ce24aa0'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-EF-087: Explainability Faithfulness (Power Grid)
+        # KPI-EF-087: Explainability Faithfulness (Power Grid)
         "ce7d0394-1aa0-41c2-84b7-dfcfe006eb8b": TestRunner_KPI_EF_087_Power_Grid(
-            test_id="ce7d0394-1aa0-41c2-84b7-dfcfe006eb8b", scenario_ids=['53b0db0e-7092-455b-9e2c-327ee017f776']
+            test_id="ce7d0394-1aa0-41c2-84b7-dfcfe006eb8b", scenario_ids=['53b0db0e-7092-455b-9e2c-327ee017f776'], benchmark_id="3810191b-8cfd-4b03-86b2-f7e530aab30d"
         ),
 
-        // KPI-AF-074: Area between reward curves (Power Grid)
+        # KPI-AF-074: Area between reward curves (Power Grid)
         "534f5a1f-7115-48a5-b58c-4deb044d425d": TestRunner_KPI_AF_074_Power_Grid(
-            test_id="534f5a1f-7115-48a5-b58c-4deb044d425d", scenario_ids=['bbcf8224-c768-4469-8ff5-939d977383b4']
+            test_id="534f5a1f-7115-48a5-b58c-4deb044d425d", scenario_ids=['bbcf8224-c768-4469-8ff5-939d977383b4'], benchmark_id="31ea606b-681a-437a-85b9-7c81d4ccc287"
         ),
 
-        // KPI-DF-075: Degradation time (Power Grid)
+        # KPI-DF-075: Degradation time (Power Grid)
         "04a23bfc-fc44-4ec4-a732-c29214130a83": TestRunner_KPI_DF_075_Power_Grid(
-            test_id="04a23bfc-fc44-4ec4-a732-c29214130a83", scenario_ids=['b355482b-30a2-431e-9536-8e3dd29d06d1']
+            test_id="04a23bfc-fc44-4ec4-a732-c29214130a83", scenario_ids=['b355482b-30a2-431e-9536-8e3dd29d06d1'], benchmark_id="31ea606b-681a-437a-85b9-7c81d4ccc287"
         ),
 
-        // KPI-RF-076: Restorative time (Power Grid)
+        # KPI-RF-076: Restorative time (Power Grid)
         "225aaee8-7c7f-4faf-810b-407b551e9f2a": TestRunner_KPI_RF_076_Power_Grid(
-            test_id="225aaee8-7c7f-4faf-810b-407b551e9f2a", scenario_ids=['2eaf04e3-090a-4c13-b923-ac86de1b6db1']
+            test_id="225aaee8-7c7f-4faf-810b-407b551e9f2a", scenario_ids=['2eaf04e3-090a-4c13-b923-ac86de1b6db1'], benchmark_id="31ea606b-681a-437a-85b9-7c81d4ccc287"
         ),
 
-        // KPI-SF-077: Similarity state to unperturbed situation (Power Grid)
+        # KPI-SF-077: Similarity state to unperturbed situation (Power Grid)
         "7fe4210f-1253-411c-ba03-49d8b37c71fa": TestRunner_KPI_SF_077_Power_Grid(
-            test_id="7fe4210f-1253-411c-ba03-49d8b37c71fa", scenario_ids=['4523d73e-427a-42a1-b841-c9668373fafb']
+            test_id="7fe4210f-1253-411c-ba03-49d8b37c71fa", scenario_ids=['4523d73e-427a-42a1-b841-c9668373fafb'], benchmark_id="31ea606b-681a-437a-85b9-7c81d4ccc287"
         ),
 
-        // KPI-RS-091: Reflection on operator trust  (Power Grid)
+        # KPI-RS-091: Reflection on operator trust  (Power Grid)
         "0eb49c18-fbf7-4797-b4c5-6dabc9795ddb": TestRunner_KPI_RS_091_Power_Grid(
-            test_id="0eb49c18-fbf7-4797-b4c5-6dabc9795ddb", scenario_ids=['b26f54c0-146a-473c-82a6-fcecbedc9cbc']
+            test_id="0eb49c18-fbf7-4797-b4c5-6dabc9795ddb", scenario_ids=['b26f54c0-146a-473c-82a6-fcecbedc9cbc'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-092: Reflection on operator agency  (Power Grid)
+        # KPI-RS-092: Reflection on operator agency  (Power Grid)
         "b7d124f7-998a-416e-81a0-424cb6192755": TestRunner_KPI_RS_092_Power_Grid(
-            test_id="b7d124f7-998a-416e-81a0-424cb6192755", scenario_ids=['284e2178-d34c-4dcb-8868-21b4d2310744']
+            test_id="b7d124f7-998a-416e-81a0-424cb6192755", scenario_ids=['284e2178-d34c-4dcb-8868-21b4d2310744'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-093: Reflection on operator de-skilling  (Power Grid)
+        # KPI-RS-093: Reflection on operator de-skilling  (Power Grid)
         "e860b491-42b1-416a-b2fb-bea9bd8a249d": TestRunner_KPI_RS_093_Power_Grid(
-            test_id="e860b491-42b1-416a-b2fb-bea9bd8a249d", scenario_ids=['f253c68c-bd5e-43a2-8d72-77ab9caccb0d']
+            test_id="e860b491-42b1-416a-b2fb-bea9bd8a249d", scenario_ids=['f253c68c-bd5e-43a2-8d72-77ab9caccb0d'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-094: Reflection on over-reliance  (Power Grid)
+        # KPI-RS-094: Reflection on over-reliance  (Power Grid)
         "ff1099da-8b25-4dff-8f64-c7ce1d5c9d9d": TestRunner_KPI_RS_094_Power_Grid(
-            test_id="ff1099da-8b25-4dff-8f64-c7ce1d5c9d9d", scenario_ids=['44daf1f7-1449-408e-baa6-9d5c29dc50f0']
+            test_id="ff1099da-8b25-4dff-8f64-c7ce1d5c9d9d", scenario_ids=['44daf1f7-1449-408e-baa6-9d5c29dc50f0'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-095: Reflection on additional training  (Power Grid)
+        # KPI-RS-095: Reflection on additional training  (Power Grid)
         "afa5288f-3a6f-4933-8bd9-1761d4c97c34": TestRunner_KPI_RS_095_Power_Grid(
-            test_id="afa5288f-3a6f-4933-8bd9-1761d4c97c34", scenario_ids=['9cfb4458-2418-4a83-a7f3-0c27758c4752']
+            test_id="afa5288f-3a6f-4933-8bd9-1761d4c97c34", scenario_ids=['9cfb4458-2418-4a83-a7f3-0c27758c4752'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-RS-096: Reflection on biases  (Power Grid)
+        # KPI-RS-096: Reflection on biases  (Power Grid)
         "b67c3a5a-c157-420c-9d3c-8c949413a79b": TestRunner_KPI_RS_096_Power_Grid(
-            test_id="b67c3a5a-c157-420c-9d3c-8c949413a79b", scenario_ids=['7dfff29e-c251-459e-b591-295d796b328a']
+            test_id="b67c3a5a-c157-420c-9d3c-8c949413a79b", scenario_ids=['7dfff29e-c251-459e-b591-295d796b328a'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
-        // KPI-PS-097: Predicted long-term adoption  (Power Grid)
+        # KPI-PS-097: Predicted long-term adoption  (Power Grid)
         "f322d495-95e0-49ab-9439-156228593328": TestRunner_KPI_PS_097_Power_Grid(
-            test_id="f322d495-95e0-49ab-9439-156228593328", scenario_ids=['d885d30d-408c-4b88-9a25-add134aca45b']
+            test_id="f322d495-95e0-49ab-9439-156228593328", scenario_ids=['d885d30d-408c-4b88-9a25-add134aca45b'], benchmark_id="df309815-8ec0-4a6f-9d0b-dc3dbfc9055a"
         ),
 
     }
