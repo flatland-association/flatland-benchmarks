@@ -3,6 +3,13 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.13.2](https://github.com/flatland-association/flatland-benchmarks/compare/v0.13.1...v0.13.2) (2025-09-17)
+
+
+### Bug Fixes
+
+* use domain queue and new benchmark ID in ai4realnet orchestrator railway integration test. ([#437](https://github.com/flatland-association/flatland-benchmarks/issues/437)) ([f338ffb](https://github.com/flatland-association/flatland-benchmarks/commit/f338ffb571781fcb0b352d6d8baa6a80f4573a28))
+
 ## [0.13.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.13.0...v0.13.1) (2025-09-17)
 
 
