@@ -22,7 +22,7 @@ services:
       # - ${POSTGRES_VOLUME:-flatland-benchmarks-postgres}:/var/lib/postgresql/data:delegated
 
   pgadmin:
-    profiles: [ tsdev, full ]
+    profiles: [ tsdev, full, full-wait ]
     image: dpage/pgadmin4
     hostname: pgadmin
     env_file: .env
@@ -51,7 +51,7 @@ services:
       - flatland-benchmarks
 
   keycloak:
-    profiles: [ tsdev, full ]
+    profiles: [ tsdev, full, full-wait ]
     build:
       context: docker/keycloak
     hostname: keycloak
@@ -237,7 +237,7 @@ services:
       - flatland-benchmarks
 
   fab-backend:
-    profiles: [ full ]
+    profiles: [ full, full-wait ]
     # TODO add switch to use pre-built image or local build
     #image: ghcr.io/flatland-association/fab-backend:latest
     #pull_policy: always
@@ -285,7 +285,7 @@ services:
       - flatland-benchmarks
 
   fab-frontend:
-    profiles: [ full ]
+    profiles: [ full, full-wait ]
     # TODO add switch to use pre-built image or local build
     #image: ghcr.io/flatland-association/fab-frontend:latest
     #pull_policy: always
@@ -300,12 +300,18 @@ services:
       - 80:80
     networks:
       - flatland-benchmarks
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "curl -v --fail http://127.0.0.1/" ]
+      interval: 5s
+      timeout: 1s
+      retries: 5
 
   ai4realnet-orchestrator-railway-setup:
     image: alpine
     volumes:
       - ./evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/submission_data_entrypoint.sh:/tmp/submission_data_entrypoint.sh
       - orchestrator-data:/vol
+      - orchestrator-scenarios:/scenarios
     entrypoint: [ "/bin/sh","-c" ]
     command:
       - |
@@ -316,9 +322,13 @@ services:
         chmod a=rx /vol/submission_data_entrypoint.sh
         cat /vol/submission_data_entrypoint.sh
 
+        chmod a+rwx -R /scenarios
+        wget "https://github.com/flatland-association/flatland-scenarios/raw/refs/heads/regen-scenarios-breaking-changes/scenarios/environments_v2.zip" -O environments_v2.zip
+        mkdir -p /scenarios
+        unzip environments_v2.zip -o -d /scenarios
 
   ai4realnet-orchestrator-railway:
-    profiles: [ tsdev, full ]
+    profiles: [ tsdev, full, full-wait ]
     # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
     # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
     entrypoint: [ "/bin/bash","-c" ]
@@ -330,6 +340,9 @@ services:
         ls -al /app/data
         mkdir -p /app/data/1234/
         touch /app/data/1234/nix.txt
+        ls -al /app/scenarios
+        mkdir -p /app/scenarios/1234/
+        touch /app/scenarios/1234/nix.txt
         cd ai4realnet_orchestrators
         python -m celery -A ai4realnet_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${DOMAIN}
     build:
@@ -344,6 +357,7 @@ services:
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
       - orchestrator-data:/app/data
+      - orchestrator-scenarios:/app/scenarios
       - ./evaluation/ai4realnet_orchestrators/:/app/ai4realnet_orchestrators/
       - ./docker/rabbitmq/certs:/cert_rabbitmq
     env_file: .env
@@ -366,7 +380,8 @@ services:
       - CLIENT_SECRET=top-secret
       - TOKEN_URL=http://keycloak:8081/realms/flatland/protocol/openid-connect/token
       - OAUTHLIB_INSECURE_TRANSPORT=1
-
+      - DATA_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-data
+      - SCENARIOS_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-scenarios
     logging:
       options:
         max-size: "20m"
@@ -376,11 +391,29 @@ services:
     networks:
       - flatland-benchmarks
 
+  wait-for-all:
+    profiles: [ full-wait ]
+    image: alpine
+    entrypoint: [ "/bin/sh","-c" ]
+    command:
+      - |
+        echo "all up and running"
+    depends_on:
+      fab-backend:
+        condition: service_healthy
+      fab-frontend:
+        condition: service_healthy
+      ai4realnet-orchestrator-railway:
+        condition: service_healthy
+      flatland3-benchmarks-orchestrator:
+        condition: service_healthy
+
 networks:
   flatland-benchmarks:
 
 volumes:
   orchestrator-data:
+  orchestrator-scenarios:
   flatland-benchmarks-keycloak:
   flatland-benchmarks-pgadmin:
   flatland-benchmarks-postgres:
