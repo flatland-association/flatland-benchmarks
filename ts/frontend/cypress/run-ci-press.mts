@@ -62,6 +62,8 @@ function myExec(command: string, ident: string, options: ExecOptions) {
   process.stderr?.setEncoding('utf-8')
   process.stderr?.on('data', (data: string) => {
     data
+      .trimEnd()
+      .replace('\r', '')
       .split('\n')
       .map((line) => line.trimEnd())
       .forEach((line) => {
@@ -71,6 +73,8 @@ function myExec(command: string, ident: string, options: ExecOptions) {
   process.stdout?.setEncoding('utf8')
   process.stdout?.on('data', (data: string) => {
     data
+      .trimEnd()
+      .replace('\r', '')
       .split('\n')
       .map((line) => line.trimEnd())
       .forEach((line) => {
