@@ -11,18 +11,18 @@
     <div class="pb-8 w-full flex flex-col gap-y-8">
       <label class="block text-left cursor-pointer">
         <h4><span class="font-bold">Submission name</span> (required)</h4>
-        <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-name" [(ngModel)]="submissionName">
+        <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-name" [(ngModel)]="submissionName" data-input-submission-name>
       </label>
 
       <label class="block text-left cursor-pointer">
         <h4><span class="font-bold">URL to submission data</span>@if(requiresSubmissionDataUrl()) { (required)}</h4>
-        <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-data-url" [(ngModel)]="submissionDataUrl">
+        <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-data-url" [(ngModel)]="submissionDataUrl" data-input-submission-data-url>
       </label>
 
       @if (requiresCodeRepository()) {
         <label class="block text-left cursor-pointer">
           <h4><span class="font-bold">URL to repository</span> (required)</h4>
-          <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="code-repository-url" [(ngModel)]="codeRepositoryUrl">
+          <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="code-repository-url" [(ngModel)]="codeRepositoryUrl" data-input-code-repository-url>
         </label>
       }
 
@@ -47,7 +47,7 @@
         </div>
       }
 
-      <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-primary-100" type="button" [attr.disabled]="canSubmit() ? null : true" (click)="submit()">
+      <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-primary-100" type="button" [attr.disabled]="canSubmit() ? null : true" (click)="submit()" data-btn-submit>
         Submit
       </button>
     </div>

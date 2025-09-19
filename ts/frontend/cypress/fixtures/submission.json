@@ -1,4 +1,5 @@
 {
+    "suiteId": "0ca46887-897a-463f-bf83-c6cd6269a976",
     "benchmark": "AI-human learning curves",
     "test": "KPI-AS-006",
     "scenario": "KPI-AS-006-1",
