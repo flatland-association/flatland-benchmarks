@@ -19,7 +19,7 @@
   @if (needsManualScoring()) {
     <lib-content>
       <p class="pb-8">Please fill in all fields and submit for manual scoring.</p>
-      <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-primary-100" type="button" [attr.disabled]="canSubmitManualScoring() ? null : true" (click)="submitManualScoring()">Submit scoring</button>
+      <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-primary-100" type="button" [attr.disabled]="canSubmitManualScoring() ? null : true" (click)="submitManualScoring()" data-btn-submit>Submit scoring</button>
     </lib-content>
   }
 }
