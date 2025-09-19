@@ -7,10 +7,10 @@ def gen_sql_test_benchmark_field(test_or_benchmark_field, key, agg_func):
 """
 
 
-def gen_sql_scenario_field(key, scenario_field):
+def gen_sql_scenario_field(key, scenario_field, scenario_field_description):
   return f"""INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('{scenario_field}', '{key}', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('{scenario_field}', '{key}', '{scenario_field_description}', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 """
@@ -68,11 +68,12 @@ def gen_sqls(data) -> str:
       sql += gen_sql_test_benchmark_field(benchmark["BENCHMARK_FIELD_ID"], benchmark["BENCHMARK_FIELD_NAME"], benchmark["BENCHMARK_AGG"])
 
       for test_id, test in benchmark["tests"].items():
-        sql += gen_sql_test(test["ID"], test["TEST_NAME"], test["TEST_DESCRIPTION"], [test["TEST_FIELD_ID"]], list(test["scenarios"].keys()),
+        sql += gen_sql_test(test["ID"], test["TEST_NAME"], test["TEST_DESCRIPTION"], [test["TEST_FIELD_ID"]], [scenario["ID"] for scenario in test["scenarios"].values()],
                             test["LOOP"], test.get("QUEUE", None))
         sql += gen_sql_test_benchmark_field(test["TEST_FIELD_ID"], test["TEST_FIELD_NAME"], test["TEST_AGG"])
-        for scenario_id, scenario in test["scenarios"].items():
-          sql += gen_sql_scenario(scenario["ID"], scenario["SCENARIO_FIELD_NAME"], scenario["SCENARIO_DESCRIPTION"], [scenario["SCENARIO_FIELD_ID"]])
-          sql += gen_sql_scenario_field(scenario["SCENARIO_FIELD_NAME"], scenario["SCENARIO_FIELD_ID"])
+        for scenario in test["scenarios"].values():
+          sql += gen_sql_scenario(scenario["ID"], scenario["SCENARIO_NAME"], scenario["SCENARIO_DESCRIPTION"], [field["SCENARIO_FIELD_ID"] for field in scenario["fields"]])
+          for field in scenario["fields"]:
+            sql += gen_sql_scenario_field(field["SCENARIO_FIELD_NAME"], field["SCENARIO_FIELD_ID"], field["SCENARIO_FIELD_DESCRIPTION"])
 
   return sql

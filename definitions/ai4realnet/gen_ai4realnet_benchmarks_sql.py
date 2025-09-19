@@ -50,10 +50,14 @@ def extract_ai4realnet_from_csv(csv):
     scenario["ID"] = row["SCENARIO_ID"]
     scenario["SCENARIO_NAME"] = row["SCENARIO_NAME"]
     scenario["SCENARIO_DESCRIPTION"] = row["SCENARIO_DESCRIPTION"]
-    scenario["SCENARIO_FIELD_ID"] = row["SCENARIO_FIELD_ID"]
-    scenario["SCENARIO_FIELD_NAME"] = row["SCENARIO_FIELD_NAME"]
-    scenario["SCENARIO_FIELD_DESCRIPTION"] = row["SCENARIO_FIELD_DESCRIPTION"]
-    scenario["_source"] = json.loads(row.to_json())
+    scenario["fields"] = scenario.get("fields", [])
+    field = {}
+    field["SCENARIO_FIELD_ID"] = row["SCENARIO_FIELD_ID"]
+    field["SCENARIO_FIELD_NAME"] = row["SCENARIO_FIELD_NAME"]
+    field["SCENARIO_FIELD_DESCRIPTION"] = row["SCENARIO_FIELD_DESCRIPTION"]
+    field["_source"] = json.loads(row.to_json())
+    scenario["fields"].append(field)
+
   return data
 
 
@@ -76,7 +80,7 @@ def gen_domain_orchestrator(data, domain):
   for suite_id, suite in data.items():
     for benchmark_id, benchmark in suite["benchmarks"].items():
       for test_id, test in benchmark["tests"].items():
-        scenario_ids = [f"'{scenario_id}'" for scenario_id in test["scenarios"].keys()]
+        scenario_ids = [f"'{scenario['ID']}'" for scenario in test["scenarios"].values()]
         if test["QUEUE"] == domain:
           s += f"""
         # {test['TEST_NAME']}
@@ -91,16 +95,17 @@ def gen_domain_orchestrator(data, domain):
   return s
 
 
-def explode_row(csv, kpi_index=40, num_scenarios=150, additional_keys=None, primary_override=None):
+def explode_row(csv, kpi_index: int, num_scenarios: int, additional_keys=None, primary_override=None):
   df = pd.read_csv(csv, index_col=[0])
   row = df.iloc[[kpi_index]]
   print(row)
   rows = []
   for i in range(num_scenarios):
     template = json.loads(json.dumps(row.to_dict('records')))[0]
-    template["SCENARIO_ID"] = str(uuid.uuid4())
-    template["SCENARIO_NAME"] = f'{template["SCENARIO_NAME"]} ({i:03d})'
-    template["SCENARIO_FIELD_ID"] = str(uuid.uuid4())
+    template["SCENARIO_NAME"] = template["SCENARIO_NAME"].replace("Scenario 1", f'Scenario {i:03d}')
+    if i > 0:
+      template["SCENARIO_ID"] = str(uuid.uuid4())
+      template["SCENARIO_FIELD_ID"] = str(uuid.uuid4())
     if primary_override is not None:
       key, desc = primary_override
       template["SCENARIO_FIELD_NAME"] = key
@@ -123,7 +128,7 @@ def explode_row(csv, kpi_index=40, num_scenarios=150, additional_keys=None, prim
 
 def main():
   if False:
-    df = explode_row(csv="KPIs_database_cards.csv", num_scenarios=150,
+    df = explode_row(csv="KPIs_database_cards.csv", kpi_index=40, num_scenarios=150,
                      primary_override=("sum_normalized_reward", "Primary scenario score (raw values): sum_normalized_reward"),
                      additional_keys=[("success_rate", "Secondary scenario score (raw values): success_rate")],
                      )

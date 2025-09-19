@@ -15,7 +15,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('8edbf9a1-09b4-478a-ac53-8fc903e70cc1', 'KPI-AS-001: Ability to anticipate (Railway)', '“The ability to anticipate. Knowing what to expect or being able to anticipate developments further into the future, such as potential disruptions, novel demands or constraints, new opportunities, or changing operating conditions” (Hollnagel, 2015, p. 4). <br/>The human operator’s ability to anticipate further into the future can be measured by calculating the ratio of (proactively) prevented deviations to actual deviations. In addition, the extent to which the anticipatory sensemaking process of the human operator is supported by AI-based assistants can be measured using the Rigor-Metric for Sensemaking (Zelik et al., 2018) or similar. The instrument needs to be further developed and adapted to the AI context. ', array['2310ad43-2065-44a5-8a6a-100e2c6076f1']::uuid[], array['c7159f8d-781b-40fc-9efa-cd0e3a8b8d21']::uuid[], 'OFFLINE', 'Railway')
+    VALUES ('8edbf9a1-09b4-478a-ac53-8fc903e70cc1', 'KPI-AS-001: Ability to anticipate (Railway)', '“The ability to anticipate. Knowing what to expect or being able to anticipate developments further into the future, such as potential disruptions, novel demands or constraints, new opportunities, or changing operating conditions” (Hollnagel, 2015, p. 4).<br/>The human operator’s ability to anticipate further into the future can be measured by calculating the ratio of (proactively) prevented deviations to actual deviations. In addition, the extent to which the anticipatory sensemaking process of the human operator is supported by AI-based assistants can be measured using the Rigor-Metric for Sensemaking (Zelik et al., 2018) or similar. The instrument needs to be further developed and adapted to the AI context. ', array['2310ad43-2065-44a5-8a6a-100e2c6076f1']::uuid[], array['c7159f8d-781b-40fc-9efa-cd0e3a8b8d21']::uuid[], 'OFFLINE', 'Railway')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -25,7 +25,8 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('c7159f8d-781b-40fc-9efa-cd0e3a8b8d21', 'primary', 'This KPI contributes to evaluating Human user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['071fb4f2-9765-4fe0-9f7a-573cf8bb2ee7']::uuid[])
+    VALUES ('c7159f8d-781b-40fc-9efa-cd0e3a8b8d21', 'Scenario 1 - “The ability to anticipate. Knowing what to expect or being able to anticipate developments further into the future, such as potential disruptions, novel demands or constraints, new opportunities, or changing operating conditions” (Hollnagel, 2015, p. 4).
+The human operator’s ability to anticipate further into the future can be measured by calculating the ratio of (proactively) prevented deviations to actual deviations. In addition, the extent to which the anticipatory sensemaking process of the human operator is supported by AI-based assistants can be measured using the Rigor-Metric for Sensemaking (Zelik et al., 2018) or similar. The instrument needs to be further developed and adapted to the AI context. ', 'This KPI contributes to evaluating Human user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['071fb4f2-9765-4fe0-9f7a-573cf8bb2ee7']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -35,7 +36,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('98413684-d114-4f88-a5e9-1e118b106d67', 'KPI-AS-001: Ability to anticipate (Power Grid)', '“The ability to anticipate. Knowing what to expect or being able to anticipate developments further into the future, such as potential disruptions, novel demands or constraints, new opportunities, or changing operating conditions” (Hollnagel, 2015, p. 4). <br/>The human operator’s ability to anticipate further into the future can be measured by calculating the ratio of (proactively) prevented deviations to actual deviations. In addition, the extent to which the anticipatory sensemaking process of the human operator is supported by AI-based assistants can be measured using the Rigor-Metric for Sensemaking (Zelik et al., 2018) or similar. The instrument needs to be further developed and adapted to the AI context. ', array['02890e30-6f7b-4ed3-80a1-abf2e169e43f']::uuid[], array['ef0af7e2-0212-454d-9391-41de03bd7e57']::uuid[], 'OFFLINE', 'PowerGrid')
+    VALUES ('98413684-d114-4f88-a5e9-1e118b106d67', 'KPI-AS-001: Ability to anticipate (Power Grid)', '“The ability to anticipate. Knowing what to expect or being able to anticipate developments further into the future, such as potential disruptions, novel demands or constraints, new opportunities, or changing operating conditions” (Hollnagel, 2015, p. 4).<br/>The human operator’s ability to anticipate further into the future can be measured by calculating the ratio of (proactively) prevented deviations to actual deviations. In addition, the extent to which the anticipatory sensemaking process of the human operator is supported by AI-based assistants can be measured using the Rigor-Metric for Sensemaking (Zelik et al., 2018) or similar. The instrument needs to be further developed and adapted to the AI context. ', array['02890e30-6f7b-4ed3-80a1-abf2e169e43f']::uuid[], array['ef0af7e2-0212-454d-9391-41de03bd7e57']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -45,7 +46,8 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('ef0af7e2-0212-454d-9391-41de03bd7e57', 'primary', 'This KPI contributes to evaluating Human user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['ad5addc9-e7e5-4807-9820-8ed96c5453e6']::uuid[])
+    VALUES ('ef0af7e2-0212-454d-9391-41de03bd7e57', 'Scenario 1 - “The ability to anticipate. Knowing what to expect or being able to anticipate developments further into the future, such as potential disruptions, novel demands or constraints, new opportunities, or changing operating conditions” (Hollnagel, 2015, p. 4).
+The human operator’s ability to anticipate further into the future can be measured by calculating the ratio of (proactively) prevented deviations to actual deviations. In addition, the extent to which the anticipatory sensemaking process of the human operator is supported by AI-based assistants can be measured using the Rigor-Metric for Sensemaking (Zelik et al., 2018) or similar. The instrument needs to be further developed and adapted to the AI context. ', 'This KPI contributes to evaluating Human user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['ad5addc9-e7e5-4807-9820-8ed96c5453e6']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -55,7 +57,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('9a9b85fb-6b8b-4b42-af5d-1d81d515e6b1', 'KPI-AS-001: Ability to anticipate (ATM)', '“The ability to anticipate. Knowing what to expect or being able to anticipate developments further into the future, such as potential disruptions, novel demands or constraints, new opportunities, or changing operating conditions” (Hollnagel, 2015, p. 4). <br/>The human operator’s ability to anticipate further into the future can be measured by calculating the ratio of (proactively) prevented deviations to actual deviations. In addition, the extent to which the anticipatory sensemaking process of the human operator is supported by AI-based assistants can be measured using the Rigor-Metric for Sensemaking (Zelik et al., 2018) or similar. The instrument needs to be further developed and adapted to the AI context. ', array['0c8a5446-bbc4-4a96-82bf-a53a86c10e9f']::uuid[], array['4cc07a90-fca8-4e96-b670-563c1e8f42fa']::uuid[], 'OFFLINE', 'ATM')
+    VALUES ('9a9b85fb-6b8b-4b42-af5d-1d81d515e6b1', 'KPI-AS-001: Ability to anticipate (ATM)', '“The ability to anticipate. Knowing what to expect or being able to anticipate developments further into the future, such as potential disruptions, novel demands or constraints, new opportunities, or changing operating conditions” (Hollnagel, 2015, p. 4).<br/>The human operator’s ability to anticipate further into the future can be measured by calculating the ratio of (proactively) prevented deviations to actual deviations. In addition, the extent to which the anticipatory sensemaking process of the human operator is supported by AI-based assistants can be measured using the Rigor-Metric for Sensemaking (Zelik et al., 2018) or similar. The instrument needs to be further developed and adapted to the AI context. ', array['0c8a5446-bbc4-4a96-82bf-a53a86c10e9f']::uuid[], array['4cc07a90-fca8-4e96-b670-563c1e8f42fa']::uuid[], 'OFFLINE', 'ATM')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -65,7 +67,8 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('4cc07a90-fca8-4e96-b670-563c1e8f42fa', 'primary', 'This KPI contributes to evaluating Human user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['38962aaa-3dfa-462a-9feb-399ebce13a2c']::uuid[])
+    VALUES ('4cc07a90-fca8-4e96-b670-563c1e8f42fa', 'Scenario 1 - “The ability to anticipate. Knowing what to expect or being able to anticipate developments further into the future, such as potential disruptions, novel demands or constraints, new opportunities, or changing operating conditions” (Hollnagel, 2015, p. 4).
+The human operator’s ability to anticipate further into the future can be measured by calculating the ratio of (proactively) prevented deviations to actual deviations. In addition, the extent to which the anticipatory sensemaking process of the human operator is supported by AI-based assistants can be measured using the Rigor-Metric for Sensemaking (Zelik et al., 2018) or similar. The instrument needs to be further developed and adapted to the AI context. ', 'This KPI contributes to evaluating Human user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['38962aaa-3dfa-462a-9feb-399ebce13a2c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -85,7 +88,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('59d015ca-ca8a-4015-a113-35c182b301e4', 'primary', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt. <br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['982a837c-0ac3-4367-a42b-a86ded8c8380']::uuid[])
+    VALUES ('59d015ca-ca8a-4015-a113-35c182b301e4', 'Scenario 1 - Assistant disturbance KPI aims to measure if the AI assistant's notifications are disturbing the human operator's activity. ', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt.<br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['982a837c-0ac3-4367-a42b-a86ded8c8380']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -105,7 +108,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('57c11d6d-0001-4623-9c1e-fbfc0744c8d5', 'primary', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt. <br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['632a41fd-7693-4c8c-bbc5-60dd4afa7da5']::uuid[])
+    VALUES ('57c11d6d-0001-4623-9c1e-fbfc0744c8d5', 'Scenario 1 - Assistant disturbance KPI aims to measure if the AI assistant's notifications are disturbing the human operator's activity. ', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt.<br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['632a41fd-7693-4c8c-bbc5-60dd4afa7da5']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -125,7 +128,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('76a0cad5-40fd-4b92-b904-5841aadf8a7d', 'primary', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt. <br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['44e94f9b-bb27-43c1-894d-e16f83c1e5ea']::uuid[])
+    VALUES ('76a0cad5-40fd-4b92-b904-5841aadf8a7d', 'Scenario 1 - Assistant disturbance KPI aims to measure if the AI assistant's notifications are disturbing the human operator's activity. ', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt.<br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['44e94f9b-bb27-43c1-894d-e16f83c1e5ea']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -145,7 +148,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('cbfe8dd3-e8df-464f-92cd-0adeab4a18b8', 'primary', 'This KPI contributes to evaluating Human user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Decision support for the human operator”, “Decision support satisfaction”.  ', array['0a9fe72d-eb7b-4d07-83d8-da256edbc26e']::uuid[])
+    VALUES ('cbfe8dd3-e8df-464f-92cd-0adeab4a18b8', 'Scenario 1 - This KPI represents human operators’ self-reported satisfaction with the system’s support for their decision-making process when working with the AI assistant measured with a questionnaire. ', 'This KPI contributes to evaluating Human user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Decision support for the human operator”, “Decision support satisfaction”.  ', array['0a9fe72d-eb7b-4d07-83d8-da256edbc26e']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -165,7 +168,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('3ac00dab-5671-4e60-bf35-99309075ee76', 'primary', 'This KPI contributes to evaluating Human user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Decision support for the human operator”, “Decision support satisfaction”.  ', array['97c2caaa-2cc4-4cf0-ac1b-9f9cb3765544']::uuid[])
+    VALUES ('3ac00dab-5671-4e60-bf35-99309075ee76', 'Scenario 1 - This KPI represents human operators’ self-reported satisfaction with the system’s support for their decision-making process when working with the AI assistant measured with a questionnaire. ', 'This KPI contributes to evaluating Human user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Decision support for the human operator”, “Decision support satisfaction”.  ', array['97c2caaa-2cc4-4cf0-ac1b-9f9cb3765544']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -185,7 +188,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('22846c4e-e703-46c7-8069-38a6b6027a7d', 'primary', 'This KPI contributes to evaluating Human user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Decision support for the human operator”, “Decision support satisfaction”.  ', array['4ac569fa-97b1-4fa8-a7f0-f49a89fce80a']::uuid[])
+    VALUES ('22846c4e-e703-46c7-8069-38a6b6027a7d', 'Scenario 1 - This KPI represents human operators’ self-reported satisfaction with the system’s support for their decision-making process when working with the AI assistant measured with a questionnaire. ', 'This KPI contributes to evaluating Human user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Decision support for the human operator”, “Decision support satisfaction”.  ', array['4ac569fa-97b1-4fa8-a7f0-f49a89fce80a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -205,7 +208,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('ab770463-5832-4edd-9ab2-178b7ee46b74', 'primary', 'This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['7d92aff2-1975-4bde-aaaf-788c4e2500d7']::uuid[])
+    VALUES ('ab770463-5832-4edd-9ab2-178b7ee46b74', 'Scenario 1 - “Intrinsic motivation is defined as doing an activity for its inherent satisfaction rather than for some separable consequence. When intrinsically motivated, a person is moved to act for the fun or challenge entailed rather than because of external products, pressures, or rewards” (Ryan & Deci, 2000, p. 56). ', 'This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['7d92aff2-1975-4bde-aaaf-788c4e2500d7']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -225,7 +228,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('ee4e4f46-9bc1-4da8-94b5-371ffddfab7e', 'primary', 'This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['a2d30aad-9211-415d-8900-6a899dc9dee2']::uuid[])
+    VALUES ('ee4e4f46-9bc1-4da8-94b5-371ffddfab7e', 'Scenario 1 - “Intrinsic motivation is defined as doing an activity for its inherent satisfaction rather than for some separable consequence. When intrinsically motivated, a person is moved to act for the fun or challenge entailed rather than because of external products, pressures, or rewards” (Ryan & Deci, 2000, p. 56). ', 'This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['a2d30aad-9211-415d-8900-6a899dc9dee2']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -245,7 +248,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('4f81efc4-4c7d-4973-9fb6-1fccbe11fcd4', 'primary', 'This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['8d986c1d-3a36-4f03-81cd-790beaedd4ea']::uuid[])
+    VALUES ('4f81efc4-4c7d-4973-9fb6-1fccbe11fcd4', 'Scenario 1 - “Intrinsic motivation is defined as doing an activity for its inherent satisfaction rather than for some separable consequence. When intrinsically motivated, a person is moved to act for the fun or challenge entailed rather than because of external products, pressures, or rewards” (Ryan & Deci, 2000, p. 56). ', 'This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['8d986c1d-3a36-4f03-81cd-790beaedd4ea']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -265,7 +268,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('35cf47d4-83f4-4eb7-ab9b-40c6fe7679a8', 'primary', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt. <br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['08d0afa1-026b-43cb-9d7e-097a272e6353']::uuid[])
+    VALUES ('35cf47d4-83f4-4eb7-ab9b-40c6fe7679a8', 'Scenario 1 - Human response time KPI evaluates time needed to react to AI advisory/information. ', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt.<br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['08d0afa1-026b-43cb-9d7e-097a272e6353']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -285,7 +288,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('d64548d6-2eb6-4e1e-8069-73c0ece64318', 'primary', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt. <br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['7dc59090-50a9-4ffc-8184-959feb2f30c0']::uuid[])
+    VALUES ('d64548d6-2eb6-4e1e-8069-73c0ece64318', 'Scenario 1 - Human response time KPI evaluates time needed to react to AI advisory/information. ', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt.<br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['7dc59090-50a9-4ffc-8184-959feb2f30c0']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -305,7 +308,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('f1278028-1c96-485c-bd6b-046d4356c335', 'primary', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt. <br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['f8401749-6e84-4a36-adf8-3e2d2b8c8fe3']::uuid[])
+    VALUES ('f1278028-1c96-485c-bd6b-046d4356c335', 'Scenario 1 - Human response time KPI evaluates time needed to react to AI advisory/information. ', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt.<br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['f8401749-6e84-4a36-adf8-3e2d2b8c8fe3']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -325,7 +328,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('3131063f-5d0e-42bd-955d-5e875ceaac94', 'primary', 'This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['5aa8e601-0374-4438-bb7b-aab98db7bd6c']::uuid[])
+    VALUES ('3131063f-5d0e-42bd-955d-5e875ceaac94', 'Scenario 1 - “Situation Awareness is the perception of the elements in the environment within a volume of time and space, the comprehension of their meaning, and the projection of their status in the near future” (Endsley, 1988). ', 'This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['5aa8e601-0374-4438-bb7b-aab98db7bd6c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -345,7 +348,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5096d57a-00a3-4018-bdc3-02cd28443a85', 'primary', 'This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['5c524071-0d18-4982-aae9-b7a00fe4e397']::uuid[])
+    VALUES ('5096d57a-00a3-4018-bdc3-02cd28443a85', 'Scenario 1 - “Situation Awareness is the perception of the elements in the environment within a volume of time and space, the comprehension of their meaning, and the projection of their status in the near future” (Endsley, 1988). ', 'This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['5c524071-0d18-4982-aae9-b7a00fe4e397']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -365,7 +368,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('f8fc8712-e092-458e-a1e6-3733f5bc65ea', 'primary', 'This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['c6e50936-cfb5-4ff4-b28a-bc51fcf6af0e']::uuid[])
+    VALUES ('f8fc8712-e092-458e-a1e6-3733f5bc65ea', 'Scenario 1 - “Situation Awareness is the perception of the elements in the environment within a volume of time and space, the comprehension of their meaning, and the projection of their status in the near future” (Endsley, 1988). ', 'This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['c6e50936-cfb5-4ff4-b28a-bc51fcf6af0e']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -375,7 +378,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('343bc5cf-0bab-4fdf-9760-266c5a738b08', 'KPI-WS-040: Workload (Railway)', 'Workload KPI is based on the workload assessment of human operators of the AI assistant. <br/>After each testing session using the system, the workload of human operators due to the AI assistant will be evaluated to understand in which scenarios (and depending on the AI level of support) it contributes for a higher workload. ', array['80e0473e-e63a-4398-b592-66b2541a8dde']::uuid[], array['c3ab2e6b-e8ed-420e-b6d2-4fd5dd407288']::uuid[], 'OFFLINE', 'Railway')
+    VALUES ('343bc5cf-0bab-4fdf-9760-266c5a738b08', 'KPI-WS-040: Workload (Railway)', 'Workload KPI is based on the workload assessment of human operators of the AI assistant.<br/>After each testing session using the system, the workload of human operators due to the AI assistant will be evaluated to understand in which scenarios (and depending on the AI level of support) it contributes for a higher workload. ', array['80e0473e-e63a-4398-b592-66b2541a8dde']::uuid[], array['c3ab2e6b-e8ed-420e-b6d2-4fd5dd407288']::uuid[], 'OFFLINE', 'Railway')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -385,7 +388,8 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('c3ab2e6b-e8ed-420e-b6d2-4fd5dd407288', 'primary', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt. <br/>This KPI will be analyzed together with the “Impact on workload” KPI-IS-041. <br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['c7e129de-357d-4f39-8963-76155c72e2bc']::uuid[])
+    VALUES ('c3ab2e6b-e8ed-420e-b6d2-4fd5dd407288', 'Scenario 1 - Workload KPI is based on the workload assessment of human operators of the AI assistant.
+After each testing session using the system, the workload of human operators due to the AI assistant will be evaluated to understand in which scenarios (and depending on the AI level of support) it contributes for a higher workload. ', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt.<br/>This KPI will be analyzed together with the “Impact on workload” KPI-IS-041.<br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['c7e129de-357d-4f39-8963-76155c72e2bc']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -395,7 +399,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('66c08000-9a5e-42ca-a328-8e6295069142', 'KPI-WS-040: Workload (Power Grid)', 'Workload KPI is based on the workload assessment of human operators of the AI assistant. <br/>After each testing session using the system, the workload of human operators due to the AI assistant will be evaluated to understand in which scenarios (and depending on the AI level of support) it contributes for a higher workload. ', array['be9cbb52-ef44-4679-8c8d-f1b3c12e9aaa']::uuid[], array['06f61acd-da79-493c-8da0-4a1327b5fe6a']::uuid[], 'OFFLINE', 'PowerGrid')
+    VALUES ('66c08000-9a5e-42ca-a328-8e6295069142', 'KPI-WS-040: Workload (Power Grid)', 'Workload KPI is based on the workload assessment of human operators of the AI assistant.<br/>After each testing session using the system, the workload of human operators due to the AI assistant will be evaluated to understand in which scenarios (and depending on the AI level of support) it contributes for a higher workload. ', array['be9cbb52-ef44-4679-8c8d-f1b3c12e9aaa']::uuid[], array['06f61acd-da79-493c-8da0-4a1327b5fe6a']::uuid[], 'OFFLINE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -405,7 +409,8 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('06f61acd-da79-493c-8da0-4a1327b5fe6a', 'primary', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt. <br/>This KPI will be analyzed together with the “Impact on workload” KPI-IS-041. <br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['11f79947-fc38-40cf-acaf-ad89adde60b4']::uuid[])
+    VALUES ('06f61acd-da79-493c-8da0-4a1327b5fe6a', 'Scenario 1 - Workload KPI is based on the workload assessment of human operators of the AI assistant.
+After each testing session using the system, the workload of human operators due to the AI assistant will be evaluated to understand in which scenarios (and depending on the AI level of support) it contributes for a higher workload. ', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt.<br/>This KPI will be analyzed together with the “Impact on workload” KPI-IS-041.<br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['11f79947-fc38-40cf-acaf-ad89adde60b4']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -415,7 +420,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('96396992-ab9a-45b8-9833-124b46925da6', 'KPI-WS-040: Workload (ATM)', 'Workload KPI is based on the workload assessment of human operators of the AI assistant. <br/>After each testing session using the system, the workload of human operators due to the AI assistant will be evaluated to understand in which scenarios (and depending on the AI level of support) it contributes for a higher workload. ', array['c5762f88-bd6b-45c6-871f-c34ff539b1a1']::uuid[], array['88a26ad8-bd41-4c4b-9f10-ee7876550752']::uuid[], 'OFFLINE', 'ATM')
+    VALUES ('96396992-ab9a-45b8-9833-124b46925da6', 'KPI-WS-040: Workload (ATM)', 'Workload KPI is based on the workload assessment of human operators of the AI assistant.<br/>After each testing session using the system, the workload of human operators due to the AI assistant will be evaluated to understand in which scenarios (and depending on the AI level of support) it contributes for a higher workload. ', array['c5762f88-bd6b-45c6-871f-c34ff539b1a1']::uuid[], array['88a26ad8-bd41-4c4b-9f10-ee7876550752']::uuid[], 'OFFLINE', 'ATM')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -425,7 +430,8 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('88a26ad8-bd41-4c4b-9f10-ee7876550752', 'primary', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt. <br/>This KPI will be analyzed together with the “Impact on workload” KPI-IS-041. <br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['7c5551cb-971e-4d20-87bf-f32698f071c8']::uuid[])
+    VALUES ('88a26ad8-bd41-4c4b-9f10-ee7876550752', 'Scenario 1 - Workload KPI is based on the workload assessment of human operators of the AI assistant.
+After each testing session using the system, the workload of human operators due to the AI assistant will be evaluated to understand in which scenarios (and depending on the AI level of support) it contributes for a higher workload. ', 'This KPI assesses whether the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt.<br/>This KPI will be analyzed together with the “Impact on workload” KPI-IS-041.<br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['7c5551cb-971e-4d20-87bf-f32698f071c8']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -445,7 +451,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('76d73b49-ff52-4b9a-96e2-cc664582c8e4', 'primary', 'The computation of the metrics will be made on the Human Assessment Module and will be integrated in the system that will Tune the autonomy Level of the system. Taking this into account, the objective is to be able to tune the system autonomy level based on the implicit assessment in real time.  <br/>For example, higher traffic or hard situations/decisions will be detected with any interference with the human operator, implicitly providing information to be used by the decision system. <br/>This KPI will not focus on the final results when this module is integrated, but in the calculation of personalized cognitive and stress metrics of a single human based on an individual assessment protocol. If we are not able to perform such protocol, then this module will be generic and not personalized, removing this KPIs. In the personalization we aim to achieve a 20-30% improvement on performance of the model based for a single individual data, enabling a high level of personalization. <br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['f1878cc0-4767-4c54-9df5-32f4a03c84bc']::uuid[])
+    VALUES ('76d73b49-ff52-4b9a-96e2-cc664582c8e4', 'Scenario 1 - Cognitive Performance & Stress KPI performs an implicit assessment of the human cognitive performance status and stress levels along the different task that will be performed. The output provides information about the operator mental status and aims to be used to integrate the AI system to contribute as a reward to better adapt decision system. ', 'The computation of the metrics will be made on the Human Assessment Module and will be integrated in the system that will Tune the autonomy Level of the system. Taking this into account, the objective is to be able to tune the system autonomy level based on the implicit assessment in real time.<br/>For example, higher traffic or hard situations/decisions will be detected with any interference with the human operator, implicitly providing information to be used by the decision system.<br/>This KPI will not focus on the final results when this module is integrated, but in the calculation of personalized cognitive and stress metrics of a single human based on an individual assessment protocol. If we are not able to perform such protocol, then this module will be generic and not personalized, removing this KPIs. In the personalization we aim to achieve a 20-30% improvement on performance of the model based for a single individual data, enabling a high level of personalization.<br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['f1878cc0-4767-4c54-9df5-32f4a03c84bc']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -465,7 +471,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('6ae869dc-40e3-4cd0-a02c-6541a838b5b3', 'primary', 'The computation of the metrics will be made on the Human Assessment Module and will be integrated in the system that will Tune the autonomy Level of the system. Taking this into account, the objective is to be able to tune the system autonomy level based on the implicit assessment in real time.  <br/>For example, higher traffic or hard situations/decisions will be detected with any interference with the human operator, implicitly providing information to be used by the decision system. <br/>This KPI will not focus on the final results when this module is integrated, but in the calculation of personalized cognitive and stress metrics of a single human based on an individual assessment protocol. If we are not able to perform such protocol, then this module will be generic and not personalized, removing this KPIs. In the personalization we aim to achieve a 20-30% improvement on performance of the model based for a single individual data, enabling a high level of personalization. <br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['596704a6-32b5-4694-bce5-2534a2edb8ac']::uuid[])
+    VALUES ('6ae869dc-40e3-4cd0-a02c-6541a838b5b3', 'Scenario 1 - Cognitive Performance & Stress KPI performs an implicit assessment of the human cognitive performance status and stress levels along the different task that will be performed. The output provides information about the operator mental status and aims to be used to integrate the AI system to contribute as a reward to better adapt decision system. ', 'The computation of the metrics will be made on the Human Assessment Module and will be integrated in the system that will Tune the autonomy Level of the system. Taking this into account, the objective is to be able to tune the system autonomy level based on the implicit assessment in real time.<br/>For example, higher traffic or hard situations/decisions will be detected with any interference with the human operator, implicitly providing information to be used by the decision system.<br/>This KPI will not focus on the final results when this module is integrated, but in the calculation of personalized cognitive and stress metrics of a single human based on an individual assessment protocol. If we are not able to perform such protocol, then this module will be generic and not personalized, removing this KPIs. In the personalization we aim to achieve a 20-30% improvement on performance of the model based for a single individual data, enabling a high level of personalization.<br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['596704a6-32b5-4694-bce5-2534a2edb8ac']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -485,7 +491,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('4b04f1b7-a4b0-4b71-8f75-6a222bb05284', 'primary', 'The computation of the metrics will be made on the Human Assessment Module and will be integrated in the system that will Tune the autonomy Level of the system. Taking this into account, the objective is to be able to tune the system autonomy level based on the implicit assessment in real time.  <br/>For example, higher traffic or hard situations/decisions will be detected with any interference with the human operator, implicitly providing information to be used by the decision system. <br/>This KPI will not focus on the final results when this module is integrated, but in the calculation of personalized cognitive and stress metrics of a single human based on an individual assessment protocol. If we are not able to perform such protocol, then this module will be generic and not personalized, removing this KPIs. In the personalization we aim to achieve a 20-30% improvement on performance of the model based for a single individual data, enabling a high level of personalization. <br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['6e7acf6f-aead-444f-b797-f7d18c592819']::uuid[])
+    VALUES ('4b04f1b7-a4b0-4b71-8f75-6a222bb05284', 'Scenario 1 - Cognitive Performance & Stress KPI performs an implicit assessment of the human cognitive performance status and stress levels along the different task that will be performed. The output provides information about the operator mental status and aims to be used to integrate the AI system to contribute as a reward to better adapt decision system. ', 'The computation of the metrics will be made on the Human Assessment Module and will be integrated in the system that will Tune the autonomy Level of the system. Taking this into account, the objective is to be able to tune the system autonomy level based on the implicit assessment in real time.<br/>For example, higher traffic or hard situations/decisions will be detected with any interference with the human operator, implicitly providing information to be used by the decision system.<br/>This KPI will not focus on the final results when this module is integrated, but in the calculation of personalized cognitive and stress metrics of a single human based on an individual assessment protocol. If we are not able to perform such protocol, then this module will be generic and not personalized, removing this KPIs. In the personalization we aim to achieve a 20-30% improvement on performance of the model based for a single individual data, enabling a high level of personalization.<br/>This KPI contributes to evaluating Human-user experience of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['6e7acf6f-aead-444f-b797-f7d18c592819']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -515,7 +521,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('0d85a097-9170-42aa-99ea-d56b833c27cf', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. ', array['cf296c89-a971-4c74-aa19-5b08a6e4c86e']::uuid[])
+    VALUES ('0d85a097-9170-42aa-99ea-d56b833c27cf', 'Scenario 1 - Acceptance of the system by a human user.', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. ', array['cf296c89-a971-4c74-aa19-5b08a6e4c86e']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -535,7 +541,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('b4b167ff-56be-43a1-9a80-121eaaf8108f', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. ', array['76cb53ca-86f8-4895-908f-d6d4bf256b09']::uuid[])
+    VALUES ('b4b167ff-56be-43a1-9a80-121eaaf8108f', 'Scenario 1 - Acceptance of the system by a human user.', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. ', array['76cb53ca-86f8-4895-908f-d6d4bf256b09']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -555,7 +561,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('91da4c1c-3011-4f70-809f-8204cd3824ba', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. ', array['f4f4211a-e0fd-4b61-b05f-e47363c1786f']::uuid[])
+    VALUES ('91da4c1c-3011-4f70-809f-8204cd3824ba', 'Scenario 1 - Acceptance of the system by a human user.', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. ', array['f4f4211a-e0fd-4b61-b05f-e47363c1786f']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -575,7 +581,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('9db20a76-763a-4597-9586-cb217981e191', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Agreement score”.  ', array['62598708-cd90-4dc5-8ef9-4b8243a96e27']::uuid[])
+    VALUES ('9db20a76-763a-4597-9586-cb217981e191', 'Scenario 1 - This KPI represents human operators’ self-reported agreement with individual AI-generated solutions/decisions on a scale of 0–100. ', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Agreement score”.  ', array['62598708-cd90-4dc5-8ef9-4b8243a96e27']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -595,7 +601,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('631244e4-ade3-4cbb-afd6-a19e56c001d6', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Agreement score”.  ', array['6ca312a1-5b41-43ce-b81f-899bb3ebb0d1']::uuid[])
+    VALUES ('631244e4-ade3-4cbb-afd6-a19e56c001d6', 'Scenario 1 - This KPI represents human operators’ self-reported agreement with individual AI-generated solutions/decisions on a scale of 0–100. ', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Agreement score”.  ', array['6ca312a1-5b41-43ce-b81f-899bb3ebb0d1']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -615,7 +621,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5ec8e7f8-a26d-4263-95ea-6c7a0832f61d', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Agreement score”.  ', array['701cf78b-17fe-4c09-9714-448b22a61766']::uuid[])
+    VALUES ('5ec8e7f8-a26d-4263-95ea-6c7a0832f61d', 'Scenario 1 - This KPI represents human operators’ self-reported agreement with individual AI-generated solutions/decisions on a scale of 0–100. ', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Agreement score”.  ', array['701cf78b-17fe-4c09-9714-448b22a61766']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -635,7 +641,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('0ee42e0f-a284-4979-86e8-4e50c9bfcef7', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective.  <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Comprehensibility”.  ', array['eee8e62b-a5c3-44a4-bfb0-9a24f63291b2']::uuid[])
+    VALUES ('0ee42e0f-a284-4979-86e8-4e50c9bfcef7', 'Scenario 1 - This KPI represents human operators’ self-reported ability to understand and thus make use of the AI-generated solution/decision, measured with a questionnaire. ', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Comprehensibility”.  ', array['eee8e62b-a5c3-44a4-bfb0-9a24f63291b2']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -655,7 +661,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('9d6c321f-25c4-4b31-91e6-0208c1da3455', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective.  <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Comprehensibility”.  ', array['cb479f8f-f4fc-4c71-b2cc-0b4212fe95ce']::uuid[])
+    VALUES ('9d6c321f-25c4-4b31-91e6-0208c1da3455', 'Scenario 1 - This KPI represents human operators’ self-reported ability to understand and thus make use of the AI-generated solution/decision, measured with a questionnaire. ', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Comprehensibility”.  ', array['cb479f8f-f4fc-4c71-b2cc-0b4212fe95ce']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -675,7 +681,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('2057f6f2-015b-4370-a4db-40bb8cd9b244', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective.  <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Comprehensibility”.  ', array['b4007321-4acc-4868-b4eb-27284244b574']::uuid[])
+    VALUES ('2057f6f2-015b-4370-a4db-40bb8cd9b244', 'Scenario 1 - This KPI represents human operators’ self-reported ability to understand and thus make use of the AI-generated solution/decision, measured with a questionnaire. ', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Comprehensibility”.  ', array['b4007321-4acc-4868-b4eb-27284244b574']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -695,7 +701,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('7b07ae08-9153-42cd-b1e9-6c03f3c1df31', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Trust in AI solutions score”.  ', array['9530cdc4-ed66-48f0-9aa9-f7fcd2d3fb38']::uuid[])
+    VALUES ('7b07ae08-9153-42cd-b1e9-6c03f3c1df31', 'Scenario 1 - This KPI represents human operators’ self-reported trust (attitude) for individual AI-generated solutions measured with a questionnaire. ', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Trust in AI solutions score”.  ', array['9530cdc4-ed66-48f0-9aa9-f7fcd2d3fb38']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -715,7 +721,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5314d4ab-35d4-4bc3-ade8-3b17bd39dd82', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Trust in AI solutions score”.  ', array['750dcb3a-3bd4-4dc6-b5eb-767e6a2b1484']::uuid[])
+    VALUES ('5314d4ab-35d4-4bc3-ade8-3b17bd39dd82', 'Scenario 1 - This KPI represents human operators’ self-reported trust (attitude) for individual AI-generated solutions measured with a questionnaire. ', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Trust in AI solutions score”.  ', array['750dcb3a-3bd4-4dc6-b5eb-767e6a2b1484']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -735,7 +741,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('e5063e27-d81b-499b-8827-b2a8ab0ff8d8', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Trust in AI solutions score”.  ', array['f3645865-2353-4077-943d-30516d275ea1']::uuid[])
+    VALUES ('e5063e27-d81b-499b-8827-b2a8ab0ff8d8', 'Scenario 1 - This KPI represents human operators’ self-reported trust (attitude) for individual AI-generated solutions measured with a questionnaire. ', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Trust in AI solutions score”.  ', array['f3645865-2353-4077-943d-30516d275ea1']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -755,7 +761,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('0e9f4bb5-6e39-4ccb-b5ae-81b9a1f91607', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. ', array['5ca84b5c-b2f6-43c7-a6b8-efe47660e40f']::uuid[])
+    VALUES ('0e9f4bb5-6e39-4ccb-b5ae-81b9a1f91607', 'Scenario 1 - (Dis)trust is defined here as a sentiment resulting from knowledge, beliefs, emotions, and other elements derived from lived or transmitted experience, which generates positive or negative expectations concerning the reactions of a system and the interaction with it (whether it is a question of another human being, an organization or a technology)” (Cahour & Forzy, 2009, p. 1261). ', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. ', array['5ca84b5c-b2f6-43c7-a6b8-efe47660e40f']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -775,7 +781,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('2d5f2c8a-5cfd-4f32-9174-7ae81a82f0be', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. ', array['1b354632-d9ac-4048-81f2-5432921286e2']::uuid[])
+    VALUES ('2d5f2c8a-5cfd-4f32-9174-7ae81a82f0be', 'Scenario 1 - (Dis)trust is defined here as a sentiment resulting from knowledge, beliefs, emotions, and other elements derived from lived or transmitted experience, which generates positive or negative expectations concerning the reactions of a system and the interaction with it (whether it is a question of another human being, an organization or a technology)” (Cahour & Forzy, 2009, p. 1261). ', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. ', array['1b354632-d9ac-4048-81f2-5432921286e2']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -795,7 +801,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('a5785b63-ccee-4108-ad34-32f861beeadf', 'primary', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. ', array['3790034c-09e2-44be-b809-2c5212e6a7d9']::uuid[])
+    VALUES ('a5785b63-ccee-4108-ad34-32f861beeadf', 'Scenario 1 - (Dis)trust is defined here as a sentiment resulting from knowledge, beliefs, emotions, and other elements derived from lived or transmitted experience, which generates positive or negative expectations concerning the reactions of a system and the interaction with it (whether it is a question of another human being, an organization or a technology)” (Cahour & Forzy, 2009, p. 1261). ', 'This KPI contributes to evaluating AI acceptability, trust and trustworthiness of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O2 main project objective. ', array['3790034c-09e2-44be-b809-2c5212e6a7d9']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -825,7 +831,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('6c383eec-31cd-4f3c-9296-cc5bb0d7f4c9', 'primary', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective: <br/>- To evaluate the effectiveness of the AI system in operating autonomously. <br/>- To provide a performance benchmark for minimizing human interventions across various domains. <br/>- To identify areas where the AI may require additional refinement or support. ', array['1362ead2-16e9-401e-8da6-251236369d72']::uuid[])
+    VALUES ('6c383eec-31cd-4f3c-9296-cc5bb0d7f4c9', 'Scenario 1 - The Human Intervention Frequency KPI measures the proportion of instances in which a human operator intervenes in an automated decision-making process. While this KPI was initially developed for railway traffic control scenarios, it has been generalized to assess the reliability and autonomy of any AI-assisted system. It reflects the trust placed in the AI by quantifying how often human corrections are required during routine operations. ', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective:<br/>- To evaluate the effectiveness of the AI system in operating autonomously.<br/>- To provide a performance benchmark for minimizing human interventions across various domains.<br/>- To identify areas where the AI may require additional refinement or support. ', array['1362ead2-16e9-401e-8da6-251236369d72']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -845,7 +851,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('81cb1769-35b5-4b97-aff0-b0d070dd6e50', 'primary', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective: <br/>- To evaluate the effectiveness of the AI system in operating autonomously. <br/>- To provide a performance benchmark for minimizing human interventions across various domains. <br/>- To identify areas where the AI may require additional refinement or support. ', array['7d55949e-0c19-4623-875f-95c09bfd55f6']::uuid[])
+    VALUES ('81cb1769-35b5-4b97-aff0-b0d070dd6e50', 'Scenario 1 - The Human Intervention Frequency KPI measures the proportion of instances in which a human operator intervenes in an automated decision-making process. While this KPI was initially developed for railway traffic control scenarios, it has been generalized to assess the reliability and autonomy of any AI-assisted system. It reflects the trust placed in the AI by quantifying how often human corrections are required during routine operations. ', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective:<br/>- To evaluate the effectiveness of the AI system in operating autonomously.<br/>- To provide a performance benchmark for minimizing human interventions across various domains.<br/>- To identify areas where the AI may require additional refinement or support. ', array['7d55949e-0c19-4623-875f-95c09bfd55f6']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -865,7 +871,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('0db9f3ea-ac49-4914-b491-ecf3f1f35263', 'primary', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective: <br/>- To evaluate the effectiveness of the AI system in operating autonomously. <br/>- To provide a performance benchmark for minimizing human interventions across various domains. <br/>- To identify areas where the AI may require additional refinement or support. ', array['13238d69-4caa-4292-a5f1-94d25262dbe8']::uuid[])
+    VALUES ('0db9f3ea-ac49-4914-b491-ecf3f1f35263', 'Scenario 1 - The Human Intervention Frequency KPI measures the proportion of instances in which a human operator intervenes in an automated decision-making process. While this KPI was initially developed for railway traffic control scenarios, it has been generalized to assess the reliability and autonomy of any AI-assisted system. It reflects the trust placed in the AI by quantifying how often human corrections are required during routine operations. ', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective:<br/>- To evaluate the effectiveness of the AI system in operating autonomously.<br/>- To provide a performance benchmark for minimizing human interventions across various domains.<br/>- To identify areas where the AI may require additional refinement or support. ', array['13238d69-4caa-4292-a5f1-94d25262dbe8']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -885,7 +891,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('eee4453e-477f-4057-ad7b-c1c2233ed108', 'primary', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Significance of human revisions”.  ', array['e9aad7a4-3ef8-4ae5-8f4b-dc972a8378ff']::uuid[])
+    VALUES ('eee4453e-477f-4057-ad7b-c1c2233ed108', 'Scenario 1 - This KPI represents human operators’ subjective assessment of necessary revisions for the AI-generated solutions by the human operator, self-reported by the operator with Likert-scale questions. ', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Significance of human revisions”.  ', array['e9aad7a4-3ef8-4ae5-8f4b-dc972a8378ff']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -905,7 +911,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('79f0ed9e-094f-4637-921c-814707f3b02e', 'primary', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Significance of human revisions”.  ', array['d1a5803e-298a-413f-bb66-c5677b0cd265']::uuid[])
+    VALUES ('79f0ed9e-094f-4637-921c-814707f3b02e', 'Scenario 1 - This KPI represents human operators’ subjective assessment of necessary revisions for the AI-generated solutions by the human operator, self-reported by the operator with Likert-scale questions. ', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Significance of human revisions”.  ', array['d1a5803e-298a-413f-bb66-c5677b0cd265']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -925,7 +931,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('a365a4df-98d6-4c7b-83bb-63b5ccb68581', 'primary', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Significance of human revisions”.  ', array['8cf309e8-a558-4cad-b24a-0791ae089f3d']::uuid[])
+    VALUES ('a365a4df-98d6-4c7b-83bb-63b5ccb68581', 'Scenario 1 - This KPI represents human operators’ subjective assessment of necessary revisions for the AI-generated solutions by the human operator, self-reported by the operator with Likert-scale questions. ', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Significance of human revisions”.  ', array['8cf309e8-a558-4cad-b24a-0791ae089f3d']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -945,7 +951,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('b228ee9c-de35-4efd-b59a-7c4bb95ca127', 'primary', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['156722a0-0cc7-42dc-9ea0-885afb2f1e69']::uuid[])
+    VALUES ('b228ee9c-de35-4efd-b59a-7c4bb95ca127', 'Scenario 1 - This KPI represents human operators’ self-reported subjective assessment of nontriviality for the AI-generated solutions measured with a questionnaire. ', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['156722a0-0cc7-42dc-9ea0-885afb2f1e69']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -965,7 +971,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('b3b52505-caa6-4438-90b8-6ac84e9880d9', 'primary', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['aec036cc-7b38-42e1-8660-7edff5e86e54']::uuid[])
+    VALUES ('b3b52505-caa6-4438-90b8-6ac84e9880d9', 'Scenario 1 - This KPI represents human operators’ self-reported subjective assessment of nontriviality for the AI-generated solutions measured with a questionnaire. ', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['aec036cc-7b38-42e1-8660-7edff5e86e54']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -985,7 +991,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('ab1d9b2b-b91f-440f-ad16-54ccabb25230', 'primary', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['19ee2451-b3e5-43bb-89c7-8137fd988bfb']::uuid[])
+    VALUES ('ab1d9b2b-b91f-440f-ad16-54ccabb25230', 'Scenario 1 - This KPI represents human operators’ self-reported subjective assessment of nontriviality for the AI-generated solutions measured with a questionnaire. ', 'This KPI contributes to evaluating Social-technical decision quality of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['19ee2451-b3e5-43bb-89c7-8137fd988bfb']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -1015,7 +1021,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('9fdd3565-45d6-4d83-9cda-478c56e94f26', 'primary', 'This KPI contributes to evaluating AI-human learning curves of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “AI co-learning capability”.  ', array['18246932-0833-40e9-880c-432cec4d0cec']::uuid[])
+    VALUES ('9fdd3565-45d6-4d83-9cda-478c56e94f26', 'Scenario 1 - This KPI represents human operators’ self-reported assessment of the AI ability to adapt to the operators’ preferences measured with a questionnaire. ', 'This KPI contributes to evaluating AI-human learning curves of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “AI co-learning capability”.  ', array['18246932-0833-40e9-880c-432cec4d0cec']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -1035,7 +1041,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('91b63e8f-7cf1-461c-98ea-0269b26bb3b4', 'primary', 'This KPI contributes to evaluating AI-human learning curves of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “AI co-learning capability”.  ', array['cba93682-5514-46e1-8399-60bdee8f3bd9']::uuid[])
+    VALUES ('91b63e8f-7cf1-461c-98ea-0269b26bb3b4', 'Scenario 1 - This KPI represents human operators’ self-reported assessment of the AI ability to adapt to the operators’ preferences measured with a questionnaire. ', 'This KPI contributes to evaluating AI-human learning curves of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “AI co-learning capability”.  ', array['cba93682-5514-46e1-8399-60bdee8f3bd9']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -1055,7 +1061,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('af91490d-d1cf-4644-aaec-887e320e4a36', 'primary', 'This KPI contributes to evaluating AI-human learning curves of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “AI co-learning capability”.  ', array['a0b93bbc-dedd-4e40-b772-c45b9d93488f']::uuid[])
+    VALUES ('af91490d-d1cf-4644-aaec-887e320e4a36', 'Scenario 1 - This KPI represents human operators’ self-reported assessment of the AI ability to adapt to the operators’ preferences measured with a questionnaire. ', 'This KPI contributes to evaluating AI-human learning curves of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “AI co-learning capability”.  ', array['a0b93bbc-dedd-4e40-b772-c45b9d93488f']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -1075,7 +1081,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('b4c9184c-c0d1-4a0c-bab1-9210bf8cb548', 'primary', 'This KPI contributes to evaluating AI-human learning curves of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['03584304-31ae-432a-8d0c-db51bff866e1']::uuid[])
+    VALUES ('b4c9184c-c0d1-4a0c-bab1-9210bf8cb548', 'Scenario 1 - Human learning is a complex process that leads to lasting changes in humans, influencing their perceptions of the world and their interactions with it across physical, psychological, and social dimensions. It is fundamentally shaped by the ongoing, interactive relationship between the learner's characteristics and the learning content, all situated within the specific environmental context of time and place and the continuity over time. ', 'This KPI contributes to evaluating AI-human learning curves of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['03584304-31ae-432a-8d0c-db51bff866e1']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -1095,7 +1101,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('6958bf4c-39ff-484f-b609-25500e9e314a', 'primary', 'This KPI contributes to evaluating AI-human learning curves of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['332feb56-b546-4a7f-bc08-1320c024ec59']::uuid[])
+    VALUES ('6958bf4c-39ff-484f-b609-25500e9e314a', 'Scenario 1 - Human learning is a complex process that leads to lasting changes in humans, influencing their perceptions of the world and their interactions with it across physical, psychological, and social dimensions. It is fundamentally shaped by the ongoing, interactive relationship between the learner's characteristics and the learning content, all situated within the specific environmental context of time and place and the continuity over time. ', 'This KPI contributes to evaluating AI-human learning curves of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['332feb56-b546-4a7f-bc08-1320c024ec59']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -1115,7 +1121,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('dd069d03-4ff6-4c9a-b3a6-bf1f1471e640', 'primary', 'This KPI contributes to evaluating AI-human learning curves of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['13cb3739-9b00-45d8-a511-91d8df7a33c3']::uuid[])
+    VALUES ('dd069d03-4ff6-4c9a-b3a6-bf1f1471e640', 'Scenario 1 - Human learning is a complex process that leads to lasting changes in humans, influencing their perceptions of the world and their interactions with it across physical, psychological, and social dimensions. It is fundamentally shaped by the ongoing, interactive relationship between the learner's characteristics and the learning content, all situated within the specific environmental context of time and place and the continuity over time. ', 'This KPI contributes to evaluating AI-human learning curves of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['13cb3739-9b00-45d8-a511-91d8df7a33c3']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -1135,7 +1141,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('aba10b3f-0d5c-4f90-aec4-69460bbb098b', 'KPI-AF-008: Assistant alert accuracy (Power Grid)', 'Assistant alert accuracy is based on the number of times the AI assistant agent is right about forecasted issues ahead of time. <br/>Even if forecasted issues concern all events that lead to a grid state out of acceptable limits (set by operation policy), use cases of the project focus on managing overloads only: this KPI therefore only focuses on alerts related to line overloads. <br/>The calculation of KPI relies on simulation of 2 parallel paths (starting from the moment the alert is raised): <br/>- Simulation of the “do nothing” path, to assess the truth values<br/>- Application of remedial actions to the “do nothing” path, to assess solved cases <br/>To calculate the KPI, all interventions by an agent or operator are fixed to a specific plan since every alert is related to a specific plan (e.g. remedial actions). <br/>Note: line contingencies for which alerts can be raised are the lines that can be attacked in the environment (env.alertable_line_ids in grid2Op), so this should be properly configured beforehand. ', array['fcabd61d-91bc-45dc-8bf8-7aeb9724cb67']::uuid[], array['729cc815-ac93-4209-9f62-b57b920c2d0a']::uuid[], 'CLOSED', 'PowerGrid')
+    VALUES ('aba10b3f-0d5c-4f90-aec4-69460bbb098b', 'KPI-AF-008: Assistant alert accuracy (Power Grid)', 'Assistant alert accuracy is based on the number of times the AI assistant agent is right about forecasted issues ahead of time.<br/>Even if forecasted issues concern all events that lead to a grid state out of acceptable limits (set by operation policy), use cases of the project focus on managing overloads only: this KPI therefore only focuses on alerts related to line overloads.<br/>The calculation of KPI relies on simulation of 2 parallel paths (starting from the moment the alert is raised):<br/>- Simulation of the “do nothing” path, to assess the truth values<br/>- Application of remedial actions to the “do nothing” path, to assess solved cases<br/>To calculate the KPI, all interventions by an agent or operator are fixed to a specific plan since every alert is related to a specific plan (e.g. remedial actions).<br/>Note: line contingencies for which alerts can be raised are the lines that can be attacked in the environment (env.alertable_line_ids in grid2Op), so this should be properly configured beforehand. ', array['fcabd61d-91bc-45dc-8bf8-7aeb9724cb67']::uuid[], array['729cc815-ac93-4209-9f62-b57b920c2d0a']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1145,7 +1151,13 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('729cc815-ac93-4209-9f62-b57b920c2d0a', 'primary', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['7f5b985b-d3a9-4e96-bd01-53ca1b73b256']::uuid[])
+    VALUES ('729cc815-ac93-4209-9f62-b57b920c2d0a', 'Scenario 1 - Assistant alert accuracy is based on the number of times the AI assistant agent is right about forecasted issues ahead of time.
+Even if forecasted issues concern all events that lead to a grid state out of acceptable limits (set by operation policy), use cases of the project focus on managing overloads only: this KPI therefore only focuses on alerts related to line overloads.
+The calculation of KPI relies on simulation of 2 parallel paths (starting from the moment the alert is raised):
+- Simulation of the “do nothing” path, to assess the truth values
+- Application of remedial actions to the “do nothing” path, to assess solved cases
+To calculate the KPI, all interventions by an agent or operator are fixed to a specific plan since every alert is related to a specific plan (e.g. remedial actions).
+Note: line contingencies for which alerts can be raised are the lines that can be attacked in the environment (env.alertable_line_ids in grid2Op), so this should be properly configured beforehand. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['7f5b985b-d3a9-4e96-bd01-53ca1b73b256']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -1165,7 +1177,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('ba7f9aac-5e96-4436-bae1-23629c4d153b', 'primary', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations. <br/>- To ensure that AI interventions lead to measurable improvements in punctuality. <br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['18da02bc-6f0c-4cac-a080-ee03974d9a8d']::uuid[])
+    VALUES ('ba7f9aac-5e96-4436-bae1-23629c4d153b', 'Scenario 1 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['18da02bc-6f0c-4cac-a080-ee03974d9a8d']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -1185,7 +1197,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('ed8ba2fc-853e-4e79-a984-b1986b9b6e97', 'primary', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['68a7aead-7408-4cfa-92ee-8c108e0bf5c7']::uuid[])
+    VALUES ('ed8ba2fc-853e-4e79-a984-b1986b9b6e97', 'Scenario 1 - Network utilization KPI is based on the relative line loads of the network, indicating to what extent the network and its components are utilized.', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['68a7aead-7408-4cfa-92ee-8c108e0bf5c7']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -1195,7 +1207,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('98ceb866-5479-47e6-a735-81292de8ca65', 'KPI-PF-026: Punctuality (Railway)', 'Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', array['1de0f52c-ae47-4847-9148-97b8568952d3']::uuid[], array['822b8be3-b284-40f3-a396-cda4477973cc', 'fb285995-83a4-4e29-bab9-253da229baa3', 'd4780268-cefc-4fb5-b40e-3ef39de9d81d', '9d081bcc-6477-45e5-91ae-2ca993ecfa6d', '0b52f979-785d-4e41-9463-c3554b266cb5', '162c60d6-5fed-4134-9f38-98e69b63d2d2', '2ac32866-2400-4a28-98b7-80f1cf8a89d7', '1c66d6ab-ef32-4ee9-8f40-3517df87cc20', '8a607249-eba6-40db-9936-022c26859fe6', '19f27ad8-d533-4a82-8f1c-bb351868ded2', '37d8fb5b-01ae-40cb-b951-d37ca464d079', '3e7935f7-6668-455f-9a80-7f4f38c19c49', '5402514d-875d-4090-8837-298c5a978fdd', 'fb40b206-b93f-468c-a07a-dc97ce5f94f0', '1728dfb2-8b04-45a0-be04-2d90a707ef1c', '4b150132-83b1-4d8f-a95d-6b8e78ee7352', '87fb1d52-99dc-493f-8846-2c74fa36f243', 'b7ae099e-930f-471c-8c67-dff8e51d628d', '1028141b-ec9f-47a4-86e2-7614488b9809', '6cc61338-8f38-49b5-b4d0-2e4d47af4746', '5fbd0918-ea63-48e8-b180-304694167646', 'f313e209-a9a5-4e1a-b532-721c6326064f', '1c423fca-07da-4e12-8920-47bce7b89f13', '712d7d76-44f2-4de2-835c-3bcf39431809', '2103f2c0-64bd-4956-916a-2cad490705e6', '3f39da46-0a0f-4e0a-aeae-451ff4e47b96', '6ec4f85b-ca8b-4288-a6a1-34377d61abdf', 'aeeac3a2-7c3f-4252-b3d9-bea2ca2f01b7', '4383e8cb-1cfc-4863-84e9-cdbed54b3bb3', 'd1c291fb-6af0-429a-a526-1d1172d6b694', 'f7de8e8a-a813-40a9-8fa4-fc8dc3dc1b4b', '53ffd237-915c-4a1c-a10f-ca8447a48c51', 'a2521b97-2a49-4637-bd1d-1f332b72e788', '84f68be8-11a7-4194-86d6-5a99bdffd34c', 'aa05a7c5-582b-4118-9e6d-3b13a7761673', '42fadb1b-5e30-4e0e-bc4f-ce4dff0eec79', '412f1fab-46a8-41c1-b769-80f5577bca0f', 'b6fe1474-3306-4236-8961-502f207a3572', 'bb98ac31-eafa-4e46-85e1-2ff26fe4f128', 'b51cf0a0-f103-4970-8ed8-17f80be7bad8', '279e5e3b-ac1e-42eb-9576-6eca3d73b615', 'b7022a3a-b7a9-43d7-868a-bec416689eb2', 'a9b3664e-81fe-4595-b159-62d1ed82ff0b', '161db07d-ef1f-49c7-90cf-16951717353b', 'a89b3a08-dd85-4514-a21f-e14673ba6cd0', '91dbe666-153c-4119-870a-92b2f3f74344', '592382ce-a92d-47a0-81de-6a2bf7d7f822', 'aeab1e0b-c1c6-4670-a062-85e0019a774b', '816a37ad-bd68-4466-92f7-0309a3c1575b', '82afbf49-4f5e-4065-9cb9-c32bcd6eb341', 'c457d15b-c6f0-4558-ba69-da498d009b19', 'c6620785-e8d3-4644-9e14-f02498a773c4', '8490c658-fb8e-44de-826f-c07c1c449b90', '4be70e62-b946-48f3-8977-a5d63abca399', 'e35d4956-f714-43eb-920a-8e09aca6f146', 'a0f6b266-6de1-45c4-bb01-29010647fbd7', '0dbaa2db-5f2a-4eef-afd5-bdbdce19313d', 'b6fcfbb3-9771-48b0-9e9d-3da6d31febc8', '5253b077-a788-4682-b483-64dd9eda03d5', '0da21807-807e-44ca-92f0-974ae2516505', '24e1e72a-1f6f-461c-b330-88ece9fbcca8', '409070c2-1c39-4369-af99-eac945774a3e', 'a8cf6af9-f5bc-4658-b59e-72c2d3ce47b4', '4b4ecc21-66a3-4fd5-852f-389854dfc7bd', 'c7ab4258-ca5d-4836-a537-479dcd5a9cc4', '5fb73c01-21f3-4683-8941-ecb152fc3250', 'cf8d2bb1-71a4-49a0-bd08-8e94bac8b3c9', 'd95e1a1d-7c20-4b1a-87b0-e38b73da94da', '3f9aced0-f3d9-48a7-ab8c-393c958398ef', 'e9c71419-692f-4c36-9486-9ada0ea5e828', '768b3e86-cfda-490a-bc71-9bbeed0689f7', '89ddcbab-a4fd-425c-a531-a83646333d06', '83c92a87-06d6-49d3-8093-f5d0906cc7c5', '2044f1ca-d8ba-4901-b55e-f5689607070c', 'f6fd6524-c5c8-4354-9ec1-9dc358546e69', '00c4fbf5-f379-4a2d-88a8-61499cc5bd32', '65d2aca4-f549-4483-8bd7-afde39d16238', '0cfcabbd-883f-4028-8a12-358c8fa451da', 'c282e296-90d1-4dc7-a7b2-5934a507c150', '38ecc44c-38c0-48a3-82b4-ed51b12d5e81', 'bb3bab27-c9c1-4953-8ebd-9175011487e0', '4a8e97b9-14bd-4ed3-b508-0e448819f9ba', '230d420f-83e1-4e26-afa3-5a661dd9c7d1', '89f966c8-50b4-44c5-90ad-0b6f6966972c', '0b5fe6bc-e533-4348-9b03-1e448a4e9d0f', 'c9f23f05-cb01-455f-8b94-9f72711cc865', 'c5348916-393e-48f9-b543-e24a19d1055c', 'a0e8b5fe-c6d6-4865-b091-7b46829ccc5d', '75d36e79-55db-40b8-802f-9a7b246a6cf5', 'c047ab1d-acd5-4338-9290-e3871034e328', 'ea181956-5cab-416e-9590-9956a8409731', '0dcf9ae8-a4fe-419c-8254-f9964e67a278', '0f590f1e-d272-4086-adfd-659df0b2ea05', 'cb39e1b8-9531-49ab-b3e6-4d3eccc30ea2', '48ef6b2e-c138-4a7e-bdbe-b75d2d668cd8', '55668041-317d-4334-b504-5c4b1a62b47d', '922b3bb8-6a35-44d3-b95e-b69cb92ea97f', '54f3769f-5d8a-4997-ba7a-8ce67a6216cd', '2f6afe60-20d7-4bce-9827-4c0a48f744b1', '49ba46a6-5e8d-4e95-80f0-c9443f0911d5', 'fc16b1d1-19af-4003-a43b-240c86d52773', '3757bc0c-6726-423e-8708-2e8632991dd2', '1447a252-1fee-4a61-b11b-b93d4d823d31', '3228888c-d4b3-4814-8008-1d28e4804480', 'e41ceeb7-c578-4764-91ac-d6d6f8bf7423', '38e6efd6-7b0f-4631-bef6-e84d73d8eb78', '626ee2b5-094c-4f33-a54f-a3641d29e6ac', 'a454fb44-6d14-4f23-8541-52c03f79de63', '5eb22519-5f4c-41f6-860c-37ab602c2f50', '5010b64a-5a35-4547-a273-d06825fa4548', '49021ab7-9380-440c-b083-9cd5ef8d53f6', 'e5b19842-c60b-4248-8873-05f92b540149', '8b6b0d08-143f-4111-9ed6-155138338964', '15874677-bcdd-48c3-9d4d-768952e23384', '745abc39-ef88-40a9-9b6d-a3bbcca4ad2c', '0d166694-2fb7-4320-bd2e-2cfccb84ddbe', 'b43fb8d4-613e-481d-b4e7-d731dc1218c9', 'a2a78e18-97e0-4c44-bb02-b533cf0466c0', 'e4fc374e-6749-4ddb-b452-1420d5c2f7de', 'c7042b3b-0a30-4804-9a5c-54751ea3d6fb', '3e3df180-1d81-4cbc-9b41-531b0e653a8f', '0ca35e34-cdfa-41cc-a26f-06a76b46a90e', '0c4c336a-22cd-49fe-98d1-cde93e3b7996', '70be8aae-3eb8-4a15-9ee9-ae6be507b427', '19c6e09d-c93a-4a78-aa81-450b1d7a3aa0', '119ded2a-7561-47b2-b47e-88c2274e0412', '7b74f972-5e86-46d7-bb19-d76302e52c0f', '53b1fa05-9eb5-4550-a796-61eb4839962c', '931fcaad-aba2-4260-b2a9-1e9176f4ca92', '71b28e23-e9e3-49c8-b4e3-f8168f9a7aa7', '1848326e-e8d7-40fb-bf4a-13ceb6a2f195', '98673dbb-ef9f-42a3-9305-d727b1c8f622', '520d8206-bfc4-410c-a21d-950e013d0c01', '42e53e34-8dfc-4b71-81b0-785f6c3ebae9', '8ce00435-a52a-4b71-ae13-1605435dc240', '6acf7c38-e1ce-4dcb-b4c5-6a04ce45464f', '5b408424-15d5-4da7-9328-cc5199f87539', 'a31cfb93-eabb-41ba-9a64-ccb927eeae96', 'edbd48b5-10c3-49de-8126-3610e2d035ab', '194174bd-76f0-4653-8b25-6f554ead70da', 'c14d38ba-6e88-446e-8f1c-67b8817e0f7c', 'b9c80185-03f3-4e8f-8716-083eb88644c4', 'bba281ad-e3f0-4381-ae8f-dd275663ab28', '8b8f6e46-e617-4443-b9cd-94d1a24abb6b', 'b9db8896-21a6-4e85-94b6-80b7fdfc011b', '8c64b3db-4823-4636-b89b-309916055d71', 'f5489742-c695-4181-8b87-aa14973d3dfa', 'bc6d985e-1250-4921-aa81-a27bb5259905', '55cb04ff-40be-4eed-94e8-51da3ce86481', '6d0e1038-31f5-4995-9392-cb82efcb136c']::uuid[], 'CLOSED', 'Railway')
+    VALUES ('98ceb866-5479-47e6-a735-81292de8ca65', 'KPI-PF-026: Punctuality (Railway)', 'Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', array['1de0f52c-ae47-4847-9148-97b8568952d3']::uuid[], array['5a60713d-01f2-4d32-9867-21904629e254', '0db72a40-43e8-477b-89b3-a7bd1224660a', '7def3118-2e9c-4de7-8d61-f0e76fbeee5d', '3ae60635-6995-4fb1-8309-61fded3d6fd8', 'eeef8445-723d-4740-b89f-4dbaf75f9ae6', '94af1ed1-3686-4a9e-99f5-3a7ad908f125', '8250d0e2-700e-4051-85c3-a8d0d95a5f0f', 'c58759a7-a64a-4cbf-970b-948bae0c2254', 'f94f517f-c0a4-4415-b726-186cdc75f9c6', 'c0e2c3e0-c171-48dd-a312-5de070e3f937', '26fb51b9-2466-48ab-8c0a-89d9536d4c34', '66c23554-47bb-4268-b08e-518f6f163e9d', '08641d25-9b18-41bb-9cbc-4039b4ad24f0', '4d3dd85a-2b16-45de-b524-f83b4a58a2f4', 'bf9209c7-125c-42f9-b78e-4e5b7aacefcc', 'f511044d-2378-4c7f-af92-45c78146bdef', 'f89cee49-e1ae-427d-ae42-5cc411661a1c', '262e43bd-bf35-4171-b38b-c77969db0b16', '61bd29ec-0b09-4067-ada0-b43e48a8ac9a', '92d22472-4696-40ba-924f-861a2f4343b6', '6fc5f67a-40fa-45ce-819e-35a85e08e560', '66bce513-502c-43b4-a155-8a16c410a7c6', 'eff645bf-7ea8-490d-ae8a-ebb0d16a774c', '8397e6d6-babc-469b-a239-7eabcbd510da', 'c359f13c-d222-4b04-ad0a-2bb30fb9da5f', '97203764-6717-4ca6-bae9-c35c4eb38206', 'adc4bf52-096c-4369-a85f-c9bf4b86bc64', '72f93d48-ecef-4bf7-9d97-cb008b47e566', 'b470667b-d9c9-4af4-b64e-c32102c34387', '4aa9e1b8-8669-466e-b4b9-c7db2a098bec', '44354e67-e0b7-4faa-9385-2d6247c7a50c', '4bca2964-ef35-4b03-a47e-829bc9078374', '6190b6ac-a06b-4b07-8b82-0dfb1088663f', 'a51d4e4a-c841-416f-9292-fc64dead758b', 'd08f6539-5c3e-4a98-93ae-3e344611e3a8', '8a2ec760-d2c2-4329-b373-3acd95395076', '9b136147-f560-45d4-abd8-9f7de7cd7570', '9723c2c5-ee55-441d-9dba-1a1dc23fdc5e', '3406bbe9-cb19-44b7-af26-460b0a117a6c', 'ae0a88ad-3bfd-4201-b28a-e2c75d081cd5', '8b308495-7ea6-4ddc-acb4-56eb5b3aec12', 'a8f69dc4-04a1-434a-ad97-27c745561b6a', '8b244f56-50e1-411a-a7d8-a2b89dfab26e', '8e6419c1-6470-4272-9c4b-43d9fe19dd3d', 'ec503b6e-3682-4dcd-9dc7-b194b67283d9', '74fd9eab-d2e5-4222-8656-81fc2dde7c21', 'c16e54c1-33b2-45b8-95b0-33cc4f5400d5', 'c80effec-27b8-4103-b726-344a85f35407', '9bec9335-3dd5-4d88-b2ac-c5d711bcab36', '4a067d3c-75e6-4e91-a42d-cdf291016674', '1f6c674b-fdb5-40c8-bbe3-d924c2b7146e', '8bd15e2f-6089-4022-8383-26a36093dc80', '5b026a8a-e0dc-47d2-b2ce-d0bfc083e6c5', 'ab2e2bba-baa0-45de-b639-c7ebf29bf947', '8f8b6f67-d3c3-41ec-b60d-2924577e68f4', '3e59642a-7b20-4989-b9e6-01a35a82b9da', '0e4618c7-7ab7-4323-855c-7f95cbaef2d0', '4a59929b-b391-464f-bfa1-628f7a45ac36', '27f8ac34-3d09-4b68-9fb4-c51cfbfd09df', 'bacb4c11-11b4-4c76-910d-f92abc5b7a39', 'a5dff3c8-902e-4cb9-8466-d277d0ed4d67', 'aca25feb-6254-40b3-8d40-3c805797c69b', 'deb21442-0f94-4ff3-b78d-8d418415d646', '6cf2cc89-d30e-4063-bced-051f3cdae92f', '84bcbff5-346f-452c-87ab-08ceff6364f2', '9acbe68e-2a45-420b-a142-34996dbcfb83', '42786e4c-c80e-40f5-8237-bafc5f39979d', '242a6240-b62c-48b4-a264-b6737e893fa5', '3c38a1d3-2340-43ed-ac0b-4b76c6588b92', 'b89daede-405b-411a-a02b-ee32d7c9d020', '736301d9-0cff-4e25-af78-4d6f78b48cd5', '3b74e3a8-e740-4bb2-802f-2b2bedabad65', '61ee09b0-96fb-4562-bf7d-a01606de424c', '8d75b03c-2a34-4b2a-8408-d8db01a7ae1a', '81c01671-1a30-41cd-9f6c-25b2f9253da9', '01723b62-3f4d-4921-8904-752f092588f5', '5d44cb89-3c63-4716-8551-bd25de881f89', 'cf7c97fc-1c61-4c0d-ad1e-952bf6d6f23a', '60ddab54-dc12-4fbd-bbec-53b23d896c9d', '7eab41ad-8fd5-4a04-8c06-4d6c2016a594', '9e0aac9e-ddf9-4575-bf1c-d08a923e15fa', 'befa97fb-2a74-4f2e-91c8-ea2879d08dcf', '0cc18965-c967-4b58-ac7f-38a443b4cd16', 'd0f62f51-5a51-443b-bf7b-18e3d5b191dc', 'c2ebb179-0a2d-4e84-95be-2837be406716', '3ac76f3c-f560-4666-af61-c693e4cd3ad4', '484bbf93-bc67-4726-8b81-6c4ab608c861', '11b19a5f-4d61-4b5d-980c-98cf0c16906a', 'edecaeb7-53d3-411a-a00c-2ce6226fde50', 'a43cb746-fa63-4d39-87cd-43a81fbf3a8e', '5a3cc8a5-584c-4171-ae2c-97bdbc5047a1', '30778350-508b-4cbe-bff2-8882d0743aed', 'dc652dd4-c0b5-4036-bb70-f71cd9fd488a', '6e4dd7f4-2155-407f-922b-25aeb04a47b7', 'ba75d8cb-bfb9-4d2b-ac2f-2b5b8697188c', '10c621d6-1f99-4045-82a0-47d3ea107ddc', '7a6b6aeb-af0e-441f-97b5-d5db846bb045', '8e2cfb59-d31b-4346-b67a-b96a12ca04f5', '2661fcc0-9b3c-45bd-b60e-3c6351acabd1', 'efcce7b2-e33a-4510-af56-09db1bfb5bd0', 'c643a6ba-a8a3-42de-afcc-fa92328397b7', '86c8d140-2b1d-41df-ba97-a959c54d2c19', '9826d43a-6be2-49ac-bfd7-fa2475f62985', '151f38af-a59a-42f8-9b2e-2df3fef3f658', '5b7b42ed-e41a-4e97-806a-6287ac918537', 'd897ffe6-43a8-4ebc-9881-6097be7711e7', '95aa9a6b-b80a-4dcc-a0a4-228f53bc7959', '0330f00b-412e-44d5-b7cc-23bebd26fa88', '9742751d-d670-4310-97ab-a14973112470', '72df8c4b-f0ef-438d-9858-88053cb188c1', '05b4cb03-5576-4d79-9afa-1c6318d632ec', '6db73b00-b6f1-4f63-9fd0-49f518361ee2', '69df632e-d2aa-4005-a9e2-1c5e07eeebd9', '09aff9df-7c67-4810-8e13-90f8c9bd05a1', '3de1e810-7abe-4dd4-9663-e19270c37c52', 'afd8d475-9bd3-4740-a5be-293cd211b34d', 'de0a8389-d573-483c-811b-e7829bd58a54', '65b60f43-6a71-4c7b-805f-6c3f564c87bb', '8d1746ff-83c6-4675-acd7-01a2a654ec0a', '011866d3-76a6-4b5a-9c42-447e2d567892', '23d5ddd1-1fb0-4149-bf59-a2e7cd34213a', '1990750e-de0f-4789-9dcc-dae5b9b99173', 'b127b87c-600d-4f28-b74a-e6c33d27e42f', 'bf0f6ceb-62fd-4a92-a7b0-29cf898b05e1', '103881e7-8415-4d6b-90c5-cef06f36b5b3', '8c558c8b-1a04-4c38-9f98-20cd5c8195a7', '5c025c8a-a032-494f-8204-dd92b1067448', '441fe9aa-79d7-4e27-8fb5-213c77c4f295', 'b630c1ad-f3a1-41c3-8e34-735a78dec9d1', '3200dbee-2685-48c7-a7dc-2e780853efda', '46583ddd-855b-4e6d-8711-d7b5a4fd26c1', 'a497e35d-fd84-4be2-a45d-f847962cd5f8', '295d5dc4-f4d4-4016-8fc0-4badd1b9c94e', 'f8934f7d-e1f6-462e-8a12-dc82c440bc90', '30fd755b-9f29-4330-b4d3-8eccc44ffade', 'a9cf3c28-8b08-451a-830f-b737936a9579', '273b434f-74b7-4581-9d69-13f030b67313', 'fcf115d7-4246-4790-a89d-666f368b3356', 'c1306680-d5e0-4629-939d-ee9e3f4c439b', 'a5cafc37-5ab6-40b2-8c1b-19089e724b1d', '34606fe8-3ba5-4778-a7f0-0275c1def3b8', '2d6ffd36-f33d-4a68-9868-53c7aa3f4011', '38e4e4d4-f801-42a0-8eac-a1a9a41a8a3e', 'bec0103f-bdf4-42b5-b04e-a44528b8c8d1', '1e01bc5e-dcdb-4ef1-94a6-f4e3a77613b8', '5debda2f-e5c1-447e-b025-d71252591074', '2d8872a4-f002-4294-9396-91d9cefabdb7', 'ac4adfe9-a213-45bd-843b-f346c9891b2c', 'b59c4643-2b45-45e4-89f7-007ef1955c9f', 'f56f6f85-9aff-4f4e-bd84-8d763708e76f']::uuid[], 'CLOSED', 'Railway')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1205,1502 +1217,2252 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('822b8be3-b284-40f3-a396-cda4477973cc', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['64406038-d90c-415b-b571-ce491d0a0782']::uuid[])
+    VALUES ('5a60713d-01f2-4d32-9867-21904629e254', 'Scenario 000 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c2a66425-186d-423b-b002-391c091b33c6', 'f56b119f-719d-4601-94ff-e511b2aaeeed']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('64406038-d90c-415b-b571-ce491d0a0782', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('c2a66425-186d-423b-b002-391c091b33c6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f56b119f-719d-4601-94ff-e511b2aaeeed', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0db72a40-43e8-477b-89b3-a7bd1224660a', 'Scenario 001 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f0f478d6-436e-476f-be79-33d8c34f20c1', 'a5c6d789-0c00-413d-b689-862806dd9b56']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f0f478d6-436e-476f-be79-33d8c34f20c1', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a5c6d789-0c00-413d-b689-862806dd9b56', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('7def3118-2e9c-4de7-8d61-f0e76fbeee5d', 'Scenario 002 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b52ec6bc-ef4a-44ec-a079-76ae7073753f', '082b3385-72b2-4d39-914b-1c8d8e7501ee']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b52ec6bc-ef4a-44ec-a079-76ae7073753f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('082b3385-72b2-4d39-914b-1c8d8e7501ee', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3ae60635-6995-4fb1-8309-61fded3d6fd8', 'Scenario 003 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c2291e69-1591-4247-96e0-898f8755a53b', 'ee474e04-b720-42cc-97be-f62d261ada60']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c2291e69-1591-4247-96e0-898f8755a53b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ee474e04-b720-42cc-97be-f62d261ada60', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('eeef8445-723d-4740-b89f-4dbaf75f9ae6', 'Scenario 004 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['ca218ea1-9dfb-4663-80c5-1dd8e3b4f49a', '70ecd6de-db9e-4c10-b6d3-c65323811973']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ca218ea1-9dfb-4663-80c5-1dd8e3b4f49a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('70ecd6de-db9e-4c10-b6d3-c65323811973', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('94af1ed1-3686-4a9e-99f5-3a7ad908f125', 'Scenario 005 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['77a857be-3070-4bea-a298-3749c919ecab', 'ffcf031a-4845-4a63-b3bc-269f31913a2d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('77a857be-3070-4bea-a298-3749c919ecab', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ffcf031a-4845-4a63-b3bc-269f31913a2d', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8250d0e2-700e-4051-85c3-a8d0d95a5f0f', 'Scenario 006 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['95ce9498-b09f-4c3a-9b4d-987235efec2e', 'ecc75557-a1ea-4b1b-bab5-4e5269bbb8eb']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('95ce9498-b09f-4c3a-9b4d-987235efec2e', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ecc75557-a1ea-4b1b-bab5-4e5269bbb8eb', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c58759a7-a64a-4cbf-970b-948bae0c2254', 'Scenario 007 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2a77ef34-110c-4d20-94bc-2228058f2024', '7a0a3e17-543e-46b5-81ec-042c8d9a2238']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2a77ef34-110c-4d20-94bc-2228058f2024', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7a0a3e17-543e-46b5-81ec-042c8d9a2238', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('f94f517f-c0a4-4415-b726-186cdc75f9c6', 'Scenario 008 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f97a7d4f-499b-4b90-a7ef-097382ab189d', '8692e760-cc0d-4e25-b86d-bed3417d52dd']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f97a7d4f-499b-4b90-a7ef-097382ab189d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8692e760-cc0d-4e25-b86d-bed3417d52dd', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c0e2c3e0-c171-48dd-a312-5de070e3f937', 'Scenario 009 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c6459e07-91ec-42e2-86ed-51edd5eeb253', '1f56631f-a864-446a-b236-19bfd7910ca5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c6459e07-91ec-42e2-86ed-51edd5eeb253', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1f56631f-a864-446a-b236-19bfd7910ca5', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('26fb51b9-2466-48ab-8c0a-89d9536d4c34', 'Scenario 010 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['fbd6177b-7831-4009-9191-47eae9a71255', 'db82dc7b-55e7-4952-9902-b1e3fda60775']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('fbd6177b-7831-4009-9191-47eae9a71255', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('db82dc7b-55e7-4952-9902-b1e3fda60775', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('66c23554-47bb-4268-b08e-518f6f163e9d', 'Scenario 011 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['e4b29a23-0d03-42bc-aa14-756122757af8', '5dc33daf-5f76-4e6d-b86c-e6986c21bae0']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e4b29a23-0d03-42bc-aa14-756122757af8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5dc33daf-5f76-4e6d-b86c-e6986c21bae0', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('08641d25-9b18-41bb-9cbc-4039b4ad24f0', 'Scenario 012 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['6c2515e2-d550-4f79-99d5-488c0119f108', 'cc6617af-d031-48d2-89e9-ac4569f6b82a']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6c2515e2-d550-4f79-99d5-488c0119f108', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('cc6617af-d031-48d2-89e9-ac4569f6b82a', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4d3dd85a-2b16-45de-b524-f83b4a58a2f4', 'Scenario 013 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['53ccb901-fc56-4020-80bd-f9802a41b224', '4779f14d-2533-4324-a7e2-6fb4dfe726e3']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('53ccb901-fc56-4020-80bd-f9802a41b224', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4779f14d-2533-4324-a7e2-6fb4dfe726e3', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('bf9209c7-125c-42f9-b78e-4e5b7aacefcc', 'Scenario 014 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['380d1ecc-6600-4d0a-ab26-a9d34f49dc38', 'df9103a1-6c9f-4db4-8ceb-510b51263a65']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('380d1ecc-6600-4d0a-ab26-a9d34f49dc38', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('df9103a1-6c9f-4db4-8ceb-510b51263a65', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('f511044d-2378-4c7f-af92-45c78146bdef', 'Scenario 015 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2edc7757-717a-4c9a-8d2e-8119a32b72f4', 'da93159a-3664-4d2e-94e0-79f7af5403f6']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2edc7757-717a-4c9a-8d2e-8119a32b72f4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('da93159a-3664-4d2e-94e0-79f7af5403f6', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('f89cee49-e1ae-427d-ae42-5cc411661a1c', 'Scenario 016 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['1a39cae1-4a44-4a39-b9e6-8f58b29b8b03', '1aad118d-0364-4eeb-9ab6-6103db65ceb2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1a39cae1-4a44-4a39-b9e6-8f58b29b8b03', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1aad118d-0364-4eeb-9ab6-6103db65ceb2', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('262e43bd-bf35-4171-b38b-c77969db0b16', 'Scenario 017 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['1b9a8049-211e-432f-8eb5-03b1e7c7db89', '3d1a1369-26cd-4a12-bca6-80c0e29e657b']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1b9a8049-211e-432f-8eb5-03b1e7c7db89', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3d1a1369-26cd-4a12-bca6-80c0e29e657b', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('61bd29ec-0b09-4067-ada0-b43e48a8ac9a', 'Scenario 018 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['3fada72e-e526-465b-86e0-d35839e5b42a', '86818fce-79f8-4d7d-9e1b-2e052d94602f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3fada72e-e526-465b-86e0-d35839e5b42a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('86818fce-79f8-4d7d-9e1b-2e052d94602f', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('92d22472-4696-40ba-924f-861a2f4343b6', 'Scenario 019 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['4b9f0031-b9fc-491a-8f49-73485d3aa755', '77646805-26af-4ee3-878d-8c8917e20f36']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4b9f0031-b9fc-491a-8f49-73485d3aa755', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('77646805-26af-4ee3-878d-8c8917e20f36', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('6fc5f67a-40fa-45ce-819e-35a85e08e560', 'Scenario 020 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['400ef71c-f16c-422f-bd34-640b393ce77a', '51f8e76e-c909-4277-a047-05e3a001620e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('400ef71c-f16c-422f-bd34-640b393ce77a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('51f8e76e-c909-4277-a047-05e3a001620e', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('66bce513-502c-43b4-a155-8a16c410a7c6', 'Scenario 021 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['740f0229-23ef-4cfc-860b-435e95142ae6', '0fe8c02d-0d01-4642-828a-301196e11188']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('740f0229-23ef-4cfc-860b-435e95142ae6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0fe8c02d-0d01-4642-828a-301196e11188', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('eff645bf-7ea8-490d-ae8a-ebb0d16a774c', 'Scenario 022 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['ce856981-fd85-49c0-8d04-24036377da9d', '421c6abf-74e9-4a19-b5ef-a81c1ee1b3e0']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ce856981-fd85-49c0-8d04-24036377da9d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('421c6abf-74e9-4a19-b5ef-a81c1ee1b3e0', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8397e6d6-babc-469b-a239-7eabcbd510da', 'Scenario 023 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['66f07fc4-dd6a-4e00-a359-76989fa5b898', 'e0a6e544-7561-49b7-bd6a-9d816423046e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('66f07fc4-dd6a-4e00-a359-76989fa5b898', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e0a6e544-7561-49b7-bd6a-9d816423046e', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c359f13c-d222-4b04-ad0a-2bb30fb9da5f', 'Scenario 024 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['4c21e031-0502-40b1-bd96-e7231f863343', '00c006b9-e5ed-4a45-a7e8-9763aa0bbcf5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4c21e031-0502-40b1-bd96-e7231f863343', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('00c006b9-e5ed-4a45-a7e8-9763aa0bbcf5', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('97203764-6717-4ca6-bae9-c35c4eb38206', 'Scenario 025 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['dd9e5742-047d-49dd-8bf7-d982a98ce24f', '360e9659-3510-4a57-bc75-876156ab1c14']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('dd9e5742-047d-49dd-8bf7-d982a98ce24f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('360e9659-3510-4a57-bc75-876156ab1c14', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('adc4bf52-096c-4369-a85f-c9bf4b86bc64', 'Scenario 026 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['8e8c2a63-e9be-4129-b756-b77960a950d7', '1e890bbe-ebbc-4a6a-bbd1-a12a29dc8130']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8e8c2a63-e9be-4129-b756-b77960a950d7', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1e890bbe-ebbc-4a6a-bbd1-a12a29dc8130', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('72f93d48-ecef-4bf7-9d97-cb008b47e566', 'Scenario 027 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['a41f3b4a-57af-475c-b1de-0635a072857a', 'bab31a7e-eea4-4b54-a8cf-ed721de4aa75']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a41f3b4a-57af-475c-b1de-0635a072857a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bab31a7e-eea4-4b54-a8cf-ed721de4aa75', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b470667b-d9c9-4af4-b64e-c32102c34387', 'Scenario 028 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['3057de2a-da30-46f5-8a22-8c232c5006d5', '4e73fe17-7ff6-4239-8ca9-ecc78ad41fb2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3057de2a-da30-46f5-8a22-8c232c5006d5', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4e73fe17-7ff6-4239-8ca9-ecc78ad41fb2', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4aa9e1b8-8669-466e-b4b9-c7db2a098bec', 'Scenario 029 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['7f662e6c-4857-4b73-8b08-dd6979e050dc', '28006112-841d-4a3c-8117-09887ef3f84c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7f662e6c-4857-4b73-8b08-dd6979e050dc', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('28006112-841d-4a3c-8117-09887ef3f84c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('44354e67-e0b7-4faa-9385-2d6247c7a50c', 'Scenario 030 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['77e5889e-20d7-4427-93fe-6fd093084fed', 'bd6ab4c1-1524-46c4-857e-07f822c3797d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('77e5889e-20d7-4427-93fe-6fd093084fed', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bd6ab4c1-1524-46c4-857e-07f822c3797d', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4bca2964-ef35-4b03-a47e-829bc9078374', 'Scenario 031 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['01ae1886-d77f-4052-9633-08adeaafb296', 'b8beace1-30c0-4f09-b65f-de89db029e75']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('01ae1886-d77f-4052-9633-08adeaafb296', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b8beace1-30c0-4f09-b65f-de89db029e75', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('6190b6ac-a06b-4b07-8b82-0dfb1088663f', 'Scenario 032 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['89d20126-8572-4cc9-906d-84c35aa882e6', '172848d0-8ec6-4c51-b6a9-60cc4a935479']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('89d20126-8572-4cc9-906d-84c35aa882e6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('172848d0-8ec6-4c51-b6a9-60cc4a935479', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a51d4e4a-c841-416f-9292-fc64dead758b', 'Scenario 033 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f3e2cf00-6cc5-4657-9d23-5f9e74747672', 'a056948f-c1b3-4b56-979d-015671202ff1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f3e2cf00-6cc5-4657-9d23-5f9e74747672', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a056948f-c1b3-4b56-979d-015671202ff1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('d08f6539-5c3e-4a98-93ae-3e344611e3a8', 'Scenario 034 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b1760251-c61d-45e3-9b1f-424a44108d84', 'e40b3acf-b405-4090-8b12-37dc6a57707b']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b1760251-c61d-45e3-9b1f-424a44108d84', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e40b3acf-b405-4090-8b12-37dc6a57707b', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8a2ec760-d2c2-4329-b373-3acd95395076', 'Scenario 035 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['7c3c8e30-a60a-429b-94d5-82c55ab7a87b', 'a9c1f2c2-4b4a-402c-a1c9-87f00f3ad557']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7c3c8e30-a60a-429b-94d5-82c55ab7a87b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a9c1f2c2-4b4a-402c-a1c9-87f00f3ad557', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('9b136147-f560-45d4-abd8-9f7de7cd7570', 'Scenario 036 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['da8327ac-9de5-42e9-87da-202d07b1fea6', 'dae4156e-afba-4a38-8dcc-8b8b705a08a5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('da8327ac-9de5-42e9-87da-202d07b1fea6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('dae4156e-afba-4a38-8dcc-8b8b705a08a5', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('9723c2c5-ee55-441d-9dba-1a1dc23fdc5e', 'Scenario 037 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['7d87c886-3a32-4278-9f1b-eb48bcc2d862', '21abc1d2-1930-4993-8d78-13537b924a09']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7d87c886-3a32-4278-9f1b-eb48bcc2d862', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('21abc1d2-1930-4993-8d78-13537b924a09', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3406bbe9-cb19-44b7-af26-460b0a117a6c', 'Scenario 038 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['bd250128-0fb3-4105-abf8-bebd763cb97c', 'bc35dfb5-18bc-4d2b-b3f4-f16f2bda8fa0']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bd250128-0fb3-4105-abf8-bebd763cb97c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bc35dfb5-18bc-4d2b-b3f4-f16f2bda8fa0', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('ae0a88ad-3bfd-4201-b28a-e2c75d081cd5', 'Scenario 039 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['90b0f241-b7ee-4dbe-8ea4-b2f964fedf58', '93ddf358-4286-4750-9c8f-d5a3e361d737']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('90b0f241-b7ee-4dbe-8ea4-b2f964fedf58', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('93ddf358-4286-4750-9c8f-d5a3e361d737', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8b308495-7ea6-4ddc-acb4-56eb5b3aec12', 'Scenario 040 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['88f509f0-83ce-4f89-84c4-f460ee6194c0', '2cb5003f-1593-47ac-a807-6866199c877f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('88f509f0-83ce-4f89-84c4-f460ee6194c0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2cb5003f-1593-47ac-a807-6866199c877f', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a8f69dc4-04a1-434a-ad97-27c745561b6a', 'Scenario 041 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['23559b62-3bac-42ea-bfaf-0ecfaf2d5418', '9d441444-09dd-42a0-b2e7-7138d7367410']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('23559b62-3bac-42ea-bfaf-0ecfaf2d5418', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9d441444-09dd-42a0-b2e7-7138d7367410', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8b244f56-50e1-411a-a7d8-a2b89dfab26e', 'Scenario 042 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['dc76fa30-a594-4d6f-a16b-6e2d13537830', '25d93d2a-953f-4be6-8656-0e8b2523b356']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('dc76fa30-a594-4d6f-a16b-6e2d13537830', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('25d93d2a-953f-4be6-8656-0e8b2523b356', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8e6419c1-6470-4272-9c4b-43d9fe19dd3d', 'Scenario 043 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['727b60a3-ac15-4361-9a33-5ca97594204c', '14045d98-c5d9-4345-9145-80663d7bd564']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('727b60a3-ac15-4361-9a33-5ca97594204c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('14045d98-c5d9-4345-9145-80663d7bd564', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('ec503b6e-3682-4dcd-9dc7-b194b67283d9', 'Scenario 044 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['3c18cf32-f868-4777-ba32-1edef5ca52ab', 'c0618d61-13c1-41a2-bfdd-d64ddd37637c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3c18cf32-f868-4777-ba32-1edef5ca52ab', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c0618d61-13c1-41a2-bfdd-d64ddd37637c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('74fd9eab-d2e5-4222-8656-81fc2dde7c21', 'Scenario 045 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['987adb8c-2121-495e-9fb6-e478e770dfe8', '3d84a2bc-963f-4034-bf5d-5a5cdc187d0f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('987adb8c-2121-495e-9fb6-e478e770dfe8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3d84a2bc-963f-4034-bf5d-5a5cdc187d0f', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c16e54c1-33b2-45b8-95b0-33cc4f5400d5', 'Scenario 046 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d1e06eae-7a72-487e-8734-8a88956dbe5c', 'b4dd871a-b97c-417a-bd01-53e998622638']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d1e06eae-7a72-487e-8734-8a88956dbe5c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b4dd871a-b97c-417a-bd01-53e998622638', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c80effec-27b8-4103-b726-344a85f35407', 'Scenario 047 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['32631a5c-824f-4adc-a8a3-57f23019a7b4', 'e74d8945-60ca-4bb8-b1d2-ac60857fcad1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('32631a5c-824f-4adc-a8a3-57f23019a7b4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e74d8945-60ca-4bb8-b1d2-ac60857fcad1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('9bec9335-3dd5-4d88-b2ac-c5d711bcab36', 'Scenario 048 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d679aac1-453c-47b5-bfd2-d70fbe6ed60d', '92a6e80d-9d64-4dce-8352-a857280ce42d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d679aac1-453c-47b5-bfd2-d70fbe6ed60d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('92a6e80d-9d64-4dce-8352-a857280ce42d', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4a067d3c-75e6-4e91-a42d-cdf291016674', 'Scenario 049 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['8f4ed654-e525-430a-be79-7ade82ef09fd', 'af5b8f78-be09-4c13-a9cb-25ed84ca819c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8f4ed654-e525-430a-be79-7ade82ef09fd', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('af5b8f78-be09-4c13-a9cb-25ed84ca819c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('1f6c674b-fdb5-40c8-bbe3-d924c2b7146e', 'Scenario 050 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['7f80b003-1758-44cd-a894-8cafdace7b17', '14482ada-9a30-4857-a2db-003968c8a57c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7f80b003-1758-44cd-a894-8cafdace7b17', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('14482ada-9a30-4857-a2db-003968c8a57c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8bd15e2f-6089-4022-8383-26a36093dc80', 'Scenario 051 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b24d7c51-d119-40ac-abe5-002f50d83a5b', '9c06b3df-40bf-4489-95e6-e4d296688bf2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b24d7c51-d119-40ac-abe5-002f50d83a5b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9c06b3df-40bf-4489-95e6-e4d296688bf2', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5b026a8a-e0dc-47d2-b2ce-d0bfc083e6c5', 'Scenario 052 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['37f7837f-0f94-4d73-9fec-a1eaa2bdb731', '4c8c8b55-c550-410d-883f-20bd22bced94']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('37f7837f-0f94-4d73-9fec-a1eaa2bdb731', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4c8c8b55-c550-410d-883f-20bd22bced94', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('ab2e2bba-baa0-45de-b639-c7ebf29bf947', 'Scenario 053 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['211a770e-d3fe-4631-9005-9de97f51e373', '51187b86-7215-4195-b125-de5d170bb3a1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('211a770e-d3fe-4631-9005-9de97f51e373', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('51187b86-7215-4195-b125-de5d170bb3a1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8f8b6f67-d3c3-41ec-b60d-2924577e68f4', 'Scenario 054 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['400a12a8-2884-4e8c-b62a-d051a100e30f', '04a84ce1-a102-49cf-9f20-abc9167d55ba']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('400a12a8-2884-4e8c-b62a-d051a100e30f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('04a84ce1-a102-49cf-9f20-abc9167d55ba', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3e59642a-7b20-4989-b9e6-01a35a82b9da', 'Scenario 055 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['aa69cbde-947a-414c-90da-3b45e0fb596b', '1acfb16a-d114-4800-8a1a-03009eaa01ea']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('aa69cbde-947a-414c-90da-3b45e0fb596b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1acfb16a-d114-4800-8a1a-03009eaa01ea', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0e4618c7-7ab7-4323-855c-7f95cbaef2d0', 'Scenario 056 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['5bf88d2b-eae0-464c-8f94-413b9d25b17f', 'c868d354-61ee-4604-a95c-27f9f72163f2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5bf88d2b-eae0-464c-8f94-413b9d25b17f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c868d354-61ee-4604-a95c-27f9f72163f2', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4a59929b-b391-464f-bfa1-628f7a45ac36', 'Scenario 057 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b48c47af-49e2-4224-8104-16301ac09b82', '6529a3ec-aaf5-4484-b998-b26632252fa2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b48c47af-49e2-4224-8104-16301ac09b82', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6529a3ec-aaf5-4484-b998-b26632252fa2', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('27f8ac34-3d09-4b68-9fb4-c51cfbfd09df', 'Scenario 058 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['073cd85e-d4b0-450a-af4f-82942568a8c2', '06168613-30f9-41b0-8ed1-45ac4af5db21']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('073cd85e-d4b0-450a-af4f-82942568a8c2', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('06168613-30f9-41b0-8ed1-45ac4af5db21', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('bacb4c11-11b4-4c76-910d-f92abc5b7a39', 'Scenario 059 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['8b4da62c-a1d5-429a-af67-9f82cab18e9f', '7c901056-66e1-4f24-b290-ff0b651b1abb']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8b4da62c-a1d5-429a-af67-9f82cab18e9f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7c901056-66e1-4f24-b290-ff0b651b1abb', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a5dff3c8-902e-4cb9-8466-d277d0ed4d67', 'Scenario 060 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['00b8aacc-fde9-4f90-996d-76ff04db92c0', '18add694-5992-4211-9cdd-0a266b997073']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('00b8aacc-fde9-4f90-996d-76ff04db92c0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('18add694-5992-4211-9cdd-0a266b997073', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('aca25feb-6254-40b3-8d40-3c805797c69b', 'Scenario 061 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['77f74e7b-fe38-4b17-8c0b-031288fe3e72', 'f0a5bd0a-d2d6-4b12-b657-68e46310e433']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('77f74e7b-fe38-4b17-8c0b-031288fe3e72', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f0a5bd0a-d2d6-4b12-b657-68e46310e433', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('deb21442-0f94-4ff3-b78d-8d418415d646', 'Scenario 062 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['0171b423-8f3a-4021-af1b-80cb1b6bb64d', '1cef0986-13e2-4fc7-82c3-a04d3b506802']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0171b423-8f3a-4021-af1b-80cb1b6bb64d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1cef0986-13e2-4fc7-82c3-a04d3b506802', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('6cf2cc89-d30e-4063-bced-051f3cdae92f', 'Scenario 063 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['7c4d516d-7c3b-432f-8b15-b801b93d8a47', '399c2730-f645-4bcf-b828-6ced81fdeef8']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7c4d516d-7c3b-432f-8b15-b801b93d8a47', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('399c2730-f645-4bcf-b828-6ced81fdeef8', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('84bcbff5-346f-452c-87ab-08ceff6364f2', 'Scenario 064 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f3848bdc-7c50-46aa-8aa9-d88dfc084a1b', 'd7faf305-6d32-4b20-b83b-ef80945c50ef']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f3848bdc-7c50-46aa-8aa9-d88dfc084a1b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d7faf305-6d32-4b20-b83b-ef80945c50ef', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('fb285995-83a4-4e29-bab9-253da229baa3', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['1aaf67c5-fdf8-4b3f-a0bf-3750b8fd6e18']::uuid[])
+    VALUES ('9acbe68e-2a45-420b-a142-34996dbcfb83', 'Scenario 065 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['09919795-1368-4d97-b0aa-4764ebb93db0', '4509a7f1-92df-4b74-9a87-b84f924f6637']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('09919795-1368-4d97-b0aa-4764ebb93db0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('1aaf67c5-fdf8-4b3f-a0bf-3750b8fd6e18', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('4509a7f1-92df-4b74-9a87-b84f924f6637', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('d4780268-cefc-4fb5-b40e-3ef39de9d81d', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['750ba040-5b6b-4a45-a85e-782649112024']::uuid[])
+    VALUES ('42786e4c-c80e-40f5-8237-bafc5f39979d', 'Scenario 066 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['23602def-5aa9-4a2d-8542-acff4e9e8277', '9c0b5ac4-5ea9-443b-aa68-40c33769c5b7']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('23602def-5aa9-4a2d-8542-acff4e9e8277', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('750ba040-5b6b-4a45-a85e-782649112024', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('9c0b5ac4-5ea9-443b-aa68-40c33769c5b7', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('9d081bcc-6477-45e5-91ae-2ca993ecfa6d', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['6bbc17d3-f3d4-49ad-bc2d-2ebbefde4c67']::uuid[])
+    VALUES ('242a6240-b62c-48b4-a264-b6737e893fa5', 'Scenario 067 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['e90355e4-5e27-4a55-b7bf-19ab148d21da', '58b04b70-72e7-4891-8478-a5aa4521b727']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e90355e4-5e27-4a55-b7bf-19ab148d21da', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('6bbc17d3-f3d4-49ad-bc2d-2ebbefde4c67', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('58b04b70-72e7-4891-8478-a5aa4521b727', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('0b52f979-785d-4e41-9463-c3554b266cb5', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['796381f8-65c4-4042-8008-c8fe6d906c6a']::uuid[])
+    VALUES ('3c38a1d3-2340-43ed-ac0b-4b76c6588b92', 'Scenario 068 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['881b7248-873d-46e0-9ceb-31ebb76df897', '78478b83-be82-4418-864e-35b7c0d364a1']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('881b7248-873d-46e0-9ceb-31ebb76df897', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('796381f8-65c4-4042-8008-c8fe6d906c6a', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('78478b83-be82-4418-864e-35b7c0d364a1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('162c60d6-5fed-4134-9f38-98e69b63d2d2', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['14ff71fa-9c4b-4e5b-b3fe-2213307737ab']::uuid[])
+    VALUES ('b89daede-405b-411a-a02b-ee32d7c9d020', 'Scenario 069 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f58732b5-e3f8-4997-a6c0-e24d57935e15', 'b8bcb820-9dd9-4861-b031-8b1fbc6d65dd']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f58732b5-e3f8-4997-a6c0-e24d57935e15', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('14ff71fa-9c4b-4e5b-b3fe-2213307737ab', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('b8bcb820-9dd9-4861-b031-8b1fbc6d65dd', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('2ac32866-2400-4a28-98b7-80f1cf8a89d7', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['fc1849d1-98a8-4ce8-8214-406041190f89']::uuid[])
+    VALUES ('736301d9-0cff-4e25-af78-4d6f78b48cd5', 'Scenario 070 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2ccc3087-4f95-4828-9f86-dcd1dd8342a3', 'f398ab87-38eb-488d-9863-4688423c9ced']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2ccc3087-4f95-4828-9f86-dcd1dd8342a3', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('fc1849d1-98a8-4ce8-8214-406041190f89', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('f398ab87-38eb-488d-9863-4688423c9ced', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('1c66d6ab-ef32-4ee9-8f40-3517df87cc20', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c04c635e-e331-4a98-b5ba-ee586540984d']::uuid[])
+    VALUES ('3b74e3a8-e740-4bb2-802f-2b2bedabad65', 'Scenario 071 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['e025c0ba-938d-49d6-8b5e-f8f2c3c0f317', '32992519-d2b3-45db-a41d-c03c4fcc048b']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e025c0ba-938d-49d6-8b5e-f8f2c3c0f317', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c04c635e-e331-4a98-b5ba-ee586540984d', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('32992519-d2b3-45db-a41d-c03c4fcc048b', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('8a607249-eba6-40db-9936-022c26859fe6', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c17179f1-dffa-455b-9bd7-a57c1fad282e']::uuid[])
+    VALUES ('61ee09b0-96fb-4562-bf7d-a01606de424c', 'Scenario 072 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['bb4d978b-bdd5-42c7-91bd-968187e080df', 'f75737c9-7ef6-4f09-b724-fb6267204ab1']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bb4d978b-bdd5-42c7-91bd-968187e080df', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c17179f1-dffa-455b-9bd7-a57c1fad282e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('f75737c9-7ef6-4f09-b724-fb6267204ab1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('19f27ad8-d533-4a82-8f1c-bb351868ded2', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['b1522cec-ca4f-4c39-a55a-e9fc74dc81af']::uuid[])
+    VALUES ('8d75b03c-2a34-4b2a-8408-d8db01a7ae1a', 'Scenario 073 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b12f3a92-65ea-489e-939d-029f78fbf6d4', '7250585b-50f3-45ac-ab03-fcc6b564f9d5']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b12f3a92-65ea-489e-939d-029f78fbf6d4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b1522cec-ca4f-4c39-a55a-e9fc74dc81af', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('7250585b-50f3-45ac-ab03-fcc6b564f9d5', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('37d8fb5b-01ae-40cb-b951-d37ca464d079', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['dae06d8a-e631-4936-8dfc-68b8fcd5a228']::uuid[])
+    VALUES ('81c01671-1a30-41cd-9f6c-25b2f9253da9', 'Scenario 074 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2349a20f-d33c-43dc-891c-7bf9ebc21ad1', '25bbb2cc-b1d3-4b7f-a04b-32ccc167c110']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2349a20f-d33c-43dc-891c-7bf9ebc21ad1', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('dae06d8a-e631-4936-8dfc-68b8fcd5a228', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('25bbb2cc-b1d3-4b7f-a04b-32ccc167c110', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('3e7935f7-6668-455f-9a80-7f4f38c19c49', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['16534334-44cb-490f-8d34-120fabe921a2']::uuid[])
+    VALUES ('01723b62-3f4d-4921-8904-752f092588f5', 'Scenario 075 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['9b3fef3c-2d06-40d3-a15a-0c0fe8d35c13', 'a1403c86-de5f-4386-a9f7-e871058c9927']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9b3fef3c-2d06-40d3-a15a-0c0fe8d35c13', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('16534334-44cb-490f-8d34-120fabe921a2', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('a1403c86-de5f-4386-a9f7-e871058c9927', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5402514d-875d-4090-8837-298c5a978fdd', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['a3e240c5-bb20-4b25-87f8-71844711cd82']::uuid[])
+    VALUES ('5d44cb89-3c63-4716-8551-bd25de881f89', 'Scenario 076 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['415bac48-7878-4fc9-b0a9-afdc266668c5', '66f89046-bb2d-4724-84fb-bdf229337038']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('415bac48-7878-4fc9-b0a9-afdc266668c5', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('a3e240c5-bb20-4b25-87f8-71844711cd82', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('66f89046-bb2d-4724-84fb-bdf229337038', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('fb40b206-b93f-468c-a07a-dc97ce5f94f0', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['d5273a19-caf3-4375-a23c-48800f3a339a']::uuid[])
+    VALUES ('cf7c97fc-1c61-4c0d-ad1e-952bf6d6f23a', 'Scenario 077 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['874509d6-244c-4446-87da-17ecb05d1f86', 'b88ecdcc-f374-4b9d-bd8f-5d96cb1a3206']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('874509d6-244c-4446-87da-17ecb05d1f86', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('d5273a19-caf3-4375-a23c-48800f3a339a', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('b88ecdcc-f374-4b9d-bd8f-5d96cb1a3206', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('1728dfb2-8b04-45a0-be04-2d90a707ef1c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['02ac2594-8e58-477f-b5d8-8a5b05cd55a4']::uuid[])
+    VALUES ('60ddab54-dc12-4fbd-bbec-53b23d896c9d', 'Scenario 078 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2c780784-33e4-454b-b37a-681577912a20', 'c838aac4-30aa-4103-b5d6-fe7864395945']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2c780784-33e4-454b-b37a-681577912a20', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('02ac2594-8e58-477f-b5d8-8a5b05cd55a4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('c838aac4-30aa-4103-b5d6-fe7864395945', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('4b150132-83b1-4d8f-a95d-6b8e78ee7352', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['6be01bfa-c19d-4fa6-b00a-440a3f30b5b7']::uuid[])
+    VALUES ('7eab41ad-8fd5-4a04-8c06-4d6c2016a594', 'Scenario 079 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['0f10f947-7e67-4400-92b9-abbacc3a84e4', 'd09f3157-8c73-4a13-9a2d-940e33d9bcb9']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0f10f947-7e67-4400-92b9-abbacc3a84e4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('6be01bfa-c19d-4fa6-b00a-440a3f30b5b7', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('d09f3157-8c73-4a13-9a2d-940e33d9bcb9', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('87fb1d52-99dc-493f-8846-2c74fa36f243', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['a713629d-eea7-449e-91b1-733f8e2a0f46']::uuid[])
+    VALUES ('9e0aac9e-ddf9-4575-bf1c-d08a923e15fa', 'Scenario 080 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['22a312d6-d593-47b6-883e-b060a62b95aa', '695de478-eff3-4b6d-8900-475b8bf08387']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('22a312d6-d593-47b6-883e-b060a62b95aa', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('a713629d-eea7-449e-91b1-733f8e2a0f46', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('695de478-eff3-4b6d-8900-475b8bf08387', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('b7ae099e-930f-471c-8c67-dff8e51d628d', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['74e15c34-4275-43a8-9d96-4a957fe43714']::uuid[])
+    VALUES ('befa97fb-2a74-4f2e-91c8-ea2879d08dcf', 'Scenario 081 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['4d79afcf-a37b-4632-b7aa-7fa5d438b20c', 'cb1887a7-5fd1-403c-a52c-20ac9a75e86f']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4d79afcf-a37b-4632-b7aa-7fa5d438b20c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('74e15c34-4275-43a8-9d96-4a957fe43714', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('cb1887a7-5fd1-403c-a52c-20ac9a75e86f', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('1028141b-ec9f-47a4-86e2-7614488b9809', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['066d0814-294b-451a-b11d-dbd7a257f159']::uuid[])
+    VALUES ('0cc18965-c967-4b58-ac7f-38a443b4cd16', 'Scenario 082 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['292efb51-5fc1-44fa-a507-92cc754ac50f', '93018027-3ec6-412d-9afc-76875ea68712']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('292efb51-5fc1-44fa-a507-92cc754ac50f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('066d0814-294b-451a-b11d-dbd7a257f159', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('93018027-3ec6-412d-9afc-76875ea68712', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('6cc61338-8f38-49b5-b4d0-2e4d47af4746', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['35127e79-ba23-4cd3-b376-ecc7e2bb4571']::uuid[])
+    VALUES ('d0f62f51-5a51-443b-bf7b-18e3d5b191dc', 'Scenario 083 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2ec397b8-6752-4749-b03e-2a99e5daa594', '73c6b52b-4406-498a-9095-3a020e11b29d']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2ec397b8-6752-4749-b03e-2a99e5daa594', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('35127e79-ba23-4cd3-b376-ecc7e2bb4571', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('73c6b52b-4406-498a-9095-3a020e11b29d', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5fbd0918-ea63-48e8-b180-304694167646', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['271e4f44-3661-4c68-9eb9-89fdbc665475']::uuid[])
+    VALUES ('c2ebb179-0a2d-4e84-95be-2837be406716', 'Scenario 084 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['ea1f7985-4998-42c4-a65d-69cc396b51f4', 'a34442f6-9568-4938-b7fe-20edb8389ab1']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ea1f7985-4998-42c4-a65d-69cc396b51f4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('271e4f44-3661-4c68-9eb9-89fdbc665475', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('a34442f6-9568-4938-b7fe-20edb8389ab1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('f313e209-a9a5-4e1a-b532-721c6326064f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['da4d5007-206f-478f-8bc6-e59033c29af8']::uuid[])
+    VALUES ('3ac76f3c-f560-4666-af61-c693e4cd3ad4', 'Scenario 085 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['beebd303-05ff-487a-80c3-e52d33647e9c', 'df7d73b8-89e1-4d79-ad30-3a57b74bd11a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('beebd303-05ff-487a-80c3-e52d33647e9c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('da4d5007-206f-478f-8bc6-e59033c29af8', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('df7d73b8-89e1-4d79-ad30-3a57b74bd11a', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('1c423fca-07da-4e12-8920-47bce7b89f13', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['235cd989-bf6d-49ad-a980-d70f28b639e1']::uuid[])
+    VALUES ('484bbf93-bc67-4726-8b81-6c4ab608c861', 'Scenario 086 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['7c66d1b5-131e-4c31-bcc6-a9b8cd241869', 'b5e06cc3-e58a-4812-8d26-a9600a38d798']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('235cd989-bf6d-49ad-a980-d70f28b639e1', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('7c66d1b5-131e-4c31-bcc6-a9b8cd241869', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('712d7d76-44f2-4de2-835c-3bcf39431809', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['108a9ed0-c282-4cae-80f3-4fa722fc2de5']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('108a9ed0-c282-4cae-80f3-4fa722fc2de5', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('b5e06cc3-e58a-4812-8d26-a9600a38d798', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('2103f2c0-64bd-4956-916a-2cad490705e6', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['3d05ea84-6a42-4062-8d4f-4500a96f259f']::uuid[])
+    VALUES ('11b19a5f-4d61-4b5d-980c-98cf0c16906a', 'Scenario 087 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f311b139-f2a6-4ced-92d7-3b78ab98489b', '3237bc4f-ccbc-4e7f-8f6c-caf4714ef7cf']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('3d05ea84-6a42-4062-8d4f-4500a96f259f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('f311b139-f2a6-4ced-92d7-3b78ab98489b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('3f39da46-0a0f-4e0a-aeae-451ff4e47b96', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['4bd7c022-8997-4302-8217-858506134533']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('4bd7c022-8997-4302-8217-858506134533', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('3237bc4f-ccbc-4e7f-8f6c-caf4714ef7cf', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('6ec4f85b-ca8b-4288-a6a1-34377d61abdf', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['a1ea0e92-dcae-448b-aa63-a496748ee3ee']::uuid[])
+    VALUES ('edecaeb7-53d3-411a-a00c-2ce6226fde50', 'Scenario 088 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['1af0eb24-9d92-45d0-a831-eee57167229e', '6e7436e0-a6a8-47bc-8114-4419f1fbb550']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('a1ea0e92-dcae-448b-aa63-a496748ee3ee', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('1af0eb24-9d92-45d0-a831-eee57167229e', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('aeeac3a2-7c3f-4252-b3d9-bea2ca2f01b7', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['0ab03f44-e525-4c92-9f33-373f4eee63c0']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('0ab03f44-e525-4c92-9f33-373f4eee63c0', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('6e7436e0-a6a8-47bc-8114-4419f1fbb550', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('4383e8cb-1cfc-4863-84e9-cdbed54b3bb3', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['4a6cae8e-a7ca-47d6-a119-a465ffe54863']::uuid[])
+    VALUES ('a43cb746-fa63-4d39-87cd-43a81fbf3a8e', 'Scenario 089 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['900fe857-9f4f-4853-b307-dd1ea4b342af', '1b83fa6a-4d59-4da9-ad7e-f43a4ced795a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('4a6cae8e-a7ca-47d6-a119-a465ffe54863', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('900fe857-9f4f-4853-b307-dd1ea4b342af', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('d1c291fb-6af0-429a-a526-1d1172d6b694', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['2fe7822c-b96c-45dc-9a50-75caa6b24593']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2fe7822c-b96c-45dc-9a50-75caa6b24593', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('1b83fa6a-4d59-4da9-ad7e-f43a4ced795a', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('f7de8e8a-a813-40a9-8fa4-fc8dc3dc1b4b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['570048f0-0350-43ab-abaf-c7e4bc35bf62']::uuid[])
+    VALUES ('5a3cc8a5-584c-4171-ae2c-97bdbc5047a1', 'Scenario 090 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['cd689619-3e99-477f-985d-367defa37a8f', 'f7374452-2699-4562-8c9d-f98f187caca0']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('570048f0-0350-43ab-abaf-c7e4bc35bf62', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('cd689619-3e99-477f-985d-367defa37a8f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('53ffd237-915c-4a1c-a10f-ca8447a48c51', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['ed24521b-134d-4361-b3c6-080d4c097ea1']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('ed24521b-134d-4361-b3c6-080d4c097ea1', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('f7374452-2699-4562-8c9d-f98f187caca0', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('a2521b97-2a49-4637-bd1d-1f332b72e788', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['5ac5f347-dcd9-4405-8077-4e9f1d7b1294']::uuid[])
+    VALUES ('30778350-508b-4cbe-bff2-8882d0743aed', 'Scenario 091 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['705f3ef5-f3e0-48c8-a653-a2fc0c97c205', '7b437484-d4be-4772-95cf-a4c7c66c0ff7']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('5ac5f347-dcd9-4405-8077-4e9f1d7b1294', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('705f3ef5-f3e0-48c8-a653-a2fc0c97c205', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('84f68be8-11a7-4194-86d6-5a99bdffd34c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['173bea92-2040-4061-a7a6-68e57c915d19']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('173bea92-2040-4061-a7a6-68e57c915d19', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('7b437484-d4be-4772-95cf-a4c7c66c0ff7', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('aa05a7c5-582b-4118-9e6d-3b13a7761673', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['97980c3a-c125-41d4-8b61-876e9ca911ef']::uuid[])
+    VALUES ('dc652dd4-c0b5-4036-bb70-f71cd9fd488a', 'Scenario 092 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['a3c43c85-ae7c-4450-8e03-902008ed9ecd', 'aaafe206-b2c7-4ec8-a625-e8e9bddc84b3']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('97980c3a-c125-41d4-8b61-876e9ca911ef', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('a3c43c85-ae7c-4450-8e03-902008ed9ecd', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('42fadb1b-5e30-4e0e-bc4f-ce4dff0eec79', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c7da97c1-388f-4571-b1c1-68865fba469e']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c7da97c1-388f-4571-b1c1-68865fba469e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('aaafe206-b2c7-4ec8-a625-e8e9bddc84b3', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('412f1fab-46a8-41c1-b769-80f5577bca0f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['e535b36e-1fd0-479a-bb95-74636b89197d']::uuid[])
+    VALUES ('6e4dd7f4-2155-407f-922b-25aeb04a47b7', 'Scenario 093 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['ccaa7ea3-7ace-4443-999b-970267108cbe', 'ff7f3ffb-e170-4385-b853-91a7c1b924a8']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('e535b36e-1fd0-479a-bb95-74636b89197d', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('ccaa7ea3-7ace-4443-999b-970267108cbe', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('b6fe1474-3306-4236-8961-502f207a3572', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['065cf9ba-8ddf-4543-a485-bf8b96526e4c']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('065cf9ba-8ddf-4543-a485-bf8b96526e4c', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('ff7f3ffb-e170-4385-b853-91a7c1b924a8', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('bb98ac31-eafa-4e46-85e1-2ff26fe4f128', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['6485bfe3-d5c3-40fd-8576-00d1396d07f2']::uuid[])
+    VALUES ('ba75d8cb-bfb9-4d2b-ac2f-2b5b8697188c', 'Scenario 094 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['84657cdf-99d3-4464-8c10-6f0ea9ec0f85', '05b2fe66-9118-4489-92a6-0b4784c1a666']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('6485bfe3-d5c3-40fd-8576-00d1396d07f2', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('84657cdf-99d3-4464-8c10-6f0ea9ec0f85', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('b51cf0a0-f103-4970-8ed8-17f80be7bad8', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['2bcb488c-1f1e-4e11-8325-b72e0326295f']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2bcb488c-1f1e-4e11-8325-b72e0326295f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('05b2fe66-9118-4489-92a6-0b4784c1a666', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('279e5e3b-ac1e-42eb-9576-6eca3d73b615', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['31d13d98-9fde-47e5-b64b-30d9492bbb77']::uuid[])
+    VALUES ('10c621d6-1f99-4045-82a0-47d3ea107ddc', 'Scenario 095 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['6865dac9-35ef-4d63-87d6-bd82d70ff8d8', '2efa40cd-884e-400a-b7c8-608d1a186b7d']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('31d13d98-9fde-47e5-b64b-30d9492bbb77', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('6865dac9-35ef-4d63-87d6-bd82d70ff8d8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('b7022a3a-b7a9-43d7-868a-bec416689eb2', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['15381599-5b84-4965-aa1c-fcc4364c347f']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('15381599-5b84-4965-aa1c-fcc4364c347f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('2efa40cd-884e-400a-b7c8-608d1a186b7d', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('a9b3664e-81fe-4595-b159-62d1ed82ff0b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['e36dcc2e-f399-42b7-8e41-800a5e934567']::uuid[])
+    VALUES ('7a6b6aeb-af0e-441f-97b5-d5db846bb045', 'Scenario 096 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d7d737b8-945c-4551-a685-5dbb70e10977', 'a998e19a-299f-4ae9-9ae5-a540974541ef']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('e36dcc2e-f399-42b7-8e41-800a5e934567', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('d7d737b8-945c-4551-a685-5dbb70e10977', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('161db07d-ef1f-49c7-90cf-16951717353b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['3b2dcdec-9285-495a-9fcc-44f66872c2bf']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('3b2dcdec-9285-495a-9fcc-44f66872c2bf', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('a998e19a-299f-4ae9-9ae5-a540974541ef', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('a89b3a08-dd85-4514-a21f-e14673ba6cd0', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['f12799ae-6181-4427-a22c-47b53db52165']::uuid[])
+    VALUES ('8e2cfb59-d31b-4346-b67a-b96a12ca04f5', 'Scenario 097 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['db6d2012-322d-4bf7-baf2-cce3112bb836', 'b0456e19-c198-41f6-9ef1-754df0f8b6c3']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f12799ae-6181-4427-a22c-47b53db52165', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('db6d2012-322d-4bf7-baf2-cce3112bb836', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('91dbe666-153c-4119-870a-92b2f3f74344', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['d4a7fb12-016f-40ee-a54f-86415a8d09d6']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('d4a7fb12-016f-40ee-a54f-86415a8d09d6', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('b0456e19-c198-41f6-9ef1-754df0f8b6c3', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('592382ce-a92d-47a0-81de-6a2bf7d7f822', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['92c51eb9-b29e-4c93-be28-056ae69af7db']::uuid[])
+    VALUES ('2661fcc0-9b3c-45bd-b60e-3c6351acabd1', 'Scenario 098 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['47195740-d89c-4b17-ac22-bb017ecf5216', '0f46f7a2-d968-4719-bee9-1b1c1f102169']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('92c51eb9-b29e-4c93-be28-056ae69af7db', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('47195740-d89c-4b17-ac22-bb017ecf5216', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('aeab1e0b-c1c6-4670-a062-85e0019a774b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['218ba2c4-9785-447a-86e1-9ca2a142cc38']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('218ba2c4-9785-447a-86e1-9ca2a142cc38', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('0f46f7a2-d968-4719-bee9-1b1c1f102169', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('816a37ad-bd68-4466-92f7-0309a3c1575b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['e39235a0-abd4-4168-8e28-13972448f119']::uuid[])
+    VALUES ('efcce7b2-e33a-4510-af56-09db1bfb5bd0', 'Scenario 099 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c5ef1284-4ced-423e-85b8-e71eef9a710f', '9167c4a3-e6fd-41fb-9ac6-61d5bd16daae']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('e39235a0-abd4-4168-8e28-13972448f119', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('c5ef1284-4ced-423e-85b8-e71eef9a710f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('82afbf49-4f5e-4065-9cb9-c32bcd6eb341', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['a5c945a8-865e-4358-9bc7-84955878948b']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('a5c945a8-865e-4358-9bc7-84955878948b', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('9167c4a3-e6fd-41fb-9ac6-61d5bd16daae', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('c457d15b-c6f0-4558-ba69-da498d009b19', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['ecb7bbe3-213c-4d69-b37c-f2a0ad236aae']::uuid[])
+    VALUES ('c643a6ba-a8a3-42de-afcc-fa92328397b7', 'Scenario 100 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d27eb381-c125-43df-8804-011cc46295b0', 'df586b32-0f78-461b-af4f-44851a3e3009']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('ecb7bbe3-213c-4d69-b37c-f2a0ad236aae', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('d27eb381-c125-43df-8804-011cc46295b0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('c6620785-e8d3-4644-9e14-f02498a773c4', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['985d0333-1dbf-447b-aa0d-f718458d4fb4']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('985d0333-1dbf-447b-aa0d-f718458d4fb4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('df586b32-0f78-461b-af4f-44851a3e3009', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('8490c658-fb8e-44de-826f-c07c1c449b90', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['34aee756-c2d3-40e7-8395-1bc8aaecbbf1']::uuid[])
+    VALUES ('86c8d140-2b1d-41df-ba97-a959c54d2c19', 'Scenario 101 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['494f08f4-1c11-4f17-a724-c3473a97b38c', 'f9460f21-c236-4fad-8699-a5c802436f92']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('34aee756-c2d3-40e7-8395-1bc8aaecbbf1', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('494f08f4-1c11-4f17-a724-c3473a97b38c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('4be70e62-b946-48f3-8977-a5d63abca399', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['689f1fcb-80a3-441f-b49d-32a1b562a0f5']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('689f1fcb-80a3-441f-b49d-32a1b562a0f5', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('f9460f21-c236-4fad-8699-a5c802436f92', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('e35d4956-f714-43eb-920a-8e09aca6f146', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['7a716c4e-3229-484e-b362-fcb43481f328']::uuid[])
+    VALUES ('9826d43a-6be2-49ac-bfd7-fa2475f62985', 'Scenario 102 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['a05fc857-eb3d-49ee-9664-c5c978fbb80c', '1f5328d6-5b32-46b8-bb4f-aed1a9e08f8b']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('7a716c4e-3229-484e-b362-fcb43481f328', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('a05fc857-eb3d-49ee-9664-c5c978fbb80c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('a0f6b266-6de1-45c4-bb01-29010647fbd7', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['d609a1ad-0936-453c-96c4-710b4059bf07']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('d609a1ad-0936-453c-96c4-710b4059bf07', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('1f5328d6-5b32-46b8-bb4f-aed1a9e08f8b', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('0dbaa2db-5f2a-4eef-afd5-bdbdce19313d', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['90e56153-9c69-48ca-9fcf-0bbaadad9be4']::uuid[])
+    VALUES ('151f38af-a59a-42f8-9b2e-2df3fef3f658', 'Scenario 103 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['4cfef0d1-2465-450c-b937-919985b7dd53', '503c6230-a376-4c08-941f-e2cf5cdff362']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('90e56153-9c69-48ca-9fcf-0bbaadad9be4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('4cfef0d1-2465-450c-b937-919985b7dd53', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('b6fcfbb3-9771-48b0-9e9d-3da6d31febc8', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['4fa5d753-d822-432d-9c56-84c0ad0e4ceb']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('4fa5d753-d822-432d-9c56-84c0ad0e4ceb', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('503c6230-a376-4c08-941f-e2cf5cdff362', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5253b077-a788-4682-b483-64dd9eda03d5', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['8507fdb9-a60b-40b1-bb0d-29fe807ac4f1']::uuid[])
+    VALUES ('5b7b42ed-e41a-4e97-806a-6287ac918537', 'Scenario 104 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['8bb05d08-6b4b-4caa-bda7-95a21c0621e0', '6fdcb499-5d2f-4ede-89ef-fa7f2dd1458b']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('8507fdb9-a60b-40b1-bb0d-29fe807ac4f1', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('8bb05d08-6b4b-4caa-bda7-95a21c0621e0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('0da21807-807e-44ca-92f0-974ae2516505', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['468cc8db-d069-4263-866e-6f22931b6677']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('468cc8db-d069-4263-866e-6f22931b6677', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('6fdcb499-5d2f-4ede-89ef-fa7f2dd1458b', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('24e1e72a-1f6f-461c-b330-88ece9fbcca8', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['81d6d74a-f74f-4515-b177-70225ea0d58d']::uuid[])
+    VALUES ('d897ffe6-43a8-4ebc-9881-6097be7711e7', 'Scenario 105 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['fc8cf3fb-4d39-401c-b926-c106a1985dd9', 'a953ffde-862d-45b3-98e6-a96ee8ce7c26']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('81d6d74a-f74f-4515-b177-70225ea0d58d', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('fc8cf3fb-4d39-401c-b926-c106a1985dd9', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('409070c2-1c39-4369-af99-eac945774a3e', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['f5a4785b-7f84-4f50-bd0a-c7eced00f4e7']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f5a4785b-7f84-4f50-bd0a-c7eced00f4e7', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('a953ffde-862d-45b3-98e6-a96ee8ce7c26', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('a8cf6af9-f5bc-4658-b59e-72c2d3ce47b4', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['911885cb-05e5-4235-98fb-5dfbeff86649']::uuid[])
+    VALUES ('95aa9a6b-b80a-4dcc-a0a4-228f53bc7959', 'Scenario 106 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['3e2dfea9-609e-44f2-b18f-33ec40524833', '36cea940-cd27-4ae3-9b34-6129b20e558c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('911885cb-05e5-4235-98fb-5dfbeff86649', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('3e2dfea9-609e-44f2-b18f-33ec40524833', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('4b4ecc21-66a3-4fd5-852f-389854dfc7bd', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['a8d86700-ca54-46de-8a50-14e14dd46a6c']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('a8d86700-ca54-46de-8a50-14e14dd46a6c', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('36cea940-cd27-4ae3-9b34-6129b20e558c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('c7ab4258-ca5d-4836-a537-479dcd5a9cc4', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['30926153-4640-4db1-9ca9-acb43bbc4fc7']::uuid[])
+    VALUES ('0330f00b-412e-44d5-b7cc-23bebd26fa88', 'Scenario 107 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['07f64c1d-1287-4672-b807-137fcc9ebe7b', '22898189-e733-4d34-ae6d-9aeffbe1a457']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('30926153-4640-4db1-9ca9-acb43bbc4fc7', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('07f64c1d-1287-4672-b807-137fcc9ebe7b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('5fb73c01-21f3-4683-8941-ecb152fc3250', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['869de905-6ecd-4747-8d87-1e9ca052cd45']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('869de905-6ecd-4747-8d87-1e9ca052cd45', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('22898189-e733-4d34-ae6d-9aeffbe1a457', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('cf8d2bb1-71a4-49a0-bd08-8e94bac8b3c9', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['abdfb5fa-d28a-4488-aa9f-b56e27af87e6']::uuid[])
+    VALUES ('9742751d-d670-4310-97ab-a14973112470', 'Scenario 108 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['804fc8af-dabe-45a5-b577-d84f43f9cd3f', '5cf2413a-0523-4d1c-9ef4-fee88393a227']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('abdfb5fa-d28a-4488-aa9f-b56e27af87e6', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('804fc8af-dabe-45a5-b577-d84f43f9cd3f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('d95e1a1d-7c20-4b1a-87b0-e38b73da94da', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['4dd8390f-be6b-4ec3-a47d-a44d127955ab']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('4dd8390f-be6b-4ec3-a47d-a44d127955ab', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('5cf2413a-0523-4d1c-9ef4-fee88393a227', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('3f9aced0-f3d9-48a7-ab8c-393c958398ef', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['464ccd1d-50bd-43da-87eb-d9513c65ec46']::uuid[])
+    VALUES ('72df8c4b-f0ef-438d-9858-88053cb188c1', 'Scenario 109 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['323c29e8-7a6f-4162-ac4d-e9ab12704992', '1841cc5c-6bf6-48f0-b54c-69c844d1a957']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('464ccd1d-50bd-43da-87eb-d9513c65ec46', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('323c29e8-7a6f-4162-ac4d-e9ab12704992', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('e9c71419-692f-4c36-9486-9ada0ea5e828', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['da26da82-812b-42ac-906b-3844858e4a46']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('da26da82-812b-42ac-906b-3844858e4a46', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('1841cc5c-6bf6-48f0-b54c-69c844d1a957', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('768b3e86-cfda-490a-bc71-9bbeed0689f7', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['36b0fc24-bd10-4156-8ed0-04fe3e2601a4']::uuid[])
+    VALUES ('05b4cb03-5576-4d79-9afa-1c6318d632ec', 'Scenario 110 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f4665504-35ba-48f8-ab7c-748e4378233c', '4084fd1e-525f-4103-8fe9-7accd4f3bff0']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('36b0fc24-bd10-4156-8ed0-04fe3e2601a4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('f4665504-35ba-48f8-ab7c-748e4378233c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('89ddcbab-a4fd-425c-a531-a83646333d06', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['bab98206-b655-40c3-a001-26a2386e0c7f']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('bab98206-b655-40c3-a001-26a2386e0c7f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('4084fd1e-525f-4103-8fe9-7accd4f3bff0', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('83c92a87-06d6-49d3-8093-f5d0906cc7c5', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['b4fe671b-23d4-48bf-83d8-e2dcc7232a66']::uuid[])
+    VALUES ('6db73b00-b6f1-4f63-9fd0-49f518361ee2', 'Scenario 111 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['e7a5c603-309a-4a4c-a5d2-622fb512dbed', 'e078e1f1-3fcd-4a29-b92e-eb587ffba3c4']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b4fe671b-23d4-48bf-83d8-e2dcc7232a66', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('e7a5c603-309a-4a4c-a5d2-622fb512dbed', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('2044f1ca-d8ba-4901-b55e-f5689607070c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['2a606050-f046-485e-aeb5-10cbc0e5ddcc']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2a606050-f046-485e-aeb5-10cbc0e5ddcc', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('e078e1f1-3fcd-4a29-b92e-eb587ffba3c4', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('f6fd6524-c5c8-4354-9ec1-9dc358546e69', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['8c14d4a6-ae50-4b34-bc7b-170af07d4ad2']::uuid[])
+    VALUES ('69df632e-d2aa-4005-a9e2-1c5e07eeebd9', 'Scenario 112 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['beb7a7ac-2f4c-4b79-9237-18d4f88f9a50', '2bb30753-995b-47d7-9ad5-4182b148aca5']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('8c14d4a6-ae50-4b34-bc7b-170af07d4ad2', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('beb7a7ac-2f4c-4b79-9237-18d4f88f9a50', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('00c4fbf5-f379-4a2d-88a8-61499cc5bd32', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['2fa4f831-2e23-4bf0-87ed-552792dc0562']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2fa4f831-2e23-4bf0-87ed-552792dc0562', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('2bb30753-995b-47d7-9ad5-4182b148aca5', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('65d2aca4-f549-4483-8bd7-afde39d16238', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['bbe476a3-ddba-4df6-b418-adaab9e65fae']::uuid[])
+    VALUES ('09aff9df-7c67-4810-8e13-90f8c9bd05a1', 'Scenario 113 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['1d778112-b0b5-4e7d-a8df-4ad15a95045e', '8f9156a8-42e0-4345-9bf4-a5af9a1e3d29']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('bbe476a3-ddba-4df6-b418-adaab9e65fae', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('1d778112-b0b5-4e7d-a8df-4ad15a95045e', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('0cfcabbd-883f-4028-8a12-358c8fa451da', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['898288f8-760b-4ffa-a66a-95a2df22d7bf']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('898288f8-760b-4ffa-a66a-95a2df22d7bf', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('8f9156a8-42e0-4345-9bf4-a5af9a1e3d29', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('c282e296-90d1-4dc7-a7b2-5934a507c150', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['866f26fe-6478-4d13-be52-4b6f0cfab0e2']::uuid[])
+    VALUES ('3de1e810-7abe-4dd4-9663-e19270c37c52', 'Scenario 114 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['47a9a474-25da-45fc-bb60-ac3728fd23d0', '6b935e60-23a9-41a0-80ba-90785cffb7ef']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('866f26fe-6478-4d13-be52-4b6f0cfab0e2', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('47a9a474-25da-45fc-bb60-ac3728fd23d0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('38ecc44c-38c0-48a3-82b4-ed51b12d5e81', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['323a16cd-2bc6-4c40-9f47-0331c5732b38']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('323a16cd-2bc6-4c40-9f47-0331c5732b38', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('6b935e60-23a9-41a0-80ba-90785cffb7ef', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('bb3bab27-c9c1-4953-8ebd-9175011487e0', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['8caf336f-72a8-4674-a778-f43979eda054']::uuid[])
+    VALUES ('afd8d475-9bd3-4740-a5be-293cd211b34d', 'Scenario 115 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['87b1300a-630a-4f9d-9088-ac2e35f826aa', '6cb29511-2f90-47f2-b45f-8b5b466abd44']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('8caf336f-72a8-4674-a778-f43979eda054', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('87b1300a-630a-4f9d-9088-ac2e35f826aa', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('4a8e97b9-14bd-4ed3-b508-0e448819f9ba', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['5dcc02ba-4a14-45ad-b2f3-70b3949b6720']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('5dcc02ba-4a14-45ad-b2f3-70b3949b6720', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('6cb29511-2f90-47f2-b45f-8b5b466abd44', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('230d420f-83e1-4e26-afa3-5a661dd9c7d1', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['b6a16c5e-a040-4b47-ae75-1e9343c9153b']::uuid[])
+    VALUES ('de0a8389-d573-483c-811b-e7829bd58a54', 'Scenario 116 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['81da31a3-2270-49f4-b493-a311cda33e36', '6c3d4ca6-5acc-4c20-b79e-f9a1e8ee2e79']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b6a16c5e-a040-4b47-ae75-1e9343c9153b', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('81da31a3-2270-49f4-b493-a311cda33e36', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('89f966c8-50b4-44c5-90ad-0b6f6966972c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c835b855-7074-4e03-810f-14867eb675de']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c835b855-7074-4e03-810f-14867eb675de', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('6c3d4ca6-5acc-4c20-b79e-f9a1e8ee2e79', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('0b5fe6bc-e533-4348-9b03-1e448a4e9d0f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['ff4157be-62b8-4637-b5ad-624726c146a4']::uuid[])
+    VALUES ('65b60f43-6a71-4c7b-805f-6c3f564c87bb', 'Scenario 117 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['cf28792f-1ae3-4ec9-994a-e05860429de6', '78e05b9c-ca04-4258-8b6f-96cd3ae83f71']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('ff4157be-62b8-4637-b5ad-624726c146a4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('cf28792f-1ae3-4ec9-994a-e05860429de6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('c9f23f05-cb01-455f-8b94-9f72711cc865', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['09bc0653-1fed-4b27-8f14-b5c7437a9899']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('09bc0653-1fed-4b27-8f14-b5c7437a9899', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('78e05b9c-ca04-4258-8b6f-96cd3ae83f71', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('c5348916-393e-48f9-b543-e24a19d1055c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c52ca1b4-9299-4648-987d-5880b4741314']::uuid[])
+    VALUES ('8d1746ff-83c6-4675-acd7-01a2a654ec0a', 'Scenario 118 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b262d34b-e8da-4a01-8961-9f6f01112510', 'b6153738-6b5a-47e5-a5ef-b82c52277a95']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c52ca1b4-9299-4648-987d-5880b4741314', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('b262d34b-e8da-4a01-8961-9f6f01112510', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('a0e8b5fe-c6d6-4865-b091-7b46829ccc5d', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['9c766df1-ad85-4876-88c7-271998051e35']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('9c766df1-ad85-4876-88c7-271998051e35', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('b6153738-6b5a-47e5-a5ef-b82c52277a95', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('75d36e79-55db-40b8-802f-9a7b246a6cf5', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['5e4dc850-3b7c-4fdf-a488-26e5e0974120']::uuid[])
+    VALUES ('011866d3-76a6-4b5a-9c42-447e2d567892', 'Scenario 119 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b1cf2122-c5f6-4623-ab6d-4a1d265dbee0', 'be23ebab-753d-47f7-84bc-1f105e54ec67']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('5e4dc850-3b7c-4fdf-a488-26e5e0974120', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('b1cf2122-c5f6-4623-ab6d-4a1d265dbee0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('c047ab1d-acd5-4338-9290-e3871034e328', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['bd2a0423-19d5-4cf2-aaaf-749c13d74cd4']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('bd2a0423-19d5-4cf2-aaaf-749c13d74cd4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('be23ebab-753d-47f7-84bc-1f105e54ec67', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('ea181956-5cab-416e-9590-9956a8409731', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['576a9fe2-1334-42b6-b4ed-fe97da2e3a2e']::uuid[])
+    VALUES ('23d5ddd1-1fb0-4149-bf59-a2e7cd34213a', 'Scenario 120 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f2677147-bd17-4bd5-a88a-f9e98a0515f7', '3007cf78-0ad8-41d1-a24c-733b8633b62a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('576a9fe2-1334-42b6-b4ed-fe97da2e3a2e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('f2677147-bd17-4bd5-a88a-f9e98a0515f7', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('0dcf9ae8-a4fe-419c-8254-f9964e67a278', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['9763a275-c58c-43fc-b8ae-ce80c604d75e']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('9763a275-c58c-43fc-b8ae-ce80c604d75e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('3007cf78-0ad8-41d1-a24c-733b8633b62a', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('0f590f1e-d272-4086-adfd-659df0b2ea05', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['33fe8cc9-9dcf-4b15-b6aa-f3a3010cb560']::uuid[])
+    VALUES ('1990750e-de0f-4789-9dcc-dae5b9b99173', 'Scenario 121 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['373538d1-9184-4cc4-9075-f320c16358b7', '4ece88ad-dc7e-4a1e-a0e4-77feee4abf1c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('33fe8cc9-9dcf-4b15-b6aa-f3a3010cb560', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('373538d1-9184-4cc4-9075-f320c16358b7', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('cb39e1b8-9531-49ab-b3e6-4d3eccc30ea2', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['6ccd6cf7-180b-4206-94a1-59ca782791ca']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('6ccd6cf7-180b-4206-94a1-59ca782791ca', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('4ece88ad-dc7e-4a1e-a0e4-77feee4abf1c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('48ef6b2e-c138-4a7e-bdbe-b75d2d668cd8', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['876999d7-981d-4718-a6d4-e3657de71b50']::uuid[])
+    VALUES ('b127b87c-600d-4f28-b74a-e6c33d27e42f', 'Scenario 122 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b567915d-e9a8-4db1-ab27-77d10b00b23d', 'ad91df4b-2ee6-4552-8102-5649296b2f2f']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('876999d7-981d-4718-a6d4-e3657de71b50', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('b567915d-e9a8-4db1-ab27-77d10b00b23d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('55668041-317d-4334-b504-5c4b1a62b47d', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['6e284a52-7334-497e-8e2b-4ed1ece27618']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('6e284a52-7334-497e-8e2b-4ed1ece27618', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('ad91df4b-2ee6-4552-8102-5649296b2f2f', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('922b3bb8-6a35-44d3-b95e-b69cb92ea97f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['831cb485-40bb-4964-8404-04ae47d38b35']::uuid[])
+    VALUES ('bf0f6ceb-62fd-4a92-a7b0-29cf898b05e1', 'Scenario 123 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['6de21d49-097b-41be-b2bb-a987ccc8fb56', '90f138c5-b7fe-4cf7-a518-f2296efe5451']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('831cb485-40bb-4964-8404-04ae47d38b35', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('6de21d49-097b-41be-b2bb-a987ccc8fb56', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('54f3769f-5d8a-4997-ba7a-8ce67a6216cd', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['9e2b934b-be15-4f88-a1da-01eb1e746a35']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('9e2b934b-be15-4f88-a1da-01eb1e746a35', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('90f138c5-b7fe-4cf7-a518-f2296efe5451', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('2f6afe60-20d7-4bce-9827-4c0a48f744b1', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c94dbef1-ca97-4225-be1a-7d29f1db2e27']::uuid[])
+    VALUES ('103881e7-8415-4d6b-90c5-cef06f36b5b3', 'Scenario 124 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['590d7c2b-c209-4419-918d-8cecfb12b089', 'd8d6beab-e1a9-42b3-9073-999693e9fd64']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c94dbef1-ca97-4225-be1a-7d29f1db2e27', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('590d7c2b-c209-4419-918d-8cecfb12b089', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('49ba46a6-5e8d-4e95-80f0-c9443f0911d5', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['905b020a-84ae-43fc-85ab-8eb8d3c7fe2f']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('905b020a-84ae-43fc-85ab-8eb8d3c7fe2f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('d8d6beab-e1a9-42b3-9073-999693e9fd64', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('fc16b1d1-19af-4003-a43b-240c86d52773', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['839abde4-2ded-419e-9d77-d3787e862542']::uuid[])
+    VALUES ('8c558c8b-1a04-4c38-9f98-20cd5c8195a7', 'Scenario 125 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['a166354f-80be-4621-b485-1afa80ef42e2', '65011186-26f6-4e3d-8179-e2bd1f30fe21']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('839abde4-2ded-419e-9d77-d3787e862542', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('a166354f-80be-4621-b485-1afa80ef42e2', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('3757bc0c-6726-423e-8708-2e8632991dd2', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['8583971d-cb74-41bd-aff0-26d3292c5248']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('8583971d-cb74-41bd-aff0-26d3292c5248', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('65011186-26f6-4e3d-8179-e2bd1f30fe21', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('1447a252-1fee-4a61-b11b-b93d4d823d31', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['5b5eb18b-8c86-4adf-a17e-80ff7387345d']::uuid[])
+    VALUES ('5c025c8a-a032-494f-8204-dd92b1067448', 'Scenario 126 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['cf482281-7e9d-43b5-97b2-71fedd958471', 'd34deb20-1708-42fd-ad2d-2cd00e15c423']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('5b5eb18b-8c86-4adf-a17e-80ff7387345d', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('cf482281-7e9d-43b5-97b2-71fedd958471', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('3228888c-d4b3-4814-8008-1d28e4804480', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['1bddf6e7-5ec1-4d7d-ae3f-53e420575766']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('1bddf6e7-5ec1-4d7d-ae3f-53e420575766', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('d34deb20-1708-42fd-ad2d-2cd00e15c423', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('e41ceeb7-c578-4764-91ac-d6d6f8bf7423', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['96c1bef0-a7ed-4acd-b0fe-f49ae66cbcdd']::uuid[])
+    VALUES ('441fe9aa-79d7-4e27-8fb5-213c77c4f295', 'Scenario 127 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['36ffcc4b-a24c-47f7-b903-493310d54981', '5d0d5e02-bbe2-4754-b9ac-6f52346a59ae']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('96c1bef0-a7ed-4acd-b0fe-f49ae66cbcdd', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('36ffcc4b-a24c-47f7-b903-493310d54981', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('38e6efd6-7b0f-4631-bef6-e84d73d8eb78', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['7768c540-c1c9-4da6-a253-d11bcd25c006']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('7768c540-c1c9-4da6-a253-d11bcd25c006', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('5d0d5e02-bbe2-4754-b9ac-6f52346a59ae', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('626ee2b5-094c-4f33-a54f-a3641d29e6ac', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['98b9495c-625c-4bdc-8e00-a1c528428707']::uuid[])
+    VALUES ('b630c1ad-f3a1-41c3-8e34-735a78dec9d1', 'Scenario 128 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b71b7989-60b0-4d05-9eab-826c59bec671', '4597805c-46cd-49b0-9bba-9b0c2289f1e0']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('98b9495c-625c-4bdc-8e00-a1c528428707', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('b71b7989-60b0-4d05-9eab-826c59bec671', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('a454fb44-6d14-4f23-8541-52c03f79de63', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['e5a21e4a-2fab-408d-96bf-67e0858e2326']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('e5a21e4a-2fab-408d-96bf-67e0858e2326', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('4597805c-46cd-49b0-9bba-9b0c2289f1e0', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5eb22519-5f4c-41f6-860c-37ab602c2f50', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['cab7b872-85a3-4d87-8ec9-17576f973b31']::uuid[])
+    VALUES ('3200dbee-2685-48c7-a7dc-2e780853efda', 'Scenario 129 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d49d49cf-7608-4ff0-8ac0-adb5d3ba4824', '00cd6ddb-ade1-40f0-84d6-aa4b1e817be2']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('cab7b872-85a3-4d87-8ec9-17576f973b31', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('d49d49cf-7608-4ff0-8ac0-adb5d3ba4824', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('5010b64a-5a35-4547-a273-d06825fa4548', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['9b43e0d5-25a1-41bf-91fe-2c496f515e2c']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('9b43e0d5-25a1-41bf-91fe-2c496f515e2c', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('00cd6ddb-ade1-40f0-84d6-aa4b1e817be2', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('49021ab7-9380-440c-b083-9cd5ef8d53f6', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['198445ce-796c-40cf-ba32-bb30a6ccd59e']::uuid[])
+    VALUES ('46583ddd-855b-4e6d-8711-d7b5a4fd26c1', 'Scenario 130 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c795f997-0292-40fe-ae08-02a19d5f5fcd', 'b0d6d37d-b2d6-473e-8f28-9493a172b805']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('198445ce-796c-40cf-ba32-bb30a6ccd59e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('c795f997-0292-40fe-ae08-02a19d5f5fcd', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('e5b19842-c60b-4248-8873-05f92b540149', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['3b9700b0-42b5-4431-8e4e-7500d65ee0c7']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('3b9700b0-42b5-4431-8e4e-7500d65ee0c7', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('b0d6d37d-b2d6-473e-8f28-9493a172b805', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('8b6b0d08-143f-4111-9ed6-155138338964', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['f5296fd5-de8f-4629-951a-68ec798ef3a2']::uuid[])
+    VALUES ('a497e35d-fd84-4be2-a45d-f847962cd5f8', 'Scenario 131 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['5b85ebe9-f610-4a1a-8c71-ec6425a493dc', 'c0e63270-e320-4d5a-8f9c-89d27758a0d3']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f5296fd5-de8f-4629-951a-68ec798ef3a2', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('5b85ebe9-f610-4a1a-8c71-ec6425a493dc', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('15874677-bcdd-48c3-9d4d-768952e23384', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['7a03b178-4743-4824-bf45-b57fd0d848cb']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('7a03b178-4743-4824-bf45-b57fd0d848cb', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('c0e63270-e320-4d5a-8f9c-89d27758a0d3', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('745abc39-ef88-40a9-9b6d-a3bbcca4ad2c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['9f9b187d-57c2-4758-b572-360a2253a4f1']::uuid[])
+    VALUES ('295d5dc4-f4d4-4016-8fc0-4badd1b9c94e', 'Scenario 132 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2ad34efc-046d-42d1-b29e-6d2f5e76f5b1', '330941f5-2289-448f-86e1-ff5595f2b9df']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('9f9b187d-57c2-4758-b572-360a2253a4f1', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('2ad34efc-046d-42d1-b29e-6d2f5e76f5b1', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('0d166694-2fb7-4320-bd2e-2cfccb84ddbe', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['7144256e-4d23-43a6-9467-2169fa32150e']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('7144256e-4d23-43a6-9467-2169fa32150e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('330941f5-2289-448f-86e1-ff5595f2b9df', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('b43fb8d4-613e-481d-b4e7-d731dc1218c9', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['ea554896-cf33-4cf5-b31d-4320c9bf2f55']::uuid[])
+    VALUES ('f8934f7d-e1f6-462e-8a12-dc82c440bc90', 'Scenario 133 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['5f4d93ba-e8f1-4644-a2d0-0868cc8b932a', '1c1e81db-28fe-4f34-8a7e-99182c8ae009']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('ea554896-cf33-4cf5-b31d-4320c9bf2f55', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('5f4d93ba-e8f1-4644-a2d0-0868cc8b932a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('a2a78e18-97e0-4c44-bb02-b533cf0466c0', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['04123c2c-cf90-4461-a304-eef664d5a4c3']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('04123c2c-cf90-4461-a304-eef664d5a4c3', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('1c1e81db-28fe-4f34-8a7e-99182c8ae009', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('e4fc374e-6749-4ddb-b452-1420d5c2f7de', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['02bc94c5-880e-4420-93b6-7662ebf18f2d']::uuid[])
+    VALUES ('30fd755b-9f29-4330-b4d3-8eccc44ffade', 'Scenario 134 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c7faaad0-fc28-4983-91da-d28db92bd1b0', '3b0b9a54-98a3-432e-aacf-f4d5116e3e39']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('02bc94c5-880e-4420-93b6-7662ebf18f2d', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('c7faaad0-fc28-4983-91da-d28db92bd1b0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('c7042b3b-0a30-4804-9a5c-54751ea3d6fb', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['06f822f9-2b64-4aea-8658-d6ac61b5b985']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('06f822f9-2b64-4aea-8658-d6ac61b5b985', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('3b0b9a54-98a3-432e-aacf-f4d5116e3e39', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('3e3df180-1d81-4cbc-9b41-531b0e653a8f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['f4503ec9-c74c-423e-abaa-992a19a25e10']::uuid[])
+    VALUES ('a9cf3c28-8b08-451a-830f-b737936a9579', 'Scenario 135 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d8ea3306-2e4f-4cdb-9a82-5f0cf76113f2', 'c3c104fd-989c-4fe3-a751-be8b1079406c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f4503ec9-c74c-423e-abaa-992a19a25e10', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('d8ea3306-2e4f-4cdb-9a82-5f0cf76113f2', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('0ca35e34-cdfa-41cc-a26f-06a76b46a90e', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['3cc3c2df-f577-43f1-b984-4b9eb9a46909']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('3cc3c2df-f577-43f1-b984-4b9eb9a46909', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('c3c104fd-989c-4fe3-a751-be8b1079406c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('0c4c336a-22cd-49fe-98d1-cde93e3b7996', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['cc48579c-12df-4391-82ef-c10b2a8923b9']::uuid[])
+    VALUES ('273b434f-74b7-4581-9d69-13f030b67313', 'Scenario 136 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['22d8222b-1a16-4803-b1cf-8922ff4a51a6', '2b526862-acd5-412e-ae3f-154af9d93dc6']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('cc48579c-12df-4391-82ef-c10b2a8923b9', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('22d8222b-1a16-4803-b1cf-8922ff4a51a6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('70be8aae-3eb8-4a15-9ee9-ae6be507b427', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['a525833e-5344-43f2-a6a3-58e0ea80d9cf']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('a525833e-5344-43f2-a6a3-58e0ea80d9cf', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('2b526862-acd5-412e-ae3f-154af9d93dc6', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('19c6e09d-c93a-4a78-aa81-450b1d7a3aa0', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['32c58d92-8325-4ec7-903b-7dcdd9e3ed22']::uuid[])
+    VALUES ('fcf115d7-4246-4790-a89d-666f368b3356', 'Scenario 137 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['1e651fa2-d09d-4cfd-8920-ae87da82e8cd', '739ddb59-eeba-4cbe-b3fe-6ee6ffe64b54']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('32c58d92-8325-4ec7-903b-7dcdd9e3ed22', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('1e651fa2-d09d-4cfd-8920-ae87da82e8cd', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('119ded2a-7561-47b2-b47e-88c2274e0412', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['01fcf1ee-8be7-4148-8074-7e346e2e9ab7']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('01fcf1ee-8be7-4148-8074-7e346e2e9ab7', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('739ddb59-eeba-4cbe-b3fe-6ee6ffe64b54', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('7b74f972-5e86-46d7-bb19-d76302e52c0f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['6826e4ea-5d49-44bd-b9d9-e800dd4dba87']::uuid[])
+    VALUES ('c1306680-d5e0-4629-939d-ee9e3f4c439b', 'Scenario 138 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f80f23e3-9fad-45a7-ac66-54745c8894a8', '907f8a10-3697-44fd-8f53-cb3563bf3f93']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('6826e4ea-5d49-44bd-b9d9-e800dd4dba87', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('f80f23e3-9fad-45a7-ac66-54745c8894a8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('53b1fa05-9eb5-4550-a796-61eb4839962c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['11a5dccf-bcc3-4eae-9691-2b3bd7884f7e']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('11a5dccf-bcc3-4eae-9691-2b3bd7884f7e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('907f8a10-3697-44fd-8f53-cb3563bf3f93', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('931fcaad-aba2-4260-b2a9-1e9176f4ca92', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['ae54c489-26a8-4978-954a-d6ce9b465c91']::uuid[])
+    VALUES ('a5cafc37-5ab6-40b2-8c1b-19089e724b1d', 'Scenario 139 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['8620c1c3-60b1-4be2-8f51-43a6814eaa38', 'f7382c5d-b8a5-416b-ad9e-7640cebc3cf1']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('ae54c489-26a8-4978-954a-d6ce9b465c91', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('8620c1c3-60b1-4be2-8f51-43a6814eaa38', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('71b28e23-e9e3-49c8-b4e3-f8168f9a7aa7', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['3773164c-651b-4a46-9905-8bfe212143f6']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('3773164c-651b-4a46-9905-8bfe212143f6', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('f7382c5d-b8a5-416b-ad9e-7640cebc3cf1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('1848326e-e8d7-40fb-bf4a-13ceb6a2f195', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['626e988a-4f6c-4f5f-bbab-316f3a69991b']::uuid[])
+    VALUES ('34606fe8-3ba5-4778-a7f0-0275c1def3b8', 'Scenario 140 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b142c94e-b58e-4a05-b4f1-60088e5c43d8', 'cc10b36a-186e-49a2-9488-8a4aeae83550']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('626e988a-4f6c-4f5f-bbab-316f3a69991b', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('b142c94e-b58e-4a05-b4f1-60088e5c43d8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('98673dbb-ef9f-42a3-9305-d727b1c8f622', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['aaff124f-aa13-46d9-8f12-e89ba1b97769']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('aaff124f-aa13-46d9-8f12-e89ba1b97769', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('cc10b36a-186e-49a2-9488-8a4aeae83550', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('520d8206-bfc4-410c-a21d-950e013d0c01', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['1a303c22-b2c9-4e4d-ac93-7836eb5355a1']::uuid[])
+    VALUES ('2d6ffd36-f33d-4a68-9868-53c7aa3f4011', 'Scenario 141 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d3f061d0-c59f-49e6-b12d-a935a00aa19f', '405cba12-df32-4e83-8066-019508c53c19']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('1a303c22-b2c9-4e4d-ac93-7836eb5355a1', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('d3f061d0-c59f-49e6-b12d-a935a00aa19f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('42e53e34-8dfc-4b71-81b0-785f6c3ebae9', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['32824c44-835c-4b6b-8255-a94d805b97f9']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('32824c44-835c-4b6b-8255-a94d805b97f9', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('405cba12-df32-4e83-8066-019508c53c19', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('8ce00435-a52a-4b71-ae13-1605435dc240', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['2b3bb2db-323a-49ab-8093-6d6828a74922']::uuid[])
+    VALUES ('38e4e4d4-f801-42a0-8eac-a1a9a41a8a3e', 'Scenario 142 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c2335c97-56a7-44b5-a595-c6ed8b34c61b', '6ebf3466-fe97-4a5e-b0b6-668198637898']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2b3bb2db-323a-49ab-8093-6d6828a74922', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('c2335c97-56a7-44b5-a595-c6ed8b34c61b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('6acf7c38-e1ce-4dcb-b4c5-6a04ce45464f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['8bc5b5a3-4ac8-4452-a6ef-03f5a44476f5']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('8bc5b5a3-4ac8-4452-a6ef-03f5a44476f5', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('6ebf3466-fe97-4a5e-b0b6-668198637898', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5b408424-15d5-4da7-9328-cc5199f87539', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['e4506ac2-bc23-4abd-ab39-6b63105931b9']::uuid[])
+    VALUES ('bec0103f-bdf4-42b5-b04e-a44528b8c8d1', 'Scenario 143 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['6d055f50-8ae0-468d-9fb9-17937e07ac77', '0022129a-bc45-463f-89f4-9447b9f4368e']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('e4506ac2-bc23-4abd-ab39-6b63105931b9', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('6d055f50-8ae0-468d-9fb9-17937e07ac77', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('a31cfb93-eabb-41ba-9a64-ccb927eeae96', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['99e3accc-ede4-443b-971d-13ec25f32acf']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('99e3accc-ede4-443b-971d-13ec25f32acf', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('0022129a-bc45-463f-89f4-9447b9f4368e', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('edbd48b5-10c3-49de-8126-3610e2d035ab', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['30cd73bf-d8df-49fa-b2c8-0593f89c2815']::uuid[])
+    VALUES ('1e01bc5e-dcdb-4ef1-94a6-f4e3a77613b8', 'Scenario 144 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b1cccbf3-a1ac-44b3-ae33-f61d3b889dd3', 'd5b5c730-c9ba-4750-bc74-5ad758085cd3']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('30cd73bf-d8df-49fa-b2c8-0593f89c2815', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('b1cccbf3-a1ac-44b3-ae33-f61d3b889dd3', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('194174bd-76f0-4653-8b25-6f554ead70da', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c610aa1e-3aef-451f-9fc8-31de6fdc3243']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c610aa1e-3aef-451f-9fc8-31de6fdc3243', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('d5b5c730-c9ba-4750-bc74-5ad758085cd3', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('c14d38ba-6e88-446e-8f1c-67b8817e0f7c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['fca44723-8436-46f9-a9ec-eb8743f9099a']::uuid[])
+    VALUES ('5debda2f-e5c1-447e-b025-d71252591074', 'Scenario 145 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['a54e17a4-f6fe-4fd2-b229-1a3a62cc8021', '4ac2a873-ee4a-459a-9ab7-f7555a22d191']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('fca44723-8436-46f9-a9ec-eb8743f9099a', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('a54e17a4-f6fe-4fd2-b229-1a3a62cc8021', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('b9c80185-03f3-4e8f-8716-083eb88644c4', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['501361f5-f09b-4459-b634-01253a4515b3']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('501361f5-f09b-4459-b634-01253a4515b3', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('4ac2a873-ee4a-459a-9ab7-f7555a22d191', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('bba281ad-e3f0-4381-ae8f-dd275663ab28', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['8bd8244f-9d55-4bc9-b223-8db1f571c28f']::uuid[])
+    VALUES ('2d8872a4-f002-4294-9396-91d9cefabdb7', 'Scenario 146 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['cd246af2-0ce5-4baa-bfce-c99cd7c16ec6', 'f5d587db-8ba3-4c4e-8cf5-b3ecc1a4eaf6']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('8bd8244f-9d55-4bc9-b223-8db1f571c28f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('cd246af2-0ce5-4baa-bfce-c99cd7c16ec6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('8b8f6e46-e617-4443-b9cd-94d1a24abb6b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['28894d09-bfa1-47d8-bcd1-b6b29f0639e7']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('28894d09-bfa1-47d8-bcd1-b6b29f0639e7', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('f5d587db-8ba3-4c4e-8cf5-b3ecc1a4eaf6', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('b9db8896-21a6-4e85-94b6-80b7fdfc011b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['99901ba7-f8db-4a9f-85ec-485b3767fdf4']::uuid[])
+    VALUES ('ac4adfe9-a213-45bd-843b-f346c9891b2c', 'Scenario 147 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['fc8357db-964c-49ac-a72f-347ce4c70eb6', 'f61d83d5-1bc6-4bf5-ad03-e43d66c8aca7']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('99901ba7-f8db-4a9f-85ec-485b3767fdf4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('fc8357db-964c-49ac-a72f-347ce4c70eb6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('8c64b3db-4823-4636-b89b-309916055d71', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['86f42c72-5ce7-4d06-815d-64b8fa4dbfde']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('86f42c72-5ce7-4d06-815d-64b8fa4dbfde', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('f61d83d5-1bc6-4bf5-ad03-e43d66c8aca7', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('f5489742-c695-4181-8b87-aa14973d3dfa', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['2368862e-0f95-490c-8885-8e975940df5a']::uuid[])
+    VALUES ('b59c4643-2b45-45e4-89f7-007ef1955c9f', 'Scenario 148 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['e3904655-f187-484c-ac97-50b955cbe50c', '8f4a8893-ae23-41bc-8abb-e15840bb8d71']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2368862e-0f95-490c-8885-8e975940df5a', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('e3904655-f187-484c-ac97-50b955cbe50c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('bc6d985e-1250-4921-aa81-a27bb5259905', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['19c6c4e7-988c-4555-aae3-606824da9f8d']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('19c6c4e7-988c-4555-aae3-606824da9f8d', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('8f4a8893-ae23-41bc-8abb-e15840bb8d71', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('55cb04ff-40be-4eed-94e8-51da3ce86481', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['30ba1e68-4cec-47aa-9a98-bfb613ea2b9e']::uuid[])
+    VALUES ('f56f6f85-9aff-4f4e-bd84-8d763708e76f', 'Scenario 149 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['cfb4b0f1-2d55-4457-9f7e-959fd19189d4', '3b63ceb3-1e82-467b-987f-61a62ccc355c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('30ba1e68-4cec-47aa-9a98-bfb613ea2b9e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('cfb4b0f1-2d55-4457-9f7e-959fd19189d4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenario_definitions
-    (id, name, description, field_ids)
-    VALUES ('6d0e1038-31f5-4995-9392-cb82efcb136c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['4523974b-e64a-403a-a20f-e469179ba62f']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('4523974b-e64a-403a-a20f-e469179ba62f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('3b63ceb3-1e82-467b-987f-61a62ccc355c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO test_definitions
@@ -2715,7 +3477,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('437971ac-6616-429b-ad27-f8796772c570', 'primary', 'This KPI aims to quantify the efficiency gains of AI integration by measuring how AI impacts execution time and delays. Specifically, it helps determine whether AI: <br/>- Reduces execution time deviations <br/>- Minimizes delays<br/>- Enhances consistency and reliability in operations. <br/>By evaluating these metrics, we can assess the AI’s effectiveness in improving human decision-making, reducing intervention time, and optimizing operational workflows. <br/>This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. <br/>This KPI is linked with project’s Long Term Expected Impact (LTEI) (LTEI1)KPIS-4, 3-6% improvement in flight capacity and mile extension. ', array['de36c069-a167-4c22-8b30-3f93e6588507']::uuid[])
+    VALUES ('437971ac-6616-429b-ad27-f8796772c570', 'Scenario 1 - The reduction in delay KPI aims to quantify the time gained overall and for each airplane, with the introduction of AI. ', 'This KPI aims to quantify the efficiency gains of AI integration by measuring how AI impacts execution time and delays. Specifically, it helps determine whether AI:<br/>- Reduces execution time deviations<br/>- Minimizes delays<br/>- Enhances consistency and reliability in operations.<br/>By evaluating these metrics, we can assess the AI’s effectiveness in improving human decision-making, reducing intervention time, and optimizing operational workflows.<br/>This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>This KPI is linked with project’s Long Term Expected Impact (LTEI) (LTEI1)KPIS-4, 3-6% improvement in flight capacity and mile extension. ', array['de36c069-a167-4c22-8b30-3f93e6588507']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2735,7 +3497,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('c5219c2e-c3b9-4e7a-aefc-b767a9b3005d', 'primary', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- To assess the speed of AI-assisted decision-making in railway operations. <br/>- To ensure rapid re-scheduling of trains in response to disturbances, minimizing the impact on passengers and freight. <br/>- To compare AI-assisted response times with traditional manual re-scheduling approaches. ', array['35d6834e-5f89-438b-adcc-326bbeda93e2']::uuid[])
+    VALUES ('c5219c2e-c3b9-4e7a-aefc-b767a9b3005d', 'Scenario 1 - The Response Time KPI measures the time taken by the AI-assisted railway re-scheduling system to generate a new operational schedule in response to a disruption. This metric evaluates how quickly the system reacts to unexpected events, ensuring minimal delays and maintaining operational efficiency. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the speed of AI-assisted decision-making in railway operations.<br/>- To ensure rapid re-scheduling of trains in response to disturbances, minimizing the impact on passengers and freight.<br/>- To compare AI-assisted response times with traditional manual re-scheduling approaches. ', array['35d6834e-5f89-438b-adcc-326bbeda93e2']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2755,7 +3517,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('22ef21e7-d00d-4c3b-8484-7110e024a4f5', 'primary', 'The System efficiency KPI aims to evaluate the effectiveness of the AI solution in real operational conditions, considering not just its raw response time but also the quality and usability of its assistance. This includes how the AI presents its advice, its ease of use, the accuracy of its recommendations, and how well it integrates with existing data and workflows. <br/>The evaluation will measure the AI-human collaboration, focusing on: <br/>- Response efficiency: The time taken for the AI to generate advice and for the human operator to act on it. <br/>- Advice clarity & usability: How well structured, coherent, and understandable the AI’s suggestions are. <br/>- Data integration quality: How seamlessly the AI incorporates relevant information into its recommendations. <br/>- Human correction factor: Whether and how often the operator needs to correct or refine the AI’s output. <br/>- Decision-making speed: The overall reduction in response time achieved through AI-assisted operation. <br/>By considering these factors, the tests aim to assess how well the AI minimizes human intervention while maximizing efficiency, accuracy, and usability in decision-making. <br/>This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['e11b124d-af80-42b7-86d1-355ce9ee83c9']::uuid[])
+    VALUES ('22ef21e7-d00d-4c3b-8484-7110e024a4f5', 'Scenario 1 - System efficiency measures the efficiency of the system in delivering trustworthy solutions requiring less effort and time to deliver an appropriate response by the operator.  ', 'The System efficiency KPI aims to evaluate the effectiveness of the AI solution in real operational conditions, considering not just its raw response time but also the quality and usability of its assistance. This includes how the AI presents its advice, its ease of use, the accuracy of its recommendations, and how well it integrates with existing data and workflows.<br/>The evaluation will measure the AI-human collaboration, focusing on:<br/>- Response efficiency: The time taken for the AI to generate advice and for the human operator to act on it.<br/>- Advice clarity & usability: How well structured, coherent, and understandable the AI’s suggestions are.<br/>- Data integration quality: How seamlessly the AI incorporates relevant information into its recommendations.<br/>- Human correction factor: Whether and how often the operator needs to correct or refine the AI’s output.<br/>- Decision-making speed: The overall reduction in response time achieved through AI-assisted operation.<br/>By considering these factors, the tests aim to assess how well the AI minimizes human intervention while maximizing efficiency, accuracy, and usability in decision-making.<br/>This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['e11b124d-af80-42b7-86d1-355ce9ee83c9']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2765,7 +3527,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('58ce79e0-5c14-4c51-8d09-89f856361259', 'KPI-TS-035: Total decision time (Power Grid)', 'It is based on the overall time needed to decide, thus including the respective time taken by the AI assistant and human operator. This KPI can be detailed to specifically distinguish the time needed by the AI assistant to provide a recommendation. <br/>An assumption is that a Human Machine Interaction (HMI) module is available.  ', array['10aadaaf-daa4-4098-bd9d-2042ecb488e9']::uuid[], array['1294d425-66bd-4510-b4b3-d9f64ca0e4f9']::uuid[], 'INTERACTIVE', 'PowerGrid')
+    VALUES ('58ce79e0-5c14-4c51-8d09-89f856361259', 'KPI-TS-035: Total decision time (Power Grid)', 'It is based on the overall time needed to decide, thus including the respective time taken by the AI assistant and human operator. This KPI can be detailed to specifically distinguish the time needed by the AI assistant to provide a recommendation.<br/>An assumption is that a Human Machine Interaction (HMI) module is available.  ', array['10aadaaf-daa4-4098-bd9d-2042ecb488e9']::uuid[], array['1294d425-66bd-4510-b4b3-d9f64ca0e4f9']::uuid[], 'INTERACTIVE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2775,7 +3537,8 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('1294d425-66bd-4510-b4b3-d9f64ca0e4f9', 'primary', 'This KPI addresses the following objectives: <br/>1. Given an alert, how much time is left until the problem occurs? <br/>The longer the better since it gives more time to make a decision.   <br/>2. Given an alert, how much time does the AI assistant take to come up with its recommendations to mitigate the issue? <br/>The shorter the better. <br/>3. Given the recommendations by the AI assistant, how much time does the human operator take to make a final decision? <br/>The shorter the better since it indicates that the recommendations are clear and convincing for the human operator. <br/>In case there is no interaction possible between the AI assistant and the human operator, this overall split is not possible. Then there is only one overall time needed to decide, starting from the alert and ending with the final decision by the human operator. <br/>This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['fb1070a5-c929-4cd6-9723-1a5da97bfdf3']::uuid[])
+    VALUES ('1294d425-66bd-4510-b4b3-d9f64ca0e4f9', 'Scenario 1 - It is based on the overall time needed to decide, thus including the respective time taken by the AI assistant and human operator. This KPI can be detailed to specifically distinguish the time needed by the AI assistant to provide a recommendation.
+An assumption is that a Human Machine Interaction (HMI) module is available.  ', 'This KPI addresses the following objectives:<br/>1. Given an alert, how much time is left until the problem occurs?<br/>The longer the better since it gives more time to make a decision.<br/>2. Given an alert, how much time does the AI assistant take to come up with its recommendations to mitigate the issue?<br/>The shorter the better.<br/>3. Given the recommendations by the AI assistant, how much time does the human operator take to make a final decision?<br/>The shorter the better since it indicates that the recommendations are clear and convincing for the human operator.<br/>In case there is no interaction possible between the AI assistant and the human operator, this overall split is not possible. Then there is only one overall time needed to decide, starting from the alert and ending with the final decision by the human operator.<br/>This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['fb1070a5-c929-4cd6-9723-1a5da97bfdf3']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2795,7 +3558,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('ab91af79-ffc3-4da7-916a-6574609dc1b6', 'KPI-CF-012: Carbon intensity (Power Grid)', 'Carbon intensity selectivity estimates the overall carbon intensity of the action recommendation provided by the AI assistant to the human operator: goal of carbon intensity KPI is to measure how much the actions will directly contribute to greenhouse gases emission, by focusing on CO2 (which is unfortunately not the only greenhouse gas).  <br/><br/>which is calculated as the weighted averaged emission factor of generation variation, including: <br/><br/>Redispatching actions, <br/><br/>Curtailment actions. ', array['d63f9bce-a639-4d20-aece-c98a16ed1e7d']::uuid[], array['75d20248-740b-4d84-86e7-1de89f10fc1e']::uuid[], 'CLOSED', 'PowerGrid')
+    VALUES ('ab91af79-ffc3-4da7-916a-6574609dc1b6', 'KPI-CF-012: Carbon intensity (Power Grid)', 'Carbon intensity selectivity estimates the overall carbon intensity of the action recommendation provided by the AI assistant to the human operator: goal of carbon intensity KPI is to measure how much the actions will directly contribute to greenhouse gases emission, by focusing on CO2 (which is unfortunately not the only greenhouse gas).<br/><br/>which is calculated as the weighted averaged emission factor of generation variation, including:<br/><br/>Redispatching actions,<br/><br/>Curtailment actions. ', array['d63f9bce-a639-4d20-aece-c98a16ed1e7d']::uuid[], array['75d20248-740b-4d84-86e7-1de89f10fc1e']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2805,7 +3568,13 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('75d20248-740b-4d84-86e7-1de89f10fc1e', 'primary', 'This KPI is calculated to estimate the relative performance compared to a baseline. <br/>The main difficulty of evaluating and assessing this KPIs lies in the difficulty to establish a proper deadline: <br/>- There is no history of human actions on the digital environments used for evaluation (since they are synthetic ones), <br/>- Comparison with KPI calculated on real grid’s operations (TenneT or RTE) is not relevant since each grid has its own generation mix, and each TSO has its own operation policies (and own redispatching offers). <br/>This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['e0902cd7-63b3-42ce-b8e4-5fc0dd1828b4']::uuid[])
+    VALUES ('75d20248-740b-4d84-86e7-1de89f10fc1e', 'Scenario 1 - Carbon intensity selectivity estimates the overall carbon intensity of the action recommendation provided by the AI assistant to the human operator: goal of carbon intensity KPI is to measure how much the actions will directly contribute to greenhouse gases emission, by focusing on CO2 (which is unfortunately not the only greenhouse gas).
+
+which is calculated as the weighted averaged emission factor of generation variation, including:
+
+Redispatching actions,
+
+Curtailment actions. ', 'This KPI is calculated to estimate the relative performance compared to a baseline.<br/>The main difficulty of evaluating and assessing this KPIs lies in the difficulty to establish a proper deadline:<br/>- There is no history of human actions on the digital environments used for evaluation (since they are synthetic ones),<br/>- Comparison with KPI calculated on real grid’s operations (TenneT or RTE) is not relevant since each grid has its own generation mix, and each TSO has its own operation policies (and own redispatching offers).<br/>This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['e0902cd7-63b3-42ce-b8e4-5fc0dd1828b4']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2825,7 +3594,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5dd33cc9-a4aa-4a61-bd3f-5fae1c1bf701', 'primary', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['2cf2f20b-3970-4568-a8f4-26131ea05c52']::uuid[])
+    VALUES ('5dd33cc9-a4aa-4a61-bd3f-5fae1c1bf701', 'Scenario 1 - Topological action complexity KPI quantifies the topological utilization of the grid and gives insights into how many topological actions are utilized: performing too complex or too many topology actions can indeed navigate the grid into topologies that are either unknown or hard to recover from for operators. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['2cf2f20b-3970-4568-a8f4-26131ea05c52']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2845,7 +3614,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('fc090c38-8740-4911-96aa-2defd06f8715', 'primary', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. <br/><br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI): <br/>- (LTEI1)KPIS-1, 15%-20% reduction in renewable energy curtailment due to optimal exploration of network flexibility with AI (see “Sum of curtailed RES energy volumes”) <br/>- (LTEI1)KPIS-2, 20%-30% avoided electricity demand shedding (see “Sum of remaining energy to be supplied in case of blackout”) ', array['c9b12bc9-ab15-4938-a0f1-1ca0d2434be6']::uuid[])
+    VALUES ('fc090c38-8740-4911-96aa-2defd06f8715', 'Scenario 1 - The operation score KPI for operating a power grid includes the cost of a blackout, the cost of energy losses on the grid, and the cost of remedial actions. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/><br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI):<br/>- (LTEI1)KPIS-1, 15%-20% reduction in renewable energy curtailment due to optimal exploration of network flexibility with AI (see “Sum of curtailed RES energy volumes”)<br/>- (LTEI1)KPIS-2, 20%-30% avoided electricity demand shedding (see “Sum of remaining energy to be supplied in case of blackout”) ', array['c9b12bc9-ab15-4938-a0f1-1ca0d2434be6']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2865,7 +3634,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('bb6302f1-0dc2-43ed-976b-4e5d3126006a', 'primary', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. <br/>- To assess the ripple effects of disruptions across the railway network. <br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays. <br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['87ca95f7-4d83-48ec-94d5-cc654e1b895e']::uuid[])
+    VALUES ('bb6302f1-0dc2-43ed-976b-4e5d3126006a', 'Scenario 1 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['87ca95f7-4d83-48ec-94d5-cc654e1b895e']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2875,7 +3644,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('c69ff5e9-497b-41e8-adff-2221bb823365', 'KPI-AS-068: Assistant adaptation to user preferences (Power Grid)', 'Assistant adaptation to user preferences assesses how the AI assistant adapts to operator’s choices and preferences. <br/>The assistant provides several recommendations which represent different trade-offs of different objectives, and the operator eventually makes one single choice. <br/>This KPI assume that an estimation of epistemic uncertainty is calculated for each action recommendation, which can be used later by the human to select the action in a multi-objective setting. <br/>This KPIs thus aims at measuring: <br/>- Whether the choice that the operator makes is in the set of recommendations proposed by the assistant, <br/>- How is the recommendation chosen by the operator ranked compared to the other ones, <br/>- Whether the recommendation chosen by the operator has a high epistemic uncertainty compared to the other recommendations. ', array['c428c0f7-85d3-4f40-9710-6f8690f5cc9c']::uuid[], array['a68e7062-1329-4a34-ac44-4f6075929902']::uuid[], 'INTERACTIVE', 'PowerGrid')
+    VALUES ('c69ff5e9-497b-41e8-adff-2221bb823365', 'KPI-AS-068: Assistant adaptation to user preferences (Power Grid)', 'Assistant adaptation to user preferences assesses how the AI assistant adapts to operator’s choices and preferences.<br/>The assistant provides several recommendations which represent different trade-offs of different objectives, and the operator eventually makes one single choice.<br/>This KPI assume that an estimation of epistemic uncertainty is calculated for each action recommendation, which can be used later by the human to select the action in a multi-objective setting.<br/>This KPIs thus aims at measuring:<br/>- Whether the choice that the operator makes is in the set of recommendations proposed by the assistant,<br/>- How is the recommendation chosen by the operator ranked compared to the other ones,<br/>- Whether the recommendation chosen by the operator has a high epistemic uncertainty compared to the other recommendations. ', array['c428c0f7-85d3-4f40-9710-6f8690f5cc9c']::uuid[], array['a68e7062-1329-4a34-ac44-4f6075929902']::uuid[], 'INTERACTIVE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -2885,7 +3654,13 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('a68e7062-1329-4a34-ac44-4f6075929902', 'primary', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['c4581424-f519-4f2f-9ca2-35e9aa85be3b']::uuid[])
+    VALUES ('a68e7062-1329-4a34-ac44-4f6075929902', 'Scenario 1 - Assistant adaptation to user preferences assesses how the AI assistant adapts to operator’s choices and preferences.
+The assistant provides several recommendations which represent different trade-offs of different objectives, and the operator eventually makes one single choice.
+This KPI assume that an estimation of epistemic uncertainty is calculated for each action recommendation, which can be used later by the human to select the action in a multi-objective setting.
+This KPIs thus aims at measuring:
+- Whether the choice that the operator makes is in the set of recommendations proposed by the assistant,
+- How is the recommendation chosen by the operator ranked compared to the other ones,
+- Whether the recommendation chosen by the operator has a high epistemic uncertainty compared to the other recommendations. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['c4581424-f519-4f2f-9ca2-35e9aa85be3b']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2915,7 +3690,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('dddb0b01-6bab-408e-9b12-4d7ab8e3b542', 'primary', 'This KPI contributes to evaluating AI-human task allocation balance of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Decision support for the human operator”, “Human Agency and Oversight”, “Human control/autonomy over the process”.  ', array['c4772e39-0e9e-4bb9-8fe6-24a900847f27']::uuid[])
+    VALUES ('dddb0b01-6bab-408e-9b12-4d7ab8e3b542', 'Scenario 1 - This KPI represents human operators’ perceived autonomy over the process when working with the AI assistant measured with a questionnaire. ', 'This KPI contributes to evaluating AI-human task allocation balance of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Decision support for the human operator”, “Human Agency and Oversight”, “Human control/autonomy over the process”.  ', array['c4772e39-0e9e-4bb9-8fe6-24a900847f27']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2935,7 +3710,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('edcf64a8-f1b8-48ec-ab6a-229d5abc1be4', 'primary', 'This KPI contributes to evaluating AI-human task allocation balance of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Decision support for the human operator”, “Human Agency and Oversight”, “Human control/autonomy over the process”.  ', array['e3b66c93-9e69-4ba7-a78f-b7fde9ad8138']::uuid[])
+    VALUES ('edcf64a8-f1b8-48ec-ab6a-229d5abc1be4', 'Scenario 1 - This KPI represents human operators’ perceived autonomy over the process when working with the AI assistant measured with a questionnaire. ', 'This KPI contributes to evaluating AI-human task allocation balance of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Decision support for the human operator”, “Human Agency and Oversight”, “Human control/autonomy over the process”.  ', array['e3b66c93-9e69-4ba7-a78f-b7fde9ad8138']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2955,7 +3730,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('3324347e-e4cb-42a2-9f53-430421090075', 'primary', 'This KPI contributes to evaluating AI-human task allocation balance of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Decision support for the human operator”, “Human Agency and Oversight”, “Human control/autonomy over the process”.  ', array['32b83567-5e58-403c-b509-66a6a53d103c']::uuid[])
+    VALUES ('3324347e-e4cb-42a2-9f53-430421090075', 'Scenario 1 - This KPI represents human operators’ perceived autonomy over the process when working with the AI assistant measured with a questionnaire. ', 'This KPI contributes to evaluating AI-human task allocation balance of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Decision support for the human operator”, “Human Agency and Oversight”, “Human control/autonomy over the process”.  ', array['32b83567-5e58-403c-b509-66a6a53d103c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2975,7 +3750,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('e967a3b5-6d9b-41c2-9897-4e40a186e879', 'primary', 'This KPI compares if the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt. <br/>This KPI will be analyzed together with the “Workload” KPI-WS-040. <br/>This KPI contributes to evaluating AI-human task allocation balance of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['d70b6f48-795a-430d-8c82-288190d35b78']::uuid[])
+    VALUES ('e967a3b5-6d9b-41c2-9897-4e40a186e879', 'Scenario 1 - Impact on the workload KPI assesses operators’ perception of the system impact on their workload (either positive or negative)  ', 'This KPI compares if the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt.<br/>This KPI will be analyzed together with the “Workload” KPI-WS-040.<br/>This KPI contributes to evaluating AI-human task allocation balance of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['d70b6f48-795a-430d-8c82-288190d35b78']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -2995,7 +3770,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('df02b09a-b431-49ee-af6b-ffd709d47670', 'primary', 'This KPI compares if the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt. <br/>This KPI will be analyzed together with the “Workload” KPI-WS-040. <br/>This KPI contributes to evaluating AI-human task allocation balance of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['bb67e013-b02d-460e-be59-e5ef3948e34b']::uuid[])
+    VALUES ('df02b09a-b431-49ee-af6b-ffd709d47670', 'Scenario 1 - Impact on the workload KPI assesses operators’ perception of the system impact on their workload (either positive or negative)  ', 'This KPI compares if the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt.<br/>This KPI will be analyzed together with the “Workload” KPI-WS-040.<br/>This KPI contributes to evaluating AI-human task allocation balance of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['bb67e013-b02d-460e-be59-e5ef3948e34b']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3015,7 +3790,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('fddeb18e-789e-40e0-9680-ca58ae10851f', 'primary', 'This KPI compares if the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt. <br/>This KPI will be analyzed together with the “Workload” KPI-WS-040. <br/>This KPI contributes to evaluating AI-human task allocation balance of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['26c99c3e-8ad1-4241-954f-25f56fade8a0']::uuid[])
+    VALUES ('fddeb18e-789e-40e0-9680-ca58ae10851f', 'Scenario 1 - Impact on the workload KPI assesses operators’ perception of the system impact on their workload (either positive or negative)  ', 'This KPI compares if the inputs of the operators are according to their real psychophysiology. This can act as a verification methodology but also support the AI to adapt.<br/>This KPI will be analyzed together with the “Workload” KPI-WS-040.<br/>This KPI contributes to evaluating AI-human task allocation balance of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. ', array['26c99c3e-8ad1-4241-954f-25f56fade8a0']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3035,7 +3810,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('dff7e358-ff14-45e7-bc22-aac2b50500f3', 'KPI-AF-050: AI-Agent Scalability Training (Railway)', 'AI-Agent Scalability Training measures the elapsed time required by an AI-agent to reach a predefined performance threshold. Time measured both as wallclock time (seconds) as well as steps or episodes according to the domain needs. The performance is defined by the native reward formulation defined by the digital environment or by domain experts. <br/>The time to threshold is measured across:  <br/>(i) Different instance complexities; <br/>(ii) Different hardware availability. <br/>The performance threshold is set empirically and is defined by the cumulative reward formulation specific to the application domain. Note that the reward formulation used to train the agent may differ. For case (i), the type of hardware used should be logged to interpret the wallclock time measurements. ', array['91c4f865-5e81-46d3-bd23-990aa361a828']::uuid[], array['d7cea956-6803-488c-b402-079d13b892c6']::uuid[], 'CLOSED', 'Railway')
+    VALUES ('dff7e358-ff14-45e7-bc22-aac2b50500f3', 'KPI-AF-050: AI-Agent Scalability Training (Railway)', 'AI-Agent Scalability Training measures the elapsed time required by an AI-agent to reach a predefined performance threshold. Time measured both as wallclock time (seconds) as well as steps or episodes according to the domain needs. The performance is defined by the native reward formulation defined by the digital environment or by domain experts.<br/>The time to threshold is measured across:<br/>(i) Different instance complexities;<br/>(ii) Different hardware availability.<br/>The performance threshold is set empirically and is defined by the cumulative reward formulation specific to the application domain. Note that the reward formulation used to train the agent may differ. For case (i), the type of hardware used should be logged to interpret the wallclock time measurements. ', array['91c4f865-5e81-46d3-bd23-990aa361a828']::uuid[], array['d7cea956-6803-488c-b402-079d13b892c6']::uuid[], 'CLOSED', 'Railway')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -3045,7 +3820,11 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('d7cea956-6803-488c-b402-079d13b892c6', 'primary', 'This KPI contributes to evaluating Scalability of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['c61d974a-44c7-44d9-8932-93654ed81ed9']::uuid[])
+    VALUES ('d7cea956-6803-488c-b402-079d13b892c6', 'Scenario 1 - AI-Agent Scalability Training measures the elapsed time required by an AI-agent to reach a predefined performance threshold. Time measured both as wallclock time (seconds) as well as steps or episodes according to the domain needs. The performance is defined by the native reward formulation defined by the digital environment or by domain experts.
+The time to threshold is measured across:
+(i) Different instance complexities;
+(ii) Different hardware availability.
+The performance threshold is set empirically and is defined by the cumulative reward formulation specific to the application domain. Note that the reward formulation used to train the agent may differ. For case (i), the type of hardware used should be logged to interpret the wallclock time measurements. ', 'This KPI contributes to evaluating Scalability of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['c61d974a-44c7-44d9-8932-93654ed81ed9']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3055,7 +3834,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('5af6ffd9-b0a6-4f53-94bf-058fc1383ecd', 'KPI-AF-050: AI-Agent Scalability Training (Power Grid)', 'AI-Agent Scalability Training measures the elapsed time required by an AI-agent to reach a predefined performance threshold. Time measured both as wallclock time (seconds) as well as steps or episodes according to the domain needs. The performance is defined by the native reward formulation defined by the digital environment or by domain experts. <br/>The time to threshold is measured across:  <br/>(i) Different instance complexities; <br/>(ii) Different hardware availability. <br/>The performance threshold is set empirically and is defined by the cumulative reward formulation specific to the application domain. Note that the reward formulation used to train the agent may differ. For case (i), the type of hardware used should be logged to interpret the wallclock time measurements. ', array['a7c2bf7f-7845-4127-8c18-5eb820f5d317']::uuid[], array['7d2d75c8-49e0-433d-809d-b0811c8e2f06']::uuid[], 'CLOSED', 'PowerGrid')
+    VALUES ('5af6ffd9-b0a6-4f53-94bf-058fc1383ecd', 'KPI-AF-050: AI-Agent Scalability Training (Power Grid)', 'AI-Agent Scalability Training measures the elapsed time required by an AI-agent to reach a predefined performance threshold. Time measured both as wallclock time (seconds) as well as steps or episodes according to the domain needs. The performance is defined by the native reward formulation defined by the digital environment or by domain experts.<br/>The time to threshold is measured across:<br/>(i) Different instance complexities;<br/>(ii) Different hardware availability.<br/>The performance threshold is set empirically and is defined by the cumulative reward formulation specific to the application domain. Note that the reward formulation used to train the agent may differ. For case (i), the type of hardware used should be logged to interpret the wallclock time measurements. ', array['a7c2bf7f-7845-4127-8c18-5eb820f5d317']::uuid[], array['7d2d75c8-49e0-433d-809d-b0811c8e2f06']::uuid[], 'CLOSED', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -3065,7 +3844,11 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('7d2d75c8-49e0-433d-809d-b0811c8e2f06', 'primary', 'This KPI contributes to evaluating Scalability of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['8232e73d-9f70-466d-ab53-c648efd58afb']::uuid[])
+    VALUES ('7d2d75c8-49e0-433d-809d-b0811c8e2f06', 'Scenario 1 - AI-Agent Scalability Training measures the elapsed time required by an AI-agent to reach a predefined performance threshold. Time measured both as wallclock time (seconds) as well as steps or episodes according to the domain needs. The performance is defined by the native reward formulation defined by the digital environment or by domain experts.
+The time to threshold is measured across:
+(i) Different instance complexities;
+(ii) Different hardware availability.
+The performance threshold is set empirically and is defined by the cumulative reward formulation specific to the application domain. Note that the reward formulation used to train the agent may differ. For case (i), the type of hardware used should be logged to interpret the wallclock time measurements. ', 'This KPI contributes to evaluating Scalability of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['8232e73d-9f70-466d-ab53-c648efd58afb']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3075,7 +3858,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('4cba45eb-2512-4e8e-87da-d39a45e529f8', 'KPI-AF-050: AI-Agent Scalability Training (ATM)', 'AI-Agent Scalability Training measures the elapsed time required by an AI-agent to reach a predefined performance threshold. Time measured both as wallclock time (seconds) as well as steps or episodes according to the domain needs. The performance is defined by the native reward formulation defined by the digital environment or by domain experts. <br/>The time to threshold is measured across:  <br/>(i) Different instance complexities; <br/>(ii) Different hardware availability. <br/>The performance threshold is set empirically and is defined by the cumulative reward formulation specific to the application domain. Note that the reward formulation used to train the agent may differ. For case (i), the type of hardware used should be logged to interpret the wallclock time measurements. ', array['0a42cb23-d3a2-4691-b430-61753b745806']::uuid[], array['89bbf582-bb03-4039-9318-1178da706760']::uuid[], 'CLOSED', 'ATM')
+    VALUES ('4cba45eb-2512-4e8e-87da-d39a45e529f8', 'KPI-AF-050: AI-Agent Scalability Training (ATM)', 'AI-Agent Scalability Training measures the elapsed time required by an AI-agent to reach a predefined performance threshold. Time measured both as wallclock time (seconds) as well as steps or episodes according to the domain needs. The performance is defined by the native reward formulation defined by the digital environment or by domain experts.<br/>The time to threshold is measured across:<br/>(i) Different instance complexities;<br/>(ii) Different hardware availability.<br/>The performance threshold is set empirically and is defined by the cumulative reward formulation specific to the application domain. Note that the reward formulation used to train the agent may differ. For case (i), the type of hardware used should be logged to interpret the wallclock time measurements. ', array['0a42cb23-d3a2-4691-b430-61753b745806']::uuid[], array['89bbf582-bb03-4039-9318-1178da706760']::uuid[], 'CLOSED', 'ATM')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -3085,7 +3868,11 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('89bbf582-bb03-4039-9318-1178da706760', 'primary', 'This KPI contributes to evaluating Scalability of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['6d8c4b1d-d30e-41e1-a0e5-dbd327af240f']::uuid[])
+    VALUES ('89bbf582-bb03-4039-9318-1178da706760', 'Scenario 1 - AI-Agent Scalability Training measures the elapsed time required by an AI-agent to reach a predefined performance threshold. Time measured both as wallclock time (seconds) as well as steps or episodes according to the domain needs. The performance is defined by the native reward formulation defined by the digital environment or by domain experts.
+The time to threshold is measured across:
+(i) Different instance complexities;
+(ii) Different hardware availability.
+The performance threshold is set empirically and is defined by the cumulative reward formulation specific to the application domain. Note that the reward formulation used to train the agent may differ. For case (i), the type of hardware used should be logged to interpret the wallclock time measurements. ', 'This KPI contributes to evaluating Scalability of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['6d8c4b1d-d30e-41e1-a0e5-dbd327af240f']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3105,7 +3892,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('1f2b1af1-dc36-49ae-9322-e61656951545', 'primary', 'This KPI contributes to evaluating Scalability of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['60b8cf5e-e4bf-46a6-ba95-4efa12309373']::uuid[])
+    VALUES ('1f2b1af1-dc36-49ae-9322-e61656951545', 'Scenario 1 - Compare multiple trained agents, RL-based or not, based on the average inference time to sample one or multiple actions while increasing the complexity of the scenario analysed. Complexity is a domain-relevant concept that must be defined. ', 'This KPI contributes to evaluating Scalability of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['60b8cf5e-e4bf-46a6-ba95-4efa12309373']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3125,7 +3912,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('547f8244-d091-40da-892d-ee24a26ee29f', 'primary', 'This KPI contributes to evaluating Scalability of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['3f680640-3269-4678-bd28-3900b8dddd6a']::uuid[])
+    VALUES ('547f8244-d091-40da-892d-ee24a26ee29f', 'Scenario 1 - Compare multiple trained agents, RL-based or not, based on the average inference time to sample one or multiple actions while increasing the complexity of the scenario analysed. Complexity is a domain-relevant concept that must be defined. ', 'This KPI contributes to evaluating Scalability of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['3f680640-3269-4678-bd28-3900b8dddd6a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3145,7 +3932,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('b63f9a44-68e0-4850-b622-bac55d980b30', 'primary', 'This KPI contributes to evaluating Scalability of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['51378548-5033-44f4-9578-703014cbc902']::uuid[])
+    VALUES ('b63f9a44-68e0-4850-b622-bac55d980b30', 'Scenario 1 - Compare multiple trained agents, RL-based or not, based on the average inference time to sample one or multiple actions while increasing the complexity of the scenario analysed. Complexity is a domain-relevant concept that must be defined. ', 'This KPI contributes to evaluating Scalability of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective. ', array['51378548-5033-44f4-9578-703014cbc902']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3175,7 +3962,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('adb8b61b-6203-436d-9b40-8d4f95af7f43', 'primary', 'Domain adaptation (DA) is a sub-field of transfer learning. DA can be defined as the capability to deploy a model trained in one or more source domains into a different target domain. We consider that the source and target domains have the same feature space. In this sense, it is important for RL based agents to have a reasonable adaptation time to a new domain which may present a slight shift from the source domain. However, the adaptation time should also consider the performance drop into its computation, as a high performance drop after the adaptation could not be tolerated.  <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['0b2b67e3-4d94-4006-9934-bbaf2184135c']::uuid[])
+    VALUES ('adb8b61b-6203-436d-9b40-8d4f95af7f43', 'Scenario 1 - The time or number of episodes required for the agent to regain a specific level of performance in the shifted domain after the domain shift has occurred. It can be used to evaluate how quickly an agent can adapt to new environmental conditions.  ', 'Domain adaptation (DA) is a sub-field of transfer learning. DA can be defined as the capability to deploy a model trained in one or more source domains into a different target domain. We consider that the source and target domains have the same feature space. In this sense, it is important for RL based agents to have a reasonable adaptation time to a new domain which may present a slight shift from the source domain. However, the adaptation time should also consider the performance drop into its computation, as a high performance drop after the adaptation could not be tolerated.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['0b2b67e3-4d94-4006-9934-bbaf2184135c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3195,7 +3982,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('81f18394-0164-4896-9408-4315bcfcc5e0', 'primary', 'Domain adaptation (DA) is a sub-field of transfer learning. DA can be defined as the capability to deploy a model trained in one or more source domains into a different target domain. We consider that the source and target domains have the same feature space. In this sense, it is important for RL based agents to have a reasonable adaptation time to a new domain which may present a slight shift from the source domain. However, the adaptation time should also consider the performance drop into its computation, as a high performance drop after the adaptation could not be tolerated.  <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['3fdb69b7-1e58-4453-b2ca-0b559f83140a']::uuid[])
+    VALUES ('81f18394-0164-4896-9408-4315bcfcc5e0', 'Scenario 1 - The time or number of episodes required for the agent to regain a specific level of performance in the shifted domain after the domain shift has occurred. It can be used to evaluate how quickly an agent can adapt to new environmental conditions.  ', 'Domain adaptation (DA) is a sub-field of transfer learning. DA can be defined as the capability to deploy a model trained in one or more source domains into a different target domain. We consider that the source and target domains have the same feature space. In this sense, it is important for RL based agents to have a reasonable adaptation time to a new domain which may present a slight shift from the source domain. However, the adaptation time should also consider the performance drop into its computation, as a high performance drop after the adaptation could not be tolerated.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['3fdb69b7-1e58-4453-b2ca-0b559f83140a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3215,7 +4002,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('c60afe79-dbc6-4c44-893e-387adf7bc02c', 'primary', 'Domain adaptation (DA) is a sub-field of transfer learning. DA can be defined as the capability to deploy a model trained in one or more source domains into a different target domain. We consider that the source and target domains have the same feature space. In this sense, it is important for RL based agents to have a reasonable adaptation time to a new domain which may present a slight shift from the source domain. However, the adaptation time should also consider the performance drop into its computation, as a high performance drop after the adaptation could not be tolerated.  <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['059a334c-5dc9-4880-a4bc-0fbaab4a8135']::uuid[])
+    VALUES ('c60afe79-dbc6-4c44-893e-387adf7bc02c', 'Scenario 1 - The time or number of episodes required for the agent to regain a specific level of performance in the shifted domain after the domain shift has occurred. It can be used to evaluate how quickly an agent can adapt to new environmental conditions.  ', 'Domain adaptation (DA) is a sub-field of transfer learning. DA can be defined as the capability to deploy a model trained in one or more source domains into a different target domain. We consider that the source and target domains have the same feature space. In this sense, it is important for RL based agents to have a reasonable adaptation time to a new domain which may present a slight shift from the source domain. However, the adaptation time should also consider the performance drop into its computation, as a high performance drop after the adaptation could not be tolerated.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['059a334c-5dc9-4880-a4bc-0fbaab4a8135']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3235,7 +4022,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('d741cc0b-7dd9-4c2e-b23c-805b622c3878', 'primary', 'The objective is to verify to which extent the AI-based assistant performance deteriorates when the target domain presents some changes in comparison to the source domain. If an agent can retain the same performance expectations in shifted domain, it will be qualified as reliable. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['2cb1902a-32c0-4e53-a1f9-0edf1b7f5c33']::uuid[])
+    VALUES ('d741cc0b-7dd9-4c2e-b23c-805b622c3878', 'Scenario 1 - Domain shift – generalization gap evaluates the absolute difference between the performance (e.g., rewards) in the training domain and the shifted domain. This metrics quantifies the extent of performance loss due to domain shift. ', 'The objective is to verify to which extent the AI-based assistant performance deteriorates when the target domain presents some changes in comparison to the source domain. If an agent can retain the same performance expectations in shifted domain, it will be qualified as reliable.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['2cb1902a-32c0-4e53-a1f9-0edf1b7f5c33']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3255,7 +4042,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('9fdfbb00-0754-444a-88c8-c8549e2cc6f9', 'primary', 'The objective is to verify to which extent the AI-based assistant performance deteriorates when the target domain presents some changes in comparison to the source domain. If an agent can retain the same performance expectations in shifted domain, it will be qualified as reliable. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['9977d7d9-df1b-4842-a95a-5b8ea9a334b6']::uuid[])
+    VALUES ('9fdfbb00-0754-444a-88c8-c8549e2cc6f9', 'Scenario 1 - Domain shift – generalization gap evaluates the absolute difference between the performance (e.g., rewards) in the training domain and the shifted domain. This metrics quantifies the extent of performance loss due to domain shift. ', 'The objective is to verify to which extent the AI-based assistant performance deteriorates when the target domain presents some changes in comparison to the source domain. If an agent can retain the same performance expectations in shifted domain, it will be qualified as reliable.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['9977d7d9-df1b-4842-a95a-5b8ea9a334b6']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3275,7 +4062,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('1f8238f7-f6b6-482c-96ad-f4e0880b801d', 'primary', 'The objective is to verify to which extent the AI-based assistant performance deteriorates when the target domain presents some changes in comparison to the source domain. If an agent can retain the same performance expectations in shifted domain, it will be qualified as reliable. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['7549c53f-8756-4b98-8c52-ba9aabc30bbf']::uuid[])
+    VALUES ('1f8238f7-f6b6-482c-96ad-f4e0880b801d', 'Scenario 1 - Domain shift – generalization gap evaluates the absolute difference between the performance (e.g., rewards) in the training domain and the shifted domain. This metrics quantifies the extent of performance loss due to domain shift. ', 'The objective is to verify to which extent the AI-based assistant performance deteriorates when the target domain presents some changes in comparison to the source domain. If an agent can retain the same performance expectations in shifted domain, it will be qualified as reliable.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['7549c53f-8756-4b98-8c52-ba9aabc30bbf']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3295,7 +4082,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('8d292cff-0409-4ec7-83fb-3034c3a4106c', 'primary', 'It is crucial for an AI-based assistant to determine whether it can make reliable decisions in a given configuration. AI algorithms tend to be more dependable when they have been trained on similar configurations. Therefore, if the AI assistant can accurately detect out-of-domain configurations, it can seek human feedback to reduce uncertainty, leading to more adapted and reliable decisions in future scenarios. This KPI allows to determine if AI-based system could detect the shift before decision making. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['ba239c95-b828-40bd-98c8-ba673fa4b76b']::uuid[])
+    VALUES ('8d292cff-0409-4ec7-83fb-3034c3a4106c', 'Scenario 1 - Domain shift – out of domain detection accuracy measures the accuracy with which the agent can detect whether it is operating in a domain that is different from the one it was trained on. It is useful for systems that need to switch strategies or request human intervention when a domain shift is detected. A recent paper proposed by Nasvytis et al. (2024) introduce various approaches for detection of OOD in RL. ', 'It is crucial for an AI-based assistant to determine whether it can make reliable decisions in a given configuration. AI algorithms tend to be more dependable when they have been trained on similar configurations. Therefore, if the AI assistant can accurately detect out-of-domain configurations, it can seek human feedback to reduce uncertainty, leading to more adapted and reliable decisions in future scenarios. This KPI allows to determine if AI-based system could detect the shift before decision making.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['ba239c95-b828-40bd-98c8-ba673fa4b76b']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3315,7 +4102,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('747cba94-8353-4982-9964-ba0b8361e689', 'primary', 'It is crucial for an AI-based assistant to determine whether it can make reliable decisions in a given configuration. AI algorithms tend to be more dependable when they have been trained on similar configurations. Therefore, if the AI assistant can accurately detect out-of-domain configurations, it can seek human feedback to reduce uncertainty, leading to more adapted and reliable decisions in future scenarios. This KPI allows to determine if AI-based system could detect the shift before decision making. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['92ce6fe6-7144-42b1-a378-7b00ece4e84d']::uuid[])
+    VALUES ('747cba94-8353-4982-9964-ba0b8361e689', 'Scenario 1 - Domain shift – out of domain detection accuracy measures the accuracy with which the agent can detect whether it is operating in a domain that is different from the one it was trained on. It is useful for systems that need to switch strategies or request human intervention when a domain shift is detected. A recent paper proposed by Nasvytis et al. (2024) introduce various approaches for detection of OOD in RL. ', 'It is crucial for an AI-based assistant to determine whether it can make reliable decisions in a given configuration. AI algorithms tend to be more dependable when they have been trained on similar configurations. Therefore, if the AI assistant can accurately detect out-of-domain configurations, it can seek human feedback to reduce uncertainty, leading to more adapted and reliable decisions in future scenarios. This KPI allows to determine if AI-based system could detect the shift before decision making.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['92ce6fe6-7144-42b1-a378-7b00ece4e84d']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3335,7 +4122,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5b92361c-927e-4aaa-83c5-4413989282a2', 'primary', 'It is crucial for an AI-based assistant to determine whether it can make reliable decisions in a given configuration. AI algorithms tend to be more dependable when they have been trained on similar configurations. Therefore, if the AI assistant can accurately detect out-of-domain configurations, it can seek human feedback to reduce uncertainty, leading to more adapted and reliable decisions in future scenarios. This KPI allows to determine if AI-based system could detect the shift before decision making. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['57e71aab-13fd-475e-ab2c-5d6feee0ba84']::uuid[])
+    VALUES ('5b92361c-927e-4aaa-83c5-4413989282a2', 'Scenario 1 - Domain shift – out of domain detection accuracy measures the accuracy with which the agent can detect whether it is operating in a domain that is different from the one it was trained on. It is useful for systems that need to switch strategies or request human intervention when a domain shift is detected. A recent paper proposed by Nasvytis et al. (2024) introduce various approaches for detection of OOD in RL. ', 'It is crucial for an AI-based assistant to determine whether it can make reliable decisions in a given configuration. AI algorithms tend to be more dependable when they have been trained on similar configurations. Therefore, if the AI assistant can accurately detect out-of-domain configurations, it can seek human feedback to reduce uncertainty, leading to more adapted and reliable decisions in future scenarios. This KPI allows to determine if AI-based system could detect the shift before decision making.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['57e71aab-13fd-475e-ab2c-5d6feee0ba84']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3355,7 +4142,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('4b42d9b8-9f27-4247-8bef-47ad3ce3a978', 'primary', 'To evaluate the robustness and generalization capability of a policy by measuring its performance ratio between a shifted domain and the original domain, ensuring that policies trained in simulated environments maintain high effectiveness when applied to real-world scenarios. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['c4b39f46-f236-4521-abb8-b460a7893156']::uuid[])
+    VALUES ('4b42d9b8-9f27-4247-8bef-47ad3ce3a978', 'Scenario 1 - Domain shift – Policy robustness KPI calculates a ratio of the performance in the shifted domain to the performance in the original domain. A score close to 1 indicates high robustness, while a lower score indicates reduced performance due to the domain shift. It can be used to assess the generalization of a policy learned in a simulated environment when applied to a real-world scenario. ', 'To evaluate the robustness and generalization capability of a policy by measuring its performance ratio between a shifted domain and the original domain, ensuring that policies trained in simulated environments maintain high effectiveness when applied to real-world scenarios.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['c4b39f46-f236-4521-abb8-b460a7893156']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3375,7 +4162,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('f393653b-850e-4c17-bed1-7fe1ca51c854', 'primary', 'To evaluate the robustness and generalization capability of a policy by measuring its performance ratio between a shifted domain and the original domain, ensuring that policies trained in simulated environments maintain high effectiveness when applied to real-world scenarios. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['fb740fbf-675f-4f87-b280-1fcdfedf19ea']::uuid[])
+    VALUES ('f393653b-850e-4c17-bed1-7fe1ca51c854', 'Scenario 1 - Domain shift – Policy robustness KPI calculates a ratio of the performance in the shifted domain to the performance in the original domain. A score close to 1 indicates high robustness, while a lower score indicates reduced performance due to the domain shift. It can be used to assess the generalization of a policy learned in a simulated environment when applied to a real-world scenario. ', 'To evaluate the robustness and generalization capability of a policy by measuring its performance ratio between a shifted domain and the original domain, ensuring that policies trained in simulated environments maintain high effectiveness when applied to real-world scenarios.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['fb740fbf-675f-4f87-b280-1fcdfedf19ea']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3395,7 +4182,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('33e32b92-51a9-4531-8b5d-8655b758a958', 'primary', 'To evaluate the robustness and generalization capability of a policy by measuring its performance ratio between a shifted domain and the original domain, ensuring that policies trained in simulated environments maintain high effectiveness when applied to real-world scenarios. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['ce3d2ed0-cb42-40e4-95e9-8a08b0eb2dfe']::uuid[])
+    VALUES ('33e32b92-51a9-4531-8b5d-8655b758a958', 'Scenario 1 - Domain shift – Policy robustness KPI calculates a ratio of the performance in the shifted domain to the performance in the original domain. A score close to 1 indicates high robustness, while a lower score indicates reduced performance due to the domain shift. It can be used to assess the generalization of a policy learned in a simulated environment when applied to a real-world scenario. ', 'To evaluate the robustness and generalization capability of a policy by measuring its performance ratio between a shifted domain and the original domain, ensuring that policies trained in simulated environments maintain high effectiveness when applied to real-world scenarios.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['ce3d2ed0-cb42-40e4-95e9-8a08b0eb2dfe']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3415,7 +4202,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('2238fa19-e337-49ce-a3b3-08abf85f1453', 'primary', 'To assess the sensitivity of the agent''s performance to variations in domain parameters, identifying key environmental factors that significantly impact the agent’s effectiveness and robustness, thereby guiding improvements in adaptability and resilience across different scenarios. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['8c63f8fe-dfc7-4b94-944b-91edcc2d6762']::uuid[])
+    VALUES ('2238fa19-e337-49ce-a3b3-08abf85f1453', 'Scenario 1 - Robustness to domain parameters KPI evaluates the sensitivity of the agent’s performance (e.g., Reward) to changes in specific domain parameters (e.g., generators type including renewables in power grid domain). It helps to identify which environmental factors most affect the agent’s performance. ', 'To assess the sensitivity of the agent''s performance to variations in domain parameters, identifying key environmental factors that significantly impact the agent’s effectiveness and robustness, thereby guiding improvements in adaptability and resilience across different scenarios.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['8c63f8fe-dfc7-4b94-944b-91edcc2d6762']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3435,7 +4222,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('82aed30d-9b28-4b8f-ba9a-fd05d6defec6', 'primary', 'To assess the sensitivity of the agent''s performance to variations in domain parameters, identifying key environmental factors that significantly impact the agent’s effectiveness and robustness, thereby guiding improvements in adaptability and resilience across different scenarios. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['a2a276a5-d9ce-4d35-bc53-8b5775e01c7f']::uuid[])
+    VALUES ('82aed30d-9b28-4b8f-ba9a-fd05d6defec6', 'Scenario 1 - Robustness to domain parameters KPI evaluates the sensitivity of the agent’s performance (e.g., Reward) to changes in specific domain parameters (e.g., generators type including renewables in power grid domain). It helps to identify which environmental factors most affect the agent’s performance. ', 'To assess the sensitivity of the agent''s performance to variations in domain parameters, identifying key environmental factors that significantly impact the agent’s effectiveness and robustness, thereby guiding improvements in adaptability and resilience across different scenarios.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['a2a276a5-d9ce-4d35-bc53-8b5775e01c7f']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3455,7 +4242,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('3f521f00-d5f7-4883-923a-1ec2a3022dcb', 'primary', 'To assess the sensitivity of the agent''s performance to variations in domain parameters, identifying key environmental factors that significantly impact the agent’s effectiveness and robustness, thereby guiding improvements in adaptability and resilience across different scenarios. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['11395763-2f0e-477c-a790-244757521cd8']::uuid[])
+    VALUES ('3f521f00-d5f7-4883-923a-1ec2a3022dcb', 'Scenario 1 - Robustness to domain parameters KPI evaluates the sensitivity of the agent’s performance (e.g., Reward) to changes in specific domain parameters (e.g., generators type including renewables in power grid domain). It helps to identify which environmental factors most affect the agent’s performance. ', 'To assess the sensitivity of the agent''s performance to variations in domain parameters, identifying key environmental factors that significantly impact the agent’s effectiveness and robustness, thereby guiding improvements in adaptability and resilience across different scenarios.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['11395763-2f0e-477c-a790-244757521cd8']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3475,7 +4262,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5d017ca4-f062-44c9-821c-31f85928903a', 'primary', 'To quantify the decline in the agent''s performance after a shift in the source domain, providing insights into the agent''s ability to maintain effectiveness under altered conditions. This KPI helps in evaluating the agent''s resilience, adaptability, and the robustness of its training, facilitating the identification of weaknesses and the development of strategies to improve its performance in dynamic or unpredictable environments. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['d71a4ce5-d954-4404-98a8-2f44df3c48eb']::uuid[])
+    VALUES ('5d017ca4-f062-44c9-821c-31f85928903a', 'Scenario 1 - Domain shift – success rate drop KPI measures drop in the performance of the agent after the occurrence of a shift in the source domain. ', 'To quantify the decline in the agent''s performance after a shift in the source domain, providing insights into the agent''s ability to maintain effectiveness under altered conditions. This KPI helps in evaluating the agent''s resilience, adaptability, and the robustness of its training, facilitating the identification of weaknesses and the development of strategies to improve its performance in dynamic or unpredictable environments.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['d71a4ce5-d954-4404-98a8-2f44df3c48eb']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3495,7 +4282,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('4d2b00cd-447a-4c7e-8cab-863f0402cb67', 'primary', 'To quantify the decline in the agent''s performance after a shift in the source domain, providing insights into the agent''s ability to maintain effectiveness under altered conditions. This KPI helps in evaluating the agent''s resilience, adaptability, and the robustness of its training, facilitating the identification of weaknesses and the development of strategies to improve its performance in dynamic or unpredictable environments. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['aa4a6491-cb70-4522-a1d4-c416c8efafb0']::uuid[])
+    VALUES ('4d2b00cd-447a-4c7e-8cab-863f0402cb67', 'Scenario 1 - Domain shift – success rate drop KPI measures drop in the performance of the agent after the occurrence of a shift in the source domain. ', 'To quantify the decline in the agent''s performance after a shift in the source domain, providing insights into the agent''s ability to maintain effectiveness under altered conditions. This KPI helps in evaluating the agent''s resilience, adaptability, and the robustness of its training, facilitating the identification of weaknesses and the development of strategies to improve its performance in dynamic or unpredictable environments.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['aa4a6491-cb70-4522-a1d4-c416c8efafb0']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3515,7 +4302,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('3ba0619c-8073-4e94-9c34-c3d5e17bcde8', 'primary', 'To quantify the decline in the agent''s performance after a shift in the source domain, providing insights into the agent''s ability to maintain effectiveness under altered conditions. This KPI helps in evaluating the agent''s resilience, adaptability, and the robustness of its training, facilitating the identification of weaknesses and the development of strategies to improve its performance in dynamic or unpredictable environments. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['e4db242e-60e9-4db0-bd6b-b14a4eb1ff65']::uuid[])
+    VALUES ('3ba0619c-8073-4e94-9c34-c3d5e17bcde8', 'Scenario 1 - Domain shift – success rate drop KPI measures drop in the performance of the agent after the occurrence of a shift in the source domain. ', 'To quantify the decline in the agent''s performance after a shift in the source domain, providing insights into the agent''s ability to maintain effectiveness under altered conditions. This KPI helps in evaluating the agent''s resilience, adaptability, and the robustness of its training, facilitating the identification of weaknesses and the development of strategies to improve its performance in dynamic or unpredictable environments.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['e4db242e-60e9-4db0-bd6b-b14a4eb1ff65']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3535,7 +4322,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('cf7bb259-0ad4-4454-a9c8-eb8add0bec57', 'primary', 'The objective of computing the Forgetting Rate in Domain Shift is to quantify the decline in an agent''s performance on the original domain after being trained or exposed to a shifted domain. This metric helps assess the extent of negative transfer, ensuring that adaptation to the new domain does not excessively degrade prior knowledge. A higher forgetting rate indicates a more significant loss of previously learned knowledge due to domain shift. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['237806e9-50d9-4feb-a52d-e6359984b0e0']::uuid[])
+    VALUES ('cf7bb259-0ad4-4454-a9c8-eb8add0bec57', 'Scenario 1 - The rate at which an agent forgets its performance in the original domain after being exposed to a shifted domain. It helps to measure the extent to which learning in the new domain negatively impacts the agent’s ability to perform in the original domain. ', 'The objective of computing the Forgetting Rate in Domain Shift is to quantify the decline in an agent''s performance on the original domain after being trained or exposed to a shifted domain. This metric helps assess the extent of negative transfer, ensuring that adaptation to the new domain does not excessively degrade prior knowledge. A higher forgetting rate indicates a more significant loss of previously learned knowledge due to domain shift.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['237806e9-50d9-4feb-a52d-e6359984b0e0']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3555,7 +4342,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('99dfde1e-2798-4741-b3eb-610a3e847bc8', 'primary', 'The objective of computing the Forgetting Rate in Domain Shift is to quantify the decline in an agent''s performance on the original domain after being trained or exposed to a shifted domain. This metric helps assess the extent of negative transfer, ensuring that adaptation to the new domain does not excessively degrade prior knowledge. A higher forgetting rate indicates a more significant loss of previously learned knowledge due to domain shift. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['47765b19-9357-47e2-8e9d-a97e86807170']::uuid[])
+    VALUES ('99dfde1e-2798-4741-b3eb-610a3e847bc8', 'Scenario 1 - The rate at which an agent forgets its performance in the original domain after being exposed to a shifted domain. It helps to measure the extent to which learning in the new domain negatively impacts the agent’s ability to perform in the original domain. ', 'The objective of computing the Forgetting Rate in Domain Shift is to quantify the decline in an agent''s performance on the original domain after being trained or exposed to a shifted domain. This metric helps assess the extent of negative transfer, ensuring that adaptation to the new domain does not excessively degrade prior knowledge. A higher forgetting rate indicates a more significant loss of previously learned knowledge due to domain shift.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['47765b19-9357-47e2-8e9d-a97e86807170']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3575,7 +4362,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('3c03cc5e-f94e-4573-90a3-924b217442e6', 'primary', 'The objective of computing the Forgetting Rate in Domain Shift is to quantify the decline in an agent''s performance on the original domain after being trained or exposed to a shifted domain. This metric helps assess the extent of negative transfer, ensuring that adaptation to the new domain does not excessively degrade prior knowledge. A higher forgetting rate indicates a more significant loss of previously learned knowledge due to domain shift. <br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['ddde7763-4544-46dd-b2fa-36e340dfc58c']::uuid[])
+    VALUES ('3c03cc5e-f94e-4573-90a3-924b217442e6', 'Scenario 1 - The rate at which an agent forgets its performance in the original domain after being exposed to a shifted domain. It helps to measure the extent to which learning in the new domain negatively impacts the agent’s ability to perform in the original domain. ', 'The objective of computing the Forgetting Rate in Domain Shift is to quantify the decline in an agent''s performance on the original domain after being trained or exposed to a shifted domain. This metric helps assess the extent of negative transfer, ensuring that adaptation to the new domain does not excessively degrade prior knowledge. A higher forgetting rate indicates a more significant loss of previously learned knowledge due to domain shift.<br/>This KPI contributes to evaluating Reliability of the AI-based assistant when dealing with real-world conditions which may be slightly different from source domain, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['ddde7763-4544-46dd-b2fa-36e340dfc58c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3595,7 +4382,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('1cbf44c3-0c82-4f9e-9857-c7c1d96d3ab9', 'KPI-RS-058: Robustness to operator input (Railway)', 'The KPI should measure or evaluate how the trained agent behaves in terms of robustness if, during the decision-making process where a human operator makes the final decisions, a human operator occasionally intervenes and significantly overrides the autonomous decisions of the trained agent. <br/>For agents trained using machine learning methods, this can cause an offset between the type of states encountered in the training data and during deployment, especially for agents trained using reinforcement learning or similar methods where the agent itself decides which actions to execute. As a consequence of this offset, the agent might make poorer decisions if the human operator does not always follow the proposed actions of the agents. <br/>To measure how sensitive the agent is to such offsets, this KPI proposes to use a “simulated operator” that does not fully follow the course of actions suggested by the agents, and instead overwrites certain action variables set by the agents in a fraction of time steps. ', array['df5f8939-f85f-4fbb-9bea-017c46b2a8f7']::uuid[], array['7a1c9dac-ec75-42e1-9355-34d88eabc52f']::uuid[], 'INTERACTIVE', 'Railway')
+    VALUES ('1cbf44c3-0c82-4f9e-9857-c7c1d96d3ab9', 'KPI-RS-058: Robustness to operator input (Railway)', 'The KPI should measure or evaluate how the trained agent behaves in terms of robustness if, during the decision-making process where a human operator makes the final decisions, a human operator occasionally intervenes and significantly overrides the autonomous decisions of the trained agent.<br/>For agents trained using machine learning methods, this can cause an offset between the type of states encountered in the training data and during deployment, especially for agents trained using reinforcement learning or similar methods where the agent itself decides which actions to execute. As a consequence of this offset, the agent might make poorer decisions if the human operator does not always follow the proposed actions of the agents.<br/>To measure how sensitive the agent is to such offsets, this KPI proposes to use a “simulated operator” that does not fully follow the course of actions suggested by the agents, and instead overwrites certain action variables set by the agents in a fraction of time steps. ', array['df5f8939-f85f-4fbb-9bea-017c46b2a8f7']::uuid[], array['7a1c9dac-ec75-42e1-9355-34d88eabc52f']::uuid[], 'INTERACTIVE', 'Railway')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -3605,7 +4392,9 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('7a1c9dac-ec75-42e1-9355-34d88eabc52f', 'primary', 'Overall, this KPI contributes to evaluating Robustness of the AI-based assistant when dealing with real-world conditions, as part of Task 4.2 evaluation objectives, and O4 main project objective. <br/>The KPI is related to Tasks 3.1 and 3.3. Specifically, it is related to goal (4) of Task 3.1 (“Analysis of the impact of human intervention in the decision process on AI agents developed and trained towards fully autonomous behavior”), goal (1) of Task 3.3 (“Develop and expand order-agnostic network architectures adapted to the RL setting to use human-data or human-like perturbations and ensure the system can also make good decisions in the context where actions are partially chosen by the human partner”) and goal (2) of Task 3.4 (“Detect risks early on and potentially inform human supervisors, e.g. relinquish control to a human supervisor or transition into “safety mode” when necessary”).   ', array['65db1797-5f1c-4a20-9e79-f8ef95c22db5']::uuid[])
+    VALUES ('7a1c9dac-ec75-42e1-9355-34d88eabc52f', 'Scenario 1 - The KPI should measure or evaluate how the trained agent behaves in terms of robustness if, during the decision-making process where a human operator makes the final decisions, a human operator occasionally intervenes and significantly overrides the autonomous decisions of the trained agent.
+For agents trained using machine learning methods, this can cause an offset between the type of states encountered in the training data and during deployment, especially for agents trained using reinforcement learning or similar methods where the agent itself decides which actions to execute. As a consequence of this offset, the agent might make poorer decisions if the human operator does not always follow the proposed actions of the agents.
+To measure how sensitive the agent is to such offsets, this KPI proposes to use a “simulated operator” that does not fully follow the course of actions suggested by the agents, and instead overwrites certain action variables set by the agents in a fraction of time steps. ', 'Overall, this KPI contributes to evaluating Robustness of the AI-based assistant when dealing with real-world conditions, as part of Task 4.2 evaluation objectives, and O4 main project objective.<br/>The KPI is related to Tasks 3.1 and 3.3. Specifically, it is related to goal (4) of Task 3.1 (“Analysis of the impact of human intervention in the decision process on AI agents developed and trained towards fully autonomous behavior”), goal (1) of Task 3.3 (“Develop and expand order-agnostic network architectures adapted to the RL setting to use human-data or human-like perturbations and ensure the system can also make good decisions in the context where actions are partially chosen by the human partner”) and goal (2) of Task 3.4 (“Detect risks early on and potentially inform human supervisors, e.g. relinquish control to a human supervisor or transition into “safety mode” when necessary”).   ', array['65db1797-5f1c-4a20-9e79-f8ef95c22db5']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3615,7 +4404,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('75cc9343-9371-4eb1-9613-22a26c67fc00', 'KPI-RS-058: Robustness to operator input (Power Grid)', 'The KPI should measure or evaluate how the trained agent behaves in terms of robustness if, during the decision-making process where a human operator makes the final decisions, a human operator occasionally intervenes and significantly overrides the autonomous decisions of the trained agent. <br/>For agents trained using machine learning methods, this can cause an offset between the type of states encountered in the training data and during deployment, especially for agents trained using reinforcement learning or similar methods where the agent itself decides which actions to execute. As a consequence of this offset, the agent might make poorer decisions if the human operator does not always follow the proposed actions of the agents. <br/>To measure how sensitive the agent is to such offsets, this KPI proposes to use a “simulated operator” that does not fully follow the course of actions suggested by the agents, and instead overwrites certain action variables set by the agents in a fraction of time steps. ', array['6e222adc-3153-4763-8bca-256cbb3d8716']::uuid[], array['0c0730f2-e795-4c9d-8220-9bee29c46dc6']::uuid[], 'INTERACTIVE', 'PowerGrid')
+    VALUES ('75cc9343-9371-4eb1-9613-22a26c67fc00', 'KPI-RS-058: Robustness to operator input (Power Grid)', 'The KPI should measure or evaluate how the trained agent behaves in terms of robustness if, during the decision-making process where a human operator makes the final decisions, a human operator occasionally intervenes and significantly overrides the autonomous decisions of the trained agent.<br/>For agents trained using machine learning methods, this can cause an offset between the type of states encountered in the training data and during deployment, especially for agents trained using reinforcement learning or similar methods where the agent itself decides which actions to execute. As a consequence of this offset, the agent might make poorer decisions if the human operator does not always follow the proposed actions of the agents.<br/>To measure how sensitive the agent is to such offsets, this KPI proposes to use a “simulated operator” that does not fully follow the course of actions suggested by the agents, and instead overwrites certain action variables set by the agents in a fraction of time steps. ', array['6e222adc-3153-4763-8bca-256cbb3d8716']::uuid[], array['0c0730f2-e795-4c9d-8220-9bee29c46dc6']::uuid[], 'INTERACTIVE', 'PowerGrid')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -3625,7 +4414,9 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('0c0730f2-e795-4c9d-8220-9bee29c46dc6', 'primary', 'Overall, this KPI contributes to evaluating Robustness of the AI-based assistant when dealing with real-world conditions, as part of Task 4.2 evaluation objectives, and O4 main project objective. <br/>The KPI is related to Tasks 3.1 and 3.3. Specifically, it is related to goal (4) of Task 3.1 (“Analysis of the impact of human intervention in the decision process on AI agents developed and trained towards fully autonomous behavior”), goal (1) of Task 3.3 (“Develop and expand order-agnostic network architectures adapted to the RL setting to use human-data or human-like perturbations and ensure the system can also make good decisions in the context where actions are partially chosen by the human partner”) and goal (2) of Task 3.4 (“Detect risks early on and potentially inform human supervisors, e.g. relinquish control to a human supervisor or transition into “safety mode” when necessary”).   ', array['729d218a-950e-4aa3-8153-2643347869de']::uuid[])
+    VALUES ('0c0730f2-e795-4c9d-8220-9bee29c46dc6', 'Scenario 1 - The KPI should measure or evaluate how the trained agent behaves in terms of robustness if, during the decision-making process where a human operator makes the final decisions, a human operator occasionally intervenes and significantly overrides the autonomous decisions of the trained agent.
+For agents trained using machine learning methods, this can cause an offset between the type of states encountered in the training data and during deployment, especially for agents trained using reinforcement learning or similar methods where the agent itself decides which actions to execute. As a consequence of this offset, the agent might make poorer decisions if the human operator does not always follow the proposed actions of the agents.
+To measure how sensitive the agent is to such offsets, this KPI proposes to use a “simulated operator” that does not fully follow the course of actions suggested by the agents, and instead overwrites certain action variables set by the agents in a fraction of time steps. ', 'Overall, this KPI contributes to evaluating Robustness of the AI-based assistant when dealing with real-world conditions, as part of Task 4.2 evaluation objectives, and O4 main project objective.<br/>The KPI is related to Tasks 3.1 and 3.3. Specifically, it is related to goal (4) of Task 3.1 (“Analysis of the impact of human intervention in the decision process on AI agents developed and trained towards fully autonomous behavior”), goal (1) of Task 3.3 (“Develop and expand order-agnostic network architectures adapted to the RL setting to use human-data or human-like perturbations and ensure the system can also make good decisions in the context where actions are partially chosen by the human partner”) and goal (2) of Task 3.4 (“Detect risks early on and potentially inform human supervisors, e.g. relinquish control to a human supervisor or transition into “safety mode” when necessary”).   ', array['729d218a-950e-4aa3-8153-2643347869de']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3635,7 +4426,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('07881948-f5e0-4772-83c9-3ca517ac245f', 'KPI-RS-058: Robustness to operator input (ATM)', 'The KPI should measure or evaluate how the trained agent behaves in terms of robustness if, during the decision-making process where a human operator makes the final decisions, a human operator occasionally intervenes and significantly overrides the autonomous decisions of the trained agent. <br/>For agents trained using machine learning methods, this can cause an offset between the type of states encountered in the training data and during deployment, especially for agents trained using reinforcement learning or similar methods where the agent itself decides which actions to execute. As a consequence of this offset, the agent might make poorer decisions if the human operator does not always follow the proposed actions of the agents. <br/>To measure how sensitive the agent is to such offsets, this KPI proposes to use a “simulated operator” that does not fully follow the course of actions suggested by the agents, and instead overwrites certain action variables set by the agents in a fraction of time steps. ', array['9916de43-06b8-413f-bc55-3ff7c10757ce']::uuid[], array['2d805705-e6b1-45e2-8511-39d3d23a9994']::uuid[], 'INTERACTIVE', 'ATM')
+    VALUES ('07881948-f5e0-4772-83c9-3ca517ac245f', 'KPI-RS-058: Robustness to operator input (ATM)', 'The KPI should measure or evaluate how the trained agent behaves in terms of robustness if, during the decision-making process where a human operator makes the final decisions, a human operator occasionally intervenes and significantly overrides the autonomous decisions of the trained agent.<br/>For agents trained using machine learning methods, this can cause an offset between the type of states encountered in the training data and during deployment, especially for agents trained using reinforcement learning or similar methods where the agent itself decides which actions to execute. As a consequence of this offset, the agent might make poorer decisions if the human operator does not always follow the proposed actions of the agents.<br/>To measure how sensitive the agent is to such offsets, this KPI proposes to use a “simulated operator” that does not fully follow the course of actions suggested by the agents, and instead overwrites certain action variables set by the agents in a fraction of time steps. ', array['9916de43-06b8-413f-bc55-3ff7c10757ce']::uuid[], array['2d805705-e6b1-45e2-8511-39d3d23a9994']::uuid[], 'INTERACTIVE', 'ATM')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -3645,7 +4436,9 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('2d805705-e6b1-45e2-8511-39d3d23a9994', 'primary', 'Overall, this KPI contributes to evaluating Robustness of the AI-based assistant when dealing with real-world conditions, as part of Task 4.2 evaluation objectives, and O4 main project objective. <br/>The KPI is related to Tasks 3.1 and 3.3. Specifically, it is related to goal (4) of Task 3.1 (“Analysis of the impact of human intervention in the decision process on AI agents developed and trained towards fully autonomous behavior”), goal (1) of Task 3.3 (“Develop and expand order-agnostic network architectures adapted to the RL setting to use human-data or human-like perturbations and ensure the system can also make good decisions in the context where actions are partially chosen by the human partner”) and goal (2) of Task 3.4 (“Detect risks early on and potentially inform human supervisors, e.g. relinquish control to a human supervisor or transition into “safety mode” when necessary”).   ', array['d6eacff5-2331-4003-a5c7-fc1c78016062']::uuid[])
+    VALUES ('2d805705-e6b1-45e2-8511-39d3d23a9994', 'Scenario 1 - The KPI should measure or evaluate how the trained agent behaves in terms of robustness if, during the decision-making process where a human operator makes the final decisions, a human operator occasionally intervenes and significantly overrides the autonomous decisions of the trained agent.
+For agents trained using machine learning methods, this can cause an offset between the type of states encountered in the training data and during deployment, especially for agents trained using reinforcement learning or similar methods where the agent itself decides which actions to execute. As a consequence of this offset, the agent might make poorer decisions if the human operator does not always follow the proposed actions of the agents.
+To measure how sensitive the agent is to such offsets, this KPI proposes to use a “simulated operator” that does not fully follow the course of actions suggested by the agents, and instead overwrites certain action variables set by the agents in a fraction of time steps. ', 'Overall, this KPI contributes to evaluating Robustness of the AI-based assistant when dealing with real-world conditions, as part of Task 4.2 evaluation objectives, and O4 main project objective.<br/>The KPI is related to Tasks 3.1 and 3.3. Specifically, it is related to goal (4) of Task 3.1 (“Analysis of the impact of human intervention in the decision process on AI agents developed and trained towards fully autonomous behavior”), goal (1) of Task 3.3 (“Develop and expand order-agnostic network architectures adapted to the RL setting to use human-data or human-like perturbations and ensure the system can also make good decisions in the context where actions are partially chosen by the human partner”) and goal (2) of Task 3.4 (“Detect risks early on and potentially inform human supervisors, e.g. relinquish control to a human supervisor or transition into “safety mode” when necessary”).   ', array['d6eacff5-2331-4003-a5c7-fc1c78016062']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3665,7 +4458,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('74dd5830-6e59-423f-89f4-b050319db14e', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['6eefe84b-567f-4d82-9c90-d6b877f05cd8']::uuid[])
+    VALUES ('74dd5830-6e59-423f-89f4-b050319db14e', 'Scenario 1 - Drop-off in reward calculates difference in reward between situation with perfect information and imperfect information either through natural malfunctions while measuring data or through intentional perturbations by an attacker. ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['6eefe84b-567f-4d82-9c90-d6b877f05cd8']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3685,7 +4478,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('900d5489-2539-4a49-b3fb-3ae2039be92f', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['128e21d2-c26e-44d8-b154-ea288187972a']::uuid[])
+    VALUES ('900d5489-2539-4a49-b3fb-3ae2039be92f', 'Scenario 1 - Drop-off in reward calculates difference in reward between situation with perfect information and imperfect information either through natural malfunctions while measuring data or through intentional perturbations by an attacker. ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['128e21d2-c26e-44d8-b154-ea288187972a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3705,7 +4498,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('532a18a1-5e58-45a4-830e-b5ca016499f9', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['b29bdff4-e173-469c-9a01-80656400b4b5']::uuid[])
+    VALUES ('532a18a1-5e58-45a4-830e-b5ca016499f9', 'Scenario 1 - Drop-off in reward calculates difference in reward between situation with perfect information and imperfect information either through natural malfunctions while measuring data or through intentional perturbations by an attacker. ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['b29bdff4-e173-469c-9a01-80656400b4b5']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3725,7 +4518,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('ffcadd8d-207a-49af-8b09-54e922642f01', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective.  ', array['c695f336-10fc-41df-8376-33857fff1816']::uuid[])
+    VALUES ('ffcadd8d-207a-49af-8b09-54e922642f01', 'Scenario 1 - Frequency changed output AI agent calculates the number of times the output of the AI agent (i.e. the action the agent chooses) is changed due to perturbations ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective.  ', array['c695f336-10fc-41df-8376-33857fff1816']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3745,7 +4538,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('fdaac433-3ef0-4667-afb8-8014d0c1afa3', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective.  ', array['44384196-3ffd-4df4-bd68-0e803f77757d']::uuid[])
+    VALUES ('fdaac433-3ef0-4667-afb8-8014d0c1afa3', 'Scenario 1 - Frequency changed output AI agent calculates the number of times the output of the AI agent (i.e. the action the agent chooses) is changed due to perturbations ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective.  ', array['44384196-3ffd-4df4-bd68-0e803f77757d']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3765,7 +4558,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('12c63b69-e6b1-4316-999b-7112e0b0c1d2', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective.  ', array['35b65c55-13d4-4385-bff4-5c5ccfeb1077']::uuid[])
+    VALUES ('12c63b69-e6b1-4316-999b-7112e0b0c1d2', 'Scenario 1 - Frequency changed output AI agent calculates the number of times the output of the AI agent (i.e. the action the agent chooses) is changed due to perturbations ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective.  ', array['35b65c55-13d4-4385-bff4-5c5ccfeb1077']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3785,7 +4578,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('588ae37c-f583-47df-9154-ca12c9ac134a', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['f28523cf-b708-4431-91c0-3b29056139f9']::uuid[])
+    VALUES ('588ae37c-f583-47df-9154-ca12c9ac134a', 'Scenario 1 - Severity of changed output AI agent KPI measures similarity of the action chosen by AI agent based on a perturbed input to the action chosen with perfect information. Average pre-defined similarity score per changed action indicating how different the new action is from the original one. ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['f28523cf-b708-4431-91c0-3b29056139f9']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3805,7 +4598,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('70d937d5-742b-4838-a456-4a95ff994788', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['eb411f0f-eb8a-47e1-9ba1-6a929449d59c']::uuid[])
+    VALUES ('70d937d5-742b-4838-a456-4a95ff994788', 'Scenario 1 - Severity of changed output AI agent KPI measures similarity of the action chosen by AI agent based on a perturbed input to the action chosen with perfect information. Average pre-defined similarity score per changed action indicating how different the new action is from the original one. ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['eb411f0f-eb8a-47e1-9ba1-6a929449d59c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3825,7 +4618,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('af261375-7fd2-4a89-92b6-3477b018a09d', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['4bb80a5b-6ed3-45f9-bab4-6a8ce1607721']::uuid[])
+    VALUES ('af261375-7fd2-4a89-92b6-3477b018a09d', 'Scenario 1 - Severity of changed output AI agent KPI measures similarity of the action chosen by AI agent based on a perturbed input to the action chosen with perfect information. Average pre-defined similarity score per changed action indicating how different the new action is from the original one. ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['4bb80a5b-6ed3-45f9-bab4-6a8ce1607721']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3845,7 +4638,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('8011c7bd-6082-4653-8d9d-887d23f1ec5c', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['10bb95e7-9938-468e-b6c2-ed7c5017fd3b']::uuid[])
+    VALUES ('8011c7bd-6082-4653-8d9d-887d23f1ec5c', 'Scenario 1 - Steps survived with perturbations KPI calculates the number of steps the AI agent is able to survive in environment with perturbation agent ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['10bb95e7-9938-468e-b6c2-ed7c5017fd3b']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3865,7 +4658,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('9cd1a5e0-8445-4b9d-859b-76b096d33049', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['2495463f-0168-438a-8b2c-65efbcfdb288']::uuid[])
+    VALUES ('9cd1a5e0-8445-4b9d-859b-76b096d33049', 'Scenario 1 - Steps survived with perturbations KPI calculates the number of steps the AI agent is able to survive in environment with perturbation agent ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['2495463f-0168-438a-8b2c-65efbcfdb288']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3885,7 +4678,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('f903201d-a631-46c9-997f-f32bf7e3ff5d', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['86becfb7-36df-449f-aa44-e27aa8d9c5c8']::uuid[])
+    VALUES ('f903201d-a631-46c9-997f-f32bf7e3ff5d', 'Scenario 1 - Steps survived with perturbations KPI calculates the number of steps the AI agent is able to survive in environment with perturbation agent ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['86becfb7-36df-449f-aa44-e27aa8d9c5c8']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3905,7 +4698,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('47a11418-fad5-4d55-a637-6b90a8351500', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['ad276973-ba49-4688-91d1-1217b35b33e1']::uuid[])
+    VALUES ('47a11418-fad5-4d55-a637-6b90a8351500', 'Scenario 1 - Vulnerability to perturbation KPI measures vulnerability of specific value in observed state to perturbations, i.e. how likely it is that perturbing the value will result in a change in action chosen by the AI agent ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['ad276973-ba49-4688-91d1-1217b35b33e1']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3925,7 +4718,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('61063867-df62-4024-be42-c57507a15d7c', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['e4f93627-fb2a-4dc9-943b-77c8f224222c']::uuid[])
+    VALUES ('61063867-df62-4024-be42-c57507a15d7c', 'Scenario 1 - Vulnerability to perturbation KPI measures vulnerability of specific value in observed state to perturbations, i.e. how likely it is that perturbing the value will result in a change in action chosen by the AI agent ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['e4f93627-fb2a-4dc9-943b-77c8f224222c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3945,7 +4738,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('3ced691e-d23c-47de-9967-5cf5d7be3e9e', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['48571925-e8a2-4329-8b58-1a9e6d9b0d1f']::uuid[])
+    VALUES ('3ced691e-d23c-47de-9967-5cf5d7be3e9e', 'Scenario 1 - Vulnerability to perturbation KPI measures vulnerability of specific value in observed state to perturbations, i.e. how likely it is that perturbing the value will result in a change in action chosen by the AI agent ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['48571925-e8a2-4329-8b58-1a9e6d9b0d1f']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3965,7 +4758,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('dc8195e4-266d-4afb-ba60-2659f59acfa4', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['b82960af-30e3-4402-aea4-f129b8518ad9']::uuid[])
+    VALUES ('dc8195e4-266d-4afb-ba60-2659f59acfa4', 'Scenario 1 - Reward per action KPI calculates average reward obtained for each action performed by the AI agent ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['b82960af-30e3-4402-aea4-f129b8518ad9']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -3985,7 +4778,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('a999eb93-2efe-4f73-a2d8-eab51f158ae8', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['a904e4a5-a0bc-4dbc-af03-7f7d8af21a28']::uuid[])
+    VALUES ('a999eb93-2efe-4f73-a2d8-eab51f158ae8', 'Scenario 1 - Reward per action KPI calculates average reward obtained for each action performed by the AI agent ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['a904e4a5-a0bc-4dbc-af03-7f7d8af21a28']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4005,7 +4798,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('eeb9b483-616d-4508-85b8-812a09f93d23', 'primary', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['4cd393ef-cca3-4624-812e-02d69c32a22c']::uuid[])
+    VALUES ('eeb9b483-616d-4508-85b8-812a09f93d23', 'Scenario 1 - Reward per action KPI calculates average reward obtained for each action performed by the AI agent ', 'This KPI contributes to evaluating Robustness of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['4cd393ef-cca3-4624-812e-02d69c32a22c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4025,7 +4818,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('e36d1ef8-939c-4cd8-a660-0a224ce24aa0', 'primary', 'This KPI ensures that AI-driven explanations remain reliable and aligned with the actual decision-making process of the model. It helps evaluate interpretability methods in AI systems used in critical applications. <br/>This KPI contributes to evaluating AI trustworthiness, acceptability and trust of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O4 main project objective.', array['17c72ca8-d2e0-4ff4-9c6c-c5d3b2391d63']::uuid[])
+    VALUES ('e36d1ef8-939c-4cd8-a660-0a224ce24aa0', 'Scenario 1 - The Explainability Robustness KPI evaluates the stability of explanations against small input perturbations, assuming the model’s output remains relatively unchanged. A robust explanation should not fluctuate significantly when the input is slightly modified. The Average Sensitivity Metric quantifies this stability by applying small perturbations to the input data and measuring how much the explanation changes. Since computing sensitivity over all possible perturbations is impractical, Monte Carlo sampling is used to estimate these variations efficiently. ', 'This KPI ensures that AI-driven explanations remain reliable and aligned with the actual decision-making process of the model. It helps evaluate interpretability methods in AI systems used in critical applications.<br/>This KPI contributes to evaluating AI trustworthiness, acceptability and trust of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O4 main project objective.', array['17c72ca8-d2e0-4ff4-9c6c-c5d3b2391d63']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4045,7 +4838,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('53b0db0e-7092-455b-9e2c-327ee017f776', 'primary', 'This KPI ensures that AI-driven explanations remain reliable and aligned with the actual decision-making process of the model. It helps evaluate interpretability methods in AI systems used in critical applications. <br/><br/>This KPI contributes to evaluating AI trustworthiness, acceptability and trust of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O4 main project objective. ', array['9fc1e90a-54bb-4d43-8cf2-89f5b8751315']::uuid[])
+    VALUES ('53b0db0e-7092-455b-9e2c-327ee017f776', 'Scenario 1 - The Faithfulness KPI assesses whether the feature importance scores provided by an explanation method accurately reflect the model’s decision-making process. It systematically removes or alters features and measures the impact on the model’s predictions. The assumption is that if a feature is truly important, removing or altering it should significantly affect the model’s output. ', 'This KPI ensures that AI-driven explanations remain reliable and aligned with the actual decision-making process of the model. It helps evaluate interpretability methods in AI systems used in critical applications.<br/><br/>This KPI contributes to evaluating AI trustworthiness, acceptability and trust of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O4 main project objective. ', array['9fc1e90a-54bb-4d43-8cf2-89f5b8751315']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4075,7 +4868,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('a9e3fbf7-b5d5-477d-a0c8-d23880237d2d', 'primary', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['0c62855e-4a6f-487f-a374-da6616523e78']::uuid[])
+    VALUES ('a9e3fbf7-b5d5-477d-a0c8-d23880237d2d', 'Scenario 1 - Area between reward curves calculates area between the curve corresponding to the reward obtained in each step in an environment where the AI agent has perfect information and the curve for an environment where the agent's input is perturbed ', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['0c62855e-4a6f-487f-a374-da6616523e78']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4095,7 +4888,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('bbcf8224-c768-4469-8ff5-939d977383b4', 'primary', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['7d47d27f-5210-4b32-af74-c675f01b7f34']::uuid[])
+    VALUES ('bbcf8224-c768-4469-8ff5-939d977383b4', 'Scenario 1 - Area between reward curves calculates area between the curve corresponding to the reward obtained in each step in an environment where the AI agent has perfect information and the curve for an environment where the agent's input is perturbed ', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['7d47d27f-5210-4b32-af74-c675f01b7f34']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4115,7 +4908,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('e80a5e55-dc60-459f-bf22-26f196a4711a', 'primary', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['9aa013b5-5b38-40ee-ae5a-5a995ed848b5']::uuid[])
+    VALUES ('e80a5e55-dc60-459f-bf22-26f196a4711a', 'Scenario 1 - Area between reward curves calculates area between the curve corresponding to the reward obtained in each step in an environment where the AI agent has perfect information and the curve for an environment where the agent's input is perturbed ', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['9aa013b5-5b38-40ee-ae5a-5a995ed848b5']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4135,7 +4928,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('dc03b9f1-bfb2-44b8-b124-f7eede10e0a7', 'primary', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['6c5d2104-95b2-4dfb-af77-3eccd7416d33']::uuid[])
+    VALUES ('dc03b9f1-bfb2-44b8-b124-f7eede10e0a7', 'Scenario 1 - Number of steps/episodes until reward reaches its lowest point after introducing perturbations to the input of the AI agent ', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['6c5d2104-95b2-4dfb-af77-3eccd7416d33']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4155,7 +4948,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('b355482b-30a2-431e-9536-8e3dd29d06d1', 'primary', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['e52742ce-a6f6-46c9-9806-83bd9d036cce']::uuid[])
+    VALUES ('b355482b-30a2-431e-9536-8e3dd29d06d1', 'Scenario 1 - Number of steps/episodes until reward reaches its lowest point after introducing perturbations to the input of the AI agent ', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['e52742ce-a6f6-46c9-9806-83bd9d036cce']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4175,7 +4968,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('2aaed2a4-7dd9-4ea6-a2df-e3ef2207680a', 'primary', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['23b4c9ee-0dec-4e36-b755-15aa29cf5b91']::uuid[])
+    VALUES ('2aaed2a4-7dd9-4ea6-a2df-e3ef2207680a', 'Scenario 1 - Number of steps/episodes until reward reaches its lowest point after introducing perturbations to the input of the AI agent ', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['23b4c9ee-0dec-4e36-b755-15aa29cf5b91']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4195,7 +4988,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('56160b90-a287-4dec-acc7-f40967d60fa0', 'primary', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['fb1b87be-26a3-48f2-bb69-d98e341ed128']::uuid[])
+    VALUES ('56160b90-a287-4dec-acc7-f40967d60fa0', 'Scenario 1 - Number of steps/episodes until reward recovers to its highest point after reaching the lowest point after introducing perturbations to the input of the AI agent ', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['fb1b87be-26a3-48f2-bb69-d98e341ed128']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4215,7 +5008,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('2eaf04e3-090a-4c13-b923-ac86de1b6db1', 'primary', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['0c79911b-29de-4f7f-bca6-820ef7f28f34']::uuid[])
+    VALUES ('2eaf04e3-090a-4c13-b923-ac86de1b6db1', 'Scenario 1 - Number of steps/episodes until reward recovers to its highest point after reaching the lowest point after introducing perturbations to the input of the AI agent ', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['0c79911b-29de-4f7f-bca6-820ef7f28f34']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4235,7 +5028,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('00e749d7-baa3-4b24-8092-d3dd69cdea58', 'primary', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['b75f5075-8c72-49b2-bbb7-523cf3757b17']::uuid[])
+    VALUES ('00e749d7-baa3-4b24-8092-d3dd69cdea58', 'Scenario 1 - Number of steps/episodes until reward recovers to its highest point after reaching the lowest point after introducing perturbations to the input of the AI agent ', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['b75f5075-8c72-49b2-bbb7-523cf3757b17']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4255,7 +5048,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('367a8b12-1b87-42f1-9400-4ecf96d6b617', 'primary', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['7929ff8d-5b64-48e1-ab5c-ebb398917ce3']::uuid[])
+    VALUES ('367a8b12-1b87-42f1-9400-4ecf96d6b617', 'Scenario 1 - Similarity state to unperturbed situation KPI measures similarity of the state in an environment where AI agent's input is perturbed to the state in the same context of an environment with perfect information ', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['7929ff8d-5b64-48e1-ab5c-ebb398917ce3']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4275,7 +5068,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('4523d73e-427a-42a1-b841-c9668373fafb', 'primary', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['5e04f982-70cf-402b-aeac-ee1184c336ba']::uuid[])
+    VALUES ('4523d73e-427a-42a1-b841-c9668373fafb', 'Scenario 1 - Similarity state to unperturbed situation KPI measures similarity of the state in an environment where AI agent's input is perturbed to the state in the same context of an environment with perfect information ', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['5e04f982-70cf-402b-aeac-ee1184c336ba']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4295,7 +5088,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('afc812fc-e4f3-4380-a856-9987bc557d5c', 'primary', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['0bc0cca0-d4db-4d28-b5f9-74609d12fef8']::uuid[])
+    VALUES ('afc812fc-e4f3-4380-a856-9987bc557d5c', 'Scenario 1 - Similarity state to unperturbed situation KPI measures similarity of the state in an environment where AI agent's input is perturbed to the state in the same context of an environment with perfect information ', 'This KPI contributes to evaluating Resilience of the AI-based assistant, as part of Task 4.2 evaluation objectives, and O4 main project objective. ', array['0bc0cca0-d4db-4d28-b5f9-74609d12fef8']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4325,7 +5118,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('e9e537cc-a8d0-4864-9460-9098c72b269f', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Transparency”, “Human Agency and Oversight”, “Credibility and Intimacy”. Furthermore, it is also relevant to the overall project KPI-ET-7 "% of acceptance of human operators regarding AI4REALNET solutions". ', array['90fb4912-29b4-468c-80f9-66221b97b575']::uuid[])
+    VALUES ('e9e537cc-a8d0-4864-9460-9098c72b269f', 'Scenario 1 - This KPI represents self-reported human operators’ perception of the changes in their trust for the AI assistant over time (increased/decreased) on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Transparency”, “Human Agency and Oversight”, “Credibility and Intimacy”. Furthermore, it is also relevant to the overall project KPI-ET-7 "% of acceptance of human operators regarding AI4REALNET solutions". ', array['90fb4912-29b4-468c-80f9-66221b97b575']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4345,7 +5138,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('b26f54c0-146a-473c-82a6-fcecbedc9cbc', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Transparency”, “Human Agency and Oversight”, “Credibility and Intimacy”. Furthermore, it is also relevant to the overall project KPI-ET-7 "% of acceptance of human operators regarding AI4REALNET solutions". ', array['ca679741-cbb3-4d96-b688-dd817693a94c']::uuid[])
+    VALUES ('b26f54c0-146a-473c-82a6-fcecbedc9cbc', 'Scenario 1 - This KPI represents self-reported human operators’ perception of the changes in their trust for the AI assistant over time (increased/decreased) on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Transparency”, “Human Agency and Oversight”, “Credibility and Intimacy”. Furthermore, it is also relevant to the overall project KPI-ET-7 "% of acceptance of human operators regarding AI4REALNET solutions". ', array['ca679741-cbb3-4d96-b688-dd817693a94c']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4365,7 +5158,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('12e1531b-8525-408d-b800-1d0df54f84bb', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Transparency”, “Human Agency and Oversight”, “Credibility and Intimacy”. Furthermore, it is also relevant to the overall project KPI-ET-7 "% of acceptance of human operators regarding AI4REALNET solutions". ', array['89f5fc6a-2365-43d0-949d-63474e6bfc04']::uuid[])
+    VALUES ('12e1531b-8525-408d-b800-1d0df54f84bb', 'Scenario 1 - This KPI represents self-reported human operators’ perception of the changes in their trust for the AI assistant over time (increased/decreased) on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Transparency”, “Human Agency and Oversight”, “Credibility and Intimacy”. Furthermore, it is also relevant to the overall project KPI-ET-7 "% of acceptance of human operators regarding AI4REALNET solutions". ', array['89f5fc6a-2365-43d0-949d-63474e6bfc04']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4385,7 +5178,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('1ce89667-c4c2-483d-8ed1-c7add0a24b4b', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.  <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Transparency”, “Decision support for the human operator”, “Human Agency and Oversight”.  ', array['9f07e590-75bd-4fe2-a0b7-fb4826d1280a']::uuid[])
+    VALUES ('1ce89667-c4c2-483d-8ed1-c7add0a24b4b', 'Scenario 1 - This KPI represents self-reported human operators’ perception of the changes in their agency working with the AI assistant over time (increased/decreased) on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Transparency”, “Decision support for the human operator”, “Human Agency and Oversight”.  ', array['9f07e590-75bd-4fe2-a0b7-fb4826d1280a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4405,7 +5198,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('284e2178-d34c-4dcb-8868-21b4d2310744', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.  <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Transparency”, “Decision support for the human operator”, “Human Agency and Oversight”.  ', array['f06cdfb0-7ba6-4463-8633-d38cc856c75a']::uuid[])
+    VALUES ('284e2178-d34c-4dcb-8868-21b4d2310744', 'Scenario 1 - This KPI represents self-reported human operators’ perception of the changes in their agency working with the AI assistant over time (increased/decreased) on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Transparency”, “Decision support for the human operator”, “Human Agency and Oversight”.  ', array['f06cdfb0-7ba6-4463-8633-d38cc856c75a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4425,7 +5218,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5afb6acf-df83-47e9-9e7e-cdfb85a3c5de', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.  <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Transparency”, “Decision support for the human operator”, “Human Agency and Oversight”.  ', array['ab2a6648-8405-4490-b868-5231ec741cc8']::uuid[])
+    VALUES ('5afb6acf-df83-47e9-9e7e-cdfb85a3c5de', 'Scenario 1 - This KPI represents self-reported human operators’ perception of the changes in their agency working with the AI assistant over time (increased/decreased) on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Transparency”, “Decision support for the human operator”, “Human Agency and Oversight”.  ', array['ab2a6648-8405-4490-b868-5231ec741cc8']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4445,7 +5238,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('e283be95-96da-4f69-8869-06ab82ee2c45', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Mitigate de-skilling in the human operators”. ', array['a7c602c7-736c-4dd0-b4e4-f2199d1d6014']::uuid[])
+    VALUES ('e283be95-96da-4f69-8869-06ab82ee2c45', 'Scenario 1 - This KPI represents self-reported human operators’ perception of the changes in their own skills working with the AI assistant over time (increased/decreased) on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Mitigate de-skilling in the human operators”. ', array['a7c602c7-736c-4dd0-b4e4-f2199d1d6014']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4465,7 +5258,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('f253c68c-bd5e-43a2-8d72-77ab9caccb0d', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Mitigate de-skilling in the human operators”. ', array['1897db1b-869a-4100-8596-a983a5525cbf']::uuid[])
+    VALUES ('f253c68c-bd5e-43a2-8d72-77ab9caccb0d', 'Scenario 1 - This KPI represents self-reported human operators’ perception of the changes in their own skills working with the AI assistant over time (increased/decreased) on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Mitigate de-skilling in the human operators”. ', array['1897db1b-869a-4100-8596-a983a5525cbf']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4485,7 +5278,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('e62d0769-c481-4641-b9d4-ad5586008e38', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Mitigate de-skilling in the human operators”. ', array['7cef4f40-a0a6-48e1-a4b9-a20f8bae0409']::uuid[])
+    VALUES ('e62d0769-c481-4641-b9d4-ad5586008e38', 'Scenario 1 - This KPI represents self-reported human operators’ perception of the changes in their own skills working with the AI assistant over time (increased/decreased) on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Mitigate de-skilling in the human operators”. ', array['7cef4f40-a0a6-48e1-a4b9-a20f8bae0409']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4505,7 +5298,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('fbe33158-fb85-492d-9015-62b95f4658e8', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Mitigate addictive behavior from humans”. ', array['06cb3d29-b11f-41cb-aa32-a0bab80f9e41']::uuid[])
+    VALUES ('fbe33158-fb85-492d-9015-62b95f4658e8', 'Scenario 1 - This KPI represents self-reported human operators’ perception of their potential over-reliance on the AI assistant on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Mitigate addictive behavior from humans”. ', array['06cb3d29-b11f-41cb-aa32-a0bab80f9e41']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4525,7 +5318,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('44daf1f7-1449-408e-baa6-9d5c29dc50f0', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Mitigate addictive behavior from humans”. ', array['00ddf7a5-e115-485b-b60a-e20fe7e4a47b']::uuid[])
+    VALUES ('44daf1f7-1449-408e-baa6-9d5c29dc50f0', 'Scenario 1 - This KPI represents self-reported human operators’ perception of their potential over-reliance on the AI assistant on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Mitigate addictive behavior from humans”. ', array['00ddf7a5-e115-485b-b60a-e20fe7e4a47b']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4545,7 +5338,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('a65a72e0-5ac4-4182-a919-da70d1241a59', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Mitigate addictive behavior from humans”. ', array['48c96014-f53b-4245-a23b-e69235885b75']::uuid[])
+    VALUES ('a65a72e0-5ac4-4182-a919-da70d1241a59', 'Scenario 1 - This KPI represents self-reported human operators’ perception of their potential over-reliance on the AI assistant on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Mitigate addictive behavior from humans”. ', array['48c96014-f53b-4245-a23b-e69235885b75']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4565,7 +5358,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('4a6d19a8-0d27-42d8-97af-9197987e64ce', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Additional training about AI for human operators” and “Societal and Environmental Well-being”. ', array['125e2e59-23cc-4a2b-a964-bdb5ef835ef5']::uuid[])
+    VALUES ('4a6d19a8-0d27-42d8-97af-9197987e64ce', 'Scenario 1 - This KPI represents self-reported human operators’ perception of the additional training necessary to adopt the AI assistant on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Additional training about AI for human operators” and “Societal and Environmental Well-being”. ', array['125e2e59-23cc-4a2b-a964-bdb5ef835ef5']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4585,7 +5378,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('9cfb4458-2418-4a83-a7f3-0c27758c4752', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Additional training about AI for human operators” and “Societal and Environmental Well-being”. ', array['64ec96be-c917-4d84-bea6-f1b3a1dbf810']::uuid[])
+    VALUES ('9cfb4458-2418-4a83-a7f3-0c27758c4752', 'Scenario 1 - This KPI represents self-reported human operators’ perception of the additional training necessary to adopt the AI assistant on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Additional training about AI for human operators” and “Societal and Environmental Well-being”. ', array['64ec96be-c917-4d84-bea6-f1b3a1dbf810']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4605,7 +5398,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('e82bc94e-ed5e-403a-8dce-a4ed9c7cb63d', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Additional training about AI for human operators” and “Societal and Environmental Well-being”. ', array['ec681c67-7748-4699-a7f9-346b81aa2c14']::uuid[])
+    VALUES ('e82bc94e-ed5e-403a-8dce-a4ed9c7cb63d', 'Scenario 1 - This KPI represents self-reported human operators’ perception of the additional training necessary to adopt the AI assistant on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Additional training about AI for human operators” and “Societal and Environmental Well-being”. ', array['ec681c67-7748-4699-a7f9-346b81aa2c14']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4625,7 +5418,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('b646c5dd-20e5-4628-984c-0b6ab3156538', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Diversity, Non-discrimination, and Fairness”. ', array['5a6f8659-28db-43ec-b112-d9f5aa9fd3a3']::uuid[])
+    VALUES ('b646c5dd-20e5-4628-984c-0b6ab3156538', 'Scenario 1 - This KPI represents self-reported human operators’ perception of biased decisions potentially produced by the AI assistant with respect to gender/ethnicity/age or commercial interests on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Diversity, Non-discrimination, and Fairness”. ', array['5a6f8659-28db-43ec-b112-d9f5aa9fd3a3']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4645,7 +5438,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('7dfff29e-c251-459e-b591-295d796b328a', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Diversity, Non-discrimination, and Fairness”. ', array['b60958e0-1320-4afd-b080-4454ebe059c0']::uuid[])
+    VALUES ('7dfff29e-c251-459e-b591-295d796b328a', 'Scenario 1 - This KPI represents self-reported human operators’ perception of biased decisions potentially produced by the AI assistant with respect to gender/ethnicity/age or commercial interests on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Diversity, Non-discrimination, and Fairness”. ', array['b60958e0-1320-4afd-b080-4454ebe059c0']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4665,7 +5458,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('3c3dd29c-67f1-49fa-8aef-384c957acaa4', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Diversity, Non-discrimination, and Fairness”. ', array['bb338017-71b2-4f70-80e2-4b425894cbc2']::uuid[])
+    VALUES ('3c3dd29c-67f1-49fa-8aef-384c957acaa4', 'Scenario 1 - This KPI represents self-reported human operators’ perception of biased decisions potentially produced by the AI assistant with respect to gender/ethnicity/age or commercial interests on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Diversity, Non-discrimination, and Fairness”. ', array['bb338017-71b2-4f70-80e2-4b425894cbc2']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4685,7 +5478,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('691ab2fd-9827-45f9-8d03-0878c1005144', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Human Agency and Oversight”, “Societal and Environmental Well-being”. ', array['6134d787-1015-46f3-bb71-572fb747f71a']::uuid[])
+    VALUES ('691ab2fd-9827-45f9-8d03-0878c1005144', 'Scenario 1 - This KPI represents predicted adoption of the AI assistant by users, stakeholders, or experts on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Human Agency and Oversight”, “Societal and Environmental Well-being”. ', array['6134d787-1015-46f3-bb71-572fb747f71a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4705,7 +5498,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('d885d30d-408c-4b88-9a25-add134aca45b', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Human Agency and Oversight”, “Societal and Environmental Well-being”. ', array['15727caa-9a67-4397-9e08-14c6b1f4e236']::uuid[])
+    VALUES ('d885d30d-408c-4b88-9a25-add134aca45b', 'Scenario 1 - This KPI represents predicted adoption of the AI assistant by users, stakeholders, or experts on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Human Agency and Oversight”, “Societal and Environmental Well-being”. ', array['15727caa-9a67-4397-9e08-14c6b1f4e236']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
@@ -4725,7 +5518,7 @@ INSERT INTO field_definitions
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('664cd46e-7eac-480f-92da-79574b470da4', 'primary', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective. <br/>It is also relevant to protocols and concepts defined in D1.1 such as “Human Agency and Oversight”, “Societal and Environmental Well-being”. ', array['524d2cef-fca0-42d8-ab3f-5abd20ab2c3e']::uuid[])
+    VALUES ('664cd46e-7eac-480f-92da-79574b470da4', 'Scenario 1 - This KPI represents predicted adoption of the AI assistant by users, stakeholders, or experts on a Likert scale. ', 'This KPI contributes to evaluating Long-term consequences of AI assistants of the AI-based assistant, as part of Task 4.3 evaluation objectives, and O3 main project objective.<br/>It is also relevant to protocols and concepts defined in D1.1 such as “Human Agency and Oversight”, “Societal and Environmental Well-being”. ', array['524d2cef-fca0-42d8-ab3f-5abd20ab2c3e']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
