@@ -258,5 +258,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: npm ci
+      - name: Clone ai4realnet-orchestrators for integration tests
+        uses: actions/checkout@v4
+        with:
+          repository: flatland-association/ai4realnet-orchestrators
+          path: evaluation/ai4realnet_orchestrators
+          ref: ${{ env.ai4realnet-orchestrators-ref }}
       - name: Run e2e test suite
         run: DEBUG=testcontainers* node --experimental-strip-types ts/frontend/cypress/run-ci-press.mts
