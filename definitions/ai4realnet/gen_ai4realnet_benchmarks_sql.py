@@ -141,9 +141,9 @@ def main():
   with Path("orchestrators.txt").open("w") as f:
     f.write(orchestrator_code)
   sql = gen_sqls(data)
-  with Path("V10.1__ai4realnet_example.json").open("w") as f:
+  with Path("V11.1__ai4realnet_example.json").open("w") as f:
     f.write(json.dumps(data, indent=4))
-  with Path("../../ts/backend/src/migration/data/V10.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
+  with Path("../../ts/backend/src/migration/data/V11.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
     f.write(sql)
 
 

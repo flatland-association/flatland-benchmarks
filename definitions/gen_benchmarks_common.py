@@ -19,7 +19,7 @@ def gen_sql_scenario_field(key, scenario_field, scenario_field_description):
 def gen_sql_scenario(scenario_id, scenario_name, scenario_description, scenario_fields):
   return f"""INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('{scenario_id}', '{scenario_name}', '{escape_sql_string(scenario_description)}', array['{"\', \'".join(scenario_fields)}']::uuid[])
+    VALUES ('{scenario_id}', '{escape_sql_string(scenario_name)[:1024]}', '{escape_sql_string(scenario_description)[:1024]}', array['{"\', \'".join(scenario_fields)}']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 """
