@@ -259,4 +259,4 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Run e2e test suite
-        run: node --experimental-strip-types ts/frontend/cypress/run-ci-press.mts
+        run: DEBUG=testcontainers* node --experimental-strip-types ts/frontend/cypress/run-ci-press.mts
