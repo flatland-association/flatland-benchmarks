@@ -391,18 +391,18 @@ services:
     networks:
       - flatland-benchmarks
 
-#  wait-for-all:
-#    profiles: [ full ]
-#    image: alpine
-#    depends_on:
-#      fab-backend:
-#        condition: service_healthy
-#      fab-frontend:
-#        condition: service_healthy
-#      ai4realnet-orchestrator-railway:
-#        condition: service_healthy
-#      flatland3-benchmarks-orchestrator:
-#        condition: service_healthy
+  wait-for-all:
+    profiles: [ full-wait ]
+    image: alpine
+    depends_on:
+      fab-backend:
+        condition: service_healthy
+      fab-frontend:
+        condition: service_healthy
+      ai4realnet-orchestrator-railway:
+        condition: service_healthy
+      flatland3-benchmarks-orchestrator:
+        condition: service_healthy
 
 networks:
   flatland-benchmarks:
