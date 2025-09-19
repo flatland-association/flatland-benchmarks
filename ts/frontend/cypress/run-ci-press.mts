@@ -41,7 +41,10 @@ async function main() {
     .withStartupTimeout(DOCKER_COMPOSE_TIMEOUT)
     .up()
 
-  backend = myExec('npm run private:serve', 'BK', { cwd: '../../backend', env: { CUSTOMIZATION: 'ai4realnet' } })
+  backend = myExec('npm run private:serve', 'BK', {
+    cwd: '../../backend',
+    env: { ...process.env, CUSTOMIZATION: 'ai4realnet' },
+  })
   frontend = myExec('npm run private:serve', 'NG', { cwd: '..' })
 
   await waitFor('http://localhost:8000/health/live', 20000)
