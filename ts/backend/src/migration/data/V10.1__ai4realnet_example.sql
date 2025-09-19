@@ -1195,22 +1195,1512 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('98ceb866-5479-47e6-a735-81292de8ca65', 'KPI-PF-026: Punctuality (Railway)', 'Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', array['1de0f52c-ae47-4847-9148-97b8568952d3']::uuid[], array['5a60713d-01f2-4d32-9867-21904629e254']::uuid[], 'CLOSED', 'Railway')
+    VALUES ('98ceb866-5479-47e6-a735-81292de8ca65', 'KPI-PF-026: Punctuality (Railway)', 'Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', array['1de0f52c-ae47-4847-9148-97b8568952d3']::uuid[], array['822b8be3-b284-40f3-a396-cda4477973cc', 'fb285995-83a4-4e29-bab9-253da229baa3', 'd4780268-cefc-4fb5-b40e-3ef39de9d81d', '9d081bcc-6477-45e5-91ae-2ca993ecfa6d', '0b52f979-785d-4e41-9463-c3554b266cb5', '162c60d6-5fed-4134-9f38-98e69b63d2d2', '2ac32866-2400-4a28-98b7-80f1cf8a89d7', '1c66d6ab-ef32-4ee9-8f40-3517df87cc20', '8a607249-eba6-40db-9936-022c26859fe6', '19f27ad8-d533-4a82-8f1c-bb351868ded2', '37d8fb5b-01ae-40cb-b951-d37ca464d079', '3e7935f7-6668-455f-9a80-7f4f38c19c49', '5402514d-875d-4090-8837-298c5a978fdd', 'fb40b206-b93f-468c-a07a-dc97ce5f94f0', '1728dfb2-8b04-45a0-be04-2d90a707ef1c', '4b150132-83b1-4d8f-a95d-6b8e78ee7352', '87fb1d52-99dc-493f-8846-2c74fa36f243', 'b7ae099e-930f-471c-8c67-dff8e51d628d', '1028141b-ec9f-47a4-86e2-7614488b9809', '6cc61338-8f38-49b5-b4d0-2e4d47af4746', '5fbd0918-ea63-48e8-b180-304694167646', 'f313e209-a9a5-4e1a-b532-721c6326064f', '1c423fca-07da-4e12-8920-47bce7b89f13', '712d7d76-44f2-4de2-835c-3bcf39431809', '2103f2c0-64bd-4956-916a-2cad490705e6', '3f39da46-0a0f-4e0a-aeae-451ff4e47b96', '6ec4f85b-ca8b-4288-a6a1-34377d61abdf', 'aeeac3a2-7c3f-4252-b3d9-bea2ca2f01b7', '4383e8cb-1cfc-4863-84e9-cdbed54b3bb3', 'd1c291fb-6af0-429a-a526-1d1172d6b694', 'f7de8e8a-a813-40a9-8fa4-fc8dc3dc1b4b', '53ffd237-915c-4a1c-a10f-ca8447a48c51', 'a2521b97-2a49-4637-bd1d-1f332b72e788', '84f68be8-11a7-4194-86d6-5a99bdffd34c', 'aa05a7c5-582b-4118-9e6d-3b13a7761673', '42fadb1b-5e30-4e0e-bc4f-ce4dff0eec79', '412f1fab-46a8-41c1-b769-80f5577bca0f', 'b6fe1474-3306-4236-8961-502f207a3572', 'bb98ac31-eafa-4e46-85e1-2ff26fe4f128', 'b51cf0a0-f103-4970-8ed8-17f80be7bad8', '279e5e3b-ac1e-42eb-9576-6eca3d73b615', 'b7022a3a-b7a9-43d7-868a-bec416689eb2', 'a9b3664e-81fe-4595-b159-62d1ed82ff0b', '161db07d-ef1f-49c7-90cf-16951717353b', 'a89b3a08-dd85-4514-a21f-e14673ba6cd0', '91dbe666-153c-4119-870a-92b2f3f74344', '592382ce-a92d-47a0-81de-6a2bf7d7f822', 'aeab1e0b-c1c6-4670-a062-85e0019a774b', '816a37ad-bd68-4466-92f7-0309a3c1575b', '82afbf49-4f5e-4065-9cb9-c32bcd6eb341', 'c457d15b-c6f0-4558-ba69-da498d009b19', 'c6620785-e8d3-4644-9e14-f02498a773c4', '8490c658-fb8e-44de-826f-c07c1c449b90', '4be70e62-b946-48f3-8977-a5d63abca399', 'e35d4956-f714-43eb-920a-8e09aca6f146', 'a0f6b266-6de1-45c4-bb01-29010647fbd7', '0dbaa2db-5f2a-4eef-afd5-bdbdce19313d', 'b6fcfbb3-9771-48b0-9e9d-3da6d31febc8', '5253b077-a788-4682-b483-64dd9eda03d5', '0da21807-807e-44ca-92f0-974ae2516505', '24e1e72a-1f6f-461c-b330-88ece9fbcca8', '409070c2-1c39-4369-af99-eac945774a3e', 'a8cf6af9-f5bc-4658-b59e-72c2d3ce47b4', '4b4ecc21-66a3-4fd5-852f-389854dfc7bd', 'c7ab4258-ca5d-4836-a537-479dcd5a9cc4', '5fb73c01-21f3-4683-8941-ecb152fc3250', 'cf8d2bb1-71a4-49a0-bd08-8e94bac8b3c9', 'd95e1a1d-7c20-4b1a-87b0-e38b73da94da', '3f9aced0-f3d9-48a7-ab8c-393c958398ef', 'e9c71419-692f-4c36-9486-9ada0ea5e828', '768b3e86-cfda-490a-bc71-9bbeed0689f7', '89ddcbab-a4fd-425c-a531-a83646333d06', '83c92a87-06d6-49d3-8093-f5d0906cc7c5', '2044f1ca-d8ba-4901-b55e-f5689607070c', 'f6fd6524-c5c8-4354-9ec1-9dc358546e69', '00c4fbf5-f379-4a2d-88a8-61499cc5bd32', '65d2aca4-f549-4483-8bd7-afde39d16238', '0cfcabbd-883f-4028-8a12-358c8fa451da', 'c282e296-90d1-4dc7-a7b2-5934a507c150', '38ecc44c-38c0-48a3-82b4-ed51b12d5e81', 'bb3bab27-c9c1-4953-8ebd-9175011487e0', '4a8e97b9-14bd-4ed3-b508-0e448819f9ba', '230d420f-83e1-4e26-afa3-5a661dd9c7d1', '89f966c8-50b4-44c5-90ad-0b6f6966972c', '0b5fe6bc-e533-4348-9b03-1e448a4e9d0f', 'c9f23f05-cb01-455f-8b94-9f72711cc865', 'c5348916-393e-48f9-b543-e24a19d1055c', 'a0e8b5fe-c6d6-4865-b091-7b46829ccc5d', '75d36e79-55db-40b8-802f-9a7b246a6cf5', 'c047ab1d-acd5-4338-9290-e3871034e328', 'ea181956-5cab-416e-9590-9956a8409731', '0dcf9ae8-a4fe-419c-8254-f9964e67a278', '0f590f1e-d272-4086-adfd-659df0b2ea05', 'cb39e1b8-9531-49ab-b3e6-4d3eccc30ea2', '48ef6b2e-c138-4a7e-bdbe-b75d2d668cd8', '55668041-317d-4334-b504-5c4b1a62b47d', '922b3bb8-6a35-44d3-b95e-b69cb92ea97f', '54f3769f-5d8a-4997-ba7a-8ce67a6216cd', '2f6afe60-20d7-4bce-9827-4c0a48f744b1', '49ba46a6-5e8d-4e95-80f0-c9443f0911d5', 'fc16b1d1-19af-4003-a43b-240c86d52773', '3757bc0c-6726-423e-8708-2e8632991dd2', '1447a252-1fee-4a61-b11b-b93d4d823d31', '3228888c-d4b3-4814-8008-1d28e4804480', 'e41ceeb7-c578-4764-91ac-d6d6f8bf7423', '38e6efd6-7b0f-4631-bef6-e84d73d8eb78', '626ee2b5-094c-4f33-a54f-a3641d29e6ac', 'a454fb44-6d14-4f23-8541-52c03f79de63', '5eb22519-5f4c-41f6-860c-37ab602c2f50', '5010b64a-5a35-4547-a273-d06825fa4548', '49021ab7-9380-440c-b083-9cd5ef8d53f6', 'e5b19842-c60b-4248-8873-05f92b540149', '8b6b0d08-143f-4111-9ed6-155138338964', '15874677-bcdd-48c3-9d4d-768952e23384', '745abc39-ef88-40a9-9b6d-a3bbcca4ad2c', '0d166694-2fb7-4320-bd2e-2cfccb84ddbe', 'b43fb8d4-613e-481d-b4e7-d731dc1218c9', 'a2a78e18-97e0-4c44-bb02-b533cf0466c0', 'e4fc374e-6749-4ddb-b452-1420d5c2f7de', 'c7042b3b-0a30-4804-9a5c-54751ea3d6fb', '3e3df180-1d81-4cbc-9b41-531b0e653a8f', '0ca35e34-cdfa-41cc-a26f-06a76b46a90e', '0c4c336a-22cd-49fe-98d1-cde93e3b7996', '70be8aae-3eb8-4a15-9ee9-ae6be507b427', '19c6e09d-c93a-4a78-aa81-450b1d7a3aa0', '119ded2a-7561-47b2-b47e-88c2274e0412', '7b74f972-5e86-46d7-bb19-d76302e52c0f', '53b1fa05-9eb5-4550-a796-61eb4839962c', '931fcaad-aba2-4260-b2a9-1e9176f4ca92', '71b28e23-e9e3-49c8-b4e3-f8168f9a7aa7', '1848326e-e8d7-40fb-bf4a-13ceb6a2f195', '98673dbb-ef9f-42a3-9305-d727b1c8f622', '520d8206-bfc4-410c-a21d-950e013d0c01', '42e53e34-8dfc-4b71-81b0-785f6c3ebae9', '8ce00435-a52a-4b71-ae13-1605435dc240', '6acf7c38-e1ce-4dcb-b4c5-6a04ce45464f', '5b408424-15d5-4da7-9328-cc5199f87539', 'a31cfb93-eabb-41ba-9a64-ccb927eeae96', 'edbd48b5-10c3-49de-8126-3610e2d035ab', '194174bd-76f0-4653-8b25-6f554ead70da', 'c14d38ba-6e88-446e-8f1c-67b8817e0f7c', 'b9c80185-03f3-4e8f-8716-083eb88644c4', 'bba281ad-e3f0-4381-ae8f-dd275663ab28', '8b8f6e46-e617-4443-b9cd-94d1a24abb6b', 'b9db8896-21a6-4e85-94b6-80b7fdfc011b', '8c64b3db-4823-4636-b89b-309916055d71', 'f5489742-c695-4181-8b87-aa14973d3dfa', 'bc6d985e-1250-4921-aa81-a27bb5259905', '55cb04ff-40be-4eed-94e8-51da3ce86481', '6d0e1038-31f5-4995-9392-cb82efcb136c']::uuid[], 'CLOSED', 'Railway')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('1de0f52c-ae47-4847-9148-97b8568952d3', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        VALUES ('1de0f52c-ae47-4847-9148-97b8568952d3', 'sum_normalized_reward', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
     (id, name, description, field_ids)
-    VALUES ('5a60713d-01f2-4d32-9867-21904629e254', 'primary', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c2a66425-186d-423b-b002-391c091b33c6']::uuid[])
+    VALUES ('822b8be3-b284-40f3-a396-cda4477973cc', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['64406038-d90c-415b-b571-ce491d0a0782']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c2a66425-186d-423b-b002-391c091b33c6', 'primary', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('64406038-d90c-415b-b571-ce491d0a0782', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('fb285995-83a4-4e29-bab9-253da229baa3', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['1aaf67c5-fdf8-4b3f-a0bf-3750b8fd6e18']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1aaf67c5-fdf8-4b3f-a0bf-3750b8fd6e18', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('d4780268-cefc-4fb5-b40e-3ef39de9d81d', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['750ba040-5b6b-4a45-a85e-782649112024']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('750ba040-5b6b-4a45-a85e-782649112024', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('9d081bcc-6477-45e5-91ae-2ca993ecfa6d', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['6bbc17d3-f3d4-49ad-bc2d-2ebbefde4c67']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6bbc17d3-f3d4-49ad-bc2d-2ebbefde4c67', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0b52f979-785d-4e41-9463-c3554b266cb5', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['796381f8-65c4-4042-8008-c8fe6d906c6a']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('796381f8-65c4-4042-8008-c8fe6d906c6a', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('162c60d6-5fed-4134-9f38-98e69b63d2d2', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['14ff71fa-9c4b-4e5b-b3fe-2213307737ab']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('14ff71fa-9c4b-4e5b-b3fe-2213307737ab', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('2ac32866-2400-4a28-98b7-80f1cf8a89d7', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['fc1849d1-98a8-4ce8-8214-406041190f89']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('fc1849d1-98a8-4ce8-8214-406041190f89', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('1c66d6ab-ef32-4ee9-8f40-3517df87cc20', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c04c635e-e331-4a98-b5ba-ee586540984d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c04c635e-e331-4a98-b5ba-ee586540984d', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8a607249-eba6-40db-9936-022c26859fe6', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c17179f1-dffa-455b-9bd7-a57c1fad282e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c17179f1-dffa-455b-9bd7-a57c1fad282e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('19f27ad8-d533-4a82-8f1c-bb351868ded2', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['b1522cec-ca4f-4c39-a55a-e9fc74dc81af']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b1522cec-ca4f-4c39-a55a-e9fc74dc81af', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('37d8fb5b-01ae-40cb-b951-d37ca464d079', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['dae06d8a-e631-4936-8dfc-68b8fcd5a228']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('dae06d8a-e631-4936-8dfc-68b8fcd5a228', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3e7935f7-6668-455f-9a80-7f4f38c19c49', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['16534334-44cb-490f-8d34-120fabe921a2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('16534334-44cb-490f-8d34-120fabe921a2', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5402514d-875d-4090-8837-298c5a978fdd', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['a3e240c5-bb20-4b25-87f8-71844711cd82']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a3e240c5-bb20-4b25-87f8-71844711cd82', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('fb40b206-b93f-468c-a07a-dc97ce5f94f0', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['d5273a19-caf3-4375-a23c-48800f3a339a']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d5273a19-caf3-4375-a23c-48800f3a339a', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('1728dfb2-8b04-45a0-be04-2d90a707ef1c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['02ac2594-8e58-477f-b5d8-8a5b05cd55a4']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('02ac2594-8e58-477f-b5d8-8a5b05cd55a4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4b150132-83b1-4d8f-a95d-6b8e78ee7352', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['6be01bfa-c19d-4fa6-b00a-440a3f30b5b7']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6be01bfa-c19d-4fa6-b00a-440a3f30b5b7', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('87fb1d52-99dc-493f-8846-2c74fa36f243', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['a713629d-eea7-449e-91b1-733f8e2a0f46']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a713629d-eea7-449e-91b1-733f8e2a0f46', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b7ae099e-930f-471c-8c67-dff8e51d628d', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['74e15c34-4275-43a8-9d96-4a957fe43714']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('74e15c34-4275-43a8-9d96-4a957fe43714', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('1028141b-ec9f-47a4-86e2-7614488b9809', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['066d0814-294b-451a-b11d-dbd7a257f159']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('066d0814-294b-451a-b11d-dbd7a257f159', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('6cc61338-8f38-49b5-b4d0-2e4d47af4746', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['35127e79-ba23-4cd3-b376-ecc7e2bb4571']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('35127e79-ba23-4cd3-b376-ecc7e2bb4571', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5fbd0918-ea63-48e8-b180-304694167646', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['271e4f44-3661-4c68-9eb9-89fdbc665475']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('271e4f44-3661-4c68-9eb9-89fdbc665475', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('f313e209-a9a5-4e1a-b532-721c6326064f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['da4d5007-206f-478f-8bc6-e59033c29af8']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('da4d5007-206f-478f-8bc6-e59033c29af8', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('1c423fca-07da-4e12-8920-47bce7b89f13', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['235cd989-bf6d-49ad-a980-d70f28b639e1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('235cd989-bf6d-49ad-a980-d70f28b639e1', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('712d7d76-44f2-4de2-835c-3bcf39431809', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['108a9ed0-c282-4cae-80f3-4fa722fc2de5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('108a9ed0-c282-4cae-80f3-4fa722fc2de5', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('2103f2c0-64bd-4956-916a-2cad490705e6', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['3d05ea84-6a42-4062-8d4f-4500a96f259f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3d05ea84-6a42-4062-8d4f-4500a96f259f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3f39da46-0a0f-4e0a-aeae-451ff4e47b96', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['4bd7c022-8997-4302-8217-858506134533']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4bd7c022-8997-4302-8217-858506134533', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('6ec4f85b-ca8b-4288-a6a1-34377d61abdf', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['a1ea0e92-dcae-448b-aa63-a496748ee3ee']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a1ea0e92-dcae-448b-aa63-a496748ee3ee', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('aeeac3a2-7c3f-4252-b3d9-bea2ca2f01b7', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['0ab03f44-e525-4c92-9f33-373f4eee63c0']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0ab03f44-e525-4c92-9f33-373f4eee63c0', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4383e8cb-1cfc-4863-84e9-cdbed54b3bb3', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['4a6cae8e-a7ca-47d6-a119-a465ffe54863']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4a6cae8e-a7ca-47d6-a119-a465ffe54863', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('d1c291fb-6af0-429a-a526-1d1172d6b694', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['2fe7822c-b96c-45dc-9a50-75caa6b24593']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2fe7822c-b96c-45dc-9a50-75caa6b24593', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('f7de8e8a-a813-40a9-8fa4-fc8dc3dc1b4b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['570048f0-0350-43ab-abaf-c7e4bc35bf62']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('570048f0-0350-43ab-abaf-c7e4bc35bf62', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('53ffd237-915c-4a1c-a10f-ca8447a48c51', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['ed24521b-134d-4361-b3c6-080d4c097ea1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ed24521b-134d-4361-b3c6-080d4c097ea1', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a2521b97-2a49-4637-bd1d-1f332b72e788', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['5ac5f347-dcd9-4405-8077-4e9f1d7b1294']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5ac5f347-dcd9-4405-8077-4e9f1d7b1294', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('84f68be8-11a7-4194-86d6-5a99bdffd34c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['173bea92-2040-4061-a7a6-68e57c915d19']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('173bea92-2040-4061-a7a6-68e57c915d19', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('aa05a7c5-582b-4118-9e6d-3b13a7761673', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['97980c3a-c125-41d4-8b61-876e9ca911ef']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('97980c3a-c125-41d4-8b61-876e9ca911ef', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('42fadb1b-5e30-4e0e-bc4f-ce4dff0eec79', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c7da97c1-388f-4571-b1c1-68865fba469e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c7da97c1-388f-4571-b1c1-68865fba469e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('412f1fab-46a8-41c1-b769-80f5577bca0f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['e535b36e-1fd0-479a-bb95-74636b89197d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e535b36e-1fd0-479a-bb95-74636b89197d', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b6fe1474-3306-4236-8961-502f207a3572', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['065cf9ba-8ddf-4543-a485-bf8b96526e4c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('065cf9ba-8ddf-4543-a485-bf8b96526e4c', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('bb98ac31-eafa-4e46-85e1-2ff26fe4f128', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['6485bfe3-d5c3-40fd-8576-00d1396d07f2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6485bfe3-d5c3-40fd-8576-00d1396d07f2', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b51cf0a0-f103-4970-8ed8-17f80be7bad8', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['2bcb488c-1f1e-4e11-8325-b72e0326295f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2bcb488c-1f1e-4e11-8325-b72e0326295f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('279e5e3b-ac1e-42eb-9576-6eca3d73b615', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['31d13d98-9fde-47e5-b64b-30d9492bbb77']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('31d13d98-9fde-47e5-b64b-30d9492bbb77', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b7022a3a-b7a9-43d7-868a-bec416689eb2', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['15381599-5b84-4965-aa1c-fcc4364c347f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('15381599-5b84-4965-aa1c-fcc4364c347f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a9b3664e-81fe-4595-b159-62d1ed82ff0b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['e36dcc2e-f399-42b7-8e41-800a5e934567']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e36dcc2e-f399-42b7-8e41-800a5e934567', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('161db07d-ef1f-49c7-90cf-16951717353b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['3b2dcdec-9285-495a-9fcc-44f66872c2bf']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3b2dcdec-9285-495a-9fcc-44f66872c2bf', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a89b3a08-dd85-4514-a21f-e14673ba6cd0', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['f12799ae-6181-4427-a22c-47b53db52165']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f12799ae-6181-4427-a22c-47b53db52165', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('91dbe666-153c-4119-870a-92b2f3f74344', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['d4a7fb12-016f-40ee-a54f-86415a8d09d6']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d4a7fb12-016f-40ee-a54f-86415a8d09d6', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('592382ce-a92d-47a0-81de-6a2bf7d7f822', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['92c51eb9-b29e-4c93-be28-056ae69af7db']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('92c51eb9-b29e-4c93-be28-056ae69af7db', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('aeab1e0b-c1c6-4670-a062-85e0019a774b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['218ba2c4-9785-447a-86e1-9ca2a142cc38']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('218ba2c4-9785-447a-86e1-9ca2a142cc38', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('816a37ad-bd68-4466-92f7-0309a3c1575b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['e39235a0-abd4-4168-8e28-13972448f119']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e39235a0-abd4-4168-8e28-13972448f119', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('82afbf49-4f5e-4065-9cb9-c32bcd6eb341', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['a5c945a8-865e-4358-9bc7-84955878948b']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a5c945a8-865e-4358-9bc7-84955878948b', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c457d15b-c6f0-4558-ba69-da498d009b19', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['ecb7bbe3-213c-4d69-b37c-f2a0ad236aae']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ecb7bbe3-213c-4d69-b37c-f2a0ad236aae', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c6620785-e8d3-4644-9e14-f02498a773c4', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['985d0333-1dbf-447b-aa0d-f718458d4fb4']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('985d0333-1dbf-447b-aa0d-f718458d4fb4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8490c658-fb8e-44de-826f-c07c1c449b90', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['34aee756-c2d3-40e7-8395-1bc8aaecbbf1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('34aee756-c2d3-40e7-8395-1bc8aaecbbf1', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4be70e62-b946-48f3-8977-a5d63abca399', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['689f1fcb-80a3-441f-b49d-32a1b562a0f5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('689f1fcb-80a3-441f-b49d-32a1b562a0f5', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('e35d4956-f714-43eb-920a-8e09aca6f146', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['7a716c4e-3229-484e-b362-fcb43481f328']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7a716c4e-3229-484e-b362-fcb43481f328', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a0f6b266-6de1-45c4-bb01-29010647fbd7', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['d609a1ad-0936-453c-96c4-710b4059bf07']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d609a1ad-0936-453c-96c4-710b4059bf07', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0dbaa2db-5f2a-4eef-afd5-bdbdce19313d', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['90e56153-9c69-48ca-9fcf-0bbaadad9be4']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('90e56153-9c69-48ca-9fcf-0bbaadad9be4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b6fcfbb3-9771-48b0-9e9d-3da6d31febc8', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['4fa5d753-d822-432d-9c56-84c0ad0e4ceb']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4fa5d753-d822-432d-9c56-84c0ad0e4ceb', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5253b077-a788-4682-b483-64dd9eda03d5', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['8507fdb9-a60b-40b1-bb0d-29fe807ac4f1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8507fdb9-a60b-40b1-bb0d-29fe807ac4f1', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0da21807-807e-44ca-92f0-974ae2516505', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['468cc8db-d069-4263-866e-6f22931b6677']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('468cc8db-d069-4263-866e-6f22931b6677', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('24e1e72a-1f6f-461c-b330-88ece9fbcca8', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['81d6d74a-f74f-4515-b177-70225ea0d58d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('81d6d74a-f74f-4515-b177-70225ea0d58d', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('409070c2-1c39-4369-af99-eac945774a3e', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['f5a4785b-7f84-4f50-bd0a-c7eced00f4e7']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f5a4785b-7f84-4f50-bd0a-c7eced00f4e7', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a8cf6af9-f5bc-4658-b59e-72c2d3ce47b4', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['911885cb-05e5-4235-98fb-5dfbeff86649']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('911885cb-05e5-4235-98fb-5dfbeff86649', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4b4ecc21-66a3-4fd5-852f-389854dfc7bd', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['a8d86700-ca54-46de-8a50-14e14dd46a6c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a8d86700-ca54-46de-8a50-14e14dd46a6c', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c7ab4258-ca5d-4836-a537-479dcd5a9cc4', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['30926153-4640-4db1-9ca9-acb43bbc4fc7']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('30926153-4640-4db1-9ca9-acb43bbc4fc7', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5fb73c01-21f3-4683-8941-ecb152fc3250', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['869de905-6ecd-4747-8d87-1e9ca052cd45']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('869de905-6ecd-4747-8d87-1e9ca052cd45', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('cf8d2bb1-71a4-49a0-bd08-8e94bac8b3c9', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['abdfb5fa-d28a-4488-aa9f-b56e27af87e6']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('abdfb5fa-d28a-4488-aa9f-b56e27af87e6', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('d95e1a1d-7c20-4b1a-87b0-e38b73da94da', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['4dd8390f-be6b-4ec3-a47d-a44d127955ab']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4dd8390f-be6b-4ec3-a47d-a44d127955ab', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3f9aced0-f3d9-48a7-ab8c-393c958398ef', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['464ccd1d-50bd-43da-87eb-d9513c65ec46']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('464ccd1d-50bd-43da-87eb-d9513c65ec46', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('e9c71419-692f-4c36-9486-9ada0ea5e828', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['da26da82-812b-42ac-906b-3844858e4a46']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('da26da82-812b-42ac-906b-3844858e4a46', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('768b3e86-cfda-490a-bc71-9bbeed0689f7', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['36b0fc24-bd10-4156-8ed0-04fe3e2601a4']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('36b0fc24-bd10-4156-8ed0-04fe3e2601a4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('89ddcbab-a4fd-425c-a531-a83646333d06', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['bab98206-b655-40c3-a001-26a2386e0c7f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bab98206-b655-40c3-a001-26a2386e0c7f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('83c92a87-06d6-49d3-8093-f5d0906cc7c5', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['b4fe671b-23d4-48bf-83d8-e2dcc7232a66']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b4fe671b-23d4-48bf-83d8-e2dcc7232a66', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('2044f1ca-d8ba-4901-b55e-f5689607070c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['2a606050-f046-485e-aeb5-10cbc0e5ddcc']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2a606050-f046-485e-aeb5-10cbc0e5ddcc', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('f6fd6524-c5c8-4354-9ec1-9dc358546e69', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['8c14d4a6-ae50-4b34-bc7b-170af07d4ad2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8c14d4a6-ae50-4b34-bc7b-170af07d4ad2', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('00c4fbf5-f379-4a2d-88a8-61499cc5bd32', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['2fa4f831-2e23-4bf0-87ed-552792dc0562']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2fa4f831-2e23-4bf0-87ed-552792dc0562', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('65d2aca4-f549-4483-8bd7-afde39d16238', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['bbe476a3-ddba-4df6-b418-adaab9e65fae']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bbe476a3-ddba-4df6-b418-adaab9e65fae', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0cfcabbd-883f-4028-8a12-358c8fa451da', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['898288f8-760b-4ffa-a66a-95a2df22d7bf']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('898288f8-760b-4ffa-a66a-95a2df22d7bf', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c282e296-90d1-4dc7-a7b2-5934a507c150', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['866f26fe-6478-4d13-be52-4b6f0cfab0e2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('866f26fe-6478-4d13-be52-4b6f0cfab0e2', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('38ecc44c-38c0-48a3-82b4-ed51b12d5e81', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['323a16cd-2bc6-4c40-9f47-0331c5732b38']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('323a16cd-2bc6-4c40-9f47-0331c5732b38', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('bb3bab27-c9c1-4953-8ebd-9175011487e0', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['8caf336f-72a8-4674-a778-f43979eda054']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8caf336f-72a8-4674-a778-f43979eda054', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4a8e97b9-14bd-4ed3-b508-0e448819f9ba', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['5dcc02ba-4a14-45ad-b2f3-70b3949b6720']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5dcc02ba-4a14-45ad-b2f3-70b3949b6720', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('230d420f-83e1-4e26-afa3-5a661dd9c7d1', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['b6a16c5e-a040-4b47-ae75-1e9343c9153b']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b6a16c5e-a040-4b47-ae75-1e9343c9153b', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('89f966c8-50b4-44c5-90ad-0b6f6966972c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c835b855-7074-4e03-810f-14867eb675de']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c835b855-7074-4e03-810f-14867eb675de', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0b5fe6bc-e533-4348-9b03-1e448a4e9d0f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['ff4157be-62b8-4637-b5ad-624726c146a4']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ff4157be-62b8-4637-b5ad-624726c146a4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c9f23f05-cb01-455f-8b94-9f72711cc865', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['09bc0653-1fed-4b27-8f14-b5c7437a9899']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('09bc0653-1fed-4b27-8f14-b5c7437a9899', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c5348916-393e-48f9-b543-e24a19d1055c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c52ca1b4-9299-4648-987d-5880b4741314']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c52ca1b4-9299-4648-987d-5880b4741314', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a0e8b5fe-c6d6-4865-b091-7b46829ccc5d', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['9c766df1-ad85-4876-88c7-271998051e35']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9c766df1-ad85-4876-88c7-271998051e35', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('75d36e79-55db-40b8-802f-9a7b246a6cf5', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['5e4dc850-3b7c-4fdf-a488-26e5e0974120']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5e4dc850-3b7c-4fdf-a488-26e5e0974120', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c047ab1d-acd5-4338-9290-e3871034e328', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['bd2a0423-19d5-4cf2-aaaf-749c13d74cd4']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bd2a0423-19d5-4cf2-aaaf-749c13d74cd4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('ea181956-5cab-416e-9590-9956a8409731', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['576a9fe2-1334-42b6-b4ed-fe97da2e3a2e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('576a9fe2-1334-42b6-b4ed-fe97da2e3a2e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0dcf9ae8-a4fe-419c-8254-f9964e67a278', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['9763a275-c58c-43fc-b8ae-ce80c604d75e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9763a275-c58c-43fc-b8ae-ce80c604d75e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0f590f1e-d272-4086-adfd-659df0b2ea05', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['33fe8cc9-9dcf-4b15-b6aa-f3a3010cb560']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('33fe8cc9-9dcf-4b15-b6aa-f3a3010cb560', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('cb39e1b8-9531-49ab-b3e6-4d3eccc30ea2', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['6ccd6cf7-180b-4206-94a1-59ca782791ca']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6ccd6cf7-180b-4206-94a1-59ca782791ca', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('48ef6b2e-c138-4a7e-bdbe-b75d2d668cd8', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['876999d7-981d-4718-a6d4-e3657de71b50']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('876999d7-981d-4718-a6d4-e3657de71b50', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('55668041-317d-4334-b504-5c4b1a62b47d', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['6e284a52-7334-497e-8e2b-4ed1ece27618']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6e284a52-7334-497e-8e2b-4ed1ece27618', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('922b3bb8-6a35-44d3-b95e-b69cb92ea97f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['831cb485-40bb-4964-8404-04ae47d38b35']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('831cb485-40bb-4964-8404-04ae47d38b35', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('54f3769f-5d8a-4997-ba7a-8ce67a6216cd', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['9e2b934b-be15-4f88-a1da-01eb1e746a35']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9e2b934b-be15-4f88-a1da-01eb1e746a35', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('2f6afe60-20d7-4bce-9827-4c0a48f744b1', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c94dbef1-ca97-4225-be1a-7d29f1db2e27']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c94dbef1-ca97-4225-be1a-7d29f1db2e27', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('49ba46a6-5e8d-4e95-80f0-c9443f0911d5', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['905b020a-84ae-43fc-85ab-8eb8d3c7fe2f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('905b020a-84ae-43fc-85ab-8eb8d3c7fe2f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('fc16b1d1-19af-4003-a43b-240c86d52773', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['839abde4-2ded-419e-9d77-d3787e862542']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('839abde4-2ded-419e-9d77-d3787e862542', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3757bc0c-6726-423e-8708-2e8632991dd2', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['8583971d-cb74-41bd-aff0-26d3292c5248']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8583971d-cb74-41bd-aff0-26d3292c5248', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('1447a252-1fee-4a61-b11b-b93d4d823d31', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['5b5eb18b-8c86-4adf-a17e-80ff7387345d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5b5eb18b-8c86-4adf-a17e-80ff7387345d', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3228888c-d4b3-4814-8008-1d28e4804480', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['1bddf6e7-5ec1-4d7d-ae3f-53e420575766']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1bddf6e7-5ec1-4d7d-ae3f-53e420575766', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('e41ceeb7-c578-4764-91ac-d6d6f8bf7423', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['96c1bef0-a7ed-4acd-b0fe-f49ae66cbcdd']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('96c1bef0-a7ed-4acd-b0fe-f49ae66cbcdd', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('38e6efd6-7b0f-4631-bef6-e84d73d8eb78', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['7768c540-c1c9-4da6-a253-d11bcd25c006']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7768c540-c1c9-4da6-a253-d11bcd25c006', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('626ee2b5-094c-4f33-a54f-a3641d29e6ac', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['98b9495c-625c-4bdc-8e00-a1c528428707']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('98b9495c-625c-4bdc-8e00-a1c528428707', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a454fb44-6d14-4f23-8541-52c03f79de63', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['e5a21e4a-2fab-408d-96bf-67e0858e2326']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e5a21e4a-2fab-408d-96bf-67e0858e2326', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5eb22519-5f4c-41f6-860c-37ab602c2f50', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['cab7b872-85a3-4d87-8ec9-17576f973b31']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('cab7b872-85a3-4d87-8ec9-17576f973b31', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5010b64a-5a35-4547-a273-d06825fa4548', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['9b43e0d5-25a1-41bf-91fe-2c496f515e2c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9b43e0d5-25a1-41bf-91fe-2c496f515e2c', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('49021ab7-9380-440c-b083-9cd5ef8d53f6', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['198445ce-796c-40cf-ba32-bb30a6ccd59e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('198445ce-796c-40cf-ba32-bb30a6ccd59e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('e5b19842-c60b-4248-8873-05f92b540149', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['3b9700b0-42b5-4431-8e4e-7500d65ee0c7']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3b9700b0-42b5-4431-8e4e-7500d65ee0c7', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8b6b0d08-143f-4111-9ed6-155138338964', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['f5296fd5-de8f-4629-951a-68ec798ef3a2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f5296fd5-de8f-4629-951a-68ec798ef3a2', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('15874677-bcdd-48c3-9d4d-768952e23384', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['7a03b178-4743-4824-bf45-b57fd0d848cb']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7a03b178-4743-4824-bf45-b57fd0d848cb', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('745abc39-ef88-40a9-9b6d-a3bbcca4ad2c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['9f9b187d-57c2-4758-b572-360a2253a4f1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9f9b187d-57c2-4758-b572-360a2253a4f1', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0d166694-2fb7-4320-bd2e-2cfccb84ddbe', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['7144256e-4d23-43a6-9467-2169fa32150e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7144256e-4d23-43a6-9467-2169fa32150e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b43fb8d4-613e-481d-b4e7-d731dc1218c9', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['ea554896-cf33-4cf5-b31d-4320c9bf2f55']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ea554896-cf33-4cf5-b31d-4320c9bf2f55', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a2a78e18-97e0-4c44-bb02-b533cf0466c0', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['04123c2c-cf90-4461-a304-eef664d5a4c3']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('04123c2c-cf90-4461-a304-eef664d5a4c3', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('e4fc374e-6749-4ddb-b452-1420d5c2f7de', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['02bc94c5-880e-4420-93b6-7662ebf18f2d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('02bc94c5-880e-4420-93b6-7662ebf18f2d', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c7042b3b-0a30-4804-9a5c-54751ea3d6fb', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['06f822f9-2b64-4aea-8658-d6ac61b5b985']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('06f822f9-2b64-4aea-8658-d6ac61b5b985', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3e3df180-1d81-4cbc-9b41-531b0e653a8f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['f4503ec9-c74c-423e-abaa-992a19a25e10']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f4503ec9-c74c-423e-abaa-992a19a25e10', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0ca35e34-cdfa-41cc-a26f-06a76b46a90e', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['3cc3c2df-f577-43f1-b984-4b9eb9a46909']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3cc3c2df-f577-43f1-b984-4b9eb9a46909', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0c4c336a-22cd-49fe-98d1-cde93e3b7996', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['cc48579c-12df-4391-82ef-c10b2a8923b9']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('cc48579c-12df-4391-82ef-c10b2a8923b9', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('70be8aae-3eb8-4a15-9ee9-ae6be507b427', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['a525833e-5344-43f2-a6a3-58e0ea80d9cf']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a525833e-5344-43f2-a6a3-58e0ea80d9cf', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('19c6e09d-c93a-4a78-aa81-450b1d7a3aa0', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['32c58d92-8325-4ec7-903b-7dcdd9e3ed22']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('32c58d92-8325-4ec7-903b-7dcdd9e3ed22', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('119ded2a-7561-47b2-b47e-88c2274e0412', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['01fcf1ee-8be7-4148-8074-7e346e2e9ab7']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('01fcf1ee-8be7-4148-8074-7e346e2e9ab7', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('7b74f972-5e86-46d7-bb19-d76302e52c0f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['6826e4ea-5d49-44bd-b9d9-e800dd4dba87']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6826e4ea-5d49-44bd-b9d9-e800dd4dba87', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('53b1fa05-9eb5-4550-a796-61eb4839962c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['11a5dccf-bcc3-4eae-9691-2b3bd7884f7e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('11a5dccf-bcc3-4eae-9691-2b3bd7884f7e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('931fcaad-aba2-4260-b2a9-1e9176f4ca92', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['ae54c489-26a8-4978-954a-d6ce9b465c91']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ae54c489-26a8-4978-954a-d6ce9b465c91', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('71b28e23-e9e3-49c8-b4e3-f8168f9a7aa7', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['3773164c-651b-4a46-9905-8bfe212143f6']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3773164c-651b-4a46-9905-8bfe212143f6', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('1848326e-e8d7-40fb-bf4a-13ceb6a2f195', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['626e988a-4f6c-4f5f-bbab-316f3a69991b']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('626e988a-4f6c-4f5f-bbab-316f3a69991b', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('98673dbb-ef9f-42a3-9305-d727b1c8f622', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['aaff124f-aa13-46d9-8f12-e89ba1b97769']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('aaff124f-aa13-46d9-8f12-e89ba1b97769', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('520d8206-bfc4-410c-a21d-950e013d0c01', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['1a303c22-b2c9-4e4d-ac93-7836eb5355a1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1a303c22-b2c9-4e4d-ac93-7836eb5355a1', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('42e53e34-8dfc-4b71-81b0-785f6c3ebae9', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['32824c44-835c-4b6b-8255-a94d805b97f9']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('32824c44-835c-4b6b-8255-a94d805b97f9', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8ce00435-a52a-4b71-ae13-1605435dc240', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['2b3bb2db-323a-49ab-8093-6d6828a74922']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2b3bb2db-323a-49ab-8093-6d6828a74922', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('6acf7c38-e1ce-4dcb-b4c5-6a04ce45464f', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['8bc5b5a3-4ac8-4452-a6ef-03f5a44476f5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8bc5b5a3-4ac8-4452-a6ef-03f5a44476f5', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5b408424-15d5-4da7-9328-cc5199f87539', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['e4506ac2-bc23-4abd-ab39-6b63105931b9']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e4506ac2-bc23-4abd-ab39-6b63105931b9', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a31cfb93-eabb-41ba-9a64-ccb927eeae96', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['99e3accc-ede4-443b-971d-13ec25f32acf']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('99e3accc-ede4-443b-971d-13ec25f32acf', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('edbd48b5-10c3-49de-8126-3610e2d035ab', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['30cd73bf-d8df-49fa-b2c8-0593f89c2815']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('30cd73bf-d8df-49fa-b2c8-0593f89c2815', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('194174bd-76f0-4653-8b25-6f554ead70da', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['c610aa1e-3aef-451f-9fc8-31de6fdc3243']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c610aa1e-3aef-451f-9fc8-31de6fdc3243', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c14d38ba-6e88-446e-8f1c-67b8817e0f7c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['fca44723-8436-46f9-a9ec-eb8743f9099a']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('fca44723-8436-46f9-a9ec-eb8743f9099a', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b9c80185-03f3-4e8f-8716-083eb88644c4', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['501361f5-f09b-4459-b634-01253a4515b3']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('501361f5-f09b-4459-b634-01253a4515b3', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('bba281ad-e3f0-4381-ae8f-dd275663ab28', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['8bd8244f-9d55-4bc9-b223-8db1f571c28f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8bd8244f-9d55-4bc9-b223-8db1f571c28f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8b8f6e46-e617-4443-b9cd-94d1a24abb6b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['28894d09-bfa1-47d8-bcd1-b6b29f0639e7']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('28894d09-bfa1-47d8-bcd1-b6b29f0639e7', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b9db8896-21a6-4e85-94b6-80b7fdfc011b', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['99901ba7-f8db-4a9f-85ec-485b3767fdf4']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('99901ba7-f8db-4a9f-85ec-485b3767fdf4', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8c64b3db-4823-4636-b89b-309916055d71', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['86f42c72-5ce7-4d06-815d-64b8fa4dbfde']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('86f42c72-5ce7-4d06-815d-64b8fa4dbfde', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('f5489742-c695-4181-8b87-aa14973d3dfa', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['2368862e-0f95-490c-8885-8e975940df5a']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2368862e-0f95-490c-8885-8e975940df5a', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('bc6d985e-1250-4921-aa81-a27bb5259905', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['19c6c4e7-988c-4555-aae3-606824da9f8d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('19c6c4e7-988c-4555-aae3-606824da9f8d', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('55cb04ff-40be-4eed-94e8-51da3ce86481', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['30ba1e68-4cec-47aa-9a98-bfb613ea2b9e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('30ba1e68-4cec-47aa-9a98-bfb613ea2b9e', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('6d0e1038-31f5-4995-9392-cb82efcb136c', 'success_rate', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective: <br/>- Improve customer satisfaction by ensuring timely arrivals <br/>- Guarantee maximal planned connection  <br/>- Minimize operational disruptions caused by delays <br/>- Meet regulatory and stakeholder benchmarks for punctuality <br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:  <br/>- 10% increase in punctuality in long-range traffic  <br/>- 5% increase in punctuality in regional traffic (with realistic disturbances) <br/>', array['4523974b-e64a-403a-a20f-e469179ba62f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4523974b-e64a-403a-a20f-e469179ba62f', 'success_rate', 'Scenario score (raw values)', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO test_definitions
