@@ -6,18 +6,18 @@
   </lib-section>
 </lib-content>
 
-@if (group?.setup === 'CAMPAIGN') {
+@if (suite?.setup === 'CAMPAIGN') {
   <lib-content>
-    <app-campaign-item-overview class="w-full my-8" [group]="group" [benchmark]="benchmark"></app-campaign-item-overview>
+    <app-campaign-item-overview class="w-full my-8" [suite]="suite" [benchmark]="benchmark"></app-campaign-item-overview>
   </lib-content>
-} @else if (group?.setup === 'COMPETITION') {
+} @else if (suite?.setup === 'COMPETITION') {
   <lib-content>
     <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'new-submission'">Submit solution</button>
-    <app-benchmark-overview class="w-full my-8" [group]="group" [benchmark]="benchmark"></app-benchmark-overview>
+    <app-benchmark-overview class="w-full my-8" [suite]="suite" [benchmark]="benchmark"></app-benchmark-overview>
   </lib-content>
 } @else {
   <lib-content>
     <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'new-submission'">Submit solution</button>
-    <app-benchmark-overview class="w-full my-8" [group]="group" [benchmark]="benchmark"></app-benchmark-overview>
+    <app-benchmark-overview class="w-full my-8" [suite]="suite" [benchmark]="benchmark"></app-benchmark-overview>
   </lib-content>
 }

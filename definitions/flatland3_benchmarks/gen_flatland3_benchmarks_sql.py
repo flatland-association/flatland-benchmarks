@@ -4,7 +4,7 @@ from collections import defaultdict
 import pandas as pd
 
 from definitions.gen_benchmarks_common import gen_sql_scenario_field, gen_sql_test_benchmark_field, gen_sql_scenario, gen_sql_test, gen_sql_benchmark, \
-  gen_sql_benchmark_group
+  gen_sql_suite
 
 
 def gen_ai4realnet_playground():
@@ -13,7 +13,7 @@ def gen_ai4realnet_playground():
   NUM_BENCHMARKS = 1
   NUM_LEVELS_PER_BENCHMARK = 1
   test_descriptions = ['lorem ipsum'] * NUM_BENCHMARKS
-  benchmark_group_id = "0ca46887-897a-463f-bf83-c6cd6269a976"
+  suite_id = "0ca46887-897a-463f-bf83-c6cd6269a976"
   # https://ai4realnet.eu/use-cases/
   benchmark_name = "Playground Electricity Network"
   benchmark_name = "Playground Air Traffic Management"
@@ -23,7 +23,7 @@ def gen_ai4realnet_playground():
 
   fields = [["normalized_reward", "NANSUM"], ["percentage_complete", "NANMEAN"]]
 
-  gen_sql(NUM_LEVELS_PER_BENCHMARK, benchmark_group_id, benchmark_name, fields, test_descriptions, test_type)
+  gen_sql(NUM_LEVELS_PER_BENCHMARK, suite_id, benchmark_name, fields, test_descriptions, test_type)
 
 
 def gen_flatland3_benchmarks():
@@ -34,13 +34,13 @@ def gen_flatland3_benchmarks():
   df_metadata = pd.read_csv("../../benchmarks/flatland3/metadata.csv.template")
   test_descriptions = [f"{v['n_agents']} agents,  {v['y_dim']}x{v['x_dim']}, 2 {v['n_cities']}" for k, v in
                        list(df_metadata.groupby("test_id").aggregate('first').iterrows())]
-  benchmark_group_id = None
+  suite_id = None
   benchmark_name = "Round 1"
   fields = [["normalized_reward", "NANSUM"], ["percentage_complete", "NANMEAN"]]
-  gen_sql(NUM_LEVELS_PER_BENCHMARK, benchmark_group_id, benchmark_name, fields, test_descriptions, test_type)
+  gen_sql(NUM_LEVELS_PER_BENCHMARK, suite_id, benchmark_name, fields, test_descriptions, test_type)
 
 
-def gen_sql(num_levels_per_test, benchmark_group_id, benchmark_name, fields, test_descriptions, test_type):
+def gen_sql(num_levels_per_test, suite_id, benchmark_name, fields, test_descriptions, test_type):
   field_definitions = ""
 
   test_ids = []
@@ -97,17 +97,17 @@ def gen_sql(num_levels_per_test, benchmark_group_id, benchmark_name, fields, tes
   print(scenario_definitions)
   print(test_definitions)
   print(benchmark_definitions)
-  if benchmark_group_id is None:
-    benchmark_group_id = str(uuid.uuid4())
+  if suite_id is None:
+    suite_id = str(uuid.uuid4())
     benchmark_ids = [benchmark_id]
-    benchmark_group_setup = "COMPETITION"
-    benchmark_group_name = "Flatland 3 Benchmarks"
-    benchmark_group_description = 'The Flatland 3 Benchmarks.'
+    suite_setup = "COMPETITION"
+    suite_name = "Flatland 3 Benchmarks"
+    suite_description = 'The Flatland 3 Benchmarks.'
 
-    benchmark_group_definitions = gen_sql_benchmark_group(benchmark_group_id, benchmark_group_setup, benchmark_group_name, benchmark_group_description,
+    suite_definitions = gen_sql_suite(suite_id, suite_setup, suite_name, suite_description,
                                                           benchmark_ids)
 
-    print(benchmark_group_definitions)
+    print(suite_definitions)
 
   return {
     "benchmarks": [{

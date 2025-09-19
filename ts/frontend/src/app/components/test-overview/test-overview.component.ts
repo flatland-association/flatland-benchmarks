@@ -1,5 +1,5 @@
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
-import { BenchmarkDefinitionRow, BenchmarkGroupDefinitionRow, TestDefinitionRow } from '@common/interfaces'
+import { BenchmarkDefinitionRow, SuiteDefinitionRow, TestDefinitionRow } from '@common/interfaces'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
@@ -11,7 +11,7 @@ import { TableColumn, TableComponent, TableRow } from '../table/table.component'
   styleUrl: './test-overview.component.scss',
 })
 export class TestOverviewComponent implements OnInit, OnChanges {
-  @Input() group?: BenchmarkGroupDefinitionRow
+  @Input() suite?: SuiteDefinitionRow
   @Input() benchmark?: BenchmarkDefinitionRow
   @Input() test?: TestDefinitionRow
 
@@ -30,14 +30,14 @@ export class TestOverviewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['group'] || changes['benchmark'] || changes['test']) {
+    if (changes['suite'] || changes['benchmark'] || changes['test']) {
       this.buildBoard()
     }
   }
 
   async buildBoard() {
-    if (this.group && this.benchmark && this.test) {
-      const group = this.group
+    if (this.suite && this.benchmark && this.test) {
+      const suite = this.suite
       const benchmark = this.benchmark
       const test = this.test
       const testOverview = (
@@ -65,7 +65,7 @@ export class TestOverviewComponent implements OnInit, OnChanges {
           const scorings = item.test_scorings.find((testScorings) => testScorings.test_id === test.id)!.scorings
           const primary = scorings[0]
           return {
-            routerLink: ['/', 'benchmarks', group.id, benchmark.id, 'submissions', item.submission_id],
+            routerLink: ['/', 'suites', suite.id, benchmark.id, 'submissions', item.submission_id],
             cells: [
               { text: primary?.rank ?? '-' },
               { text: submission?.name ?? 'NA' },

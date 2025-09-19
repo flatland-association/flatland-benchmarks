@@ -120,6 +120,11 @@ Then, to actually run the tests, run `npm run cypress:run` from `ts/frontend`.
 
 To debug the tests, run `npm run cypress:open` from `ts/frontend`, select "E2E Testing" in the GUI and then select Chrome or Edge (the tests won't pass in Electron or FireFox).
 
+To do a complete setup/test run/teardown of the e2e environment, run the following command in the project root:
+```bash
+node --experimental-strip-types ts/frontend/cypress/run-ci-press.mts
+```
+
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

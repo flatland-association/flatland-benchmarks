@@ -1,6 +1,6 @@
-@if (group && benchmark && tests) {
+@if (suite && benchmark && tests) {
   <lib-content>
-    @if (group.setup === 'CAMPAIGN') {
+    @if (suite.setup === 'CAMPAIGN') {
       <app-site-heading class="bp-8 flex w-full" [title]="tests[0].name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
     } @else {
       <app-site-heading class="bp-8 flex w-full" [title]="benchmark.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
@@ -26,12 +26,12 @@
         </label>
       }
 
-      @if (group.setup === 'CAMPAIGN') {
+      @if (suite.setup === 'CAMPAIGN') {
         <div>
           <h4 class="bp-2 font-bold">Test</h4>
           <div>{{ tests[0].name }}</div>
         </div>
-      } @else if (group.setup === 'BENCHMARK') {
+      } @else if (suite.setup === 'DEFAULT') {
         <div>
           <h4 class="bp-2 font-bold">Tests</h4>
           <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">

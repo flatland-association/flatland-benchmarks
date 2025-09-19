@@ -96,13 +96,13 @@ export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmark
   test_ids: string[]
 }
 
-export type BenchmarkGroupSetup = 'BENCHMARK' | 'COMPETITION' | 'CAMPAIGN'
+export type SuiteSetup = 'DEFAULT' | 'COMPETITION' | 'CAMPAIGN'
 
-export interface BenchmarkGroupDefinitionRow extends Resource<'/definitions/benchmark-groups/'> {
+export interface SuiteDefinitionRow extends Resource<'/definitions/suites/'> {
   id: string
   name: string
   description: string
-  setup: BenchmarkGroupSetup
+  setup: SuiteSetup
   benchmark_ids: string[]
 }
 
@@ -187,6 +187,6 @@ export interface CampaignItemOverview {
 }
 
 export interface CampaignOverview {
-  group_id: string
+  suite_id: string
   items: CampaignItemOverview[]
 }
