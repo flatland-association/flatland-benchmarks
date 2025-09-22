@@ -95,9 +95,9 @@ def gen_domain_orchestrator(data, domain):
   return s
 
 
-def explode_row(csv, kpi_index: int, num_scenarios: int, additional_keys=None, primary_override=None):
+def explode_row(csv, start_row: int, num_scenarios: int, additional_keys=None, primary_override=None):
   df = pd.read_csv(csv, index_col=[0])
-  row = df.iloc[[kpi_index]]
+  row = df.iloc[[start_row]]
   print(row)
   rows = []
   for i in range(num_scenarios):
@@ -122,7 +122,7 @@ def explode_row(csv, kpi_index: int, num_scenarios: int, additional_keys=None, p
         template["SCENARIO_FIELD_DESCRIPTION"] = desc
         rows.append(template)
 
-  concat = pd.concat([df.iloc[:kpi_index], pd.DataFrame.from_records(rows), df.iloc[kpi_index + 1:]], ignore_index=True)
+  concat = pd.concat([df.iloc[:start_row], pd.DataFrame.from_records(rows), df.iloc[start_row + 1:]], ignore_index=True)
   return concat
 
 
@@ -131,6 +131,16 @@ def main(truncate_scenarios_docker_compose=2):
     df = explode_row(csv="KPIs_database_cards.csv", kpi_index=40, num_scenarios=150,
                      primary_override=("punctuality", "Primary scenario score (raw values): punctuality"),
                      additional_keys=[("success_rate", "Secondary scenario score (raw values): success_rate")],
+                     )
+  if False:
+    df = explode_row(csv="KPIs_database_cards.csv", start_row=364, num_scenarios=150,
+                     primary_override=("network_impact_propagation", "Primary scenario score (raw values): network_impact_propagation"),
+                     additional_keys=[
+                       ("success_rate_1", "Secondary scenario score (raw values): success_rate scenario without malfunction"),
+                       ("punctuality_1", "Secondary scenario score (raw values): punctuality scenario without malfunction"),
+                       ("success_rate_2", "Secondary scenario score (raw values): success_rate scenario without malfunction"),
+                       ("punctuality_2", "Secondary scenario score (raw values): punctuality scenario without malfunction"),
+                     ],
                      )
     df.to_csv("KPIs_database_cards.csv")
   # download from https://flatlandassociation.sharepoint.com/:x:/s/FlatlandAssociation/EanEj4dEBHBDsGzo5WyygCsBIBH7jo502okMbMybT6Bx0g?e=6DotJy

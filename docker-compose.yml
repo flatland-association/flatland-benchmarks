@@ -360,6 +360,7 @@ services:
       - orchestrator-scenarios:/app/scenarios
       - ./evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/orchestrator.py:/app/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/orchestrator.py:rx
       - ./evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/test_runner_kpi_pf_026_railway.py:/app/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/test_runner_kpi_pf_026_railway.py:rx
+      - ./evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/test_runner_kpi_nf_045_railway.py:/app/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/test_runner_kpi_nf_045_railway.py:rx
       - ./evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/integrationtests/orchestrator_definitions.py:/app/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/orchestrator_definitions.py:rx
       - ./docker/rabbitmq/certs:/cert_rabbitmq
     env_file: .env
