@@ -1195,7 +1195,7 @@ INSERT INTO field_definitions
 
 INSERT INTO test_definitions
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('98ceb866-5479-47e6-a735-81292de8ca65', 'KPI-PF-026: Punctuality (Railway)', 'Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', array['1de0f52c-ae47-4847-9148-97b8568952d3']::uuid[], array['5a60713d-01f2-4d32-9867-21904629e254', '0db72a40-43e8-477b-89b3-a7bd1224660a']::uuid[], 'CLOSED', 'Railway')
+    VALUES ('98ceb866-5479-47e6-a735-81292de8ca65', 'KPI-PF-026: Punctuality (Railway)', 'Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', array['1de0f52c-ae47-4847-9148-97b8568952d3']::uuid[], array['5a60713d-01f2-4d32-9867-21904629e254', '0db72a40-43e8-477b-89b3-a7bd1224660a', '7def3118-2e9c-4de7-8d61-f0e76fbeee5d', '3ae60635-6995-4fb1-8309-61fded3d6fd8', 'eeef8445-723d-4740-b89f-4dbaf75f9ae6', '94af1ed1-3686-4a9e-99f5-3a7ad908f125', '8250d0e2-700e-4051-85c3-a8d0d95a5f0f', 'c58759a7-a64a-4cbf-970b-948bae0c2254', 'f94f517f-c0a4-4415-b726-186cdc75f9c6', 'c0e2c3e0-c171-48dd-a312-5de070e3f937', '26fb51b9-2466-48ab-8c0a-89d9536d4c34', '66c23554-47bb-4268-b08e-518f6f163e9d', '08641d25-9b18-41bb-9cbc-4039b4ad24f0', '4d3dd85a-2b16-45de-b524-f83b4a58a2f4', 'bf9209c7-125c-42f9-b78e-4e5b7aacefcc', 'f511044d-2378-4c7f-af92-45c78146bdef', 'f89cee49-e1ae-427d-ae42-5cc411661a1c', '262e43bd-bf35-4171-b38b-c77969db0b16', '61bd29ec-0b09-4067-ada0-b43e48a8ac9a', '92d22472-4696-40ba-924f-861a2f4343b6', '6fc5f67a-40fa-45ce-819e-35a85e08e560', '66bce513-502c-43b4-a155-8a16c410a7c6', 'eff645bf-7ea8-490d-ae8a-ebb0d16a774c', '8397e6d6-babc-469b-a239-7eabcbd510da', 'c359f13c-d222-4b04-ad0a-2bb30fb9da5f', '97203764-6717-4ca6-bae9-c35c4eb38206', 'adc4bf52-096c-4369-a85f-c9bf4b86bc64', '72f93d48-ecef-4bf7-9d97-cb008b47e566', 'b470667b-d9c9-4af4-b64e-c32102c34387', '4aa9e1b8-8669-466e-b4b9-c7db2a098bec', '44354e67-e0b7-4faa-9385-2d6247c7a50c', '4bca2964-ef35-4b03-a47e-829bc9078374', '6190b6ac-a06b-4b07-8b82-0dfb1088663f', 'a51d4e4a-c841-416f-9292-fc64dead758b', 'd08f6539-5c3e-4a98-93ae-3e344611e3a8', '8a2ec760-d2c2-4329-b373-3acd95395076', '9b136147-f560-45d4-abd8-9f7de7cd7570', '9723c2c5-ee55-441d-9dba-1a1dc23fdc5e', '3406bbe9-cb19-44b7-af26-460b0a117a6c', 'ae0a88ad-3bfd-4201-b28a-e2c75d081cd5', '8b308495-7ea6-4ddc-acb4-56eb5b3aec12', 'a8f69dc4-04a1-434a-ad97-27c745561b6a', '8b244f56-50e1-411a-a7d8-a2b89dfab26e', '8e6419c1-6470-4272-9c4b-43d9fe19dd3d', 'ec503b6e-3682-4dcd-9dc7-b194b67283d9', '74fd9eab-d2e5-4222-8656-81fc2dde7c21', 'c16e54c1-33b2-45b8-95b0-33cc4f5400d5', 'c80effec-27b8-4103-b726-344a85f35407', '9bec9335-3dd5-4d88-b2ac-c5d711bcab36', '4a067d3c-75e6-4e91-a42d-cdf291016674', '1f6c674b-fdb5-40c8-bbe3-d924c2b7146e', '8bd15e2f-6089-4022-8383-26a36093dc80', '5b026a8a-e0dc-47d2-b2ce-d0bfc083e6c5', 'ab2e2bba-baa0-45de-b639-c7ebf29bf947', '8f8b6f67-d3c3-41ec-b60d-2924577e68f4', '3e59642a-7b20-4989-b9e6-01a35a82b9da', '0e4618c7-7ab7-4323-855c-7f95cbaef2d0', '4a59929b-b391-464f-bfa1-628f7a45ac36', '27f8ac34-3d09-4b68-9fb4-c51cfbfd09df', 'bacb4c11-11b4-4c76-910d-f92abc5b7a39', 'a5dff3c8-902e-4cb9-8466-d277d0ed4d67', 'aca25feb-6254-40b3-8d40-3c805797c69b', 'deb21442-0f94-4ff3-b78d-8d418415d646', '6cf2cc89-d30e-4063-bced-051f3cdae92f', '84bcbff5-346f-452c-87ab-08ceff6364f2', '9acbe68e-2a45-420b-a142-34996dbcfb83', '42786e4c-c80e-40f5-8237-bafc5f39979d', '242a6240-b62c-48b4-a264-b6737e893fa5', '3c38a1d3-2340-43ed-ac0b-4b76c6588b92', 'b89daede-405b-411a-a02b-ee32d7c9d020', '736301d9-0cff-4e25-af78-4d6f78b48cd5', '3b74e3a8-e740-4bb2-802f-2b2bedabad65', '61ee09b0-96fb-4562-bf7d-a01606de424c', '8d75b03c-2a34-4b2a-8408-d8db01a7ae1a', '81c01671-1a30-41cd-9f6c-25b2f9253da9', '01723b62-3f4d-4921-8904-752f092588f5', '5d44cb89-3c63-4716-8551-bd25de881f89', 'cf7c97fc-1c61-4c0d-ad1e-952bf6d6f23a', '60ddab54-dc12-4fbd-bbec-53b23d896c9d', '7eab41ad-8fd5-4a04-8c06-4d6c2016a594', '9e0aac9e-ddf9-4575-bf1c-d08a923e15fa', 'befa97fb-2a74-4f2e-91c8-ea2879d08dcf', '0cc18965-c967-4b58-ac7f-38a443b4cd16', 'd0f62f51-5a51-443b-bf7b-18e3d5b191dc', 'c2ebb179-0a2d-4e84-95be-2837be406716', '3ac76f3c-f560-4666-af61-c693e4cd3ad4', '484bbf93-bc67-4726-8b81-6c4ab608c861', '11b19a5f-4d61-4b5d-980c-98cf0c16906a', 'edecaeb7-53d3-411a-a00c-2ce6226fde50', 'a43cb746-fa63-4d39-87cd-43a81fbf3a8e', '5a3cc8a5-584c-4171-ae2c-97bdbc5047a1', '30778350-508b-4cbe-bff2-8882d0743aed', 'dc652dd4-c0b5-4036-bb70-f71cd9fd488a', '6e4dd7f4-2155-407f-922b-25aeb04a47b7', 'ba75d8cb-bfb9-4d2b-ac2f-2b5b8697188c', '10c621d6-1f99-4045-82a0-47d3ea107ddc', '7a6b6aeb-af0e-441f-97b5-d5db846bb045', '8e2cfb59-d31b-4346-b67a-b96a12ca04f5', '2661fcc0-9b3c-45bd-b60e-3c6351acabd1', 'efcce7b2-e33a-4510-af56-09db1bfb5bd0', 'c643a6ba-a8a3-42de-afcc-fa92328397b7', '86c8d140-2b1d-41df-ba97-a959c54d2c19', '9826d43a-6be2-49ac-bfd7-fa2475f62985', '151f38af-a59a-42f8-9b2e-2df3fef3f658', '5b7b42ed-e41a-4e97-806a-6287ac918537', 'd897ffe6-43a8-4ebc-9881-6097be7711e7', '95aa9a6b-b80a-4dcc-a0a4-228f53bc7959', '0330f00b-412e-44d5-b7cc-23bebd26fa88', '9742751d-d670-4310-97ab-a14973112470', '72df8c4b-f0ef-438d-9858-88053cb188c1', '05b4cb03-5576-4d79-9afa-1c6318d632ec', '6db73b00-b6f1-4f63-9fd0-49f518361ee2', '69df632e-d2aa-4005-a9e2-1c5e07eeebd9', '09aff9df-7c67-4810-8e13-90f8c9bd05a1', '3de1e810-7abe-4dd4-9663-e19270c37c52', 'afd8d475-9bd3-4740-a5be-293cd211b34d', 'de0a8389-d573-483c-811b-e7829bd58a54', '65b60f43-6a71-4c7b-805f-6c3f564c87bb', '8d1746ff-83c6-4675-acd7-01a2a654ec0a', '011866d3-76a6-4b5a-9c42-447e2d567892', '23d5ddd1-1fb0-4149-bf59-a2e7cd34213a', '1990750e-de0f-4789-9dcc-dae5b9b99173', 'b127b87c-600d-4f28-b74a-e6c33d27e42f', 'bf0f6ceb-62fd-4a92-a7b0-29cf898b05e1', '103881e7-8415-4d6b-90c5-cef06f36b5b3', '8c558c8b-1a04-4c38-9f98-20cd5c8195a7', '5c025c8a-a032-494f-8204-dd92b1067448', '441fe9aa-79d7-4e27-8fb5-213c77c4f295', 'b630c1ad-f3a1-41c3-8e34-735a78dec9d1', '3200dbee-2685-48c7-a7dc-2e780853efda', '46583ddd-855b-4e6d-8711-d7b5a4fd26c1', 'a497e35d-fd84-4be2-a45d-f847962cd5f8', '295d5dc4-f4d4-4016-8fc0-4badd1b9c94e', 'f8934f7d-e1f6-462e-8a12-dc82c440bc90', '30fd755b-9f29-4330-b4d3-8eccc44ffade', 'a9cf3c28-8b08-451a-830f-b737936a9579', '273b434f-74b7-4581-9d69-13f030b67313', 'fcf115d7-4246-4790-a89d-666f368b3356', 'c1306680-d5e0-4629-939d-ee9e3f4c439b', 'a5cafc37-5ab6-40b2-8c1b-19089e724b1d', '34606fe8-3ba5-4778-a7f0-0275c1def3b8', '2d6ffd36-f33d-4a68-9868-53c7aa3f4011', '38e4e4d4-f801-42a0-8eac-a1a9a41a8a3e', 'bec0103f-bdf4-42b5-b04e-a44528b8c8d1', '1e01bc5e-dcdb-4ef1-94a6-f4e3a77613b8', '5debda2f-e5c1-447e-b025-d71252591074', '2d8872a4-f002-4294-9396-91d9cefabdb7', 'ac4adfe9-a213-45bd-843b-f346c9891b2c', 'b59c4643-2b45-45e4-89f7-007ef1955c9f', 'f56f6f85-9aff-4f4e-bd84-8d763708e76f']::uuid[], 'CLOSED', 'Railway')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO field_definitions
@@ -1231,6 +1231,2226 @@ INSERT INTO field_definitions
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
         VALUES ('a5c6d789-0c00-413d-b689-862806dd9b56', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('7def3118-2e9c-4de7-8d61-f0e76fbeee5d', 'Scenario 002 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b52ec6bc-ef4a-44ec-a079-76ae7073753f', '082b3385-72b2-4d39-914b-1c8d8e7501ee']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b52ec6bc-ef4a-44ec-a079-76ae7073753f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('082b3385-72b2-4d39-914b-1c8d8e7501ee', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3ae60635-6995-4fb1-8309-61fded3d6fd8', 'Scenario 003 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c2291e69-1591-4247-96e0-898f8755a53b', 'ee474e04-b720-42cc-97be-f62d261ada60']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c2291e69-1591-4247-96e0-898f8755a53b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ee474e04-b720-42cc-97be-f62d261ada60', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('eeef8445-723d-4740-b89f-4dbaf75f9ae6', 'Scenario 004 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['ca218ea1-9dfb-4663-80c5-1dd8e3b4f49a', '70ecd6de-db9e-4c10-b6d3-c65323811973']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ca218ea1-9dfb-4663-80c5-1dd8e3b4f49a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('70ecd6de-db9e-4c10-b6d3-c65323811973', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('94af1ed1-3686-4a9e-99f5-3a7ad908f125', 'Scenario 005 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['77a857be-3070-4bea-a298-3749c919ecab', 'ffcf031a-4845-4a63-b3bc-269f31913a2d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('77a857be-3070-4bea-a298-3749c919ecab', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ffcf031a-4845-4a63-b3bc-269f31913a2d', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8250d0e2-700e-4051-85c3-a8d0d95a5f0f', 'Scenario 006 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['95ce9498-b09f-4c3a-9b4d-987235efec2e', 'ecc75557-a1ea-4b1b-bab5-4e5269bbb8eb']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('95ce9498-b09f-4c3a-9b4d-987235efec2e', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ecc75557-a1ea-4b1b-bab5-4e5269bbb8eb', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c58759a7-a64a-4cbf-970b-948bae0c2254', 'Scenario 007 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2a77ef34-110c-4d20-94bc-2228058f2024', '7a0a3e17-543e-46b5-81ec-042c8d9a2238']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2a77ef34-110c-4d20-94bc-2228058f2024', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7a0a3e17-543e-46b5-81ec-042c8d9a2238', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('f94f517f-c0a4-4415-b726-186cdc75f9c6', 'Scenario 008 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f97a7d4f-499b-4b90-a7ef-097382ab189d', '8692e760-cc0d-4e25-b86d-bed3417d52dd']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f97a7d4f-499b-4b90-a7ef-097382ab189d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8692e760-cc0d-4e25-b86d-bed3417d52dd', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c0e2c3e0-c171-48dd-a312-5de070e3f937', 'Scenario 009 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c6459e07-91ec-42e2-86ed-51edd5eeb253', '1f56631f-a864-446a-b236-19bfd7910ca5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c6459e07-91ec-42e2-86ed-51edd5eeb253', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1f56631f-a864-446a-b236-19bfd7910ca5', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('26fb51b9-2466-48ab-8c0a-89d9536d4c34', 'Scenario 010 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['fbd6177b-7831-4009-9191-47eae9a71255', 'db82dc7b-55e7-4952-9902-b1e3fda60775']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('fbd6177b-7831-4009-9191-47eae9a71255', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('db82dc7b-55e7-4952-9902-b1e3fda60775', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('66c23554-47bb-4268-b08e-518f6f163e9d', 'Scenario 011 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['e4b29a23-0d03-42bc-aa14-756122757af8', '5dc33daf-5f76-4e6d-b86c-e6986c21bae0']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e4b29a23-0d03-42bc-aa14-756122757af8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5dc33daf-5f76-4e6d-b86c-e6986c21bae0', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('08641d25-9b18-41bb-9cbc-4039b4ad24f0', 'Scenario 012 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['6c2515e2-d550-4f79-99d5-488c0119f108', 'cc6617af-d031-48d2-89e9-ac4569f6b82a']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6c2515e2-d550-4f79-99d5-488c0119f108', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('cc6617af-d031-48d2-89e9-ac4569f6b82a', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4d3dd85a-2b16-45de-b524-f83b4a58a2f4', 'Scenario 013 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['53ccb901-fc56-4020-80bd-f9802a41b224', '4779f14d-2533-4324-a7e2-6fb4dfe726e3']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('53ccb901-fc56-4020-80bd-f9802a41b224', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4779f14d-2533-4324-a7e2-6fb4dfe726e3', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('bf9209c7-125c-42f9-b78e-4e5b7aacefcc', 'Scenario 014 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['380d1ecc-6600-4d0a-ab26-a9d34f49dc38', 'df9103a1-6c9f-4db4-8ceb-510b51263a65']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('380d1ecc-6600-4d0a-ab26-a9d34f49dc38', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('df9103a1-6c9f-4db4-8ceb-510b51263a65', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('f511044d-2378-4c7f-af92-45c78146bdef', 'Scenario 015 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2edc7757-717a-4c9a-8d2e-8119a32b72f4', 'da93159a-3664-4d2e-94e0-79f7af5403f6']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2edc7757-717a-4c9a-8d2e-8119a32b72f4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('da93159a-3664-4d2e-94e0-79f7af5403f6', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('f89cee49-e1ae-427d-ae42-5cc411661a1c', 'Scenario 016 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['1a39cae1-4a44-4a39-b9e6-8f58b29b8b03', '1aad118d-0364-4eeb-9ab6-6103db65ceb2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1a39cae1-4a44-4a39-b9e6-8f58b29b8b03', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1aad118d-0364-4eeb-9ab6-6103db65ceb2', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('262e43bd-bf35-4171-b38b-c77969db0b16', 'Scenario 017 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['1b9a8049-211e-432f-8eb5-03b1e7c7db89', '3d1a1369-26cd-4a12-bca6-80c0e29e657b']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1b9a8049-211e-432f-8eb5-03b1e7c7db89', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3d1a1369-26cd-4a12-bca6-80c0e29e657b', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('61bd29ec-0b09-4067-ada0-b43e48a8ac9a', 'Scenario 018 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['3fada72e-e526-465b-86e0-d35839e5b42a', '86818fce-79f8-4d7d-9e1b-2e052d94602f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3fada72e-e526-465b-86e0-d35839e5b42a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('86818fce-79f8-4d7d-9e1b-2e052d94602f', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('92d22472-4696-40ba-924f-861a2f4343b6', 'Scenario 019 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['4b9f0031-b9fc-491a-8f49-73485d3aa755', '77646805-26af-4ee3-878d-8c8917e20f36']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4b9f0031-b9fc-491a-8f49-73485d3aa755', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('77646805-26af-4ee3-878d-8c8917e20f36', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('6fc5f67a-40fa-45ce-819e-35a85e08e560', 'Scenario 020 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['400ef71c-f16c-422f-bd34-640b393ce77a', '51f8e76e-c909-4277-a047-05e3a001620e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('400ef71c-f16c-422f-bd34-640b393ce77a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('51f8e76e-c909-4277-a047-05e3a001620e', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('66bce513-502c-43b4-a155-8a16c410a7c6', 'Scenario 021 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['740f0229-23ef-4cfc-860b-435e95142ae6', '0fe8c02d-0d01-4642-828a-301196e11188']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('740f0229-23ef-4cfc-860b-435e95142ae6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0fe8c02d-0d01-4642-828a-301196e11188', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('eff645bf-7ea8-490d-ae8a-ebb0d16a774c', 'Scenario 022 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['ce856981-fd85-49c0-8d04-24036377da9d', '421c6abf-74e9-4a19-b5ef-a81c1ee1b3e0']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ce856981-fd85-49c0-8d04-24036377da9d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('421c6abf-74e9-4a19-b5ef-a81c1ee1b3e0', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8397e6d6-babc-469b-a239-7eabcbd510da', 'Scenario 023 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['66f07fc4-dd6a-4e00-a359-76989fa5b898', 'e0a6e544-7561-49b7-bd6a-9d816423046e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('66f07fc4-dd6a-4e00-a359-76989fa5b898', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e0a6e544-7561-49b7-bd6a-9d816423046e', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c359f13c-d222-4b04-ad0a-2bb30fb9da5f', 'Scenario 024 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['4c21e031-0502-40b1-bd96-e7231f863343', '00c006b9-e5ed-4a45-a7e8-9763aa0bbcf5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4c21e031-0502-40b1-bd96-e7231f863343', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('00c006b9-e5ed-4a45-a7e8-9763aa0bbcf5', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('97203764-6717-4ca6-bae9-c35c4eb38206', 'Scenario 025 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['dd9e5742-047d-49dd-8bf7-d982a98ce24f', '360e9659-3510-4a57-bc75-876156ab1c14']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('dd9e5742-047d-49dd-8bf7-d982a98ce24f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('360e9659-3510-4a57-bc75-876156ab1c14', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('adc4bf52-096c-4369-a85f-c9bf4b86bc64', 'Scenario 026 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['8e8c2a63-e9be-4129-b756-b77960a950d7', '1e890bbe-ebbc-4a6a-bbd1-a12a29dc8130']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8e8c2a63-e9be-4129-b756-b77960a950d7', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1e890bbe-ebbc-4a6a-bbd1-a12a29dc8130', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('72f93d48-ecef-4bf7-9d97-cb008b47e566', 'Scenario 027 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['a41f3b4a-57af-475c-b1de-0635a072857a', 'bab31a7e-eea4-4b54-a8cf-ed721de4aa75']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a41f3b4a-57af-475c-b1de-0635a072857a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bab31a7e-eea4-4b54-a8cf-ed721de4aa75', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b470667b-d9c9-4af4-b64e-c32102c34387', 'Scenario 028 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['3057de2a-da30-46f5-8a22-8c232c5006d5', '4e73fe17-7ff6-4239-8ca9-ecc78ad41fb2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3057de2a-da30-46f5-8a22-8c232c5006d5', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4e73fe17-7ff6-4239-8ca9-ecc78ad41fb2', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4aa9e1b8-8669-466e-b4b9-c7db2a098bec', 'Scenario 029 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['7f662e6c-4857-4b73-8b08-dd6979e050dc', '28006112-841d-4a3c-8117-09887ef3f84c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7f662e6c-4857-4b73-8b08-dd6979e050dc', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('28006112-841d-4a3c-8117-09887ef3f84c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('44354e67-e0b7-4faa-9385-2d6247c7a50c', 'Scenario 030 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['77e5889e-20d7-4427-93fe-6fd093084fed', 'bd6ab4c1-1524-46c4-857e-07f822c3797d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('77e5889e-20d7-4427-93fe-6fd093084fed', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bd6ab4c1-1524-46c4-857e-07f822c3797d', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4bca2964-ef35-4b03-a47e-829bc9078374', 'Scenario 031 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['01ae1886-d77f-4052-9633-08adeaafb296', 'b8beace1-30c0-4f09-b65f-de89db029e75']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('01ae1886-d77f-4052-9633-08adeaafb296', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b8beace1-30c0-4f09-b65f-de89db029e75', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('6190b6ac-a06b-4b07-8b82-0dfb1088663f', 'Scenario 032 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['89d20126-8572-4cc9-906d-84c35aa882e6', '172848d0-8ec6-4c51-b6a9-60cc4a935479']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('89d20126-8572-4cc9-906d-84c35aa882e6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('172848d0-8ec6-4c51-b6a9-60cc4a935479', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a51d4e4a-c841-416f-9292-fc64dead758b', 'Scenario 033 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f3e2cf00-6cc5-4657-9d23-5f9e74747672', 'a056948f-c1b3-4b56-979d-015671202ff1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f3e2cf00-6cc5-4657-9d23-5f9e74747672', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a056948f-c1b3-4b56-979d-015671202ff1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('d08f6539-5c3e-4a98-93ae-3e344611e3a8', 'Scenario 034 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b1760251-c61d-45e3-9b1f-424a44108d84', 'e40b3acf-b405-4090-8b12-37dc6a57707b']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b1760251-c61d-45e3-9b1f-424a44108d84', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e40b3acf-b405-4090-8b12-37dc6a57707b', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8a2ec760-d2c2-4329-b373-3acd95395076', 'Scenario 035 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['7c3c8e30-a60a-429b-94d5-82c55ab7a87b', 'a9c1f2c2-4b4a-402c-a1c9-87f00f3ad557']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7c3c8e30-a60a-429b-94d5-82c55ab7a87b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a9c1f2c2-4b4a-402c-a1c9-87f00f3ad557', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('9b136147-f560-45d4-abd8-9f7de7cd7570', 'Scenario 036 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['da8327ac-9de5-42e9-87da-202d07b1fea6', 'dae4156e-afba-4a38-8dcc-8b8b705a08a5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('da8327ac-9de5-42e9-87da-202d07b1fea6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('dae4156e-afba-4a38-8dcc-8b8b705a08a5', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('9723c2c5-ee55-441d-9dba-1a1dc23fdc5e', 'Scenario 037 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['7d87c886-3a32-4278-9f1b-eb48bcc2d862', '21abc1d2-1930-4993-8d78-13537b924a09']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7d87c886-3a32-4278-9f1b-eb48bcc2d862', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('21abc1d2-1930-4993-8d78-13537b924a09', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3406bbe9-cb19-44b7-af26-460b0a117a6c', 'Scenario 038 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['bd250128-0fb3-4105-abf8-bebd763cb97c', 'bc35dfb5-18bc-4d2b-b3f4-f16f2bda8fa0']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bd250128-0fb3-4105-abf8-bebd763cb97c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bc35dfb5-18bc-4d2b-b3f4-f16f2bda8fa0', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('ae0a88ad-3bfd-4201-b28a-e2c75d081cd5', 'Scenario 039 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['90b0f241-b7ee-4dbe-8ea4-b2f964fedf58', '93ddf358-4286-4750-9c8f-d5a3e361d737']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('90b0f241-b7ee-4dbe-8ea4-b2f964fedf58', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('93ddf358-4286-4750-9c8f-d5a3e361d737', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8b308495-7ea6-4ddc-acb4-56eb5b3aec12', 'Scenario 040 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['88f509f0-83ce-4f89-84c4-f460ee6194c0', '2cb5003f-1593-47ac-a807-6866199c877f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('88f509f0-83ce-4f89-84c4-f460ee6194c0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2cb5003f-1593-47ac-a807-6866199c877f', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a8f69dc4-04a1-434a-ad97-27c745561b6a', 'Scenario 041 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['23559b62-3bac-42ea-bfaf-0ecfaf2d5418', '9d441444-09dd-42a0-b2e7-7138d7367410']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('23559b62-3bac-42ea-bfaf-0ecfaf2d5418', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9d441444-09dd-42a0-b2e7-7138d7367410', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8b244f56-50e1-411a-a7d8-a2b89dfab26e', 'Scenario 042 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['dc76fa30-a594-4d6f-a16b-6e2d13537830', '25d93d2a-953f-4be6-8656-0e8b2523b356']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('dc76fa30-a594-4d6f-a16b-6e2d13537830', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('25d93d2a-953f-4be6-8656-0e8b2523b356', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8e6419c1-6470-4272-9c4b-43d9fe19dd3d', 'Scenario 043 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['727b60a3-ac15-4361-9a33-5ca97594204c', '14045d98-c5d9-4345-9145-80663d7bd564']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('727b60a3-ac15-4361-9a33-5ca97594204c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('14045d98-c5d9-4345-9145-80663d7bd564', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('ec503b6e-3682-4dcd-9dc7-b194b67283d9', 'Scenario 044 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['3c18cf32-f868-4777-ba32-1edef5ca52ab', 'c0618d61-13c1-41a2-bfdd-d64ddd37637c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3c18cf32-f868-4777-ba32-1edef5ca52ab', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c0618d61-13c1-41a2-bfdd-d64ddd37637c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('74fd9eab-d2e5-4222-8656-81fc2dde7c21', 'Scenario 045 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['987adb8c-2121-495e-9fb6-e478e770dfe8', '3d84a2bc-963f-4034-bf5d-5a5cdc187d0f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('987adb8c-2121-495e-9fb6-e478e770dfe8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3d84a2bc-963f-4034-bf5d-5a5cdc187d0f', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c16e54c1-33b2-45b8-95b0-33cc4f5400d5', 'Scenario 046 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d1e06eae-7a72-487e-8734-8a88956dbe5c', 'b4dd871a-b97c-417a-bd01-53e998622638']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d1e06eae-7a72-487e-8734-8a88956dbe5c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b4dd871a-b97c-417a-bd01-53e998622638', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c80effec-27b8-4103-b726-344a85f35407', 'Scenario 047 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['32631a5c-824f-4adc-a8a3-57f23019a7b4', 'e74d8945-60ca-4bb8-b1d2-ac60857fcad1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('32631a5c-824f-4adc-a8a3-57f23019a7b4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e74d8945-60ca-4bb8-b1d2-ac60857fcad1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('9bec9335-3dd5-4d88-b2ac-c5d711bcab36', 'Scenario 048 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d679aac1-453c-47b5-bfd2-d70fbe6ed60d', '92a6e80d-9d64-4dce-8352-a857280ce42d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d679aac1-453c-47b5-bfd2-d70fbe6ed60d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('92a6e80d-9d64-4dce-8352-a857280ce42d', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4a067d3c-75e6-4e91-a42d-cdf291016674', 'Scenario 049 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['8f4ed654-e525-430a-be79-7ade82ef09fd', 'af5b8f78-be09-4c13-a9cb-25ed84ca819c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8f4ed654-e525-430a-be79-7ade82ef09fd', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('af5b8f78-be09-4c13-a9cb-25ed84ca819c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('1f6c674b-fdb5-40c8-bbe3-d924c2b7146e', 'Scenario 050 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['7f80b003-1758-44cd-a894-8cafdace7b17', '14482ada-9a30-4857-a2db-003968c8a57c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7f80b003-1758-44cd-a894-8cafdace7b17', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('14482ada-9a30-4857-a2db-003968c8a57c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8bd15e2f-6089-4022-8383-26a36093dc80', 'Scenario 051 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b24d7c51-d119-40ac-abe5-002f50d83a5b', '9c06b3df-40bf-4489-95e6-e4d296688bf2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b24d7c51-d119-40ac-abe5-002f50d83a5b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9c06b3df-40bf-4489-95e6-e4d296688bf2', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5b026a8a-e0dc-47d2-b2ce-d0bfc083e6c5', 'Scenario 052 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['37f7837f-0f94-4d73-9fec-a1eaa2bdb731', '4c8c8b55-c550-410d-883f-20bd22bced94']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('37f7837f-0f94-4d73-9fec-a1eaa2bdb731', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4c8c8b55-c550-410d-883f-20bd22bced94', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('ab2e2bba-baa0-45de-b639-c7ebf29bf947', 'Scenario 053 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['211a770e-d3fe-4631-9005-9de97f51e373', '51187b86-7215-4195-b125-de5d170bb3a1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('211a770e-d3fe-4631-9005-9de97f51e373', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('51187b86-7215-4195-b125-de5d170bb3a1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8f8b6f67-d3c3-41ec-b60d-2924577e68f4', 'Scenario 054 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['400a12a8-2884-4e8c-b62a-d051a100e30f', '04a84ce1-a102-49cf-9f20-abc9167d55ba']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('400a12a8-2884-4e8c-b62a-d051a100e30f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('04a84ce1-a102-49cf-9f20-abc9167d55ba', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3e59642a-7b20-4989-b9e6-01a35a82b9da', 'Scenario 055 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['aa69cbde-947a-414c-90da-3b45e0fb596b', '1acfb16a-d114-4800-8a1a-03009eaa01ea']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('aa69cbde-947a-414c-90da-3b45e0fb596b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1acfb16a-d114-4800-8a1a-03009eaa01ea', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0e4618c7-7ab7-4323-855c-7f95cbaef2d0', 'Scenario 056 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['5bf88d2b-eae0-464c-8f94-413b9d25b17f', 'c868d354-61ee-4604-a95c-27f9f72163f2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5bf88d2b-eae0-464c-8f94-413b9d25b17f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c868d354-61ee-4604-a95c-27f9f72163f2', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('4a59929b-b391-464f-bfa1-628f7a45ac36', 'Scenario 057 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b48c47af-49e2-4224-8104-16301ac09b82', '6529a3ec-aaf5-4484-b998-b26632252fa2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b48c47af-49e2-4224-8104-16301ac09b82', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6529a3ec-aaf5-4484-b998-b26632252fa2', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('27f8ac34-3d09-4b68-9fb4-c51cfbfd09df', 'Scenario 058 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['073cd85e-d4b0-450a-af4f-82942568a8c2', '06168613-30f9-41b0-8ed1-45ac4af5db21']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('073cd85e-d4b0-450a-af4f-82942568a8c2', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('06168613-30f9-41b0-8ed1-45ac4af5db21', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('bacb4c11-11b4-4c76-910d-f92abc5b7a39', 'Scenario 059 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['8b4da62c-a1d5-429a-af67-9f82cab18e9f', '7c901056-66e1-4f24-b290-ff0b651b1abb']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8b4da62c-a1d5-429a-af67-9f82cab18e9f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7c901056-66e1-4f24-b290-ff0b651b1abb', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a5dff3c8-902e-4cb9-8466-d277d0ed4d67', 'Scenario 060 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['00b8aacc-fde9-4f90-996d-76ff04db92c0', '18add694-5992-4211-9cdd-0a266b997073']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('00b8aacc-fde9-4f90-996d-76ff04db92c0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('18add694-5992-4211-9cdd-0a266b997073', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('aca25feb-6254-40b3-8d40-3c805797c69b', 'Scenario 061 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['77f74e7b-fe38-4b17-8c0b-031288fe3e72', 'f0a5bd0a-d2d6-4b12-b657-68e46310e433']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('77f74e7b-fe38-4b17-8c0b-031288fe3e72', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f0a5bd0a-d2d6-4b12-b657-68e46310e433', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('deb21442-0f94-4ff3-b78d-8d418415d646', 'Scenario 062 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['0171b423-8f3a-4021-af1b-80cb1b6bb64d', '1cef0986-13e2-4fc7-82c3-a04d3b506802']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0171b423-8f3a-4021-af1b-80cb1b6bb64d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1cef0986-13e2-4fc7-82c3-a04d3b506802', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('6cf2cc89-d30e-4063-bced-051f3cdae92f', 'Scenario 063 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['7c4d516d-7c3b-432f-8b15-b801b93d8a47', '399c2730-f645-4bcf-b828-6ced81fdeef8']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7c4d516d-7c3b-432f-8b15-b801b93d8a47', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('399c2730-f645-4bcf-b828-6ced81fdeef8', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('84bcbff5-346f-452c-87ab-08ceff6364f2', 'Scenario 064 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f3848bdc-7c50-46aa-8aa9-d88dfc084a1b', 'd7faf305-6d32-4b20-b83b-ef80945c50ef']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f3848bdc-7c50-46aa-8aa9-d88dfc084a1b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d7faf305-6d32-4b20-b83b-ef80945c50ef', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('9acbe68e-2a45-420b-a142-34996dbcfb83', 'Scenario 065 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['09919795-1368-4d97-b0aa-4764ebb93db0', '4509a7f1-92df-4b74-9a87-b84f924f6637']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('09919795-1368-4d97-b0aa-4764ebb93db0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4509a7f1-92df-4b74-9a87-b84f924f6637', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('42786e4c-c80e-40f5-8237-bafc5f39979d', 'Scenario 066 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['23602def-5aa9-4a2d-8542-acff4e9e8277', '9c0b5ac4-5ea9-443b-aa68-40c33769c5b7']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('23602def-5aa9-4a2d-8542-acff4e9e8277', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9c0b5ac4-5ea9-443b-aa68-40c33769c5b7', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('242a6240-b62c-48b4-a264-b6737e893fa5', 'Scenario 067 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['e90355e4-5e27-4a55-b7bf-19ab148d21da', '58b04b70-72e7-4891-8478-a5aa4521b727']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e90355e4-5e27-4a55-b7bf-19ab148d21da', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('58b04b70-72e7-4891-8478-a5aa4521b727', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3c38a1d3-2340-43ed-ac0b-4b76c6588b92', 'Scenario 068 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['881b7248-873d-46e0-9ceb-31ebb76df897', '78478b83-be82-4418-864e-35b7c0d364a1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('881b7248-873d-46e0-9ceb-31ebb76df897', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('78478b83-be82-4418-864e-35b7c0d364a1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b89daede-405b-411a-a02b-ee32d7c9d020', 'Scenario 069 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f58732b5-e3f8-4997-a6c0-e24d57935e15', 'b8bcb820-9dd9-4861-b031-8b1fbc6d65dd']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f58732b5-e3f8-4997-a6c0-e24d57935e15', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b8bcb820-9dd9-4861-b031-8b1fbc6d65dd', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('736301d9-0cff-4e25-af78-4d6f78b48cd5', 'Scenario 070 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2ccc3087-4f95-4828-9f86-dcd1dd8342a3', 'f398ab87-38eb-488d-9863-4688423c9ced']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2ccc3087-4f95-4828-9f86-dcd1dd8342a3', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f398ab87-38eb-488d-9863-4688423c9ced', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3b74e3a8-e740-4bb2-802f-2b2bedabad65', 'Scenario 071 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['e025c0ba-938d-49d6-8b5e-f8f2c3c0f317', '32992519-d2b3-45db-a41d-c03c4fcc048b']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e025c0ba-938d-49d6-8b5e-f8f2c3c0f317', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('32992519-d2b3-45db-a41d-c03c4fcc048b', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('61ee09b0-96fb-4562-bf7d-a01606de424c', 'Scenario 072 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['bb4d978b-bdd5-42c7-91bd-968187e080df', 'f75737c9-7ef6-4f09-b724-fb6267204ab1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bb4d978b-bdd5-42c7-91bd-968187e080df', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f75737c9-7ef6-4f09-b724-fb6267204ab1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8d75b03c-2a34-4b2a-8408-d8db01a7ae1a', 'Scenario 073 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b12f3a92-65ea-489e-939d-029f78fbf6d4', '7250585b-50f3-45ac-ab03-fcc6b564f9d5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b12f3a92-65ea-489e-939d-029f78fbf6d4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7250585b-50f3-45ac-ab03-fcc6b564f9d5', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('81c01671-1a30-41cd-9f6c-25b2f9253da9', 'Scenario 074 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2349a20f-d33c-43dc-891c-7bf9ebc21ad1', '25bbb2cc-b1d3-4b7f-a04b-32ccc167c110']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2349a20f-d33c-43dc-891c-7bf9ebc21ad1', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('25bbb2cc-b1d3-4b7f-a04b-32ccc167c110', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('01723b62-3f4d-4921-8904-752f092588f5', 'Scenario 075 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['9b3fef3c-2d06-40d3-a15a-0c0fe8d35c13', 'a1403c86-de5f-4386-a9f7-e871058c9927']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9b3fef3c-2d06-40d3-a15a-0c0fe8d35c13', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a1403c86-de5f-4386-a9f7-e871058c9927', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5d44cb89-3c63-4716-8551-bd25de881f89', 'Scenario 076 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['415bac48-7878-4fc9-b0a9-afdc266668c5', '66f89046-bb2d-4724-84fb-bdf229337038']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('415bac48-7878-4fc9-b0a9-afdc266668c5', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('66f89046-bb2d-4724-84fb-bdf229337038', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('cf7c97fc-1c61-4c0d-ad1e-952bf6d6f23a', 'Scenario 077 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['874509d6-244c-4446-87da-17ecb05d1f86', 'b88ecdcc-f374-4b9d-bd8f-5d96cb1a3206']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('874509d6-244c-4446-87da-17ecb05d1f86', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b88ecdcc-f374-4b9d-bd8f-5d96cb1a3206', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('60ddab54-dc12-4fbd-bbec-53b23d896c9d', 'Scenario 078 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2c780784-33e4-454b-b37a-681577912a20', 'c838aac4-30aa-4103-b5d6-fe7864395945']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2c780784-33e4-454b-b37a-681577912a20', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c838aac4-30aa-4103-b5d6-fe7864395945', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('7eab41ad-8fd5-4a04-8c06-4d6c2016a594', 'Scenario 079 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['0f10f947-7e67-4400-92b9-abbacc3a84e4', 'd09f3157-8c73-4a13-9a2d-940e33d9bcb9']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0f10f947-7e67-4400-92b9-abbacc3a84e4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d09f3157-8c73-4a13-9a2d-940e33d9bcb9', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('9e0aac9e-ddf9-4575-bf1c-d08a923e15fa', 'Scenario 080 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['22a312d6-d593-47b6-883e-b060a62b95aa', '695de478-eff3-4b6d-8900-475b8bf08387']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('22a312d6-d593-47b6-883e-b060a62b95aa', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('695de478-eff3-4b6d-8900-475b8bf08387', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('befa97fb-2a74-4f2e-91c8-ea2879d08dcf', 'Scenario 081 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['4d79afcf-a37b-4632-b7aa-7fa5d438b20c', 'cb1887a7-5fd1-403c-a52c-20ac9a75e86f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4d79afcf-a37b-4632-b7aa-7fa5d438b20c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('cb1887a7-5fd1-403c-a52c-20ac9a75e86f', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0cc18965-c967-4b58-ac7f-38a443b4cd16', 'Scenario 082 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['292efb51-5fc1-44fa-a507-92cc754ac50f', '93018027-3ec6-412d-9afc-76875ea68712']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('292efb51-5fc1-44fa-a507-92cc754ac50f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('93018027-3ec6-412d-9afc-76875ea68712', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('d0f62f51-5a51-443b-bf7b-18e3d5b191dc', 'Scenario 083 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2ec397b8-6752-4749-b03e-2a99e5daa594', '73c6b52b-4406-498a-9095-3a020e11b29d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2ec397b8-6752-4749-b03e-2a99e5daa594', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('73c6b52b-4406-498a-9095-3a020e11b29d', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c2ebb179-0a2d-4e84-95be-2837be406716', 'Scenario 084 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['ea1f7985-4998-42c4-a65d-69cc396b51f4', 'a34442f6-9568-4938-b7fe-20edb8389ab1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ea1f7985-4998-42c4-a65d-69cc396b51f4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a34442f6-9568-4938-b7fe-20edb8389ab1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3ac76f3c-f560-4666-af61-c693e4cd3ad4', 'Scenario 085 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['beebd303-05ff-487a-80c3-e52d33647e9c', 'df7d73b8-89e1-4d79-ad30-3a57b74bd11a']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('beebd303-05ff-487a-80c3-e52d33647e9c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('df7d73b8-89e1-4d79-ad30-3a57b74bd11a', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('484bbf93-bc67-4726-8b81-6c4ab608c861', 'Scenario 086 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['7c66d1b5-131e-4c31-bcc6-a9b8cd241869', 'b5e06cc3-e58a-4812-8d26-a9600a38d798']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7c66d1b5-131e-4c31-bcc6-a9b8cd241869', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b5e06cc3-e58a-4812-8d26-a9600a38d798', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('11b19a5f-4d61-4b5d-980c-98cf0c16906a', 'Scenario 087 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f311b139-f2a6-4ced-92d7-3b78ab98489b', '3237bc4f-ccbc-4e7f-8f6c-caf4714ef7cf']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f311b139-f2a6-4ced-92d7-3b78ab98489b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3237bc4f-ccbc-4e7f-8f6c-caf4714ef7cf', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('edecaeb7-53d3-411a-a00c-2ce6226fde50', 'Scenario 088 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['1af0eb24-9d92-45d0-a831-eee57167229e', '6e7436e0-a6a8-47bc-8114-4419f1fbb550']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1af0eb24-9d92-45d0-a831-eee57167229e', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6e7436e0-a6a8-47bc-8114-4419f1fbb550', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a43cb746-fa63-4d39-87cd-43a81fbf3a8e', 'Scenario 089 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['900fe857-9f4f-4853-b307-dd1ea4b342af', '1b83fa6a-4d59-4da9-ad7e-f43a4ced795a']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('900fe857-9f4f-4853-b307-dd1ea4b342af', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1b83fa6a-4d59-4da9-ad7e-f43a4ced795a', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5a3cc8a5-584c-4171-ae2c-97bdbc5047a1', 'Scenario 090 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['cd689619-3e99-477f-985d-367defa37a8f', 'f7374452-2699-4562-8c9d-f98f187caca0']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('cd689619-3e99-477f-985d-367defa37a8f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f7374452-2699-4562-8c9d-f98f187caca0', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('30778350-508b-4cbe-bff2-8882d0743aed', 'Scenario 091 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['705f3ef5-f3e0-48c8-a653-a2fc0c97c205', '7b437484-d4be-4772-95cf-a4c7c66c0ff7']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('705f3ef5-f3e0-48c8-a653-a2fc0c97c205', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7b437484-d4be-4772-95cf-a4c7c66c0ff7', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('dc652dd4-c0b5-4036-bb70-f71cd9fd488a', 'Scenario 092 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['a3c43c85-ae7c-4450-8e03-902008ed9ecd', 'aaafe206-b2c7-4ec8-a625-e8e9bddc84b3']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a3c43c85-ae7c-4450-8e03-902008ed9ecd', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('aaafe206-b2c7-4ec8-a625-e8e9bddc84b3', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('6e4dd7f4-2155-407f-922b-25aeb04a47b7', 'Scenario 093 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['ccaa7ea3-7ace-4443-999b-970267108cbe', 'ff7f3ffb-e170-4385-b853-91a7c1b924a8']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ccaa7ea3-7ace-4443-999b-970267108cbe', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ff7f3ffb-e170-4385-b853-91a7c1b924a8', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('ba75d8cb-bfb9-4d2b-ac2f-2b5b8697188c', 'Scenario 094 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['84657cdf-99d3-4464-8c10-6f0ea9ec0f85', '05b2fe66-9118-4489-92a6-0b4784c1a666']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('84657cdf-99d3-4464-8c10-6f0ea9ec0f85', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('05b2fe66-9118-4489-92a6-0b4784c1a666', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('10c621d6-1f99-4045-82a0-47d3ea107ddc', 'Scenario 095 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['6865dac9-35ef-4d63-87d6-bd82d70ff8d8', '2efa40cd-884e-400a-b7c8-608d1a186b7d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6865dac9-35ef-4d63-87d6-bd82d70ff8d8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2efa40cd-884e-400a-b7c8-608d1a186b7d', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('7a6b6aeb-af0e-441f-97b5-d5db846bb045', 'Scenario 096 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d7d737b8-945c-4551-a685-5dbb70e10977', 'a998e19a-299f-4ae9-9ae5-a540974541ef']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d7d737b8-945c-4551-a685-5dbb70e10977', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a998e19a-299f-4ae9-9ae5-a540974541ef', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8e2cfb59-d31b-4346-b67a-b96a12ca04f5', 'Scenario 097 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['db6d2012-322d-4bf7-baf2-cce3112bb836', 'b0456e19-c198-41f6-9ef1-754df0f8b6c3']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('db6d2012-322d-4bf7-baf2-cce3112bb836', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b0456e19-c198-41f6-9ef1-754df0f8b6c3', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('2661fcc0-9b3c-45bd-b60e-3c6351acabd1', 'Scenario 098 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['47195740-d89c-4b17-ac22-bb017ecf5216', '0f46f7a2-d968-4719-bee9-1b1c1f102169']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('47195740-d89c-4b17-ac22-bb017ecf5216', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0f46f7a2-d968-4719-bee9-1b1c1f102169', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('efcce7b2-e33a-4510-af56-09db1bfb5bd0', 'Scenario 099 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c5ef1284-4ced-423e-85b8-e71eef9a710f', '9167c4a3-e6fd-41fb-9ac6-61d5bd16daae']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c5ef1284-4ced-423e-85b8-e71eef9a710f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9167c4a3-e6fd-41fb-9ac6-61d5bd16daae', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c643a6ba-a8a3-42de-afcc-fa92328397b7', 'Scenario 100 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d27eb381-c125-43df-8804-011cc46295b0', 'df586b32-0f78-461b-af4f-44851a3e3009']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d27eb381-c125-43df-8804-011cc46295b0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('df586b32-0f78-461b-af4f-44851a3e3009', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('86c8d140-2b1d-41df-ba97-a959c54d2c19', 'Scenario 101 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['494f08f4-1c11-4f17-a724-c3473a97b38c', 'f9460f21-c236-4fad-8699-a5c802436f92']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('494f08f4-1c11-4f17-a724-c3473a97b38c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f9460f21-c236-4fad-8699-a5c802436f92', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('9826d43a-6be2-49ac-bfd7-fa2475f62985', 'Scenario 102 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['a05fc857-eb3d-49ee-9664-c5c978fbb80c', '1f5328d6-5b32-46b8-bb4f-aed1a9e08f8b']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a05fc857-eb3d-49ee-9664-c5c978fbb80c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1f5328d6-5b32-46b8-bb4f-aed1a9e08f8b', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('151f38af-a59a-42f8-9b2e-2df3fef3f658', 'Scenario 103 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['4cfef0d1-2465-450c-b937-919985b7dd53', '503c6230-a376-4c08-941f-e2cf5cdff362']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4cfef0d1-2465-450c-b937-919985b7dd53', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('503c6230-a376-4c08-941f-e2cf5cdff362', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5b7b42ed-e41a-4e97-806a-6287ac918537', 'Scenario 104 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['8bb05d08-6b4b-4caa-bda7-95a21c0621e0', '6fdcb499-5d2f-4ede-89ef-fa7f2dd1458b']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8bb05d08-6b4b-4caa-bda7-95a21c0621e0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6fdcb499-5d2f-4ede-89ef-fa7f2dd1458b', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('d897ffe6-43a8-4ebc-9881-6097be7711e7', 'Scenario 105 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['fc8cf3fb-4d39-401c-b926-c106a1985dd9', 'a953ffde-862d-45b3-98e6-a96ee8ce7c26']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('fc8cf3fb-4d39-401c-b926-c106a1985dd9', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a953ffde-862d-45b3-98e6-a96ee8ce7c26', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('95aa9a6b-b80a-4dcc-a0a4-228f53bc7959', 'Scenario 106 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['3e2dfea9-609e-44f2-b18f-33ec40524833', '36cea940-cd27-4ae3-9b34-6129b20e558c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3e2dfea9-609e-44f2-b18f-33ec40524833', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('36cea940-cd27-4ae3-9b34-6129b20e558c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('0330f00b-412e-44d5-b7cc-23bebd26fa88', 'Scenario 107 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['07f64c1d-1287-4672-b807-137fcc9ebe7b', '22898189-e733-4d34-ae6d-9aeffbe1a457']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('07f64c1d-1287-4672-b807-137fcc9ebe7b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('22898189-e733-4d34-ae6d-9aeffbe1a457', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('9742751d-d670-4310-97ab-a14973112470', 'Scenario 108 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['804fc8af-dabe-45a5-b577-d84f43f9cd3f', '5cf2413a-0523-4d1c-9ef4-fee88393a227']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('804fc8af-dabe-45a5-b577-d84f43f9cd3f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5cf2413a-0523-4d1c-9ef4-fee88393a227', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('72df8c4b-f0ef-438d-9858-88053cb188c1', 'Scenario 109 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['323c29e8-7a6f-4162-ac4d-e9ab12704992', '1841cc5c-6bf6-48f0-b54c-69c844d1a957']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('323c29e8-7a6f-4162-ac4d-e9ab12704992', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1841cc5c-6bf6-48f0-b54c-69c844d1a957', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('05b4cb03-5576-4d79-9afa-1c6318d632ec', 'Scenario 110 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f4665504-35ba-48f8-ab7c-748e4378233c', '4084fd1e-525f-4103-8fe9-7accd4f3bff0']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f4665504-35ba-48f8-ab7c-748e4378233c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4084fd1e-525f-4103-8fe9-7accd4f3bff0', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('6db73b00-b6f1-4f63-9fd0-49f518361ee2', 'Scenario 111 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['e7a5c603-309a-4a4c-a5d2-622fb512dbed', 'e078e1f1-3fcd-4a29-b92e-eb587ffba3c4']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e7a5c603-309a-4a4c-a5d2-622fb512dbed', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e078e1f1-3fcd-4a29-b92e-eb587ffba3c4', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('69df632e-d2aa-4005-a9e2-1c5e07eeebd9', 'Scenario 112 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['beb7a7ac-2f4c-4b79-9237-18d4f88f9a50', '2bb30753-995b-47d7-9ad5-4182b148aca5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('beb7a7ac-2f4c-4b79-9237-18d4f88f9a50', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2bb30753-995b-47d7-9ad5-4182b148aca5', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('09aff9df-7c67-4810-8e13-90f8c9bd05a1', 'Scenario 113 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['1d778112-b0b5-4e7d-a8df-4ad15a95045e', '8f9156a8-42e0-4345-9bf4-a5af9a1e3d29']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1d778112-b0b5-4e7d-a8df-4ad15a95045e', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8f9156a8-42e0-4345-9bf4-a5af9a1e3d29', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3de1e810-7abe-4dd4-9663-e19270c37c52', 'Scenario 114 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['47a9a474-25da-45fc-bb60-ac3728fd23d0', '6b935e60-23a9-41a0-80ba-90785cffb7ef']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('47a9a474-25da-45fc-bb60-ac3728fd23d0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6b935e60-23a9-41a0-80ba-90785cffb7ef', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('afd8d475-9bd3-4740-a5be-293cd211b34d', 'Scenario 115 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['87b1300a-630a-4f9d-9088-ac2e35f826aa', '6cb29511-2f90-47f2-b45f-8b5b466abd44']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('87b1300a-630a-4f9d-9088-ac2e35f826aa', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6cb29511-2f90-47f2-b45f-8b5b466abd44', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('de0a8389-d573-483c-811b-e7829bd58a54', 'Scenario 116 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['81da31a3-2270-49f4-b493-a311cda33e36', '6c3d4ca6-5acc-4c20-b79e-f9a1e8ee2e79']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('81da31a3-2270-49f4-b493-a311cda33e36', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6c3d4ca6-5acc-4c20-b79e-f9a1e8ee2e79', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('65b60f43-6a71-4c7b-805f-6c3f564c87bb', 'Scenario 117 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['cf28792f-1ae3-4ec9-994a-e05860429de6', '78e05b9c-ca04-4258-8b6f-96cd3ae83f71']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('cf28792f-1ae3-4ec9-994a-e05860429de6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('78e05b9c-ca04-4258-8b6f-96cd3ae83f71', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8d1746ff-83c6-4675-acd7-01a2a654ec0a', 'Scenario 118 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b262d34b-e8da-4a01-8961-9f6f01112510', 'b6153738-6b5a-47e5-a5ef-b82c52277a95']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b262d34b-e8da-4a01-8961-9f6f01112510', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b6153738-6b5a-47e5-a5ef-b82c52277a95', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('011866d3-76a6-4b5a-9c42-447e2d567892', 'Scenario 119 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b1cf2122-c5f6-4623-ab6d-4a1d265dbee0', 'be23ebab-753d-47f7-84bc-1f105e54ec67']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b1cf2122-c5f6-4623-ab6d-4a1d265dbee0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('be23ebab-753d-47f7-84bc-1f105e54ec67', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('23d5ddd1-1fb0-4149-bf59-a2e7cd34213a', 'Scenario 120 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f2677147-bd17-4bd5-a88a-f9e98a0515f7', '3007cf78-0ad8-41d1-a24c-733b8633b62a']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f2677147-bd17-4bd5-a88a-f9e98a0515f7', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3007cf78-0ad8-41d1-a24c-733b8633b62a', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('1990750e-de0f-4789-9dcc-dae5b9b99173', 'Scenario 121 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['373538d1-9184-4cc4-9075-f320c16358b7', '4ece88ad-dc7e-4a1e-a0e4-77feee4abf1c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('373538d1-9184-4cc4-9075-f320c16358b7', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4ece88ad-dc7e-4a1e-a0e4-77feee4abf1c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b127b87c-600d-4f28-b74a-e6c33d27e42f', 'Scenario 122 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b567915d-e9a8-4db1-ab27-77d10b00b23d', 'ad91df4b-2ee6-4552-8102-5649296b2f2f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b567915d-e9a8-4db1-ab27-77d10b00b23d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ad91df4b-2ee6-4552-8102-5649296b2f2f', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('bf0f6ceb-62fd-4a92-a7b0-29cf898b05e1', 'Scenario 123 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['6de21d49-097b-41be-b2bb-a987ccc8fb56', '90f138c5-b7fe-4cf7-a518-f2296efe5451']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6de21d49-097b-41be-b2bb-a987ccc8fb56', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('90f138c5-b7fe-4cf7-a518-f2296efe5451', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('103881e7-8415-4d6b-90c5-cef06f36b5b3', 'Scenario 124 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['590d7c2b-c209-4419-918d-8cecfb12b089', 'd8d6beab-e1a9-42b3-9073-999693e9fd64']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('590d7c2b-c209-4419-918d-8cecfb12b089', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d8d6beab-e1a9-42b3-9073-999693e9fd64', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('8c558c8b-1a04-4c38-9f98-20cd5c8195a7', 'Scenario 125 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['a166354f-80be-4621-b485-1afa80ef42e2', '65011186-26f6-4e3d-8179-e2bd1f30fe21']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a166354f-80be-4621-b485-1afa80ef42e2', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('65011186-26f6-4e3d-8179-e2bd1f30fe21', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5c025c8a-a032-494f-8204-dd92b1067448', 'Scenario 126 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['cf482281-7e9d-43b5-97b2-71fedd958471', 'd34deb20-1708-42fd-ad2d-2cd00e15c423']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('cf482281-7e9d-43b5-97b2-71fedd958471', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d34deb20-1708-42fd-ad2d-2cd00e15c423', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('441fe9aa-79d7-4e27-8fb5-213c77c4f295', 'Scenario 127 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['36ffcc4b-a24c-47f7-b903-493310d54981', '5d0d5e02-bbe2-4754-b9ac-6f52346a59ae']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('36ffcc4b-a24c-47f7-b903-493310d54981', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5d0d5e02-bbe2-4754-b9ac-6f52346a59ae', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b630c1ad-f3a1-41c3-8e34-735a78dec9d1', 'Scenario 128 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b71b7989-60b0-4d05-9eab-826c59bec671', '4597805c-46cd-49b0-9bba-9b0c2289f1e0']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b71b7989-60b0-4d05-9eab-826c59bec671', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4597805c-46cd-49b0-9bba-9b0c2289f1e0', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('3200dbee-2685-48c7-a7dc-2e780853efda', 'Scenario 129 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d49d49cf-7608-4ff0-8ac0-adb5d3ba4824', '00cd6ddb-ade1-40f0-84d6-aa4b1e817be2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d49d49cf-7608-4ff0-8ac0-adb5d3ba4824', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('00cd6ddb-ade1-40f0-84d6-aa4b1e817be2', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('46583ddd-855b-4e6d-8711-d7b5a4fd26c1', 'Scenario 130 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c795f997-0292-40fe-ae08-02a19d5f5fcd', 'b0d6d37d-b2d6-473e-8f28-9493a172b805']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c795f997-0292-40fe-ae08-02a19d5f5fcd', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b0d6d37d-b2d6-473e-8f28-9493a172b805', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a497e35d-fd84-4be2-a45d-f847962cd5f8', 'Scenario 131 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['5b85ebe9-f610-4a1a-8c71-ec6425a493dc', 'c0e63270-e320-4d5a-8f9c-89d27758a0d3']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5b85ebe9-f610-4a1a-8c71-ec6425a493dc', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c0e63270-e320-4d5a-8f9c-89d27758a0d3', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('295d5dc4-f4d4-4016-8fc0-4badd1b9c94e', 'Scenario 132 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['2ad34efc-046d-42d1-b29e-6d2f5e76f5b1', '330941f5-2289-448f-86e1-ff5595f2b9df']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2ad34efc-046d-42d1-b29e-6d2f5e76f5b1', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('330941f5-2289-448f-86e1-ff5595f2b9df', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('f8934f7d-e1f6-462e-8a12-dc82c440bc90', 'Scenario 133 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['5f4d93ba-e8f1-4644-a2d0-0868cc8b932a', '1c1e81db-28fe-4f34-8a7e-99182c8ae009']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5f4d93ba-e8f1-4644-a2d0-0868cc8b932a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1c1e81db-28fe-4f34-8a7e-99182c8ae009', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('30fd755b-9f29-4330-b4d3-8eccc44ffade', 'Scenario 134 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c7faaad0-fc28-4983-91da-d28db92bd1b0', '3b0b9a54-98a3-432e-aacf-f4d5116e3e39']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c7faaad0-fc28-4983-91da-d28db92bd1b0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3b0b9a54-98a3-432e-aacf-f4d5116e3e39', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a9cf3c28-8b08-451a-830f-b737936a9579', 'Scenario 135 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d8ea3306-2e4f-4cdb-9a82-5f0cf76113f2', 'c3c104fd-989c-4fe3-a751-be8b1079406c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d8ea3306-2e4f-4cdb-9a82-5f0cf76113f2', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c3c104fd-989c-4fe3-a751-be8b1079406c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('273b434f-74b7-4581-9d69-13f030b67313', 'Scenario 136 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['22d8222b-1a16-4803-b1cf-8922ff4a51a6', '2b526862-acd5-412e-ae3f-154af9d93dc6']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('22d8222b-1a16-4803-b1cf-8922ff4a51a6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2b526862-acd5-412e-ae3f-154af9d93dc6', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('fcf115d7-4246-4790-a89d-666f368b3356', 'Scenario 137 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['1e651fa2-d09d-4cfd-8920-ae87da82e8cd', '739ddb59-eeba-4cbe-b3fe-6ee6ffe64b54']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1e651fa2-d09d-4cfd-8920-ae87da82e8cd', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('739ddb59-eeba-4cbe-b3fe-6ee6ffe64b54', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('c1306680-d5e0-4629-939d-ee9e3f4c439b', 'Scenario 138 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['f80f23e3-9fad-45a7-ac66-54745c8894a8', '907f8a10-3697-44fd-8f53-cb3563bf3f93']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f80f23e3-9fad-45a7-ac66-54745c8894a8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('907f8a10-3697-44fd-8f53-cb3563bf3f93', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('a5cafc37-5ab6-40b2-8c1b-19089e724b1d', 'Scenario 139 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['8620c1c3-60b1-4be2-8f51-43a6814eaa38', 'f7382c5d-b8a5-416b-ad9e-7640cebc3cf1']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8620c1c3-60b1-4be2-8f51-43a6814eaa38', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f7382c5d-b8a5-416b-ad9e-7640cebc3cf1', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('34606fe8-3ba5-4778-a7f0-0275c1def3b8', 'Scenario 140 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b142c94e-b58e-4a05-b4f1-60088e5c43d8', 'cc10b36a-186e-49a2-9488-8a4aeae83550']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b142c94e-b58e-4a05-b4f1-60088e5c43d8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('cc10b36a-186e-49a2-9488-8a4aeae83550', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('2d6ffd36-f33d-4a68-9868-53c7aa3f4011', 'Scenario 141 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['d3f061d0-c59f-49e6-b12d-a935a00aa19f', '405cba12-df32-4e83-8066-019508c53c19']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d3f061d0-c59f-49e6-b12d-a935a00aa19f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('405cba12-df32-4e83-8066-019508c53c19', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('38e4e4d4-f801-42a0-8eac-a1a9a41a8a3e', 'Scenario 142 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['c2335c97-56a7-44b5-a595-c6ed8b34c61b', '6ebf3466-fe97-4a5e-b0b6-668198637898']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c2335c97-56a7-44b5-a595-c6ed8b34c61b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6ebf3466-fe97-4a5e-b0b6-668198637898', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('bec0103f-bdf4-42b5-b04e-a44528b8c8d1', 'Scenario 143 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['6d055f50-8ae0-468d-9fb9-17937e07ac77', '0022129a-bc45-463f-89f4-9447b9f4368e']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6d055f50-8ae0-468d-9fb9-17937e07ac77', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0022129a-bc45-463f-89f4-9447b9f4368e', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('1e01bc5e-dcdb-4ef1-94a6-f4e3a77613b8', 'Scenario 144 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['b1cccbf3-a1ac-44b3-ae33-f61d3b889dd3', 'd5b5c730-c9ba-4750-bc74-5ad758085cd3']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b1cccbf3-a1ac-44b3-ae33-f61d3b889dd3', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d5b5c730-c9ba-4750-bc74-5ad758085cd3', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('5debda2f-e5c1-447e-b025-d71252591074', 'Scenario 145 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['a54e17a4-f6fe-4fd2-b229-1a3a62cc8021', '4ac2a873-ee4a-459a-9ab7-f7555a22d191']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a54e17a4-f6fe-4fd2-b229-1a3a62cc8021', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4ac2a873-ee4a-459a-9ab7-f7555a22d191', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('2d8872a4-f002-4294-9396-91d9cefabdb7', 'Scenario 146 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['cd246af2-0ce5-4baa-bfce-c99cd7c16ec6', 'f5d587db-8ba3-4c4e-8cf5-b3ecc1a4eaf6']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('cd246af2-0ce5-4baa-bfce-c99cd7c16ec6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f5d587db-8ba3-4c4e-8cf5-b3ecc1a4eaf6', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('ac4adfe9-a213-45bd-843b-f346c9891b2c', 'Scenario 147 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['fc8357db-964c-49ac-a72f-347ce4c70eb6', 'f61d83d5-1bc6-4bf5-ad03-e43d66c8aca7']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('fc8357db-964c-49ac-a72f-347ce4c70eb6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f61d83d5-1bc6-4bf5-ad03-e43d66c8aca7', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('b59c4643-2b45-45e4-89f7-007ef1955c9f', 'Scenario 148 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['e3904655-f187-484c-ac97-50b955cbe50c', '8f4a8893-ae23-41bc-8abb-e15840bb8d71']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e3904655-f187-484c-ac97-50b955cbe50c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8f4a8893-ae23-41bc-8abb-e15840bb8d71', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenario_definitions
+    (id, name, description, field_ids)
+    VALUES ('f56f6f85-9aff-4f4e-bd84-8d763708e76f', 'Scenario 149 - Punctuality measures the percentage of trains arriving at their destinations on time (the train doesn’t arrive after planned arrival) and the train didn’t depart before planned departure time. The goal is to maintain a high level of reliability and minimize delays for passengers and freight services. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- Improve customer satisfaction by ensuring timely arrivals<br/>- Guarantee maximal planned connection<br/>- Minimize operational disruptions caused by delays<br/>- Meet regulatory and stakeholder benchmarks for punctuality<br/>This KPI is linked with project’s Long Term Expected Impacts (LTEI) (LTEI1)KPIS-3:<br/>- 10% increase in punctuality in long-range traffic<br/>- 5% increase in punctuality in regional traffic (with realistic disturbances)<br/>', array['cfb4b0f1-2d55-4457-9f7e-959fd19189d4', '3b63ceb3-1e82-467b-987f-61a62ccc355c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('cfb4b0f1-2d55-4457-9f7e-959fd19189d4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO field_definitions
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3b63ceb3-1e82-467b-987f-61a62ccc355c', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO test_definitions

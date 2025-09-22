@@ -126,7 +126,7 @@ def explode_row(csv, kpi_index: int, num_scenarios: int, additional_keys=None, p
   return concat
 
 
-def main():
+def main(truncate_scenarios_docker_compose=2):
   if False:
     df = explode_row(csv="KPIs_database_cards.csv", kpi_index=40, num_scenarios=150,
                      primary_override=("sum_normalized_reward", "Primary scenario score (raw values): sum_normalized_reward"),
@@ -141,11 +141,21 @@ def main():
   with Path("orchestrators.txt").open("w") as f:
     f.write(orchestrator_code)
   sql = gen_sqls(data)
-  with Path("V11.1__ai4realnet_example.json").open("w") as f:
+  with Path("ai4realnet_definitions.json").open("w") as f:
     f.write(json.dumps(data, indent=4))
+  with Path("ai4realnet_definitions.sql").open("w") as f:
+    f.write(sql)
+
+  for suite_id, suite in data.items():
+    for benchmark_id, benchmark in suite["benchmarks"].items():
+      for test_id, test in benchmark["tests"].items():
+        for scenario_id in list(test["scenarios"].keys())[truncate_scenarios_docker_compose:]:
+          del test["scenarios"][scenario_id]
+
+  sql = gen_sqls(data)
   with Path("../../ts/backend/src/migration/data/V11.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
     f.write(sql)
 
 
 if __name__ == '__main__':
-  main()
+  main(truncate_scenarios_docker_compose=2)
