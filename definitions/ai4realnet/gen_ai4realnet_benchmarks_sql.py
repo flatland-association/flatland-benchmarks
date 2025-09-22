@@ -129,7 +129,7 @@ def explode_row(csv, kpi_index: int, num_scenarios: int, additional_keys=None, p
 def main(truncate_scenarios_docker_compose=2):
   if False:
     df = explode_row(csv="KPIs_database_cards.csv", kpi_index=40, num_scenarios=150,
-                     primary_override=("sum_normalized_reward", "Primary scenario score (raw values): sum_normalized_reward"),
+                     primary_override=("punctuality", "Primary scenario score (raw values): punctuality"),
                      additional_keys=[("success_rate", "Secondary scenario score (raw values): success_rate")],
                      )
     df.to_csv("KPIs_database_cards.csv")

@@ -1200,7 +1200,7 @@ INSERT INTO test_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('1de0f52c-ae47-4847-9148-97b8568952d3', 'sum_normalized_reward', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        VALUES ('1de0f52c-ae47-4847-9148-97b8568952d3', 'punctuality', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenario_definitions
@@ -1210,7 +1210,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c2a66425-186d-423b-b002-391c091b33c6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('c2a66425-186d-423b-b002-391c091b33c6', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1225,7 +1225,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f0f478d6-436e-476f-be79-33d8c34f20c1', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('f0f478d6-436e-476f-be79-33d8c34f20c1', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1240,7 +1240,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b52ec6bc-ef4a-44ec-a079-76ae7073753f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('b52ec6bc-ef4a-44ec-a079-76ae7073753f', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1255,7 +1255,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c2291e69-1591-4247-96e0-898f8755a53b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('c2291e69-1591-4247-96e0-898f8755a53b', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1270,7 +1270,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('ca218ea1-9dfb-4663-80c5-1dd8e3b4f49a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('ca218ea1-9dfb-4663-80c5-1dd8e3b4f49a', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1285,7 +1285,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('77a857be-3070-4bea-a298-3749c919ecab', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('77a857be-3070-4bea-a298-3749c919ecab', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1300,7 +1300,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('95ce9498-b09f-4c3a-9b4d-987235efec2e', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('95ce9498-b09f-4c3a-9b4d-987235efec2e', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1315,7 +1315,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2a77ef34-110c-4d20-94bc-2228058f2024', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('2a77ef34-110c-4d20-94bc-2228058f2024', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1330,7 +1330,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f97a7d4f-499b-4b90-a7ef-097382ab189d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('f97a7d4f-499b-4b90-a7ef-097382ab189d', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1345,7 +1345,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c6459e07-91ec-42e2-86ed-51edd5eeb253', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('c6459e07-91ec-42e2-86ed-51edd5eeb253', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1360,7 +1360,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('fbd6177b-7831-4009-9191-47eae9a71255', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('fbd6177b-7831-4009-9191-47eae9a71255', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1375,7 +1375,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('e4b29a23-0d03-42bc-aa14-756122757af8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('e4b29a23-0d03-42bc-aa14-756122757af8', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1390,7 +1390,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('6c2515e2-d550-4f79-99d5-488c0119f108', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('6c2515e2-d550-4f79-99d5-488c0119f108', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1405,7 +1405,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('53ccb901-fc56-4020-80bd-f9802a41b224', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('53ccb901-fc56-4020-80bd-f9802a41b224', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1420,7 +1420,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('380d1ecc-6600-4d0a-ab26-a9d34f49dc38', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('380d1ecc-6600-4d0a-ab26-a9d34f49dc38', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1435,7 +1435,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2edc7757-717a-4c9a-8d2e-8119a32b72f4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('2edc7757-717a-4c9a-8d2e-8119a32b72f4', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1450,7 +1450,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('1a39cae1-4a44-4a39-b9e6-8f58b29b8b03', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('1a39cae1-4a44-4a39-b9e6-8f58b29b8b03', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1465,7 +1465,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('1b9a8049-211e-432f-8eb5-03b1e7c7db89', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('1b9a8049-211e-432f-8eb5-03b1e7c7db89', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1480,7 +1480,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('3fada72e-e526-465b-86e0-d35839e5b42a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('3fada72e-e526-465b-86e0-d35839e5b42a', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1495,7 +1495,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('4b9f0031-b9fc-491a-8f49-73485d3aa755', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('4b9f0031-b9fc-491a-8f49-73485d3aa755', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1510,7 +1510,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('400ef71c-f16c-422f-bd34-640b393ce77a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('400ef71c-f16c-422f-bd34-640b393ce77a', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1525,7 +1525,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('740f0229-23ef-4cfc-860b-435e95142ae6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('740f0229-23ef-4cfc-860b-435e95142ae6', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1540,7 +1540,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('ce856981-fd85-49c0-8d04-24036377da9d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('ce856981-fd85-49c0-8d04-24036377da9d', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1555,7 +1555,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('66f07fc4-dd6a-4e00-a359-76989fa5b898', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('66f07fc4-dd6a-4e00-a359-76989fa5b898', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1570,7 +1570,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('4c21e031-0502-40b1-bd96-e7231f863343', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('4c21e031-0502-40b1-bd96-e7231f863343', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1585,7 +1585,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('dd9e5742-047d-49dd-8bf7-d982a98ce24f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('dd9e5742-047d-49dd-8bf7-d982a98ce24f', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1600,7 +1600,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('8e8c2a63-e9be-4129-b756-b77960a950d7', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('8e8c2a63-e9be-4129-b756-b77960a950d7', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1615,7 +1615,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('a41f3b4a-57af-475c-b1de-0635a072857a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('a41f3b4a-57af-475c-b1de-0635a072857a', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1630,7 +1630,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('3057de2a-da30-46f5-8a22-8c232c5006d5', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('3057de2a-da30-46f5-8a22-8c232c5006d5', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1645,7 +1645,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('7f662e6c-4857-4b73-8b08-dd6979e050dc', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('7f662e6c-4857-4b73-8b08-dd6979e050dc', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1660,7 +1660,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('77e5889e-20d7-4427-93fe-6fd093084fed', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('77e5889e-20d7-4427-93fe-6fd093084fed', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1675,7 +1675,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('01ae1886-d77f-4052-9633-08adeaafb296', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('01ae1886-d77f-4052-9633-08adeaafb296', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1690,7 +1690,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('89d20126-8572-4cc9-906d-84c35aa882e6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('89d20126-8572-4cc9-906d-84c35aa882e6', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1705,7 +1705,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f3e2cf00-6cc5-4657-9d23-5f9e74747672', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('f3e2cf00-6cc5-4657-9d23-5f9e74747672', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1720,7 +1720,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b1760251-c61d-45e3-9b1f-424a44108d84', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('b1760251-c61d-45e3-9b1f-424a44108d84', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1735,7 +1735,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('7c3c8e30-a60a-429b-94d5-82c55ab7a87b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('7c3c8e30-a60a-429b-94d5-82c55ab7a87b', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1750,7 +1750,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('da8327ac-9de5-42e9-87da-202d07b1fea6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('da8327ac-9de5-42e9-87da-202d07b1fea6', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1765,7 +1765,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('7d87c886-3a32-4278-9f1b-eb48bcc2d862', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('7d87c886-3a32-4278-9f1b-eb48bcc2d862', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1780,7 +1780,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('bd250128-0fb3-4105-abf8-bebd763cb97c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('bd250128-0fb3-4105-abf8-bebd763cb97c', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1795,7 +1795,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('90b0f241-b7ee-4dbe-8ea4-b2f964fedf58', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('90b0f241-b7ee-4dbe-8ea4-b2f964fedf58', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1810,7 +1810,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('88f509f0-83ce-4f89-84c4-f460ee6194c0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('88f509f0-83ce-4f89-84c4-f460ee6194c0', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1825,7 +1825,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('23559b62-3bac-42ea-bfaf-0ecfaf2d5418', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('23559b62-3bac-42ea-bfaf-0ecfaf2d5418', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1840,7 +1840,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('dc76fa30-a594-4d6f-a16b-6e2d13537830', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('dc76fa30-a594-4d6f-a16b-6e2d13537830', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1855,7 +1855,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('727b60a3-ac15-4361-9a33-5ca97594204c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('727b60a3-ac15-4361-9a33-5ca97594204c', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1870,7 +1870,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('3c18cf32-f868-4777-ba32-1edef5ca52ab', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('3c18cf32-f868-4777-ba32-1edef5ca52ab', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1885,7 +1885,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('987adb8c-2121-495e-9fb6-e478e770dfe8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('987adb8c-2121-495e-9fb6-e478e770dfe8', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1900,7 +1900,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('d1e06eae-7a72-487e-8734-8a88956dbe5c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('d1e06eae-7a72-487e-8734-8a88956dbe5c', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1915,7 +1915,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('32631a5c-824f-4adc-a8a3-57f23019a7b4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('32631a5c-824f-4adc-a8a3-57f23019a7b4', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1930,7 +1930,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('d679aac1-453c-47b5-bfd2-d70fbe6ed60d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('d679aac1-453c-47b5-bfd2-d70fbe6ed60d', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1945,7 +1945,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('8f4ed654-e525-430a-be79-7ade82ef09fd', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('8f4ed654-e525-430a-be79-7ade82ef09fd', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1960,7 +1960,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('7f80b003-1758-44cd-a894-8cafdace7b17', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('7f80b003-1758-44cd-a894-8cafdace7b17', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1975,7 +1975,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b24d7c51-d119-40ac-abe5-002f50d83a5b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('b24d7c51-d119-40ac-abe5-002f50d83a5b', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -1990,7 +1990,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('37f7837f-0f94-4d73-9fec-a1eaa2bdb731', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('37f7837f-0f94-4d73-9fec-a1eaa2bdb731', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2005,7 +2005,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('211a770e-d3fe-4631-9005-9de97f51e373', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('211a770e-d3fe-4631-9005-9de97f51e373', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2020,7 +2020,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('400a12a8-2884-4e8c-b62a-d051a100e30f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('400a12a8-2884-4e8c-b62a-d051a100e30f', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2035,7 +2035,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('aa69cbde-947a-414c-90da-3b45e0fb596b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('aa69cbde-947a-414c-90da-3b45e0fb596b', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2050,7 +2050,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('5bf88d2b-eae0-464c-8f94-413b9d25b17f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('5bf88d2b-eae0-464c-8f94-413b9d25b17f', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2065,7 +2065,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b48c47af-49e2-4224-8104-16301ac09b82', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('b48c47af-49e2-4224-8104-16301ac09b82', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2080,7 +2080,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('073cd85e-d4b0-450a-af4f-82942568a8c2', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('073cd85e-d4b0-450a-af4f-82942568a8c2', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2095,7 +2095,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('8b4da62c-a1d5-429a-af67-9f82cab18e9f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('8b4da62c-a1d5-429a-af67-9f82cab18e9f', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2110,7 +2110,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('00b8aacc-fde9-4f90-996d-76ff04db92c0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('00b8aacc-fde9-4f90-996d-76ff04db92c0', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2125,7 +2125,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('77f74e7b-fe38-4b17-8c0b-031288fe3e72', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('77f74e7b-fe38-4b17-8c0b-031288fe3e72', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2140,7 +2140,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('0171b423-8f3a-4021-af1b-80cb1b6bb64d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('0171b423-8f3a-4021-af1b-80cb1b6bb64d', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2155,7 +2155,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('7c4d516d-7c3b-432f-8b15-b801b93d8a47', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('7c4d516d-7c3b-432f-8b15-b801b93d8a47', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2170,7 +2170,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f3848bdc-7c50-46aa-8aa9-d88dfc084a1b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('f3848bdc-7c50-46aa-8aa9-d88dfc084a1b', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2185,7 +2185,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('09919795-1368-4d97-b0aa-4764ebb93db0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('09919795-1368-4d97-b0aa-4764ebb93db0', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2200,7 +2200,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('23602def-5aa9-4a2d-8542-acff4e9e8277', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('23602def-5aa9-4a2d-8542-acff4e9e8277', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2215,7 +2215,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('e90355e4-5e27-4a55-b7bf-19ab148d21da', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('e90355e4-5e27-4a55-b7bf-19ab148d21da', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2230,7 +2230,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('881b7248-873d-46e0-9ceb-31ebb76df897', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('881b7248-873d-46e0-9ceb-31ebb76df897', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2245,7 +2245,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f58732b5-e3f8-4997-a6c0-e24d57935e15', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('f58732b5-e3f8-4997-a6c0-e24d57935e15', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2260,7 +2260,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2ccc3087-4f95-4828-9f86-dcd1dd8342a3', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('2ccc3087-4f95-4828-9f86-dcd1dd8342a3', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2275,7 +2275,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('e025c0ba-938d-49d6-8b5e-f8f2c3c0f317', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('e025c0ba-938d-49d6-8b5e-f8f2c3c0f317', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2290,7 +2290,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('bb4d978b-bdd5-42c7-91bd-968187e080df', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('bb4d978b-bdd5-42c7-91bd-968187e080df', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2305,7 +2305,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b12f3a92-65ea-489e-939d-029f78fbf6d4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('b12f3a92-65ea-489e-939d-029f78fbf6d4', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2320,7 +2320,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2349a20f-d33c-43dc-891c-7bf9ebc21ad1', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('2349a20f-d33c-43dc-891c-7bf9ebc21ad1', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2335,7 +2335,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('9b3fef3c-2d06-40d3-a15a-0c0fe8d35c13', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('9b3fef3c-2d06-40d3-a15a-0c0fe8d35c13', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2350,7 +2350,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('415bac48-7878-4fc9-b0a9-afdc266668c5', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('415bac48-7878-4fc9-b0a9-afdc266668c5', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2365,7 +2365,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('874509d6-244c-4446-87da-17ecb05d1f86', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('874509d6-244c-4446-87da-17ecb05d1f86', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2380,7 +2380,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2c780784-33e4-454b-b37a-681577912a20', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('2c780784-33e4-454b-b37a-681577912a20', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2395,7 +2395,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('0f10f947-7e67-4400-92b9-abbacc3a84e4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('0f10f947-7e67-4400-92b9-abbacc3a84e4', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2410,7 +2410,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('22a312d6-d593-47b6-883e-b060a62b95aa', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('22a312d6-d593-47b6-883e-b060a62b95aa', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2425,7 +2425,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('4d79afcf-a37b-4632-b7aa-7fa5d438b20c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('4d79afcf-a37b-4632-b7aa-7fa5d438b20c', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2440,7 +2440,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('292efb51-5fc1-44fa-a507-92cc754ac50f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('292efb51-5fc1-44fa-a507-92cc754ac50f', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2455,7 +2455,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2ec397b8-6752-4749-b03e-2a99e5daa594', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('2ec397b8-6752-4749-b03e-2a99e5daa594', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2470,7 +2470,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('ea1f7985-4998-42c4-a65d-69cc396b51f4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('ea1f7985-4998-42c4-a65d-69cc396b51f4', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2485,7 +2485,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('beebd303-05ff-487a-80c3-e52d33647e9c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('beebd303-05ff-487a-80c3-e52d33647e9c', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2500,7 +2500,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('7c66d1b5-131e-4c31-bcc6-a9b8cd241869', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('7c66d1b5-131e-4c31-bcc6-a9b8cd241869', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2515,7 +2515,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f311b139-f2a6-4ced-92d7-3b78ab98489b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('f311b139-f2a6-4ced-92d7-3b78ab98489b', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2530,7 +2530,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('1af0eb24-9d92-45d0-a831-eee57167229e', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('1af0eb24-9d92-45d0-a831-eee57167229e', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2545,7 +2545,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('900fe857-9f4f-4853-b307-dd1ea4b342af', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('900fe857-9f4f-4853-b307-dd1ea4b342af', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2560,7 +2560,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('cd689619-3e99-477f-985d-367defa37a8f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('cd689619-3e99-477f-985d-367defa37a8f', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2575,7 +2575,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('705f3ef5-f3e0-48c8-a653-a2fc0c97c205', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('705f3ef5-f3e0-48c8-a653-a2fc0c97c205', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2590,7 +2590,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('a3c43c85-ae7c-4450-8e03-902008ed9ecd', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('a3c43c85-ae7c-4450-8e03-902008ed9ecd', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2605,7 +2605,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('ccaa7ea3-7ace-4443-999b-970267108cbe', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('ccaa7ea3-7ace-4443-999b-970267108cbe', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2620,7 +2620,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('84657cdf-99d3-4464-8c10-6f0ea9ec0f85', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('84657cdf-99d3-4464-8c10-6f0ea9ec0f85', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2635,7 +2635,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('6865dac9-35ef-4d63-87d6-bd82d70ff8d8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('6865dac9-35ef-4d63-87d6-bd82d70ff8d8', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2650,7 +2650,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('d7d737b8-945c-4551-a685-5dbb70e10977', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('d7d737b8-945c-4551-a685-5dbb70e10977', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2665,7 +2665,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('db6d2012-322d-4bf7-baf2-cce3112bb836', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('db6d2012-322d-4bf7-baf2-cce3112bb836', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2680,7 +2680,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('47195740-d89c-4b17-ac22-bb017ecf5216', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('47195740-d89c-4b17-ac22-bb017ecf5216', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2695,7 +2695,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c5ef1284-4ced-423e-85b8-e71eef9a710f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('c5ef1284-4ced-423e-85b8-e71eef9a710f', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2710,7 +2710,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('d27eb381-c125-43df-8804-011cc46295b0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('d27eb381-c125-43df-8804-011cc46295b0', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2725,7 +2725,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('494f08f4-1c11-4f17-a724-c3473a97b38c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('494f08f4-1c11-4f17-a724-c3473a97b38c', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2740,7 +2740,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('a05fc857-eb3d-49ee-9664-c5c978fbb80c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('a05fc857-eb3d-49ee-9664-c5c978fbb80c', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2755,7 +2755,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('4cfef0d1-2465-450c-b937-919985b7dd53', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('4cfef0d1-2465-450c-b937-919985b7dd53', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2770,7 +2770,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('8bb05d08-6b4b-4caa-bda7-95a21c0621e0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('8bb05d08-6b4b-4caa-bda7-95a21c0621e0', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2785,7 +2785,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('fc8cf3fb-4d39-401c-b926-c106a1985dd9', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('fc8cf3fb-4d39-401c-b926-c106a1985dd9', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2800,7 +2800,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('3e2dfea9-609e-44f2-b18f-33ec40524833', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('3e2dfea9-609e-44f2-b18f-33ec40524833', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2815,7 +2815,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('07f64c1d-1287-4672-b807-137fcc9ebe7b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('07f64c1d-1287-4672-b807-137fcc9ebe7b', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2830,7 +2830,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('804fc8af-dabe-45a5-b577-d84f43f9cd3f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('804fc8af-dabe-45a5-b577-d84f43f9cd3f', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2845,7 +2845,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('323c29e8-7a6f-4162-ac4d-e9ab12704992', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('323c29e8-7a6f-4162-ac4d-e9ab12704992', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2860,7 +2860,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f4665504-35ba-48f8-ab7c-748e4378233c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('f4665504-35ba-48f8-ab7c-748e4378233c', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2875,7 +2875,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('e7a5c603-309a-4a4c-a5d2-622fb512dbed', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('e7a5c603-309a-4a4c-a5d2-622fb512dbed', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2890,7 +2890,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('beb7a7ac-2f4c-4b79-9237-18d4f88f9a50', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('beb7a7ac-2f4c-4b79-9237-18d4f88f9a50', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2905,7 +2905,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('1d778112-b0b5-4e7d-a8df-4ad15a95045e', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('1d778112-b0b5-4e7d-a8df-4ad15a95045e', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2920,7 +2920,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('47a9a474-25da-45fc-bb60-ac3728fd23d0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('47a9a474-25da-45fc-bb60-ac3728fd23d0', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2935,7 +2935,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('87b1300a-630a-4f9d-9088-ac2e35f826aa', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('87b1300a-630a-4f9d-9088-ac2e35f826aa', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2950,7 +2950,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('81da31a3-2270-49f4-b493-a311cda33e36', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('81da31a3-2270-49f4-b493-a311cda33e36', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2965,7 +2965,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('cf28792f-1ae3-4ec9-994a-e05860429de6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('cf28792f-1ae3-4ec9-994a-e05860429de6', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2980,7 +2980,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b262d34b-e8da-4a01-8961-9f6f01112510', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('b262d34b-e8da-4a01-8961-9f6f01112510', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -2995,7 +2995,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b1cf2122-c5f6-4623-ab6d-4a1d265dbee0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('b1cf2122-c5f6-4623-ab6d-4a1d265dbee0', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3010,7 +3010,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f2677147-bd17-4bd5-a88a-f9e98a0515f7', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('f2677147-bd17-4bd5-a88a-f9e98a0515f7', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3025,7 +3025,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('373538d1-9184-4cc4-9075-f320c16358b7', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('373538d1-9184-4cc4-9075-f320c16358b7', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3040,7 +3040,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b567915d-e9a8-4db1-ab27-77d10b00b23d', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('b567915d-e9a8-4db1-ab27-77d10b00b23d', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3055,7 +3055,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('6de21d49-097b-41be-b2bb-a987ccc8fb56', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('6de21d49-097b-41be-b2bb-a987ccc8fb56', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3070,7 +3070,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('590d7c2b-c209-4419-918d-8cecfb12b089', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('590d7c2b-c209-4419-918d-8cecfb12b089', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3085,7 +3085,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('a166354f-80be-4621-b485-1afa80ef42e2', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('a166354f-80be-4621-b485-1afa80ef42e2', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3100,7 +3100,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('cf482281-7e9d-43b5-97b2-71fedd958471', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('cf482281-7e9d-43b5-97b2-71fedd958471', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3115,7 +3115,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('36ffcc4b-a24c-47f7-b903-493310d54981', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('36ffcc4b-a24c-47f7-b903-493310d54981', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3130,7 +3130,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b71b7989-60b0-4d05-9eab-826c59bec671', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('b71b7989-60b0-4d05-9eab-826c59bec671', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3145,7 +3145,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('d49d49cf-7608-4ff0-8ac0-adb5d3ba4824', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('d49d49cf-7608-4ff0-8ac0-adb5d3ba4824', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3160,7 +3160,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c795f997-0292-40fe-ae08-02a19d5f5fcd', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('c795f997-0292-40fe-ae08-02a19d5f5fcd', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3175,7 +3175,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('5b85ebe9-f610-4a1a-8c71-ec6425a493dc', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('5b85ebe9-f610-4a1a-8c71-ec6425a493dc', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3190,7 +3190,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('2ad34efc-046d-42d1-b29e-6d2f5e76f5b1', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('2ad34efc-046d-42d1-b29e-6d2f5e76f5b1', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3205,7 +3205,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('5f4d93ba-e8f1-4644-a2d0-0868cc8b932a', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('5f4d93ba-e8f1-4644-a2d0-0868cc8b932a', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3220,7 +3220,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c7faaad0-fc28-4983-91da-d28db92bd1b0', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('c7faaad0-fc28-4983-91da-d28db92bd1b0', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3235,7 +3235,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('d8ea3306-2e4f-4cdb-9a82-5f0cf76113f2', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('d8ea3306-2e4f-4cdb-9a82-5f0cf76113f2', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3250,7 +3250,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('22d8222b-1a16-4803-b1cf-8922ff4a51a6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('22d8222b-1a16-4803-b1cf-8922ff4a51a6', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3265,7 +3265,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('1e651fa2-d09d-4cfd-8920-ae87da82e8cd', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('1e651fa2-d09d-4cfd-8920-ae87da82e8cd', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3280,7 +3280,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('f80f23e3-9fad-45a7-ac66-54745c8894a8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('f80f23e3-9fad-45a7-ac66-54745c8894a8', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3295,7 +3295,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('8620c1c3-60b1-4be2-8f51-43a6814eaa38', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('8620c1c3-60b1-4be2-8f51-43a6814eaa38', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3310,7 +3310,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b142c94e-b58e-4a05-b4f1-60088e5c43d8', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('b142c94e-b58e-4a05-b4f1-60088e5c43d8', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3325,7 +3325,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('d3f061d0-c59f-49e6-b12d-a935a00aa19f', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('d3f061d0-c59f-49e6-b12d-a935a00aa19f', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3340,7 +3340,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('c2335c97-56a7-44b5-a595-c6ed8b34c61b', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('c2335c97-56a7-44b5-a595-c6ed8b34c61b', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3355,7 +3355,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('6d055f50-8ae0-468d-9fb9-17937e07ac77', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('6d055f50-8ae0-468d-9fb9-17937e07ac77', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3370,7 +3370,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('b1cccbf3-a1ac-44b3-ae33-f61d3b889dd3', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('b1cccbf3-a1ac-44b3-ae33-f61d3b889dd3', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3385,7 +3385,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('a54e17a4-f6fe-4fd2-b229-1a3a62cc8021', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('a54e17a4-f6fe-4fd2-b229-1a3a62cc8021', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3400,7 +3400,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('cd246af2-0ce5-4baa-bfce-c99cd7c16ec6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('cd246af2-0ce5-4baa-bfce-c99cd7c16ec6', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3415,7 +3415,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('fc8357db-964c-49ac-a72f-347ce4c70eb6', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('fc8357db-964c-49ac-a72f-347ce4c70eb6', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3430,7 +3430,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('e3904655-f187-484c-ac97-50b955cbe50c', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('e3904655-f187-484c-ac97-50b955cbe50c', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
@@ -3445,7 +3445,7 @@ INSERT INTO scenario_definitions
 
 INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('cfb4b0f1-2d55-4457-9f7e-959fd19189d4', 'sum_normalized_reward', 'Primary scenario score (raw values): sum_normalized_reward', NULL, NULL)
+        VALUES ('cfb4b0f1-2d55-4457-9f7e-959fd19189d4', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO field_definitions
