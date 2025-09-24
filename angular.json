@@ -148,13 +148,48 @@
             ],
             "eslintConfig": "ts/frontend/eslint.config.js"
           }
+        },
+        "cypress-run": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "frontend:serve",
+            "configFile": "ts/frontend/cypress.config.js"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "frontend:serve:production"
+            }
+          }
+        },
+        "cypress-open": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "watch": true,
+            "headless": false,
+            "configFile": "ts/frontend/cypress.config.js"
+          }
+        },
+        "e2e": {
+          "builder": "@cypress/schematic:cypress",
+          "options": {
+            "devServerTarget": "frontend:serve",
+            "watch": true,
+            "headless": false
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "frontend:serve:production"
+            }
+          }
         }
       }
     }
   },
   "cli": {
     "schematicCollections": [
-      "angular-eslint"
+      "@cypress/schematic",
+      "angular-eslint",
+      "@schematics/angular"
     ],
     "analytics": false
   },
