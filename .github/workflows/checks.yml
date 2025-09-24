@@ -2,7 +2,7 @@ name: Checks
 
 env:
   # DEPENDENCY SWITCH:
-  ai4realnet-orchestrators-ref: main
+  ai4realnet-orchestrators-ref: railway-kpis
 
 on:
   workflow_dispatch:

@@ -1,4 +1,5 @@
 import json
+import uuid
 from collections import defaultdict
 from pathlib import Path
 
@@ -49,10 +50,14 @@ def extract_ai4realnet_from_csv(csv):
     scenario["ID"] = row["SCENARIO_ID"]
     scenario["SCENARIO_NAME"] = row["SCENARIO_NAME"]
     scenario["SCENARIO_DESCRIPTION"] = row["SCENARIO_DESCRIPTION"]
-    scenario["SCENARIO_FIELD_ID"] = row["SCENARIO_FIELD_ID"]
-    scenario["SCENARIO_FIELD_NAME"] = row["SCENARIO_FIELD_NAME"]
-    scenario["SCENARIO_FIELD_DESCRIPTION"] = row["SCENARIO_FIELD_DESCRIPTION"]
-    scenario["_source"] = json.loads(row.to_json())
+    scenario["fields"] = scenario.get("fields", [])
+    field = {}
+    field["SCENARIO_FIELD_ID"] = row["SCENARIO_FIELD_ID"]
+    field["SCENARIO_FIELD_NAME"] = row["SCENARIO_FIELD_NAME"]
+    field["SCENARIO_FIELD_DESCRIPTION"] = row["SCENARIO_FIELD_DESCRIPTION"]
+    field["_source"] = json.loads(row.to_json())
+    scenario["fields"].append(field)
+
   return data
 
 
@@ -66,6 +71,7 @@ SETUP_MAP = {
 def sanitize_string_for_python_name(s: str):
   return s.replace('-', '_').replace(' ', '_')
 
+
 def gen_domain_orchestrator(data, domain):
   s = f"""
 {domain.lower().replace(' ', '_')}_orchestrator = Orchestrator(
@@ -74,7 +80,7 @@ def gen_domain_orchestrator(data, domain):
   for suite_id, suite in data.items():
     for benchmark_id, benchmark in suite["benchmarks"].items():
       for test_id, test in benchmark["tests"].items():
-        scenario_ids = [f"'{scenario_id}'" for scenario_id in test["scenarios"].keys()]
+        scenario_ids = [f"'{scenario['ID']}'" for scenario in test["scenarios"].values()]
         if test["QUEUE"] == domain:
           s += f"""
         # {test['TEST_NAME']}
@@ -89,20 +95,77 @@ def gen_domain_orchestrator(data, domain):
   return s
 
 
-if __name__ == '__main__':
+def explode_row(csv, start_row: int, num_scenarios: int, additional_keys=None, primary_override=None):
+  df = pd.read_csv(csv, index_col=[0])
+  row = df.iloc[[start_row]]
+  print(row)
+  rows = []
+  for i in range(num_scenarios):
+    template = json.loads(json.dumps(row.to_dict('records')))[0]
+    template["SCENARIO_NAME"] = template["SCENARIO_NAME"].replace("Scenario 1", f'Scenario {i:03d}')
+    if i > 0:
+      template["SCENARIO_ID"] = str(uuid.uuid4())
+      template["SCENARIO_FIELD_ID"] = str(uuid.uuid4())
+    if primary_override is not None:
+      key, desc = primary_override
+      template["SCENARIO_FIELD_NAME"] = key
+      template["SCENARIO_FIELD_DESCRIPTION"] = desc
+      template["TEST_FIELD_NAME"] = key
+      template["BENCHMARK_FIELD_NAME"] = key
+    rows.append(template)
+
+    if additional_keys is not None:
+      for key, desc in additional_keys:
+        template = json.loads(json.dumps(template))
+        template["SCENARIO_FIELD_ID"] = str(uuid.uuid4())
+        template["SCENARIO_FIELD_NAME"] = key
+        template["SCENARIO_FIELD_DESCRIPTION"] = desc
+        rows.append(template)
+
+  concat = pd.concat([df.iloc[:start_row], pd.DataFrame.from_records(rows), df.iloc[start_row + 1:]], ignore_index=True)
+  return concat
+
+
+def main(truncate_scenarios_docker_compose=2):
+  if False:
+    df = explode_row(csv="KPIs_database_cards.csv", kpi_index=40, num_scenarios=150,
+                     primary_override=("punctuality", "Primary scenario score (raw values): punctuality"),
+                     additional_keys=[("success_rate", "Secondary scenario score (raw values): success_rate")],
+                     )
+  if False:
+    df = explode_row(csv="KPIs_database_cards.csv", start_row=364, num_scenarios=150,
+                     primary_override=("network_impact_propagation", "Primary scenario score (raw values): network_impact_propagation"),
+                     additional_keys=[
+                       ("success_rate_1", "Secondary scenario score (raw values): success_rate scenario without malfunction"),
+                       ("punctuality_1", "Secondary scenario score (raw values): punctuality scenario without malfunction"),
+                       ("success_rate_2", "Secondary scenario score (raw values): success_rate scenario without malfunction"),
+                       ("punctuality_2", "Secondary scenario score (raw values): punctuality scenario without malfunction"),
+                     ],
+                     )
+    df.to_csv("KPIs_database_cards.csv")
   # download from https://flatlandassociation.sharepoint.com/:x:/s/FlatlandAssociation/EanEj4dEBHBDsGzo5WyygCsBIBH7jo502okMbMybT6Bx0g?e=6DotJy
   data = extract_ai4realnet_from_csv(csv="KPIs_database_cards.csv")
-
   orchestrator_code = ""
   for domain in ["Railway", "ATM", "Power Grid"]:
     orchestrator_code += gen_domain_orchestrator(data, domain)
-
   with Path("orchestrators.txt").open("w") as f:
     f.write(orchestrator_code)
+  sql = gen_sqls(data)
+  with Path("ai4realnet_definitions.json").open("w") as f:
+    f.write(json.dumps(data, indent=4))
+  with Path("ai4realnet_definitions.sql").open("w") as f:
+    f.write(sql)
+
+  for suite_id, suite in data.items():
+    for benchmark_id, benchmark in suite["benchmarks"].items():
+      for test_id, test in benchmark["tests"].items():
+        for scenario_id in list(test["scenarios"].keys())[truncate_scenarios_docker_compose:]:
+          del test["scenarios"][scenario_id]
 
   sql = gen_sqls(data)
-  with Path("V10.1__ai4realnet_example.json").open("w") as f:
-    f.write(json.dumps(data, indent=4))
-
-  with Path("../../ts/backend/src/migration/data/V10.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
+  with Path("../../ts/backend/src/migration/data/V11.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
     f.write(sql)
+
+
+if __name__ == '__main__':
+  main(truncate_scenarios_docker_compose=2)
