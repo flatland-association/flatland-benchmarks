@@ -3,6 +3,23 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.14.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.13.1...v0.14.0) (2025-09-29)
+
+
+### Features
+
+* explode 1 to 150 scenario for KPI-PF-026: Punctuality (Railway). Rename primary to mean_percentage_complete and add secondary score success_rate. ([e3c1e78](https://github.com/flatland-association/flatland-benchmarks/commit/e3c1e78edef5608affa23cae571599c24413f40a))
+* explode 1 to 150 scenario for KPI-PF-026: Punctuality and KPI_NF_045: Network Impact Propagation. ([04750c9](https://github.com/flatland-association/flatland-benchmarks/commit/04750c9fb87e09f81e22a230915bf60c2139413c))
+* **railway-orchestrator:** add IDs for all 150 scenario for KPI_NF_045 (EO: Solution Quality). ([e6d99f8](https://github.com/flatland-association/flatland-benchmarks/commit/e6d99f81f9b3bb0c443323609c4058fe0fb4b2ea))
+* **railway-orchestrator:** use all scenarios for punctuality kpi. Use only first two scenarios for integration tests. ([d06f2f0](https://github.com/flatland-association/flatland-benchmarks/commit/d06f2f0d7a1f9473eab359f32278644129a4600f))
+* **railway-orchestrator:** use punctuality as primary key for KPI_PF_026. ([48036b1](https://github.com/flatland-association/flatland-benchmarks/commit/48036b17beaabf6923c7e82573628316b47320d6))
+* use scenarios v2 for ai4realnet railway orchestrator. ([bbc048b](https://github.com/flatland-association/flatland-benchmarks/commit/bbc048b75a13aacd55cad4af2a09ce17b1a6bff2))
+
+
+### Bug Fixes
+
+* use domain queue and new benchmark ID in ai4realnet orchestrator railway integration test. ([#437](https://github.com/flatland-association/flatland-benchmarks/issues/437)) ([f338ffb](https://github.com/flatland-association/flatland-benchmarks/commit/f338ffb571781fcb0b352d6d8baa6a80f4573a28))
+
 ## [0.13.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.13.0...v0.13.1) (2025-09-17)
 
 
