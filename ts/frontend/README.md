@@ -111,6 +111,8 @@ This will compile your project and store the build artifacts in the `dist/` dire
 
 ## E2E Testing
 
+We use [Cypress](https://docs.cypress.io/app/get-started/why-cypress) for end-to-end testing from frontend: an instrumented Browser navigates to the locally served frontend, simulates interacting with HTML elements, which can trigger communication with the API and should update the rendered HTML afterwards. In the chain frontend <-> backend <-> queue <-> orchestrator, all services are live, nothing is mocked, including KeyCloak (however, all services use development data, not real production data). Test assertions are done on HTML level (checking textual contents of elements).
+
 To run end-to-end tests locally, make sure the following "services" are running
 - Docker (e.g. `npm run docker:up`)
 - backend, AI4REALNET flavor (i.e. `npm run start.ai4realnet` from `ts/backend`)
