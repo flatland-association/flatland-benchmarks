@@ -66,7 +66,9 @@ export class Server {
 
       if (!res.headersSent) {
         res.status(500)
-        res.send('500: Internal server error')
+        res.json({
+          error: '500: Internal server error',
+        })
         logger.error(
           `${req.method} ${req.originalUrl}: Handler terminated with error, responded with internal server error 500:`,
           err,
