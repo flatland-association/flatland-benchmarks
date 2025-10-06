@@ -31,7 +31,7 @@ export class CeleryService extends Service {
       // queue
       queue,
     )
-    console.log(
+    logger.debug(
       `Sending payload ${payload} to amqp://${this.config.amqp.host}:${this.config.amqp.port} via queue ${queue}`,
     )
     const result = client.sendTask(
@@ -40,10 +40,10 @@ export class CeleryService extends Service {
       payload as object, // kwargs?: object,
       uuid, //     taskId?: string
     )
-    console.log(`Sent task to amqp://${this.config.amqp.host}:${this.config.amqp.port} via queue ${queue}`)
+    logger.debug(`Sent task to amqp://${this.config.amqp.host}:${this.config.amqp.port} via queue ${queue}`)
     // return promise
     return result.get().then((data) => {
-      console.log(`Received result from queue: ${data}`)
+      logger.debug(`Received result from queue: ${data}`)
       client.disconnect()
       return data
     })
