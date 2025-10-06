@@ -1,3 +1,4 @@
+import { ApiResponse } from '@common/api-response'
 import cors from 'cors'
 import type { Express, NextFunction, Request, Response } from 'express'
 import express from 'express'
@@ -67,8 +68,8 @@ export class Server {
       if (!res.headersSent) {
         res.status(500)
         res.json({
-          error: '500: Internal server error',
-        })
+          error: { text: '500: Internal server error' },
+        } satisfies ApiResponse<void>)
         logger.error(
           `${req.method} ${req.originalUrl}: Handler terminated with error, responded with internal server error 500:`,
           err,
