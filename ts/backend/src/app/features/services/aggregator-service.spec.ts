@@ -4,7 +4,7 @@ import { loadConfig } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AggregatorService } from './aggregator-service.mjs'
 
-Logger.setOptions({ '--log-level': 'NONE' })
+Logger.setOptions({ '--log-level': 'OFF' })
 
 type AggFunc = keyof Pick<
   AggregatorService,
