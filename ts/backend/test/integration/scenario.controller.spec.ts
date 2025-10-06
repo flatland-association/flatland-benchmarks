@@ -1,10 +1,13 @@
 import { ScenarioController } from '../../src/app/features/controller/scenario.controller.mjs'
+import { Logger } from '../../src/app/features/logger/logger.mjs'
 import {
   assertApiResponse,
   ControllerTestAdapter,
   setupControllerTestEnvironment,
 } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
+
+Logger.setOptions({ '--log-level': 'OFF' })
 
 describe.sequential('Scenario controller', () => {
   let controller: ControllerTestAdapter

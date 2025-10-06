@@ -4,7 +4,7 @@ import { AggregatorService } from '../../src/app/features/services/aggregator-se
 import { SqlService } from '../../src/app/features/services/sql-service.mjs'
 import { getTestConfig } from './setup.mjs'
 
-Logger.setOptions({ '--log-level': 'NONE' })
+Logger.setOptions({ '--log-level': 'OFF' })
 
 type AggregatorPublicMethods = keyof Pick<
   AggregatorService,

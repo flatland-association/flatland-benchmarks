@@ -2,6 +2,7 @@ import { SubmissionRow } from '@common/interfaces'
 import { StripLocator } from '@common/utility-types'
 import { MockInstance } from 'vitest'
 import { SubmissionController } from '../../src/app/features/controller/submission.controller.mjs'
+import { Logger } from '../../src/app/features/logger/logger.mjs'
 import { CeleryService } from '../../src/app/features/services/celery-client-service.mjs'
 import {
   assertApiResponse,
@@ -10,6 +11,8 @@ import {
   testUserJwt,
 } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
+
+Logger.setOptions({ '--log-level': 'OFF' })
 
 const testSubmission: StripLocator<SubmissionRow> = {
   benchmark_id: '20ccc7c1-034c-4880-8946-bffc3fed1359',

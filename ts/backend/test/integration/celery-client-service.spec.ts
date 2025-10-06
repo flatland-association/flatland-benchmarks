@@ -1,6 +1,9 @@
 import celery from 'celery-node'
+import { Logger } from '../../src/app/features/logger/logger.mjs'
 import { CeleryService } from '../../src/app/features/services/celery-client-service.mjs'
 import { getTestConfig } from './setup.mjs'
+
+Logger.setOptions({ '--log-level': 'OFF' })
 
 describe.sequential('Celery client Service', () => {
   describe('online', () => {
