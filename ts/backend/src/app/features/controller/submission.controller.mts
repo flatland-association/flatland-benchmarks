@@ -164,7 +164,12 @@ export class SubmissionController extends Controller {
    *        schema:
    *          type: string
    *          format: uuid
-   *        description: Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too.
+   *        description: Filter submissions by user.
+   *      - in: query
+   *        name: unpublished_own
+   *        schema:
+   *          type: bool
+   *        description: If true, un-published submissions owned by the authenticated user are not filtered out.
    *    responses:
    *      200:
    *        description: Requested submissions.
@@ -217,6 +222,7 @@ export class SubmissionController extends Controller {
 
     const benchmarkId = req.query['benchmark_ids']
     const submittedBy = req.query['submitted_by']
+    const unpublishedOwn = req.query['unpublished_own'] === 'true'
 
     const sql = SqlService.getInstance()
 
@@ -229,11 +235,11 @@ export class SubmissionController extends Controller {
       whereBenchmark = sql.fragment`benchmark_id=${benchmarkId}`
     }
     if (submittedBy) {
-      // turn off public requirement if submitter matches authorized user
-      if (submittedBy === auth?.sub) {
-        wherePublic = sql.fragment`1=1`
-      }
       whereSubmittedBy = sql.fragment`submitted_by=${submittedBy}`
+    }
+    if (unpublishedOwn && auth?.sub) {
+      // bypass published requirement for own submissions only
+      wherePublic = sql.fragment`(published = true OR submitted_by = ${auth.sub})`
     }
 
     const rows = await sql.query<StripDir<SubmissionRow>>`

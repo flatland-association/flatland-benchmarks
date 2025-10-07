@@ -42,7 +42,7 @@ export class MySubmissionsView implements OnInit {
     // TODO: load via resource service
     // see: https://github.com/flatland-association/flatland-benchmarks/issues/395
     this.apiService
-      .get('/submissions', { query: { submitted_by: this.authService.userUuid } })
+      .get('/submissions', { query: { submitted_by: this.authService.userUuid, unpublished_own: 'true' } })
       .then(async (resonse) => {
         const submissions = resonse.body
         if (!submissions?.length) {
