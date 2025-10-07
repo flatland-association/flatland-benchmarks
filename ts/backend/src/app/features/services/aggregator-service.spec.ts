@@ -1,7 +1,10 @@
 import { FieldDefinitionRow, SubmissionScore } from '@common/interfaces'
 import { afterEach, beforeAll, beforeEach, describe, expect, MockInstance, test, vi } from 'vitest'
 import { loadConfig } from '../config/config.mjs'
+import { Logger } from '../logger/logger.mjs'
 import { AggregatorService } from './aggregator-service.mjs'
+
+Logger.setOptions({ '--log-level': 'OFF' })
 
 type AggFunc = keyof Pick<
   AggregatorService,

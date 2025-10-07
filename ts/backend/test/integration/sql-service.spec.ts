@@ -1,5 +1,8 @@
+import { Logger } from '../../src/app/features/logger/logger.mjs'
 import { dbgSqlState, SqlService } from '../../src/app/features/services/sql-service.mjs'
 import { getTestConfig } from './setup.mjs'
+
+Logger.setOptions({ '--log-level': 'OFF' })
 
 describe.sequential('SQL Service (with Postgres)', () => {
   beforeAll(async () => {

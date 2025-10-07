@@ -1,11 +1,14 @@
 import { ApiGetEndpoints } from '@common/api-endpoints'
 import { BenchmarkController } from '../../src/app/features/controller/benchmark.controller.mjs'
+import { Logger } from '../../src/app/features/logger/logger.mjs'
 import {
   assertApiResponse,
   ControllerTestAdapter,
   setupControllerTestEnvironment,
 } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
+
+Logger.setOptions({ '--log-level': 'OFF' })
 
 const protoBenchmark = [
   {

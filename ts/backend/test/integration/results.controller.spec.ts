@@ -9,7 +9,7 @@ import {
 } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
 
-Logger.setOptions({ '--log-level': 'ERROR' })
+Logger.setOptions({ '--log-level': 'OFF' })
 
 describe.sequential('Results controller', () => {
   let controller: ControllerTestAdapter
