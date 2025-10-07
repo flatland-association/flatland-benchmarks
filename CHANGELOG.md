@@ -3,6 +3,13 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.14.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.14.0...v0.14.1) (2025-10-07)
+
+
+### Bug Fixes
+
+* **backend:** global error response not ApiResponse ([#445](https://github.com/flatland-association/flatland-benchmarks/issues/445)) ([01e8b45](https://github.com/flatland-association/flatland-benchmarks/commit/01e8b45154223d80ef107cbabd5fac489639ae2c))
+
 ## [0.14.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.13.1...v0.14.0) (2025-09-29)
 
 
