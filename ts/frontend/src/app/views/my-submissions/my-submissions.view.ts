@@ -45,7 +45,7 @@ export class MySubmissionsView implements OnInit {
       .get('/submissions', { query: { submitted_by: this.authService.userUuid } })
       .then(async (resonse) => {
         const submissions = resonse.body
-        if (!submissions) {
+        if (!submissions?.length) {
           this.rows = []
           return
         }
