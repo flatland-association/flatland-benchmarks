@@ -121,7 +121,7 @@ export class ControllerTestAdapter {
   ): Promise<TestResponse<ApiGetEndpoints[E]['response']>> {
     return this.withMockedAuth(() => {
       // @ts-expect-error params
-      return this.request.get(this.buildEndpoint(endpoint, options?.params))
+      return this.request.get(this.buildEndpoint(endpoint, options?.params)).query(options?.query)
     }, jwt)
   }
 
