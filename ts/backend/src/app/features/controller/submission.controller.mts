@@ -168,7 +168,7 @@ export class SubmissionController extends Controller {
    *      - in: query
    *        name: unpublished_own
    *        schema:
-   *          type: bool
+   *          type: boolean
    *        description: If true, un-published submissions owned by the authenticated user are not filtered out.
    *    responses:
    *      200:
