@@ -233,7 +233,7 @@ export class SubmissionController extends Controller {
     const sql = SqlService.getInstance()
 
     // per default, list all public submissions
-    let wherePublic = sql.fragment`published = true`
+    let wherePublished = sql.fragment`published = true`
     let whereBenchmark = sql.fragment`1=1`
     let whereSubmittedBy = sql.fragment`1=1`
     if (benchmarkId) {
@@ -245,13 +245,13 @@ export class SubmissionController extends Controller {
     }
     if (unpublishedOwn && auth?.sub) {
       // bypass published requirement for own submissions only
-      wherePublic = sql.fragment`(published = true OR submitted_by = ${auth.sub})`
+      wherePublished = sql.fragment`(published = true OR submitted_by = ${auth.sub})`
     }
 
     const rows = await sql.query<StripDir<SubmissionRow>>`
         SELECT * FROM submissions
         WHERE
-          ${wherePublic} AND
+          ${wherePublished} AND
           ${whereBenchmark} AND
           ${whereSubmittedBy}
       `
@@ -329,16 +329,16 @@ export class SubmissionController extends Controller {
     const uuids = req.params.submission_ids.split(',')
     const sql = SqlService.getInstance()
     // per default, list only public submissions
-    let wherePublic = sql.fragment`published = true`
+    let wherePublished = sql.fragment`published = true`
     if (auth?.sub) {
-      wherePublic = sql.fragment`(published = true OR submitted_by = ${auth.sub})`
+      wherePublished = sql.fragment`(published = true OR submitted_by = ${auth.sub})`
     }
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<SubmissionRow>>`
         SELECT * FROM submissions
         WHERE
           id=ANY(${uuids}) AND
-          ${wherePublic}
+          ${wherePublished}
         LIMIT ${uuids.length}
       `
     const submissions = appendDir('/submissions/', rows)
