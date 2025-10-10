@@ -168,8 +168,8 @@ export class SubmissionController extends Controller {
    *      - in: query
    *        name: unpublished_own
    *        schema:
-   *          type: boolean
-   *        description: If true, un-published submissions owned by the authenticated user are not filtered out.
+   *          type: string
+   *        description: Either `true` or `false` (default), literally and case-sensitive. If `true`, un-published submissions owned by the authenticated user are not filtered out.
    *    responses:
    *      200:
    *        description: Requested submissions.
@@ -222,7 +222,13 @@ export class SubmissionController extends Controller {
 
     const benchmarkId = req.query['benchmark_ids']
     const submittedBy = req.query['submitted_by']
-    const unpublishedOwn = req.query['unpublished_own'] === 'true'
+    let unpublishedOwn = false
+    if (req.query['unpublished_own'] === 'true') {
+      unpublishedOwn = true
+    } else if (req.query['unpublished_own'] !== 'false') {
+      this.requestError(req, res, { text: `invalid value "${req.query['unpublished_own']}" for "unpublished_own"` })
+      return
+    }
 
     const sql = SqlService.getInstance()
 
