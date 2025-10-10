@@ -73,9 +73,26 @@ describe.sequential('Submission controller', () => {
     expect(submissionIds).not.toContain('06ad18b5-e697-4684-aa7b-76b5c82c4307')
   })
 
-  test('should return published submission (no user)', async () => {
-    const res = await controller.testGet('/submissions/:submission_ids', { params: { submission_ids: submissionUuid } })
+  test('should list own unpublished submissions (user required)', async () => {
+    const res = await controller.testGet('/submissions', { query: { unpublished_own: 'true' } }, testUserJwt)
     assertApiResponse(res)
+    const submissionIds = res.body.body.map((s) => s.id)
+    expect(submissionIds).toContain(submissionUuid)
+  })
+
+  test('should deny listing own unpublished submissions (no user)', async () => {
+    const res = await controller.testGet('/submissions', { query: { unpublished_own: 'true' } })
+    assertApiResponse(res)
+    const submissionIds = res.body.body.map((s) => s.id)
+    expect(submissionIds).not.toContain(submissionUuid)
+  })
+
+  test('should return published submission (no user)', async () => {
+    const res = await controller.testGet('/submissions/:submission_ids', {
+      params: { submission_ids: 'cd4d44bc-d40e-4173-bccb-f04e0be1b2ae' },
+    })
+    assertApiResponse(res)
+    expect(res.body.body).toHaveLength(1)
   })
 
   test('should deny returning unpublished submission (no user)', async () => {
@@ -91,5 +108,6 @@ describe.sequential('Submission controller', () => {
       testUserJwt,
     )
     assertApiResponse(res)
+    expect(res.body.body).toHaveLength(1)
   })
 })

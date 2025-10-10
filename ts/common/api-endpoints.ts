@@ -93,7 +93,11 @@ interface ApiEndpointDefinitions {
     GET: ApiEndpoint<Empty, Empty, FieldDefinitionRow[]>
   }
   '/submissions': {
-    GET: ApiEndpoint<Empty, { benchmark_ids?: string; ids?: string; submitted_by?: string }, SubmissionRow[]>
+    GET: ApiEndpoint<
+      Empty,
+      { benchmark_ids?: string; ids?: string; submitted_by?: string; unpublished_own?: string },
+      SubmissionRow[]
+    >
     POST: ApiEndpoint<StripLocator<SubmissionRow>, Empty, { id: string }>
   }
   '/submissions/:submission_ids': {
