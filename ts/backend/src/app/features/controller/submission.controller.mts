@@ -225,7 +225,7 @@ export class SubmissionController extends Controller {
     let unpublishedOwn = false
     if (req.query['unpublished_own'] === 'true') {
       unpublishedOwn = true
-    } else if (req.query['unpublished_own'] !== 'false') {
+    } else if (req.query['unpublished_own'] !== 'false' && typeof req.query['unpublished_own'] !== 'undefined') {
       this.requestError(req, res, { text: `invalid value "${req.query['unpublished_own']}" for "unpublished_own"` })
       return
     }
