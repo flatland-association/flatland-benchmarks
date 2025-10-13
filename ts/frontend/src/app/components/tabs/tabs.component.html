@@ -1,0 +1,6 @@
+<div class="w-full border-b border-primary-600">
+  @for (tab of tabs; track $index) {
+    <button type="button" class="px-4 py-2 text-primary-600 font-bold" [ngClass]="{'bg-primary-100': currentTab === tab}" (click)="currentTab = tab" (keypress)="currentTab = tab">{{ tab.title }}</button>
+  }
+</div>
+<div class="mt-4" [innerHTML]="currentTab.text"></div>
