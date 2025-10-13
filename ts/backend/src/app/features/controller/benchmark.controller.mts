@@ -40,6 +40,9 @@ export class BenchmarkController extends Controller {
    *                            type: string
    *                          description:
    *                            type: string
+   *                          contents:
+   *                            type: object
+   *                            description: Additional textual contents for page.
    *                          field_ids:
    *                            type: array
    *                            items:
@@ -102,6 +105,9 @@ export class BenchmarkController extends Controller {
    *                            type: string
    *                          description:
    *                            type: string
+   *                          contents:
+   *                            type: object
+   *                            description: Additional textual contents for page.
    *                          field_ids:
    *                            type: array
    *                            items:

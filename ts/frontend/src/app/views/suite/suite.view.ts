@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs'
 import { CampaignOverviewComponent } from '../../components/campaign-overview/campaign-overview.component'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { SuiteOverviewComponent } from '../../components/suite-overview/suite-overview.component'
+import { TabsComponent } from '../../components/tabs/tabs.component'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
 import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.pipe'
@@ -19,6 +20,7 @@ import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.
     SectionComponent,
     CampaignOverviewComponent,
     SuiteOverviewComponent,
+    TabsComponent,
   ],
   templateUrl: './suite.view.html',
   styleUrl: './suite.view.scss',

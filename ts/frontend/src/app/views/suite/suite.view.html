@@ -4,6 +4,14 @@
   <lib-section class="w-full">
     <div [innerHTML]="suite?.description"></div>
   </lib-section>
+
+  @if (suite?.contents?.introduction) {
+    <div class="w-full mt-16" [innerHTML]="suite?.contents?.introduction"></div>
+  }
+
+  @if (suite?.contents?.tabs) {
+    <app-tabs class="w-full mt-16" [tabs]="suite!.contents!.tabs!"></app-tabs>
+  }
 </lib-content>
 
 @if (suite?.setup === 'CAMPAIGN') {

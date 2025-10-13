@@ -1,5 +1,6 @@
 // putting everything in one file to minimize cyclic imports
 
+import { Tab } from '../frontend/src/app/components/tabs/tabs.component'
 import { ResourceDir, ResourceId } from './utility-types'
 
 export interface Resource<Dir extends ResourceDir = ResourceDir> {
@@ -48,6 +49,11 @@ export interface Submission_old extends Resource<'/submissions/'> {
   tests: ResourceId[]
 }
 
+export interface PageContents {
+  introduction?: string
+  tabs?: Tab[]
+}
+
 // TODO: merge/reduce number of interfaces, find a way to use same interface for transport as for computation
 
 export type AggFunction = 'SUM' | 'NANSUM' | 'MEAN' | 'NANMEAN' | 'MEADIAN' | 'NANMEDIAN'
@@ -91,6 +97,7 @@ export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmark
   id: string
   name: string
   description: string
+  contents: PageContents
   field_ids: string[]
   campaign_field_ids: string[]
   test_ids: string[]
@@ -103,6 +110,7 @@ export interface SuiteDefinitionRow extends Resource<'/definitions/suites/'> {
   id: string
   name: string
   description: string
+  contents: PageContents
   setup: SuiteSetup
   benchmark_ids: string[]
 }
