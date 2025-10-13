@@ -5,6 +5,7 @@
   "scripts": {
     "start.fab": "CUSTOMIZATION=fab npm run private:start",
     "start.ai4realnet": "CUSTOMIZATION=ai4realnet npm run private:start",
+    "start.realworldbaselines": "CUSTOMIZATION=realworldbaselines npm run private:start",
     "build": "npm run private:swagger:prod && npm run private:build && mkdir -p ../../dist/backend/config && mkdir -p ../../dist/backend/public && mkdir -p ../../dist/backend/app && cp ../../out-tsc/backend/main.min.mjs ../../dist/backend/app",
     "check": "npm run private:swagger:prod && tsc -p tsconfig.check.json && tsc -p test/integration/tsconfig.check.json && npx eslint",
     "test": "npm run private:swagger:dev && FAB_VERSION=999 vitest run --coverage",
