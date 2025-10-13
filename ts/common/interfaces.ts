@@ -110,7 +110,7 @@ export interface SuiteDefinitionRow extends Resource<'/definitions/suites/'> {
   id: string
   name: string
   description: string
-  contents: PageContents
+  contents: PageContents | null
   setup: SuiteSetup
   benchmark_ids: string[]
 }
