@@ -56,13 +56,11 @@ export class MySubmissionsView implements OnInit {
             params: { submission_ids: submissions.map((s) => s.id).join(',') },
           })
         ).body
-        // TODO: load only linked suites
-        // see: https://github.com/flatland-association/flatland-benchmarks/issues/410
-        // TODO: load via resource service
-        // see: https://github.com/flatland-association/flatland-benchmarks/issues/395
-        const suites = (await this.apiService.get('/definitions/suites'))?.body
         const benchmarks = await this.resourceService.loadGrouped('/definitions/benchmarks/:benchmark_ids', {
           params: { benchmark_ids: submissions?.map((s) => s.benchmark_id) ?? [] },
+        })
+        const suites = await this.resourceService.loadGrouped('/definitions/suites/:suite_ids', {
+          params: { suite_ids: benchmarks?.filter((b) => !!b.suite_id).map((b) => b.suite_id!) ?? [] },
         })
         await this.resourceService.load('/definitions/fields/:field_ids', {
           params: { field_ids: benchmarks?.flatMap((b) => b.field_ids) ?? [] },
@@ -71,7 +69,7 @@ export class MySubmissionsView implements OnInit {
           submissions?.map(async (submission) => {
             const score = scores?.find((s) => s?.submission_id === submission.id)
             const benchmark = benchmarks?.find((b) => b.id === submission.benchmark_id)
-            const suite = benchmark?.id ? suites?.find((s) => s.benchmark_ids.includes(benchmark.id)) : undefined
+            const suite = suites?.find((s) => s.id === benchmark?.suite_id)
             const fields = await this.resourceService.load('/definitions/fields/:field_ids', {
               params: { field_ids: benchmark?.field_ids ?? [] },
             })
