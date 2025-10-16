@@ -52,6 +52,7 @@ export interface Submission_old extends Resource<'/submissions/'> {
 export interface PageContents {
   introduction?: string
   tabs?: Tab[]
+  cta?: string
 }
 
 // TODO: merge/reduce number of interfaces, find a way to use same interface for transport as for computation

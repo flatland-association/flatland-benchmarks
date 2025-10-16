@@ -1,7 +1,7 @@
 INSERT INTO benchmark_definitions
-  (id, name, description)
+  (id, name, description, contents)
 VALUES
-  ('2c9f9d3b-e9c0-4c81-9f09-98ff585ce4c0', 'Warm-up round', 'The warm-up round runs from November 10th, 2025 - November 28th, 2025');
+  ('2c9f9d3b-e9c0-4c81-9f09-98ff585ce4c0', 'Warm-up round', 'The warm-up round runs from November 10th, 2025 - November 28th, 2025', '{"cta":"Are you up for the challenge? Make your first submission now."}');
 
 INSERT INTO suites
   (id, setup, name, description, contents, benchmark_ids)
