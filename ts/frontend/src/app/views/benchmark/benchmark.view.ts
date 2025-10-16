@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { BenchmarkDefinitionRow, SuiteDefinitionRow } from '@common/interfaces'
-import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
+import { ContentComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
 import { BenchmarkOverviewComponent } from '../../components/benchmark-overview/benchmark-overview.component'
 import { CampaignItemOverviewComponent } from '../../components/campaign-item-overview/campaign-item-overview.component'
@@ -16,7 +16,6 @@ import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.
     RouterModule,
     ContentComponent,
     SiteHeadingComponent,
-    SectionComponent,
     PublicResourcePipe,
     CampaignItemOverviewComponent,
     BenchmarkOverviewComponent,
