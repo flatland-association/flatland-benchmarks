@@ -1,9 +1,7 @@
 <lib-content>
   <app-site-heading class="bp-8 flex w-full" [title]="suite?.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
 
-  <lib-section class="w-full">
-    <div [innerHTML]="suite?.description"></div>
-  </lib-section>
+  <div class="w-full" [innerHTML]="suite?.description"></div>
 
   @if (suite?.contents?.introduction) {
     <div class="w-full mt-16" [innerHTML]="suite?.contents?.introduction"></div>
