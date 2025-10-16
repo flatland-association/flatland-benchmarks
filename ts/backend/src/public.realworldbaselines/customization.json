@@ -3,6 +3,7 @@
   "content": {
     "title": "Real-World Baselines Challenge",
     "home": {
+      "title": "AI4REALNET Railway Competition",
       "lead": "It's Friday evening, you've just come out of your last meeting and the only thing you want to do is go home. You catch the next train a minute before departure and sit down, exhausted but also relieved. Minutes pass, however, the train still hasn't moved, and you wonder if you're ever going to get home. You think about how everyone is using ChatGPT nowadays but railway companies still don't have AI to help them prevent delays. <i>Someone needs to get behind this...</i>",
       "benchmarksHeading": "🚂 Welcome to the Flatland Real-World Baselines Challenge 🚂"
     }
