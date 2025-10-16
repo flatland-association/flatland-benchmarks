@@ -94,6 +94,7 @@ export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmark
   field_ids: string[]
   campaign_field_ids: string[]
   test_ids: string[]
+  suite_id: string | null
 }
 
 export type SuiteSetup = 'DEFAULT' | 'COMPETITION' | 'CAMPAIGN'

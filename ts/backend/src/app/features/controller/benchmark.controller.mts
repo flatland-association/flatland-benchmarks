@@ -50,11 +50,15 @@ export class BenchmarkController extends Controller {
    *                            items:
    *                              type: string
    *                              format: uuid
+   *                          suite_id:
+   *                            type: string
+   *                            format: uuid
    */
   getBenchmarks: GetHandler<'/definitions/benchmarks'> = async (req, res) => {
     const sql = SqlService.getInstance()
     const rows = await sql.query<StripDir<BenchmarkDefinitionRow>>`
-      SELECT id, name, description, field_ids, campaign_field_ids, test_ids FROM benchmark_definitions
+      SELECT benchmark_definitions.id, benchmark_definitions.name, benchmark_definitions.description, benchmark_definitions.field_ids, benchmark_definitions.campaign_field_ids, benchmark_definitions.test_ids, suites.id as suite_id FROM benchmark_definitions
+      LEFT JOIN suites ON benchmark_definitions.id=ANY(suites.benchmark_ids)
       ORDER BY name ASC
     `
     const resources = appendDir('/definitions/benchmarks/', rows)
@@ -108,14 +112,18 @@ export class BenchmarkController extends Controller {
    *                            items:
    *                              type: string
    *                              format: uuid
+   *                          suite_id:
+   *                            type: string
+   *                            format: uuid
    */
   getBenchmarkById: GetHandler<'/definitions/benchmarks/:benchmark_ids'> = async (req, res) => {
     const ids = req.params.benchmark_ids.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const rows = await sql.query<StripDir<BenchmarkDefinitionRow>>`
-      SELECT id, name, description, field_ids, campaign_field_ids, test_ids FROM benchmark_definitions
-      WHERE id=ANY(${ids})
+      SELECT benchmark_definitions.id, benchmark_definitions.name, benchmark_definitions.description, benchmark_definitions.field_ids, benchmark_definitions.campaign_field_ids, benchmark_definitions.test_ids, suites.id as suite_id FROM benchmark_definitions
+      LEFT JOIN suites ON benchmark_definitions.id=ANY(suites.benchmark_ids)
+      WHERE benchmark_definitions.id=ANY(${ids})
       LIMIT ${ids.length}
     `
     const benchmarks = appendDir('/definitions/benchmarks/', rows)
