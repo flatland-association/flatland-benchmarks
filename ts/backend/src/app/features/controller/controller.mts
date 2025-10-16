@@ -63,10 +63,36 @@ export class Controller {
   respond<T>(req: Request, res: Response<ApiResponse<T>>, body: T, dbg?: unknown, status = 200) {
     res.status(status)
     res.json({
-      body: body,
+      body,
       dbg,
     })
     logger.debug(`${req.method} ${req.originalUrl}: Response ${status}`, body)
+  }
+
+  /**
+   * Send a well-typed JSON error response with optional debug info.
+   * @param req Express request.
+   * @param res Express response.
+   * @param error Error object.
+   * @param body Response body. Type is derived from endpoint registry.
+   * @param dbg Additional debug info.
+   * @see {@link ApiResponse}
+   */
+  respondError<T>(
+    req: Request,
+    res: Response<ApiResponse<T>>,
+    error: ApiResponse<T>['error'],
+    body?: T,
+    dbg?: unknown,
+    status = 500,
+  ) {
+    res.status(status)
+    res.json({
+      body,
+      error,
+      dbg,
+    })
+    logger.debug(`${req.method} ${req.originalUrl}: Error response ${status}`, body)
   }
 
   /**
@@ -75,12 +101,20 @@ export class Controller {
    * @param req Express request.
    * @param res Express response.
    * @param error Error object.
+   * @param body Response body. Type is derived from endpoint registry.
    * @param dbg Additional debug info.
    * @see {@link ApiResponse}
    */
-  requestError<T>(req: Request, res: Response<ApiResponse<T>>, error: ApiResponse<T>['error'], dbg?: unknown) {
+  requestError<T>(
+    req: Request,
+    res: Response<ApiResponse<T>>,
+    error: ApiResponse<T>['error'],
+    body?: T,
+    dbg?: unknown,
+  ) {
     res.status(400)
     res.json({
+      body,
       error,
       dbg,
     })
@@ -93,12 +127,20 @@ export class Controller {
    * @param req Express request.
    * @param res Express response.
    * @param error Error object.
+   * @param body Response body. Type is derived from endpoint registry.
    * @param dbg Additional debug info.
    * @see {@link ApiResponse}
    */
-  unauthorizedError<T>(req: Request, res: Response<ApiResponse<T>>, error: ApiResponse<T>['error'], dbg?: unknown) {
+  unauthorizedError<T>(
+    req: Request,
+    res: Response<ApiResponse<T>>,
+    error: ApiResponse<T>['error'],
+    body?: T,
+    dbg?: unknown,
+  ) {
     res.status(401)
     res.json({
+      body,
       error,
       dbg,
     })
@@ -111,12 +153,14 @@ export class Controller {
    * @param req Express request.
    * @param res Express response.
    * @param error Error object.
+   * @param body Response body. Type is derived from endpoint registry.
    * @param dbg Additional debug info.
    * @see {@link ApiResponse}
    */
-  serverError<T>(req: Request, res: Response<ApiResponse<T>>, error: ApiResponse<T>['error'], dbg?: unknown) {
+  serverError<T>(req: Request, res: Response<ApiResponse<T>>, error: ApiResponse<T>['error'], body?: T, dbg?: unknown) {
     res.status(500)
     res.json({
+      body,
       error,
       dbg,
     })

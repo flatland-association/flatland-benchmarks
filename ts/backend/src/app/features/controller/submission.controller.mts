@@ -104,7 +104,7 @@ export class SubmissionController extends Controller {
       `
     const id: string | undefined = idRow.at(0)?.['id']
     if (!id) {
-      this.serverError(req, res, { text: `could not insert submission` }, { id })
+      this.serverError(req, res, { text: `could not insert submission` }, undefined, { id })
       return
     }
     // get tests
