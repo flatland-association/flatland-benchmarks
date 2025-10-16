@@ -1,9 +1,7 @@
 <lib-content>
   <app-site-heading class="bp-8 flex w-full" [title]="benchmark?.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
 
-  <lib-section class="w-full">
-    <div [innerHTML]="benchmark?.description"></div>
-  </lib-section>
+  <div class="w-full" [innerHTML]="benchmark?.description"></div>
 </lib-content>
 
 @if (suite?.setup === 'CAMPAIGN') {
