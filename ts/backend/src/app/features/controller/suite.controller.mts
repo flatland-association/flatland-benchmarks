@@ -41,6 +41,9 @@ export class SuiteController extends Controller {
    *                            type: string
    *                          description:
    *                            type: string
+   *                          contents:
+   *                            type: object
+   *                            description: Additional textual contents for page.
    *                          setup:
    *                            type: string
    *                          benchmark_ids:
@@ -97,6 +100,9 @@ export class SuiteController extends Controller {
    *                            type: string
    *                          description:
    *                            type: string
+   *                          contents:
+   *                            type: object
+   *                            description: Additional textual contents for page.
    *                          setup:
    *                            type: string
    *                          benchmark_ids:
