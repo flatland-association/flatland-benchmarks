@@ -43,7 +43,7 @@ describe.sequential('Controller', () => {
       controller.unauthorizedError(req, res, { text: 'auth error' })
     })
     controller.attachGet('/test-server-error' as '/mirror', (req, res) => {
-      controller.serverError(req, res, { text: 'server error' })
+      controller.respondError(req, res, { text: 'server error' })
     })
     // test fallback error handler with exception
     controller.attachGet('/test-catch' as '/mirror', (_req, _res) => {

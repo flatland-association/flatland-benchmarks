@@ -51,7 +51,7 @@ export class DebugController extends Controller {
         this.respond(req, res, iam, jwtp)
       })
       .catch((err) => {
-        this.serverError(req, res, err)
+        this.respondError(req, res, err)
       })
   }
 }

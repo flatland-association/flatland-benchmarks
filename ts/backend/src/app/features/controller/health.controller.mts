@@ -79,12 +79,7 @@ export class HealthController extends Controller {
     if (payload['status'] == 'UP') {
       this.respond(req, res, payload)
     } else {
-      // TODO: https://github.com/flatland-association/flatland-benchmarks/issues/264
-      res.status(503)
-      res.json({
-        error: { text: 'Service unavailable' },
-        body: payload,
-      })
+      this.respondError(req, res, { text: 'Service unavailable' }, payload, undefined, 503)
     }
   }
 }
