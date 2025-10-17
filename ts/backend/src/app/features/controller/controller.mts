@@ -58,6 +58,7 @@ export class Controller {
    * @param res Express response.
    * @param body Response body. Type is derived from endpoint registry.
    * @param dbg Additional debug info.
+   * @param status HTTP status code (default 200).
    * @see {@link ApiResponse}
    */
   respond<T>(req: Request, res: Response<ApiResponse<T>>, body: T, dbg?: unknown, status = 200) {
@@ -76,6 +77,7 @@ export class Controller {
    * @param error Error object.
    * @param body Response body. Type is derived from endpoint registry.
    * @param dbg Additional debug info.
+   * @param status HTTP status code (default 500).
    * @see {@link ApiResponse}
    */
   respondError<T>(
@@ -92,12 +94,11 @@ export class Controller {
       error,
       dbg,
     })
-    logger.debug(`${req.method} ${req.originalUrl}: Error response ${status}`, body)
+    logger.debug(`${req.method} ${req.originalUrl}: Error response ${status}`, error, body)
   }
 
   /**
-   * Send a well-typed error with code 400 (Bad request), additional error text
-   * and optional debug info.
+   * Alias of {@link respondError} with status code 400 (Bad request).
    * @param req Express request.
    * @param res Express response.
    * @param error Error object.
@@ -112,13 +113,7 @@ export class Controller {
     body?: T,
     dbg?: unknown,
   ) {
-    res.status(400)
-    res.json({
-      body,
-      error,
-      dbg,
-    })
-    logger.warn(`${req.method} ${req.originalUrl}: Bad request 400`, error)
+    this.respondError(req, res, error, body, dbg, 400)
   }
 
   /**
@@ -145,26 +140,6 @@ export class Controller {
       dbg,
     })
     logger.warn(`${req.method} ${req.originalUrl}: Unauthorized 401`, error)
-  }
-
-  /**
-   * Send a well-typed error with code 500 (Internal server error), additional
-   * error text and optional debug info.
-   * @param req Express request.
-   * @param res Express response.
-   * @param error Error object.
-   * @param body Response body. Type is derived from endpoint registry.
-   * @param dbg Additional debug info.
-   * @see {@link ApiResponse}
-   */
-  serverError<T>(req: Request, res: Response<ApiResponse<T>>, error: ApiResponse<T>['error'], body?: T, dbg?: unknown) {
-    res.status(500)
-    res.json({
-      body,
-      error,
-      dbg,
-    })
-    logger.error(`${req.method} ${req.originalUrl}: Internal server error 500`, error)
   }
 
   // Attach handler wrapper, serves two purposes:

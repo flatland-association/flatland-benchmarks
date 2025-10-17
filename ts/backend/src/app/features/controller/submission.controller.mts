@@ -104,7 +104,7 @@ export class SubmissionController extends Controller {
       `
     const id: string | undefined = idRow.at(0)?.['id']
     if (!id) {
-      this.serverError(req, res, { text: `could not insert submission` }, undefined, { id })
+      this.respondError(req, res, { text: `could not insert submission` }, undefined, { id })
       return
     }
     // get tests
@@ -134,7 +134,7 @@ export class SubmissionController extends Controller {
         this.respond(req, res, { id }, payload)
       } catch (error) {
         // request fails if sendTask fails as not ready
-        this.serverError(req, res, { text: error as string })
+        this.respondError(req, res, { text: error as string })
       }
     } else {
       logger.info('All tests are offline loop, no celery task sent.')
