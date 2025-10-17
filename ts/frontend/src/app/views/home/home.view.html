@@ -1,4 +1,7 @@
 <lib-content>
+  @if (customization?.content?.home?.title) {
+    <h2 class="text-center text-2xl font-bold text-neutral-500 pb-8">{{ customization?.content?.home?.title }}</h2>
+  }
   <lib-section>
     <p [innerHTML]="leadHtml">{{ customization?.content?.home?.lead }}</p>
   </lib-section>

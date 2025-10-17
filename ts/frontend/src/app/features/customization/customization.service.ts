@@ -14,6 +14,7 @@ export interface Customization {
     title: string
     logo?: string
     home: {
+      title: string
       lead: string
       benchmarksHeading: string
     }

@@ -370,7 +370,13 @@ def test_definitions_benchmarks_get():
   print(token)
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
   benchmarks = fab.definitions_benchmarks_get()
-  assert len(benchmarks.body) == 7 + 12
+
+  #  1 from V3.1__new_demo_data.sql
+  #  5 from V4.1__ai4realnet_example.sql
+  #  1 from V6.1__fab_example.sql
+  # 12 from V11.1__ai4realnet_example.sql
+  #  1 from V12.1__realworldbaselines_example.sql
+  assert len(benchmarks.body) == 1 + 5 + 1 + 12 + 1
 
   filtered_bodies = [body for body in benchmarks.body if body.id == uuid.UUID("255fb1e8-af57-45a0-97dc-ecc3e6721b4f")]
   assert len(filtered_bodies) == 1
