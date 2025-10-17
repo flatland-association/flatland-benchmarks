@@ -73,6 +73,17 @@ describe.sequential('Submission controller', () => {
     expect(submissionIds).not.toContain('06ad18b5-e697-4684-aa7b-76b5c82c4307')
   })
 
+  // data set in
+  // - ts\backend\src\migration\data\V4.1__ai4realnet_example.sql
+  test('should list submissions for benchmark', async () => {
+    const res = await controller.testGet('/submissions', {
+      query: { benchmark_ids: '1df5f920-ed2c-4873-957b-723b4b5d81b1' },
+    })
+    assertApiResponse(res)
+    const submissionIds = res.body.body.map((s) => s.id)
+    expect(submissionIds).toContain('a8bb32be-a596-4636-898d-7e1fe7c7492d')
+  })
+
   test('should list own unpublished submissions (user required)', async () => {
     const res = await controller.testGet('/submissions', { query: { unpublished_own: 'true' } }, testUserJwt)
     assertApiResponse(res)
@@ -109,5 +120,27 @@ describe.sequential('Submission controller', () => {
     )
     assertApiResponse(res)
     expect(res.body.body).toHaveLength(1)
+  })
+
+  test('should allow publishing submissions', async () => {
+    const res = await controller.testPatch(
+      '/submissions/:submission_ids',
+      {
+        params: { submission_ids: submissionUuid },
+      },
+      testUserJwt,
+    )
+    assertApiResponse(res)
+    expect(res.body.body).toHaveLength(1)
+  })
+
+  // this only works after publishing the submission
+  test('should list submissions by submitter', async () => {
+    const res = await controller.testGet('/submissions', {
+      query: { submitted_by: testUserJwt.sub },
+    })
+    assertApiResponse(res)
+    const submissionIds = res.body.body.map((s) => s.id)
+    expect(submissionIds).toContain(submissionUuid)
   })
 })

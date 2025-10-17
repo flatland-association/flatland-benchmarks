@@ -244,6 +244,11 @@ jobs:
           openapi-generator-cli validate -i ts/backend/src/swagger/swagger.json  2> fail.txt
           cat fail.txt
           exit $(cat fail.txt | wc -l)
+      - name: Code Coverage Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        with:
+          filename: ts/backend/test/coverage/cobertura-coverage.xml
+          format: markdown
   
   test-e2e:
     runs-on: ubuntu-latest
