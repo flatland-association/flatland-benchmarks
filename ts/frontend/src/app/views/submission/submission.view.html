@@ -2,9 +2,7 @@
   <lib-content>
     <app-site-heading class="bp-8 flex w-full" [title]="submission.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
 
-    <lib-section class="w-full">
-      <div [innerHTML]="submission.description"></div>
-    </lib-section>
+    <div class="w-full" [innerHTML]="submission.description"></div>
   </lib-content>
 
   <lib-content>

@@ -1,7 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core'
 import { ActivatedRoute, RouterModule } from '@angular/router'
 import { BenchmarkDefinitionRow, SuiteDefinitionRow, TestDefinitionRow } from '@common/interfaces'
-import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
+import { ContentComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { TestOverviewComponent } from '../../components/test-overview/test-overview.component'
@@ -11,14 +11,7 @@ import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.
 
 @Component({
   selector: 'view-test',
-  imports: [
-    ContentComponent,
-    RouterModule,
-    SiteHeadingComponent,
-    SectionComponent,
-    PublicResourcePipe,
-    TestOverviewComponent,
-  ],
+  imports: [ContentComponent, RouterModule, SiteHeadingComponent, PublicResourcePipe, TestOverviewComponent],
   templateUrl: './test.view.html',
   styleUrl: './test.view.scss',
 })

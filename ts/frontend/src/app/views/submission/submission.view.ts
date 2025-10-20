@@ -10,7 +10,7 @@ import {
   TestDefinitionRow,
 } from '@common/interfaces'
 import { isSubmissionCompletelyScored } from '@common/scoring-utils'
-import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
+import { ContentComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { SubmissionResultsComponent } from '../../components/submission-results/submission-results.component'
@@ -26,7 +26,6 @@ import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.
     CommonModule,
     FormsModule,
     ContentComponent,
-    SectionComponent,
     SiteHeadingComponent,
     PublicResourcePipe,
     SubmissionResultsComponent,
