@@ -15,4 +15,4 @@ USER runner
 
 RUN sudo ls /tmp
 
-RUN python -m pip install flatland-rl
+RUN python -m pip install git+https://github.com/flatland-association/flatland-benchmarks.git@feature/seeding
