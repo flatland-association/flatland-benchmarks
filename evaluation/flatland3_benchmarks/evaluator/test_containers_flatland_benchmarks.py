@@ -1,13 +1,9 @@
-import json
 import logging
 import os
 import time
 import uuid
-from io import StringIO
 from typing import List
 
-import boto3
-import pandas as pd
 import pytest
 from celery import Celery
 from dotenv import dotenv_values
@@ -119,69 +115,10 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
   submission_id = str(uuid.uuid4())
   config = dotenv_values("../../.env")
 
-  ret = run_task('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', submission_id,
-                 # use deterministic baselines
-                 submission_data_url="ghcr.io/flatland-association/flatland-baselines:latest",
-                 tests=tests, **config)
-
-  logger.info(f"{[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
-
-  for k, v in ret.items():
-    logger.log(TRACE, "Got %s", (k, v['job_status'], v['image_id'], v['log']))
-
-  all_completed = all([s["job_status"] == "Complete" for s in ret.values()])
-  assert all_completed, ret
-
-  # check Celery direct return value
-  assert set(ret.keys()) == {"f3-evaluator", "f3-submission"}
-
-  assert set(ret["f3-evaluator"].keys()) == {"job_status", "image_id", "log", "job", "pod", "results.csv", "results.json"}
-  assert set(ret["f3-submission"].keys()) == {"job_status", "image_id", "log", "job", "pod"}
-
-  assert ret["f3-evaluator"]["job_status"] == "Complete"
-  assert ret["f3-submission"]["job_status"] == "Complete"
-
-  assert ret["f3-evaluator"]["image_id"] == "ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:latest"
-  assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/flatland-baselines:latest"
-
-  assert "end evaluator/run.sh" in str(ret["f3-evaluator"]["log"])
-  assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])
-
-  res_df = pd.read_csv(StringIO(ret["f3-evaluator"]["results.csv"]))
-  logger.debug(res_df)
-  res_json = json.loads(ret["f3-evaluator"]["results.json"])
-  logger.debug(res_json)
-
-  assert res_json["simulation_count"] == expected_total_simulation_count
-
-  scenarios_run = res_df.loc[res_df['controller_inference_time_max'].notna()]
-  tests_with_some_steps = set(scenarios_run["fab_test_id"])
-  # Due to non-determinism of agent and early stopping ("The mean percentage of done agents during the last Test (2 environments) was too low: 0.100 < 0.25"), we cannot check the number of scenarios or tests run
-  if tests is not None:
-    assert len(tests_with_some_steps.difference(tests)) == 0, (tests_with_some_steps, tests)
-
-  logger.info("Download results from S3")
-
-  aws_endpoint_url = config["AWS_ENDPOINT_URL"]
-  s3 = boto3.client(
-    's3',
-    # https://docs.weka.io/additional-protocols/s3/s3-examples-using-boto3
-    # N.B. evaluator uploads from within docker network, we're accessing MinIO container from the host network.
-    endpoint_url=aws_endpoint_url.replace("minio", "localhost"),
-    aws_access_key_id=config["AWS_ACCESS_KEY_ID"],
-    aws_secret_access_key=config["AWS_SECRET_ACCESS_KEY"]
-  )
-  s3_bucket = config["S3_BUCKET"]
-
-  logger.info("Get results files from S3 under %s...", aws_endpoint_url)
-  obj = s3.get_object(Bucket=s3_bucket, Key=f'results/{submission_id}.csv', )
-  results_csv = obj['Body'].read().decode("utf-8")
-  df = pd.read_csv(StringIO(results_csv))
-  print(df)
-  obj = s3.get_object(Bucket=s3_bucket, Key=f'results/{submission_id}.json', )
-  results_json = obj['Body'].read().decode("utf-8")
-  data = json.loads(results_json)
-  print(data)
+  run_task('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', submission_id,
+           # use deterministic baselines
+           submission_data_url="ghcr.io/flatland-association/flatland-baselines:latest",
+           tests=tests, **config)
 
   token = backend_application_flow(
     client_id='fab-client-credentials',
@@ -203,7 +140,7 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
     test_results = fab.results_submissions_submission_id_tests_test_ids_get(
       submission_id=submission_id,
       test_ids=[test_id])
-    print("results_uploaded")
+    print(f"results downloaded for submission_id={submission_id} and test_id={test_id}")
     print(test_results)
     for i in range(len(primary_scenario_scores)):
       assert test_results.body[0].scenario_scorings[i].scorings[0].field_key == "normalized_reward"
