@@ -1,6 +1,6 @@
-import { ApiGetEndpoints, ApiPostEndpoints } from '@common/api-endpoints'
+import { ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoints } from '@common/api-endpoints'
 import { ApiResponse } from '@common/api-response'
-import { ApiGetOptions, ApiPostOptions } from '@common/api-types'
+import { ApiGetOptions, ApiPatchOptions, ApiPostOptions } from '@common/api-types'
 import { interpolateEndpoint } from '@common/endpoint-utils'
 import { BanEmpty } from '@common/utility-types'
 import type { Express } from 'express'
@@ -138,6 +138,27 @@ export class ControllerTestAdapter {
         this.request
           // @ts-expect-error params
           .post(this.buildEndpoint(endpoint, options?.params))
+          // @ts-expect-error body
+          .send((options.body as object) ?? undefined)
+          .set('Content-Type', 'application/json')
+          .set('Accept', 'application/json')
+      )
+    }, jwt)
+  }
+
+  /**
+   * Mocks a PATCH request.
+   */
+  async testPatch<E extends keyof ApiPatchEndpoints>(
+    endpoint: E,
+    options: BanEmpty<ApiPatchOptions<E>>,
+    jwt: JwtPayload | null = null,
+  ): Promise<TestResponse<ApiPatchEndpoints[E]['response']>> {
+    return this.withMockedAuth(() => {
+      return (
+        this.request
+          // @ts-expect-error params
+          .patch(this.buildEndpoint(endpoint, options?.params))
           // @ts-expect-error body
           .send((options.body as object) ?? undefined)
           .set('Content-Type', 'application/json')
