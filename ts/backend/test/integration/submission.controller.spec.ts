@@ -74,7 +74,7 @@ describe.sequential('Submission controller', () => {
   })
 
   // data set in
-  // - ts\backend\src\migration\data\V4.1__ai4realnet_example.sql
+  // - ts/backend/src/migration/data/V4.1__ai4realnet_example.sql
   test('should list submissions for benchmark', async () => {
     const res = await controller.testGet('/submissions', {
       query: { benchmark_ids: '1df5f920-ed2c-4873-957b-723b4b5d81b1' },
