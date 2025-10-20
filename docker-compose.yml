@@ -172,69 +172,6 @@ services:
     networks:
       - flatland-benchmarks
 
-  flatland3-benchmarks-orchestrator:
-    # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
-    # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
-    entrypoint: [ "/bin/bash","-c" ]
-    command:
-      - |
-        set -euxo pipefail
-        pwd
-        python -m pip install -r /app/fab-clientlib/requirements.txt
-        python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
-    build:
-      # install sudo for DinD
-      dockerfile: docker/flatland3_benchmarks/orchestrator/Dockerfile
-    depends_on:
-      rabbit:
-        condition: service_healthy
-      minio_setup:
-        condition: service_completed_successfully
-    volumes:
-      - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
-      - ./docker/flatland3_benchmarks/orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
-      - ./evaluation/flatland3_benchmarks/orchestrator/orchestrator_common.py:/app/orchestrator_common.py
-      - ./fab-clientlib/:/app/fab-clientlib
-      - ./docker/rabbitmq/certs:/cert_rabbitmq
-    environment:
-      # Celery configuration
-      - BENCHMARK_ID=f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
-      - TEST_IDS=${TEST_IDS}
-      - PYTHONPATH=/app/:/app/fab-clientlib
-      - BROKER_URL=amqps://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5671//
-      - BACKEND_URL=rpc://
-      - RABBITMQ_CA_CERTS=/cert_rabbitmq/ca_certificate.pem
-      - RABBITMQ_KEYFILE=/cert_rabbitmq/client_localhost_key.pem
-      - RABBITMQ_CERTFILE=/cert_rabbitmq/client_localhost_certificate.pem
-
-      # evaluator configuration
-      - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
-      - S3_BUCKET=fab-demo-results
-      # for backend to S3 communication, use internal docker hostname
-      - AWS_ENDPOINT_URL=http://minio:${MINIO_PORT}
-      - AWS_ACCESS_KEY_ID=${MINIO_ROOT_USER}
-      - AWS_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD}
-      - S3_UPLOAD_PATH_TEMPLATE=${S3_UPLOAD_PATH_TEMPLATE}
-      - S3_UPLOAD_WITH_SUBMISSION_ID=true
-      - S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=${S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}
-      - DOCKERCOMPOSE_HOST_DIRECTORY=${PWD}
-
-      # configuration for fab-clientlib:
-      - FAB_API_URL=http://fab-backend:8000
-      - CLIENT_ID=fab-client-credentials
-      - CLIENT_SECRET=top-secret
-      # use Docker hostname as called from orchestrator run within Docker container:
-      - TOKEN_URL=http://keycloak:8081/realms/flatland/protocol/openid-connect/token
-      # we use http in fab-backend:
-      - OAUTHLIB_INSECURE_TRANSPORT=1
-    logging:
-      options:
-        max-size: "20m"
-        max-file: "5"
-    healthcheck:
-      test: celery -A orchestrator inspect ping
-    networks:
-      - flatland-benchmarks
 
   fab-backend:
     profiles: [ full, full-wait ]
@@ -380,10 +317,12 @@ services:
       - BACKEND_URL=rpc://
       # configuration for fab-clientlib:
       - FAB_API_URL=http://fab-backend:8000
-      - DATA_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-data
       - CLIENT_SECRET=top-secret
+      # use Docker hostname as called from orchestrator run within Docker container:
       - TOKEN_URL=http://keycloak:8081/realms/flatland/protocol/openid-connect/token
+      # we use http in fab-backend:
       - OAUTHLIB_INSECURE_TRANSPORT=1
+      # data volumes for scenarios (input to submission image) and trajectories (output to submission image)
       - DATA_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-data
       - SCENARIOS_VOLUME=${COMPOSE_PROJECT_NAME}_orchestrator-scenarios
     logging:
@@ -392,6 +331,99 @@ services:
         max-file: "5"
     healthcheck:
       test: cd ai4realnet_orchestrators && python -m celery -A ai4realnet_orchestrators.railway.orchestrator inspect ping
+    networks:
+      - flatland-benchmarks
+
+  flatland3-benchmarks-orchestrator-setup:
+    image: alpine
+    volumes:
+      - flatland3-benchmarks-scenarios:/scenarios
+      - flatland3-benchmarks-data:/vol
+    entrypoint: [ "/bin/sh","-c" ]
+    command:
+      - |
+        set -euxo pipefail
+
+        whoami
+        chmod a+rwx -R /vol
+
+        chmod a+rwx -R /scenarios
+        wget "https://data.flatland.cloud/benchmarks/Flatland3/debug-environments.zip" -O debug-environments.zip -O debug-environments.zip
+        mkdir -p /scenarios
+        unzip debug-environments.zip -o -d /scenarios
+        mv -f /scenarios/debug-environments/ /scenarios/
+        find /scenarios
+
+  flatland3-benchmarks-orchestrator:
+    # https://docs.celeryq.dev/en/stable/reference/cli.html#celery-worker
+    # Use --concurrency 2 to specify worker pool size: https://docs.celeryq.dev/en/stable/userguide/workers.html#concurrency
+    entrypoint: [ "/bin/bash","-c" ]
+    command:
+      - |
+        set -euxo pipefail
+        pwd
+        python -m pip install -r /app/fab-clientlib/requirements.txt
+        python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
+    build:
+      # install sudo for DinD
+      dockerfile: docker/flatland3_benchmarks/orchestrator/Dockerfile
+    depends_on:
+      rabbit:
+        condition: service_healthy
+      minio_setup:
+        condition: service_completed_successfully
+      flatland3-benchmarks-orchestrator-setup:
+        condition: service_completed_successfully
+    volumes:
+      - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
+      - ./docker/flatland3_benchmarks/orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
+      - ./evaluation/flatland3_benchmarks/orchestrator/orchestrator_common.py:/app/orchestrator_common.py
+      - ./evaluation/flatland3_benchmarks/orchestrator/s3_utils.py:/app/s3_utils.py
+      - ./fab-clientlib/:/app/fab-clientlib
+      - ./docker/rabbitmq/certs:/cert_rabbitmq
+      - flatland3-benchmarks-data:/app/data
+      - flatland3-benchmarks-scenarios:/app/scenarios
+    environment:
+      # Celery configuration
+      - BENCHMARK_ID=f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
+      - TEST_IDS=${TEST_IDS}
+      - PYTHONPATH=/app/:/app/fab-clientlib
+      - BROKER_URL=amqps://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5671//
+      - BACKEND_URL=rpc://
+      - RABBITMQ_CA_CERTS=/cert_rabbitmq/ca_certificate.pem
+      - RABBITMQ_KEYFILE=/cert_rabbitmq/client_localhost_key.pem
+      - RABBITMQ_CERTFILE=/cert_rabbitmq/client_localhost_certificate.pem
+
+      # evaluator configuration
+      - BENCHMARKING_NETWORK=${COMPOSE_PROJECT_NAME}_flatland-benchmarks
+      - S3_BUCKET=fab-demo-results
+      # for backend to S3 communication, use internal docker hostname
+      - AWS_ENDPOINT_URL=http://minio:${MINIO_PORT}
+      - AWS_ACCESS_KEY_ID=${MINIO_ROOT_USER}
+      - AWS_SECRET_ACCESS_KEY=${MINIO_ROOT_PASSWORD}
+      - S3_UPLOAD_PATH_TEMPLATE=${S3_UPLOAD_PATH_TEMPLATE}
+      - S3_UPLOAD_WITH_SUBMISSION_ID=true
+      - S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=${S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID}
+      - DOCKERCOMPOSE_HOST_DIRECTORY=${PWD}
+
+      # configuration for fab-clientlib:
+      - FAB_API_URL=http://fab-backend:8000
+      - CLIENT_ID=fab-client-credentials
+      - CLIENT_SECRET=top-secret
+      # use Docker hostname as called from orchestrator run within Docker container:
+      - TOKEN_URL=http://keycloak:8081/realms/flatland/protocol/openid-connect/token
+      # we use http in fab-backend:
+      - OAUTHLIB_INSECURE_TRANSPORT=1
+      # data volumes for scenarios (input to submission image) and trajectories (output to submission image)
+
+      - DATA_VOLUME=${COMPOSE_PROJECT_NAME}_flatland3-benchmarks-data
+      - SCENARIOS_VOLUME=${COMPOSE_PROJECT_NAME}_flatland3-benchmarks-scenarios
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    healthcheck:
+      test: celery -A orchestrator inspect ping
     networks:
       - flatland-benchmarks
 
@@ -421,3 +453,5 @@ volumes:
   flatland-benchmarks-keycloak:
   flatland-benchmarks-pgadmin:
   flatland-benchmarks-postgres:
+  flatland3-benchmarks-data:
+  flatland3-benchmarks-scenarios:

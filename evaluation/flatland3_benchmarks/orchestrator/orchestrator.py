@@ -24,7 +24,6 @@ S3_UPLOAD_PATH_TEMPLATE = os.getenv("S3_UPLOAD_PATH_TEMPLATE", None)
 S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID = os.getenv("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
 ACTIVE_DEADLINE_SECONDS = os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)
 SUPPORTED_CLIENT_VERSIONS_RANGE = os.environ.get("SUPPORTED_CLIENT_VERSION_RANGE", ">=4.2.0")
-TEST_RUNNER_EVALUATOR_IMAGE = os.environ.get("EVALUATOR_IMAGE", "ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:latest")
 BENCHMARK_ID = os.environ.get("BENCHMARK_ID", "flatland3-evaluation")
 
 app = Celery(
@@ -42,8 +41,8 @@ app = Celery(
 
 class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
 
-  def run_flatland(self, test_runner_evaluator_image, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key,
-                   s3_bucket, s3_upload_path_template, s3_upload_path_template_use_submission_id, **kwargs):
+  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket,
+                   s3_upload_path_template, s3_upload_path_template_use_submission_id, **kwargs):
 
     core_api = kwargs["core_api"]
     batch_api = kwargs["batch_api"]
@@ -167,14 +166,11 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
     raise RuntimeError("Misconfiguration: S3_UPLOAD_PATH_TEMPLATE must be set in the orchestrator")
   if not S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID:
     raise RuntimeError("Misconfiguration: S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID must be set to true in the orchestrator")
-  if not TEST_RUNNER_EVALUATOR_IMAGE:
-    raise RuntimeError("Misconfiguration: EVALUATOR_IMAGE must be set to true in the orchestrator")
 
   submission_id = self.request.id
   return K8sFlatlandBenchmarksOrchestrator(submission_id).orchestrator(
     submission_data_url=submission_data_url,
     tests=tests,
-    test_runner_evaluator_image=TEST_RUNNER_EVALUATOR_IMAGE,
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_access_key_id=AWS_ACCESS_KEY_ID,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,

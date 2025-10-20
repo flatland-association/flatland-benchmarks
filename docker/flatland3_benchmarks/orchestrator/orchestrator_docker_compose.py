@@ -2,18 +2,21 @@
 import asyncio
 import logging
 import os
+import shutil
 import ssl
 import subprocess
 from io import BytesIO, TextIOWrapper
+from pathlib import Path
 from typing import List, Optional
 
 from celery import Celery
 from celery.app.log import TaskFormatter
 from celery.signals import after_setup_task_logger
 from celery.utils.log import get_task_logger
-from yaml import safe_load
+from flatland.trajectories.trajectories import Trajectory
 
 from orchestrator_common import FlatlandBenchmarksOrchestrator
+from s3_utils import S3_BUCKET, AI4REALNET_S3_UPLOAD_ROOT, s3_utils
 
 logger = get_task_logger(__name__)
 
@@ -40,6 +43,15 @@ CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
 TOKEN_URL = os.environ.get("TOKEN_URL")
 BENCHMARK_ID = os.environ.get("BENCHMARK_ID")
 
+# required only for docker in docker
+DATA_VOLUME = os.environ.get("DATA_VOLUME")
+SCENARIOS_VOLUME = os.environ.get("SCENARIOS_VOLUME")
+SUDO = os.environ.get("SUDO", "true").lower() == "true"
+
+DATA_VOLUME_MOUNTPATH = os.environ.get("DATA_VOLUME_MOUNTPATH", "/app/data")
+SCENARIOS_VOLUME_MOUNTPATH = os.environ.get("SCENARIOS_VOLUME_MOUNTPATH", "/app/scenarios")
+RAILWAY_ORCHESTRATOR_RUN_LOCAL = os.environ.get("RAILWAY_ORCHESTRATOR_RUN_LOCAL", False)
+
 
 # https://celery.school/custom-celery-task-logger
 @after_setup_task_logger.connect
@@ -49,119 +61,136 @@ def setup_task_logger(logger, *args, **kwargs):
     handler.setFormatter(tf)
 
 
-TEST_IDS = safe_load(os.environ.get("TEST_IDS", "{}"))
-REVERSE_TEST_IDS = {v: k for k, v in TEST_IDS.items()}
+TEST_TO_SCENARIO_IDS = {
+  '4ecdb9f4-e2ff-41ff-9857-abe649c19c50': ['d99f4d35-aec5-41c1-a7b0-64f78b35d7ef', '04d618b8-84df-406b-b803-d516c7425537', ],
+  '5206f2ee-d0a9-405b-8da3-93625e169811': ['6f3ad83c-3312-4ab3-9740-cbce80feea91', 'f954a860-e963-431e-a09d-5b1040948f2d',
+                                           'f92bfe0c-5347-4d89-bc17-b6f86d514ef8']
+}
 
 
 class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
+  def exec(self, generate_policy_args: List[str], test_id: str, scenario_id: str, submission_id: str, subdir: str, submission_data_url: str):
+    # --data-dir must exist -- TODO fix in flatland-rl instead
+    args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "mkdir", "-p", f"/vol/{subdir}"]
+    exec_with_logging(args if not SUDO else ["sudo"] + args)
+    args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "chmod", "-R", "a=rwx",
+            f"/vol/{submission_id}/{test_id}/{scenario_id}"]
+    exec_with_logging(args if not SUDO else ["sudo"] + args)
 
-  def run_flatland(self, test_runner_evaluator_image, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key,
-                   s3_bucket, s3_upload_path_template, s3_upload_path_template_use_submission_id, **kwargs):
-    if test_runner_evaluator_image is None:
-      os.environ.get("TEST_RUNNER_EVALUATOR_IMAGE", None)
-    docker_image = test_runner_evaluator_image
-    logger.info(f"/ start task with submission_id={submission_id} with docker_image={docker_image} and submission_data_url={submission_data_url}")
-    assert BENCHMARKING_NETWORK is not None
-    assert docker_image is not None
-    loop = asyncio.get_event_loop()
-    evaluator_future = loop.create_future()
-    submission_future = loop.create_future()
-    evaluator_exec_args = [
-      "sudo", "docker", "run",
-      "--name", f"flatland3-evaluator-{submission_id}",
-      "-e", "redis_ip=redis",
-      "-e", f"AICROWD_SUBMISSION_ID={submission_id}",
-    ]
-    if aws_endpoint_url:
-      evaluator_exec_args.extend(["-e", f"AWS_ENDPOINT_URL={aws_endpoint_url}"])
-    if aws_access_key_id:
-      evaluator_exec_args.extend(["-e", f"AWS_ACCESS_KEY_ID={aws_access_key_id}"])
-    if aws_secret_access_key:
-      evaluator_exec_args.extend(["-e", f"AWS_SECRET_ACCESS_KEY={aws_secret_access_key}"])
-    if s3_bucket:
-      evaluator_exec_args.extend(["-e", f"S3_BUCKET={s3_bucket}"])
-    if s3_upload_path_template:
-      evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE={s3_upload_path_template}"])
-    if s3_upload_path_template_use_submission_id:
-      evaluator_exec_args.extend(["-e", f"S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID={s3_upload_path_template_use_submission_id}"])
-    if SUPPORTED_CLIENT_VERSION_RANGE is not None:
-      evaluator_exec_args.extend(["-e", f"SUPPORTED_CLIENT_VERSION_RANGE={SUPPORTED_CLIENT_VERSION_RANGE}"])
-    if tests is not None:
-      test_names = [REVERSE_TEST_IDS[test_id] for test_id in tests]
-      evaluator_exec_args.extend(["-e", f"TEST_ID_FILTER={','.join(test_names)}"])
-    evaluator_exec_args.extend(["-e", f"AICROWD_IS_GRADING={True}"])
-    evaluator_exec_args.extend([
-      "-v", f"{DOCKERCOMPOSE_HOST_DIRECTORY}/evaluation/flatland3_benchmarks/evaluator/debug-environments/:/tmp/environments",
-      "-e", "AICROWD_TESTS_FOLDER=/tmp/environments/",
-      "--network", BENCHMARKING_NETWORK,
-      docker_image,
-    ])
-    exec_with_logging(["sudo", "docker", "pull", docker_image])
-    exec_with_logging(["sudo", "docker", "pull", submission_data_url])
-    gathered_tasks = asyncio.gather(
-      run_async_and_catch_output(evaluator_future, exec_args=evaluator_exec_args),
-      run_async_and_catch_output(submission_future, exec_args=[
-        "sudo", "docker", "run",
-        "--name", f"flatland3-submission-{submission_id}",
-        "-e", "redis_ip=redis",
-        "-e", "AICROWD_TESTS_FOLDER=/tmp/environments/",
-        "-e", f"AICROWD_SUBMISSION_ID={submission_id}",
-        "-v", f"{DOCKERCOMPOSE_HOST_DIRECTORY}/evaluation/flatland3_benchmarks/evaluator/debug-environments/:/tmp/environments/",
-        "--network", BENCHMARKING_NETWORK,
-        submission_data_url,
-      ])
-    )
+    # update image
+    args = ["docker", "pull", submission_data_url, ]
+    exec_with_logging(args if not SUDO else ["sudo"] + args)
+    args = [
+             "docker", "run",
+             # "--rm",
+             "-v", f"{DATA_VOLUME}:{DATA_VOLUME_MOUNTPATH}",
+             "-v", f"{SCENARIOS_VOLUME}:{SCENARIOS_VOLUME_MOUNTPATH}",
+             "--entrypoint", "/bin/bash",
+             # Don't allow subprocesses to raise privileges, see https://github.com/codalab/codabench/blob/43e01d4bc3de26e8339ddb1463eef7d960ddb3af/compute_worker/compute_worker.py#L520
+             "--security-opt=no-new-privileges",
+             # Don't buffer python output, so we don't lose any
+             "-e", "PYTHONUNBUFFERED=1",
+             # for integration tests with localhost http
+             "-e", "OAUTHLIB_INSECURE_TRANSPORT=1",
+             submission_data_url,
+             # TODO get rid of hard-coded path in flatland-baselines
+             "/home/conda/entrypoint_generic.sh", "flatland-trajectory-generate-from-policy",
+           ] + generate_policy_args
+    exec_with_logging(args if not SUDO else ["sudo"] + args, log_level_stdout=logging.DEBUG)
+
+    args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "chmod", "-R", "a=rwx",
+            f"/vol/{submission_id}/{test_id}/{scenario_id}"]
+    exec_with_logging(args if not SUDO else ["sudo"] + args)
+
+  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket,
+                   s3_upload_path_template, s3_upload_path_template_use_submission_id, **kwargs):
     try:
-      loop.run_until_complete(gathered_tasks)
-      ret_evaluator = evaluator_future.result()
-      ret_evaluator["image_id"] = docker_image
-      ret_submission = submission_future.result()
-      ret_submission["image_id"] = submission_data_url
-      ret = {"f3-evaluator": ret_evaluator, "f3-submission": ret_submission}
-      logger.debug("Task with submission_id=%s got results from docker run: %s.", submission_id, ret)
+      logger.info(f"/ start task with submission_id={submission_id} with submission_data_url={submission_data_url} for tests {tests}")
 
-      exec_with_logging(["sudo", "docker", "ps"])
-      try:
-        logger.info("/ Logs from container %s", f"flatland3-evaluator-{submission_id}")
-        exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{submission_id}", ])
-        logger.info("\\ Logs from container %s", f"flatland3-evaluator-{submission_id}")
-      except:
-        logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{submission_id}")
-      try:
-        logger.info("/ Logs from container %s", f"flatland3-submission-{submission_id}")
-        exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{submission_id}", ])
-        logger.info("\\ Logs from container %s", f"flatland3-submission-{submission_id}")
-      except:
-        logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{submission_id}")
+      if tests is None:
+        tests = ['4ecdb9f4-e2ff-41ff-9857-abe649c19c50', '5206f2ee-d0a9-405b-8da3-93625e169811']
+      logger.info(f"/ start task with submission_id={submission_id} with submission_data_url={submission_data_url} for tests {tests}")
+      results = {test_id: {} for test_id in tests}
+      for test_id in tests:
+        for scenario_id in TEST_TO_SCENARIO_IDS[test_id]:
+          env_path = self.load_scenario_data(scenario_id)
 
-      if ret_evaluator["job_status"] != "Complete" or ret_submission["job_status"] != "Complete":
-        raise Exception(f"Evaluator or submission failed, aborting: {ret}")
-      return ret
-    except Exception as e:
-      exec_with_logging(["sudo", "docker", "ps"])
-      debug = []
-      try:
-        logger.info("/ Logs from container %s", f"flatland3-evaluator-{submission_id}")
-        stdo, stderr = exec_with_logging(["sudo", "docker", "logs", f"flatland3-evaluator-{submission_id}", ], log_level_stdout=logging.INFO,
-                                         log_level_stderr=logging.WARN,
-                                         collect=True)
-        debug += stdo
-        debug += stderr
-        logger.info("\\ Logs from container %s", f"flatland3-evaluator-{submission_id}")
-      except:
-        logger.warning("Could not fetch logs from container %s", f"flatland3-evaluator-{submission_id}")
-      try:
-        logger.info("/ Logs from container %s", f"flatland3-submission-{submission_id}")
-        stdo, stderr = exec_with_logging(["sudo", "docker", "logs", f"flatland3-submission-{submission_id}", ], log_level_stdout=logging.INFO,
-                                         log_level_stderr=logging.WARN,
-                                         collect=True)
-        debug += stdo
-        debug += stderr
-        logger.info("\\ Logs from container %s", f"flatland3-submission-{submission_id}")
-      except:
-        logger.warning("Could not fetch logs from container %s", f"flatland3-submission-{submission_id}")
+          data_dir = f"{DATA_VOLUME_MOUNTPATH}/{submission_id}/{test_id}/{scenario_id}"
+          generate_policy_args = [
+            "--data-dir", data_dir,
+            "--policy-pkg", "flatland_baselines.deadlock_avoidance_heuristic.policy.deadlock_avoidance_policy", "--policy-cls", "DeadLockAvoidancePolicy",
+            "--obs-builder-pkg", "flatland_baselines.deadlock_avoidance_heuristic.observation.full_env_observation", "--obs-builder-cls", "FullEnvObservation",
+            "--ep-id", scenario_id,
+            "--env-path", f"{SCENARIOS_VOLUME_MOUNTPATH}/{env_path}",
+            "--snapshot-interval", "10",
+            "--seed", 1001
+          ]
+          self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
 
-      raise Exception(str(e) + ": " + '\n'.join(debug)) from e
+          trajectory = Trajectory(data_dir=data_dir, ep_id=scenario_id)
+          trajectory.load()
+          rail_env = trajectory.restore_episode()
+
+          df_trains_arrived = trajectory.trains_arrived
+          logger.info(f"trains arrived: {df_trains_arrived}")
+          assert len(df_trains_arrived) == 1
+          logger.info(f"trains arrived: {df_trains_arrived.iloc[0]}")
+          success_rate = df_trains_arrived.iloc[0]["success_rate"]
+          logger.info(f"success rate: {success_rate}")
+
+          df_trains_rewards_dones_infos = trajectory.trains_rewards_dones_infos
+          logger.info(f"trains dones infos: {trajectory.trains_rewards_dones_infos}")
+          num_agents = df_trains_rewards_dones_infos["agent_id"].max() + 1
+          logger.info(f"num_agents: {num_agents}")
+
+          agent_scores = df_trains_rewards_dones_infos["reward"].to_list()
+          logger.info(f"agent_scores: {agent_scores}")
+
+          total_rewards = sum(agent_scores)
+
+          normalized_reward = total_rewards / (rail_env._max_episode_steps * rail_env.get_num_agents()) + 1
+
+          self.upload_and_empty_local(test_id, submission_id, scenario_id)
+
+          results[test_id][scenario_id] = {
+            "normalized_reward": normalized_reward,
+            "percentage_complete": success_rate
+          }
+
+      logger.info(f"\ end task with submission_id={submission_id} with submission_data_url={submission_data_url}. Results={results}")
+
+      return results
+    except BaseException as exception:
+      logger.error(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}")
+      raise RuntimeError(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}") from exception
+
+  @staticmethod
+  def load_scenario_data(scenario_id: str) -> str:
+    return {
+      # test 4ecdb9f4-e2ff-41ff-9857-abe649c19c50_
+      'd99f4d35-aec5-41c1-a7b0-64f78b35d7ef': "Test_0/Level_0.pkl",
+      '04d618b8-84df-406b-b803-d516c7425537': "Test_0/Level_1.pkl",
+
+      # test 5206f2ee-d0a9-405b-8da3-93625e169811:
+      '6f3ad83c-3312-4ab3-9740-cbce80feea91': "Test_1/Level_0.pkl",
+      'f954a860-e963-431e-a09d-5b1040948f2d': "Test_1/Level_1.pkl",
+      'f92bfe0c-5347-4d89-bc17-b6f86d514ef8': "Test_1/Level_2.pkl",
+    }[scenario_id]
+
+  def upload_and_empty_local(self, test_id: str, submission_id: str, scenario_id: str):
+    data_volume = Path(DATA_VOLUME_MOUNTPATH)
+    scenario_folder = data_volume / submission_id / test_id / scenario_id
+    logger.info(f"Uploading {scenario_folder} to s3 {S3_BUCKET}/{AI4REALNET_S3_UPLOAD_ROOT}{scenario_folder.relative_to(data_volume)}")
+    for f in scenario_folder.rglob("**/*"):
+      if f.is_dir():
+        continue
+      relative_upload_key = str(f.relative_to(data_volume))
+      s3_utils.upload_to_s3(f, relative_upload_key)
+      print(relative_upload_key)
+    logger.info(f"Deleting {scenario_folder} after uploading s3 {S3_BUCKET}/{AI4REALNET_S3_UPLOAD_ROOT}/{scenario_folder.relative_to(data_volume)}")
+    # a bit hacky: in test_containers_railway, /app/data is mounted as root.
+    for d in scenario_folder.iterdir():
+      shutil.rmtree(d)
 
 
 # N.B. name to be used by send_task
@@ -169,7 +198,6 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
 def orchestrator(self,
                  submission_data_url: str,
                  tests: List[str] = None,
-                 TEST_RUNNER_EVALUATOR_IMAGE="ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:latest",
                  AWS_ENDPOINT_URL=None,
                  AWS_ACCESS_KEY_ID=None,
                  AWS_SECRET_ACCESS_KEY=None,
@@ -181,7 +209,6 @@ def orchestrator(self,
   return DockerComposeFlatlandBenchmarksOrchestrator(submission_id).orchestrator(
     submission_data_url=submission_data_url,
     tests=tests,
-    test_runner_evaluator_image=TEST_RUNNER_EVALUATOR_IMAGE,
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_access_key_id=AWS_ACCESS_KEY_ID,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
@@ -193,7 +220,7 @@ def orchestrator(self,
 
 
 # https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
-def exec_with_logging(exec_args: List[str], log_level_stdout=logging.DEBUG, log_level_stderr=logging.WARN, collect: bool = False):
+def exec_with_logging(exec_args: List[str], log_level_stdout=logging.DEBUG, log_level_stderr=logging.DEBUG, collect: bool = False):
   logger.debug(f"/ Start %s", exec_args)
   try:
     proc = subprocess.Popen(exec_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
