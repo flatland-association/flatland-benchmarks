@@ -19,7 +19,7 @@ describe.sequential('Suite controller', () => {
   })
 
   // data set in
-  // - ts\backend\src\migration\data\V5.1__validation_campaign.sql
+  // - ts/backend/src/migration/data/V5.1__validation_campaign.sql
   test('should return suites', async () => {
     const res = await controller.testGet('/definitions/suites', {})
     assertApiResponse(res)
