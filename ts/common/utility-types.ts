@@ -1,5 +1,3 @@
-import { Resource } from './interfaces'
-
 /**
  * Utility type for the empty object `{}`.
  */
@@ -98,47 +96,7 @@ export type OptionalOnly<T> = {
  * Strip the `id` field from given type/interface. Used for typed post requests
  * where `id` is never part of the request.
  */
-// export type StripId<T> = Omit<T, 'id'>
-
-/**
- * Strip the `dir` field from given type/interface. Used for typed sql queries,
- * where `dir` is never part of the result.
- */
-export type StripDir<T> = Omit<T, 'dir'>
-
-/**
- * Strip the `id` and `dir` fields from given type/interface. Used for typed
- * post requests, where they're never part of the request body.
- */
-export type StripLocator<T> = Omit<T, 'id' | 'dir'>
-
-/**
- * Directory in which a resource lies.
- * For automatic resource fetching, this must match the static part in the
- * corresponding GET endpoint, i.e:
- * ```
- * endpoint = `${ResourceDir}:id`
- * ```
- */
-export type ResourceDir = `/${string}/`
-
-/**
- * How a resource is identified within its directory.
- */
-export type ResourceId = number | string
-
-/**
- * Composite resource locator - directory / id tuple. The reason this is a
- * tuple and not simply `Resource` is additional type safety.
- */
-export type ResourceLocator<R extends Resource> = [R['dir'], ResourceId]
-
-/**
- * Consolidated composite resource locator - directory / ids tuple.
- * Makes programmatically merging and splitting resources from the same
- * directory easier.
- */
-export type ConsolidatedResourceLocator<R extends Resource> = [R['dir'], ResourceId[]]
+export type StripId<T> = Omit<T, 'id'>
 
 /**
  * Common type of elements in array.

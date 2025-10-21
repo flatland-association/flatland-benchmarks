@@ -162,7 +162,6 @@ describe('Aggregator Service', () => {
       'returns $returns for agg_fields = $agg_fields with index = $index',
       (testCase) => {
         const dummyFieldDefinition: FieldDefinitionRow = {
-          dir: '/definitions/fields/',
           id: '41f16002-d807-4722-90a6-d191e6e54adf',
           key: 'primary',
           description: '',

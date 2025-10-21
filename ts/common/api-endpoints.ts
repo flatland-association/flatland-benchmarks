@@ -16,7 +16,7 @@ import {
   Test,
   TestDefinitionRow,
 } from './interfaces'
-import { Empty, json, NoNever, StripLocator } from './utility-types'
+import { Empty, json, NoNever, StripId } from './utility-types'
 
 /**
  * Interface for registered enpoints. Types the request body, request query
@@ -98,7 +98,7 @@ interface ApiEndpointDefinitions {
       { benchmark_ids?: string; ids?: string; submitted_by?: string; unpublished_own?: string },
       SubmissionRow[]
     >
-    POST: ApiEndpoint<StripLocator<SubmissionRow>, Empty, { id: string }>
+    POST: ApiEndpoint<StripId<SubmissionRow>, Empty, { id: string }>
   }
   '/submissions/:submission_ids': {
     GET: ApiEndpoint<Empty, Empty, SubmissionRow[]>

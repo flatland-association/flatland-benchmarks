@@ -1,6 +1,4 @@
-import { appendDir } from '@common/endpoint-utils.js'
 import { SuiteDefinitionRow } from '@common/interfaces.js'
-import { StripDir } from '@common/utility-types.js'
 import { configuration } from '../config/config.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import { Controller, GetHandler } from './controller.mjs'
@@ -54,12 +52,11 @@ export class SuiteController extends Controller {
    */
   getSuites: GetHandler<'/definitions/suites'> = async (req, res) => {
     const sql = SqlService.getInstance()
-    const rows = await sql.query<StripDir<SuiteDefinitionRow>>`
+    const suites = await sql.query<SuiteDefinitionRow>`
       SELECT * FROM suites
       ORDER BY name ASC
     `
-    const resources = appendDir('/definitions/suites/', rows)
-    this.respond(req, res, resources)
+    this.respond(req, res, suites)
   }
 
   /**
@@ -115,12 +112,11 @@ export class SuiteController extends Controller {
     const ids = req.params.suite_ids.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
-    const rows = await sql.query<StripDir<SuiteDefinitionRow>>`
+    const suites = await sql.query<SuiteDefinitionRow>`
       SELECT * FROM suites
       WHERE id=ANY(${ids})
       LIMIT ${ids.length}
     `
-    const suites = appendDir('/definitions/suites/', rows)
     this.respond(req, res, suites)
   }
 }

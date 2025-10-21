@@ -1,52 +1,22 @@
 // putting everything in one file to minimize cyclic imports
 
 import { Tab } from '../frontend/src/app/components/tabs/tabs.component'
-import { ResourceDir, ResourceId } from './utility-types'
 
-export interface Resource<Dir extends ResourceDir = ResourceDir> {
-  /** Directory in which the resource lies. Identifies its type. */
-  dir: Dir
-  /** Identifier of resource within its directory. */
-  id: ResourceId
-  /** Resource UUID */
-  uuid?: string
-}
-
-export interface BenchmarkPreview extends Resource<'/definitions/benchmarks/'> {
+export interface BenchmarkPreview {
   name: string
   description: string
 }
 
-export interface Benchmark extends Resource<'/definitions/benchmarks/'> {
+export interface Benchmark {
   name: string
   description: string
   docker_image: string
   tests: number[]
 }
 
-export interface Test extends Resource<'/definitions/tests/'> {
+export interface Test {
   name: string
   description: string
-}
-
-// TODO: remove
-export interface SubmissionPreview extends Resource<'/submissions/'> {
-  name: string
-  benchmark: ResourceId
-  submitted_at: string
-  submitted_by_username: string
-  public: boolean
-  scores: number[]
-  rank: number | null
-}
-
-// TODO: remove
-export interface Submission_old extends Resource<'/submissions/'> {
-  name: string
-  benchmark: ResourceId
-  submission_image: string
-  code_repository: string
-  tests: ResourceId[]
 }
 
 export interface PageContents {
@@ -59,7 +29,7 @@ export interface PageContents {
 
 export type AggFunction = 'SUM' | 'NANSUM' | 'MEAN' | 'NANMEAN' | 'MEADIAN' | 'NANMEDIAN'
 
-export interface FieldDefinitionRow extends Resource<'/definitions/fields/'> {
+export interface FieldDefinitionRow {
   id: string
   /** Identifier of field, how it's accessed in aggregation. */
   key: string
@@ -75,7 +45,7 @@ export interface FieldDefinitionRow extends Resource<'/definitions/fields/'> {
   agg_lateral?: boolean | null
 }
 
-export interface ScenarioDefinitionRow extends Resource<'/definitions/scenarios/'> {
+export interface ScenarioDefinitionRow {
   id: string
   name: string
   description: string
@@ -84,7 +54,7 @@ export interface ScenarioDefinitionRow extends Resource<'/definitions/scenarios/
 
 export type Loop = 'CLOSED' | 'INTERACTIVE' | 'OFFLINE'
 
-export interface TestDefinitionRow extends Resource<'/definitions/tests/'> {
+export interface TestDefinitionRow {
   id: string
   name: string
   description: string
@@ -94,7 +64,7 @@ export interface TestDefinitionRow extends Resource<'/definitions/tests/'> {
   queue: string | null
 }
 
-export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmarks/'> {
+export interface BenchmarkDefinitionRow {
   id: string
   name: string
   description: string
@@ -107,7 +77,7 @@ export interface BenchmarkDefinitionRow extends Resource<'/definitions/benchmark
 
 export type SuiteSetup = 'DEFAULT' | 'COMPETITION' | 'CAMPAIGN'
 
-export interface SuiteDefinitionRow extends Resource<'/definitions/suites/'> {
+export interface SuiteDefinitionRow {
   id: string
   name: string
   description: string
@@ -118,7 +88,7 @@ export interface SuiteDefinitionRow extends Resource<'/definitions/suites/'> {
 
 export type SubmissionStatus = 'SUBMITTED' | 'RUNNING' | 'SUCCESS' | 'FAILURE'
 
-export interface SubmissionRow extends Resource<'/submissions/'> {
+export interface SubmissionRow {
   id: string
   benchmark_id: string
   test_ids: string[]

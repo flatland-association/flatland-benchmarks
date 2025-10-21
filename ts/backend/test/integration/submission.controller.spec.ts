@@ -1,5 +1,5 @@
 import { SubmissionRow } from '@common/interfaces'
-import { StripLocator } from '@common/utility-types'
+import { StripId } from '@common/utility-types'
 import { MockInstance } from 'vitest'
 import { SubmissionController } from '../../src/app/features/controller/submission.controller.mjs'
 import { Logger } from '../../src/app/features/logger/logger.mjs'
@@ -14,7 +14,7 @@ import { getTestConfig } from './setup.mjs'
 
 Logger.setOptions({ '--log-level': 'OFF' })
 
-const testSubmission: StripLocator<SubmissionRow> = {
+const testSubmission: StripId<SubmissionRow> = {
   benchmark_id: '20ccc7c1-034c-4880-8946-bffc3fed1359',
   test_ids: ['557d9a00-7e6d-410b-9bca-a017ca7fe3aa'],
   name: 'test',

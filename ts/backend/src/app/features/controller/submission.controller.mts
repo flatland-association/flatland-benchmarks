@@ -1,6 +1,4 @@
-import { appendDir } from '@common/endpoint-utils.js'
 import { SubmissionRow, TestDefinitionRow } from '@common/interfaces.js'
-import { StripDir } from '@common/utility-types.js'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AuthService } from '../services/auth-service.mjs'
@@ -248,15 +246,14 @@ export class SubmissionController extends Controller {
       wherePublished = sql.fragment`(published = true OR submitted_by = ${auth.sub})`
     }
 
-    const rows = await sql.query<StripDir<SubmissionRow>>`
+    const submissions = await sql.query<SubmissionRow>`
         SELECT * FROM submissions
         WHERE
           ${wherePublished} AND
           ${whereBenchmark} AND
           ${whereSubmittedBy}
       `
-    const resources = appendDir('/submissions/', rows)
-    this.respond(req, res, resources)
+    this.respond(req, res, submissions)
   }
 
   /**
@@ -334,14 +331,13 @@ export class SubmissionController extends Controller {
       wherePublished = sql.fragment`(published = true OR submitted_by = ${auth.sub})`
     }
     // id=ANY - dev.003
-    const rows = await sql.query<StripDir<SubmissionRow>>`
+    const submissions = await sql.query<SubmissionRow>`
         SELECT * FROM submissions
         WHERE
           id=ANY(${uuids}) AND
           ${wherePublished}
         LIMIT ${uuids.length}
       `
-    const submissions = appendDir('/submissions/', rows)
     // return array - dev.002
     this.respond(req, res, submissions)
   }
@@ -421,14 +417,12 @@ export class SubmissionController extends Controller {
     const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
-    const rows = await sql.query<StripDir<SubmissionRow>>`
+    const submissions = await sql.query<SubmissionRow>`
       UPDATE submissions SET published=true
         WHERE id=ANY(${uuids})
         RETURNING *
     `
-    logger.info(`rows ${rows}`)
-
-    const submissions = appendDir('/submissions/', rows)
+    logger.info(`rows ${submissions}`)
     // return array - dev.002
     this.respond(req, res, submissions)
   }
