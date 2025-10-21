@@ -39,23 +39,16 @@ export class MySubmissionsView implements OnInit {
     this.customizationService.getCustomization().then((customization) => {
       this.customization = customization
     })
-    // TODO: load via resource service
-    // see: https://github.com/flatland-association/flatland-benchmarks/issues/395
-    this.apiService
-      .get('/submissions', { query: { submitted_by: this.authService.userUuid, unpublished_own: 'true' } })
-      .then(async (resonse) => {
-        const submissions = resonse.body
+    this.resourceService
+      .load('/submissions', { query: { submitted_by: this.authService.userUuid, unpublished_own: 'true' } })
+      .then(async (submissions) => {
         if (!submissions?.length) {
           this.rows = []
           return
         }
-        // TODO: load via resource service
-        // see: https://github.com/flatland-association/flatland-benchmarks/issues/395
-        const scores = (
-          await this.apiService.get('/results/submissions/:submission_ids', {
-            params: { submission_ids: submissions.map((s) => s.id).join(',') },
-          })
-        ).body
+        const scores = await this.resourceService.loadGrouped('/results/submissions/:submission_ids', {
+          params: { submission_ids: submissions.map((s) => s.id) },
+        })
         const benchmarks = await this.resourceService.loadGrouped('/definitions/benchmarks/:benchmark_ids', {
           params: { benchmark_ids: submissions?.map((s) => s.benchmark_id) ?? [] },
         })
