@@ -150,6 +150,7 @@ export interface SubmissionScore {
 
 export interface Leaderboard {
   benchmark_id: string
+  test_id?: string
   // TODO: rename property to submissions maybe?
   items: SubmissionScore[]
 }

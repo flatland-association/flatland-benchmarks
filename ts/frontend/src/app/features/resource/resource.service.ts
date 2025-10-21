@@ -58,7 +58,7 @@ export type ResourceMetaRecords = {
      * Which property from the returned resource to consider to build the
      * resource URL. Default is `id`.
      */
-    idProperty?: ResourceProperty<ResourceGetEndpoints[K]['response']['body']>
+    idProperty?: ResourceProperty<ResourceGetEndpoints[K]['response']['body']> & {}
   }
 }
 
@@ -118,7 +118,7 @@ export const resourceMeta: ResourceMetaRecords = {
   },
   '/results/benchmarks/:benchmark_id/tests/:test_ids': {
     spreadParam: 'test_ids',
-    idProperty: 'benchmark_id',
+    idProperty: 'test_id',
   },
 }
 
@@ -282,6 +282,7 @@ export class ResourceService {
         // when spreading is active, treat all items in response as individual
         // set of resources
         if (spread) {
+          // TOFIX: throw if idProperty does not exist on resource
           const identProp = meta?.idProperty ?? 'id'
           resources?.forEach((resource) => {
             // the resource URL has to be derived from the request options merged
