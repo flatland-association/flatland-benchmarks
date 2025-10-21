@@ -5,7 +5,6 @@ import { isSubmissionCompletelyScored } from '@common/scoring-utils'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { TableColumn, TableComponent, TableRow } from '../../components/table/table.component'
-import { ApiService } from '../../features/api/api.service'
 import { AuthService } from '../../features/auth/auth.service'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
@@ -20,7 +19,6 @@ import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.
 })
 export class MySubmissionsView implements OnInit {
   private authService = inject(AuthService)
-  private apiService = inject(ApiService)
   private resourceService = inject(ResourceService)
   private customizationService = inject(CustomizationService)
   private datePipe = inject(DatePipe)
