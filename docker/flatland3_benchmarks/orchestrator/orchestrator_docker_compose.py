@@ -126,8 +126,8 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
             "--seed", "1001"
           ]
           self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
-          logger.info(f"data_dir={data_dir}")
-          logger.info(f"contents={list(Path(data_dir).rglob("**/*"))}")
+          logger.info(f"DATA_VOLUME_MOUNTPATH={DATA_VOLUME_MOUNTPATH}")
+          logger.info(f"contents={list(Path(DATA_VOLUME_MOUNTPATH).rglob("**/*"))}")
           trajectory = Trajectory(data_dir=data_dir, ep_id=scenario_id)
           trajectory.load()
           rail_env = trajectory.restore_episode()
