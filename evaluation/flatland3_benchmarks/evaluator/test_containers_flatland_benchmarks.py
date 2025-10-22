@@ -107,9 +107,10 @@ def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, te
       debug += stdo
       debug += stderr
       logger.info("\\ Logs from docker compose")
+      raise Exception(str(e) + ": " + '\n'.join(debug)) from e
     except:
       logger.warning("Could not fetch logs from docker compose")
-    raise Exception(str(e) + ": " + '\n'.join(debug)) from e
+      raise
 
 
 @pytest.mark.usefixtures("test_containers_fixture")

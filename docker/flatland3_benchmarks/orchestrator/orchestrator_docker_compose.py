@@ -98,10 +98,6 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
            ] + generate_policy_args
     exec_with_logging(args if not SUDO else ["sudo"] + args, log_level_stdout=logging.DEBUG)
 
-    # args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "chmod", "-R", "a=rwx",
-    #         f"/vol/{submission_id}/{test_id}/{scenario_id}"]
-    # exec_with_logging(args if not SUDO else ["sudo"] + args)
-
   def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket,
                    s3_upload_path_template, s3_upload_path_template_use_submission_id, **kwargs):
     try:
