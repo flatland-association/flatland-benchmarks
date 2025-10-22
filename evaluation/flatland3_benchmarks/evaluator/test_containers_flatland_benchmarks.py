@@ -1,8 +1,10 @@
 import logging
 import os
+import subprocess
 import time
 import uuid
-from typing import List
+from io import TextIOWrapper, BytesIO
+from typing import List, Optional
 
 import pytest
 from celery import Celery
@@ -68,29 +70,46 @@ def test_containers_fixture():
     raise e
 
 
-def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, tests: List[str], **kwargs):
-  start_time = time.time()
-  app = Celery(
-    broker="amqp://localhost:5672",
-    backend="rpc://",
-  )
-  logger.info(f"/ Start simulate submission from portal for submission_id={submission_id}.....")
+def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, tests: List[str] = None, **kwargs):
+  try:
+    start_time = time.time()
+    app = Celery(
+      broker="amqp://localhost:5672",
+      backend="rpc://",
+    )
+    logger.info(f"/ Start simulate submission from portal for submission_id={submission_id}.....")
 
-  ret = app.send_task(
-    benchmark_id,
-    task_id=submission_id,
-    kwargs={
-      "submission_data_url": submission_data_url,
-      "tests": tests,
-      **kwargs
-    },
-    queue=benchmark_id,
-  ).get()
-  logger.info(ret)
-  duration = time.time() - start_time
-  logger.info(
-    f"\\ End simulate submission from portal for submission_id={submission_id}. Took {duration} seconds.")
-  return ret
+    ret = app.send_task(
+      benchmark_id,
+      task_id=submission_id,
+      kwargs={
+        "submission_data_url": submission_data_url,
+        "tests": tests,
+        **kwargs
+      },
+      queue=benchmark_id,
+    ).get()
+    logger.info(ret)
+    duration = time.time() - start_time
+    logger.info(
+      f"\\ End simulate submission from portal for submission_id={submission_id}. Took {duration} seconds.")
+    return ret
+  except BaseException as e:
+    exec_with_logging(["docker", "ps"])
+    debug = []
+    try:
+      logger.info("/ Logs from docker compose")
+
+      stdo, stderr = exec_with_logging(["docker", "compose", "--profile", "full", "logs", ],
+                                       log_level_stdout=logging.INFO,
+                                       log_level_stderr=logging.WARN,
+                                       collect=True)
+      debug += stdo
+      debug += stderr
+      logger.info("\\ Logs from docker compose")
+    except:
+      logger.warning("Could not fetch logs from docker compose")
+    raise Exception(str(e) + ": " + '\n'.join(debug)) from e
 
 
 @pytest.mark.usefixtures("test_containers_fixture")
@@ -128,7 +147,7 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
   print(token)
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
 
-  fab.submissions_submission_ids_patch(submission_ids=[submission_id])
+  fab.submissions_submission_ids_patch(submission_ids=[uuid.UUID(submission_id)])
 
   test_ids = {
     "Test_0": "4ecdb9f4-e2ff-41ff-9857-abe649c19c50",
@@ -138,8 +157,8 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
   for (test_name, test_id), primary_scenario_scores, primary_test_score, secondary_scenario_scores, secondary_test_score in (
     zip(test_ids.items(), expected_primary_scenario_scores, expected_primary_test_scores, expected_secondary_scenario_scores, expected_secondary_test_scores)):
     test_results = fab.results_submissions_submission_id_tests_test_ids_get(
-      submission_id=submission_id,
-      test_ids=[test_id])
+      submission_id=uuid.UUID(submission_id),
+      test_ids=[uuid.UUID(test_id)])
     print(f"results downloaded for submission_id={submission_id} and test_id={test_id}")
     print(test_results)
     for i in range(len(primary_scenario_scores)):
@@ -180,3 +199,32 @@ def backend_application_flow(
     client_secret=client_secret,
   )
   return token
+
+
+# https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
+def exec_with_logging(exec_args: List[str], log_level_stdout=logging.DEBUG, log_level_stderr=logging.DEBUG, collect: bool = False):
+  logger.debug(f"/ Start %s", exec_args)
+  proc = subprocess.Popen(exec_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+  stdout = None
+  stderr = None
+  try:
+    stdout, stderr = proc.communicate()
+    stdo = log_subprocess_output(TextIOWrapper(BytesIO(stdout)), level=log_level_stdout, label=str(exec_args), collect=collect)
+    stde = log_subprocess_output(TextIOWrapper(BytesIO(stderr)), level=log_level_stderr, label=str(exec_args), collect=collect)
+    logger.debug("\\ End %s", exec_args)
+    return stdo, stde
+  except (OSError, subprocess.CalledProcessError) as exception:
+    logger.error(stderr)
+    raise RuntimeError(f"Failed to run {exec_args}. Stdout={stdout}. Stderr={stderr}") from exception
+
+
+# https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
+def log_subprocess_output(pipe, level=logging.DEBUG, label="", collect: bool = False) -> Optional[List[str]]:
+  s = []
+  for line in pipe.readlines():
+    logger.log(level, "[from subprocess %s] %s", label, line)
+    if collect:
+      s.append(line)
+  if collect:
+    return s
+  return None
