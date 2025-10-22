@@ -220,14 +220,14 @@ def orchestrator(self,
 
 
 # https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
-def exec_with_logging(exec_args: List[str], log_level_stdout=logging.DEBUG, log_level_stderr=logging.DEBUG, collect: bool = False):
-  logger.debug(f"/ Start %s", exec_args)
+def exec_with_logging(exec_args: List[str], log_level_stdout=logging.INFO, log_level_stderr=logging.INFO, collect: bool = False):
+  logger.info(f"/ Start %s", exec_args)
   try:
     proc = subprocess.Popen(exec_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout, stderr = proc.communicate()
     stdo = log_subprocess_output(TextIOWrapper(BytesIO(stdout)), level=log_level_stdout, label=str(exec_args), collect=collect)
     stde = log_subprocess_output(TextIOWrapper(BytesIO(stderr)), level=log_level_stderr, label=str(exec_args), collect=collect)
-    logger.debug("\\ End %s", exec_args)
+    logger.info("\\ End %s", exec_args)
     return stdo, stde
   except (OSError, subprocess.CalledProcessError) as exception:
     logger.error(stderr)
