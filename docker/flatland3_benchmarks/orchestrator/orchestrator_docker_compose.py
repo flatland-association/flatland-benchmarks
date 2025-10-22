@@ -123,7 +123,7 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
             "--ep-id", scenario_id,
             "--env-path", f"{SCENARIOS_VOLUME_MOUNTPATH}/{env_path}",
             "--snapshot-interval", "10",
-            "--seed", 1001
+            "--seed", "1001"
           ]
           self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
 
