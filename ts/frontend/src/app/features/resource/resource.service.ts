@@ -192,10 +192,6 @@ export class ResourceService {
     const now = Date.now()
     const meta = resourceMeta[endpoint]
 
-    if (!meta) {
-      console.warn(`No meta for ${endpoint}`)
-    }
-
     const tcutoff = typeof meta?.maxAge === 'number' ? now - meta.maxAge * 1000 : now
     const spread = meta?.spreadParam
 
