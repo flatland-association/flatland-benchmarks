@@ -129,7 +129,6 @@ export class ResourceService {
   private apiService = inject(ApiService)
 
   // maps endpoint to responded resources
-  // (using)
   private cache = new Map<
     string,
     AsyncCacheItem<ResourceGetEndpoints[keyof ResourceGetEndpoints]['response']['body']>
