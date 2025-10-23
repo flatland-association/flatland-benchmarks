@@ -351,6 +351,7 @@ services:
         wget "https://data.flatland.cloud/benchmarks/Flatland3/debug-environments.zip" -O debug-environments.zip -O debug-environments.zip
         mkdir -p /scenarios
         unzip debug-environments.zip -o -d /scenarios
+        rm -fR /scenarios/Test*
         mv -f /scenarios/debug-environments/Test* /scenarios/
         find /scenarios
 
