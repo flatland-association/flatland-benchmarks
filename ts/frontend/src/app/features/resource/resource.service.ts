@@ -34,6 +34,7 @@ interface AugmentedApiGetOptions<E extends keyof ResourceGetEndpoints> {
 interface RequestDescriptor<E extends keyof ResourceGetEndpoints> {
   endpoint: E
   options?: Partial<AugmentedApiGetOptions<E>>
+  resourceURL: string
 }
 
 type ResourceProperty<T> = T extends unknown[] ? keyof T[number] : never
@@ -213,22 +214,27 @@ export class ResourceService {
     // every request.
     if (spread) {
       resourceRequests = (options!.params![spread] as string[]).map((id) => {
-        return { endpoint, options: this.cloneOptionsForId(options, spread!, id) }
+        const opts = this.cloneOptionsForId(options, spread!, id)
+        const resourceURL = this.getResourceURL(endpoint, opts)
+        return {
+          endpoint,
+          options: opts,
+          resourceURL,
+        }
       })
     }
     // Without spreading, simply use original options for interpolation.
     else {
-      resourceRequests = [{ endpoint, options }]
+      resourceRequests = [{ endpoint, options, resourceURL: this.getResourceURL(endpoint, options) }]
     }
 
-    const apiRequests: RequestDescriptor<E>[] = []
+    const apiRequests = new Map<string, RequestDescriptor<E>>()
 
     // go through all resource requests (in order) and either
     // - return cached promise
     // - prepare + return cached promise, make api request and resolve later on
     const promises: Promise<ResourceGetEndpoints[E]['response']['body']>[] = resourceRequests.map((request) => {
-      const resourceURL = this.getResourceURL(request.endpoint, request.options)
-      const item = this.cache.get(resourceURL)
+      const item = this.cache.get(request.resourceURL)
       if (
         item &&
         // Timestamp is undefined until the promise resolved once.
@@ -249,9 +255,9 @@ export class ResourceService {
           cacheItem.value = value
           return value
         })
-        this.cache.set(resourceURL, cacheItem)
+        this.cache.set(request.resourceURL, cacheItem)
         // and remember to load once
-        apiRequests.push(request)
+        apiRequests.set(request.resourceURL, request)
         return cacheItem.promise
       }
     })
@@ -262,11 +268,12 @@ export class ResourceService {
     // which leads to the conclusion that all remaining requests can be merged
     // into one. (And also: if there are actually multiple requests, they only
     // differ by the id param)
-    if (apiRequests.length > 0) {
-      const actualRequest = window.structuredClone(apiRequests[0])
+    if (apiRequests.size > 0) {
+      const requests = Array.from(apiRequests.values())
+      const actualRequest = window.structuredClone(requests[0])
       // merge ids from requests if spreading is active
       if (spread) {
-        const actualIds = apiRequests.map((request) => request.options!.params![spread!])
+        const actualIds = requests.map((request) => request.options!.params![spread!])
         actualRequest.options!.params![spread!] = actualIds.join(',')
       }
       const resources = (
@@ -276,38 +283,44 @@ export class ResourceService {
         // when spreading is active, treat all items in response as individual
         // set of resources
         if (spread) {
-          // TOFIX: throw if idProperty does not exist on resource
           const identProp = meta?.idProperty ?? 'id'
           resources?.forEach((resource) => {
-            // the resource URL has to be derived from the request options merged
-            // with the responded resource's identifying property
-            const resourceOptions = this.cloneOptionsForId(
-              actualRequest.options,
-              spread,
-              resource[identProp as keyof typeof resource],
-            )
-            const resourceURL = this.getResourceURL(actualRequest.endpoint, resourceOptions)
-            const item = this.cache.get(resourceURL)
-            //@ts-expect-error undefined
-            item?.promiseResolve([resource])
+            // if identProp does not exist, do not resolve promise (to cause its
+            // rejection later on)
+            if (identProp in resource) {
+              // the resource URL has to be derived from the request options
+              // merged with the responded resource's identifying property
+              const resourceOptions = this.cloneOptionsForId(
+                actualRequest.options,
+                spread,
+                resource[identProp as keyof typeof resource],
+              )
+              const resourceURL = this.getResourceURL(actualRequest.endpoint, resourceOptions)
+              const item = this.cache.get(resourceURL)
+              //@ts-expect-error undefined
+              item?.promiseResolve([resource])
+              apiRequests.delete(resourceURL)
+            }
           })
         }
         //... otherwise, treat the whole response as one resource
         else {
-          const resourceURL = this.getResourceURL(actualRequest.endpoint, actualRequest.options)
+          const resourceURL = actualRequest.resourceURL
           const item = this.cache.get(resourceURL)
           item?.promiseResolve(resources)
+          apiRequests.delete(resourceURL)
         }
       }
-      // if no resources are returned, reject and void the prepared cache objects
-      else {
-        apiRequests.forEach((apiRequest) => {
-          const resourceURL = this.getResourceURL(apiRequest.endpoint, apiRequest.options)
-          const item = this.cache.get(resourceURL)
-          item?.promiseReject()
-          this.cache.delete(resourceURL)
-        })
-      }
+      // Resolved apiRequests are removed. Any apiRequest still around means
+      // it didn't resolve, indicating something went wrong (e.g. no matching
+      // resource was returned).
+      // Force rejection of those, otherwise function will never return.
+      // Also, invalidate prepared cache object.
+      apiRequests.forEach((_request, resourceURL) => {
+        const item = this.cache.get(resourceURL)
+        item?.promiseReject()
+        this.cache.delete(resourceURL)
+      })
     }
 
     //@ts-expect-error undefined (because response body is typed as optional)
