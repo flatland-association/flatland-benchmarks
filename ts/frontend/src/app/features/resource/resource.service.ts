@@ -249,7 +249,6 @@ export class ResourceService {
           cacheItem.value = value
           return value
         })
-        //@t s-expect-error subtype
         this.cache.set(resourceURL, cacheItem)
         // and remember to load once
         apiRequests.push(request)
