@@ -40,8 +40,6 @@ export class TestController extends Controller {
    *                      items:
    *                        type: object
    *                        properties:
-   *                          dir:
-   *                            type: string
    *                          id:
    *                            type: string
    *                            format: uuid
