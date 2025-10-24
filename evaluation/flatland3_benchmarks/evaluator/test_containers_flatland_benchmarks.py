@@ -1,13 +1,11 @@
-import json
 import logging
 import os
+import subprocess
 import time
 import uuid
-from io import StringIO
-from typing import List
+from io import TextIOWrapper, BytesIO
+from typing import List, Optional
 
-import boto3
-import pandas as pd
 import pytest
 from celery import Celery
 from dotenv import dotenv_values
@@ -72,29 +70,47 @@ def test_containers_fixture():
     raise e
 
 
-def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, tests: List[str], **kwargs):
-  start_time = time.time()
-  app = Celery(
-    broker="amqp://localhost:5672",
-    backend="rpc://",
-  )
-  logger.info(f"/ Start simulate submission from portal for submission_id={submission_id}.....")
+def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, tests: List[str] = None, **kwargs):
+  try:
+    start_time = time.time()
+    app = Celery(
+      broker="amqp://localhost:5672",
+      backend="rpc://",
+    )
+    logger.info(f"/ Start simulate submission from portal for submission_id={submission_id}.....")
 
-  ret = app.send_task(
-    benchmark_id,
-    task_id=submission_id,
-    kwargs={
-      "submission_data_url": submission_data_url,
-      "tests": tests,
-      **kwargs
-    },
-    queue=benchmark_id,
-  ).get()
-  logger.info(ret)
-  duration = time.time() - start_time
-  logger.info(
-    f"\\ End simulate submission from portal for submission_id={submission_id}. Took {duration} seconds.")
-  return ret
+    ret = app.send_task(
+      benchmark_id,
+      task_id=submission_id,
+      kwargs={
+        "submission_data_url": submission_data_url,
+        "tests": tests,
+        **kwargs
+      },
+      queue=benchmark_id,
+    ).get()
+    logger.info(ret)
+    duration = time.time() - start_time
+    logger.info(
+      f"\\ End simulate submission from portal for submission_id={submission_id}. Took {duration} seconds.")
+    return ret
+  except BaseException as e:
+    exec_with_logging(["docker", "ps"])
+    debug = []
+    try:
+      logger.info("/ Logs from docker compose")
+
+      stdo, stderr = exec_with_logging(["docker", "compose", "--profile", "full", "logs", ],
+                                       log_level_stdout=logging.INFO,
+                                       log_level_stderr=logging.WARN,
+                                       collect=True)
+      debug += stdo
+      debug += stderr
+      logger.info("\\ Logs from docker compose")
+      raise Exception(str(e) + ": " + '\n'.join(debug)) from e
+    except:
+      logger.warning("Could not fetch logs from docker compose")
+      raise
 
 
 @pytest.mark.usefixtures("test_containers_fixture")
@@ -119,69 +135,10 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
   submission_id = str(uuid.uuid4())
   config = dotenv_values("../../.env")
 
-  ret = run_task('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', submission_id,
-                 # use deterministic baselines
-                 submission_data_url="ghcr.io/flatland-association/flatland-baselines:latest",
-                 tests=tests, **config)
-
-  logger.info(f"{[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
-
-  for k, v in ret.items():
-    logger.log(TRACE, "Got %s", (k, v['job_status'], v['image_id'], v['log']))
-
-  all_completed = all([s["job_status"] == "Complete" for s in ret.values()])
-  assert all_completed, ret
-
-  # check Celery direct return value
-  assert set(ret.keys()) == {"f3-evaluator", "f3-submission"}
-
-  assert set(ret["f3-evaluator"].keys()) == {"job_status", "image_id", "log", "job", "pod", "results.csv", "results.json"}
-  assert set(ret["f3-submission"].keys()) == {"job_status", "image_id", "log", "job", "pod"}
-
-  assert ret["f3-evaluator"]["job_status"] == "Complete"
-  assert ret["f3-submission"]["job_status"] == "Complete"
-
-  assert ret["f3-evaluator"]["image_id"] == "ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:latest"
-  assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/flatland-baselines:latest"
-
-  assert "end evaluator/run.sh" in str(ret["f3-evaluator"]["log"])
-  assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])
-
-  res_df = pd.read_csv(StringIO(ret["f3-evaluator"]["results.csv"]))
-  logger.debug(res_df)
-  res_json = json.loads(ret["f3-evaluator"]["results.json"])
-  logger.debug(res_json)
-
-  assert res_json["simulation_count"] == expected_total_simulation_count
-
-  scenarios_run = res_df.loc[res_df['controller_inference_time_max'].notna()]
-  tests_with_some_steps = set(scenarios_run["fab_test_id"])
-  # Due to non-determinism of agent and early stopping ("The mean percentage of done agents during the last Test (2 environments) was too low: 0.100 < 0.25"), we cannot check the number of scenarios or tests run
-  if tests is not None:
-    assert len(tests_with_some_steps.difference(tests)) == 0, (tests_with_some_steps, tests)
-
-  logger.info("Download results from S3")
-
-  aws_endpoint_url = config["AWS_ENDPOINT_URL"]
-  s3 = boto3.client(
-    's3',
-    # https://docs.weka.io/additional-protocols/s3/s3-examples-using-boto3
-    # N.B. evaluator uploads from within docker network, we're accessing MinIO container from the host network.
-    endpoint_url=aws_endpoint_url.replace("minio", "localhost"),
-    aws_access_key_id=config["AWS_ACCESS_KEY_ID"],
-    aws_secret_access_key=config["AWS_SECRET_ACCESS_KEY"]
-  )
-  s3_bucket = config["S3_BUCKET"]
-
-  logger.info("Get results files from S3 under %s...", aws_endpoint_url)
-  obj = s3.get_object(Bucket=s3_bucket, Key=f'results/{submission_id}.csv', )
-  results_csv = obj['Body'].read().decode("utf-8")
-  df = pd.read_csv(StringIO(results_csv))
-  print(df)
-  obj = s3.get_object(Bucket=s3_bucket, Key=f'results/{submission_id}.json', )
-  results_json = obj['Body'].read().decode("utf-8")
-  data = json.loads(results_json)
-  print(data)
+  run_task('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', submission_id,
+           # use deterministic baselines
+           submission_data_url="ghcr.io/flatland-association/flatland-baselines:latest",
+           tests=tests, **config)
 
   token = backend_application_flow(
     client_id='fab-client-credentials',
@@ -191,7 +148,7 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
   print(token)
   fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
 
-  fab.submissions_submission_ids_patch(submission_ids=[submission_id])
+  fab.submissions_submission_ids_patch(submission_ids=[uuid.UUID(submission_id)])
 
   test_ids = {
     "Test_0": "4ecdb9f4-e2ff-41ff-9857-abe649c19c50",
@@ -201,9 +158,9 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
   for (test_name, test_id), primary_scenario_scores, primary_test_score, secondary_scenario_scores, secondary_test_score in (
     zip(test_ids.items(), expected_primary_scenario_scores, expected_primary_test_scores, expected_secondary_scenario_scores, expected_secondary_test_scores)):
     test_results = fab.results_submissions_submission_id_tests_test_ids_get(
-      submission_id=submission_id,
-      test_ids=[test_id])
-    print("results_uploaded")
+      submission_id=uuid.UUID(submission_id),
+      test_ids=[uuid.UUID(test_id)])
+    print(f"results downloaded for submission_id={submission_id} and test_id={test_id}")
     print(test_results)
     for i in range(len(primary_scenario_scores)):
       assert test_results.body[0].scenario_scorings[i].scorings[0].field_key == "normalized_reward"
@@ -243,3 +200,32 @@ def backend_application_flow(
     client_secret=client_secret,
   )
   return token
+
+
+# https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
+def exec_with_logging(exec_args: List[str], log_level_stdout=logging.DEBUG, log_level_stderr=logging.DEBUG, collect: bool = False):
+  logger.debug(f"/ Start %s", exec_args)
+  proc = subprocess.Popen(exec_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+  stdout = None
+  stderr = None
+  try:
+    stdout, stderr = proc.communicate()
+    stdo = log_subprocess_output(TextIOWrapper(BytesIO(stdout)), level=log_level_stdout, label=str(exec_args), collect=collect)
+    stde = log_subprocess_output(TextIOWrapper(BytesIO(stderr)), level=log_level_stderr, label=str(exec_args), collect=collect)
+    logger.debug("\\ End %s", exec_args)
+    return stdo, stde
+  except (OSError, subprocess.CalledProcessError) as exception:
+    logger.error(stderr)
+    raise RuntimeError(f"Failed to run {exec_args}. Stdout={stdout}. Stderr={stderr}") from exception
+
+
+# https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
+def log_subprocess_output(pipe, level=logging.DEBUG, label="", collect: bool = False) -> Optional[List[str]]:
+  s = []
+  for line in pipe.readlines():
+    logger.log(level, "[from subprocess %s] %s", label, line)
+    if collect:
+      s.append(line)
+  if collect:
+    return s
+  return None

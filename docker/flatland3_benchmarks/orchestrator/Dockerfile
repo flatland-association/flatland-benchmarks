@@ -14,3 +14,5 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 USER runner
 
 RUN sudo ls /tmp
+
+RUN python -m pip install git+https://github.com/flatland-association/flatland-rl.git@main
