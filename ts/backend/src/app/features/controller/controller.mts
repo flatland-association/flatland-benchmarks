@@ -2,9 +2,10 @@ import { ApiEndpointsOfVerb, ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoint
 import { ApiResponse } from '@common/api-response.js'
 import express, { NextFunction, Request, Response, Router } from 'express'
 import type { RouteParameters } from 'express-serve-static-core'
-import { StatusCodes } from 'http-status-codes'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
+import { failedPresenceCheck, presenceCheckTrusted } from './controller-utils.mjs'
 
 const logger = new Logger('controller')
 
@@ -122,6 +123,36 @@ export class Controller {
       dbg,
     })
     logger.warn(`${req.method} ${req.originalUrl}: Unauthorized ${StatusCodes.UNAUTHORIZED}`, error)
+  }
+
+  /**
+   * Performs a presence check and responds with `OK` if that passed and error
+   * responds with `Not Found` with the missed ids in `dbg` otherwise.
+   * @param req Express request.
+   * @param res Express response.
+   * @param body Response body. Type is derived from endpoint registry.
+   * @param ids Ids to look for.
+   * @param idProperty Property name in `body` items to compare with id.
+   */
+  respondAfterPresenceCheck<T extends unknown[], K extends keyof T[number]>(
+    req: Request,
+    res: Response<ApiResponse<T>>,
+    body: T,
+    ids: T[number][K][],
+    idProperty: K = 'id' as K,
+  ) {
+    if (presenceCheckTrusted(body, ids, idProperty)) {
+      this.respond(req, res, body)
+    } else {
+      this.respondError(
+        req,
+        res,
+        { text: ReasonPhrases.NOT_FOUND },
+        body,
+        failedPresenceCheck(body, ids, idProperty),
+        StatusCodes.NOT_FOUND,
+      )
+    }
   }
 
   // Attach handler wrapper, serves two purposes:

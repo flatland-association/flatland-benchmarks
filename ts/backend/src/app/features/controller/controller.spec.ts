@@ -6,6 +6,8 @@ import { beforeAll, describe, expect, test } from 'vitest'
 import { defaults } from '../config/defaults.mjs'
 import { Controller } from './controller.mjs'
 
+const dummyResources = [{ id: '1' }, { id: '2' }]
+
 describe.sequential('Controller', () => {
   let app: Express
   let request: TestAgent
@@ -50,6 +52,12 @@ describe.sequential('Controller', () => {
     controller.attachGet('/test-undefined' as '/mirror', (_req, _res) => {
       /* */
     })
+    controller.attachGet('/test-presence-check/:suite_ids' as '/definitions/suites/:suite_ids', (req, res) => {
+      const ids = req.params.suite_ids.split(',')
+      const resources = dummyResources
+      //@ts-expect-error suite
+      controller.respondAfterPresenceCheck(req, res, resources, ids)
+    })
     // test for routes presence
     const routes = getControllerRoutes(controller)
     expect(routes).toContain('/test-get')
@@ -59,8 +67,9 @@ describe.sequential('Controller', () => {
     expect(routes).toContain('/test-server-error')
     expect(routes).toContain('/test-catch')
     expect(routes).toContain('/test-undefined')
+    expect(routes).toContain('/test-presence-check/:suite_ids')
     // no more than the the explicitly attached routes should be present
-    expect(routes).toHaveLength(7)
+    expect(routes).toHaveLength(8)
   })
 
   test.each([
@@ -88,6 +97,14 @@ describe.sequential('Controller', () => {
     {
       route: '/test-undefined',
       expects: { status: 500, response: {} },
+    },
+    {
+      route: '/test-presence-check/1,2',
+      expects: { status: 200, response: { body: dummyResources } },
+    },
+    {
+      route: '/test-presence-check/1,2,3',
+      expects: { status: 404, response: { body: dummyResources, error: { text: 'Not Found' }, dbg: ['3'] } },
     },
   ])('should answer $route with $expects', async (testCase) => {
     const res = await request.get(testCase.route)
