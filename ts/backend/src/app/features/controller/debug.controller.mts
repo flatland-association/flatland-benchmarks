@@ -1,3 +1,4 @@
+import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { Controller, dbgRequestObject, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
@@ -22,10 +23,17 @@ export class DebugController extends Controller {
   }
 
   postMirror: PostHandler<'/mirror'> = (req, res) => {
-    // do not set body.data to see `requestError` in action
+    // do not set body.data to see `respondError` in action
     // do not set body at all to see fallback error handling in action
     if (!req.body.data) {
-      this.requestError(req, res, { text: 'No data set in request body' })
+      this.respondError(
+        req,
+        res,
+        { text: 'No data set in request body' },
+        undefined,
+        undefined,
+        StatusCodes.BAD_REQUEST,
+      )
       return
     } else {
       this.respond(req, res, req.body, dbgRequestObject(req))

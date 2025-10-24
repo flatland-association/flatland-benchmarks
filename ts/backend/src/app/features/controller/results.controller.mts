@@ -1,4 +1,5 @@
 import { ResultRow } from '@common/interfaces'
+import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AggregatorService } from '../services/aggregator-service.mjs'
@@ -264,10 +265,17 @@ export class ResultsController extends Controller {
           INSERT INTO results ${sql.fragment(resultRows)}
         `
       })
-      this.respond(req, res, {}, undefined, 201)
+      this.respond(req, res, {}, undefined, StatusCodes.CREATED)
     } catch (error) {
       logger.error(error)
-      this.requestError(req, res, { text: 'Some results could not be inserted, transaction aborted.' })
+      this.respondError(
+        req,
+        res,
+        { text: 'Some results could not be inserted, transaction aborted.' },
+        undefined,
+        undefined,
+        StatusCodes.CONFLICT,
+      )
       logger.error(`${error} req.body.data=${req.body.data}`)
       logger.error(`${error} req.body=${req.body}`)
       logger.error(`${error} sql.notices=${sql.notices}`)

@@ -36,9 +36,6 @@ describe.sequential('Controller', () => {
     controller.attachPatch('/test-patch' as '/mirror/:id', (req, res) => {
       controller.respond(req, res, { data: '<ok>' }, '<debug>')
     })
-    controller.attachGet('/test-request-error' as '/mirror', (req, res) => {
-      controller.requestError(req, res, { text: 'request error' })
-    })
     controller.attachGet('/test-auth-error' as '/mirror', (req, res) => {
       controller.unauthorizedError(req, res, { text: 'auth error' })
     })
@@ -58,23 +55,18 @@ describe.sequential('Controller', () => {
     expect(routes).toContain('/test-get')
     expect(routes).toContain('/test-post')
     expect(routes).toContain('/test-patch')
-    expect(routes).toContain('/test-request-error')
     expect(routes).toContain('/test-auth-error')
     expect(routes).toContain('/test-server-error')
     expect(routes).toContain('/test-catch')
     expect(routes).toContain('/test-undefined')
     // no more than the the explicitly attached routes should be present
-    expect(routes).toHaveLength(8)
+    expect(routes).toHaveLength(7)
   })
 
   test.each([
     {
       route: '/test-get',
       expects: { status: 200, response: { body: '<ok>', dbg: '<debug>' } },
-    },
-    {
-      route: '/test-request-error',
-      expects: { status: 400, response: { error: { text: 'request error' } } },
     },
     {
       route: '/test-auth-error',
