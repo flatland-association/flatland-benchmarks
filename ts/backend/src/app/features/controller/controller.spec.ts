@@ -1,5 +1,6 @@
 import type { Express } from 'express'
 import express from 'express'
+import { StatusCodes } from 'http-status-codes'
 import supertest from 'supertest'
 import TestAgent from 'supertest/lib/agent'
 import { beforeAll, describe, expect, test } from 'vitest'
@@ -75,36 +76,39 @@ describe.sequential('Controller', () => {
   test.each([
     {
       route: '/test-get',
-      expects: { status: 200, response: { body: '<ok>', dbg: '<debug>' } },
+      expects: { status: StatusCodes.OK, response: { body: '<ok>', dbg: '<debug>' } },
     },
     {
       route: '/test-auth-error',
-      expects: { status: 401, response: { error: { text: 'auth error' } } },
+      expects: { status: StatusCodes.UNAUTHORIZED, response: { error: { text: 'auth error' } } },
     },
     {
       route: '/test-no-such-route',
-      expects: { status: 404, response: {} },
+      expects: { status: StatusCodes.NOT_FOUND, response: {} },
     },
     {
       route: '/test-server-error',
-      expects: { status: 500, response: { error: { text: 'server error' } } },
+      expects: { status: StatusCodes.INTERNAL_SERVER_ERROR, response: { error: { text: 'server error' } } },
     },
     // fallback error handler does not set a response body
     {
       route: '/test-catch',
-      expects: { status: 500, response: {} },
+      expects: { status: StatusCodes.INTERNAL_SERVER_ERROR, response: {} },
     },
     {
       route: '/test-undefined',
-      expects: { status: 500, response: {} },
+      expects: { status: StatusCodes.INTERNAL_SERVER_ERROR, response: {} },
     },
     {
       route: '/test-presence-check/1,2',
-      expects: { status: 200, response: { body: dummyResources } },
+      expects: { status: StatusCodes.OK, response: { body: dummyResources } },
     },
     {
       route: '/test-presence-check/1,2,3',
-      expects: { status: 404, response: { body: dummyResources, error: { text: 'Not Found' }, dbg: ['3'] } },
+      expects: {
+        status: StatusCodes.NOT_FOUND,
+        response: { body: dummyResources, error: { text: 'Not Found' }, dbg: ['3'] },
+      },
     },
   ])('should answer $route with $expects', async (testCase) => {
     const res = await request.get(testCase.route)
