@@ -3,6 +3,22 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.15.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.14.0...v0.15.0) (2025-10-24)
+
+
+### Features
+
+* **backend:** Allow body in error responses ([#450](https://github.com/flatland-association/flatland-benchmarks/issues/450)) ([4c65284](https://github.com/flatland-association/flatland-benchmarks/commit/4c65284808f9d134385f6925408bd40fcb4c727b))
+* **backend:** Introduce independent query param in submissions endpoint for unpublished own ([#447](https://github.com/flatland-association/flatland-benchmarks/issues/447)) ([fdf9d89](https://github.com/flatland-association/flatland-benchmarks/commit/fdf9d89a0bb4731c7f167db9c32609f171328e93))
+* Link to suite from benchmark ([#449](https://github.com/flatland-association/flatland-benchmarks/issues/449)) ([1a4e6c9](https://github.com/flatland-association/flatland-benchmarks/commit/1a4e6c9dc47387164d7d23d75cc0e83b566d25bb))
+* Make leaderboards and alike resources ([#454](https://github.com/flatland-association/flatland-benchmarks/issues/454)) ([4b0260e](https://github.com/flatland-association/flatland-benchmarks/commit/4b0260e0fab877f19c392f36c2df24ea388b7190))
+* Real world baseline challenge ([#448](https://github.com/flatland-association/flatland-benchmarks/issues/448)) ([6a857a3](https://github.com/flatland-association/flatland-benchmarks/commit/6a857a3358e6ed3ecb5d23d5ef82cb3304a0bab6))
+
+
+### Bug Fixes
+
+* **backend:** global error response not ApiResponse ([#445](https://github.com/flatland-association/flatland-benchmarks/issues/445)) ([01e8b45](https://github.com/flatland-association/flatland-benchmarks/commit/01e8b45154223d80ef107cbabd5fac489639ae2c))
+
 ## [0.14.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.13.1...v0.14.0) (2025-09-29)
 
 
