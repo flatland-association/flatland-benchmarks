@@ -166,7 +166,7 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const score = await aggregator.getSubmissionTestScore(submissionId, testIds)
-    this.respond(req, res, score)
+    this.respondAfterPresenceCheck(req, res, score, testIds, 'test_id')
   }
 
   /**
@@ -336,7 +336,7 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const score = await aggregator.getSubmissionScenarioScore(submissionId, scenarioIds)
-    this.respond(req, res, score)
+    this.respondAfterPresenceCheck(req, res, score, scenarioIds, 'scenario_id')
   }
 
   /**
@@ -421,7 +421,7 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getBenchmarkLeaderboard(benchmarkIds)
-    this.respond(req, res, board)
+    this.respondAfterPresenceCheck(req, res, board, benchmarkIds, 'benchmark_id')
   }
 
   /**
@@ -482,7 +482,7 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getCampaignItemOverview(benchmarkIds)
-    this.respond(req, res, board)
+    this.respondAfterPresenceCheck(req, res, board, benchmarkIds, 'benchmark_id')
   }
 
   /**
@@ -557,7 +557,7 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getCampaignOverview(suiteIds)
-    this.respond(req, res, board)
+    this.respondAfterPresenceCheck(req, res, board, suiteIds, 'suite_id')
   }
 
   /**
@@ -654,6 +654,6 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getBenchmarkTestLeaderboard(benchmarkId, testIds)
-    this.respond(req, res, board)
+    this.respondAfterPresenceCheck(req, res, board, testIds, 'test_id')
   }
 }

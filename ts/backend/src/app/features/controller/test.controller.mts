@@ -63,6 +63,6 @@ export class TestController extends Controller {
         LIMIT ${ids.length}
       `
     // return array - dev.002
-    this.respond(req, res, tests)
+    this.respondAfterPresenceCheck(req, res, tests, ids)
   }
 }

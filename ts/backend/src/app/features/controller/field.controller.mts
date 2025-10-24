@@ -58,6 +58,6 @@ export class FieldController extends Controller {
         LIMIT ${ids.length}
       `
     // return array - dev.002
-    this.respond(req, res, fields)
+    this.respondAfterPresenceCheck(req, res, fields, ids)
   }
 }

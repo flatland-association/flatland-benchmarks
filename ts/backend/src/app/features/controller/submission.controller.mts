@@ -347,7 +347,7 @@ export class SubmissionController extends Controller {
         LIMIT ${uuids.length}
       `
     // return array - dev.002
-    this.respond(req, res, submissions)
+    this.respondAfterPresenceCheck(req, res, submissions, uuids)
   }
 
   /**
