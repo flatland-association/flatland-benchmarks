@@ -593,6 +593,10 @@ export class ResultsController extends Controller {
    *                            type: string
    *                            format: uuid
    *                            description: ID of benchmark.
+   *                          test_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of test.
    *                          items:
    *                            type: array
    *                            items:

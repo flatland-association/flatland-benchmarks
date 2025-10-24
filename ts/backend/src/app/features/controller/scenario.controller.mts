@@ -1,6 +1,4 @@
-import { appendDir } from '@common/endpoint-utils.js'
 import { ScenarioDefinitionRow } from '@common/interfaces.js'
-import { StripDir } from '@common/utility-types.js'
 import { configuration } from '../config/config.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import { Controller, GetHandler } from './controller.mjs'
@@ -42,8 +40,6 @@ export class ScenarioController extends Controller {
    *                      items:
    *                        type: object
    *                        properties:
-   *                          dir:
-   *                            type: string
    *                          id:
    *                            type: string
    *                            format: uuid
@@ -56,12 +52,11 @@ export class ScenarioController extends Controller {
     const ids = req.params.scenario_ids.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
-    const rows = await sql.query<StripDir<ScenarioDefinitionRow>>`
+    const scenarios = await sql.query<ScenarioDefinitionRow>`
         SELECT * FROM scenario_definitions
         WHERE id=ANY(${ids})
         LIMIT ${ids.length}
       `
-    const scenarios = appendDir('/definitions/scenarios/', rows)
     // return array - dev.002
     this.respond(req, res, scenarios)
   }

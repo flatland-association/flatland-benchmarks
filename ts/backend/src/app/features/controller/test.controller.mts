@@ -1,6 +1,4 @@
-import { appendDir } from '@common/endpoint-utils.js'
 import { TestDefinitionRow } from '@common/interfaces.js'
-import { StripDir } from '@common/utility-types.js'
 import { configuration } from '../config/config.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import { Controller, GetHandler } from './controller.mjs'
@@ -42,8 +40,6 @@ export class TestController extends Controller {
    *                      items:
    *                        type: object
    *                        properties:
-   *                          dir:
-   *                            type: string
    *                          id:
    *                            type: string
    *                            format: uuid
@@ -61,12 +57,11 @@ export class TestController extends Controller {
     const ids = req.params.test_ids.split(',')
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
-    const rows = await sql.query<StripDir<TestDefinitionRow>>`
+    const tests = await sql.query<TestDefinitionRow>`
         SELECT * FROM test_definitions
         WHERE id=ANY(${ids})
         LIMIT ${ids.length}
       `
-    const tests = appendDir('/definitions/tests/', rows)
     // return array - dev.002
     this.respond(req, res, tests)
   }

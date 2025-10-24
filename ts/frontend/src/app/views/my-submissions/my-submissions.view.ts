@@ -5,7 +5,6 @@ import { isSubmissionCompletelyScored } from '@common/scoring-utils'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { TableColumn, TableComponent, TableRow } from '../../components/table/table.component'
-import { ApiService } from '../../features/api/api.service'
 import { AuthService } from '../../features/auth/auth.service'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
@@ -20,7 +19,6 @@ import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.
 })
 export class MySubmissionsView implements OnInit {
   private authService = inject(AuthService)
-  private apiService = inject(ApiService)
   private resourceService = inject(ResourceService)
   private customizationService = inject(CustomizationService)
   private datePipe = inject(DatePipe)
@@ -39,23 +37,16 @@ export class MySubmissionsView implements OnInit {
     this.customizationService.getCustomization().then((customization) => {
       this.customization = customization
     })
-    // TODO: load via resource service
-    // see: https://github.com/flatland-association/flatland-benchmarks/issues/395
-    this.apiService
-      .get('/submissions', { query: { submitted_by: this.authService.userUuid, unpublished_own: 'true' } })
-      .then(async (resonse) => {
-        const submissions = resonse.body
+    this.resourceService
+      .load('/submissions', { query: { submitted_by: this.authService.userUuid, unpublished_own: 'true' } })
+      .then(async (submissions) => {
         if (!submissions?.length) {
           this.rows = []
           return
         }
-        // TODO: load via resource service
-        // see: https://github.com/flatland-association/flatland-benchmarks/issues/395
-        const scores = (
-          await this.apiService.get('/results/submissions/:submission_ids', {
-            params: { submission_ids: submissions.map((s) => s.id).join(',') },
-          })
-        ).body
+        const scores = await this.resourceService.loadGrouped('/results/submissions/:submission_ids', {
+          params: { submission_ids: submissions.map((s) => s.id) },
+        })
         const benchmarks = await this.resourceService.loadGrouped('/definitions/benchmarks/:benchmark_ids', {
           params: { benchmark_ids: submissions?.map((s) => s.benchmark_id) ?? [] },
         })

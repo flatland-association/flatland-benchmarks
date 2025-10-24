@@ -119,6 +119,7 @@ export class AggregatorService extends Service {
     return testIds.map((testId) => {
       const leaderboard: Leaderboard = {
         benchmark_id: benchmarkId,
+        test_id: testId,
         items: board.items.filter((item) => item.test_scorings.some((score) => score.test_id === testId)),
       }
       // sort leaderboard items by primary test score

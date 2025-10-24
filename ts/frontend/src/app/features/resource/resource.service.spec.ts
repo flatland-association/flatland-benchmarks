@@ -6,7 +6,6 @@ import { ResourceService } from './resource.service'
 
 const dummySuites: SuiteDefinitionRow[] = [
   {
-    dir: '/definitions/suites/',
     id: 'a',
     name: 'Suite A',
     description: 'For testing',
@@ -15,7 +14,6 @@ const dummySuites: SuiteDefinitionRow[] = [
     benchmark_ids: [],
   },
   {
-    dir: '/definitions/suites/',
     id: 'b',
     name: 'Suite B',
     description: 'For testing',

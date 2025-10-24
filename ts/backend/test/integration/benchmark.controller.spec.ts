@@ -12,7 +12,6 @@ Logger.setOptions({ '--log-level': 'OFF' })
 
 const protoBenchmark = [
   {
-    dir: '/definitions/benchmarks/',
     id: '20ccc7c1-034c-4880-8946-bffc3fed1359',
     name: 'Benchmark 1',
     description: 'Domain X benchmark',

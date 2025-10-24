@@ -2,8 +2,8 @@ import { Component, OnInit, inject } from '@angular/core'
 import { SuiteDefinitionRow } from '@common/interfaces'
 import { ContentComponent, SectionComponent } from '@flatland-association/flatland-ui'
 import { SuiteCardComponent } from '../../components/suite-card/suite-card.component'
-import { ApiService } from '../../features/api/api.service'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
+import { ResourceService } from '../../features/resource/resource.service'
 
 @Component({
   selector: 'view-home',
@@ -12,8 +12,8 @@ import { Customization, CustomizationService } from '../../features/customizatio
   styleUrl: './home.view.scss',
 })
 export class HomeView implements OnInit {
-  apiService = inject(ApiService)
-  customizationService = inject(CustomizationService)
+  private resourceService = inject(ResourceService)
+  private customizationService = inject(CustomizationService)
 
   suites?: SuiteDefinitionRow[]
   customization?: Customization
@@ -21,7 +21,7 @@ export class HomeView implements OnInit {
 
   async ngOnInit() {
     this.customization = await this.customizationService.getCustomization()
-    this.suites = (await this.apiService.get('/definitions/suites')).body
+    this.suites = await this.resourceService.load('/definitions/suites')
     this.leadHtml = this.customization.content.home.lead
   }
 }

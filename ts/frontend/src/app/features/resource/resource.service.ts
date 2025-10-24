@@ -6,6 +6,15 @@ import { BanEmpty, Empty, OptionalEmpty } from '@common/utility-types'
 import { RouteParameters } from 'express-serve-static-core'
 import { ApiService } from '../api/api.service'
 
+/**
+ * Resource endpoints are ApiEndpoints adhering to dev.002 (returning array).
+ */
+export type ResourceGetEndpoints = {
+  [E in keyof ApiGetEndpoints as Required<ApiGetEndpoints[E]['response']>['body'] extends unknown[]
+    ? E
+    : never]: ApiGetEndpoints[E]
+}
+
 interface AsyncCacheItem<T> {
   value?: T
   promise: Promise<T>
@@ -15,28 +24,103 @@ interface AsyncCacheItem<T> {
 }
 
 // like ApiGetOptions but allowing params to be of type string[]
-interface AugmentedApiGetOptions<E extends keyof ApiGetEndpoints> {
+interface AugmentedApiGetOptions<E extends keyof ResourceGetEndpoints> {
   params: {
     [K in keyof RouteParameters<E>]: string | string[]
   }
-  query?: ApiGetEndpoints[E]['request']['query']
+  query?: ResourceGetEndpoints[E]['request']['query']
 }
 
-interface RequestDescriptor<E extends keyof ApiGetEndpoints> {
+interface RequestDescriptor<E extends keyof ResourceGetEndpoints> {
   endpoint: E
   options?: Partial<AugmentedApiGetOptions<E>>
+  resourceURL: string
 }
 
-// TODO: ideally define where endpoints are defined
-// see: https://github.com/flatland-association/flatland-benchmarks/issues/413
-const maxAges: Partial<Record<keyof ApiGetEndpoints, number>> = {
-  '/results/benchmarks/:benchmark_id/tests/:test_ids': 0,
-  '/results/benchmarks/:benchmark_ids': 0,
-  '/results/campaign-items/:benchmark_ids': 0,
-  '/results/campaigns/:suite_ids': 0,
-  '/results/submissions/:submission_id/scenarios/:scenario_ids': 0,
-  '/results/submissions/:submission_id/tests/:test_ids': 0,
-  '/results/submissions/:submission_ids': 0,
+type ResourceProperty<T> = T extends unknown[] ? keyof T[number] : never
+
+/**
+ * Resource meta data.
+ */
+export type ResourceMetaRecords = {
+  [K in keyof ResourceGetEndpoints]?: {
+    /** Max. cache lifetime in seconds. Default is 0. */
+    maxAge?: number
+    /**
+     * Which parameter - if any - to spread in multi-requests. Per default, no
+     * spreading is applied.
+     *
+     * Spreading describes the operation treating `GET /res/1, GET /res/2,
+     * GET /res/3` the same as `GET /res/1,2,3`, allowing resources to be
+     * handled individually yet fetched from backend in one request.
+     */
+    spreadParam?: keyof RouteParameters<K> | undefined
+    /**
+     * Which property from the returned resource to consider to build the
+     * resource URL. Default is `id`.
+     */
+    idProperty?: ResourceProperty<ResourceGetEndpoints[K]['response']['body']> & {}
+  }
+}
+
+/**
+ * Meta data define how resources - identified by endpoint - are cached and
+ * spread.
+ * See also {@link ResourceMetaRecords}
+ */
+export const resourceMeta: ResourceMetaRecords = {
+  '/definitions/fields/:field_ids': {
+    maxAge: Infinity,
+    spreadParam: 'field_ids',
+  },
+  '/definitions/scenarios/:scenario_ids': {
+    maxAge: Infinity,
+    spreadParam: 'scenario_ids',
+  },
+  '/definitions/tests/:test_ids': {
+    maxAge: Infinity,
+    spreadParam: 'test_ids',
+  },
+  '/definitions/benchmarks/:benchmark_ids': {
+    maxAge: Infinity,
+    spreadParam: 'benchmark_ids',
+  },
+  '/definitions/suites/:suite_ids': {
+    maxAge: Infinity,
+    spreadParam: 'suite_ids',
+  },
+  '/submissions/:submission_ids': {
+    maxAge: Infinity,
+    spreadParam: 'submission_ids',
+  },
+  '/results/submissions/:submission_ids': {
+    spreadParam: 'submission_ids',
+    idProperty: 'submission_id',
+  },
+  '/results/submissions/:submission_id/tests/:test_ids': {
+    spreadParam: 'test_ids',
+    idProperty: 'test_id',
+  },
+  '/results/submissions/:submission_id/scenarios/:scenario_ids': {
+    spreadParam: 'scenario_ids',
+    idProperty: 'scenario_id',
+  },
+  '/results/benchmarks/:benchmark_ids': {
+    spreadParam: 'benchmark_ids',
+    idProperty: 'benchmark_id',
+  },
+  '/results/campaign-items/:benchmark_ids': {
+    spreadParam: 'benchmark_ids',
+    idProperty: 'benchmark_id',
+  },
+  '/results/campaigns/:suite_ids': {
+    spreadParam: 'suite_ids',
+    idProperty: 'suite_id',
+  },
+  '/results/benchmarks/:benchmark_id/tests/:test_ids': {
+    spreadParam: 'test_ids',
+    idProperty: 'test_id',
+  },
 }
 
 @Injectable({
@@ -45,8 +129,17 @@ const maxAges: Partial<Record<keyof ApiGetEndpoints, number>> = {
 export class ResourceService {
   private apiService = inject(ApiService)
 
-  // maps "resource identifier" (interpolated endpoint + query params) to response
-  private cache = new Map<string, AsyncCacheItem<unknown>>()
+  // maps endpoint to responded resources
+  private cache = new Map<
+    string,
+    AsyncCacheItem<ResourceGetEndpoints[keyof ResourceGetEndpoints]['response']['body']>
+  >()
+
+  constructor() {
+    // expose service for debugging purposes
+    //@ts-expect-error any
+    window['resourceService'] = this
+  }
 
   // NOTE: The `& {}` you see in types below is to pretty print the type (makes
   // debugging type errors easier, as it resolves generics where possible)
@@ -54,15 +147,13 @@ export class ResourceService {
   /**
    * Load resource from cache or backend, if not cached yet.
    * @param endpoint String representation of the endpoint route.
-   * @param _options Request options. Last param can be `string` or `string[]` -
-   * if latter, it will be interpreted as list of ids that can be spread for
-   * cache lookup but be joined with a comma for the API request.
-   * @see {@link ApiGetEndpoints}
+   * @param _options Request options.
+   * @see {@link ResourceGetEndpoints}
    */
-  async load<E extends keyof ApiGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
+  async load<E extends keyof ResourceGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
     endpoint: E,
     ..._options: Empty extends O ? [options?: O] : [O & {}]
-  ): Promise<ApiGetEndpoints[E]['response']['body']> {
+  ): Promise<ResourceGetEndpoints[E]['response']['body']> {
     return this.loadOrdered<E, O>(endpoint, ..._options)
   }
 
@@ -70,15 +161,13 @@ export class ResourceService {
    * Load resources from cache or backend, if not cached yet.
    * Returned resources are not in order of passed ids.
    * @param endpoint String representation of the endpoint route.
-   * @param _options Request options. Last param can be `string` or `string[]` -
-   * if latter, it will be interpreted as list of ids that can be spread for
-   * cache lookup but be joined with a comma for the API request.
-   * @see {@link ApiGetEndpoints}
+   * @param _options Request options.
+   * @see {@link ResourceGetEndpoints}
    */
-  async loadGrouped<E extends keyof ApiGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
+  async loadGrouped<E extends keyof ResourceGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
     endpoint: E,
     ..._options: Empty extends O ? [o?: O] : [o: O & {}]
-  ): Promise<ApiGetEndpoints[E]['response']['body']> {
+  ): Promise<ResourceGetEndpoints[E]['response']['body']> {
     const options = _options[0]
     // Group (make unique) all entries in array params
     for (const key in options?.params) {
@@ -93,81 +182,82 @@ export class ResourceService {
    * Load multiple resources from cache or backend, if not cached yet.
    * Returned resources are in order of passed ids.
    * @param endpoint String representation of the endpoint route.
-   * @param _options Request options. Last param can be `string` or `string[]` -
-   * if latter, it will be interpreted as list of ids that can be spread for
-   * cache lookup but be joined with a comma for the API request.
-   * @see {@link ApiGetEndpoints}
+   * @param _options Request options.
+   * @see {@link ResourceGetEndpoints}
    */
-  async loadOrdered<E extends keyof ApiGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
+  async loadOrdered<E extends keyof ResourceGetEndpoints & {}, O extends OptionalEmpty<AugmentedApiGetOptions<E>>>(
     endpoint: E,
     ..._options: Empty extends O ? [o?: O] : [o: O & {}]
-  ): Promise<ApiGetEndpoints[E]['response']['body']> {
+  ): Promise<ResourceGetEndpoints[E]['response']['body']> {
     const options = _options[0]
     const now = Date.now()
-    const maxAge = maxAges[endpoint]
-    const tcutoff = typeof maxAge !== 'undefined' ? now - maxAge : undefined
+    const meta = resourceMeta[endpoint]
+
+    const tcutoff = typeof meta?.maxAge === 'number' ? now - meta.maxAge * 1000 : now
+    const spread = meta?.spreadParam
 
     let resourceRequests: RequestDescriptor<E>[]
 
-    // accept at max one spread param - derive that one from options (last
-    // listed array is spread param)
-    let spread: keyof RouteParameters<E> | undefined
     if (options?.params) {
-      Object.entries(options.params).forEach(([param, value]) => {
-        if (Array.isArray(value)) {
-          spread = param as keyof RouteParameters<E>
-        }
-      })
-      //... all other array params: collapse
+      // collapse all params (except the spread one, which has to be an array)
       for (const key in options.params) {
-        if (key !== spread && Array.isArray(options.params[key])) {
+        if (key === spread && !Array.isArray(options.params[key])) {
+          options.params[key] = [options.params[key]]
+        } else if (key !== spread && Array.isArray(options.params[key])) {
           options.params[key] = options.params[key].join(',')
         }
       }
     }
 
-    // If spread params are passed, interpolate endpoint with options merged
-    // with entry for every spread param. For that to work, clone options and
-    // overwrite the id param for every request.
-    // Without spreading, simply use original options for interpolation.
+    // If spreading is active, make one virtual resource request per spread
+    // param. For that to work, clone options and overwrite the id param for
+    // every request.
     if (spread) {
       resourceRequests = (options!.params![spread] as string[]).map((id) => {
-        return { endpoint, options: this.cloneOptionsForId(options, spread!, id) }
+        const opts = this.cloneOptionsForId(options, spread!, id)
+        const resourceURL = this.getResourceURL(endpoint, opts)
+        return {
+          endpoint,
+          options: opts,
+          resourceURL,
+        }
       })
-    } else {
-      resourceRequests = [{ endpoint, options }]
+    }
+    // Without spreading, simply use original options for interpolation.
+    else {
+      resourceRequests = [{ endpoint, options, resourceURL: this.getResourceURL(endpoint, options) }]
     }
 
-    const apiRequests: RequestDescriptor<E>[] = []
+    const apiRequests = new Map<string, RequestDescriptor<E>>()
 
     // go through all resource requests (in order) and either
     // - return cached promise
     // - prepare + return cached promise, make api request and resolve later on
-    const promises = resourceRequests.map((request) => {
-      const identifier = this.getResourceIdentifier(request.endpoint, request.options)
-      const item = this.cache.get(identifier)
+    const promises: Promise<ResourceGetEndpoints[E]['response']['body']>[] = resourceRequests.map((request) => {
+      const item = this.cache.get(request.resourceURL)
       if (
         item &&
-        (typeof item.timestamp === 'undefined' || typeof tcutoff === 'undefined' || item.timestamp >= tcutoff)
+        // Timestamp is undefined until the promise resolved once.
+        // After that, it's set to the time when the promise resolved.
+        (typeof item.timestamp === 'undefined' || item.timestamp >= tcutoff)
       ) {
         // this returns the same promise if the same id is duplicated in `ids`
         return item.promise
       } else {
         // create the cache item (with promise and executor) once
-        const cacheItem = {} as AsyncCacheItem<ApiGetEndpoints[E]['response']['body']>
-        cacheItem.promise = new Promise<ApiGetEndpoints[E]['response']['body']>((resolve, reject) => {
+        const cacheItem = {} as AsyncCacheItem<ResourceGetEndpoints[E]['response']['body']>
+        cacheItem.promise = new Promise<ResourceGetEndpoints[E]['response']['body']>((resolve, reject) => {
           cacheItem.promiseResolve = resolve
           cacheItem.promiseReject = reject
         }).then((value) => {
           // start item lifetime only once it has been resolved
-          cacheItem.timestamp = now
+          cacheItem.timestamp = Date.now()
           cacheItem.value = value
           return value
         })
-        //@ts-expect-error subtype
-        this.cache.set(identifier, cacheItem)
+        this.cache.set(request.resourceURL, cacheItem)
         // and remember to load once
-        apiRequests.push(request)
+        apiRequests.set(request.resourceURL, request)
         return cacheItem.promise
       }
     })
@@ -178,40 +268,70 @@ export class ResourceService {
     // which leads to the conclusion that all remaining requests can be merged
     // into one. (And also: if there are actually multiple requests, they only
     // differ by the id param)
-    if (apiRequests.length > 0) {
-      const actualRequest = window.structuredClone(apiRequests[0])
-      // merge request if necessary
-      if (apiRequests.length > 1) {
-        const actualIds = apiRequests.map((request) => request.options!.params![spread!])
+    if (apiRequests.size > 0) {
+      const requests = Array.from(apiRequests.values())
+      const actualRequest = window.structuredClone(requests[0])
+      // merge ids from requests if spreading is active
+      if (spread) {
+        const actualIds = requests.map((request) => request.options!.params![spread!])
         actualRequest.options!.params![spread!] = actualIds.join(',')
       }
-      const body = (
+      const resources = (
         await this.apiService.get(actualRequest.endpoint, actualRequest.options as BanEmpty<ApiGetOptions<E>>)
       ).body
-      const resources = Array.isArray(body) ? body : [body]
-      // go through all loaded resources and resolve the cached promise
-      resources?.forEach((resource) => {
-        // The returned resource does not include the complete identifier,
-        // hence rebuild that from request merged with response id.
-        const resourceEndpoint = actualRequest.endpoint
-        let resourceOptions = actualRequest.options
+      if (resources) {
+        // when spreading is active, treat all items in response as individual
+        // set of resources
         if (spread) {
-          resourceOptions = this.cloneOptionsForId(resourceOptions, spread, resource.id)
+          const identProp = meta?.idProperty ?? 'id'
+          resources?.forEach((resource) => {
+            // if identProp does not exist, do not resolve promise (to cause its
+            // rejection later on)
+            if (identProp in resource) {
+              // the resource URL has to be derived from the request options
+              // merged with the responded resource's identifying property
+              const resourceOptions = this.cloneOptionsForId(
+                actualRequest.options,
+                spread,
+                resource[identProp as keyof typeof resource],
+              )
+              const resourceURL = this.getResourceURL(actualRequest.endpoint, resourceOptions)
+              const item = this.cache.get(resourceURL)
+              //@ts-expect-error undefined
+              item?.promiseResolve([resource])
+              apiRequests.delete(resourceURL)
+            }
+          })
         }
-        const identifier = this.getResourceIdentifier(resourceEndpoint, resourceOptions)
-        const item = this.cache.get(identifier)
-        item?.promiseResolve(resource)
+        //... otherwise, treat the whole response as one resource
+        else {
+          const resourceURL = actualRequest.resourceURL
+          const item = this.cache.get(resourceURL)
+          item?.promiseResolve(resources)
+          apiRequests.delete(resourceURL)
+        }
+      }
+      // Resolved apiRequests are removed. Any apiRequest still around means
+      // it didn't resolve, indicating something went wrong (e.g. no matching
+      // resource was returned).
+      // Force rejection of those, otherwise function will never return.
+      // Also, invalidate prepared cache object.
+      apiRequests.forEach((_request, resourceURL) => {
+        const item = this.cache.get(resourceURL)
+        item?.promiseReject()
+        this.cache.delete(resourceURL)
       })
     }
-    // @ ts-expect-error type
-    return Promise.all(promises)
+
+    //@ts-expect-error undefined (because response body is typed as optional)
+    return Promise.all(promises).then((arrays) => arrays.flat(1))
   }
 
   /**
    * Returns a copy of a `AugmentedApiGetOptions` object with the specified
    * `param` (from `options.params`) replaced by `id`.
    */
-  private cloneOptionsForId<E extends keyof ApiGetEndpoints & {}>(
+  private cloneOptionsForId<E extends keyof ResourceGetEndpoints & {}>(
     options: Partial<AugmentedApiGetOptions<E>> | undefined,
     param: keyof RouteParameters<E>,
     id: string,
@@ -223,10 +343,10 @@ export class ResourceService {
   }
 
   /**
-   * Returns a resource identifier, which is derived from its endpoint (with
-   * interpolated parameters) and optional query.
+   * Returns a resource URL (endpoint with interpolated parameters and query),
+   * uniquely identifying it.
    */
-  private getResourceIdentifier<E extends keyof ApiGetEndpoints & {}, O extends Partial<AugmentedApiGetOptions<E>>>(
+  private getResourceURL<E extends keyof ResourceGetEndpoints & {}, O extends Partial<AugmentedApiGetOptions<E>>>(
     endpoint: E,
     options?: O | undefined,
   ) {
