@@ -58,6 +58,6 @@ export class ScenarioController extends Controller {
         LIMIT ${ids.length}
       `
     // return array - dev.002
-    this.respond(req, res, scenarios)
+    this.respondAfterPresenceCheck(req, res, scenarios, ids)
   }
 }

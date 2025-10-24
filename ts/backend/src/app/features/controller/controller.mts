@@ -2,8 +2,10 @@ import { ApiEndpointsOfVerb, ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoint
 import { ApiResponse } from '@common/api-response.js'
 import express, { NextFunction, Request, Response, Router } from 'express'
 import type { RouteParameters } from 'express-serve-static-core'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
+import { failedPresenceCheck, presenceCheckTrusted } from './controller-utils.mjs'
 
 const logger = new Logger('controller')
 
@@ -58,10 +60,10 @@ export class Controller {
    * @param res Express response.
    * @param body Response body. Type is derived from endpoint registry.
    * @param dbg Additional debug info.
-   * @param status HTTP status code (default 200).
+   * @param status HTTP status code (default 200 - OK).
    * @see {@link ApiResponse}
    */
-  respond<T>(req: Request, res: Response<ApiResponse<T>>, body: T, dbg?: unknown, status = 200) {
+  respond<T>(req: Request, res: Response<ApiResponse<T>>, body: T, dbg?: unknown, status = StatusCodes.OK) {
     res.status(status)
     res.json({
       body,
@@ -77,7 +79,7 @@ export class Controller {
    * @param error Error object.
    * @param body Response body. Type is derived from endpoint registry.
    * @param dbg Additional debug info.
-   * @param status HTTP status code (default 500).
+   * @param status HTTP status code (default 500 - Internal Server Error).
    * @see {@link ApiResponse}
    */
   respondError<T>(
@@ -86,7 +88,7 @@ export class Controller {
     error: ApiResponse<T>['error'],
     body?: T,
     dbg?: unknown,
-    status = 500,
+    status = StatusCodes.INTERNAL_SERVER_ERROR,
   ) {
     res.status(status)
     res.json({
@@ -95,25 +97,6 @@ export class Controller {
       dbg,
     })
     logger.debug(`${req.method} ${req.originalUrl}: Error response ${status}`, error, body)
-  }
-
-  /**
-   * Alias of {@link respondError} with status code 400 (Bad request).
-   * @param req Express request.
-   * @param res Express response.
-   * @param error Error object.
-   * @param body Response body. Type is derived from endpoint registry.
-   * @param dbg Additional debug info.
-   * @see {@link ApiResponse}
-   */
-  requestError<T>(
-    req: Request,
-    res: Response<ApiResponse<T>>,
-    error: ApiResponse<T>['error'],
-    body?: T,
-    dbg?: unknown,
-  ) {
-    this.respondError(req, res, error, body, dbg, 400)
   }
 
   /**
@@ -133,13 +116,43 @@ export class Controller {
     body?: T,
     dbg?: unknown,
   ) {
-    res.status(401)
+    res.status(StatusCodes.UNAUTHORIZED)
     res.json({
       body,
       error,
       dbg,
     })
-    logger.warn(`${req.method} ${req.originalUrl}: Unauthorized 401`, error)
+    logger.warn(`${req.method} ${req.originalUrl}: Unauthorized ${StatusCodes.UNAUTHORIZED}`, error)
+  }
+
+  /**
+   * Performs a presence check and responds with `OK` if that passed and error
+   * responds with `Not Found` with the missed ids in `dbg` otherwise.
+   * @param req Express request.
+   * @param res Express response.
+   * @param body Response body. Type is derived from endpoint registry.
+   * @param ids Ids to look for.
+   * @param idProperty Property name in `body` items to compare with id.
+   */
+  respondAfterPresenceCheck<T extends unknown[], K extends keyof T[number]>(
+    req: Request,
+    res: Response<ApiResponse<T>>,
+    body: T,
+    ids: T[number][K][],
+    idProperty: K = 'id' as K,
+  ) {
+    if (presenceCheckTrusted(body, ids, idProperty)) {
+      this.respond(req, res, body)
+    } else {
+      this.respondError(
+        req,
+        res,
+        { text: ReasonPhrases.NOT_FOUND },
+        body,
+        failedPresenceCheck(body, ids, idProperty),
+        StatusCodes.NOT_FOUND,
+      )
+    }
   }
 
   // Attach handler wrapper, serves two purposes:

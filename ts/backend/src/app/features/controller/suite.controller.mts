@@ -117,6 +117,6 @@ export class SuiteController extends Controller {
       WHERE id=ANY(${ids})
       LIMIT ${ids.length}
     `
-    this.respond(req, res, suites)
+    this.respondAfterPresenceCheck(req, res, suites, ids)
   }
 }

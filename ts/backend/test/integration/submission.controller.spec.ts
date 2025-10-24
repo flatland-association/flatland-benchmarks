@@ -1,5 +1,6 @@
 import { SubmissionRow } from '@common/interfaces'
 import { StripId } from '@common/utility-types'
+import { StatusCodes } from 'http-status-codes'
 import { MockInstance } from 'vitest'
 import { SubmissionController } from '../../src/app/features/controller/submission.controller.mjs'
 import { Logger } from '../../src/app/features/logger/logger.mjs'
@@ -108,7 +109,7 @@ describe.sequential('Submission controller', () => {
 
   test('should deny returning unpublished submission (no user)', async () => {
     const res = await controller.testGet('/submissions/:submission_ids', { params: { submission_ids: submissionUuid } })
-    assertApiResponse(res)
+    assertApiResponse(res, StatusCodes.NOT_FOUND)
     expect(res.body.body).toHaveLength(0)
   })
 
