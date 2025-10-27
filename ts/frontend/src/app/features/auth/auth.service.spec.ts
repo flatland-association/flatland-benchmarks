@@ -21,6 +21,7 @@ function setupTestBed(options?: { initialAccessToken?: boolean }): Context {
     setupAutomaticSilentRefresh: () => undefined,
     loadDiscoveryDocumentAndTryLogin: async () => true,
     hasValidAccessToken: () => options?.initialAccessToken ?? false,
+    initImplicitFlowInPopup: async (..._args: unknown[]) => true,
     state: undefined,
     events: oauthServiceEvents,
   }
@@ -46,7 +47,7 @@ function setupTestBed(options?: { initialAccessToken?: boolean }): Context {
 }
 
 describe('AuthService', () => {
-  describe('clean state', () => {
+  describe('OAuth integration', () => {
     let context: Context
 
     beforeEach(() => {
@@ -87,7 +88,7 @@ describe('AuthService', () => {
     })
   })
 
-  describe('restored login state', () => {
+  describe('OAuth integration with automatic refresh', () => {
     let context: Context
 
     beforeEach(() => {
@@ -96,6 +97,20 @@ describe('AuthService', () => {
 
     it('should have loggedin state after creation', async () => {
       expect(await firstValueFrom(context.service.getAuthState())).toBe('loggedin')
+    })
+  })
+
+  describe('redirect after login', () => {
+    let context: Context
+
+    beforeEach(() => {
+      context = setupTestBed()
+    })
+
+    it('should navigate after login', async () => {
+      spyOn(window, 'open').and.returnValue(null)
+      await context.service.logIn('/test-route')
+      expect(context.routerSpy.navigate).toHaveBeenCalledWith(['/test-route'])
     })
   })
 })
