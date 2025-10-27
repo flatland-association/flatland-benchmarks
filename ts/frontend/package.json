@@ -7,7 +7,7 @@
     "start": "concurrently --kill-others 'npm run private:serve' 'npm run private:test'",
     "build": "ng build",
     "check": "ng lint",
-    "test": "ng test --watch=false --browsers=ChromeHeadless",
+    "test": "ng test --watch=false --browsers=ChromeHeadless --code-coverage",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run --browser chrome",
     "private:serve": "ng serve",
