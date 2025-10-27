@@ -2,7 +2,7 @@ name: Checks
 
 env:
   # DEPENDENCY SWITCH:
-  ai4realnet-orchestrators-ref: main
+  ai4realnet-orchestrators-ref: entrypoint-refactoring
 
 on:
   workflow_dispatch:
@@ -249,7 +249,7 @@ jobs:
         with:
           filename: ts/backend/test/coverage/cobertura-coverage.xml
           format: markdown
-  
+
   test-e2e:
     runs-on: ubuntu-latest
     strategy:
