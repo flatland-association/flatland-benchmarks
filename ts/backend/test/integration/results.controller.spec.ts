@@ -1,4 +1,5 @@
 import { CampaignItemOverview, CampaignOverview, Leaderboard } from '@common/interfaces'
+import { StatusCodes } from 'http-status-codes'
 import { ResultsController } from '../../src/app/features/controller/results.controller.mjs'
 import { Logger } from '../../src/app/features/logger/logger.mjs'
 import {
@@ -57,7 +58,7 @@ describe.sequential('Results controller', () => {
       },
       testUserJwt,
     )
-    assertApiResponse(res, 400)
+    assertApiResponse(res, StatusCodes.CONFLICT)
     expect(res.body.error.text).toContain('results could not be inserted')
   })
 
@@ -78,7 +79,7 @@ describe.sequential('Results controller', () => {
       },
       testUserJwt,
     )
-    assertApiResponse(res, 400)
+    assertApiResponse(res, StatusCodes.CONFLICT)
     expect(res.body.error.text).toContain('results could not be inserted')
   })
 

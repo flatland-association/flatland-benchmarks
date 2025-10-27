@@ -1,10 +1,13 @@
 import type { Express } from 'express'
 import express from 'express'
+import { StatusCodes } from 'http-status-codes'
 import supertest from 'supertest'
 import TestAgent from 'supertest/lib/agent'
 import { beforeAll, describe, expect, test } from 'vitest'
 import { defaults } from '../config/defaults.mjs'
 import { Controller } from './controller.mjs'
+
+const dummyResources = [{ id: '1' }, { id: '2' }]
 
 describe.sequential('Controller', () => {
   let app: Express
@@ -36,9 +39,6 @@ describe.sequential('Controller', () => {
     controller.attachPatch('/test-patch' as '/mirror/:id', (req, res) => {
       controller.respond(req, res, { data: '<ok>' }, '<debug>')
     })
-    controller.attachGet('/test-request-error' as '/mirror', (req, res) => {
-      controller.requestError(req, res, { text: 'request error' })
-    })
     controller.attachGet('/test-auth-error' as '/mirror', (req, res) => {
       controller.unauthorizedError(req, res, { text: 'auth error' })
     })
@@ -53,16 +53,22 @@ describe.sequential('Controller', () => {
     controller.attachGet('/test-undefined' as '/mirror', (_req, _res) => {
       /* */
     })
+    controller.attachGet('/test-presence-check/:suite_ids' as '/definitions/suites/:suite_ids', (req, res) => {
+      const ids = req.params.suite_ids.split(',')
+      const resources = dummyResources
+      //@ts-expect-error suite
+      controller.respondAfterPresenceCheck(req, res, resources, ids)
+    })
     // test for routes presence
     const routes = getControllerRoutes(controller)
     expect(routes).toContain('/test-get')
     expect(routes).toContain('/test-post')
     expect(routes).toContain('/test-patch')
-    expect(routes).toContain('/test-request-error')
     expect(routes).toContain('/test-auth-error')
     expect(routes).toContain('/test-server-error')
     expect(routes).toContain('/test-catch')
     expect(routes).toContain('/test-undefined')
+    expect(routes).toContain('/test-presence-check/:suite_ids')
     // no more than the the explicitly attached routes should be present
     expect(routes).toHaveLength(8)
   })
@@ -70,32 +76,39 @@ describe.sequential('Controller', () => {
   test.each([
     {
       route: '/test-get',
-      expects: { status: 200, response: { body: '<ok>', dbg: '<debug>' } },
-    },
-    {
-      route: '/test-request-error',
-      expects: { status: 400, response: { error: { text: 'request error' } } },
+      expects: { status: StatusCodes.OK, response: { body: '<ok>', dbg: '<debug>' } },
     },
     {
       route: '/test-auth-error',
-      expects: { status: 401, response: { error: { text: 'auth error' } } },
+      expects: { status: StatusCodes.UNAUTHORIZED, response: { error: { text: 'auth error' } } },
     },
     {
       route: '/test-no-such-route',
-      expects: { status: 404, response: {} },
+      expects: { status: StatusCodes.NOT_FOUND, response: {} },
     },
     {
       route: '/test-server-error',
-      expects: { status: 500, response: { error: { text: 'server error' } } },
+      expects: { status: StatusCodes.INTERNAL_SERVER_ERROR, response: { error: { text: 'server error' } } },
     },
     // fallback error handler does not set a response body
     {
       route: '/test-catch',
-      expects: { status: 500, response: {} },
+      expects: { status: StatusCodes.INTERNAL_SERVER_ERROR, response: {} },
     },
     {
       route: '/test-undefined',
-      expects: { status: 500, response: {} },
+      expects: { status: StatusCodes.INTERNAL_SERVER_ERROR, response: {} },
+    },
+    {
+      route: '/test-presence-check/1,2',
+      expects: { status: StatusCodes.OK, response: { body: dummyResources } },
+    },
+    {
+      route: '/test-presence-check/1,2,3',
+      expects: {
+        status: StatusCodes.NOT_FOUND,
+        response: { body: dummyResources, error: { text: 'Not Found' }, dbg: ['3'] },
+      },
     },
   ])('should answer $route with $expects', async (testCase) => {
     const res = await request.get(testCase.route)

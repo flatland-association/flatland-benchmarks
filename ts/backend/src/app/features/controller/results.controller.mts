@@ -1,4 +1,5 @@
 import { ResultRow } from '@common/interfaces'
+import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AggregatorService } from '../services/aggregator-service.mjs'
@@ -165,7 +166,7 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const score = await aggregator.getSubmissionTestScore(submissionId, testIds)
-    this.respond(req, res, score)
+    this.respondAfterPresenceCheck(req, res, score, testIds, 'test_id')
   }
 
   /**
@@ -264,10 +265,17 @@ export class ResultsController extends Controller {
           INSERT INTO results ${sql.fragment(resultRows)}
         `
       })
-      this.respond(req, res, {}, undefined, 201)
+      this.respond(req, res, {}, undefined, StatusCodes.CREATED)
     } catch (error) {
       logger.error(error)
-      this.requestError(req, res, { text: 'Some results could not be inserted, transaction aborted.' })
+      this.respondError(
+        req,
+        res,
+        { text: 'Some results could not be inserted, transaction aborted.' },
+        undefined,
+        undefined,
+        StatusCodes.CONFLICT,
+      )
       logger.error(`${error} req.body.data=${req.body.data}`)
       logger.error(`${error} req.body=${req.body}`)
       logger.error(`${error} sql.notices=${sql.notices}`)
@@ -328,7 +336,7 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const score = await aggregator.getSubmissionScenarioScore(submissionId, scenarioIds)
-    this.respond(req, res, score)
+    this.respondAfterPresenceCheck(req, res, score, scenarioIds, 'scenario_id')
   }
 
   /**
@@ -413,7 +421,7 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getBenchmarkLeaderboard(benchmarkIds)
-    this.respond(req, res, board)
+    this.respondAfterPresenceCheck(req, res, board, benchmarkIds, 'benchmark_id')
   }
 
   /**
@@ -474,7 +482,7 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getCampaignItemOverview(benchmarkIds)
-    this.respond(req, res, board)
+    this.respondAfterPresenceCheck(req, res, board, benchmarkIds, 'benchmark_id')
   }
 
   /**
@@ -549,7 +557,7 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getCampaignOverview(suiteIds)
-    this.respond(req, res, board)
+    this.respondAfterPresenceCheck(req, res, board, suiteIds, 'suite_id')
   }
 
   /**
@@ -646,6 +654,6 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getBenchmarkTestLeaderboard(benchmarkId, testIds)
-    this.respond(req, res, board)
+    this.respondAfterPresenceCheck(req, res, board, testIds, 'test_id')
   }
 }

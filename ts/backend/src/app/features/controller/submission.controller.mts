@@ -1,4 +1,5 @@
 import { SubmissionRow, TestDefinitionRow } from '@common/interfaces.js'
+import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AuthService } from '../services/auth-service.mjs'
@@ -224,7 +225,14 @@ export class SubmissionController extends Controller {
     if (req.query['unpublished_own'] === 'true') {
       unpublishedOwn = true
     } else if (req.query['unpublished_own'] !== 'false' && typeof req.query['unpublished_own'] !== 'undefined') {
-      this.requestError(req, res, { text: `invalid value "${req.query['unpublished_own']}" for "unpublished_own"` })
+      this.respondError(
+        req,
+        res,
+        { text: `invalid value "${req.query['unpublished_own']}" for "unpublished_own"` },
+        undefined,
+        undefined,
+        StatusCodes.BAD_REQUEST,
+      )
       return
     }
 
@@ -339,7 +347,7 @@ export class SubmissionController extends Controller {
         LIMIT ${uuids.length}
       `
     // return array - dev.002
-    this.respond(req, res, submissions)
+    this.respondAfterPresenceCheck(req, res, submissions, uuids)
   }
 
   /**

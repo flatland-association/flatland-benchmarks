@@ -129,6 +129,6 @@ export class BenchmarkController extends Controller {
       WHERE benchmark_definitions.id=ANY(${ids})
       LIMIT ${ids.length}
     `
-    this.respond(req, res, benchmarks)
+    this.respondAfterPresenceCheck(req, res, benchmarks, ids)
   }
 }
