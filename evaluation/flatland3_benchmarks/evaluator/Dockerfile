@@ -18,7 +18,7 @@ RUN set -euxo pipefail && conda --version  && \
     source /home/conda/.bashrc && \
     source activate base && \
     conda env list  && \
-    conda activate flatland-rl && \
+    conda activate flatland-baselines && \
     python -c 'from flatland.evaluators.service import FlatlandRemoteEvaluationService'
 
 COPY run.sh ./
