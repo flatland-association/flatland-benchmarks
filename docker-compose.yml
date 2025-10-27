@@ -309,7 +309,6 @@ services:
   ai4realnet-orchestrator-railway-setup:
     image: alpine
     volumes:
-      - ./evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/submission_data_entrypoint.sh:/tmp/submission_data_entrypoint.sh
       - orchestrator-data:/vol
       - orchestrator-scenarios:/scenarios
     entrypoint: [ "/bin/sh","-c" ]
