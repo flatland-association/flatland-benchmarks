@@ -121,7 +121,7 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
 
   ret = run_task('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', submission_id,
                  # use deterministic baselines
-                 submission_data_url="ghcr.io/flatland-association/flatland-baselines:latest",
+                 submission_data_url="ghcr.io/flatland-association/flatland-baselines:chenkins-patch-1",
                  tests=tests, **config)
 
   logger.info(f"{[(k, v['job_status'], v['image_id'], v['log']) for k, v in ret.items()]}")
@@ -142,7 +142,7 @@ def test_succesful_run(expected_total_simulation_count, tests: List[str], expect
   assert ret["f3-submission"]["job_status"] == "Complete"
 
   assert ret["f3-evaluator"]["image_id"] == "ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:latest"
-  assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/flatland-baselines:latest"
+  assert ret["f3-submission"]["image_id"] == "ghcr.io/flatland-association/flatland-baselines:chenkins-patch-1"
 
   assert "end evaluator/run.sh" in str(ret["f3-evaluator"]["log"])
   assert "end submission_template/run.sh" in str(ret["f3-submission"]["log"])
