@@ -136,7 +136,8 @@
               "ts/frontend/src/styles.scss",
               "node_modules/@flatland-association/flatland-ui/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "karmaConfig": "ts/frontend/karma.conf.js"
           }
         },
         "lint": {

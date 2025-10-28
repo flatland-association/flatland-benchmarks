@@ -35,7 +35,6 @@ export interface Customization {
 })
 export class CustomizationService {
   private http = inject(HttpClient)
-  private customization?: Customization
   private customizationPromise?: Promise<Customization>
 
   /**
@@ -46,8 +45,6 @@ export class CustomizationService {
   getCustomization() {
     // customization already loading, do not re-trigger loading
     if (this.customizationPromise) return this.customizationPromise
-    // customization already loaded, return promise
-    if (this.customization) return Promise.resolve(this.customization)
     // no customization loaded, load
     this.customizationPromise = firstValueFrom(
       this.http.get<Customization>(`${environment.apiBase}/public/customization.json`),
