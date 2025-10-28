@@ -422,29 +422,28 @@ Here's an overview of the aggregation:
 * The definitions are linked top-down (could be normalized). ⚠️ Although we do not enforce it in the DB schema, benchmarks/tests/scenarios are never used by more than one parent.
 * Field definitions can be re-used, but often they will be 1:1 with benchmark
 * We accept the following slight inconsistencies:
-  * we use `key` instead of `name` in `results` and `field_defintitions`
+  * we use `key` instead of `name` in `results` and `fields`
   * we use `key` instead of uuid in results API as unique key
-  * for historical reasons, some tables are suffixed `_definitions` while others are not.
   * Accepting the above convention, we could drop (marked `*` below)
     * `test_id` in `results`
     * `benchmark_id` in `submissions`
 
 ```mermaid
 erDiagram
-  suites one to zero or more benchmark_definitions: benchmark_ids
-  benchmark_definitions one to zero or more field_definitions: field_ids
-  benchmark_definitions one to zero or more field_definitions: campaign_field_ids
-  benchmark_definitions one to zero or more test_definitions: test_ids
-  test_definitions one to zero or more field_definitions: field_ids
-  scenario_definitions one to zero or more field_definitions: field_ids
-  results many to many test_definitions: "test_id*"
-  results many to 1 scenario_definitions: scenario_id
+  suites one to zero or more benchmarks: benchmark_ids
+  benchmarks one to zero or more fields: field_ids
+  benchmarks one to zero or more fields: campaign_field_ids
+  benchmarks one to zero or more tests: test_ids
+  tests one to zero or more fields: field_ids
+  scenarios one to zero or more fields: field_ids
+  results many to many tests: "test_id*"
+  results many to 1 scenarios: scenario_id
   results many to 1 submissions: submission_id
-  results many to one field_definitions: key
-  submissions many to 1 benchmark_definitions: "benchmark_id*"
-  submissions many to many test_definitions: test_ids
+  results many to one fields: key
+  submissions many to 1 benchmarks: "benchmark_id*"
+  submissions many to many tests: test_ids
 
-  field_definitions {
+  fields {
     uuid id PK
     character key
     text description
@@ -485,7 +484,7 @@ erDiagram
     uuid[] benchmark_ids FK
   }
 
-  benchmark_definitions {
+  benchmarks {
     uuid id PK
     character name
     text description
@@ -496,7 +495,7 @@ erDiagram
     uuid[] campaign_field_ids FK
   }
 
-  test_definitions {
+  tests {
     uuid id PK
     character name
     text description
@@ -506,7 +505,7 @@ erDiagram
     character queue
   }
 
-  scenario_definitions {
+  scenarios {
     uuid id PK
     character name
     text description
