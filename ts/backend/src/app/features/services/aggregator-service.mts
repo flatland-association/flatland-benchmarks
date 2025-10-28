@@ -23,20 +23,20 @@ const logger = new Logger('aggregator-service')
 
 // the models are aggregated to arrays in SQL query:
 interface SubmissionScenarioScoreSources {
-  scenario_definitions: (ScenarioDefinitionRow | null)[]
-  field_definitions: (FieldDefinitionRow | null)[]
+  scenarios: (ScenarioDefinitionRow | null)[]
+  fields: (FieldDefinitionRow | null)[]
   results: (ResultRow | null)[]
 }
 
 interface SubmissionTestScoreSources extends SubmissionScenarioScoreSources {
-  test_definitions: (TestDefinitionRow | null)[]
+  tests: (TestDefinitionRow | null)[]
 }
 
 interface SubmissionScoreSources extends SubmissionTestScoreSources {
   submissions: (SubmissionRow | null)[]
-  // benchmark_definitions required as well, because the field definitions for
+  // benchmarks required as well, because the field definitions for
   // submission score aggregation are stored in there.
-  benchmark_definitions: (BenchmarkDefinitionRow | null)[]
+  benchmarks: (BenchmarkDefinitionRow | null)[]
 }
 
 interface CampaignOverviewSources extends SubmissionScoreSources {
@@ -199,18 +199,15 @@ export class AggregatorService extends Service {
     // load relevant sources (relevant means: referenced from scenarioId)
     const [sources] = await this.sql.query<SubmissionScenarioScoreSources>`
       SELECT
-        json_agg(DISTINCT to_jsonb(scenario_definitions)) AS scenario_definitions,
-        json_agg(DISTINCT to_jsonb(field_definitions)) AS field_definitions,
+        json_agg(DISTINCT to_jsonb(scenarios)) AS scenarios,
+        json_agg(DISTINCT to_jsonb(fields)) AS fields,
         json_agg(DISTINCT to_jsonb(results)) AS results
-      FROM scenario_definitions
-      LEFT JOIN field_definitions ON field_definitions.id = ANY(scenario_definitions.field_ids)
-      LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = ${submissionId}
-      WHERE scenario_definitions.id = ANY(${scenarioIds})
+      FROM scenarios
+      LEFT JOIN fields ON fields.id = ANY(scenarios.field_ids)
+      LEFT JOIN results ON results.scenario_id = scenarios.id AND results.submission_id = ${submissionId}
+      WHERE scenarios.id = ANY(${scenarioIds})
     `
-    return (
-      sources ??
-      ({ scenario_definitions: [], field_definitions: [], results: [] } satisfies SubmissionScenarioScoreSources)
-    )
+    return sources ?? ({ scenarios: [], fields: [], results: [] } satisfies SubmissionScenarioScoreSources)
   }
 
   /**
@@ -221,22 +218,22 @@ export class AggregatorService extends Service {
     // load relevant sources (relevant means: referenced from testId)
     const [sources] = await this.sql.query<SubmissionTestScoreSources>`
       SELECT
-        json_agg(DISTINCT to_jsonb(test_definitions)) AS test_definitions,
-        json_agg(DISTINCT to_jsonb(scenario_definitions)) AS scenario_definitions,
-        json_agg(DISTINCT to_jsonb(field_definitions)) AS field_definitions,
+        json_agg(DISTINCT to_jsonb(tests)) AS tests,
+        json_agg(DISTINCT to_jsonb(scenarios)) AS scenarios,
+        json_agg(DISTINCT to_jsonb(fields)) AS fields,
         json_agg(DISTINCT to_jsonb(results)) AS results
-      FROM test_definitions
-      LEFT JOIN scenario_definitions ON scenario_definitions.id = ANY(test_definitions.scenario_ids)
-      LEFT JOIN field_definitions ON field_definitions.id = ANY(scenario_definitions.field_ids || test_definitions.field_ids)
-      LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = ${submissionId}
-      WHERE test_definitions.id = ANY(${testIds})
+      FROM tests
+      LEFT JOIN scenarios ON scenarios.id = ANY(tests.scenario_ids)
+      LEFT JOIN fields ON fields.id = ANY(scenarios.field_ids || tests.field_ids)
+      LEFT JOIN results ON results.scenario_id = scenarios.id AND results.submission_id = ${submissionId}
+      WHERE tests.id = ANY(${testIds})
     `
     return (
       sources ??
       ({
-        test_definitions: [],
-        scenario_definitions: [],
-        field_definitions: [],
+        tests: [],
+        scenarios: [],
+        fields: [],
         results: [],
       } satisfies SubmissionTestScoreSources)
     )
@@ -255,27 +252,27 @@ export class AggregatorService extends Service {
     const [sources] = await this.sql.query<SubmissionScoreSources>`
       SELECT
         json_agg(DISTINCT to_jsonb(submissions)) AS submissions,
-        json_agg(DISTINCT to_jsonb(benchmark_definitions)) AS benchmark_definitions,
-        json_agg(DISTINCT to_jsonb(test_definitions)) AS test_definitions,
-        json_agg(DISTINCT to_jsonb(scenario_definitions)) AS scenario_definitions,
-        json_agg(DISTINCT to_jsonb(field_definitions)) AS field_definitions,
+        json_agg(DISTINCT to_jsonb(benchmarks)) AS benchmarks,
+        json_agg(DISTINCT to_jsonb(tests)) AS tests,
+        json_agg(DISTINCT to_jsonb(scenarios)) AS scenarios,
+        json_agg(DISTINCT to_jsonb(fields)) AS fields,
         json_agg(DISTINCT to_jsonb(results)) AS results
       FROM submissions
-      LEFT JOIN benchmark_definitions ON benchmark_definitions.id = submissions.benchmark_id
-      LEFT JOIN test_definitions ON test_definitions.id = ANY(benchmark_definitions.test_ids)
-      LEFT JOIN scenario_definitions ON scenario_definitions.id = ANY(test_definitions.scenario_ids)
-      LEFT JOIN field_definitions ON field_definitions.id = ANY(scenario_definitions.field_ids || test_definitions.field_ids || benchmark_definitions.field_ids)
-      LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
+      LEFT JOIN benchmarks ON benchmarks.id = submissions.benchmark_id
+      LEFT JOIN tests ON tests.id = ANY(benchmarks.test_ids)
+      LEFT JOIN scenarios ON scenarios.id = ANY(tests.scenario_ids)
+      LEFT JOIN fields ON fields.id = ANY(scenarios.field_ids || tests.field_ids || benchmarks.field_ids)
+      LEFT JOIN results ON results.scenario_id = scenarios.id AND results.submission_id = submissions.id
       WHERE submissions.id = ANY(${submissionIds})
     `
     return (
       sources ??
       ({
         submissions: [],
-        benchmark_definitions: [],
-        test_definitions: [],
-        scenario_definitions: [],
-        field_definitions: [],
+        benchmarks: [],
+        tests: [],
+        scenarios: [],
+        fields: [],
         results: [],
       } satisfies SubmissionScoreSources)
     )
@@ -289,28 +286,28 @@ export class AggregatorService extends Service {
     // load relevant sources (relevant means: referenced from benchmark)
     const [sources] = await this.sql.query<SubmissionScoreSources>`
       SELECT
-        json_agg(DISTINCT to_jsonb(benchmark_definitions)) AS benchmark_definitions,
+        json_agg(DISTINCT to_jsonb(benchmarks)) AS benchmarks,
         json_agg(DISTINCT to_jsonb(submissions)) AS submissions,
-        json_agg(DISTINCT to_jsonb(test_definitions)) AS test_definitions,
-        json_agg(DISTINCT to_jsonb(scenario_definitions)) AS scenario_definitions,
-        json_agg(DISTINCT to_jsonb(field_definitions)) AS field_definitions,
+        json_agg(DISTINCT to_jsonb(tests)) AS tests,
+        json_agg(DISTINCT to_jsonb(scenarios)) AS scenarios,
+        json_agg(DISTINCT to_jsonb(fields)) AS fields,
         json_agg(DISTINCT to_jsonb(results)) AS results
-      FROM benchmark_definitions
-      LEFT JOIN submissions ON submissions.benchmark_id = benchmark_definitions.id AND submissions.published = true
-      LEFT JOIN test_definitions ON test_definitions.id = ANY(benchmark_definitions.test_ids)
-      LEFT JOIN scenario_definitions ON scenario_definitions.id = ANY(test_definitions.scenario_ids)
-      LEFT JOIN field_definitions ON field_definitions.id = ANY(scenario_definitions.field_ids || test_definitions.field_ids || benchmark_definitions.field_ids)
-      LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
-      WHERE benchmark_definitions.id = ANY(${benchmarkIds})
+      FROM benchmarks
+      LEFT JOIN submissions ON submissions.benchmark_id = benchmarks.id AND submissions.published = true
+      LEFT JOIN tests ON tests.id = ANY(benchmarks.test_ids)
+      LEFT JOIN scenarios ON scenarios.id = ANY(tests.scenario_ids)
+      LEFT JOIN fields ON fields.id = ANY(scenarios.field_ids || tests.field_ids || benchmarks.field_ids)
+      LEFT JOIN results ON results.scenario_id = scenarios.id AND results.submission_id = submissions.id
+      WHERE benchmarks.id = ANY(${benchmarkIds})
     `
     return (
       sources ??
       ({
         submissions: [],
-        benchmark_definitions: [],
-        test_definitions: [],
-        scenario_definitions: [],
-        field_definitions: [],
+        benchmarks: [],
+        tests: [],
+        scenarios: [],
+        fields: [],
         results: [],
       } satisfies SubmissionScoreSources)
     )
@@ -324,28 +321,28 @@ export class AggregatorService extends Service {
     // load relevant sources (relevant means: referenced from benchmark)
     const [sources] = await this.sql.query<SubmissionScoreSources>`
       SELECT
-        json_agg(DISTINCT to_jsonb(benchmark_definitions)) AS benchmark_definitions,
+        json_agg(DISTINCT to_jsonb(benchmarks)) AS benchmarks,
         json_agg(DISTINCT to_jsonb(submissions)) AS submissions,
-        json_agg(DISTINCT to_jsonb(test_definitions)) AS test_definitions,
-        json_agg(DISTINCT to_jsonb(scenario_definitions)) AS scenario_definitions,
-        json_agg(DISTINCT to_jsonb(field_definitions)) AS field_definitions,
+        json_agg(DISTINCT to_jsonb(tests)) AS tests,
+        json_agg(DISTINCT to_jsonb(scenarios)) AS scenarios,
+        json_agg(DISTINCT to_jsonb(fields)) AS fields,
         json_agg(DISTINCT to_jsonb(results)) AS results
-      FROM benchmark_definitions
-      LEFT JOIN submissions ON submissions.benchmark_id = benchmark_definitions.id AND submissions.published = true
-      LEFT JOIN test_definitions ON test_definitions.id = ANY(benchmark_definitions.test_ids)
-      LEFT JOIN scenario_definitions ON scenario_definitions.id = ANY(test_definitions.scenario_ids)
-      LEFT JOIN field_definitions ON field_definitions.id = ANY(scenario_definitions.field_ids || test_definitions.field_ids || benchmark_definitions.field_ids || benchmark_definitions.campaign_field_ids)
-      LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
-      WHERE benchmark_definitions.id = ANY(${benchmarkIds})
+      FROM benchmarks
+      LEFT JOIN submissions ON submissions.benchmark_id = benchmarks.id AND submissions.published = true
+      LEFT JOIN tests ON tests.id = ANY(benchmarks.test_ids)
+      LEFT JOIN scenarios ON scenarios.id = ANY(tests.scenario_ids)
+      LEFT JOIN fields ON fields.id = ANY(scenarios.field_ids || tests.field_ids || benchmarks.field_ids || benchmarks.campaign_field_ids)
+      LEFT JOIN results ON results.scenario_id = scenarios.id AND results.submission_id = submissions.id
+      WHERE benchmarks.id = ANY(${benchmarkIds})
     `
     return (
       sources ??
       ({
         submissions: [],
-        benchmark_definitions: [],
-        test_definitions: [],
-        scenario_definitions: [],
-        field_definitions: [],
+        benchmarks: [],
+        tests: [],
+        scenarios: [],
+        fields: [],
         results: [],
       } satisfies SubmissionScoreSources)
     )
@@ -360,19 +357,19 @@ export class AggregatorService extends Service {
     const [sources] = await this.sql.query<CampaignOverviewSources>`
       SELECT
         json_agg(DISTINCT to_jsonb(suites)) AS suites,
-        json_agg(DISTINCT to_jsonb(benchmark_definitions)) AS benchmark_definitions,
+        json_agg(DISTINCT to_jsonb(benchmarks)) AS benchmarks,
         json_agg(DISTINCT to_jsonb(submissions)) AS submissions,
-        json_agg(DISTINCT to_jsonb(test_definitions)) AS test_definitions,
-        json_agg(DISTINCT to_jsonb(scenario_definitions)) AS scenario_definitions,
-        json_agg(DISTINCT to_jsonb(field_definitions)) AS field_definitions,
+        json_agg(DISTINCT to_jsonb(tests)) AS tests,
+        json_agg(DISTINCT to_jsonb(scenarios)) AS scenarios,
+        json_agg(DISTINCT to_jsonb(fields)) AS fields,
         json_agg(DISTINCT to_jsonb(results)) AS results
       FROM suites
-      LEFT JOIN benchmark_definitions ON benchmark_definitions.id = ANY(suites.benchmark_ids)
-      LEFT JOIN submissions ON submissions.benchmark_id = benchmark_definitions.id AND submissions.published = true
-      LEFT JOIN test_definitions ON test_definitions.id = ANY(benchmark_definitions.test_ids)
-      LEFT JOIN scenario_definitions ON scenario_definitions.id = ANY(test_definitions.scenario_ids)
-      LEFT JOIN field_definitions ON field_definitions.id = ANY(scenario_definitions.field_ids || test_definitions.field_ids || benchmark_definitions.field_ids || benchmark_definitions.campaign_field_ids)
-      LEFT JOIN results ON results.scenario_id = scenario_definitions.id AND results.submission_id = submissions.id
+      LEFT JOIN benchmarks ON benchmarks.id = ANY(suites.benchmark_ids)
+      LEFT JOIN submissions ON submissions.benchmark_id = benchmarks.id AND submissions.published = true
+      LEFT JOIN tests ON tests.id = ANY(benchmarks.test_ids)
+      LEFT JOIN scenarios ON scenarios.id = ANY(tests.scenario_ids)
+      LEFT JOIN fields ON fields.id = ANY(scenarios.field_ids || tests.field_ids || benchmarks.field_ids || benchmarks.campaign_field_ids)
+      LEFT JOIN results ON results.scenario_id = scenarios.id AND results.submission_id = submissions.id
       WHERE suites.id = ANY(${suiteIds})
     `
     return (
@@ -380,10 +377,10 @@ export class AggregatorService extends Service {
       ({
         submissions: [],
         suites: [],
-        benchmark_definitions: [],
-        test_definitions: [],
-        scenario_definitions: [],
-        field_definitions: [],
+        benchmarks: [],
+        tests: [],
+        scenarios: [],
+        fields: [],
         results: [],
       } satisfies CampaignOverviewSources)
     )
@@ -392,13 +389,10 @@ export class AggregatorService extends Service {
   /**
    * Returns the `FieldDefinitionRow` from `sources` matching `fieldId`.
    */
-  findField(
-    sources: { field_definitions: (FieldDefinitionRow | null)[] },
-    fieldId: string,
-  ): FieldDefinitionRow | undefined {
-    const field = sources.field_definitions.find((fieldDefRow) => fieldDefRow?.id === fieldId)
+  findField(sources: { fields: (FieldDefinitionRow | null)[] }, fieldId: string): FieldDefinitionRow | undefined {
+    const field = sources.fields.find((fieldDefRow) => fieldDefRow?.id === fieldId)
     if (!field) {
-      logger.warn(`field ${fieldId} not found in sources`, sources.field_definitions)
+      logger.warn(`field ${fieldId} not found in sources`, sources.fields)
     }
     return field ?? undefined
   }
@@ -407,12 +401,12 @@ export class AggregatorService extends Service {
    * Returns the `ScenarioDefinitionRow` from `sources` matching `scenarioId`.
    */
   findScenario(
-    sources: { scenario_definitions: (ScenarioDefinitionRow | null)[] },
+    sources: { scenarios: (ScenarioDefinitionRow | null)[] },
     scenarioId: string,
   ): ScenarioDefinitionRow | undefined {
-    const scenario = sources.scenario_definitions.find((scenarioDefRow) => scenarioDefRow?.id === scenarioId)
+    const scenario = sources.scenarios.find((scenarioDefRow) => scenarioDefRow?.id === scenarioId)
     if (!scenario) {
-      logger.warn(`scenario ${scenarioId} not found in sources`, sources.scenario_definitions)
+      logger.warn(`scenario ${scenarioId} not found in sources`, sources.scenarios)
     }
     return scenario ?? undefined
   }
@@ -420,10 +414,10 @@ export class AggregatorService extends Service {
   /**
    * Returns the `TestDefinitionRow` from `sources` matching `scenarioId`.
    */
-  findTest(sources: { test_definitions: (TestDefinitionRow | null)[] }, testId: string): TestDefinitionRow | undefined {
-    const test = sources.test_definitions.find((testDefRow) => testDefRow?.id === testId)
+  findTest(sources: { tests: (TestDefinitionRow | null)[] }, testId: string): TestDefinitionRow | undefined {
+    const test = sources.tests.find((testDefRow) => testDefRow?.id === testId)
     if (!test) {
-      logger.warn(`test ${testId} not found in sources`, sources.test_definitions)
+      logger.warn(`test ${testId} not found in sources`, sources.tests)
     }
     return test ?? undefined
   }
@@ -443,12 +437,12 @@ export class AggregatorService extends Service {
    * Returns the `BenchmarkDefinitionRow` from `sources` matching `benchmarkId`.
    */
   findBenchmark(
-    sources: { benchmark_definitions: (BenchmarkDefinitionRow | null)[] },
+    sources: { benchmarks: (BenchmarkDefinitionRow | null)[] },
     benchmarkId: string,
   ): BenchmarkDefinitionRow | undefined {
-    const benchmark = sources.benchmark_definitions.find((benchmarkDefRow) => benchmarkDefRow?.id === benchmarkId)
+    const benchmark = sources.benchmarks.find((benchmarkDefRow) => benchmarkDefRow?.id === benchmarkId)
     if (!benchmark) {
-      logger.warn(`benchmark ${benchmarkId} not found in sources`, sources.benchmark_definitions)
+      logger.warn(`benchmark ${benchmarkId} not found in sources`, sources.benchmarks)
     }
     return benchmark ?? undefined
   }
@@ -689,10 +683,7 @@ export class AggregatorService extends Service {
   /**
    * Returns an array of `Scoring` objects for given `fieldIds`.
    */
-  prepareScoringsForFields(
-    sources: { field_definitions: (FieldDefinitionRow | null)[] },
-    fieldIds: string[],
-  ): Scoring[] {
+  prepareScoringsForFields(sources: { fields: (FieldDefinitionRow | null)[] }, fieldIds: string[]): Scoring[] {
     return fieldIds.map((fieldId) => {
       const field = this.findField(sources, fieldId)
       return {

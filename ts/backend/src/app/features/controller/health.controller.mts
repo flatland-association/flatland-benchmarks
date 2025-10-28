@@ -61,7 +61,7 @@ export class HealthController extends Controller {
     }
     // try running query
     const sql = SqlService.getInstance()
-    await sql.query`SELECT * FROM field_definitions`.catch(function (err) {
+    await sql.query`SELECT * FROM fields`.catch(function (err) {
       logger.error(`Received error from SqlService:${err}`)
       payload['status'] = 'DOWN'
       payload['checks'][0]['status'] = 'DOWN'

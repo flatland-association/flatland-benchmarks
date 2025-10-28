@@ -21,9 +21,9 @@ describe.sequential('SQL Service (with Postgres)', () => {
   test('should execute query on set up schema', async () => {
     const sql = SqlService.getInstance()
     const rows = await sql.query`
-      SELECT id FROM benchmarks
+      SELECT id FROM benchmarks WHERE id::text LIKE '20cc%'
     `
-    expect(rows).toEqual([{ id: 1 }])
+    expect(rows).toEqual([{ id: '20ccc7c1-034c-4880-8946-bffc3fed1359' }])
   })
 
   test('should error on faulty query (syntax error)', async () => {

@@ -58,7 +58,7 @@ export class TestController extends Controller {
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const tests = await sql.query<TestDefinitionRow>`
-        SELECT * FROM test_definitions
+        SELECT * FROM tests
         WHERE id=ANY(${ids})
         LIMIT ${ids.length}
       `
