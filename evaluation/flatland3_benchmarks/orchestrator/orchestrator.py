@@ -41,12 +41,12 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
 
   def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, **kwargs):
     if tests is None:
-      tests = ['4ecdb9f4-e2ff-41ff-9857-abe649c19c50', '5206f2ee-d0a9-405b-8da3-93625e169811']
-    logger.info(f"/ start task with submission_id={submission_id} with submission_data_url={submission_data_url} for tests {tests}")
+      tests = list(TEST_TO_SCENARIO_IDS.keys())
+
     results = {test_id: {} for test_id in tests}
     for test_id in tests:
       for scenario_id in TEST_TO_SCENARIO_IDS[test_id]:
-
+        logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
         pkl_path = self.load_scenario_data(scenario_id)
         prefix = f"{submission_id}/{scenario_id}"
 
@@ -80,7 +80,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         ret = {}
         while not all_done and not any_failed:
           time.sleep(1)
-          print(".")
+          # print(".")
           jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"submission_id={label}")
           assert len(jobs.items) == 1
           all_done = True
@@ -107,6 +107,12 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                 "pod": pod.to_dict()
               }
               ret[job_name] = _ret
+        if any_failed:
+          raise TaskExecutionError(
+            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}.", ret)
+        logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
+
+        logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
         with tempfile.TemporaryDirectory() as tmpdirname:
           s3 = s3_utils.get_boto_client(aws_access_key_id, aws_secret_access_key, aws_endpoint_url)
           download_dir(prefix=prefix, bucket=s3_bucket, client=s3, local=tmpdirname)
@@ -116,23 +122,33 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
             "normalized_reward": normalized_reward,
             "percentage_complete": success_rate
           }
-      if any_failed:
-        raise TaskExecutionError(
-          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}.", ret)
+        logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {results[test_id][scenario_id]}")
     return results
 
-  # TODO all 150 scenarios
+
   @staticmethod
   def load_scenario_data(scenario_id: str) -> str:
+    # TODO all 150 scenarios
+    # return {
+    #   # test 4ecdb9f4-e2ff-41ff-9857-abe649c19c50_
+    #   'd99f4d35-aec5-41c1-a7b0-64f78b35d7ef': "Test_00/Level_0.pkl",
+    #   '04d618b8-84df-406b-b803-d516c7425537': "Test_00/Level_1.pkl",
+    #
+    #   # test 5206f2ee-d0a9-405b-8da3-93625e169811:
+    #   '6f3ad83c-3312-4ab3-9740-cbce80feea91': "Test_01/Level_0.pkl",
+    #   'f954a860-e963-431e-a09d-5b1040948f2d': "Test_01/Level_1.pkl",
+    #   'f92bfe0c-5347-4d89-bc17-b6f86d514ef8': "Test_01/Level_2.pkl",
+    # }[scenario_id]
+    # debug environments:
     return {
       # test 4ecdb9f4-e2ff-41ff-9857-abe649c19c50_
-      'd99f4d35-aec5-41c1-a7b0-64f78b35d7ef': "Test_00/Level_0.pkl",
-      '04d618b8-84df-406b-b803-d516c7425537': "Test_00/Level_1.pkl",
+      'd99f4d35-aec5-41c1-a7b0-64f78b35d7ef': "Test_0/Level_0.pkl",
+      '04d618b8-84df-406b-b803-d516c7425537': "Test_0/Level_1.pkl",
 
       # test 5206f2ee-d0a9-405b-8da3-93625e169811:
-      '6f3ad83c-3312-4ab3-9740-cbce80feea91': "Test_01/Level_0.pkl",
-      'f954a860-e963-431e-a09d-5b1040948f2d': "Test_01/Level_1.pkl",
-      'f92bfe0c-5347-4d89-bc17-b6f86d514ef8': "Test_01/Level_2.pkl",
+      '6f3ad83c-3312-4ab3-9740-cbce80feea91': "Test_1/Level_0.pkl",
+      'f954a860-e963-431e-a09d-5b1040948f2d': "Test_1/Level_1.pkl",
+      'f92bfe0c-5347-4d89-bc17-b6f86d514ef8': "Test_1/Level_2.pkl",
     }[scenario_id]
 
 

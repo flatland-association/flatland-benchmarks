@@ -96,14 +96,13 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
 
   def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, **kwargs):
     try:
-      logger.info(f"/ start task with submission_id={submission_id} with submission_data_url={submission_data_url} for tests {tests}")
-
       if tests is None:
-        tests = ['4ecdb9f4-e2ff-41ff-9857-abe649c19c50', '5206f2ee-d0a9-405b-8da3-93625e169811']
-      logger.info(f"/ start task with submission_id={submission_id} with submission_data_url={submission_data_url} for tests {tests}")
+        tests = list(TEST_TO_SCENARIO_IDS.keys())
+
       results = {test_id: {} for test_id in tests}
       for test_id in tests:
         for scenario_id in TEST_TO_SCENARIO_IDS[test_id]:
+          logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
           env_path = self.load_scenario_data(scenario_id)
 
           data_dir = f"{DATA_VOLUME_MOUNTPATH}/{submission_id}/{test_id}/{scenario_id}"
@@ -117,9 +116,11 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
             "--seed", "1001"
           ]
           self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
+
+          logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+
           # TODO how to inject model into call?
-          logger.info(f"DATA_VOLUME_MOUNTPATH={DATA_VOLUME_MOUNTPATH}")
-          logger.info(f"contents={list(Path(DATA_VOLUME_MOUNTPATH).rglob("**/*"))}")
+          logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
 
           normalized_reward, success_rate = self._extract_stats_from_trajectory(data_dir, scenario_id)
 
@@ -129,9 +130,8 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
             "normalized_reward": normalized_reward,
             "percentage_complete": success_rate
           }
-
-      logger.info(f"\ end task with submission_id={submission_id} with submission_data_url={submission_data_url}. Results={results}")
-
+          logger.info(
+            f"\\\\ END evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {results[test_id][scenario_id]}")
       return results
     except BaseException as exception:
       logger.error(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}")
@@ -146,7 +146,6 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
         continue
       relative_upload_key = str(f.relative_to(data_volume))
       s3_utils.upload_to_s3(f, relative_upload_key)
-      print(relative_upload_key)
     logger.info(f"Deleting {scenario_folder} after uploading s3 {S3_BUCKET}/{AI4REALNET_S3_UPLOAD_ROOT}/{scenario_folder.relative_to(data_volume)}")
     # a bit hacky: in test_containers_railway, /app/data is mounted as root.
     for d in scenario_folder.iterdir():
