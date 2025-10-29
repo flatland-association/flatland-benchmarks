@@ -171,15 +171,21 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
 def orchestrator(self,
                  submission_data_url: str,
                  tests: List[str] = None,
-                 AWS_ENDPOINT_URL=None,
-                 AWS_ACCESS_KEY_ID=None,
-                 AWS_SECRET_ACCESS_KEY=None,
-                 S3_BUCKET=None,
+                 aws_endpoint_url=None,
+                 aws_access_key_id=None,
+                 aws_secret_access_key=None,
+                 s3_bucket=None,
                  **kwargs):
   submission_id = self.request.id
-  return DockerComposeFlatlandBenchmarksOrchestrator(submission_id).orchestrator(submission_data_url=submission_data_url, tests=tests,
-                                                                                 aws_endpoint_url=AWS_ENDPOINT_URL, aws_access_key_id=AWS_ACCESS_KEY_ID,
-                                                                                 aws_secret_access_key=AWS_SECRET_ACCESS_KEY, s3_bucket=S3_BUCKET, **kwargs)
+  return DockerComposeFlatlandBenchmarksOrchestrator(submission_id).orchestrator(
+    submission_data_url=submission_data_url,
+    tests=tests,
+    aws_endpoint_url=aws_endpoint_url,
+    aws_access_key_id=aws_access_key_id,
+    aws_secret_access_key=aws_secret_access_key,
+    s3_bucket=s3_bucket,
+    **kwargs
+  )
 
 
 # https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging

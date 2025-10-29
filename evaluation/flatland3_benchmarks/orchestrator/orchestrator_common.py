@@ -41,8 +41,15 @@ class FlatlandBenchmarksOrchestrator:
   def __init__(self, submission_id: str):
     self.submission_id = submission_id
 
-  def orchestrator(self, submission_data_url: str, tests: List[str] = None, aws_endpoint_url=None, aws_access_key_id=None, aws_secret_access_key=None,
-                   s3_bucket=None, s3=None, fab: DefaultApi = None, **kwargs):
+  def orchestrator(self,
+                   submission_data_url: str,
+                   tests: List[str] = None,
+                   aws_endpoint_url=None,
+                   aws_access_key_id=None,
+                   aws_secret_access_key=None,
+                   s3_bucket=None, s3=None,
+                   fab: DefaultApi = None,
+                   **kwargs):
     submission_id = self.submission_id
     try:
       start_time = time.time()
