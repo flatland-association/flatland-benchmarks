@@ -1,3 +1,4 @@
+
 FROM ghcr.io/flatland-association/fab-flatland3-benchmarks-orchestrator:latest
 
 # switch to root again
@@ -15,4 +16,5 @@ USER runner
 
 RUN sudo ls /tmp
 
+# DEPENDENCY SWITCH
 RUN python -m pip install git+https://github.com/flatland-association/flatland-rl.git@main
