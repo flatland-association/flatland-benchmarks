@@ -55,8 +55,7 @@ To participate, or even organize your own benchmarks or competitions, you don't 
 
 ```shell
 cd evaluation
-docker compose  -f docker-compose.yml --profile full up -d
-
+docker compose  -f docker-compose.yml --profile full up --wait
 ```
 
 📑 Documentation
