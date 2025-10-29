@@ -1,5 +1,0 @@
-name: flatland-rl
-dependencies:
-  - python==3.12
-  - pip:
-      - flatland-rl==4.2.0

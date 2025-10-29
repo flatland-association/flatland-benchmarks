@@ -17,7 +17,6 @@ ADD ./s3_utils.py ./s3_utils.py
 
 RUN python -m pip install -U -r requirements.txt
 
-ADD ./evaluator_job.yaml ./evaluator_job.yaml
 ADD ./submission_job.yaml ./submission_job.yaml
 
 # configure runner
