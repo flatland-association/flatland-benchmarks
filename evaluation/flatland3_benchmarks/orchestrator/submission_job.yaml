@@ -1,10 +1,11 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  labels: { }
+  labels: { } # INSERTED
   annotations: { }
-  name: f3-submission
+  name: f3-sub
 spec:
+  backoffLimit: 1
   template:
     spec:
       # https://kubernetes.io/docs/concepts/workloads/controllers/job/#handling-pod-and-container-failures
@@ -12,45 +13,57 @@ spec:
       activeDeadlineSeconds: 7200
       restartPolicy: Never
       containers:
-        - env:
-            - name: AICROWD_TESTS_FOLDER
-              value: /tmp
-          image:
-          pullPolicy: Always
-          name: f3-submission
+        - name: f3-submission
+          image: INSERTED
+          imagePullPolicy: Always
+          imagePullSecrets:
+            - name: default-secret
+          command: INSERTED
           volumeMounts:
-            - mountPath: /tmp
-              name: environments
+            - name: pvc-fab-int-submissions
+              mountPath: /data
+              subPath:
+            - name: environments
+              mountPath: /tmp/environments
+
       initContainers:
-        - command:
+        - name: download-environments
+          command:
             - aws
             - s3
             - cp
             - s3://fab-data/flatland3/environments.zip
             - /tmp/environments
-          env: [ ]
+          env: [ ] # INSERTED
           image: amazon/aws-cli
           imagePullPolicy: IfNotPresent
-          name: download-environments
           volumeMounts:
             - mountPath: /tmp/environments
               name: environments
-        - args:
+        - name: extract-environments
+          args:
             - -c
             - |
               set -euxo pipefail
               find /tmp
               unzip /tmp/environments/environments.zip -d /tmp/environments/
               find /tmp
+              mkdir -p /data/${PREFIX}
+              find /data
           command:
-            - /bin/bash
+            - sh
+          env: [ ] # INSERTED
           image: busybox
           imagePullPolicy: IfNotPresent
-          name: extract-environments
           volumeMounts:
             - mountPath: /tmp/environments
               name: environments
+            - name: pvc-fab-int-submissions
+              mountPath: /data
       volumes:
         - emptyDir: { }
           name: environments
+        - name: pvc-fab-int-submissions
+          persistentVolumeClaim:
+            claimName: fab-int-submissions
 

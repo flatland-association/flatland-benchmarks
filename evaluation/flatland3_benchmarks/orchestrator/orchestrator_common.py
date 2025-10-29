@@ -8,6 +8,7 @@ from typing import Dict
 from typing import List
 
 import celery.exceptions
+from flatland.trajectories.trajectories import Trajectory
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
@@ -29,22 +30,20 @@ class TaskExecutionError(Exception):
     self.status = status
 
 
+# TODO all 150 scenarios
+TEST_TO_SCENARIO_IDS = {
+  '4ecdb9f4-e2ff-41ff-9857-abe649c19c50': ['d99f4d35-aec5-41c1-a7b0-64f78b35d7ef', '04d618b8-84df-406b-b803-d516c7425537', ],
+  '5206f2ee-d0a9-405b-8da3-93625e169811': ['6f3ad83c-3312-4ab3-9740-cbce80feea91', 'f954a860-e963-431e-a09d-5b1040948f2d',
+                                           'f92bfe0c-5347-4d89-bc17-b6f86d514ef8']
+}
+
+
 class FlatlandBenchmarksOrchestrator:
   def __init__(self, submission_id: str):
     self.submission_id = submission_id
 
-  def orchestrator(self,
-                   submission_data_url: str,
-                   tests: List[str] = None,
-                   aws_endpoint_url=None,
-                   aws_access_key_id=None,
-                   aws_secret_access_key=None,
-                   s3_bucket=None,
-                   s3_upload_path_template=None,
-                   s3_upload_path_template_use_submission_id=None,
-                   s3=None,
-                   fab: DefaultApi = None,
-                   **kwargs):
+  def orchestrator(self, submission_data_url: str, tests: List[str] = None, aws_endpoint_url=None, aws_access_key_id=None, aws_secret_access_key=None,
+                   s3_bucket=None, s3=None, fab: DefaultApi = None, **kwargs):
     submission_id = self.submission_id
 
     try:
@@ -58,12 +57,7 @@ class FlatlandBenchmarksOrchestrator:
         aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
       if s3_bucket is None:
         s3_bucket = os.environ.get("S3_BUCKET", None)
-      if s3_upload_path_template is None:
-        s3_upload_path_template = os.environ.get("S3_UPLOAD_PATH_TEMPLATE", None)
-      if s3_upload_path_template_use_submission_id is None:
-        s3_upload_path_template_use_submission_id = os.environ.get("S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID", None)
-      ret = self.run_flatland(submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket,
-                              s3_upload_path_template, s3_upload_path_template_use_submission_id, **kwargs)
+      ret = self.run_flatland(submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, **kwargs)
 
       duration = time.time() - start_time
       logger.info(
@@ -97,13 +91,35 @@ class FlatlandBenchmarksOrchestrator:
       logger.error("Hit %s - getting logs from containers", e)
       raise e
     except BaseException as e:
-      logger.error("Hit %s - get results from S3 and uploading to FAB", e)
-      raise Exception(f"Hit {e} - get results from S3 and uploading to FAB: {traceback.format_exception(e)}") from e
+      logger.error("Failed get results from S3 and uploading to FAB with exception \"%s\"", e, exc_info=e)
+      raise Exception(
+        f"Failed get results from S3 and uploading to FAB with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}") from e
 
   @abstractmethod
-  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket,
-                   s3_upload_path_template, s3_upload_path_template_use_submission_id, **kwargs):
+  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, **kwargs):
     raise NotImplementedError()
+
+  def _extract_stats_from_trajectory(self, data_dir, scenario_id):
+    # TODO we should evaluate the trajectory and not trust the trajectory from the submission!
+
+    trajectory = Trajectory(data_dir=data_dir, ep_id=scenario_id)
+    trajectory.load()
+    rail_env = trajectory.restore_episode()
+    df_trains_arrived = trajectory.trains_arrived
+    logger.info(f"trains arrived: {df_trains_arrived}")
+    assert len(df_trains_arrived) == 1
+    logger.info(f"trains arrived: {df_trains_arrived.iloc[0]}")
+    success_rate = df_trains_arrived.iloc[0]["success_rate"]
+    logger.info(f"success rate: {success_rate}")
+    df_trains_rewards_dones_infos = trajectory.trains_rewards_dones_infos
+    logger.info(f"trains dones infos: {trajectory.trains_rewards_dones_infos}")
+    num_agents = df_trains_rewards_dones_infos["agent_id"].max() + 1
+    logger.info(f"num_agents: {num_agents}")
+    agent_scores = df_trains_rewards_dones_infos["reward"].to_list()
+    logger.info(f"agent_scores: {agent_scores}")
+    total_rewards = sum(agent_scores)
+    normalized_reward = total_rewards / (rail_env._max_episode_steps * rail_env.get_num_agents()) + 1
+    return normalized_reward, success_rate
 
 
 def backend_application_flow(

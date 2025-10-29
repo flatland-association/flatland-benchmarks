@@ -46,9 +46,8 @@ def test_tasks_successful():
   results_json_bytes = "{}".encode('utf-8')
   when(m).read().thenReturn(results_csv_bytes, results_json_bytes)
   when(s3).get_object(Bucket=mockito.any(), Key=mockito.any()).thenReturn({"Body": m})
-  ret = K8sFlatlandBenchmarksOrchestrator(submission_id="1234").orchestrator(test_runner_evaluator_image="fancy", submission_data_url="pancy",
-                                                                             batch_api=batch_api, core_api=core_api, s3=s3,
-                                                                             s3_upload_path_template="results/{}", fab=fab)
+  ret = K8sFlatlandBenchmarksOrchestrator(submission_id="1234").orchestrator(submission_data_url="pancy", s3=s3, fab=fab, test_runner_evaluator_image="fancy",
+                                                                             batch_api=batch_api, core_api=core_api)
 
   verify(batch_api, times=1).list_namespaced_job(...)
   verify(core_api, times=1).list_namespaced_pod(namespace="fab-int", label_selector=f"job-name=f3-evaluator-1234")
@@ -111,9 +110,8 @@ def test_tasks_failing():
   when(core_api).read_namespaced_pod_log("subi", namespace="fab-int").thenReturn("abcd")
 
   with pytest.raises(TaskExecutionError) as exc_info:
-    K8sFlatlandBenchmarksOrchestrator(submission_id="1234").orchestrator(test_runner_evaluator_image="fancy", submission_data_url="pancy", batch_api=batch_api,
-                                                                         core_api=core_api, s3=s3,
-                                                                         s3_upload_path_template="results/{}", fab=fab)
+    K8sFlatlandBenchmarksOrchestrator(submission_id="1234").orchestrator(submission_data_url="pancy", s3=s3, fab=fab, test_runner_evaluator_image="fancy",
+                                                                         batch_api=batch_api, core_api=core_api)
 
   assert exc_info.value.message.startswith(f"Failed task with submission_id=1234 with docker_image=fancy and submission_data_url=pancy")
   ret = exc_info.value.status
