@@ -246,7 +246,6 @@ services:
   ai4realnet-orchestrator-railway-setup:
     image: alpine
     volumes:
-      - ./evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/submission_data_entrypoint.sh:/tmp/submission_data_entrypoint.sh
       - orchestrator-data:/vol
       - orchestrator-scenarios:/scenarios
     entrypoint: [ "/bin/sh","-c" ]
@@ -255,9 +254,6 @@ services:
         set -euxo pipefail
         whoami
         chmod a+rwx -R /vol
-        cp /tmp/submission_data_entrypoint.sh /vol/submission_data_entrypoint.sh
-        chmod a=rx /vol/submission_data_entrypoint.sh
-        cat /vol/submission_data_entrypoint.sh
 
         chmod a+rwx -R /scenarios
         wget "https://github.com/flatland-association/flatland-scenarios/raw/refs/heads/regen-scenarios-breaking-changes/scenarios/environments_v2.zip" -O environments_v2.zip
