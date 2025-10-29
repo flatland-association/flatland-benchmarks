@@ -7,7 +7,6 @@ from abc import abstractmethod
 from typing import Dict
 from typing import List
 
-import celery.exceptions
 from flatland.trajectories.trajectories import Trajectory
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
@@ -45,10 +44,8 @@ class FlatlandBenchmarksOrchestrator:
   def orchestrator(self, submission_data_url: str, tests: List[str] = None, aws_endpoint_url=None, aws_access_key_id=None, aws_secret_access_key=None,
                    s3_bucket=None, s3=None, fab: DefaultApi = None, **kwargs):
     submission_id = self.submission_id
-
     try:
       start_time = time.time()
-
       if aws_endpoint_url is None:
         aws_endpoint_url = os.environ.get("AWS_ENDPOINT_URL", None)
       if aws_access_key_id is None:
@@ -57,12 +54,15 @@ class FlatlandBenchmarksOrchestrator:
         aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
       if s3_bucket is None:
         s3_bucket = os.environ.get("S3_BUCKET", None)
+
       ret = self.run_flatland(submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, **kwargs)
 
-      duration = time.time() - start_time
-      logger.info(
-        f"\\ end task with submission_id={submission_id} with submission_data_url={submission_data_url}. Took {duration:.2f} seconds.")
+    except BaseException as e:
+      logger.error("Failed get results from S3 and uploading to FAB with exception \"%s\"", e, exc_info=e)
+      raise Exception(
+        f"Failed get results from S3 and uploading to FAB with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}") from e
 
+    try:
       if fab is None:
         token = backend_application_flow(CLIENT_ID, CLIENT_SECRET, TOKEN_URL)
         print("token")
@@ -71,7 +71,7 @@ class FlatlandBenchmarksOrchestrator:
 
       for test_id, scenarios in ret.items():
         for scenario_id, result in scenarios.items():
-          print(f"uploading results for submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {result}")
+          logger.info(f"uploading results for submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {result}")
 
           fab.results_submissions_submission_id_tests_test_ids_post(
             submission_id=submission_id,
@@ -85,11 +85,10 @@ class FlatlandBenchmarksOrchestrator:
               ]
             ),
           )
+      duration = time.time() - start_time
+      logger.info(
+        f"\\ end task with submission_id={submission_id} with submission_data_url={submission_data_url}. Took {duration:.2f} seconds.")
       return ret
-
-    except celery.exceptions.SoftTimeLimitExceeded as e:
-      logger.error("Hit %s - getting logs from containers", e)
-      raise e
     except BaseException as e:
       logger.error("Failed get results from S3 and uploading to FAB with exception \"%s\"", e, exc_info=e)
       raise Exception(
