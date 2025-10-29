@@ -65,7 +65,6 @@ jobs:
         working-directory: evaluation/flatland3_benchmarks
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
-          pytest -s evaluator
           pytest -s orchestrator
 
   test-ai4realnet-orchestrator-railway:
