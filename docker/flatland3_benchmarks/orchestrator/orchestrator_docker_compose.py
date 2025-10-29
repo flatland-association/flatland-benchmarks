@@ -13,9 +13,8 @@ from celery import Celery
 from celery.app.log import TaskFormatter
 from celery.signals import after_setup_task_logger
 from celery.utils.log import get_task_logger
-from flatland.trajectories.trajectories import Trajectory
 
-from orchestrator_common import FlatlandBenchmarksOrchestrator
+from orchestrator_common import FlatlandBenchmarksOrchestrator, TEST_TO_SCENARIO_IDS
 from s3_utils import S3_BUCKET, AI4REALNET_S3_UPLOAD_ROOT, s3_utils
 
 logger = get_task_logger(__name__)
@@ -61,13 +60,6 @@ def setup_task_logger(logger, *args, **kwargs):
     handler.setFormatter(tf)
 
 
-TEST_TO_SCENARIO_IDS = {
-  '4ecdb9f4-e2ff-41ff-9857-abe649c19c50': ['d99f4d35-aec5-41c1-a7b0-64f78b35d7ef', '04d618b8-84df-406b-b803-d516c7425537', ],
-  '5206f2ee-d0a9-405b-8da3-93625e169811': ['6f3ad83c-3312-4ab3-9740-cbce80feea91', 'f954a860-e963-431e-a09d-5b1040948f2d',
-                                           'f92bfe0c-5347-4d89-bc17-b6f86d514ef8']
-}
-
-
 class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
   def exec(self, generate_policy_args: List[str], test_id: str, scenario_id: str, submission_id: str, subdir: str, submission_data_url: str):
     # --data-dir must exist -- TODO fix in flatland-rl instead
@@ -102,8 +94,7 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
             f"/vol/{submission_id}/{test_id}/{scenario_id}"]
     exec_with_logging(args if not SUDO else ["sudo"] + args)
 
-  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket,
-                   s3_upload_path_template, s3_upload_path_template_use_submission_id, **kwargs):
+  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, **kwargs):
     try:
       logger.info(f"/ start task with submission_id={submission_id} with submission_data_url={submission_data_url} for tests {tests}")
 
@@ -126,30 +117,11 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
             "--seed", "1001"
           ]
           self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
+          # TODO how to inject model into call?
           logger.info(f"DATA_VOLUME_MOUNTPATH={DATA_VOLUME_MOUNTPATH}")
           logger.info(f"contents={list(Path(DATA_VOLUME_MOUNTPATH).rglob("**/*"))}")
-          trajectory = Trajectory(data_dir=data_dir, ep_id=scenario_id)
-          trajectory.load()
-          rail_env = trajectory.restore_episode()
 
-          df_trains_arrived = trajectory.trains_arrived
-          logger.info(f"trains arrived: {df_trains_arrived}")
-          assert len(df_trains_arrived) == 1
-          logger.info(f"trains arrived: {df_trains_arrived.iloc[0]}")
-          success_rate = df_trains_arrived.iloc[0]["success_rate"]
-          logger.info(f"success rate: {success_rate}")
-
-          df_trains_rewards_dones_infos = trajectory.trains_rewards_dones_infos
-          logger.info(f"trains dones infos: {trajectory.trains_rewards_dones_infos}")
-          num_agents = df_trains_rewards_dones_infos["agent_id"].max() + 1
-          logger.info(f"num_agents: {num_agents}")
-
-          agent_scores = df_trains_rewards_dones_infos["reward"].to_list()
-          logger.info(f"agent_scores: {agent_scores}")
-
-          total_rewards = sum(agent_scores)
-
-          normalized_reward = total_rewards / (rail_env._max_episode_steps * rail_env.get_num_agents()) + 1
+          normalized_reward, success_rate = self._extract_stats_from_trajectory(data_dir, scenario_id)
 
           self.upload_and_empty_local(test_id, submission_id, scenario_id)
 
@@ -164,19 +136,6 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
     except BaseException as exception:
       logger.error(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}")
       raise RuntimeError(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}") from exception
-
-  @staticmethod
-  def load_scenario_data(scenario_id: str) -> str:
-    return {
-      # test 4ecdb9f4-e2ff-41ff-9857-abe649c19c50_
-      'd99f4d35-aec5-41c1-a7b0-64f78b35d7ef': "Test_0/Level_0.pkl",
-      '04d618b8-84df-406b-b803-d516c7425537': "Test_0/Level_1.pkl",
-
-      # test 5206f2ee-d0a9-405b-8da3-93625e169811:
-      '6f3ad83c-3312-4ab3-9740-cbce80feea91': "Test_1/Level_0.pkl",
-      'f954a860-e963-431e-a09d-5b1040948f2d': "Test_1/Level_1.pkl",
-      'f92bfe0c-5347-4d89-bc17-b6f86d514ef8': "Test_1/Level_2.pkl",
-    }[scenario_id]
 
   def upload_and_empty_local(self, test_id: str, submission_id: str, scenario_id: str):
     data_volume = Path(DATA_VOLUME_MOUNTPATH)
@@ -193,6 +152,20 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
     for d in scenario_folder.iterdir():
       shutil.rmtree(d)
 
+  # debug environments
+  @staticmethod
+  def load_scenario_data(scenario_id: str) -> str:
+    return {
+      # test 4ecdb9f4-e2ff-41ff-9857-abe649c19c50_
+      'd99f4d35-aec5-41c1-a7b0-64f78b35d7ef': "Test_0/Level_0.pkl",
+      '04d618b8-84df-406b-b803-d516c7425537': "Test_0/Level_1.pkl",
+
+      # test 5206f2ee-d0a9-405b-8da3-93625e169811:
+      '6f3ad83c-3312-4ab3-9740-cbce80feea91': "Test_1/Level_0.pkl",
+      'f954a860-e963-431e-a09d-5b1040948f2d': "Test_1/Level_1.pkl",
+      'f92bfe0c-5347-4d89-bc17-b6f86d514ef8': "Test_1/Level_2.pkl",
+    }[scenario_id]
+
 
 # N.B. name to be used by send_task
 @app.task(name=os.environ.get("BENCHMARK_ID"), bind=True, soft_time_limit=10 * 60, time_limit=12 * 60)
@@ -203,21 +176,11 @@ def orchestrator(self,
                  AWS_ACCESS_KEY_ID=None,
                  AWS_SECRET_ACCESS_KEY=None,
                  S3_BUCKET=None,
-                 S3_UPLOAD_PATH_TEMPLATE=None,
-                 S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID=None,
                  **kwargs):
   submission_id = self.request.id
-  return DockerComposeFlatlandBenchmarksOrchestrator(submission_id).orchestrator(
-    submission_data_url=submission_data_url,
-    tests=tests,
-    aws_endpoint_url=AWS_ENDPOINT_URL,
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-    s3_bucket=S3_BUCKET,
-    s3_upload_path_template=S3_UPLOAD_PATH_TEMPLATE,
-    s3_upload_path_template_use_submission_id=S3_UPLOAD_PATH_TEMPLATE_USE_SUBMISSION_ID,
-    **kwargs
-  )
+  return DockerComposeFlatlandBenchmarksOrchestrator(submission_id).orchestrator(submission_data_url=submission_data_url, tests=tests,
+                                                                                 aws_endpoint_url=AWS_ENDPOINT_URL, aws_access_key_id=AWS_ACCESS_KEY_ID,
+                                                                                 aws_secret_access_key=AWS_SECRET_ACCESS_KEY, s3_bucket=S3_BUCKET, **kwargs)
 
 
 # https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
