@@ -1,34 +1,32 @@
 import { SubmissionScenarioScore, SubmissionScore, SubmissionTestScore } from './interfaces'
 
 /**
- * Returns whether all submission's scenarios have non-null scores only.
+ * Returns whether the item's primary score is numerical.
+ */
+export function isScored(itemScore?: SubmissionScore | SubmissionTestScore | SubmissionScenarioScore) {
+  return typeof itemScore?.scorings[0].score === 'number'
+}
+
+/**
+ * Returns whether all submission's scores are numerical.
  */
 export function isSubmissionCompletelyScored(submissionScore?: SubmissionScore) {
   if (!submissionScore) return false
-  const scenarioScorings = submissionScore.test_scorings.flatMap((test) =>
-    test.scenario_scorings.map((scenario) => scenario.scorings),
-  )
-  return scenarioScorings.every((scoring) => {
-    return scoring.every((s) => s.score !== null)
-  })
+  return submissionScore.scorings.every((scoring) => typeof scoring.score === 'number')
 }
 
 /**
- * Returns whether all tests's scenarios have non-null scores only.
+ * Returns whether all tests's scores are numerical.
  */
 export function isTestCompletelyScored(testScore?: SubmissionTestScore) {
   if (!testScore) return false
-  const scenarioScorings = testScore.scenario_scorings.map((s) => s.scorings)
-  return scenarioScorings.every((scoring) => {
-    return scoring.every((s) => s.score !== null)
-  })
+  return testScore.scorings.every((scoring) => typeof scoring.score === 'number')
 }
 
 /**
- * Returns whether a scenario has non-null scores only.
+ * Returns whether all scenario's scores are numerical.
  */
 export function isScenarioCompletelyScored(scenarioScore?: SubmissionScenarioScore) {
   if (!scenarioScore) return false
-  const scoring = scenarioScore.scorings
-  return scoring.every((s) => s.score !== null)
+  return scenarioScore.scorings.every((scoring) => typeof scoring.score === 'number')
 }
