@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common'
 import { Component, inject, OnInit } from '@angular/core'
 import { RouterModule } from '@angular/router'
-import { isSubmissionCompletelyScored } from '@common/scoring-utils'
+import { isScored } from '@common/scoring-utils'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { TableColumn, TableComponent, TableRow } from '../../components/table/table.component'
@@ -67,7 +67,7 @@ export class MySubmissionsView implements OnInit {
             const startedAtStr = submission.submitted_at
               ? this.datePipe.transform(submission.submitted_at, 'dd/MM/yyyy HH:mm')
               : ''
-            const isScored = isSubmissionCompletelyScored(score)
+            const isSubmissionScored = isScored(score)
             return {
               routerLink:
                 suite && benchmark ? ['/', 'suites', suite.id, benchmark.id, 'submissions', submission.id] : undefined,
@@ -75,7 +75,7 @@ export class MySubmissionsView implements OnInit {
                 { text: submission.name },
                 { text: `${suite?.name ?? 'NA'} / ${benchmark?.name ?? 'NA'}` },
                 { text: startedAtStr },
-                isScored ? { scorings: score!.scorings, fieldDefinitions: fields } : { text: '⚠️' },
+                isSubmissionScored ? { scorings: score!.scorings, fieldDefinitions: fields } : { text: '⚠️' },
               ],
             }
           }) ?? [],

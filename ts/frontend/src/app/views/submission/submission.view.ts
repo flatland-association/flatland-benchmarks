@@ -9,7 +9,7 @@ import {
   SuiteDefinitionRow,
   TestDefinitionRow,
 } from '@common/interfaces'
-import { isSubmissionCompletelyScored } from '@common/scoring-utils'
+import { isScored } from '@common/scoring-utils'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
@@ -83,7 +83,7 @@ export class SubmissionView implements OnInit, OnDestroy {
   }
 
   isSubmissionScored() {
-    return isSubmissionCompletelyScored(this.submissionScore)
+    return isScored(this.submissionScore)
   }
 
   canPublishSubmission() {
