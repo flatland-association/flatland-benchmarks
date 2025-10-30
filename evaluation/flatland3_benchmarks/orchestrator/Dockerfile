@@ -13,10 +13,10 @@ WORKDIR /app
 ADD ./orchestrator.py ./orchestrator.py
 ADD ./orchestrator_common.py ./orchestrator_common.py
 ADD ./requirements.txt ./requirements.txt
+ADD ./s3_utils.py ./s3_utils.py
 
 RUN python -m pip install -U -r requirements.txt
 
-ADD ./evaluator_job.yaml ./evaluator_job.yaml
 ADD ./submission_job.yaml ./submission_job.yaml
 
 # configure runner
