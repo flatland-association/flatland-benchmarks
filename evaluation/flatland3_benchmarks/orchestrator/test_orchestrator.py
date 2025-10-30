@@ -26,7 +26,6 @@ def test_tasks_successful():
   when(core_api).read_namespaced_pod_log("subi", namespace="fab-int").thenReturn("abcd")
 
   ret = K8sFlatlandBenchmarksOrchestrator(submission_id="1234")._run_submission(
-    submission_id="1234",
     test_id="55",
     scenario_id="66",
     submission_data_url="pancy",
@@ -66,7 +65,6 @@ def test_tasks_failing():
 
   with pytest.raises(TaskExecutionError) as exc_info:
     K8sFlatlandBenchmarksOrchestrator(submission_id="1234")._run_submission(
-      submission_id="1234",
       test_id="55",
       scenario_id="66",
       submission_data_url="pancy",
