@@ -51,7 +51,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         core_api = kwargs["core_api"]
         batch_api = kwargs["batch_api"]
 
-        self._run_submission(submission_id, test_id, scenario_id, submission_data_url, pkl_path,
+        self._run_submission(test_id, scenario_id, submission_data_url, pkl_path,
                              core_api, batch_api, aws_access_key_id, aws_endpoint_url, aws_secret_access_key, )
 
         logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
@@ -68,15 +68,17 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {results[test_id][scenario_id]}")
     return results
 
-  def _run_submission(self, submission_id, test_id, scenario_id, submission_data_url, pkl_path, core_api, batch_api,
+  def _run_submission(self,
+                      test_id, scenario_id, submission_data_url, pkl_path, core_api, batch_api,
                       aws_access_key_id=None, aws_endpoint_url=None, aws_secret_access_key=None,
                       ):
-    prefix = f"{submission_id}/{scenario_id}"
-    logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+    submission_id = self.submission_id
 
+    logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+    sub_path = f"{submission_id}/{scenario_id}"
     submission_definition = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))
     metadata_name_ = submission_definition['metadata']['name']
-    submission_definition["metadata"]["name"] = f"{metadata_name_}--{prefix.replace("/", "--")}"[:62]
+    submission_definition["metadata"]["name"] = f"{metadata_name_}--{sub_path.replace("/", "--")}"[:62]
     label = f"{submission_id}-{scenario_id}"[:63].lower()
     submission_definition["metadata"]["labels"]["submission_id"] = label
     submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = ACTIVE_DEADLINE_SECONDS
@@ -84,7 +86,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_container_definition["image"] = submission_data_url
     submission_container_definition["command"] = ["bash", "entrypoint_generic.sh",
                                                   f"flatland-trajectory-generate-from-policy --data-dir /data/ --policy-pkg tests.trajectories.test_trajectories --policy-cls RandomPolicy --obs-builder-pkg flatland.core.env_observation_builder --obs-builder-cls DummyObservationBuilder --callbacks-pkg flatland.callbacks.generate_movie_callbacks --callbacks-cls GenerateMovieCallbacks --env-path /tmp/environments/{pkl_path} --ep-id {scenario_id}"]
-    submission_container_definition["volumeMounts"][0]["subPath"] = prefix
+    submission_container_definition["volumeMounts"][0]["subPath"] = sub_path
     submission_download_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
     submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
     if aws_endpoint_url:
@@ -93,7 +95,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       submission_download_initcontainer_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": aws_access_key_id})
     if aws_secret_access_key:
       submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": aws_secret_access_key})
-    submission_extractenvs_initcontainer_definition["env"].append({"name": "PREFIX", "value": prefix})
+    submission_extractenvs_initcontainer_definition["env"].append({"name": "PREFIX", "value": sub_path})
     submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
     batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
     all_done = False
