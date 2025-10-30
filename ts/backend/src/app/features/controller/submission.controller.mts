@@ -52,6 +52,10 @@ export class SubmissionController extends Controller {
    *                  type: string
    *                  format: uuid
    *                description: IDs of tests to run.
+   *            required:
+   *              - name
+   *              - benchmark_id
+   *              - test_ids
    *    responses:
    *      200:
    *        description: Created.
@@ -75,6 +79,23 @@ export class SubmissionController extends Controller {
     const auth = await authService.authorization(req)
     if (!auth) {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
+      return
+    }
+    // Check presence of required fields using simple nullish check to catch
+    // empty strings as well.
+    const missingFields: (keyof typeof req.body)[] = []
+    if (!req.body.name) missingFields.push('name')
+    if (!req.body.benchmark_id) missingFields.push('benchmark_id')
+    if (!req.body.test_ids || req.body.test_ids.length === 0) missingFields.push('test_ids')
+    if (missingFields.length) {
+      this.respondError(
+        req,
+        res,
+        { text: 'Required field is missing value' },
+        undefined,
+        missingFields,
+        StatusCodes.BAD_REQUEST,
+      )
       return
     }
     // save submission in db
