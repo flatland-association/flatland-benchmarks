@@ -53,7 +53,7 @@ export class FieldController extends Controller {
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const fields = await sql.query<FieldDefinitionRow>`
-        SELECT * FROM field_definitions
+        SELECT * FROM fields
         WHERE id=ANY(${ids})
         LIMIT ${ids.length}
       `

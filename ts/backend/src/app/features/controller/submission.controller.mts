@@ -108,7 +108,7 @@ export class SubmissionController extends Controller {
     }
     // get tests
     const tests = await sql.query<TestDefinitionRow>`
-        SELECT * FROM test_definitions
+        SELECT * FROM tests
         WHERE id=ANY(${req.body.test_ids})
         LIMIT ${req.body.test_ids!.length}
       `

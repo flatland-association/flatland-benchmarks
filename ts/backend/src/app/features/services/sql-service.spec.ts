@@ -22,7 +22,7 @@ describe('SQL Service', () => {
   it('aborts and throws error on error', async () => {
     const sql = SqlService.getInstance()
     await expect(async () => {
-      await sql.query`SELECT * FROM field_definitions`
+      await sql.query`SELECT * FROM fields`
     }).rejects.toThrow()
   })
 })

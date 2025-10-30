@@ -58,8 +58,8 @@ export class BenchmarkController extends Controller {
   getBenchmarks: GetHandler<'/definitions/benchmarks'> = async (req, res) => {
     const sql = SqlService.getInstance()
     const benchmarks = await sql.query<BenchmarkDefinitionRow>`
-      SELECT benchmark_definitions.id, benchmark_definitions.name, benchmark_definitions.description, benchmark_definitions.contents, benchmark_definitions.field_ids, benchmark_definitions.campaign_field_ids, benchmark_definitions.test_ids, suites.id as suite_id FROM benchmark_definitions
-      LEFT JOIN suites ON benchmark_definitions.id=ANY(suites.benchmark_ids)
+      SELECT benchmarks.id, benchmarks.name, benchmarks.description, benchmarks.contents, benchmarks.field_ids, benchmarks.campaign_field_ids, benchmarks.test_ids, suites.id as suite_id FROM benchmarks
+      LEFT JOIN suites ON benchmarks.id=ANY(suites.benchmark_ids)
       ORDER BY name ASC
     `
     this.respond(req, res, benchmarks)
@@ -124,9 +124,9 @@ export class BenchmarkController extends Controller {
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const benchmarks = await sql.query<BenchmarkDefinitionRow>`
-      SELECT benchmark_definitions.id, benchmark_definitions.name, benchmark_definitions.description, benchmark_definitions.contents, benchmark_definitions.field_ids, benchmark_definitions.campaign_field_ids, benchmark_definitions.test_ids, suites.id as suite_id FROM benchmark_definitions
-      LEFT JOIN suites ON benchmark_definitions.id=ANY(suites.benchmark_ids)
-      WHERE benchmark_definitions.id=ANY(${ids})
+      SELECT benchmarks.id, benchmarks.name, benchmarks.description, benchmarks.contents, benchmarks.field_ids, benchmarks.campaign_field_ids, benchmarks.test_ids, suites.id as suite_id FROM benchmarks
+      LEFT JOIN suites ON benchmarks.id=ANY(suites.benchmark_ids)
+      WHERE benchmarks.id=ANY(${ids})
       LIMIT ${ids.length}
     `
     this.respondAfterPresenceCheck(req, res, benchmarks, ids)

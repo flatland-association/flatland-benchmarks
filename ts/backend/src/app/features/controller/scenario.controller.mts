@@ -53,7 +53,7 @@ export class ScenarioController extends Controller {
     const sql = SqlService.getInstance()
     // id=ANY - dev.003
     const scenarios = await sql.query<ScenarioDefinitionRow>`
-        SELECT * FROM scenario_definitions
+        SELECT * FROM scenarios
         WHERE id=ANY(${ids})
         LIMIT ${ids.length}
       `
