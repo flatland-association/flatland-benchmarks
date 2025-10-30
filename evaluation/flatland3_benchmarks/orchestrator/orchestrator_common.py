@@ -47,7 +47,8 @@ class FlatlandBenchmarksOrchestrator:
                    aws_endpoint_url=None,
                    aws_access_key_id=None,
                    aws_secret_access_key=None,
-                   s3_bucket=None, s3=None,
+                   s3_bucket=None,
+                   s3=None,
                    fab: DefaultApi = None,
                    **kwargs):
     submission_id = self.submission_id
@@ -62,7 +63,7 @@ class FlatlandBenchmarksOrchestrator:
       if s3_bucket is None:
         s3_bucket = os.environ.get("S3_BUCKET", None)
 
-      ret = self.run_flatland(submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, **kwargs)
+      ret = self.run_flatland(submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, s3, **kwargs)
 
     except BaseException as e:
       logger.error("Failed get results from S3 and uploading to FAB with exception \"%s\"", e, exc_info=e)
@@ -102,7 +103,7 @@ class FlatlandBenchmarksOrchestrator:
         f"Failed get results from S3 and uploading to FAB with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}") from e
 
   @abstractmethod
-  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, **kwargs):
+  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, s3, **kwargs):
     raise NotImplementedError()
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):

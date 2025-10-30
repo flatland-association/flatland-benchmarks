@@ -39,82 +39,25 @@ app = Celery(
 
 class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
 
-  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, **kwargs):
+  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, s3, **kwargs):
     if tests is None:
       tests = list(TEST_TO_SCENARIO_IDS.keys())
 
     results = {test_id: {} for test_id in tests}
     for test_id in tests:
       for scenario_id in TEST_TO_SCENARIO_IDS[test_id]:
-        logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
         pkl_path = self.load_scenario_data(scenario_id)
         prefix = f"{submission_id}/{scenario_id}"
-
         core_api = kwargs["core_api"]
         batch_api = kwargs["batch_api"]
-        submission_definition = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))
-        submission_definition["metadata"]["name"] = f"{submission_definition['metadata']['name']}--{prefix.replace("/", "--")}"[:62]
-        label = f"{submission_id}-{scenario_id}"[:63].lower()
-        submission_definition["metadata"]["labels"]["submission_id"] = label
-        submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = ACTIVE_DEADLINE_SECONDS
-        submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
-        submission_container_definition["image"] = submission_data_url
-        submission_container_definition["command"] = ["bash", "entrypoint_generic.sh",
-                                                      f"flatland-trajectory-generate-from-policy --data-dir /data/ --policy-pkg tests.trajectories.test_trajectories --policy-cls RandomPolicy --obs-builder-pkg flatland.core.env_observation_builder --obs-builder-cls DummyObservationBuilder --callbacks-pkg flatland.callbacks.generate_movie_callbacks --callbacks-cls GenerateMovieCallbacks --env-path /tmp/environments/{pkl_path} --ep-id {scenario_id}"]
-        submission_container_definition["volumeMounts"][0]["subPath"] = prefix
-        submission_download_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
-        submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
-        if aws_endpoint_url:
-          submission_download_initcontainer_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": aws_endpoint_url})
-        if aws_access_key_id:
-          submission_download_initcontainer_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": aws_access_key_id})
-        if aws_secret_access_key:
-          submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": aws_secret_access_key})
-        submission_extractenvs_initcontainer_definition["env"].append({"name": "PREFIX", "value": prefix})
 
-        submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
-        batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
-
-        all_done = False
-        any_failed = False
-        ret = {}
-        while not all_done and not any_failed:
-          time.sleep(1)
-          # print(".")
-          jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"submission_id={label}")
-          assert len(jobs.items) == 1
-          all_done = True
-          status = []
-          for job in jobs.items:
-            all_done = all_done and job.status.conditions is not None
-            any_failed = any_failed or (job.status.conditions is not None and job.status.conditions[0].type != "Complete")
-
-          if all_done or any_failed:
-            for job in jobs.items:
-              status.append(job.status.conditions[0].type)
-              job_name = job.metadata.name
-              pods = core_api.list_namespaced_pod(namespace=KUBERNETES_NAMESPACE, label_selector=f"job-name={job_name}")
-
-              # backoff
-              pod = pods.items[-1]
-              log = core_api.read_namespaced_pod_log(pod.metadata.name, namespace=KUBERNETES_NAMESPACE)
-
-              _ret = {
-                "job_status": job.status.conditions[0].type,
-                "image_id": pods.items[-1].status.container_statuses[0].image_id,
-                "log": log,
-                "job": job.to_dict(),
-                "pod": pod.to_dict()
-              }
-              ret[job_name] = _ret
-        if any_failed:
-          raise TaskExecutionError(
-            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}.", ret)
-        logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
+        self._run_submission(submission_id, test_id, scenario_id, submission_data_url, pkl_path,
+                             core_api, batch_api, aws_access_key_id, aws_endpoint_url, aws_secret_access_key, )
 
         logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
         with tempfile.TemporaryDirectory() as tmpdirname:
-          s3 = s3_utils.get_boto_client(aws_access_key_id, aws_secret_access_key, aws_endpoint_url)
+          if s3 is None:
+            s3 = s3_utils.get_boto_client(aws_access_key_id, aws_secret_access_key, aws_endpoint_url)
           download_dir(prefix=prefix, bucket=s3_bucket, client=s3, local=tmpdirname)
 
           normalized_reward, success_rate = self._extract_stats_from_trajectory(Path(tmpdirname) / submission_id / scenario_id, scenario_id)
@@ -124,6 +67,72 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
           }
         logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {results[test_id][scenario_id]}")
     return results
+
+  def _run_submission(self, submission_id, test_id, scenario_id, submission_data_url, pkl_path, core_api, batch_api,
+                      aws_access_key_id=None, aws_endpoint_url=None, aws_secret_access_key=None,
+                      ):
+    prefix = f"{submission_id}/{scenario_id}"
+    logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+
+    submission_definition = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))
+    metadata_name_ = submission_definition['metadata']['name']
+    submission_definition["metadata"]["name"] = f"{metadata_name_}--{prefix.replace("/", "--")}"[:62]
+    label = f"{submission_id}-{scenario_id}"[:63].lower()
+    submission_definition["metadata"]["labels"]["submission_id"] = label
+    submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = ACTIVE_DEADLINE_SECONDS
+    submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
+    submission_container_definition["image"] = submission_data_url
+    submission_container_definition["command"] = ["bash", "entrypoint_generic.sh",
+                                                  f"flatland-trajectory-generate-from-policy --data-dir /data/ --policy-pkg tests.trajectories.test_trajectories --policy-cls RandomPolicy --obs-builder-pkg flatland.core.env_observation_builder --obs-builder-cls DummyObservationBuilder --callbacks-pkg flatland.callbacks.generate_movie_callbacks --callbacks-cls GenerateMovieCallbacks --env-path /tmp/environments/{pkl_path} --ep-id {scenario_id}"]
+    submission_container_definition["volumeMounts"][0]["subPath"] = prefix
+    submission_download_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
+    submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
+    if aws_endpoint_url:
+      submission_download_initcontainer_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": aws_endpoint_url})
+    if aws_access_key_id:
+      submission_download_initcontainer_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": aws_access_key_id})
+    if aws_secret_access_key:
+      submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": aws_secret_access_key})
+    submission_extractenvs_initcontainer_definition["env"].append({"name": "PREFIX", "value": prefix})
+    submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
+    batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
+    all_done = False
+    any_failed = False
+    ret = {}
+    while not all_done and not any_failed:
+      time.sleep(1)
+      # print(".")
+      jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"submission_id={label}")
+      assert len(jobs.items) == 1
+      all_done = True
+      status = []
+      for job in jobs.items:
+        all_done = all_done and job.status.conditions is not None
+        any_failed = any_failed or (job.status.conditions is not None and job.status.conditions[0].type != "Complete")
+
+      if all_done or any_failed:
+        for job in jobs.items:
+          status.append(job.status.conditions[0].type)
+          job_name = job.metadata.name
+          pods = core_api.list_namespaced_pod(namespace=KUBERNETES_NAMESPACE, label_selector=f"job-name={job_name}")
+
+          # backoff
+          pod = pods.items[-1]
+          log = core_api.read_namespaced_pod_log(pod.metadata.name, namespace=KUBERNETES_NAMESPACE)
+
+          _ret = {
+            "job_status": job.status.conditions[0].type,
+            "image_id": pods.items[-1].status.container_statuses[0].image_id,
+            "log": log,
+            "job": job.to_dict(),
+            "pod": pod.to_dict()
+          }
+          ret[metadata_name_] = _ret
+    if any_failed:
+      raise TaskExecutionError(
+        f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}.", ret)
+    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
+    return ret
 
   @staticmethod
   def load_scenario_data(scenario_id: str) -> str:
