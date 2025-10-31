@@ -81,6 +81,7 @@ export class SubmissionController extends Controller {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
+    // TODO: extract these checks to function for re-usability in PUT/PATCH
     // Check presence of required fields using simple nullish check to catch
     // empty strings as well.
     const missingFields: (keyof typeof req.body)[] = []
@@ -98,8 +99,28 @@ export class SubmissionController extends Controller {
       )
       return
     }
-    // save submission in db
     const sql = SqlService.getInstance()
+    // Rationality check
+    const benchmarkMismatches = await sql.query`
+      SELECT reference
+      FROM UNNEST(${[req.body.benchmark_id]}::uuid[]) AS reference
+      LEFT JOIN benchmarks ON id = reference
+      WHERE id IS NULL
+    `
+    if (benchmarkMismatches.length) {
+      this.respondError(
+        req,
+        res,
+        { text: 'Referenced benchmark does not exist' },
+        undefined,
+        benchmarkMismatches,
+        StatusCodes.BAD_REQUEST,
+      )
+      return
+    }
+    // TODO: rationality check for tests and tests->benchmark
+
+    // save submission in db
     const idRow = await sql.query`
         INSERT INTO submissions (
           benchmark_id,
