@@ -1,7 +1,7 @@
 import { DecimalPipe } from '@angular/common'
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { BenchmarkDefinitionRow, SubmissionRow, SuiteDefinitionRow } from '@common/interfaces'
-import { isScenarioCompletelyScored, isSubmissionCompletelyScored, isTestCompletelyScored } from '@common/scoring-utils'
+import { isScored } from '@common/scoring-utils'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
@@ -51,7 +51,7 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
         })
       )?.at(0)
       this.totalScore = '-'
-      if (isSubmissionCompletelyScored(submissionScore)) {
+      if (isScored(submissionScore)) {
         if (submissionScore?.scorings) {
           const primaryScoring = submissionScore.scorings[0]
           if (primaryScoring) {
@@ -74,7 +74,7 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
         const testFields = await this.resourceService.loadOrdered('/definitions/fields/:field_ids', {
           params: { field_ids: test?.field_ids ?? [] },
         })
-        const isTestScored = isTestCompletelyScored(testScore)
+        const isTestScored = isScored(testScore)
         rows.push({
           cells: [
             { text: test?.name ?? 'NA' },
@@ -91,7 +91,7 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
           const scenarioFields = await this.resourceService.loadOrdered('/definitions/fields/:field_ids', {
             params: { field_ids: scenario?.field_ids ?? [] },
           })
-          const isScenarioScored = isScenarioCompletelyScored(scenarioScore)
+          const isScenarioScored = isScored(scenarioScore)
           rows.push({
             routerLink: [
               '/',
