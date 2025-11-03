@@ -45,6 +45,37 @@ describe.sequential('Submission controller', () => {
     assertApiResponse(res, 401)
   })
 
+  test('should reject post submission with missing required properties', async () => {
+    const faultySubmission = structuredClone(testSubmission)
+    faultySubmission.benchmark_id = ''
+    const res = await controller.testPost('/submissions', { body: faultySubmission }, testUserJwt)
+    assertApiResponse(res, StatusCodes.BAD_REQUEST)
+  })
+
+  test('should reject post submission with invalid link (inexistent benchmark)', async () => {
+    const faultySubmission = structuredClone(testSubmission)
+    // using test_id as benchmark_id
+    faultySubmission.benchmark_id = '557d9a00-7e6d-410b-9bca-a017ca7fe3aa'
+    const res = await controller.testPost('/submissions', { body: faultySubmission }, testUserJwt)
+    assertApiResponse(res, StatusCodes.BAD_REQUEST)
+  })
+
+  test('should reject post submission with invalid link (inexistent test)', async () => {
+    const faultySubmission = structuredClone(testSubmission)
+    // using benchmark_id as test_id
+    faultySubmission.test_ids = ['20ccc7c1-034c-4880-8946-bffc3fed1359']
+    const res = await controller.testPost('/submissions', { body: faultySubmission }, testUserJwt)
+    assertApiResponse(res, StatusCodes.BAD_REQUEST)
+  })
+
+  test('should reject post submission with invalid link (test not in benchmark)', async () => {
+    const faultySubmission = structuredClone(testSubmission)
+    // using test_id from ts\backend\src\migration\data\V4.1__ai4realnet_example.sql
+    faultySubmission.test_ids = ['aeabd5b9-4e86-4c7a-859f-a32ff1be5516']
+    const res = await controller.testPost('/submissions', { body: faultySubmission }, testUserJwt)
+    assertApiResponse(res, StatusCodes.BAD_REQUEST)
+  })
+
   test('should allow post submissions', async () => {
     const res = await controller.testPost('/submissions', { body: testSubmission }, testUserJwt)
     assertApiResponse(res)
