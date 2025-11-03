@@ -133,15 +133,15 @@ def gen_data(num_levels_per_test, suite_id, benchmark_name, benchmark_descriptio
           "ID": benchmark_id,
           "BENCHMARK_NAME": benchmark_name,
           "BENCHMARK_DESCRIPTION": benchmark_description,
-          "BENCHMARK_FIELDS": [
-            {
-              "BENCHMARK_FIELD_ID": field_id,
+          "BENCHMARK_FIELDS": {
+            field_id: {
+              "ID": field_id,
               "BENCHMARK_FIELD_NAME": key,
               "BENCHMARK_FIELD_DESCRIPTION": f'{'Primary' if (i == 0) else 'Secondary'} benchmark score ({agg_func} of corresponding test scores)',
               "BENCHMARK_AGG": agg_func,
 
             } for i, (field_id, (key, agg_func)) in enumerate(zip(benchmark_fields, fields))
-          ],
+          },
           "tests": {
             test_id: {
               "ID": test_id,
@@ -162,14 +162,14 @@ def gen_data(num_levels_per_test, suite_id, benchmark_name, benchmark_descriptio
                   "ID": scenario_id,
                   "SCENARIO_NAME": scenario_id,
                   "SCENARIO_DESCRIPTION": scenario_id,
-                  "fields": [
-                    {
+                  "SCENARIO_FIELDS": {
+                    field_id: {
                       "ID": field_id,
                       "SCENARIO_FIELD_NAME": key,
                       "SCENARIO_FIELD_DESCRIPTION": f"{'Primary' if (i == 0) else 'Secondary'} raw scenario score.",
                     }
                     for i, (field_id, (key, agg_func)) in enumerate(zip(scenario_fields, fields))
-                  ]
+                  }
                 }
               },
             }

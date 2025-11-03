@@ -60,15 +60,15 @@ def escape_sql_string(s):
 def gen_sqls(data) -> str:
   sql = ""
   for suite_id, suite in data.items():
-    sql += gen_sql_suite(suite_id, suite["SUITE_SETUP"], suite["SUITE_NAME"], suite["SUITE_DESCRIPTION"], suite["SUITE_CONTENTS"],
+    sql += gen_sql_suite(suite_id, suite["SUITE_SETUP"], suite["SUITE_NAME"], suite["SUITE_DESCRIPTION"], suite.get("SUITE_CONTENTS", ""),
                          list(suite["benchmarks"].keys()))
 
     for benchmark_id, benchmark in suite["benchmarks"].items():
       sql += gen_sql_benchmark(benchmark_id, benchmark["BENCHMARK_NAME"], benchmark["BENCHMARK_DESCRIPTION"],
-                               [benchmark_field["BENCHMARK_FIELD_ID"] for benchmark_field in benchmark["BENCHMARK_FIELDS"]],
+                               [benchmark_field["ID"] for benchmark_field in benchmark["BENCHMARK_FIELDS"].values()],
                                list(benchmark["tests"].keys()))
-      for benchmark_field in benchmark["BENCHMARK_FIELDS"]:
-        sql += gen_sql_test_benchmark_field(benchmark_field["BENCHMARK_FIELD_ID"], benchmark_field["BENCHMARK_FIELD_NAME"],
+      for benchmark_field in benchmark["BENCHMARK_FIELDS"].values():
+        sql += gen_sql_test_benchmark_field(benchmark_field["ID"], benchmark_field["BENCHMARK_FIELD_NAME"],
                                             benchmark_field["BENCHMARK_FIELD_DESCRIPTION"], benchmark_field["BENCHMARK_AGG"])
 
       for test_id, test in benchmark["tests"].items():
@@ -80,8 +80,8 @@ def gen_sqls(data) -> str:
                                               test_field["TEST_AGG"])
         for scenario in test["scenarios"].values():
           sql += gen_sql_scenario(scenario["ID"], scenario["SCENARIO_NAME"], scenario["SCENARIO_DESCRIPTION"],
-                                  [field["ID"] for field in scenario["fields"]])
-          for field in scenario["fields"]:
+                                  [field["ID"] for field in scenario["SCENARIO_FIELDS"].values()])
+          for field in scenario["SCENARIO_FIELDS"].values():
             sql += gen_sql_scenario_field(field["SCENARIO_FIELD_NAME"], field["ID"], field["SCENARIO_FIELD_DESCRIPTION"])
 
   return sql
