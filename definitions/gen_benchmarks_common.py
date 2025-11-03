@@ -1,7 +1,7 @@
-def gen_sql_test_benchmark_field(test_or_benchmark_field, key, agg_func):
+def gen_sql_test_benchmark_field(test_or_benchmark_field, key, field_description, agg_func):
   return f"""INSERT INTO field_definitions
         (id, key, description, agg_func, agg_weights)
-        VALUES ('{test_or_benchmark_field}', '{key}', 'Benchmark score ({agg_func} of test scores)', '{agg_func}', NULL)
+        VALUES ('{test_or_benchmark_field}', '{key}', '{field_description}', '{agg_func}', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 """
@@ -60,21 +60,28 @@ def escape_sql_string(s):
 def gen_sqls(data) -> str:
   sql = ""
   for suite_id, suite in data.items():
-    sql += gen_sql_suite(suite_id, 'CAMPAIGN', suite["SUITE_NAME"], suite["SUITE_DESCRIPTION"], suite["SUITE_CONTENTS"],
-                                   list(suite["benchmarks"].keys()))
+    sql += gen_sql_suite(suite_id, suite["SUITE_SETUP"], suite["SUITE_NAME"], suite["SUITE_DESCRIPTION"], suite["SUITE_CONTENTS"],
+                         list(suite["benchmarks"].keys()))
 
     for benchmark_id, benchmark in suite["benchmarks"].items():
-      sql += gen_sql_benchmark(benchmark_id, benchmark["BENCHMARK_NAME"], benchmark["BENCHMARK_DESCRIPTION"], [benchmark["BENCHMARK_FIELD_ID"]],
+      sql += gen_sql_benchmark(benchmark_id, benchmark["BENCHMARK_NAME"], benchmark["BENCHMARK_DESCRIPTION"],
+                               [benchmark_field["BENCHMARK_FIELD_ID"] for benchmark_field in benchmark["BENCHMARK_FIELDS"]],
                                list(benchmark["tests"].keys()))
-      sql += gen_sql_test_benchmark_field(benchmark["BENCHMARK_FIELD_ID"], benchmark["BENCHMARK_FIELD_NAME"], benchmark["BENCHMARK_AGG"])
+      for benchmark_field in benchmark["BENCHMARK_FIELDS"]:
+        sql += gen_sql_test_benchmark_field(benchmark_field["BENCHMARK_FIELD_ID"], benchmark_field["BENCHMARK_FIELD_NAME"],
+                                            benchmark_field["BENCHMARK_FIELD_DESCRIPTION"], benchmark_field["BENCHMARK_AGG"])
 
       for test_id, test in benchmark["tests"].items():
-        sql += gen_sql_test(test["ID"], test["TEST_NAME"], test["TEST_DESCRIPTION"], [test["TEST_FIELD_ID"]], [scenario["ID"] for scenario in test["scenarios"].values()],
+        sql += gen_sql_test(test["ID"], test["TEST_NAME"], test["TEST_DESCRIPTION"], [field_id for field_id in test["TEST_FIELDS"].keys()],
+                            [scenario["ID"] for scenario in test["scenarios"].values()],
                             test["LOOP"], test.get("QUEUE", None))
-        sql += gen_sql_test_benchmark_field(test["TEST_FIELD_ID"], test["TEST_FIELD_NAME"], test["TEST_AGG"])
+        for test_field in test["TEST_FIELDS"].values():
+          sql += gen_sql_test_benchmark_field(test_field["ID"], test_field["TEST_FIELD_NAME"], test_field["TEST_FIELD_DESCRIPTION"],
+                                              test_field["TEST_AGG"])
         for scenario in test["scenarios"].values():
-          sql += gen_sql_scenario(scenario["ID"], scenario["SCENARIO_NAME"], scenario["SCENARIO_DESCRIPTION"], [field["SCENARIO_FIELD_ID"] for field in scenario["fields"]])
+          sql += gen_sql_scenario(scenario["ID"], scenario["SCENARIO_NAME"], scenario["SCENARIO_DESCRIPTION"],
+                                  [field["ID"] for field in scenario["fields"]])
           for field in scenario["fields"]:
-            sql += gen_sql_scenario_field(field["SCENARIO_FIELD_NAME"], field["SCENARIO_FIELD_ID"], field["SCENARIO_FIELD_DESCRIPTION"])
+            sql += gen_sql_scenario_field(field["SCENARIO_FIELD_NAME"], field["ID"], field["SCENARIO_FIELD_DESCRIPTION"])
 
   return sql

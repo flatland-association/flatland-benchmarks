@@ -18,6 +18,7 @@ def extract_ai4realnet_from_csv(csv):
     suite["ID"] = row["SUITE_ID"]
     suite["SUITE_NAME"] = row["SUITE_NAME"]
     suite["SUITE_DESCRIPTION"] = row["SUITE_DESCRIPTION"]
+    suite["SUITE_SETUP"] = "CAMPAIGN"
 
     suite["benchmarks"] = suite.get("benchmarks", defaultdict(lambda: {}))
     benchmarks = suite["benchmarks"]
@@ -25,10 +26,14 @@ def extract_ai4realnet_from_csv(csv):
     benchmark["ID"] = row["BENCHMARK_ID"]
     benchmark["BENCHMARK_NAME"] = row["BENCHMARK_NAME"]
     benchmark["BENCHMARK_DESCRIPTION"] = row["BENCHMARK_DESCRIPTION"]
-    benchmark["BENCHMARK_FIELD_ID"] = row["BENCHMARK_FIELD_ID"]
-    benchmark["BENCHMARK_FIELD_NAME"] = row["BENCHMARK_FIELD_NAME"]
-    benchmark["BENCHMARK_FIELD_DESCRIPTION"] = row["BENCHMARK_FIELD_DESCRIPTION"]
-    benchmark["BENCHMARK_AGG"] = row["BENCHMARK_AGG"]
+
+    benchmark["BENCHMARK_FIELDS"] = [{
+      "BENCHMARK_FIELD_ID": row["BENCHMARK_FIELD_ID"],
+      "BENCHMARK_FIELD_NAME": row["BENCHMARK_FIELD_NAME"],
+      "BENCHMARK_FIELD_DESCRIPTION": row["BENCHMARK_FIELD_DESCRIPTION"],
+      "BENCHMARK_AGG": row["BENCHMARK_AGG"]
+    }]
+
 
     benchmark["tests"] = benchmark.get("tests", defaultdict(lambda: {}))
     tests = benchmark["tests"]

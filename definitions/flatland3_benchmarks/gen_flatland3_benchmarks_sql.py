@@ -1,25 +1,21 @@
+import json
 import uuid
 from collections import defaultdict
+from pathlib import Path
 
 import pandas as pd
 
 from definitions.gen_benchmarks_common import gen_sql_scenario_field, gen_sql_test_benchmark_field, gen_sql_scenario, gen_sql_test, gen_sql_benchmark, \
   gen_sql_suite
-import uuid
-from collections import defaultdict
-
-import pandas as pd
-
-from definitions.gen_benchmarks_common import gen_sql_scenario_field, gen_sql_test_benchmark_field, gen_sql_scenario, gen_sql_test, gen_sql_benchmark, \
-  gen_sql_suite
+from definitions.gen_benchmarks_common import gen_sqls
 
 
 def gen_ai4realnet_playground():
   test_type = 'CLOSED'
 
-  NUM_BENCHMARKS = 1
   NUM_LEVELS_PER_BENCHMARK = 1
-  test_descriptions = ['lorem ipsum'] * NUM_BENCHMARKS
+  num_levels_per_test = 1
+  test_descriptions = ['lorem ipsum'] * NUM_LEVELS_PER_BENCHMARK
   suite_id = "0ca46887-897a-463f-bf83-c6cd6269a976"
   # https://ai4realnet.eu/use-cases/
   benchmark_name = "Playground Electricity Network"
@@ -27,10 +23,16 @@ def gen_ai4realnet_playground():
   benchmark_name = "Playground Railway (interactive)"
   test_type = 'CLOSED'
   test_type = 'INTERACTIVE'
+  benchmark_description = ""
 
   fields = [["normalized_reward", "NANSUM"], ["percentage_complete", "NANMEAN"]]
+  suite_setup = ""
+  suite_name = ""
+  suite_description = ""
+  suite_contents = ""
 
-  gen_data(NUM_LEVELS_PER_BENCHMARK, suite_id, benchmark_name, fields, test_descriptions, test_type)
+  gen_data(num_levels_per_test, suite_id, benchmark_name, benchmark_description, fields, test_descriptions, test_type, suite_setup, suite_name,
+           suite_description, suite_contents)
 
 
 def gen_flatland3_benchmarks(
@@ -38,14 +40,14 @@ def gen_flatland3_benchmarks(
   suite_id=None,
   benchmark_name="Round 1",
   benchmark_description="",
-  fields=[["normalized_reward", "NANSUM"], ["percentage_complete", "NANMEAN"]],
+  fields=None,
   suite_setup="COMPETITION",
   suite_name="Flatland 3 Benchmarks",
   suite_description='The Flatland 3 Benchmarks.',
   suite_contents='',
   num_levels_per_benchmark=10,
   csv_template="../../benchmarks/flatland3/metadata.csv.template",
-):
+) -> dict:
   df_metadata = pd.read_csv(csv_template)
   test_descriptions = [f"Test {i}: {v['n_agents']} agents,  {v['y_dim']}x{v['x_dim']}, {v['n_cities']}" for i, (k, v) in
                        enumerate(list(df_metadata.groupby("test_id").aggregate('first').iterrows()))]
@@ -69,19 +71,19 @@ def gen_data(num_levels_per_test, suite_id, benchmark_name, benchmark_descriptio
   for key, agg_func in fields:
     scenario_field = str(uuid.uuid4())
     test_field = str(uuid.uuid4())
-    benchmark_field = str(uuid.uuid4())
+    benchmark_field_id = str(uuid.uuid4())
     scenario_fields.append(scenario_field)
     test_fields.append(test_field)
-    benchmark_fields.append(benchmark_field)
+    benchmark_fields.append(benchmark_field_id)
 
-  for (key, agg_func), scenario_field, test_field, benchmark_field in zip(fields, scenario_fields, test_fields, benchmark_fields):
+  for (key, agg_func), scenario_field, test_field, benchmark_field_id in zip(fields, scenario_fields, test_fields, benchmark_fields):
     field_definition = gen_sql_scenario_field(key, scenario_field, "scenario field description")
     field_definitions += field_definition
 
-    field_definition = gen_sql_test_benchmark_field(benchmark_field, key, agg_func)
+    field_definition = gen_sql_test_benchmark_field(benchmark_field_id, key, f'Benchmark score ({agg_func} of test scores)', agg_func)
     field_definitions += field_definition
 
-    field_definition = gen_sql_test_benchmark_field(test_field, key, agg_func)
+    field_definition = gen_sql_test_benchmark_field(test_field, key, f'Test score ({agg_func} of scenario scores)', agg_func)
     field_definitions += field_definition
 
   scenario_ids = defaultdict(lambda: [])
@@ -120,26 +122,66 @@ def gen_data(num_levels_per_test, suite_id, benchmark_name, benchmark_descriptio
   print(suite_definitions)
 
   return {
-    "benchmarks": [{
-      "id": benchmark_id,
-      "name": benchmark_name,
-      "fields": benchmark_fields,
-      "tests": [{
-        "id": test_id,
-        # "name": "",
-        "fields": test_fields,
-        "scenarios": [{
-          "id": scenario_id,
-          # name
-          "fields": scenario_fields,
-        } for scenario_id in scenario_ids[test_id]]
+    suite_id: {
+      "ID": suite_id,
+      "SUITE_NAME": suite_name,
+      "SUITE_DESCRIPTION": suite_description,
+      "SUITE_CONTENTS": suite_contents,
+      "SUITE_SETUP": suite_setup,
+      "benchmarks": {
+        benchmark_id: {
+          "ID": benchmark_id,
+          "BENCHMARK_NAME": benchmark_name,
+          "BENCHMARK_DESCRIPTION": benchmark_description,
+          "BENCHMARK_FIELDS": [
+            {
+              "BENCHMARK_FIELD_ID": field_id,
+              "BENCHMARK_FIELD_NAME": key,
+              "BENCHMARK_FIELD_DESCRIPTION": f'{'Primary' if (i == 0) else 'Secondary'} benchmark score ({agg_func} of corresponding test scores)',
+              "BENCHMARK_AGG": agg_func,
 
-      } for test_id in test_ids]
-    }]
+            } for i, (field_id, (key, agg_func)) in enumerate(zip(benchmark_fields, fields))
+          ],
+          "tests": {
+            test_id: {
+              "ID": test_id,
+              "TEST_NAME": test_name,
+              "TEST_DESCRIPTION": test_description,
+              "TEST_FIELDS": {
+                field_id: {
+                  "ID": field_id,
+                  "TEST_FIELD_NAME": key,
+                  "TEST_FIELD_DESCRIPTION": f"{'Primary' if (i == 0) else 'Secondary'} test score ({agg_func} of corresponding scenario scores)",
+                  "TEST_AGG": agg_func,
+                }
+                for i, (field_id, (key, agg_func)) in enumerate(zip(test_fields, fields))
+              },
+              "LOOP": "CLOSED",
+              "scenarios": {
+                "ID": {
+                  "ID": scenario_id,
+                  "SCENARIO_NAME": scenario_id,
+                  "SCENARIO_DESCRIPTION": scenario_id,
+                  "fields": [
+                    {
+                      "ID": field_id,
+                      "SCENARIO_FIELD_NAME": key,
+                      "SCENARIO_FIELD_DESCRIPTION": f"{'Primary' if (i == 0) else 'Secondary'} raw scenario score.",
+                    }
+                    for i, (field_id, (key, agg_func)) in enumerate(zip(scenario_fields, fields))
+                  ]
+                }
+              },
+            }
+            for test_name, test_description, test_id, scenario_ids_for_test in zip(test_names, test_descriptions, test_ids, scenario_ids_per_test)
+          }
+        }
+      }
+    }
   }
 
 
-def main(truncate_scenarios_docker_compose: int = 1):
+def main(truncate_benchmarks_docker_compose: int = 1, truncate_tests_docker_compose: int = 1, truncate_scenarios_docker_compose: int = 1):
   data = gen_flatland3_benchmarks(
     test_type='CLOSED',
     suite_id="24ab2336-a407-4329-b781-d71846250e24",
@@ -154,24 +196,26 @@ def main(truncate_scenarios_docker_compose: int = 1):
     csv_template="../../benchmarks/flatland3/metadata.csv.template",
   )
   print(data)
-  # TODO harmonize with general workflow:
-  # sql = gen_sqls(data)
-  # with Path("fab3_definitions.json").open("w") as f:
-  #   f.write(json.dumps(data, indent=4))
-  # with Path("fab_definitions.sql").open("w") as f:
-  #   f.write(sql)
-  #
-  # for suite_id, suite in data.items():
-  #   for benchmark_id, benchmark in suite["benchmarks"].items():
-  #     for test_id, test in benchmark["tests"].items():
-  #       for scenario_id in list(test["scenarios"].keys())[truncate_scenarios_docker_compose:]:
-  #         del test["scenarios"][scenario_id]
-  #
-  # sql = gen_sqls(data)
-  # with Path("../../ts/backend/src/migration/data/V11.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
-  #   f.write(sql)
+  sql = gen_sqls(data)
+  with Path("fab3_definitions.json").open("w") as f:
+    f.write(json.dumps(data, indent=4))
+  with Path("fab3_definitions.sql").open("w") as f:
+    f.write(sql)
 
-  # 'Warm-up round', 'The warm-up round runs from November 10th, 2025 - November 28th, 2025', '{"cta":"Are you up for the challenge? Make your first submission now."}');
+  for suite_id, suite in data.items():
+    for benchmark_id in list(suite["benchmarks"].keys())[truncate_benchmarks_docker_compose:]:
+      del suite["benchmarks"][benchmark_id]
+
+    for benchmark_id, benchmark in list(suite["benchmarks"].items()):
+      for test_id in list(benchmark["tests"].keys())[truncate_tests_docker_compose:]:
+        del benchmark["tests"][test_id]
+      for test_id, test in benchmark["tests"].items():
+        for scenario_id in list(test["scenarios"].keys())[truncate_scenarios_docker_compose:]:
+          del test["scenarios"][scenario_id]
+
+  sql = gen_sqls(data)
+  with Path("../../ts/backend/src/migration/data/V12.1__realworldbaselines_example.sql").open("w", encoding="utf-8") as f:
+    f.write(sql)
 
 
 if __name__ == '__main__':
