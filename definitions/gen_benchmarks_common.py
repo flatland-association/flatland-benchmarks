@@ -35,19 +35,19 @@ def gen_sql_test(test_id, test_name, test_description, test_fields, scenario_ids
 """
 
 
-def gen_sql_benchmark(benchmark_id, benchmark_name, benchmark_fields, test_ids):
+def gen_sql_benchmark(benchmark_id, benchmark_name, benchmark_description, benchmark_fields, test_ids):
   return f"""INSERT INTO benchmark_definitions
     (id, name, description, field_ids, test_ids)
-    VALUES ('{benchmark_id}', '{benchmark_name}', '{benchmark_name}', array['{"\', \'".join(benchmark_fields)}']::uuid[], array['{"', '".join(test_ids)}']::uuid[])
+    VALUES ('{benchmark_id}', '{benchmark_name}', '{benchmark_description}', array['{"\', \'".join(benchmark_fields)}']::uuid[], array['{"', '".join(test_ids)}']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 """
 
 
-def gen_sql_suite(suite_id, suite_setup, suite_name, suite_description, benchmark_ids):
+def gen_sql_suite(suite_id, suite_setup, suite_name, suite_description, suite_contents, benchmark_ids):
   return f""" INSERT INTO suites
-    (id, setup, name, description, benchmark_ids)
-    VALUES ('{suite_id}', '{suite_setup}', '{suite_name}', '{suite_description}', array['{"', '".join(benchmark_ids)}']::uuid[])
+    (id, setup, name, description, contents, benchmark_ids)
+    VALUES ('{suite_id}', '{suite_setup}', '{suite_name}', '{suite_description}', '{suite_contents}', array['{"', '".join(benchmark_ids)}']::uuid[])
     ON CONFLICT(id) DO UPDATE SET setup=EXCLUDED.setup, name=EXCLUDED.name, description=EXCLUDED.description, benchmark_ids=EXCLUDED.benchmark_ids;
 
 """
@@ -60,11 +60,12 @@ def escape_sql_string(s):
 def gen_sqls(data) -> str:
   sql = ""
   for suite_id, suite in data.items():
-    sql += gen_sql_suite(suite_id, 'CAMPAIGN', suite["SUITE_NAME"], suite["SUITE_DESCRIPTION"],
+    sql += gen_sql_suite(suite_id, 'CAMPAIGN', suite["SUITE_NAME"], suite["SUITE_DESCRIPTION"], suite["SUITE_CONTENTS"],
                                    list(suite["benchmarks"].keys()))
 
     for benchmark_id, benchmark in suite["benchmarks"].items():
-      sql += gen_sql_benchmark(benchmark_id, benchmark["BENCHMARK_NAME"], [benchmark["BENCHMARK_FIELD_ID"]], list(benchmark["tests"].keys()))
+      sql += gen_sql_benchmark(benchmark_id, benchmark["BENCHMARK_NAME"], benchmark["BENCHMARK_DESCRIPTION"], [benchmark["BENCHMARK_FIELD_ID"]],
+                               list(benchmark["tests"].keys()))
       sql += gen_sql_test_benchmark_field(benchmark["BENCHMARK_FIELD_ID"], benchmark["BENCHMARK_FIELD_NAME"], benchmark["BENCHMARK_AGG"])
 
       for test_id, test in benchmark["tests"].items():
