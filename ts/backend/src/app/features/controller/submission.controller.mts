@@ -464,7 +464,7 @@ export class SubmissionController extends Controller {
   /**
    * Checks if all values in the provided `resource` are valid.
    * @param resource Resource to validate.
-   * @throws When check failed.
+   * @throws {ControllerError} When check failed.
    */
   async checkValidity(resource: StripId<SubmissionRow>) {
     const sql = SqlService.getInstance()
