@@ -6,38 +6,38 @@
     "SUITE_CONTENTS": "{\"introduction\":\"<p><b>In this competition we want to find out how to efficiently manage dense traffic on a complex railway network with unforeseen events.</b></p><p>This competition tackles a real-world problem faced by many transportation companies around the world: the vehicle rescheduling problem (VRSP). It aims to identify novel solutions and advance existing approaches for dynamic railway rescheduling to take a step towards real-time rescheduling demands of future railway networks. Your contribution to this challenge might influence how modern traffic management systems are implemented.</p><p>This competition is part of the <a href=\"https://ai4realnet.eu/\">AI4REALNET project</a> (AI for REAL-world NETwork operation).</p>\",\"tabs\":[{\"title\":\"What is Flatland?\",\"text\":\"<p><a href=\"https://github.com/flatland-association/flatland-rl\">Flatland</a> is an open-source framework for developing and comparing Multi-Agent Reinforcement Learning algorithms in little (or ridiculously large!) grid-worlds. Check out the extensive <a href=\"https://flatland-association.github.io/flatland-book/intro.html\">documentation on GitHub</a> or the <a href=\"https://arxiv.org/abs/2012.05893\">paper on arXiv</a>.</p>\"},{\"title\":\"Competition Procedure\",\"text\":\"<p>The competition consists of a warm-up round for participants to familiarize themselves with the Flatland environment and the competition setup. After that, the proper competition starts with new and more complex environments to tackle.</p><p><b>Warm-up round:</b> November 10th, 2025 - November 28th, 2025</p><p><b>Proper competition:</b> December 1st, 2025 - January 23rd, 2026</p>\"},{\"title\":\"Prizes\",\"text\":\"There will be a paper written on the competition and the best teams and their solutions will be included. The paper is meant to be published and presented at a relevant conference, e.g. NeurIPS.\"},{\"title\":\"Rules\",\"text\":\"<p><b>General:</b> In the following, Participant refers to a single person or a participating team. By signing up for this competition, Participants agree to the rules of the competition. Anyone registered as Participant has the right to participate in the competition and participants are allowed to form teams.</p><p><b>Daily Submission Cap:</b> Each Participant may submit up to 5 solutions per day.</p><p><b>Runtime Limitation:</b> The evaluation of a solution will be stopped if double the timesteps of the latest scheduled arrival elapsed during a scenario, or if the evaluation lasts longer than 4 hours. The scores for all completed scenarios up to that point will be counted toward to competition.</p><p><b>Open Source:</b> Participants must open source their submissions in order to qualify for prizes.</p><p>Evaluation Procedure: Submissions are initially scored automatically and shown on the leaderboard. Top-performing entries are subjected to a secondary human review to resolve any ties and ensure robustness of the scoring methodology.</p>\"},{\"title\":\"Contact\",\"text\":\"<p>Join the competition on our Revolt server: tba</p><p>Get in touch with us by e-mail <a href=\"mailto:competition@flatland-association.org\">competition@flatland-association.org</a></p>\"}]}",
     "SUITE_SETUP": "COMPETITION",
     "benchmarks": {
-      "becc32fe-d993-44ba-aaa9-a31bde3e2a0a": {
-        "ID": "becc32fe-d993-44ba-aaa9-a31bde3e2a0a",
+      "b47190f5-4a3e-4dc0-9280-c0da5ce9a3bd": {
+        "ID": "b47190f5-4a3e-4dc0-9280-c0da5ce9a3bd",
         "BENCHMARK_NAME": "Warm-up round",
         "BENCHMARK_DESCRIPTION": "The warm-up round runs from November 10th, 2025 - November 28th, 2025",
-        "BENCHMARK_FIELDS": [
-          {
-            "BENCHMARK_FIELD_ID": "5b6dc263-0377-4dc0-a873-16b3b35abf44",
+        "BENCHMARK_FIELDS": {
+          "8eb53853-42bd-4687-9cf5-d1d8aa65f5cf": {
+            "ID": "8eb53853-42bd-4687-9cf5-d1d8aa65f5cf",
             "BENCHMARK_FIELD_NAME": "normalized_reward",
             "BENCHMARK_FIELD_DESCRIPTION": "Primary benchmark score (NANSUM of corresponding test scores)",
             "BENCHMARK_AGG": "NANSUM"
           },
-          {
-            "BENCHMARK_FIELD_ID": "53128eb5-1991-42fe-93ca-6e8f16385828",
+          "07b0df09-08fa-4703-b2d5-7d36bc404cd9": {
+            "ID": "07b0df09-08fa-4703-b2d5-7d36bc404cd9",
             "BENCHMARK_FIELD_NAME": "percentage_complete",
             "BENCHMARK_FIELD_DESCRIPTION": "Secondary benchmark score (NANMEAN of corresponding test scores)",
             "BENCHMARK_AGG": "NANMEAN"
           }
-        ],
+        },
         "tests": {
-          "ee1675ff-3e6a-4f19-a371-3b60533f50f5": {
-            "ID": "ee1675ff-3e6a-4f19-a371-3b60533f50f5",
+          "0b0a2157-7116-48fb-9679-0a9a4d08791f": {
+            "ID": "0b0a2157-7116-48fb-9679-0a9a4d08791f",
             "TEST_NAME": "Test 0",
             "TEST_DESCRIPTION": "Test 0: 7 agents,  30x30, 2",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -46,37 +46,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "ad15a918-f020-4bf2-af35-f37a07158c77": {
-            "ID": "ad15a918-f020-4bf2-af35-f37a07158c77",
+          "48669745-0947-4078-b8d3-e5134d4c6ef5": {
+            "ID": "48669745-0947-4078-b8d3-e5134d4c6ef5",
             "TEST_NAME": "Test 1",
             "TEST_DESCRIPTION": "Test 1: 7 agents,  30x30, 2",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -85,37 +85,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "74d15655-bbd5-4e3f-b84a-756172a9fae2": {
-            "ID": "74d15655-bbd5-4e3f-b84a-756172a9fae2",
+          "fdec7073-27bd-4f14-bacd-338ba43633f9": {
+            "ID": "fdec7073-27bd-4f14-bacd-338ba43633f9",
             "TEST_NAME": "Test 2",
             "TEST_DESCRIPTION": "Test 2: 20 agents,  30x30, 3",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -124,37 +124,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "cccc9193-31b1-49f1-8c45-21453f1831f0": {
-            "ID": "cccc9193-31b1-49f1-8c45-21453f1831f0",
+          "c620a720-75c1-4ff4-833e-88790f168c4e": {
+            "ID": "c620a720-75c1-4ff4-833e-88790f168c4e",
             "TEST_NAME": "Test 3",
             "TEST_DESCRIPTION": "Test 3: 50 agents,  35x30, 3",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -163,37 +163,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "bb672a97-2278-4000-a450-ee3e0054d5f6": {
-            "ID": "bb672a97-2278-4000-a450-ee3e0054d5f6",
+          "7c754675-209a-4c7a-9726-891b5c95be23": {
+            "ID": "7c754675-209a-4c7a-9726-891b5c95be23",
             "TEST_NAME": "Test 4",
             "TEST_DESCRIPTION": "Test 4: 80 agents,  30x35, 5",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -202,37 +202,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "3ef9d9a4-e8a6-4de0-8c93-15db75c96160": {
-            "ID": "3ef9d9a4-e8a6-4de0-8c93-15db75c96160",
+          "cf23674d-781b-4c08-bb75-522e9eb59c02": {
+            "ID": "cf23674d-781b-4c08-bb75-522e9eb59c02",
             "TEST_NAME": "Test 5",
             "TEST_DESCRIPTION": "Test 5: 80 agents,  35x45, 7",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -241,37 +241,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "6777b4aa-f2f4-4712-8c84-00d3f9ceaea6": {
-            "ID": "6777b4aa-f2f4-4712-8c84-00d3f9ceaea6",
+          "1c1786de-eb59-4bf8-ab2c-cff0a6223491": {
+            "ID": "1c1786de-eb59-4bf8-ab2c-cff0a6223491",
             "TEST_NAME": "Test 6",
             "TEST_DESCRIPTION": "Test 6: 80 agents,  60x40, 9",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -280,37 +280,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "bd542182-871e-499d-8de5-1e3f98850715": {
-            "ID": "bd542182-871e-499d-8de5-1e3f98850715",
+          "a0f64b59-68b5-4642-b1ed-ef0c85155afd": {
+            "ID": "a0f64b59-68b5-4642-b1ed-ef0c85155afd",
             "TEST_NAME": "Test 7",
             "TEST_DESCRIPTION": "Test 7: 80 agents,  40x60, 13",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -319,37 +319,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "8d14cc5a-bdba-494e-a4ba-551f8c169736": {
-            "ID": "8d14cc5a-bdba-494e-a4ba-551f8c169736",
+          "5cc7dcd2-ebba-495a-a856-a4ceef3c6623": {
+            "ID": "5cc7dcd2-ebba-495a-a856-a4ceef3c6623",
             "TEST_NAME": "Test 8",
             "TEST_DESCRIPTION": "Test 8: 80 agents,  60x60, 17",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -358,37 +358,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "52840e5d-b6ab-4855-aff1-65ee4e3aa239": {
-            "ID": "52840e5d-b6ab-4855-aff1-65ee4e3aa239",
+          "7174dde5-3d85-42fe-8df9-9298659f8ce0": {
+            "ID": "7174dde5-3d85-42fe-8df9-9298659f8ce0",
             "TEST_NAME": "Test 9",
             "TEST_DESCRIPTION": "Test 9: 100 agents,  120x80, 21",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -397,37 +397,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "a94944df-3aa8-46dc-9e15-7237a75ecf80": {
-            "ID": "a94944df-3aa8-46dc-9e15-7237a75ecf80",
+          "a4c2eb0e-2783-4c40-bed5-55af2b82c317": {
+            "ID": "a4c2eb0e-2783-4c40-bed5-55af2b82c317",
             "TEST_NAME": "Test 10",
             "TEST_DESCRIPTION": "Test 10: 100 agents,  80x100, 25",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -436,37 +436,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "a86fdf12-b186-4db9-99f9-252248cd0321": {
-            "ID": "a86fdf12-b186-4db9-99f9-252248cd0321",
+          "7131442c-361f-48d9-9e51-28ae7b7f242f": {
+            "ID": "7131442c-361f-48d9-9e51-28ae7b7f242f",
             "TEST_NAME": "Test 11",
             "TEST_DESCRIPTION": "Test 11: 200 agents,  100x100, 29",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -475,37 +475,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "2cf91405-d037-4742-a9ff-7c0023d4f86e": {
-            "ID": "2cf91405-d037-4742-a9ff-7c0023d4f86e",
+          "bfaaf4e8-cc97-4abf-b78f-e65b3242422c": {
+            "ID": "bfaaf4e8-cc97-4abf-b78f-e65b3242422c",
             "TEST_NAME": "Test 12",
             "TEST_DESCRIPTION": "Test 12: 200 agents,  150x150, 33",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -514,37 +514,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "6610f499-7366-4271-ba1e-5613c3318a94": {
-            "ID": "6610f499-7366-4271-ba1e-5613c3318a94",
+          "4db6f4c0-532c-4336-ad80-771d7c360e77": {
+            "ID": "4db6f4c0-532c-4336-ad80-771d7c360e77",
             "TEST_NAME": "Test 13",
             "TEST_DESCRIPTION": "Test 13: 400 agents,  150x150, 37",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -553,37 +553,37 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           },
-          "e7f1d751-c875-4857-b1d2-072cbb72b383": {
-            "ID": "e7f1d751-c875-4857-b1d2-072cbb72b383",
+          "ddcdcbe8-77ee-4280-81f4-f16ef7b1ce7b": {
+            "ID": "ddcdcbe8-77ee-4280-81f4-f16ef7b1ce7b",
             "TEST_NAME": "Test 14",
             "TEST_DESCRIPTION": "Test 14: 425 agents,  158x158, 41",
             "TEST_FIELDS": {
-              "3c5df517-5bfa-42ca-96ed-f652711e88a8": {
-                "ID": "3c5df517-5bfa-42ca-96ed-f652711e88a8",
+              "13cc7cc1-03cb-47d3-bf98-ca55bc79163a": {
+                "ID": "13cc7cc1-03cb-47d3-bf98-ca55bc79163a",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "0aceae40-b02a-4ed6-85b9-50e61ebd70e3": {
-                "ID": "0aceae40-b02a-4ed6-85b9-50e61ebd70e3",
+              "842a983d-45a2-4779-a895-26bbdd4b1609": {
+                "ID": "842a983d-45a2-4779-a895-26bbdd4b1609",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -592,21 +592,21 @@
             "LOOP": "CLOSED",
             "scenarios": {
               "ID": {
-                "ID": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_NAME": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "SCENARIO_DESCRIPTION": "92fea6d9-610f-4344-af4f-bfdf4e294f63",
-                "fields": [
-                  {
-                    "ID": "a89584d2-590c-4a15-8215-a34a39444dfc",
+                "ID": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_NAME": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_DESCRIPTION": "3b341a02-ab8d-451c-948e-257a4d7757be",
+                "SCENARIO_FIELDS": {
+                  "e6b011e1-bcda-4031-b4f9-abe227588d82": {
+                    "ID": "e6b011e1-bcda-4031-b4f9-abe227588d82",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  {
-                    "ID": "627fec75-e066-4cd3-b8a3-fecf79915033",
+                  "567495c9-bef9-412c-a56a-ec883027ba9e": {
+                    "ID": "567495c9-bef9-412c-a56a-ec883027ba9e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
-                ]
+                }
               }
             }
           }

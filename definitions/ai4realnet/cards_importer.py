@@ -37,7 +37,7 @@ def main():
       record["BENCHMARK_ID"] = objectives[d["objective"]]
       record["BENCHMARK_NAME"] = record["objective"]
       record["BENCHMARK_DESCRIPTION"] = record["objectiveDescription"]
-      record["BENCHMARK_FIELD_ID"] = fields_tests.setdefault(record["BENCHMARK_ID"], str(uuid4()))
+      record["ID"] = fields_tests.setdefault(record["BENCHMARK_ID"], str(uuid4()))
       record["BENCHMARK_FIELD_NAME"] = f'primary'
       record["BENCHMARK_FIELD_DESCRIPTION"] = f'Benchmark score ({agg_func} of test scores)'
       record["BENCHMARK_AGG"] = agg_func
