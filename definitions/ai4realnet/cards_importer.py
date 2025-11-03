@@ -9,6 +9,7 @@ def main():
   SUITE_ID = '0ca46887-897a-463f-bf83-c6cd6269a977'
   SUITE_NAME = 'Beta Validation Campaign'
   SUITE_DESCRIPTION = 'The beta validation campaign runs until 30.11.2025'
+  SUITE_CONTENTS = ''
   agg_func = "MEAN"
 
   # from https://github.com/AI4REALNET/KPIs-cards/blob/main/data/card-data.ts
@@ -32,6 +33,7 @@ def main():
       record["SUITE_ID"] = SUITE_ID
       record["SUITE_NAME"] = SUITE_NAME
       record["SUITE_DESCRIPTION"] = SUITE_DESCRIPTION
+      record["SUITE_CONTENTS"] = SUITE_CONTENTS
       record["BENCHMARK_ID"] = objectives[d["objective"]]
       record["BENCHMARK_NAME"] = record["objective"]
       record["BENCHMARK_DESCRIPTION"] = record["objectiveDescription"]
