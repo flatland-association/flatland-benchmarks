@@ -1,13 +1,12 @@
-import { ApiResponse } from '@common/api-response'
 import { SubmissionRow, TestDefinitionRow } from '@common/interfaces.js'
 import { StripId } from '@common/utility-types'
-import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { CeleryService } from '../services/celery-client-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
+import { ControllerError } from './controller-utils.mjs'
 import { Controller, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
 
 const logger = new Logger('submission-controller')
@@ -84,16 +83,8 @@ export class SubmissionController extends Controller {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
-    // TODO: allow throwing out of handler without triggering additional error
-    // handling or better even allow throwing errors with custom error and dbg
-    // properties.
-    // see: https://github.com/flatland-association/flatland-benchmarks/issues/463
-    try {
-      this.checkCompleteness(req, res, req.body)
-      await this.checkValidity(req, res, req.body)
-    } catch (_e) {
-      return
-    }
+    this.checkCompleteness(req.body)
+    await this.checkValidity(req.body)
     // save submission in db
     const sql = SqlService.getInstance()
     const idRow = await sql.query`
@@ -454,12 +445,10 @@ export class SubmissionController extends Controller {
 
   /**
    * Checks if the provided `resource` is complete.
-   * @param req Express request.
-   * @param res Express response.
    * @param resource Resource to check for completeness.
-   * @throws When check failed.
+   * @throws {ControllerError} When check failed.
    */
-  checkCompleteness<T>(req: Request, res: Response<ApiResponse<T>>, resource: StripId<SubmissionRow>) {
+  checkCompleteness(resource: StripId<SubmissionRow>) {
     // Check presence of required fields using simple nullish check to catch
     // empty strings as well.
     const missingFields: (keyof typeof resource)[] = []
@@ -467,29 +456,17 @@ export class SubmissionController extends Controller {
     if (!resource.benchmark_id) missingFields.push('benchmark_id')
     if (!resource.test_ids || resource.test_ids.length === 0) missingFields.push('test_ids')
     if (missingFields.length) {
-      // TODO: don't handle error here, instead throw meaningful object
-      // see: https://github.com/flatland-association/flatland-benchmarks/issues/463
-      this.respondError(
-        req,
-        res,
-        { text: 'Required field is missing value' },
-        undefined,
-        missingFields,
-        StatusCodes.BAD_REQUEST,
-      )
-      throw undefined
+      throw new ControllerError('Required field is missing value', missingFields, StatusCodes.BAD_REQUEST)
     }
   }
 
   // not using `validate` to keep the `checkX` pattern up
   /**
    * Checks if all values in the provided `resource` are valid.
-   * @param req Express request.
-   * @param res Express response.
    * @param resource Resource to validate.
-   * @throws When check failed.
+   * @throws {ControllerError} When check failed.
    */
-  async checkValidity<T>(req: Request, res: Response<ApiResponse<T>>, resource: StripId<SubmissionRow>) {
+  async checkValidity(resource: StripId<SubmissionRow>) {
     const sql = SqlService.getInstance()
     // returns an array of all ids (in benchmark_id) without matching db row
     const benchmarkMismatches = await sql.query`
@@ -499,15 +476,7 @@ export class SubmissionController extends Controller {
       WHERE id IS NULL
     `
     if (benchmarkMismatches.length) {
-      this.respondError(
-        req,
-        res,
-        { text: 'Referenced benchmark does not exist' },
-        undefined,
-        benchmarkMismatches,
-        StatusCodes.BAD_REQUEST,
-      )
-      throw undefined
+      throw new ControllerError('Referenced benchmark does not exist', benchmarkMismatches, StatusCodes.BAD_REQUEST)
     }
     const testMismatches = await sql.query`
       SELECT reference
@@ -516,15 +485,7 @@ export class SubmissionController extends Controller {
       WHERE id IS NULL
     `
     if (testMismatches.length) {
-      this.respondError(
-        req,
-        res,
-        { text: 'Referenced test does not exist' },
-        undefined,
-        testMismatches,
-        StatusCodes.BAD_REQUEST,
-      )
-      throw undefined
+      throw new ControllerError('Referenced test does not exist', testMismatches, StatusCodes.BAD_REQUEST)
     }
     const testBenchRelMismatches = await sql.query`
       SELECT reference
@@ -534,15 +495,11 @@ export class SubmissionController extends Controller {
       WHERE benchmarks.id != ${resource.benchmark_id}
     `
     if (testBenchRelMismatches.length) {
-      this.respondError(
-        req,
-        res,
-        { text: 'Referenced test does not exist in benchmark' },
-        undefined,
+      throw new ControllerError(
+        'Referenced test does not exist in benchmark',
         testBenchRelMismatches,
         StatusCodes.BAD_REQUEST,
       )
-      throw undefined
     }
   }
 }
