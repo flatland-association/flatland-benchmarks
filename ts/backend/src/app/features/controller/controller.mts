@@ -5,7 +5,7 @@ import type { RouteParameters } from 'express-serve-static-core'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
-import { failedPresenceCheck, presenceCheckTrusted } from './controller-utils.mjs'
+import { ControllerError, failedPresenceCheck, presenceCheckTrusted } from './controller-utils.mjs'
 
 const logger = new Logger('controller')
 
@@ -174,8 +174,17 @@ export class Controller {
           next('Handler did not respond')
         }
       } catch (error) {
-        logger.error(`${req.method} ${req.originalUrl}: Exception`, error)
-        next(error)
+        if (error instanceof ControllerError) {
+          res.status(error.status)
+          res.json({
+            error: { text: error.text },
+            dbg: error.dbg,
+          })
+          logger.error(`${req.method} ${req.originalUrl}: ControllerError`, error)
+        } else {
+          logger.error(`${req.method} ${req.originalUrl}: Exception`, error)
+          next(error)
+        }
       }
     })
   }

@@ -1,3 +1,5 @@
+import { StatusCodes } from 'http-status-codes'
+
 /**
  * Returns `true` if `ids` and `resources` match in length. If not, performs a
  * `presenceCheckFull`.
@@ -42,4 +44,26 @@ export function failedPresenceCheck<R extends unknown[], K extends keyof R[numbe
 ) {
   //@ts-expect-error unknown
   return ids.filter((id) => !resources.find((r) => r[idProperty] === id))
+}
+
+/**
+ * Wraps error objects meant to be thrown by controllers. Caught and reported in
+ * a well-formed manner by the controller's base class error handler.
+ */
+export class ControllerError {
+  text: string
+  dbg: unknown
+  status: StatusCodes
+
+  /**
+   * Creates a new `ControllerError` object.
+   * @param text Text, transmitted in the response's `error` property.
+   * @param dbg Optional debug object, transmitted in response's `dbg` property.
+   * @param status HTTP Status code, defaults to 500 (Internal Server Error).
+   */
+  constructor(text: string, dbg: unknown, status = StatusCodes.INTERNAL_SERVER_ERROR) {
+    this.text = text
+    this.dbg = dbg
+    this.status = status
+  }
 }
