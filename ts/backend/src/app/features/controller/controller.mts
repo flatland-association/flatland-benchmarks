@@ -102,32 +102,6 @@ export class Controller {
   }
 
   /**
-   * Send a well-typed error with code 401 (Unauthorized), additional
-   * error text and optional debug info.
-   * @param req Express request.
-   * @param res Express response.
-   * @param error Error object.
-   * @param body Response body. Type is derived from endpoint registry.
-   * @param dbg Additional debug info.
-   * @see {@link ApiResponse}
-   */
-  unauthorizedError<T>(
-    req: Request,
-    res: Response<ApiResponse<T>>,
-    error: ApiResponse<T>['error'],
-    body?: T,
-    dbg?: unknown,
-  ) {
-    res.status(StatusCodes.UNAUTHORIZED)
-    res.json({
-      body,
-      error,
-      dbg,
-    })
-    logger.warn(`${req.method} ${req.originalUrl}: Unauthorized ${StatusCodes.UNAUTHORIZED}`, error)
-  }
-
-  /**
    * Performs a presence check and responds with `OK` if that passed and error
    * responds with `Not Found` with the missed ids in `dbg` otherwise.
    * @param req Express request.
