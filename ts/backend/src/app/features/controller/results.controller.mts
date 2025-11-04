@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AggregatorService } from '../services/aggregator-service.mjs'
-import { AuthService } from '../services/auth-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import { Controller, GetHandler, PostHandler } from './controller.mjs'
 
@@ -231,12 +230,7 @@ export class ResultsController extends Controller {
    *                - $ref: "#/components/schemas/ApiResponse"
    */
   postTestResults: PostHandler<'/results/submissions/:submission_id/tests/:test_ids'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
+    await this.checkAuthorizationRole(req, 'User')
     const submissionId = req.params.submission_id
 
     // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple test_ids

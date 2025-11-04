@@ -77,12 +77,7 @@ export class SubmissionController extends Controller {
    *                            description: ID of submission.
    */
   postSubmission: PostHandler<'/submissions'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
+    const auth = await this.checkAuthorizationRole(req, 'User')
     this.checkCompleteness(req.body)
     await this.checkValidity(req.body)
     // save submission in db
@@ -423,12 +418,7 @@ export class SubmissionController extends Controller {
    */
   patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res) => {
     logger.info(`patchSubmissionByUuid`)
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
+    await this.checkAuthorizationRole(req, 'User')
 
     const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
