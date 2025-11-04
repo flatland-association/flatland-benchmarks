@@ -3,8 +3,10 @@ import { ApiResponse } from '@common/api-response.js'
 import express, { NextFunction, Request, Response, Router } from 'express'
 import type { RouteParameters } from 'express-serve-static-core'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { JwtPayload } from 'jsonwebtoken'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
+import { AuthService } from '../services/auth-service.mjs'
 import { ControllerError, failedPresenceCheck, presenceCheckTrusted } from './controller-utils.mjs'
 
 const logger = new Logger('controller')
@@ -208,6 +210,23 @@ export class Controller {
    */
   attachPatch<E extends keyof ApiPatchEndpoints>(endpoint: E, handler: PatchHandler<E>) {
     this.attach('patch', endpoint, handler)
+  }
+
+  /**
+   * Checks if the request was made by an authenticated user with `role`.
+   * If successful, returns authorization details.
+   * @param req Express request.
+   * @param role Required role.
+   * @returns {JwtPayload} Authorization details.
+   * @throws {ControllerError} When check failed.
+   */
+  async checkAuthorizationRole(req: Request, role: string) {
+    const authService = AuthService.getInstance()
+    const auth = await authService.authorization(req)
+    if (!auth || !('roles' in auth) || !Array.isArray(auth['roles']) || !auth['roles'].includes(role)) {
+      throw new ControllerError('Not authorized', undefined, StatusCodes.UNAUTHORIZED)
+    }
+    return auth
   }
 }
 
