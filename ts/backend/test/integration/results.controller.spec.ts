@@ -10,7 +10,17 @@ import {
 } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
 
-Logger.setOptions({ '--log-level': 'OFF' })
+Logger.setOptions({ '--log-level': 'ALL' })
+
+const scorableSubmissionOptions = {
+  params: {
+    submission_id: '4c5bd494-c5c8-4efc-9553-5a28794c5e5f',
+    test_ids: '99f5a8f8-38d9-4a8c-9630-4789b0225ec0',
+  },
+  body: {
+    data: [{ scenario_id: 'b074d47e-a769-4ecc-b61a-c7efdd39d12a', scores: { primary: 1.0 } }],
+  },
+}
 
 describe.sequential('Results controller', () => {
   let controller: ControllerTestAdapter
@@ -21,64 +31,40 @@ describe.sequential('Results controller', () => {
     controller = new ControllerTestAdapter(ResultsController, testConfig)
   })
 
+  test.each([
+    { mismatch: 'key', key: 'notprimary' },
+    { mismatch: 'scenario', scenario_id: '00000000-0000-0000-0000-000000000000' },
+    { mismatch: 'test', test_ids: '00000000-0000-0000-0000-000000000000' },
+    { mismatch: 'submission', submission_id: '00000000-0000-0000-0000-000000000000' },
+  ])('should reject posting faulty results ($mismatch mismatch)', async (testCase) => {
+    const options = structuredClone(scorableSubmissionOptions)
+    if (testCase.key) {
+      options.body.data[0]['scores'] = { [testCase.key]: 1.0 } as { primary: number }
+    }
+    if (testCase.scenario_id) {
+      options.body.data[0]['scenario_id'] = testCase.scenario_id
+    }
+    if (testCase.test_ids) {
+      options.params.test_ids = testCase.test_ids
+    }
+    if (testCase.submission_id) {
+      options.params.submission_id = testCase.submission_id
+    }
+    const res = await controller.testPost('/results/submissions/:submission_id/tests/:test_ids', options, testUserJwt)
+    assertApiResponse(res, StatusCodes.BAD_REQUEST)
+    expect(res.body.error.text).toBeTruthy()
+  })
+
   test('should allow posting new results', async () => {
-    const res = await controller.testPost(
-      '/results/submissions/:submission_id/tests/:test_ids',
-      {
-        params: {
-          submission_id: '5fa91da5-127b-408c-8863-a3ac670030b3',
-          test_ids: 'aeabd5b9-4e86-4c7a-859f-a32ff1be5516',
-        },
-        // The controller currently does not check if
-        // a) a field of that name exists
-        // b) the scenario has a field with that name in its fields array
-        // c) the submission references the test or scenario
-        // That's why this test works. If either of above change, update test.
-        // see: https://github.com/flatland-association/flatland-benchmarks/issues/386
-        body: {
-          data: [{ scenario_id: '8fba6834-cd86-4bca-b3b5-f14d6c54d92f', scores: { secondary: 1.0, tertiary: 3.14 } }],
-        },
-      },
-      testUserJwt,
-    )
-    assertApiResponse(res, 201)
+    const options = structuredClone(scorableSubmissionOptions)
+    const res = await controller.testPost('/results/submissions/:submission_id/tests/:test_ids', options, testUserJwt)
+    assertApiResponse(res, StatusCodes.CREATED)
     expect(res.body.body).toEqual({})
   })
 
   test('should reject posting results that already exist', async () => {
-    const res = await controller.testPost(
-      '/results/submissions/:submission_id/tests/:test_ids',
-      {
-        params: {
-          submission_id: '5fa91da5-127b-408c-8863-a3ac670030b3',
-          test_ids: 'aeabd5b9-4e86-4c7a-859f-a32ff1be5516',
-        },
-        //@ts-expect-error type
-        body: { data: [{ scenario_id: '8fba6834-cd86-4bca-b3b5-f14d6c54d92f', primary: 1.0 }] },
-      },
-      testUserJwt,
-    )
-    assertApiResponse(res, StatusCodes.CONFLICT)
-    expect(res.body.error.text).toContain('results could not be inserted')
-  })
-
-  test('should reject posting results that partially exist', async () => {
-    const res = await controller.testPost(
-      '/results/submissions/:submission_id/tests/:test_ids',
-      {
-        params: {
-          submission_id: '5fa91da5-127b-408c-8863-a3ac670030b3',
-          test_ids: 'aeabd5b9-4e86-4c7a-859f-a32ff1be5516',
-        },
-        // see also comment above in 'should allow posting new results'
-        body: {
-          data: [
-            { scenario_id: '8fba6834-cd86-4bca-b3b5-f14d6c54d92f', scores: { primary: 1.0, totally_new_score: 7.0 } },
-          ],
-        },
-      },
-      testUserJwt,
-    )
+    const options = structuredClone(scorableSubmissionOptions)
+    const res = await controller.testPost('/results/submissions/:submission_id/tests/:test_ids', options, testUserJwt)
     assertApiResponse(res, StatusCodes.CONFLICT)
     expect(res.body.error.text).toContain('results could not be inserted')
   })
