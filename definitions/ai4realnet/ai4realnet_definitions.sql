@@ -1,6 +1,6 @@
  INSERT INTO suites
     (id, setup, name, description, contents, benchmark_ids)
-    VALUES ('0ca46887-897a-463f-bf83-c6cd6269a977', 'CAMPAIGN', 'Beta Validation Campaign', 'The beta validation campaign runs until 30.11.2025', '', array['3237ba20-ccff-45b0-af23-44719e584f41', '2da3781a-25a9-4c89-8b43-9269844f3fef', '8d5c876e-22c2-49e7-bdd5-4c1840d309f0', '65547935-f436-49fa-8d20-f320c6bd46dc', '3b1bdca6-ed90-4938-bd63-fd657aa7dcd7', '4b0be731-8371-4e4e-a673-b630187b0bb8', 'd65cd37a-4830-468c-9100-0f60ee9ff72e', '16706c82-75df-4969-932d-a7f5c941eca2', '43040944-39ac-47c9-b91d-bc8ca5693b3c', '3810191b-8cfd-4b03-86b2-f7e530aab30d', '31ea606b-681a-437a-85b9-7c81d4ccc287', 'df309815-8ec0-4a6f-9d0b-dc3dbfc9055a']::uuid[])
+    VALUES ('0ca46887-897a-463f-bf83-c6cd6269a977', 'CAMPAIGN', 'Beta Validation Campaign', 'The beta validation campaign runs until 30.11.2025', '{}', array['3237ba20-ccff-45b0-af23-44719e584f41', '2da3781a-25a9-4c89-8b43-9269844f3fef', '8d5c876e-22c2-49e7-bdd5-4c1840d309f0', '65547935-f436-49fa-8d20-f320c6bd46dc', '3b1bdca6-ed90-4938-bd63-fd657aa7dcd7', '4b0be731-8371-4e4e-a673-b630187b0bb8', 'd65cd37a-4830-468c-9100-0f60ee9ff72e', '16706c82-75df-4969-932d-a7f5c941eca2', '43040944-39ac-47c9-b91d-bc8ca5693b3c', '3810191b-8cfd-4b03-86b2-f7e530aab30d', '31ea606b-681a-437a-85b9-7c81d4ccc287', 'df309815-8ec0-4a6f-9d0b-dc3dbfc9055a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET setup=EXCLUDED.setup, name=EXCLUDED.name, description=EXCLUDED.description, benchmark_ids=EXCLUDED.benchmark_ids;
 
 INSERT INTO benchmark_definitions
