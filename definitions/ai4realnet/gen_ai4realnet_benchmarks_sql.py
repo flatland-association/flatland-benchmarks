@@ -169,7 +169,7 @@ def main(truncate_scenarios_docker_compose=2):
           del test["scenarios"][scenario_id]
 
   sql = gen_sqls(data)
-  with Path("../../ts/backend/src/migration/data/V11.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
+  with Path("../../ts/backend/src/migration/data/V12.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
     f.write(sql)
 
 
