@@ -60,7 +60,7 @@ def escape_sql_string(s):
 def gen_sqls(data) -> str:
   sql = ""
   for suite_id, suite in data.items():
-    sql += gen_sql_suite(suite_id, suite["SUITE_SETUP"], suite["SUITE_NAME"], suite["SUITE_DESCRIPTION"], suite.get("SUITE_CONTENTS", ""),
+    sql += gen_sql_suite(suite_id, suite["SUITE_SETUP"], suite["SUITE_NAME"], suite["SUITE_DESCRIPTION"], suite.get("SUITE_CONTENTS", "{}"),
                          list(suite["benchmarks"].keys()))
 
     for benchmark_id, benchmark in suite["benchmarks"].items():
