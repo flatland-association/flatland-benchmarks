@@ -75,19 +75,15 @@ export class AuthService {
    * Starts the login flow. This function will redirect the user to the login
    * form.
    * @param state State passed around during login, used as redirect url on success.
+   * @returns {Promise} Promise resolving when login succeeded.
    */
-  logIn(state?: string) {
+  async logIn(state?: string) {
     const keycloakTab = window.open('about:blank', 'keycloakTab')!
-    this.oauthService
-      .initImplicitFlowInPopup({ windowRef: keycloakTab })
-      .then(() => {
-        if (state && state !== '/') {
-          this.router.navigate([state])
-        }
-      })
-      .catch(() => {
-        // presence of handler required, although no action is taken
-      })
+    await this.oauthService.initImplicitFlowInPopup({ windowRef: keycloakTab }).then(() => {
+      if (state && state !== '/') {
+        this.router.navigate([state])
+      }
+    })
   }
 
   /**
