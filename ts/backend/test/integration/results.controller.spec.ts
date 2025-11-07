@@ -10,7 +10,7 @@ import {
 } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
 
-Logger.setOptions({ '--log-level': 'ALL' })
+Logger.setOptions({ '--log-level': 'OFF' })
 
 const scorableSubmissionOptions = {
   params: {
