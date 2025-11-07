@@ -1,10 +1,12 @@
 import { SubmissionRow, TestDefinitionRow } from '@common/interfaces.js'
+import { StripId } from '@common/utility-types'
 import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { CeleryService } from '../services/celery-client-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
+import { ControllerError } from './controller-utils.mjs'
 import { Controller, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
 
 const logger = new Logger('submission-controller')
@@ -52,6 +54,10 @@ export class SubmissionController extends Controller {
    *                  type: string
    *                  format: uuid
    *                description: IDs of tests to run.
+   *            required:
+   *              - name
+   *              - benchmark_id
+   *              - test_ids
    *    responses:
    *      200:
    *        description: Created.
@@ -77,6 +83,8 @@ export class SubmissionController extends Controller {
       this.unauthorizedError(req, res, { text: 'Not authorized' })
       return
     }
+    this.checkCompleteness(req.body)
+    await this.checkValidity(req.body)
     // save submission in db
     const sql = SqlService.getInstance()
     const idRow = await sql.query`
@@ -433,5 +441,65 @@ export class SubmissionController extends Controller {
     logger.info(`rows ${submissions}`)
     // return array - dev.002
     this.respond(req, res, submissions)
+  }
+
+  /**
+   * Checks if the provided `resource` is complete.
+   * @param resource Resource to check for completeness.
+   * @throws {ControllerError} When check failed.
+   */
+  checkCompleteness(resource: StripId<SubmissionRow>) {
+    // Check presence of required fields using simple nullish check to catch
+    // empty strings as well.
+    const missingFields: (keyof typeof resource)[] = []
+    if (!resource.name) missingFields.push('name')
+    if (!resource.benchmark_id) missingFields.push('benchmark_id')
+    if (!resource.test_ids || resource.test_ids.length === 0) missingFields.push('test_ids')
+    if (missingFields.length) {
+      throw new ControllerError('Required field is missing value', missingFields, StatusCodes.BAD_REQUEST)
+    }
+  }
+
+  // not using `validate` to keep the `checkX` pattern up
+  /**
+   * Checks if all values in the provided `resource` are valid.
+   * @param resource Resource to validate.
+   * @throws {ControllerError} When check failed.
+   */
+  async checkValidity(resource: StripId<SubmissionRow>) {
+    const sql = SqlService.getInstance()
+    // returns an array of all ids (in benchmark_id) without matching db row
+    const benchmarkMismatches = await sql.query`
+      SELECT reference
+      FROM UNNEST(${[resource.benchmark_id]}::uuid[]) AS reference
+      LEFT JOIN benchmarks ON id = reference
+      WHERE id IS NULL
+    `
+    if (benchmarkMismatches.length) {
+      throw new ControllerError('Referenced benchmark does not exist', benchmarkMismatches, StatusCodes.BAD_REQUEST)
+    }
+    const testMismatches = await sql.query`
+      SELECT reference
+      FROM UNNEST(${resource.test_ids}::uuid[]) AS reference
+      LEFT JOIN tests ON id = reference
+      WHERE id IS NULL
+    `
+    if (testMismatches.length) {
+      throw new ControllerError('Referenced test does not exist', testMismatches, StatusCodes.BAD_REQUEST)
+    }
+    const testBenchRelMismatches = await sql.query`
+      SELECT reference
+      FROM UNNEST(${resource.test_ids}::uuid[]) AS reference
+      LEFT JOIN tests ON id = reference
+      LEFT JOIN benchmarks ON tests.id = ANY(benchmarks.test_ids)
+      WHERE benchmarks.id != ${resource.benchmark_id}
+    `
+    if (testBenchRelMismatches.length) {
+      throw new ControllerError(
+        'Referenced test does not exist in benchmark',
+        testBenchRelMismatches,
+        StatusCodes.BAD_REQUEST,
+      )
+    }
   }
 }
