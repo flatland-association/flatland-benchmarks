@@ -1,0 +1,63 @@
+@if (open()) {
+  <lib-modal [(open)]="open">
+    @if (showForm) {
+      @if (suite && benchmark && tests) {
+        <lib-content>
+          @if (suite.setup === 'CAMPAIGN') {
+            <app-site-heading class="bp-8 flex w-full" [title]="tests[0].name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
+          } @else {
+            <app-site-heading class="bp-8 flex w-full" [title]="benchmark.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
+          }
+
+          <h3 class="pb-8 text-xl font-bold">New submission</h3>
+
+          <div class="pb-8 w-full flex flex-col gap-y-8">
+            <label class="block text-left cursor-pointer">
+              <h4><span class="font-bold">Submission name</span> (required)</h4>
+              <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-name" [(ngModel)]="submissionName" data-input-submission-name>
+            </label>
+
+            <label class="block text-left cursor-pointer">
+              <h4><span class="font-bold">URL to submission data</span>@if(requiresSubmissionDataUrl()) { (required)}</h4>
+              <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="submission-data-url" [(ngModel)]="submissionDataUrl" data-input-submission-data-url>
+            </label>
+
+            @if (requiresCodeRepository()) {
+              <label class="block text-left cursor-pointer">
+                <h4><span class="font-bold">URL to repository</span> (required)</h4>
+                <input type="url" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="code-repository-url" [(ngModel)]="codeRepositoryUrl" data-input-code-repository-url>
+              </label>
+            }
+
+            @if (suite.setup === 'CAMPAIGN') {
+              <div>
+                <h4 class="bp-2 font-bold">Test</h4>
+                <div>{{ tests[0].name }}</div>
+              </div>
+            } @else if (suite.setup === 'DEFAULT') {
+              <div>
+                <h4 class="bp-2 font-bold">Tests</h4>
+                <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">
+                  @for (test of tests; track $index) {
+                  <label class="contents cursor-pointer">
+                    <div>
+                      <input type="checkbox" [id]="'test-' + $index" [(ngModel)]="testsSelection[$index]">
+                    </div>
+                    <span>{{ test.name }}</span>
+                  </label>
+                }
+                </div>
+              </div>
+            }
+
+            <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-primary-100" type="button" [attr.disabled]="canSubmit() ? null : true" (click)="submit()" data-btn-submit>
+              Submit
+            </button>
+          </div>
+        </lib-content>
+      }
+    } @else {
+      <p>You need to be logged in to access this form.</p>
+    }
+  </lib-modal>
+}

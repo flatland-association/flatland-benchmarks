@@ -10,7 +10,7 @@
       <p>{{ customization?.content?.vcKpi?.lead }}</p>
     }
     <app-test-overview class="w-full my-8" [suite]="suite" [benchmark]="benchmark" [test]="test"></app-test-overview>
-    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'new-submission'" data-btn-new-submission>Submit solution</button>
+    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="showNewSubmissionModal = true" data-btn-new-submission>Submit solution</button>
   </lib-content>
 } @else if (suite?.setup === 'COMPETITION') {
   <lib-content>
@@ -20,4 +20,8 @@
   <lib-content>
     <app-test-overview class="w-full my-8" [suite]="suite" [benchmark]="benchmark" [test]="test"></app-test-overview>
   </lib-content>
+}
+
+@if (showNewSubmissionModal) {
+  <app-new-submission-modal [(open)]="showNewSubmissionModal" [suiteId]="suite?.id" [benchmarkId]="benchmark?.id" [testId]="test?.id"></app-new-submission-modal>
 }
