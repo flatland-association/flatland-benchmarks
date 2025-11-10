@@ -5,6 +5,7 @@ import { ContentComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
 import { BenchmarkOverviewComponent } from '../../components/benchmark-overview/benchmark-overview.component'
 import { CampaignItemOverviewComponent } from '../../components/campaign-item-overview/campaign-item-overview.component'
+import { NewSubmissionModalComponent } from '../../components/new-submission-modal/new-submission-modal.component'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
@@ -19,6 +20,7 @@ import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.
     PublicResourcePipe,
     CampaignItemOverviewComponent,
     BenchmarkOverviewComponent,
+    NewSubmissionModalComponent,
   ],
   templateUrl: './benchmark.view.html',
   styleUrl: './benchmark.view.scss',
@@ -32,6 +34,7 @@ export class BenchmarkView implements OnInit, OnDestroy {
   suite?: SuiteDefinitionRow
   benchmark?: BenchmarkDefinitionRow
   customization?: Customization
+  showNewSubmissionModal = false
 
   ngOnInit(): void {
     this.customizationService.getCustomization().then((customization) => {

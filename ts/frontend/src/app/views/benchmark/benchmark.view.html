@@ -13,7 +13,7 @@
     @if (benchmark?.contents?.cta) {
       <p class="mb-8">{{ benchmark?.contents?.cta }}</p>
     }
-    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'new-submission'">Submit solution</button>
+    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="showNewSubmissionModal = true" >Submit solution</button>
     <app-benchmark-overview class="w-full my-8" [suite]="suite" [benchmark]="benchmark"></app-benchmark-overview>
   </lib-content>
 } @else {
@@ -21,7 +21,11 @@
     @if (benchmark?.contents?.cta) {
       <p class="mb-8">{{ benchmark?.contents?.cta }}</p>
     }
-    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" [routerLink]="'new-submission'">Submit solution</button>
+    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" (click)="showNewSubmissionModal = true" >Submit solution</button>
     <app-benchmark-overview class="w-full my-8" [suite]="suite" [benchmark]="benchmark"></app-benchmark-overview>
   </lib-content>
+}
+
+@if (showNewSubmissionModal) {
+  <app-new-submission-modal [(open)]="showNewSubmissionModal" [suiteId]="suite?.id" [benchmarkId]="benchmark?.id"></app-new-submission-modal>
 }
