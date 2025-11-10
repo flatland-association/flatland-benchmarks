@@ -34,6 +34,7 @@ COPY --from=builder /usr/src/app/ts/backend/src/migration/schema /flyway/sql/sch
 RUN mkdir -p /usr/src/app/public
 COPY ts/backend/src/public.ai4realnet /usr/src/public.ai4realnet
 COPY ts/backend/src/public.fab /usr/src/public.fab
+COPY ts/backend/src/public.realworldbaselines /usr/src/public.realworldbaselines
 RUN find /usr/src/public.*
 
 RUN mkdir -p /usr/src/app/dist/backend/config/
