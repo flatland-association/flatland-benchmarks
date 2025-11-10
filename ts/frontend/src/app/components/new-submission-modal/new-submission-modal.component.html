@@ -1,5 +1,5 @@
 @if (open()) {
-  <lib-modal [(open)]="open">
+  <lib-modal [(open)]="open" size="container">
     @if (showForm) {
       @if (suite && benchmark && tests) {
         <lib-content>
