@@ -5,7 +5,6 @@ import { AuthGuard } from './guards/auth.guard'
 import { BenchmarkView } from './views/benchmark/benchmark.view'
 import { HomeView } from './views/home/home.view'
 import { MySubmissionsView } from './views/my-submissions/my-submissions.view'
-import { NewSubmissionView } from './views/new-submission/new-submission.view'
 import { SubmissionScenarioResultsView } from './views/submission-scenario-results/submission-scenario-results.view'
 import { SubmissionView } from './views/submission/submission.view'
 import { SuiteView } from './views/suite/suite.view'
@@ -53,22 +52,6 @@ export const routes: Routes = [
         component: TestView,
         data: {
           breadcrumbs: [Breadcrumb.suite, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.test],
-        } satisfies BreadcrumbData,
-      },
-      {
-        path: ':suite_id/:benchmark_id/tests/:test_id/new-submission',
-        component: NewSubmissionView,
-        canActivate: [AuthGuard],
-        data: {
-          breadcrumbs: [Breadcrumb.suite, Breadcrumb.benchmark, Breadcrumb.HIDDEN, Breadcrumb.test, 'New Submission'],
-        } satisfies BreadcrumbData,
-      },
-      {
-        path: ':suite_id/:benchmark_id/new-submission',
-        component: NewSubmissionView,
-        canActivate: [AuthGuard],
-        data: {
-          breadcrumbs: [Breadcrumb.suite, Breadcrumb.benchmark, 'New Submission'],
         } satisfies BreadcrumbData,
       },
       {
