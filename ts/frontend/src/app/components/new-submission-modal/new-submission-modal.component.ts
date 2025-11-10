@@ -1,56 +1,82 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core'
+import { Component, effect, inject, Input, model, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { FormsModule } from '@angular/forms'
-import { ActivatedRoute, Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { BenchmarkDefinitionRow, SuiteDefinitionRow, TestDefinitionRow } from '@common/interfaces'
-import { ContentComponent } from '@flatland-association/flatland-ui'
-import { Subscription } from 'rxjs'
-import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
+import { ContentComponent, ModalComponent } from '@flatland-association/flatland-ui'
 import { ApiService } from '../../features/api/api.service'
+import { AuthService } from '../../features/auth/auth.service'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
 import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.pipe'
+import { SiteHeadingComponent } from '../site-heading/site-heading.component'
 
 @Component({
-  selector: 'view-new-submission',
-  imports: [FormsModule, ContentComponent, SiteHeadingComponent, PublicResourcePipe],
-  templateUrl: './new-submission.view.html',
-  styleUrl: './new-submission.view.scss',
+  selector: 'app-new-submission-modal',
+  imports: [FormsModule, ModalComponent, ContentComponent, SiteHeadingComponent, PublicResourcePipe],
+  templateUrl: './new-submission-modal.component.html',
+  styleUrl: './new-submission-modal.component.scss',
 })
-export class NewSubmissionView implements OnInit, OnDestroy {
+export class NewSubmissionModalComponent implements OnInit, OnChanges {
+  private authService = inject(AuthService)
   private apiService = inject(ApiService)
   private resourceService = inject(ResourceService)
   private customizationService = inject(CustomizationService)
   private router = inject(Router)
-  private route = inject(ActivatedRoute)
-  private paramsSubscription?: Subscription
+
+  @Input() suiteId?: string
+  @Input() benchmarkId?: string
+  @Input() testId?: string
 
   suite?: SuiteDefinitionRow
   benchmark?: BenchmarkDefinitionRow
   tests?: TestDefinitionRow[]
   customization?: Customization
 
+  open = model<boolean>(true)
+  showForm = false
+
   submissionName = ''
   submissionDataUrl = ''
   codeRepositoryUrl = ''
   testsSelection: boolean[] = []
 
+  constructor() {
+    effect(async () => {
+      if (this.open()) {
+        if (!this.authService.isLoggedIn()) {
+          await this.authService.logIn()
+        }
+        this.showForm = true
+      } else {
+        this.showForm = false
+      }
+    })
+  }
+
   ngOnInit(): void {
     this.customizationService.getCustomization().then((customization) => {
       this.customization = customization
     })
-    this.paramsSubscription = this.route.params.subscribe(({ suite_id, benchmark_id, test_id }) => {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['suiteId'] && this.suiteId) {
       this.resourceService
-        .load('/definitions/suites/:suite_ids', { params: { suite_ids: suite_id } })
+        .load('/definitions/suites/:suite_ids', { params: { suite_ids: this.suiteId } })
         .then((suites) => {
           this.suite = suites?.at(0)
         })
+    }
+    if (changes['benchmarkId'] && this.benchmarkId) {
       // In campaign setting, test_id will be passed and only that test needs
       // to be loaded. In other settings, all tests need to be loaded.
       this.resourceService
-        .load('/definitions/benchmarks/:benchmark_ids', { params: { benchmark_ids: benchmark_id } })
+        .load('/definitions/benchmarks/:benchmark_ids', { params: { benchmark_ids: this.benchmarkId } })
         .then((benchmark) => {
           this.benchmark = benchmark?.at(0)
-          if (!test_id) {
+          // If no testId was passed (i.e. not in CAMPAIGN setup), load all test
+          // definitions from benchmark.
+          if (!this.testId) {
             this.resourceService
               .load('/definitions/tests/:test_ids', { params: { test_ids: this.benchmark?.test_ids ?? [] } })
               .then((tests) => {
@@ -59,16 +85,12 @@ export class NewSubmissionView implements OnInit, OnDestroy {
               })
           }
         })
-      if (test_id) {
-        this.resourceService.load('/definitions/tests/:test_ids', { params: { test_ids: test_id } }).then((tests) => {
-          this.tests = tests
-        })
-      }
-    })
-  }
-
-  ngOnDestroy(): void {
-    this.paramsSubscription?.unsubscribe()
+    }
+    if (changes['testId'] && this.testId) {
+      this.resourceService.load('/definitions/tests/:test_ids', { params: { test_ids: this.testId } }).then((tests) => {
+        this.tests = tests
+      })
+    }
   }
 
   requiresSubmissionDataUrl() {
