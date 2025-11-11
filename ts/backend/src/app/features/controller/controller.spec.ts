@@ -49,9 +49,13 @@ describe.sequential('Controller', () => {
     controller.attachPatch('/test-patch' as '/mirror/:id', (req, res) => {
       controller.respond(req, res, { data: '<ok>' }, '<debug>')
     })
-    controller.attachGet('/test-auth-error' as '/mirror', async (req, _res) => {
-      await controller.checkAuthorizationRole(req, 'Root')
-    })
+    controller.attachGet(
+      '/test-auth-error' as '/mirror',
+      async (req, res) => {
+        controller.respond(req, res, 'unreachable')
+      },
+      { authorizedRoles: ['Admin'] },
+    )
     controller.attachGet('/test-server-error' as '/mirror', (req, res) => {
       controller.respondError(req, res, { text: 'server error' })
     })
