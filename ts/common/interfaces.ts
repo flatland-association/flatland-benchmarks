@@ -171,3 +171,5 @@ export interface CampaignOverview {
   suite_id: string
   items: CampaignItemOverview[]
 }
+
+export type AuthRole = 'User' | 'Admin'

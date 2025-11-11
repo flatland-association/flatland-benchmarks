@@ -15,10 +15,10 @@ export class SubmissionController extends Controller {
   constructor(config: configuration) {
     super(config)
 
-    this.attachPost('/submissions', this.postSubmission)
+    this.attachPost('/submissions', this.postSubmission, { authorizedRoles: ['User'] })
     this.attachGet('/submissions', this.getSubmissions)
     this.attachGet('/submissions/:submission_ids', this.getSubmissionByUuid)
-    this.attachPatch('/submissions/:submission_ids', this.patchSubmissionByUuid)
+    this.attachPatch('/submissions/:submission_ids', this.patchSubmissionByUuid, { authorizedRoles: ['User'] })
   }
 
   /**
@@ -77,7 +77,8 @@ export class SubmissionController extends Controller {
    *                            description: ID of submission.
    */
   postSubmission: PostHandler<'/submissions'> = async (req, res) => {
-    const auth = await this.checkAuthorizationRole(req, 'User')
+    const authService = AuthService.getInstance()
+    const auth = (await authService.authorization(req))!
     this.checkCompleteness(req.body)
     await this.checkValidity(req.body)
     // save submission in db
@@ -418,8 +419,6 @@ export class SubmissionController extends Controller {
    */
   patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res) => {
     logger.info(`patchSubmissionByUuid`)
-    await this.checkAuthorizationRole(req, 'User')
-
     const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()

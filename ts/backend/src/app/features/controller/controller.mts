@@ -1,15 +1,20 @@
 import { ApiEndpointsOfVerb, ApiGetEndpoints, ApiPatchEndpoints, ApiPostEndpoints } from '@common/api-endpoints.js'
 import { ApiResponse } from '@common/api-response.js'
+import { AuthRole } from '@common/interfaces'
 import express, { NextFunction, Request, Response, Router } from 'express'
 import type { RouteParameters } from 'express-serve-static-core'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { JwtPayload } from 'jsonwebtoken'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { ControllerError, failedPresenceCheck, presenceCheckTrusted } from './controller-utils.mjs'
 
 const logger = new Logger('controller')
+
+export interface ControllerOptions {
+  /** If provided, the controller is only accessible for these roles. */
+  authorizedRoles?: AuthRole[]
+}
 
 /**
  * Type for handlers for given method.
@@ -139,10 +144,21 @@ export class Controller {
     verb: V,
     endpoint: E,
     handler: HandlerOfVerb<Uppercase<V>, E>,
+    options?: ControllerOptions,
   ) {
     this.router[verb](endpoint, async (req, res, next) => {
       try {
         logger.debug(`${req.method} ${req.originalUrl}: Request`, req.body)
+        if (options?.authorizedRoles) {
+          const authService = AuthService.getInstance()
+          const auth = await authService.authorization(req)
+          if (
+            !Array.isArray(auth?.['roles']) ||
+            !options.authorizedRoles.some((role) => auth['roles'].includes(role))
+          ) {
+            throw new ControllerError('Not authorized', undefined, StatusCodes.UNAUTHORIZED)
+          }
+        }
         await handler(req, res, next)
         // force a server error if the handler did not respond
         if (!res.writableEnded) {
@@ -168,39 +184,22 @@ export class Controller {
   /**
    * Attach handler for GET endpoint.
    */
-  attachGet<E extends keyof ApiGetEndpoints>(endpoint: E, handler: GetHandler<E>) {
-    this.attach('get', endpoint, handler)
+  attachGet<E extends keyof ApiGetEndpoints>(endpoint: E, handler: GetHandler<E>, options?: ControllerOptions) {
+    this.attach('get', endpoint, handler, options)
   }
 
   /**
    * Attach handler for POST endpoint.
    */
-  attachPost<E extends keyof ApiPostEndpoints>(endpoint: E, handler: PostHandler<E>) {
-    this.attach('post', endpoint, handler)
+  attachPost<E extends keyof ApiPostEndpoints>(endpoint: E, handler: PostHandler<E>, options?: ControllerOptions) {
+    this.attach('post', endpoint, handler, options)
   }
 
   /**
    * Attach handler for PATCH endpoint.
    */
-  attachPatch<E extends keyof ApiPatchEndpoints>(endpoint: E, handler: PatchHandler<E>) {
-    this.attach('patch', endpoint, handler)
-  }
-
-  /**
-   * Checks if the request was made by an authenticated user with `role`.
-   * If successful, returns authorization details.
-   * @param req Express request.
-   * @param role Required role.
-   * @returns {JwtPayload} Authorization details.
-   * @throws {ControllerError} When check failed.
-   */
-  async checkAuthorizationRole(req: Request, role: string) {
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth || !('roles' in auth) || !Array.isArray(auth['roles']) || !auth['roles'].includes(role)) {
-      throw new ControllerError('Not authorized', undefined, StatusCodes.UNAUTHORIZED)
-    }
-    return auth
+  attachPatch<E extends keyof ApiPatchEndpoints>(endpoint: E, handler: PatchHandler<E>, options?: ControllerOptions) {
+    this.attach('patch', endpoint, handler, options)
   }
 }
 
