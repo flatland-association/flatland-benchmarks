@@ -100,10 +100,8 @@ class FlatlandBenchmarksOrchestrator:
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):
     # TODO we should evaluate the trajectory and not trust the trajectory from the submission!
-
-    trajectory = Trajectory(data_dir=data_dir, ep_id=scenario_id)
-    trajectory.load()
-    rail_env = trajectory.restore_episode()
+    trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)
+    rail_env = trajectory.load_env()
     df_trains_arrived = trajectory.trains_arrived
     logger.info(f"trains arrived: {df_trains_arrived}")
     assert len(df_trains_arrived) == 1
