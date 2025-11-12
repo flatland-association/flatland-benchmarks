@@ -43,22 +43,10 @@ spec:
         - name: extract-environments
           args:
             - -c
-            # TODO take 150 scenarios:
-            #            - |
-            #              set -euxo pipefail
-            #              find /tmp
-            #              unzip /tmp/environments/environments.zip -d /tmp/environments/
-            #              find /tmp
-            #              mkdir -p /data/${PREFIX}
-            #              find /data
             - |
               set -euxo pipefail
               find /tmp
-              wget "https://data.flatland.cloud/benchmarks/Flatland3/debug-environments.zip" -O /tmp/debug-environments.zip
-              mkdir -p /tmp/debug-environments
-              unzip /tmp/debug-environments.zip -d /tmp/debug-environments
-              mv -f  /tmp/debug-environments/debug-environments/Test*  /tmp/environments/
-              mv -f  /tmp/debug-environments/debug-environments/metadata.csv  /tmp/environments/
+              unzip /tmp/environments/environments.zip -d /tmp/environments/
               find /tmp
               mkdir -p /data/${PREFIX}
               find /data
