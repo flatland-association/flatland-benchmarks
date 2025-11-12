@@ -29,14 +29,6 @@ class TaskExecutionError(Exception):
     self.status = status
 
 
-# TODO all 150 scenarios
-TEST_TO_SCENARIO_IDS = {
-  '4ecdb9f4-e2ff-41ff-9857-abe649c19c50': ['d99f4d35-aec5-41c1-a7b0-64f78b35d7ef', '04d618b8-84df-406b-b803-d516c7425537', ],
-  '5206f2ee-d0a9-405b-8da3-93625e169811': ['6f3ad83c-3312-4ab3-9740-cbce80feea91', 'f954a860-e963-431e-a09d-5b1040948f2d',
-                                           'f92bfe0c-5347-4d89-bc17-b6f86d514ef8']
-}
-
-
 class FlatlandBenchmarksOrchestrator:
   def __init__(self, submission_id: str):
     self.submission_id = submission_id

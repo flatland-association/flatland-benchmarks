@@ -14,7 +14,7 @@ from celery.app.log import TaskFormatter
 from celery.signals import after_setup_task_logger
 from celery.utils.log import get_task_logger
 
-from orchestrator_common import FlatlandBenchmarksOrchestrator, TEST_TO_SCENARIO_IDS
+from orchestrator_common import FlatlandBenchmarksOrchestrator
 from s3_utils import S3_BUCKET, AI4REALNET_S3_UPLOAD_ROOT, s3_utils
 
 logger = get_task_logger(__name__)
@@ -97,11 +97,11 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
   def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, **kwargs):
     try:
       if tests is None:
-        tests = list(TEST_TO_SCENARIO_IDS.keys())
+        tests = list(self.TEST_TO_SCENARIO_IDS.keys())
 
       results = {test_id: {} for test_id in tests}
       for test_id in tests:
-        for scenario_id in TEST_TO_SCENARIO_IDS[test_id]:
+        for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
           logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
           env_path = self.load_scenario_data(scenario_id)
 
@@ -164,6 +164,12 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
       'f954a860-e963-431e-a09d-5b1040948f2d': "Test_1/Level_1.pkl",
       'f92bfe0c-5347-4d89-bc17-b6f86d514ef8': "Test_1/Level_2.pkl",
     }[scenario_id]
+
+  TEST_TO_SCENARIO_IDS = {
+    '4ecdb9f4-e2ff-41ff-9857-abe649c19c50': ['d99f4d35-aec5-41c1-a7b0-64f78b35d7ef', '04d618b8-84df-406b-b803-d516c7425537', ],
+    '5206f2ee-d0a9-405b-8da3-93625e169811': ['6f3ad83c-3312-4ab3-9740-cbce80feea91', 'f954a860-e963-431e-a09d-5b1040948f2d',
+                                             'f92bfe0c-5347-4d89-bc17-b6f86d514ef8']
+  }
 
 
 # N.B. name to be used by send_task
