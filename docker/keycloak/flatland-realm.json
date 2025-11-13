@@ -273,6 +273,7 @@
         "containerId" : "35ad1e56-a6d7-45e9-be30-ec0902aa2215",
         "attributes" : { }
       } ],
+      "fab-client-credentials" : [],
       "account" : [ {
         "id" : "934ee69d-14d0-49b3-8054-5444c5de5c5e",
         "name" : "view-consent",
@@ -438,6 +439,22 @@
     },
     "notBefore" : 0,
     "groups" : [ ]
+  }, {
+    "id": "c8dbf06a-7de6-44a7-b1a5-a8fffb7924b2",
+    "username": "service-account-fab-client-credentials",
+    "emailVerified": false,
+    "enabled": true,
+    "createdTimestamp": 1763029811389,
+    "totp": false,
+    "serviceAccountClientId": "fab-client-credentials",
+    "disableableCredentialTypes": [],
+    "requiredActions": [],
+    "realmRoles": [ "default-roles-fab" ],
+    "clientRoles": {
+      "fab": [ "User" ]
+    },
+    "notBefore": 0,
+    "groups": []
   } ],
   "scopeMappings" : [ {
     "clientScope" : "offline_access",
