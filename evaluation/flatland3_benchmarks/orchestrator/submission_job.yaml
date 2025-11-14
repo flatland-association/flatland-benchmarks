@@ -18,7 +18,7 @@ spec:
           imagePullPolicy: Always
           imagePullSecrets:
             - name: default-secret
-          command: INSERTED
+          args: INSERTED
           volumeMounts:
             - name: pvc-fab-int-submissions
               mountPath: /data

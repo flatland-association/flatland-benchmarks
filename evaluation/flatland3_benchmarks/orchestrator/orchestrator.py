@@ -84,8 +84,10 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = ACTIVE_DEADLINE_SECONDS
     submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
     submission_container_definition["image"] = submission_data_url
-    submission_container_definition["command"] = ["bash", "entrypoint_generic.sh",
-                                                  f"flatland-trajectory-generate-from-policy --data-dir /data/ --policy-pkg tests.trajectories.test_trajectories --policy-cls RandomPolicy --obs-builder-pkg flatland.core.env_observation_builder --obs-builder-cls DummyObservationBuilder --callbacks-pkg flatland.callbacks.generate_movie_callbacks --callbacks-cls GenerateMovieCallbacks --env-path /tmp/environments/{pkl_path} --ep-id {scenario_id}"]
+    # https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/
+    submission_container_definition["args"] = ["flatland-trajectory-generate-from-policy", "--data-dir", "/data/", "--callbacks-pkg",
+                                               "flatland.callbacks.generate_movie_callbacks", "--callbacks-cls GenerateMovieCallbacks", "--env-path",
+                                               f"/tmp/environments/{pkl_path}", "--ep-id", f"{scenario_id}"]
     submission_container_definition["volumeMounts"][0]["subPath"] = sub_path
     submission_download_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
     submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
