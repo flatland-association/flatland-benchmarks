@@ -9,13 +9,14 @@ from io import BytesIO, TextIOWrapper
 from pathlib import Path
 from typing import List, Optional
 
+import boto3
 from celery import Celery
 from celery.app.log import TaskFormatter
 from celery.signals import after_setup_task_logger
 from celery.utils.log import get_task_logger
 
 from orchestrator_common import FlatlandBenchmarksOrchestrator
-from s3_utils import S3_BUCKET, AI4REALNET_S3_UPLOAD_ROOT, s3_utils
+from s3_utils import S3_BUCKET, S3_UPLOAD_ROOT, s3_utils
 
 logger = get_task_logger(__name__)
 
@@ -92,7 +93,8 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
             f"/vol/{submission_id}/{test_id}/{scenario_id}"]
     exec_with_logging(args if not SUDO else ["sudo"] + args)
 
-  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, **kwargs):
+  # docker implementation has volume mapped into submission container - data is uploaded to S3 by orchestrator
+  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, s3, **kwargs):
     try:
       if tests is None:
         tests = list(self.TEST_TO_SCENARIO_IDS.keys())
@@ -109,18 +111,18 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
             "--ep-id", scenario_id,
             "--env-path", f"{SCENARIOS_VOLUME_MOUNTPATH}/{env_path}",
             "--snapshot-interval", "10",
+            # TODO old debug-environments have np_random not persisted, so pass seed to have envs behave deterministically. Should do this everywhere or assume envs are reset?
             "--seed", "1001"
           ]
           self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
 
           logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
 
-          # TODO how to inject model into call?
           logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
 
-          normalized_reward, success_rate = self._extract_stats_from_trajectory(data_dir, scenario_id)
+          normalized_reward, success_rate = self._extract_stats_from_trajectory(Path(data_dir), scenario_id)
 
-          self.upload_and_empty_local(test_id, submission_id, scenario_id)
+          self.upload_and_empty_local(test_id, submission_id, scenario_id, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, s3)
 
           results[test_id][scenario_id] = {
             "normalized_reward": normalized_reward,
@@ -133,16 +135,20 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
       logger.error(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}")
       raise RuntimeError(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}") from exception
 
-  def upload_and_empty_local(self, test_id: str, submission_id: str, scenario_id: str):
+  def upload_and_empty_local(self, test_id: str, submission_id: str, scenario_id: str, aws_endpoint_url: str, aws_access_key_id: str,
+                             aws_secret_access_key: str, s3_bucket: str,
+                             s3: boto3.session.Session.client):
     data_volume = Path(DATA_VOLUME_MOUNTPATH)
     scenario_folder = data_volume / submission_id / test_id / scenario_id
-    logger.info(f"Uploading {scenario_folder} to s3 {S3_BUCKET}/{AI4REALNET_S3_UPLOAD_ROOT}{scenario_folder.relative_to(data_volume)}")
+    logger.info(f"Uploading {scenario_folder} to s3 {S3_BUCKET}/{S3_UPLOAD_ROOT}{scenario_folder.relative_to(data_volume)}")
     for f in scenario_folder.rglob("**/*"):
       if f.is_dir():
         continue
       relative_upload_key = str(f.relative_to(data_volume))
-      s3_utils.upload_to_s3(f, relative_upload_key)
-    logger.info(f"Deleting {scenario_folder} after uploading s3 {S3_BUCKET}/{AI4REALNET_S3_UPLOAD_ROOT}/{scenario_folder.relative_to(data_volume)}")
+      if s3 is None:
+        s3 = s3_utils.get_boto_client(aws_access_key_id, aws_secret_access_key, aws_endpoint_url)
+      s3_utils.upload_to_s3(f, relative_upload_key, s3_bucket=s3_bucket, s3=s3)
+    logger.info(f"Deleting {scenario_folder} after uploading s3 {S3_BUCKET}/{S3_UPLOAD_ROOT}/{scenario_folder.relative_to(data_volume)}")
     # a bit hacky: in test_containers_railway, /app/data is mounted as root.
     for d in scenario_folder.iterdir():
       shutil.rmtree(d)

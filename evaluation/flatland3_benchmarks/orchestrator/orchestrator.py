@@ -39,6 +39,7 @@ app = Celery(
 
 class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
 
+  # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
   def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, s3, **kwargs):
     if tests is None:
       tests = list(self.TEST_TO_SCENARIO_IDS.keys())
@@ -47,7 +48,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     for test_id in tests:
       for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
         pkl_path = self.load_scenario_data(scenario_id)
-        prefix = f"{submission_id}/{scenario_id}"
+        prefix = f"{submission_id}/{test_id}/{scenario_id}"
         core_api = kwargs["core_api"]
         batch_api = kwargs["batch_api"]
 
@@ -75,7 +76,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
-    sub_path = f"{submission_id}/{scenario_id}"
+    sub_path = f"{submission_id}/"
     submission_definition = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))
     metadata_name_ = submission_definition['metadata']['name']
     submission_definition["metadata"]["name"] = f"{metadata_name_}--{sub_path.replace("/", "--")}"[:62]
@@ -85,7 +86,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
     submission_container_definition["image"] = submission_data_url
     # https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/
-    submission_container_definition["args"] = ["flatland-trajectory-generate-from-policy", "--data-dir", "/data/", "--callbacks-pkg",
+    submission_container_definition["args"] = ["flatland-trajectory-generate-from-policy", "--data-dir", f"/data/{test_id}/{scenario_id}", "--callbacks-pkg",
                                                "flatland.callbacks.generate_movie_callbacks", "--callbacks-cls GenerateMovieCallbacks", "--env-path",
                                                f"/tmp/environments/{pkl_path}", "--ep-id", f"{scenario_id}"]
     submission_container_definition["volumeMounts"][0]["subPath"] = sub_path

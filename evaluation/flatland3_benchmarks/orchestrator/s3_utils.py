@@ -1,23 +1,24 @@
 import os
 
+import boto3
+
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", False)
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", False)
 AWS_ENDPOINT_URL = os.getenv("AWS_ENDPOINT_URL", None)
-AI4REALNET_S3_UPLOAD_ROOT = os.getenv("AI4REALNET_S3_UPLOAD_ROOT", "ai4realnet/submissions/")
-
+S3_UPLOAD_ROOT = os.getenv("S3_UPLOAD_ROOT", "ai4realnet/submissions/")
 S3_BUCKET = os.getenv("S3_BUCKET", "aicrowd-production")
 
 
 class s3_utils:
 
   @staticmethod
-  def upload_to_s3(localpath, relative_upload_key, s3_bucket=S3_BUCKET, s3=None):
+  def upload_to_s3(localpath: str, relative_upload_key: str, s3_bucket: str = S3_BUCKET, s3: boto3.session.Session.client = None):
     if s3 is None:
       s3 = s3_utils.get_boto_client()
     if not s3_bucket:
       raise Exception("S3_BUCKET not provided...")
 
-    file_target_key = AI4REALNET_S3_UPLOAD_ROOT + relative_upload_key
+    file_target_key = S3_UPLOAD_ROOT + relative_upload_key
     s3.put_object(
       Bucket=s3_bucket,
       Key=file_target_key,
@@ -54,13 +55,19 @@ class s3_utils:
 
 
 # https://stackoverflow.com/questions/31918960/boto3-to-download-all-files-from-a-s3-bucket
-def download_dir(prefix, local, bucket, client):
+def download_dir(prefix: str, local: str, bucket: str, client: boto3.session.Session.client):
   """
-  params:
-  - prefix: pattern to match in s3
-  - local: local path to folder in which to place files
-  - bucket: s3 bucket with target contents
-  - client: initialized s3 client object
+
+  Parameters
+  ----------
+  prefix : str
+    pattern to match in s3
+  local : str
+    local path to folder in which to place files
+  bucket : str
+    s3 bucket with target contents
+  client : boto3.session.Session.client
+    initialized s3 client object
   """
   keys = []
   dirs = []
