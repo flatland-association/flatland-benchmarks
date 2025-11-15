@@ -373,7 +373,7 @@ services:
         condition: service_completed_successfully
     volumes:
       - ${COMPUTE_WORKER_SOCKET:-/var/run/docker.sock}:/var/run/docker.sock
-      - ./docker/flatland3_benchmarks/orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
+      - ./evaluation/flatland3_benchmarks/orchestrator/orchestrator_docker_compose.py:/app/orchestrator.py
       - ./evaluation/flatland3_benchmarks/orchestrator/orchestrator_common.py:/app/orchestrator_common.py
       - ./evaluation/flatland3_benchmarks/orchestrator/s3_utils.py:/app/s3_utils.py
       - ./fab-clientlib/:/app/fab-clientlib

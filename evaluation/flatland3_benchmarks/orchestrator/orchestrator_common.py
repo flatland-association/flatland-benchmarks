@@ -4,9 +4,10 @@ import os
 import time
 import traceback
 from abc import abstractmethod
-from typing import Dict
+from typing import Dict, Optional
 from typing import List
 
+import boto3
 from flatland.trajectories.trajectories import Trajectory
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
@@ -95,7 +96,8 @@ class FlatlandBenchmarksOrchestrator:
         f"Failed get results from S3 and uploading to FAB with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}") from e
 
   @abstractmethod
-  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, s3, **kwargs):
+  def run_flatland(self, submission_id: str, submission_data_url: str, tests: Optional[List[str]], aws_endpoint_url: str, aws_access_key_id: str,
+                   aws_secret_access_key: str, s3_bucket: str, s3: Optional[boto3.session.Session.client], **kwargs):
     raise NotImplementedError()
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):
