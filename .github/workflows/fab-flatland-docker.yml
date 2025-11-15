@@ -18,35 +18,6 @@ defaults:
     shell: bash
 
 jobs:
-  build-fab-flatland3-benchmarks-evaluator:
-    name: Build Flatland 3 Benchmarks Evaluator
-    runs-on: ubuntu-latest
-    steps:
-      - name: Evaluate tag
-        run: |
-          echo "TAG=${{ github.event.inputs.tag || 'latest' }}" >> $GITHUB_ENV
-      - uses: actions/checkout@v4
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Login to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and Push Container Image
-        uses: docker/build-push-action@v6
-        with:
-          # TODO https://github.com/flatland-association/flatland-benchmarks/issues/234 harmonize context and move Dockerfile under deployment/
-          context: evaluation/flatland3_benchmarks/evaluator
-          file: evaluation/flatland3_benchmarks/evaluator/Dockerfile
-          platforms: linux/amd64,linux/arm64/v8
-          push: true
-          tags: |
-            ghcr.io/flatland-association/fab-flatland3-benchmarks-evaluator:${{ env.TAG }}
-
   build-fab-flatland3-benchmarks-orchestrator:
     name: Build Flatland 3 Benchmarks Orchestrator
     runs-on: ubuntu-latest

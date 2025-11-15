@@ -18,17 +18,21 @@ def extract_ai4realnet_from_csv(csv):
     suite["ID"] = row["SUITE_ID"]
     suite["SUITE_NAME"] = row["SUITE_NAME"]
     suite["SUITE_DESCRIPTION"] = row["SUITE_DESCRIPTION"]
+    suite["SUITE_SETUP"] = "CAMPAIGN"
 
     suite["benchmarks"] = suite.get("benchmarks", defaultdict(lambda: {}))
     benchmarks = suite["benchmarks"]
     benchmark = benchmarks[row["BENCHMARK_ID"]]
-    benchmark["ID"] = row["BENCHMARK_ID"]
+    benchmark["ID"] = row["ID"]
     benchmark["BENCHMARK_NAME"] = row["BENCHMARK_NAME"]
-    benchmark["BENCHMARK_DESCRIPTION"] = row["BENCHMARK_DESCRIPTION"]
-    benchmark["BENCHMARK_FIELD_ID"] = row["BENCHMARK_FIELD_ID"]
-    benchmark["BENCHMARK_FIELD_NAME"] = row["BENCHMARK_FIELD_NAME"]
-    benchmark["BENCHMARK_FIELD_DESCRIPTION"] = row["BENCHMARK_FIELD_DESCRIPTION"]
-    benchmark["BENCHMARK_AGG"] = row["BENCHMARK_AGG"]
+    benchmark["BENCHMARK_DESCRIPTION"] = row["BENCHMARK_NAME"]
+    benchmark["BENCHMARK_FIELDS"] = benchmark.get("BENCHMARK_FIELDS", {})
+    benchmark["BENCHMARK_FIELDS"][row["BENCHMARK_FIELD_ID"]] = {
+      "ID": row["BENCHMARK_FIELD_ID"],
+      "BENCHMARK_FIELD_NAME": row["BENCHMARK_FIELD_NAME"],
+      "BENCHMARK_FIELD_DESCRIPTION": row["BENCHMARK_FIELD_DESCRIPTION"],
+      "BENCHMARK_AGG": row["BENCHMARK_AGG"]
+    }
 
     benchmark["tests"] = benchmark.get("tests", defaultdict(lambda: {}))
     tests = benchmark["tests"]
@@ -37,10 +41,13 @@ def extract_ai4realnet_from_csv(csv):
     test["TEST_KPI"] = row["ID"]
     test["TEST_NAME"] = row["TEST_NAME"]
     test["TEST_DESCRIPTION"] = row["TEST_DESCRIPTION"]
-    test["TEST_FIELD_ID"] = row["TEST_FIELD_ID"]
-    test["TEST_FIELD_NAME"] = row["TEST_FIELD_NAME"]
-    test["TEST_FIELD_DESCRIPTION"] = row["TEST_FIELD_DESCRIPTION"]
-    test["TEST_AGG"] = row["TEST_AGG"]
+    test["TEST_FIELDS"] = test.get("TEST_FIELDS", {})
+    test["TEST_FIELDS"][row["TEST_FIELD_ID"]] = {
+      "ID": row["TEST_FIELD_ID"],
+      "TEST_FIELD_NAME": row["TEST_FIELD_NAME"],
+      "TEST_FIELD_DESCRIPTION": row["TEST_FIELD_DESCRIPTION"],
+      "TEST_AGG": row["TEST_AGG"]
+    }
     test["LOOP"] = SETUP_MAP[row["evaluation"]]
     test["QUEUE"] = row["domain"]
 
@@ -50,14 +57,12 @@ def extract_ai4realnet_from_csv(csv):
     scenario["ID"] = row["SCENARIO_ID"]
     scenario["SCENARIO_NAME"] = row["SCENARIO_NAME"]
     scenario["SCENARIO_DESCRIPTION"] = row["SCENARIO_DESCRIPTION"]
-    scenario["fields"] = scenario.get("fields", [])
-    field = {}
-    field["SCENARIO_FIELD_ID"] = row["SCENARIO_FIELD_ID"]
-    field["SCENARIO_FIELD_NAME"] = row["SCENARIO_FIELD_NAME"]
-    field["SCENARIO_FIELD_DESCRIPTION"] = row["SCENARIO_FIELD_DESCRIPTION"]
-    field["_source"] = json.loads(row.to_json())
-    scenario["fields"].append(field)
-
+    scenario["SCENARIO_FIELDS"] = scenario.get("SCENARIO_FIELDS", {})
+    scenario["SCENARIO_FIELDS"][row["SCENARIO_FIELD_ID"]] = {
+      "ID": row["SCENARIO_FIELD_ID"],
+      "SCENARIO_FIELD_NAME": row["SCENARIO_FIELD_NAME"],
+      "SCENARIO_FIELD_DESCRIPTION": row["SCENARIO_FIELD_DESCRIPTION"],
+    }
   return data
 
 
@@ -128,10 +133,11 @@ def explode_row(csv, start_row: int, num_scenarios: int, additional_keys=None, p
 
 def main(truncate_scenarios_docker_compose=2):
   if False:
-    df = explode_row(csv="KPIs_database_cards.csv", kpi_index=40, num_scenarios=150,
+    df = explode_row(csv="KPIs_database_cards.csv", start_row=40, num_scenarios=150,
                      primary_override=("punctuality", "Primary scenario score (raw values): punctuality"),
                      additional_keys=[("success_rate", "Secondary scenario score (raw values): success_rate")],
                      )
+    df.to_csv("KPIs_database_cards.csv")
   if False:
     df = explode_row(csv="KPIs_database_cards.csv", start_row=364, num_scenarios=150,
                      primary_override=("network_impact_propagation", "Primary scenario score (raw values): network_impact_propagation"),
@@ -163,7 +169,7 @@ def main(truncate_scenarios_docker_compose=2):
           del test["scenarios"][scenario_id]
 
   sql = gen_sqls(data)
-  with Path("../../ts/backend/src/migration/data/V11.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
+  with Path("../../ts/backend/src/migration/data/V12.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
     f.write(sql)
 
 
