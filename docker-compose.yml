@@ -74,33 +74,7 @@ services:
       test: [ "CMD", "bash", "-c", "curl -v --fail http://127.0.0.1:${KEYCLOAK_PORT:-8081}/realms/flatland/.well-known/openid-configuration" ]
       interval: 5s
       timeout: 20s
-      retries: 50
-
-  redis:
-    image: redis
-    ports:
-      - ${REDIS_PORT:-6379}:6379
-    restart: unless-stopped
-    logging:
-      options:
-        max-size: "20m"
-        max-file: "5"
-    networks:
-      - flatland-benchmarks
-
-  redis-monitor:
-    image: redis
-    command: redis-cli -h redis -p 6379 monitor
-    restart: unless-stopped
-    logging:
-      options:
-        max-size: "20m"
-        max-file: "5"
-    depends_on:
-      redis:
-        condition: service_started
-    networks:
-      - flatland-benchmarks
+      retries: 5
 
   rabbit:
     build:
