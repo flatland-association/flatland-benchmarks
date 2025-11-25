@@ -8,6 +8,7 @@ from typing import Dict, Optional
 from typing import List
 
 import boto3
+from flatland.evaluators.trajectory_evaluator import TrajectoryEvaluator
 from flatland.trajectories.trajectories import Trajectory
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
@@ -101,8 +102,8 @@ class FlatlandBenchmarksOrchestrator:
     raise NotImplementedError()
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):
-    # TODO we should evaluate the trajectory and not trust the trajectory from the submission!
     trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)
+    TrajectoryEvaluator(trajectory).evaluate()
     rail_env = trajectory.load_env()
     df_trains_arrived = trajectory.trains_arrived
     logger.info(f"trains arrived: {df_trains_arrived}")
