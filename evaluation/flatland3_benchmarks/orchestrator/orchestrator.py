@@ -76,10 +76,9 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
-    sub_path = f"{submission_id}/"
     submission_definition = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))
     metadata_name_ = submission_definition['metadata']['name']
-    submission_definition["metadata"]["name"] = f"{metadata_name_}--{sub_path.replace("/", "--")}"[:62]
+    submission_definition["metadata"]["name"] = f"{metadata_name_}--{str(submission_id).lower()}"[:62].rstrip("-")
     label = f"{submission_id}-{scenario_id}"[:63].lower()
     submission_definition["metadata"]["labels"]["submission_id"] = label
     submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = ACTIVE_DEADLINE_SECONDS
@@ -89,6 +88,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_container_definition["args"] = ["flatland-trajectory-generate-from-policy", "--data-dir", f"/data/{test_id}/{scenario_id}", "--callbacks-pkg",
                                                "flatland.callbacks.generate_movie_callbacks", "--callbacks-cls GenerateMovieCallbacks", "--env-path",
                                                f"/tmp/environments/{pkl_path}", "--ep-id", f"{scenario_id}"]
+
+    sub_path = f"{submission_id}/"
     submission_container_definition["volumeMounts"][0]["subPath"] = sub_path
     submission_download_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
     submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
