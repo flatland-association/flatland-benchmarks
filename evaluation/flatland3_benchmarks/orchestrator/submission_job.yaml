@@ -18,11 +18,11 @@ spec:
           imagePullPolicy: Always
           imagePullSecrets:
             - name: default-secret
-          args: INSERTED
+          args: [ ] # INSERTED
           volumeMounts:
             - name: pvc-fab-int-submissions
               mountPath: /data
-              subPath:
+              subPath: # INSERTED /<submission_id> in the pvc mounted as /data/<submission_id>
             - name: environments
               mountPath: /tmp/environments
 
@@ -48,9 +48,11 @@ spec:
               find /tmp
               unzip /tmp/environments/environments.zip -d /tmp/environments/
               find /tmp
-              mkdir -p /data/${PREFIX}
               ls -al /data
-              find /data/${PREFIX}
+              # /<submission_id>/<test_id>/<scenario_id> in the pvc mounted under /data:
+              mkdir -p ${DATA_DIR}
+              ls -al /data
+
           command:
             - sh
           env: [ ] # INSERTED

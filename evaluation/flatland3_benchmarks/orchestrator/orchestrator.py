@@ -85,12 +85,16 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
     submission_container_definition["image"] = submission_data_url
     # https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/
-    submission_container_definition["args"] = ["flatland-trajectory-generate-from-policy", "--data-dir", f"/data/{test_id}/{scenario_id}", "--callbacks-pkg",
+
+    # submission container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
+    data_dir = f"/data/{test_id}/{scenario_id}"
+    submission_container_definition["args"] = ["flatland-trajectory-generate-from-policy", "--data-dir", data_dir, "--callbacks-pkg",
                                                "flatland.callbacks.generate_movie_callbacks", "--callbacks-cls GenerateMovieCallbacks", "--env-path",
                                                f"/tmp/environments/{pkl_path}", "--ep-id", f"{scenario_id}"]
 
     sub_path = f"{submission_id}/"
     submission_container_definition["volumeMounts"][0]["subPath"] = sub_path
+
     submission_download_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
     submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
     if aws_endpoint_url:
@@ -99,7 +103,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       submission_download_initcontainer_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": aws_access_key_id})
     if aws_secret_access_key:
       submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": aws_secret_access_key})
-    submission_extractenvs_initcontainer_definition["env"].append({"name": "PREFIX", "value": sub_path})
+    # init container has full pvc mounted:
+    submission_extractenvs_initcontainer_definition["env"].append({"name": "DATA_DIR", "value": f"/data/{submission_id}/{test_id}/{scenario_id}"})
     submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
     batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
     all_done = False
