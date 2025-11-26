@@ -9,6 +9,8 @@ from typing import List
 
 import yaml
 from celery import Celery
+from celery.app.log import TaskFormatter
+from celery.signals import after_setup_task_logger
 from kubernetes import client, config
 
 from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError
@@ -35,6 +37,14 @@ app = Celery(
     'cert_reqs': ssl.CERT_REQUIRED
   }
 )
+
+
+# https://celery.school/custom-celery-task-logger
+@after_setup_task_logger.connect
+def setup_task_logger(logger, *args, **kwargs):
+  for handler in logger.handlers:
+    tf = TaskFormatter("[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] [%(task_name)s] - [%(task_id)s] - %(message)s")
+    handler.setFormatter(tf)
 
 
 class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
