@@ -49,7 +49,8 @@ spec:
               unzip /tmp/environments/environments.zip -d /tmp/environments/
               find /tmp
               mkdir -p /data/${PREFIX}
-              find /data
+              ls -al /data
+              find /data/${PREFIX}
           command:
             - sh
           env: [ ] # INSERTED

@@ -107,7 +107,6 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     ret = {}
     while not all_done and not any_failed:
       time.sleep(1)
-      # print(".")
       jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"submission_id={label}")
       assert len(jobs.items) == 1
       all_done = True
