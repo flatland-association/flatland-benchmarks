@@ -78,7 +78,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
     submission_definition = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))
     metadata_name_ = submission_definition['metadata']['name']
-    submission_definition["metadata"]["name"] = f"{metadata_name_}--{str(submission_id).lower()}"[:62].rstrip("-")
+    submission_definition["metadata"]["name"] = f"{metadata_name_}--{str(submission_id).lower()[:10]}--{str(scenario_id).lower()}"[:62].rstrip("-")
     label = f"{submission_id}-{scenario_id}"[:63].lower()
     submission_definition["metadata"]["labels"]["submission_id"] = label
     submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = ACTIVE_DEADLINE_SECONDS
