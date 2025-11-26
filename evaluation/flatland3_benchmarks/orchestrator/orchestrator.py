@@ -61,7 +61,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
             s3 = s3_utils.get_boto_client(aws_access_key_id, aws_secret_access_key, aws_endpoint_url)
           download_dir(prefix=prefix, bucket=s3_bucket, client=s3, local=tmpdirname)
 
-          normalized_reward, success_rate = self._extract_stats_from_trajectory(Path(tmpdirname) / submission_id / scenario_id, scenario_id)
+          normalized_reward, success_rate = self._extract_stats_from_trajectory(Path(tmpdirname) / submission_id / test_id / scenario_id, scenario_id)
           results[test_id][scenario_id] = {
             "normalized_reward": normalized_reward,
             "percentage_complete": success_rate
