@@ -98,9 +98,14 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
 
     # submission container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
     data_dir = f"/data/{test_id}/{scenario_id}"
-    submission_container_definition["args"] = ["flatland-trajectory-generate-from-policy", "--data-dir", data_dir, "--callbacks-pkg",
-                                               "flatland.callbacks.generate_movie_callbacks", "--callbacks-cls GenerateMovieCallbacks", "--env-path",
+    submission_container_definition["args"] = ["flatland-trajectory-generate-from-policy", "--data-dir", data_dir, "--env-path",
                                                f"/tmp/environments/{pkl_path}", "--ep-id", f"{scenario_id}"]
+    if False:
+      submission_container_definition["args"] += ["--callbacks-pkg",
+                                                  "flatland.callbacks.generate_movie_callbacks", "--callbacks-cls GenerateMovieCallbacks", ]
+    additional_submission_args = os.environ.get("ADDITIONAL_SUBMISSION_ARGS", None)
+    if additional_submission_args is not None:
+      submission_container_definition["args"] += additional_submission_args.split(" ")
 
     sub_path = f"{submission_id}/"
     submission_container_definition["volumeMounts"][0]["subPath"] = sub_path
