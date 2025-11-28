@@ -3,8 +3,9 @@ import express from 'express'
 import { StatusCodes } from 'http-status-codes'
 import supertest from 'supertest'
 import TestAgent from 'supertest/lib/agent'
-import { beforeAll, describe, expect, test } from 'vitest'
+import { afterAll, beforeAll, describe, expect, MockInstance, test, vi } from 'vitest'
 import { defaults } from '../config/defaults.mjs'
+import { AuthService } from '../services/auth-service.mjs'
 import { Controller } from './controller.mjs'
 
 const dummyResources = [{ id: '1' }, { id: '2' }]
@@ -13,10 +14,19 @@ describe.sequential('Controller', () => {
   let app: Express
   let request: TestAgent
   let controller: Controller
+  let authMock: MockInstance
 
   beforeAll(() => {
     app = express()
     request = supertest(app)
+    authMock = vi.spyOn(AuthService, 'getInstance').mockReturnValue(
+      //@ts-expect-error authorization
+      { authorization: () => null },
+    )
+  })
+
+  afterAll(() => {
+    authMock.mockReset()
   })
 
   test('should be instantiated (with default configuration)', () => {
@@ -39,9 +49,13 @@ describe.sequential('Controller', () => {
     controller.attachPatch('/test-patch' as '/mirror/:id', (req, res) => {
       controller.respond(req, res, { data: '<ok>' }, '<debug>')
     })
-    controller.attachGet('/test-auth-error' as '/mirror', (req, res) => {
-      controller.unauthorizedError(req, res, { text: 'auth error' })
-    })
+    controller.attachGet(
+      '/test-auth-error' as '/mirror',
+      async (req, res) => {
+        controller.respond(req, res, 'unreachable')
+      },
+      { authorizedRoles: ['Admin'] },
+    )
     controller.attachGet('/test-server-error' as '/mirror', (req, res) => {
       controller.respondError(req, res, { text: 'server error' })
     })
@@ -80,7 +94,7 @@ describe.sequential('Controller', () => {
     },
     {
       route: '/test-auth-error',
-      expects: { status: StatusCodes.UNAUTHORIZED, response: { error: { text: 'auth error' } } },
+      expects: { status: StatusCodes.UNAUTHORIZED, response: { error: { text: 'Not authorized' } } },
     },
     {
       route: '/test-no-such-route',

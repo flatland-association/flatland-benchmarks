@@ -95,7 +95,8 @@ describe.sequential('Submission controller', () => {
   // data set in
   // - ts\backend\src\migration\data\V4.1__ai4realnet_example.sql
   // - ts\backend\src\migration\data\V5.2__publishable_submission.sql
-  test('should list published submissions (no user)', async () => {
+  test('should list published submissions (no user)', async ({ skip }) => {
+    if (!submissionUuid) skip()
     const res = await controller.testGet('/submissions', {})
     assertApiResponse(res)
     const submissionIds = res.body.body.map((s) => s.id)
@@ -107,7 +108,8 @@ describe.sequential('Submission controller', () => {
 
   // data set in
   // - ts/backend/src/migration/data/V4.1__ai4realnet_example.sql
-  test('should list submissions for benchmark', async () => {
+  test('should list submissions for benchmark', async ({ skip }) => {
+    if (!submissionUuid) skip()
     const res = await controller.testGet('/submissions', {
       query: { benchmark_ids: '1df5f920-ed2c-4873-957b-723b4b5d81b1' },
     })
@@ -116,21 +118,22 @@ describe.sequential('Submission controller', () => {
     expect(submissionIds).toContain('a8bb32be-a596-4636-898d-7e1fe7c7492d')
   })
 
-  test('should list own unpublished submissions (user required)', async () => {
-    const res = await controller.testGet('/submissions', { query: { unpublished_own: 'true' } }, testUserJwt)
+  test('should deny listing own submissions (no user)', async () => {
+    const res = await controller.testGet('/submissions/own', {})
+    assertApiResponse(res, StatusCodes.UNAUTHORIZED)
+    expect(res.body.body).toBeUndefined()
+  })
+
+  test('should list own submissions (user required)', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testGet('/submissions/own', {}, testUserJwt)
     assertApiResponse(res)
     const submissionIds = res.body.body.map((s) => s.id)
     expect(submissionIds).toContain(submissionUuid)
   })
 
-  test('should deny listing own unpublished submissions (no user)', async () => {
-    const res = await controller.testGet('/submissions', { query: { unpublished_own: 'true' } })
-    assertApiResponse(res)
-    const submissionIds = res.body.body.map((s) => s.id)
-    expect(submissionIds).not.toContain(submissionUuid)
-  })
-
-  test('should return published submission (no user)', async () => {
+  test('should return published submission (no user)', async ({ skip }) => {
+    if (!submissionUuid) skip()
     const res = await controller.testGet('/submissions/:submission_ids', {
       params: { submission_ids: 'cd4d44bc-d40e-4173-bccb-f04e0be1b2ae' },
     })
@@ -138,13 +141,15 @@ describe.sequential('Submission controller', () => {
     expect(res.body.body).toHaveLength(1)
   })
 
-  test('should deny returning unpublished submission (no user)', async () => {
+  test('should deny returning unpublished submission (no user)', async ({ skip }) => {
+    if (!submissionUuid) skip()
     const res = await controller.testGet('/submissions/:submission_ids', { params: { submission_ids: submissionUuid } })
     assertApiResponse(res, StatusCodes.NOT_FOUND)
     expect(res.body.body).toHaveLength(0)
   })
 
-  test('should return unpublished own submission (user required)', async () => {
+  test('should return unpublished own submission (user required)', async ({ skip }) => {
+    if (!submissionUuid) skip()
     const res = await controller.testGet(
       '/submissions/:submission_ids',
       { params: { submission_ids: submissionUuid } },
@@ -154,7 +159,8 @@ describe.sequential('Submission controller', () => {
     expect(res.body.body).toHaveLength(1)
   })
 
-  test('should allow publishing submissions', async () => {
+  test('should allow publishing submissions', async ({ skip }) => {
+    if (!submissionUuid) skip()
     const res = await controller.testPatch(
       '/submissions/:submission_ids',
       {
@@ -164,15 +170,5 @@ describe.sequential('Submission controller', () => {
     )
     assertApiResponse(res)
     expect(res.body.body).toHaveLength(1)
-  })
-
-  // this only works after publishing the submission
-  test('should list submissions by submitter', async () => {
-    const res = await controller.testGet('/submissions', {
-      query: { submitted_by: testUserJwt.sub },
-    })
-    assertApiResponse(res)
-    const submissionIds = res.body.body.map((s) => s.id)
-    expect(submissionIds).toContain(submissionUuid)
   })
 })

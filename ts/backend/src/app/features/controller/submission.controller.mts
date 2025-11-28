@@ -15,10 +15,11 @@ export class SubmissionController extends Controller {
   constructor(config: configuration) {
     super(config)
 
-    this.attachPost('/submissions', this.postSubmission)
+    this.attachPost('/submissions', this.postSubmission, { authorizedRoles: ['User'] })
     this.attachGet('/submissions', this.getSubmissions)
+    this.attachGet('/submissions/own', this.getOwnSubmissions, { authorizedRoles: ['User'] })
     this.attachGet('/submissions/:submission_ids', this.getSubmissionByUuid)
-    this.attachPatch('/submissions/:submission_ids', this.patchSubmissionByUuid)
+    this.attachPatch('/submissions/:submission_ids', this.patchSubmissionByUuid, { authorizedRoles: ['User'] })
   }
 
   /**
@@ -78,11 +79,7 @@ export class SubmissionController extends Controller {
    */
   postSubmission: PostHandler<'/submissions'> = async (req, res) => {
     const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
+    const auth = (await authService.authorization(req))!
     this.checkCompleteness(req.body)
     await this.checkValidity(req.body)
     // save submission in db
@@ -154,9 +151,6 @@ export class SubmissionController extends Controller {
    * /submissions:
    *  get:
    *    description: Lists all published submissions.
-   *    security:
-   *      - {}
-   *      - oauth2: [user]
    *    parameters:
    *      - in: query
    *        name: benchmark_ids
@@ -166,17 +160,6 @@ export class SubmissionController extends Controller {
    *            type: string
    *            format: uuid
    *        description: Filter submissions by benchmark.
-   *      - in: query
-   *        name: submitted_by
-   *        schema:
-   *          type: string
-   *          format: uuid
-   *        description: Filter submissions by user.
-   *      - in: query
-   *        name: unpublished_own
-   *        schema:
-   *          type: string
-   *        description: Either `true` or `false` (default), literally and case-sensitive. If `true`, un-published submissions owned by the authenticated user are not filtered out.
    *    responses:
    *      200:
    *        description: Requested submissions.
@@ -224,50 +207,88 @@ export class SubmissionController extends Controller {
    *                            type: boolean
    */
   getSubmissions: GetHandler<'/submissions'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-
     const benchmarkId = req.query['benchmark_ids']
-    const submittedBy = req.query['submitted_by']
-    let unpublishedOwn = false
-    if (req.query['unpublished_own'] === 'true') {
-      unpublishedOwn = true
-    } else if (req.query['unpublished_own'] !== 'false' && typeof req.query['unpublished_own'] !== 'undefined') {
-      this.respondError(
-        req,
-        res,
-        { text: `invalid value "${req.query['unpublished_own']}" for "unpublished_own"` },
-        undefined,
-        undefined,
-        StatusCodes.BAD_REQUEST,
-      )
-      return
-    }
 
     const sql = SqlService.getInstance()
 
-    // per default, list all public submissions
-    let wherePublished = sql.fragment`published = true`
+    // per default, list for all benchmarks
     let whereBenchmark = sql.fragment`1=1`
-    let whereSubmittedBy = sql.fragment`1=1`
     if (benchmarkId) {
       // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple benchmark_ids
-      whereBenchmark = sql.fragment`benchmark_id=${benchmarkId}`
-    }
-    if (submittedBy) {
-      whereSubmittedBy = sql.fragment`submitted_by=${submittedBy}`
-    }
-    if (unpublishedOwn && auth?.sub) {
-      // bypass published requirement for own submissions only
-      wherePublished = sql.fragment`(published = true OR submitted_by = ${auth.sub})`
+      whereBenchmark = sql.fragment`benchmark_id = ${benchmarkId}`
     }
 
     const submissions = await sql.query<SubmissionRow>`
         SELECT * FROM submissions
         WHERE
-          ${wherePublished} AND
-          ${whereBenchmark} AND
-          ${whereSubmittedBy}
+          published = true AND
+          ${whereBenchmark}
+      `
+    this.respond(req, res, submissions)
+  }
+
+  /**
+   * @swagger
+   * /submissions/own:
+   *  get:
+   *    description: Lists own submissions.
+   *    security:
+   *      - oauth2: [user]
+   *    responses:
+   *      200:
+   *        description: Requested submissions.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                          benchmark_id:
+   *                            type: string
+   *                            format: uuid
+   *                          test_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   *                          name:
+   *                            type: string
+   *                          description:
+   *                            type: string
+   *                          submission_data_url:
+   *                            type: string
+   *                          code_repository:
+   *                            type: string
+   *                          submitted_at:
+   *                            type: string
+   *                          submitted_by:
+   *                            type: string
+   *                            format: uuid
+   *                          submitted_by_username:
+   *                            type: string
+   *                          status:
+   *                            type: string
+   *                          published:
+   *                            type: boolean
+   */
+  getOwnSubmissions: GetHandler<'/submissions/own'> = async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = (await authService.authorization(req))!
+    const sql = SqlService.getInstance()
+
+    const submissions = await sql.query<SubmissionRow>`
+        SELECT * FROM submissions
+        WHERE
+          submitted_by = ${auth.sub}
       `
     this.respond(req, res, submissions)
   }
@@ -423,13 +444,6 @@ export class SubmissionController extends Controller {
    */
   patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res) => {
     logger.info(`patchSubmissionByUuid`)
-    const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
-    if (!auth) {
-      this.unauthorizedError(req, res, { text: 'Not authorized' })
-      return
-    }
-
     const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
