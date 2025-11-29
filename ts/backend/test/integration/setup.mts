@@ -50,7 +50,7 @@ export async function getTestConfig() {
   // forwarded ports)
   testConfig.postgres.port = +env['POSTGRES_PORT']
   testConfig.amqp.port = +env['RABBITMQ_PORT']
-  // TODO: redis, keycloak: make port configurable directly
+  // TODO: keycloak: make port configurable directly
   // depends on https://github.com/flatland-association/flatland-benchmarks/issues/52
   testConfig.keycloak.url = testConfig.keycloak.url.replace('8081', env['KEYCLOAK_PORT'])
 

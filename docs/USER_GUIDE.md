@@ -17,16 +17,11 @@ Our compute worker is responsible for handling submissions.
 
 ### Flatland 3 Benchmark Participants' User Guide
 
-* Your submission Docker image must ship with an entrypoint, so we can run the container without an entrypoint/command. See submission template [FAB Flatland 3 starterkit](https://github.com/flatland-association/flatland-benchmarks-f3-starterkit/) for an example.
-* We set two environment variables:
-  * `AICROWD_TESTS_FOLDER` (see https://github.com/flatland-association/flatland-rl/blob/03234e2805d3ed3b8e8343d3e861fd3637e6470d/flatland/evaluators/client.py#L91)
-  * `redis_ip` (see https://github.com/flatland-association/flatland-rl/blob/03234e2805d3ed3b8e8343d3e861fd3637e6470d/flatland/evaluators/client.py#L57)
+Your submission Docker image must ship with an entrypoint that
 
-### FAB Benchmark Administrators' User Guide
+* activates the Python env contain that has the Flatland cli commands and your policy and observation builders are on the `PYTHONPATH`
+* `POLICY` and `OBS_BUILDER` env vars are set to your policy and matching observation builder implementing the corresponding interfaces (`flatland.envs.RailEnvPolicy.RailEnvPolicy` resp. `flatland.core.env_observation_builder.ObservationBuilder`)
 
-This describes the default `evaluation/orchestrator` used with a different evaluator:
+See submission template [FAB Flatland 3 starterkit](https://github.com/flatland-association/flatland-benchmarks-f3-starterkit/) for an example.
 
-* Your evaluator Docker image must ship with an entrypoint, so we can run the container without an entrypoint/command.
-* We set one environment variables:
-  * `redis_ip` (see https://github.com/flatland-association/flatland-rl/blob/03234e2805d3ed3b8e8343d3e861fd3637e6470d/flatland/evaluators/client.py#L57)
-* Environments are mounted at `/tmp/environments/` (hard-coded location)
+

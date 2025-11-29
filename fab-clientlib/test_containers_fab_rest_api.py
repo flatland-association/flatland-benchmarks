@@ -249,7 +249,7 @@ def test_submission_roundtrip():
   test_results = fab.results_submissions_submission_id_tests_test_ids_get(
     submission_id=submission_id,
     test_ids=[test_id])
-  print("results_uploaded")
+  print(f"results downloaded for submission_id={submission_id} and test_id={test_id}")
   print(test_results.body)
   scenario_scorings = test_results.body[0].scenario_scorings
   assert scenario_scorings[0].scorings[0].field_key == "primary"

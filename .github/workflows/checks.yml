@@ -2,7 +2,8 @@ name: Checks
 
 env:
   # DEPENDENCY SWITCH:
-  ai4realnet-orchestrators-ref: main
+  # TODO use released version
+  ai4realnet-orchestrators-ref: entrypoint-refactoring
 
 on:
   workflow_dispatch:
@@ -43,14 +44,6 @@ jobs:
           df -h
           docker system df
       - uses: actions/checkout@v4
-      - name: Download debug environments
-        working-directory: evaluation/flatland3_benchmarks
-        run: |
-          wget "https://data.flatland.cloud/benchmarks/Flatland3/debug-environments.zip" -O debug-environments.zip
-          unzip -o debug-environments.zip -d evaluator
-          find .
-          git status
-          git checkout -- evaluator/debug-environments/metadata.csv
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
         with:
@@ -73,7 +66,6 @@ jobs:
         working-directory: evaluation/flatland3_benchmarks
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
-          pytest -s evaluator
           pytest -s orchestrator
 
   test-ai4realnet-orchestrator-railway:
