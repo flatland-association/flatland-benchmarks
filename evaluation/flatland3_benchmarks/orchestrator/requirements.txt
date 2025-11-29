@@ -7,4 +7,5 @@ python-dotenv==1.0.1
 #git+https://github.com/flatland-association/flatland-benchmarks.git@feature/domain-queues#subdirectory=fab-clientlib
 fab-clientlib==0.13.1
 # DEPENDENCY SWITCH:
+# TODO use released version
 flatland-rl @ git+https://github.com/flatland-association/flatland-rl.git@main

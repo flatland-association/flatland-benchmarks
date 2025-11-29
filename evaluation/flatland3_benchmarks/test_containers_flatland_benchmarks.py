@@ -123,7 +123,7 @@ def test_successful_run(expected_total_simulation_count, expected_test_ids, test
 
   ret = run_task('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', submission_id,
                  # use deterministic baselines
-                 submission_data_url="ghcr.io/flatland-association/flatland-baselines-deadlock-avoidance-heuristic:entrypoint-refactoring",
+                 submission_data_url="ghcr.io/flatland-association/flatland-baselines-deadlock-avoidance-heuristic:latest",
                  tests=tests, **config)
   assert set(ret.keys()) == set(expected_test_ids)
 
