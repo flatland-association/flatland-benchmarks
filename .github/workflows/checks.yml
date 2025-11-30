@@ -3,7 +3,7 @@ name: Checks
 env:
   # DEPENDENCY SWITCH:
   # TODO use released version
-  ai4realnet-orchestrators-ref: entrypoint-refactoring
+  ai4realnet-orchestrators-ref: main
 
 on:
   workflow_dispatch:
