@@ -3,6 +3,33 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.15.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.14.0...v0.15.0) (2025-11-29)
+
+
+### Features
+
+* **backend:** Allow body in error responses ([#450](https://github.com/flatland-association/flatland-benchmarks/issues/450)) ([4c65284](https://github.com/flatland-association/flatland-benchmarks/commit/4c65284808f9d134385f6925408bd40fcb4c727b))
+* **backend:** Granular http codes ([#455](https://github.com/flatland-association/flatland-benchmarks/issues/455)) ([9b5868a](https://github.com/flatland-association/flatland-benchmarks/commit/9b5868abc317c97f740687e099fb7f78f13299df))
+* **backend:** Introduce independent query param in submissions endpoint for unpublished own ([#447](https://github.com/flatland-association/flatland-benchmarks/issues/447)) ([fdf9d89](https://github.com/flatland-association/flatland-benchmarks/commit/fdf9d89a0bb4731c7f167db9c32609f171328e93))
+* **backend:** Validate submission body ([#464](https://github.com/flatland-association/flatland-benchmarks/issues/464)) ([3f8cc07](https://github.com/flatland-association/flatland-benchmarks/commit/3f8cc07e503061d4bf5c6e2d6df47f9329c6703a))
+* evaluate trajectory from submission. ([839523a](https://github.com/flatland-association/flatland-benchmarks/commit/839523a5bd5d581d89c655dc436ca6e02e79d87a))
+* expect POLICY and OBS_BUILDER to be set in Flatland 3 submissions. ([c2f609b](https://github.com/flatland-association/flatland-benchmarks/commit/c2f609bf422217f5da8dc54e8ff1decc05e5ea7e))
+* **frontend:** Optimize scenario loading ([#474](https://github.com/flatland-association/flatland-benchmarks/issues/474)) ([3273ab6](https://github.com/flatland-association/flatland-benchmarks/commit/3273ab675f82b88b440dbec03606cc542007a899))
+* **frontend:** publish non-NaN scores only ([#461](https://github.com/flatland-association/flatland-benchmarks/issues/461)) ([e26dd8f](https://github.com/flatland-association/flatland-benchmarks/commit/e26dd8f8c8732b5df8e9b1efdb2e75cc9a1b8594))
+* gen flatland 3 benchmarks scenario SQLs. ([649ad2f](https://github.com/flatland-association/flatland-benchmarks/commit/649ad2f5edc6678661ed56946850102cca826c56))
+* Link to suite from benchmark ([#449](https://github.com/flatland-association/flatland-benchmarks/issues/449)) ([1a4e6c9](https://github.com/flatland-association/flatland-benchmarks/commit/1a4e6c9dc47387164d7d23d75cc0e83b566d25bb))
+* Make leaderboards and alike resources ([#454](https://github.com/flatland-association/flatland-benchmarks/issues/454)) ([4b0260e](https://github.com/flatland-association/flatland-benchmarks/commit/4b0260e0fab877f19c392f36c2df24ea388b7190))
+* Real world baseline challenge ([#448](https://github.com/flatland-association/flatland-benchmarks/issues/448)) ([6a857a3](https://github.com/flatland-association/flatland-benchmarks/commit/6a857a3358e6ed3ecb5d23d5ef82cb3304a0bab6))
+
+
+### Bug Fixes
+
+* **backend:** global error response not ApiResponse ([#445](https://github.com/flatland-association/flatland-benchmarks/issues/445)) ([01e8b45](https://github.com/flatland-association/flatland-benchmarks/commit/01e8b45154223d80ef107cbabd5fac489639ae2c))
+* comply with breaking API changes. ([c165d79](https://github.com/flatland-association/flatland-benchmarks/commit/c165d7912bc7a9d5f1173f1f00ad28bbd269ed4b))
+* generation of fab3_definitions.json. add: gen dict. ([fad9f3e](https://github.com/flatland-association/flatland-benchmarks/commit/fad9f3e95c85858f03fe4379a10d9972a8e7ee70))
+* **k8s benchmark orchestrator:** fix pod name. ([719b2e2](https://github.com/flatland-association/flatland-benchmarks/commit/719b2e267f93b75453f804249d5f204033e8bf39))
+* **railway-orchestrator:** fix TEST_TO_SCENARIO_IDS for 150 scenarios. ([9be5176](https://github.com/flatland-association/flatland-benchmarks/commit/9be5176513f95ea23ccc16b0aa874bf3be026aa5))
+
 ## [0.14.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.13.1...v0.14.0) (2025-09-29)
 
 
