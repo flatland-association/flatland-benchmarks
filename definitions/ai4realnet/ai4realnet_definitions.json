@@ -1,8 +1,8 @@
 {
     "0ca46887-897a-463f-bf83-c6cd6269a977": {
         "ID": "0ca46887-897a-463f-bf83-c6cd6269a977",
-        "SUITE_NAME": "Beta Validation Campaign",
-        "SUITE_DESCRIPTION": "The beta validation campaign runs until 30.11.2025",
+      "SUITE_NAME": "First Validation Campaign",
+      "SUITE_DESCRIPTION": "The first validation campaign runs until 31/03/2026.",
         "SUITE_SETUP": "CAMPAIGN",
         "benchmarks": {
             "3237ba20-ccff-45b0-af23-44719e584f41": {

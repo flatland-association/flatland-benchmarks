@@ -1,3 +1,11 @@
+"""
+One time import from https://github.com/AI4REALNET/KPIs-cards/blob/main/data/card-data.ts.
+
+In:
+- KPIs_database_cards.json
+Out:
+- KPIs_database_cards.csv
+"""
 import json
 from pathlib import Path
 from uuid import uuid4
@@ -7,7 +15,7 @@ import pandas as pd
 
 def main():
   SUITE_ID = '0ca46887-897a-463f-bf83-c6cd6269a977'
-  SUITE_NAME = 'Beta Validation Campaign'
+  SUITE_NAME = 'First Validation Campaign'
   SUITE_DESCRIPTION = 'The beta validation campaign runs until 30.11.2025'
   SUITE_CONTENTS = ''
   agg_func = "MEAN"
