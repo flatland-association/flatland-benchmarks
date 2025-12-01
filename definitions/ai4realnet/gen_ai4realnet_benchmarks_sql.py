@@ -1,3 +1,13 @@
+"""
+Update benchmark definitions by editing KPIs_database_cards.csv.
+
+In:
+  - KPIs_database_cards.csv
+Out (updating):
+  - ai4realnet_definitions.json
+  - ai4realnet_definitions.sql
+  - V13.1__ai4realnet_example.sql
+"""
 import json
 import uuid
 from collections import defaultdict
@@ -169,7 +179,7 @@ def main(truncate_scenarios_docker_compose=2):
           del test["scenarios"][scenario_id]
 
   sql = gen_sqls(data)
-  with Path("../../ts/backend/src/migration/data/V12.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
+  with Path("../../ts/backend/src/migration/data/V13.1__ai4realnet_example.sql").open("w", encoding="utf-8") as f:
     f.write(sql)
 
 
