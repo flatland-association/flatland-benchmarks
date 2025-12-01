@@ -38,7 +38,7 @@
     "ansi-styles": "^6.2.3",
     "celery-node": "^0.5.9",
     "cors": "^2.8.5",
-    "express": "^5.1.0",
+    "express": "^5.2.1",
     "http-status-codes": "^2.3.0",
     "json5": "^2.2.3",
     "jsonwebtoken": "^9.0.2",
