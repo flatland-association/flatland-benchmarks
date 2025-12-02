@@ -103,7 +103,7 @@ class FlatlandBenchmarksOrchestrator:
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):
     trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)
-    TrajectoryEvaluator(trajectory).evaluate()
+    TrajectoryEvaluator(trajectory).evaluate(tqdm_kwargs={"disable": True})
     rail_env = trajectory.load_env()
     df_trains_arrived = trajectory.trains_arrived
     logger.info(f"trains arrived: {df_trains_arrived}")
