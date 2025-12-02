@@ -74,10 +74,10 @@ describe('Aggregator Service', () => {
   describe('yields correct aggregation results', () => {
     test.each([
       // not putting numbers in order, to show that median actually does a thing
-      { func: 'aggSum', values: [], result: 0 },
+      { func: 'aggSum', values: [], result: null },
       { func: 'aggSum', values: [2, 1, null], result: null },
       { func: 'aggSum', values: [2, 1, 3], result: 6 },
-      { func: 'aggNaNSum', values: [], result: 0 },
+      { func: 'aggNaNSum', values: [], result: null },
       { func: 'aggNaNSum', values: [2, 1, null], result: 3 },
       { func: 'aggNaNSum', values: [2, 1, 3], result: 6 },
       { func: 'aggMean', values: [], result: null },
