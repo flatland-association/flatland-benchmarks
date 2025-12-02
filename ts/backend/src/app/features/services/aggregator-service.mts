@@ -807,6 +807,8 @@ export class AggregatorService extends Service {
    * Calculates sum, returns `null` if there's a `null` in values.
    */
   aggSum(values: (number | null)[]) {
+    // empty set defaults to null
+    if (values.length === 0) return null
     let sum = 0
     for (const value of values) {
       // null? early abort
