@@ -3,6 +3,14 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.15.3](https://github.com/flatland-association/flatland-benchmarks/compare/v0.15.2...v0.15.3) (2025-12-02)
+
+
+### Bug Fixes
+
+* empty sum should return nan in order to recognize unscored submissions. ([9f7b0d7](https://github.com/flatland-association/flatland-benchmarks/commit/9f7b0d74c43da7dc1234309ded787fdf5b7cac54))
+* empty sum should return nan. ([0baae18](https://github.com/flatland-association/flatland-benchmarks/commit/0baae186740e70a435b1d34bc08ff037d03ab6c3))
+
 ## [0.15.2](https://github.com/flatland-association/flatland-benchmarks/compare/v0.15.1...v0.15.2) (2025-12-01)
 
 
