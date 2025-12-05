@@ -1,9 +1,11 @@
 import { ResultRow } from '@common/interfaces'
+import { StripId } from '@common/utility-types'
 import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AggregatorService } from '../services/aggregator-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
+import { ControllerError } from './controller-utils.mjs'
 import { Controller, GetHandler, PostHandler } from './controller.mjs'
 
 const logger = new Logger('results-controller')
@@ -250,8 +252,7 @@ export class ResultsController extends Controller {
       }
       return resultRows
     })
-    // TODO: check that all defined fields are present
-    // see: https://github.com/flatland-association/flatland-benchmarks/issues/386
+    await this.checkValidity(resultRows)
     // save in db
     const sql = SqlService.getInstance()
     try {
@@ -650,5 +651,84 @@ export class ResultsController extends Controller {
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getBenchmarkTestLeaderboard(benchmarkId, testIds)
     this.respondAfterPresenceCheck(req, res, board, testIds, 'test_id')
+  }
+
+  // not using `validate` to keep the `checkX` pattern up
+  /**
+   * Checks if all values in the provided `resource` are valid.
+   * @param resources Resources to validate.
+   * @throws {ControllerError} When check failed.
+   */
+  async checkValidity(resources: StripId<ResultRow>[]) {
+    const sql = SqlService.getInstance()
+    // load sources (greedy, filter later on)
+    // (derived via referenced submissions -> tests -> scenarios -> fields)
+    const submissionIds = Array.from(new Set(resources.map((r) => r.submission_id)))
+    const [sources] = await sql.query<{
+      submissions: { id: string; test_ids: string[] }[] | null
+      tests: { id: string; scenario_ids: string[] }[] | null
+      scenarios: { id: string; field_ids: string[] }[] | null
+      fields: { id: string; key: string }[] | null
+    }>`
+      SELECT
+        json_agg(DISTINCT jsonb_build_object('id', submissions.id, 'test_ids', submissions.test_ids)) AS submissions,
+        json_agg(DISTINCT jsonb_build_object('id', tests.id, 'scenario_ids', tests.scenario_ids)) AS tests,
+        json_agg(DISTINCT jsonb_build_object('id', scenarios.id, 'field_ids', scenarios.field_ids)) AS scenarios,
+        json_agg(DISTINCT jsonb_build_object('id', fields.id, 'key', fields.key)) AS fields
+      FROM submissions
+      LEFT JOIN tests ON tests.id = ANY(submissions.test_ids)
+      LEFT JOIN scenarios ON scenarios.id = ANY(tests.scenario_ids)
+      LEFT JOIN fields ON fields.id = ANY(scenarios.field_ids)
+      WHERE submissions.id = ANY(${submissionIds})
+    `
+    logger.debug('loaded sources', sources)
+    // for every resource, check the chain of references
+    resources.forEach((resource) => {
+      // submission from sources
+      const submission = sources.submissions?.find((s) => s.id === resource.submission_id)
+      if (!submission) {
+        throw new ControllerError(
+          'Referenced submission does not exist',
+          { submission: resource.submission_id },
+          StatusCodes.BAD_REQUEST,
+        )
+      }
+      // test must be referenced by submission
+      const referencedTests = sources.tests?.filter((t) => submission?.test_ids.includes(t.id))
+      const test = referencedTests?.find((t) => t.id === resource.test_id)
+      if (!test) {
+        throw new ControllerError(
+          'Referenced test is not available',
+          { test: resource.test_id, submission: resource.submission_id },
+          StatusCodes.BAD_REQUEST,
+        )
+      }
+      // scenario must be referenced by test
+      const referencedScenarios = sources.scenarios?.filter((s) => test?.scenario_ids.includes(s.id))
+      const scenario = referencedScenarios?.find((s) => s.id === resource.scenario_id)
+      if (!scenario) {
+        throw new ControllerError(
+          'Referenced scenario is not available',
+          { scenario: resource.scenario_id, test: resource.test_id, submission: resource.submission_id },
+          StatusCodes.BAD_REQUEST,
+        )
+      }
+      // field must be referenced by scenario
+      const referencedFields = sources.fields?.filter((f) => scenario?.field_ids.includes(f.id))
+      const field = referencedFields?.find((f) => f.key === resource.key)
+      // check key belongs to scenarios field definition
+      if (!field) {
+        throw new ControllerError(
+          'Referenced field is not available',
+          {
+            field: resource.key,
+            scenario: resource.scenario_id,
+            test: resource.test_id,
+            submission: resource.submission_id,
+          },
+          StatusCodes.BAD_REQUEST,
+        )
+      }
+    })
   }
 }
