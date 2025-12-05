@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router'
 import { BenchmarkDefinitionRow, SuiteDefinitionRow, TestDefinitionRow } from '@common/interfaces'
 import { ContentComponent } from '@flatland-association/flatland-ui'
 import { Subscription } from 'rxjs'
+import { NewSubmissionModalComponent } from '../../components/new-submission-modal/new-submission-modal.component'
 import { SiteHeadingComponent } from '../../components/site-heading/site-heading.component'
 import { TestOverviewComponent } from '../../components/test-overview/test-overview.component'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
@@ -11,7 +12,14 @@ import { PublicResourcePipe } from '../../pipes/public-resource/public-resource.
 
 @Component({
   selector: 'view-test',
-  imports: [ContentComponent, RouterModule, SiteHeadingComponent, PublicResourcePipe, TestOverviewComponent],
+  imports: [
+    ContentComponent,
+    RouterModule,
+    SiteHeadingComponent,
+    PublicResourcePipe,
+    TestOverviewComponent,
+    NewSubmissionModalComponent,
+  ],
   templateUrl: './test.view.html',
   styleUrl: './test.view.scss',
 })
@@ -25,6 +33,7 @@ export class TestView implements OnInit, OnDestroy {
   benchmark?: BenchmarkDefinitionRow
   test?: TestDefinitionRow
   customization?: Customization
+  showNewSubmissionModal = false
 
   ngOnInit(): void {
     this.customizationService.getCustomization().then((customization) => {
