@@ -25,6 +25,8 @@ AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
 S3_BUCKET = os.environ.get("S3_BUCKET", None)
 ACTIVE_DEADLINE_SECONDS = os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)
 BENCHMARK_ID = os.environ.get("BENCHMARK_ID", "flatland3-evaluation")
+SUBMISSIONS_PVC = os.environ.get("SUBMISSIONS_PVC", "fab-int-submissions")
+S3_URL_ENVIRONMENTS_ZIP = os.environ.get("S3_URL_ENVIRONMENTS_ZIP", "s3://fab-data/flatland3/environments.zip")
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
@@ -86,6 +88,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+
     submission_definition = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))
     metadata_name_ = submission_definition['metadata']['name']
     submission_definition["metadata"]["name"] = f"{metadata_name_}--{str(submission_id).lower()[:10]}--{str(scenario_id).lower()}"[:62].rstrip("-")
@@ -94,15 +97,15 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = ACTIVE_DEADLINE_SECONDS
     submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
     submission_container_definition["image"] = submission_data_url
-    # https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/
+    submission_definition["spec"]["template"]["spec"]["volumes"][1]["persistentVolumeClaim"]["claimName"] = SUBMISSIONS_PVC
+
 
     # submission container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
     data_dir = f"/data/{test_id}/{scenario_id}"
+
+    # https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/
     submission_container_definition["args"] = ["flatland-trajectory-generate-from-policy", "--data-dir", data_dir, "--env-path",
                                                f"/tmp/environments/{pkl_path}", "--ep-id", f"{scenario_id}"]
-    if False:
-      submission_container_definition["args"] += ["--callbacks-pkg",
-                                                  "flatland.callbacks.generate_movie_callbacks", "--callbacks-cls GenerateMovieCallbacks", ]
     additional_submission_args = os.environ.get("ADDITIONAL_SUBMISSION_ARGS", None)
     if additional_submission_args is not None:
       submission_container_definition["args"] += additional_submission_args.split(" ")
@@ -111,6 +114,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_container_definition["volumeMounts"][0]["subPath"] = sub_path
 
     submission_download_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
+    submission_download_initcontainer_definition["env"].append({"name": "S3_URL_ENVIRONMENTS_ZIP", "value": S3_URL_ENVIRONMENTS_ZIP})
+
     submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
     if aws_endpoint_url:
       submission_download_initcontainer_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": aws_endpoint_url})
@@ -120,6 +125,9 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": aws_secret_access_key})
     # init container has full pvc mounted:
     submission_extractenvs_initcontainer_definition["env"].append({"name": "DATA_DIR", "value": f"/data/{submission_id}/{test_id}/{scenario_id}"})
+
+    # print(json.dumps(submission_definition, indent=4))
+
     submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
     batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
     all_done = False
