@@ -22,6 +22,14 @@ export default defineConfig({
           globals: true,
         },
       },
+      {
+        extends: true,
+        test: {
+          name: 'integration-no-setup',
+          include: ['./test/integration/**/*.spec.ts'],
+          globals: true,
+        },
+      },
     ],
     coverage: {
       provider: 'v8',
