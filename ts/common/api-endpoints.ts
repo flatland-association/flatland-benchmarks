@@ -101,7 +101,7 @@ interface ApiEndpointDefinitions {
   }
   '/submissions/:submission_ids': {
     GET: ApiEndpoint<Empty, Empty, SubmissionRow[]>
-    PATCH: ApiEndpoint<Empty, Empty, SubmissionRow[]>
+    PATCH: ApiEndpoint<Partial<SubmissionRow>, Empty, SubmissionRow[]>
   }
   '/results/submissions/:submission_ids': {
     GET: ApiEndpoint<Empty, Empty, SubmissionScore[]>

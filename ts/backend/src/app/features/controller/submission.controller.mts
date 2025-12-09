@@ -396,9 +396,25 @@ export class SubmissionController extends Controller {
    *          items:
    *            type: string
    *            format: uuid
+   *    requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *              name:
+   *                type: string
+   *                description: Display name of submission.
+   *              code_repository:
+   *                type: string
+   *                description: URL of submission code repository.
+   *              published:
+   *                type: boolean
+   *                description: Whether submission is published.
    *    responses:
    *      200:
-   *        description: Published submission.
+   *        description: Submission patched.
    *        content:
    *          application/json:
    *            schema:
@@ -444,11 +460,35 @@ export class SubmissionController extends Controller {
    */
   patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res) => {
     logger.info(`patchSubmissionByUuid`)
+    const authService = AuthService.getInstance()
+    const auth = (await authService.authorization(req))!
     const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
+    // assert user only patches own submissions
+    // TODO: role for admin/technical user, allowed to update any submission
+    if (!auth['roles'].includes('TBD_ADMIN')) {
+      const submissionMismatches = await sql.query`
+        SELECT reference
+        FROM UNNEST(${uuids}::uuid[]) AS reference
+        LEFT JOIN submissions ON id = reference
+        WHERE id IS NULL OR submitted_by IS DISTINCT FROM ${auth.sub}
+      `
+      if (submissionMismatches.length) {
+        throw new ControllerError('Cannot update submission', submissionMismatches, StatusCodes.FORBIDDEN)
+      }
+    }
+    // assert only patchable fields are provided
+    const PATCHABLE_FIELDS: (keyof SubmissionRow)[] = ['name', 'description', 'code_repository', 'published']
+    const submissionRow = req.body
+    const keys = Object.keys(submissionRow) as (keyof SubmissionRow)[]
+    keys.forEach((key) => {
+      if (!PATCHABLE_FIELDS.includes(key)) {
+        throw new ControllerError('Field is not patchable', key, StatusCodes.BAD_REQUEST)
+      }
+    })
     const submissions = await sql.query<SubmissionRow>`
-      UPDATE submissions SET published=true
+      UPDATE submissions SET ${sql.fragment(submissionRow)}
         WHERE id=ANY(${uuids})
         RETURNING *
     `
