@@ -15,6 +15,27 @@
       "request": "launch",
       "preLaunchTask": "npm: test",
       "url": "http://localhost:9876/debug.html"
+    },
+    {
+      "type": "node-terminal",
+      "name": "Debug Current Unit Test",
+      "request": "launch",
+      "command": "npm run test-unit  ${file}",
+      "cwd": "${workspaceFolder}/ts/backend"
+    },
+    {
+      "type": "node-terminal",
+      "name": "Debug Current Integration Test w/ setup",
+      "request": "launch",
+      "command": "npm run test-no-swagger ${file}",
+      "cwd": "${workspaceFolder}/ts/backend"
+    },
+    {
+      "type": "node-terminal",
+      "name": "Debug Current Integration Test w/o setup",
+      "request": "launch",
+      "command": "npm run test-integration-no-setup ${file}",
+      "cwd": "${workspaceFolder}/ts/backend"
     }
   ]
 }
