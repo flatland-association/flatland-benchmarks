@@ -107,15 +107,9 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
             params: { test_ids: testScore.test_id },
           })
         )?.at(0)
-        const testFields = await this.resourceService.loadOrdered('/definitions/fields/:field_ids', {
-          params: { field_ids: test?.field_ids ?? [] },
-        })
         const isTestScored = isScored(testScore)
         rows.push({
-          cells: [
-            { text: test?.name ?? 'NA' },
-            isTestScored ? { scorings: testScore.scorings, fieldDefinitions: testFields } : { text: '⚠️' },
-          ],
+          cells: [{ text: test?.name ?? 'NA' }, isTestScored ? { scorings: testScore.scorings } : { text: '⚠️' }],
         })
         //... and one line per scenario directly under the test line
         for (const scenarioScore of testScore.scenario_scorings) {
@@ -124,9 +118,6 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
               params: { scenario_ids: scenarioScore.scenario_id },
             })
           )?.at(0)
-          const scenarioFields = await this.resourceService.loadOrdered('/definitions/fields/:field_ids', {
-            params: { field_ids: scenario?.field_ids ?? [] },
-          })
           const isScenarioScored = isScored(scenarioScore)
           rows.push({
             routerLink: [
@@ -141,9 +132,7 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
             ],
             cells: [
               { text: ' • ' + (scenario?.name ?? 'NA') },
-              isScenarioScored
-                ? { scorings: scenarioScore.scorings, fieldDefinitions: scenarioFields }
-                : { text: '⚠️' },
+              isScenarioScored ? { scorings: scenarioScore.scorings } : { text: '⚠️' },
             ],
           })
         }

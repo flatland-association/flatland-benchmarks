@@ -55,15 +55,12 @@ export class CampaignOverviewComponent implements OnInit, OnChanges {
               params: { benchmark_ids: item.benchmark_id },
             })
           )?.at(0)
-          const fields = await this.resourceService.loadOrdered('/definitions/fields/:field_ids', {
-            params: { field_ids: benchmark?.campaign_field_ids ?? [] },
-          })
           return {
             routerLink: ['/', 'suites', this.suite!.id, item.benchmark_id],
             cells: [
               { text: benchmark?.name ?? 'NA' },
               { text: benchmark?.test_ids.length ?? 'NA' },
-              { scorings: item.scorings, fieldDefinitions: fields },
+              { scorings: item.scorings },
             ],
           }
         }) ?? [],

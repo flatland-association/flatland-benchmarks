@@ -46,9 +46,6 @@ export class BenchmarkOverviewComponent implements OnInit, OnChanges {
           params: { benchmark_ids: this.benchmark.id },
         })
       )?.at(0)
-      const fields = await this.resourceService.loadGrouped('/definitions/fields/:field_ids', {
-        params: { field_ids: this.benchmark.field_ids },
-      })
       // pre-fetch linked resources
       await Promise.all([
         this.resourceService.loadGrouped('/submissions/:submission_ids', {
@@ -64,7 +61,7 @@ export class BenchmarkOverviewComponent implements OnInit, OnChanges {
           )?.at(0)
           return {
             routerLink: ['/', 'suites', suite.id, benchmark.id, 'submissions', item.submission_id],
-            cells: [{ text: submission?.name ?? 'NA' }, { scorings: item.scorings, fieldDefinitions: fields }],
+            cells: [{ text: submission?.name ?? 'NA' }, { scorings: item.scorings }],
           }
         }) ?? [],
       )

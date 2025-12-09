@@ -53,9 +53,6 @@ export class SuiteOverviewComponent implements OnChanges {
               params: { benchmark_ids: benchmarkId },
             })
           )?.at(0)
-          const fields = await this.resourceService.loadGrouped('/definitions/fields/:field_ids', {
-            params: { field_ids: benchmark?.field_ids ?? [] },
-          })
           const leaderboard = (
             await this.resourceService.load('/results/benchmarks/:benchmark_ids', {
               params: { benchmark_ids: benchmarkId },
@@ -66,7 +63,7 @@ export class SuiteOverviewComponent implements OnChanges {
             cells: [
               { text: benchmark?.name ?? 'NA' },
               { text: leaderboard?.items.length ?? 0 },
-              { scorings: leaderboard?.items.at(0)?.scorings ?? null, fieldDefinitions: fields },
+              { scorings: leaderboard?.items.at(0)?.scorings ?? null },
             ],
           }
         }) ?? [],

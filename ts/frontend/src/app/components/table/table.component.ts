@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common'
 import { Component, effect, ElementRef, input, viewChild } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router'
-import { FieldDefinitionRow, Scoring } from '@common/interfaces'
+import { Scoring } from '@common/interfaces'
 import { ModalComponent } from '@flatland-association/flatland-ui'
 import { FaIconComponent } from '@fortawesome/angular-fontawesome'
 import {
@@ -50,24 +50,17 @@ export type TableCell =
       /** Text to display in the cell. */
       text: string | number | null
       scorings?: undefined
-      fieldDefinitions?: undefined
       input?: undefined
     }
   | {
       text?: undefined
       /** Scorings to display in the cell. */
       scorings: Scoring[] | null
-      /**
-       * Meta data (field definitions) of Scorings to display. Optional, default
-       * is to display `primary`.
-       */
-      fieldDefinitions?: (FieldDefinitionRow | undefined)[]
       input?: undefined
     }
   | {
       text?: undefined
       scorings?: undefined
-      fieldDefinitions?: undefined
       /** Input field to display in the cell. */
       input: TableInput
     }

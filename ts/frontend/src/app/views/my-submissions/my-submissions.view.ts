@@ -59,9 +59,6 @@ export class MySubmissionsView implements OnInit {
           const score = scores?.find((s) => s?.submission_id === submission.id)
           const benchmark = benchmarks?.find((b) => b.id === submission.benchmark_id)
           const suite = suites?.find((s) => s.id === benchmark?.suite_id)
-          const fields = await this.resourceService.load('/definitions/fields/:field_ids', {
-            params: { field_ids: benchmark?.field_ids ?? [] },
-          })
           const startedAtStr = submission.submitted_at
             ? this.datePipe.transform(submission.submitted_at, 'dd/MM/yyyy HH:mm')
             : ''
@@ -73,7 +70,7 @@ export class MySubmissionsView implements OnInit {
               { text: submission.name },
               { text: `${suite?.name ?? 'NA'} / ${benchmark?.name ?? 'NA'}` },
               { text: startedAtStr },
-              isSubmissionScored ? { scorings: score!.scorings, fieldDefinitions: fields } : { text: '⚠️' },
+              isSubmissionScored ? { scorings: score!.scorings } : { text: '⚠️' },
             ],
           }
         }) ?? [],
