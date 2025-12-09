@@ -91,8 +91,14 @@ export class SubmissionView implements OnInit, OnDestroy {
   }
 
   async publish() {
+    const submissionPatch: Partial<SubmissionRow> = {
+      published: true,
+    }
     this.submission = (
-      await this.apiService.patch('/submissions/:submission_ids', { params: { submission_ids: this.submission!.id } })
+      await this.apiService.patch('/submissions/:submission_ids', {
+        params: { submission_ids: this.submission!.id },
+        body: submissionPatch,
+      })
     ).body?.at(0)
   }
 }
