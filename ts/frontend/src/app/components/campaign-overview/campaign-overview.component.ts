@@ -19,9 +19,9 @@ export class CampaignOverviewComponent implements OnInit, OnChanges {
   customization?: Customization
 
   columns: TableColumn[] = [
-    { title: 'Evaluation objective' },
-    { title: 'KPIs', align: 'right' },
-    { title: 'Score', align: 'right' },
+    { title: 'Evaluation objective', sortable: 'text', filterable: true },
+    { title: 'KPIs', align: 'right', sortable: 'number' },
+    { title: 'Score', align: 'right', sortable: 'score' },
   ]
   rows: TableRow[] = []
 

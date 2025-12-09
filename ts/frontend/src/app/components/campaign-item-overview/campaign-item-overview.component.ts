@@ -19,7 +19,10 @@ export class CampaignItemOverviewComponent implements OnInit, OnChanges {
 
   customization?: Customization
 
-  columns: TableColumn[] = [{ title: 'KPI' }, { title: 'Score', align: 'right' }]
+  columns: TableColumn[] = [
+    { title: 'KPI', sortable: 'text', filterable: true },
+    { title: 'Score', align: 'right', sortable: 'score' },
+  ]
   rows: TableRow[] = []
 
   ngOnInit(): void {

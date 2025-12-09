@@ -20,7 +20,11 @@ export class TestOverviewComponent implements OnInit, OnChanges {
 
   customization?: Customization
 
-  columns: TableColumn[] = [{ title: 'Rank' }, { title: 'Submission' }, { title: 'Score', align: 'right' }]
+  columns: TableColumn[] = [
+    { title: 'Rank', sortable: 'number' },
+    { title: 'Submission', sortable: 'text', filterable: true },
+    { title: 'Score', align: 'right', sortable: 'score' },
+  ]
   rows: TableRow[] = []
 
   ngOnInit(): void {

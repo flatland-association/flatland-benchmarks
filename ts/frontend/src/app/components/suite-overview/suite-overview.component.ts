@@ -16,9 +16,9 @@ export class SuiteOverviewComponent implements OnChanges {
   private resourceService = inject(ResourceService)
 
   columns: TableColumn[] = [
-    { title: 'Benchmark' },
-    { title: 'Submissions', align: 'right' },
-    { title: 'Best Score', align: 'right' },
+    { title: 'Benchmark', sortable: 'text', filterable: true },
+    { title: 'Submissions', align: 'right', sortable: 'number' },
+    { title: 'Best Score', align: 'right', sortable: 'score' },
   ]
   rows: TableRow[] = []
 

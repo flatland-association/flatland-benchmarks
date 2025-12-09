@@ -26,10 +26,10 @@ export class MySubmissionsView implements OnInit {
   customization?: Customization
 
   columns: TableColumn[] = [
-    { title: 'Submission' },
-    { title: 'Submitted for' },
-    { title: 'Started' },
-    { title: 'Score', align: 'right' },
+    { title: 'Submission', sortable: 'text', filterable: true },
+    { title: 'Submitted for', sortable: 'text', filterable: true },
+    { title: 'Started', sortable: 'date' },
+    { title: 'Score', align: 'right', sortable: 'score' },
   ]
   rows: TableRow[] = []
 

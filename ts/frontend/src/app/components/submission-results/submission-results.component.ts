@@ -26,7 +26,10 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
   customization?: Customization
 
   totalScore = '-'
-  columns: TableColumn[] = [{ title: 'Test / Scenario' }, { title: 'Score', align: 'right' }]
+  columns: TableColumn[] = [
+    { title: 'Test / Scenario', sortable: 'text', filterable: true },
+    { title: 'Score', align: 'right', sortable: 'score' },
+  ]
   rows: TableRow[] = []
 
   ngOnInit(): void {
