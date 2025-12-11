@@ -1,4 +1,4 @@
-import { SubmissionRow, TestDefinitionRow } from '@common/interfaces.js'
+import { AuthRole, SubmissionRow, TestDefinitionRow } from '@common/interfaces.js'
 import { StripId } from '@common/utility-types'
 import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
@@ -10,6 +10,15 @@ import { ControllerError } from './controller-utils.mjs'
 import { Controller, GetHandler, PatchHandler, PostHandler } from './controller.mjs'
 
 const logger = new Logger('submission-controller')
+
+type ResourceFieldAccess<T> = { [K in keyof T]?: AuthRole[] }
+
+const PATCHABLE_FIELDS: ResourceFieldAccess<SubmissionRow> = {
+  name: ['User'],
+  description: ['User'],
+  code_repository: ['User'],
+  published: ['User'],
+}
 
 export class SubmissionController extends Controller {
   constructor(config: configuration) {
@@ -479,12 +488,15 @@ export class SubmissionController extends Controller {
       }
     }
     // assert only patchable fields are provided
-    const PATCHABLE_FIELDS: (keyof SubmissionRow)[] = ['name', 'description', 'code_repository', 'published']
     const submissionRow = req.body
     const keys = Object.keys(submissionRow) as (keyof SubmissionRow)[]
     keys.forEach((key) => {
-      if (!PATCHABLE_FIELDS.includes(key)) {
+      if (!(key in PATCHABLE_FIELDS)) {
         throw new ControllerError('Field is not patchable', key, StatusCodes.BAD_REQUEST)
+      }
+      // at least one of user's roles must be included in field access definition
+      if (!(auth['roles'] as AuthRole[]).some((role) => PATCHABLE_FIELDS[key]?.includes(role))) {
+        throw new ControllerError('Cannot patch field', key, StatusCodes.FORBIDDEN)
       }
     })
     const submissions = await sql.query<SubmissionRow>`
