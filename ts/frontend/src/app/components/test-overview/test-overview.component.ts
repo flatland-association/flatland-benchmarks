@@ -20,7 +20,11 @@ export class TestOverviewComponent implements OnInit, OnChanges {
 
   customization?: Customization
 
-  columns: TableColumn[] = [{ title: 'Rank' }, { title: 'Submission' }, { title: 'Score', align: 'right' }]
+  columns: TableColumn[] = [
+    { title: 'Rank', sortable: 'number' },
+    { title: 'Submission', sortable: 'text', filterable: true },
+    { title: 'Score', align: 'right', sortable: 'score' },
+  ]
   rows: TableRow[] = []
 
   ngOnInit(): void {
@@ -45,9 +49,6 @@ export class TestOverviewComponent implements OnInit, OnChanges {
           params: { benchmark_id: benchmark.id, test_ids: test.id },
         })
       )?.at(0)
-      const fields = await this.resourceService.loadGrouped('/definitions/fields/:field_ids', {
-        params: { field_ids: test.field_ids },
-      })
       // pre-fetch linked resources
       await Promise.all([
         this.resourceService.loadGrouped('/submissions/:submission_ids', {
@@ -66,11 +67,7 @@ export class TestOverviewComponent implements OnInit, OnChanges {
           const primary = scorings[0]
           return {
             routerLink: ['/', 'suites', suite.id, benchmark.id, 'submissions', item.submission_id],
-            cells: [
-              { text: primary?.rank ?? '-' },
-              { text: submission?.name ?? 'NA' },
-              { scorings: scorings, fieldDefinitions: fields },
-            ],
+            cells: [{ text: primary?.rank ?? '-' }, { text: submission?.name ?? 'NA' }, { scorings: scorings }],
           }
         }) ?? [],
       )

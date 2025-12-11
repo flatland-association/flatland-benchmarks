@@ -49,7 +49,11 @@ export class SubmissionScenarioResultsView implements OnInit, OnDestroy {
   customization?: Customization
 
   totalScore = '-'
-  columns: TableColumn[] = [{ title: 'Field' }, { title: 'Description' }, { title: 'Score', align: 'right' }]
+  columns: TableColumn[] = [
+    { title: 'Field', sortable: 'text', filterable: true },
+    { title: 'Description', filterable: true },
+    { title: 'Score', align: 'right', sortable: 'score' },
+  ]
   rows: TableRow[] = []
 
   ngOnInit(): void {

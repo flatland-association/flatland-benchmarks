@@ -1,16 +1,36 @@
 <table class="w-full">
   <thead class="font-bold text-neutral-500 bg-neutral-100">
     <tr>
-      @for (column of columns; track $index) {
-        <th class="px-3 py-1" [ngClass]="{'rounded-tl': $index === 0, 'rounded-tr': $index === columns.length - 1, 'text-right': column.align === 'right', 'text-center': column.align === 'center'}">{{ column.title }}</th>
+      @for (column of columns(); track $index) {
+        <th class="px-3 py-1" [ngClass]="{'rounded-tl': $index === 0, 'rounded-tr': $index === columns.length - 1}">
+          <div class="flex" [ngClass]="{'justify-end': column.align === 'right', 'justify-center': column.align === 'center'}">
+            @if (column.sortable) {
+              <button type="button" class="-ml-1 px-1 text-sm" [ngClass]="sorting.column === $index ? 'text-primary-600' : 'text-neutral-300'" (click)="sortByColumn($index)">
+                @if (sorting.column !== $index) {
+                  <fa-icon [icon]="faSort"></fa-icon>
+                } @else if (sorting.order === 'asc') {
+                  <fa-icon [icon]="faSortUp"></fa-icon>
+                } @else {
+                  <fa-icon [icon]="faSortDown"></fa-icon>
+                }
+              </button>
+            }
+            {{ column.title }}
+            @if (column.filterable) {
+              <button type="button" class="px-1 text-sm" [ngClass]="filtering[$index] ? 'text-primary-600' : 'text-neutral-300'" (click)="showFilterForColumn($index)">
+                <fa-icon [icon]="faFilter"></fa-icon>
+              </button>
+            }
+          </div>
+        </th>
       }
     </tr>
   </thead>
   <tbody>
-    @for (row of rows; track $index) {
+    @for (row of displayRows; track $index) {
       <tr [routerLink]="row.routerLink" [ngClass]="{'cursor-pointer': !!row.routerLink}" [attr.data-link]="row.routerLink">
         @for (cell of row.cells; track $index; let ci = $index) {
-          @let column = columns[ci];
+          @let column = columns()[ci];
           <td class="px-3 py-3 border-b border-neutral-100" [ngClass]="{'text-right': column.align === 'right', 'text-center': column.align === 'center'}">
             @if ('text' in cell) {
               {{ cell.text }}
@@ -25,3 +45,40 @@
     }
   </tbody>
 </table>
+
+<lib-modal [(open)]="showFilterModal" contentClass="w-96">
+  <div class="flex flex-col gap-y-2">
+    <div class="grid grid-cols-[1fr,2em,2em]">
+      <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" #filterFreeTextRef [ngModel]="filterFreeText" (ngModelChange)="updateDisplayFilterOptions($event)" (keydown)="onFilterKeyDown($event)">
+      <button type="button" class="p-1" [ngClass]="filterFreeText ? 'text-neutral-500' : 'text-neutral-100'" (click)="onFilterDelete()">
+        <fa-icon [icon]="faTrash"></fa-icon>
+      </button>
+      <button type="button" class="p-1 text-neutral-500" (click)="onFilterApply()">
+        @if (filterOptionSelected === -1) {
+          <fa-icon [icon]="faArrowTurnDown" [rotate]="90" class="text-neutral-500"></fa-icon>
+        } @else {
+          <fa-icon [icon]="faCheck"></fa-icon>
+        }
+      </button>
+    </div>
+    <ul class="divide-y divide-neutral-100 leading-6 h-64">
+      @for (option of displayFilterOptions.slice(0, NUM_FILTER_OPTIONS); track $index) {
+        <li>
+          <button type="button" class="py-2 w-full grid grid-cols-[1fr,2em]" (click)="applyFilter(option)">
+            <span class="w-full justify-self-start overflow-hidden text-nowrap text-left">
+              {{ option }}
+            </span>
+            @if (filterOptionSelected === $index) {
+              <fa-icon [icon]="faArrowTurnDown" [rotate]="90" class="text-neutral-500"></fa-icon>
+            }
+          </button>
+        </li>
+      }
+      @if (displayFilterOptions.length > NUM_FILTER_OPTIONS) {
+        <li class="py-2 text-center">
+          <fa-icon [icon]="faEllipsis" class="text-neutral-300"></fa-icon>
+        </li>
+      }
+    </ul>
+  </div>
+</lib-modal>
