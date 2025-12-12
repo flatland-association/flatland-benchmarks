@@ -93,7 +93,13 @@ export interface SuiteDefinitionRow {
   benchmark_ids: string[]
 }
 
-export type SubmissionStatus = 'SUBMITTED' | 'RUNNING' | 'SUCCESS' | 'FAILURE'
+export type SubmissionStatus = 'SUBMITTED' | 'STARTED' | 'SUCCESS' | 'FAILURE'
+
+export interface SubmissionStatusRow {
+  submission_id: string
+  status: SubmissionStatus
+  timestamp: string
+}
 
 export interface SubmissionRow {
   id: string
@@ -106,7 +112,7 @@ export interface SubmissionRow {
   submitted_at?: string | null
   submitted_by?: string | null
   submitted_by_username?: string | null
-  status?: SubmissionStatus
+  status?: SubmissionStatus | null
   published?: boolean
 }
 
