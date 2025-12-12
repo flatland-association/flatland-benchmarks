@@ -52,4 +52,37 @@ describe.sequential('SQL Service (with Postgres)', () => {
     expect(dbg.notices?.at(0)?.['severity']).toBe('NOTICE')
     expect(dbg.notices?.at(0)?.['message']).toMatch('does not exist, skipping')
   })
+
+  test('should abort transactions on error', async () => {
+    const sql = SqlService.getInstance()
+    await expect(
+      sql.transaction(async (sql) => {
+        await sql.query`
+          SELEC
+        `
+      }),
+    ).rejects.toThrow()
+  })
+
+  test('should roll back aborted transactions', async () => {
+    const sql = SqlService.getInstance()
+    // asserting 'control exception' asserts first query has been executed
+    await expect(
+      sql.transaction(async (sql) => {
+        await sql.query`
+          INSERT INTO fields (
+            id, key, description
+          ) VALUES (
+            '00000000-0000-0000-0000-000000000000', 'primary', 'none'
+          )
+        `
+        throw 'control exception'
+      }),
+    ).rejects.toThrowError('control exception')
+    // assert it has been rolled back
+    const rows = await sql.query`
+      SELECT * FROM fields WHERE id = '00000000-0000-0000-0000-000000000000'
+    `
+    expect(rows).toEqual([])
+  })
 })
