@@ -1,4 +1,4 @@
-import { AuthRole, SubmissionRow, TestDefinitionRow } from '@common/interfaces.js'
+import { AuthRole, SubmissionRow, SubmissionStatusRow, TestDefinitionRow } from '@common/interfaces.js'
 import { StripId } from '@common/utility-types'
 import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
@@ -29,6 +29,8 @@ export class SubmissionController extends Controller {
     this.attachGet('/submissions/own', this.getOwnSubmissions, { authorizedRoles: ['User'] })
     this.attachGet('/submissions/:submission_ids', this.getSubmissionByUuid)
     this.attachPatch('/submissions/:submission_ids', this.patchSubmissionByUuid, { authorizedRoles: ['User'] })
+    // TODO: only authorize technical user
+    this.attachPost('/submissions/:submission_ids/statuses', this.postSubmissionStatus, { authorizedRoles: ['User'] })
   }
 
   /**
@@ -117,33 +119,47 @@ export class SubmissionController extends Controller {
       }
     }
 
-    const idRow = await sql.query`
-        INSERT INTO submissions (
-          benchmark_id,
-          test_ids,
-          name,
-          submission_data_url,
-          code_repository,
-          submitted_at,
-          submitted_by,
-          submitted_by_username
-        ) VALUES (
-          ${req.body.benchmark_id},
-          ${req.body.test_ids},
-          ${req.body.name},
-          ${req.body.submission_data_url},
-          ${req.body.code_repository ?? null},
-          current_timestamp,
-          ${auth.sub ?? null},
-          ${auth['preferred_username'] ?? null}
-        )
-        RETURNING id
-      `
-    const id: string | undefined = idRow.at(0)?.['id']
-    if (!id) {
-      this.respondError(req, res, { text: `could not insert submission` }, undefined, { id })
-      return
-    }
+    let id!: string
+    await sql.transaction(async (sql) => {
+      const idRow = await sql.query`
+      INSERT INTO submissions (
+        benchmark_id,
+        test_ids,
+        name,
+        submission_data_url,
+        code_repository,
+        submitted_at,
+        submitted_by,
+        submitted_by_username
+      ) VALUES (
+        ${req.body.benchmark_id},
+        ${req.body.test_ids},
+        ${req.body.name},
+        ${req.body.submission_data_url},
+        ${req.body.code_repository ?? null},
+        current_timestamp,
+        ${auth.sub ?? null},
+        ${auth['preferred_username'] ?? null}
+      )
+      RETURNING id
+    `
+      id = idRow.at(0)?.['id']
+      if (!id) {
+        this.respondError(req, res, { text: `could not insert submission` }, undefined, { id })
+        return
+      }
+      await sql.query`
+      INSERT INTO submission_statuses (
+        submission_id,
+        status,
+        timestamp
+      ) VALUES (
+        ${id},
+        'SUBMITTED',
+        current_timestamp
+      )
+    `
+    })
     // get tests
     const tests = await sql.query<TestDefinitionRow>`
         SELECT * FROM tests
@@ -253,6 +269,12 @@ export class SubmissionController extends Controller {
 
     const submissions = await sql.query<SubmissionRow>`
         SELECT * FROM submissions
+        LEFT JOIN LATERAL (
+          SELECT status FROM submission_statuses
+          WHERE submission_statuses.submission_id = submissions.id
+          ORDER BY timestamp DESC
+          LIMIT 1
+        ) AS status ON true
         WHERE
           published = true AND
           ${whereBenchmark}
@@ -320,6 +342,12 @@ export class SubmissionController extends Controller {
 
     const submissions = await sql.query<SubmissionRow>`
         SELECT * FROM submissions
+        LEFT JOIN LATERAL (
+          SELECT status FROM submission_statuses
+          WHERE submission_statuses.submission_id = submissions.id
+          ORDER BY timestamp DESC
+          LIMIT 1
+        ) AS status ON true
         WHERE
           submitted_by = ${auth.sub}
       `
@@ -403,6 +431,12 @@ export class SubmissionController extends Controller {
     // id=ANY - dev.003
     const submissions = await sql.query<SubmissionRow>`
         SELECT * FROM submissions
+        LEFT JOIN LATERAL (
+          SELECT status FROM submission_statuses
+          WHERE submission_statuses.submission_id = submissions.id
+          ORDER BY timestamp DESC
+          LIMIT 1
+        ) AS status ON true
         WHERE
           id=ANY(${uuids}) AND
           ${wherePublished}
@@ -531,6 +565,77 @@ export class SubmissionController extends Controller {
     logger.info(`rows ${submissions}`)
     // return array - dev.002
     this.respond(req, res, submissions)
+  }
+
+  /**
+   * @swagger
+   * /submissions/{submission_ids}/statuses:
+   *  post:
+   *    description: Inserts new submission status.
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: submission_ids
+   *        description: Submission ID.
+   *        required: true
+   *        schema:
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
+   *    requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *              status:
+   *                type: string
+   *                description: New submission status.
+   *            required:
+   *              - status
+   *    responses:
+   *      200:
+   *        description: Created.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                        type: object
+   *                        properties:
+   *                          submission_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of submission.
+   *                          status:
+   *                            type: string
+   *                            description: Submission status.
+   *                          timestamp:
+   *                            type: string
+   */
+  postSubmissionStatus: PostHandler<'/submissions/:submission_ids/statuses'> = async (req, res) => {
+    const uuid = req.params.submission_ids
+    const status = req.body.status
+    const sql = SqlService.getInstance()
+    const statuses = await sql.query<SubmissionStatusRow>`
+      INSERT INTO submission_statuses (
+        submission_id,
+        status,
+        timestamp
+      ) VALUES (
+        ${uuid},
+        ${status},
+        current_timestamp
+      )
+      RETURNING *
+    `
+    this.respond(req, res, statuses)
   }
 
   /**
