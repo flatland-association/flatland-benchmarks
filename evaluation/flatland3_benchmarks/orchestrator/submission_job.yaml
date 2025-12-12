@@ -20,7 +20,7 @@ spec:
             - name: default-secret
           args: [ ] # INSERTED
           volumeMounts:
-            - name: pvc-fab-int-submissions
+            - name: pvc-submissions
               mountPath: /data
               subPath: # INSERTED /<submission_id> in the pvc mounted as /data/<submission_id>
             - name: environments
@@ -29,11 +29,12 @@ spec:
       initContainers:
         - name: download-environments
           command:
-            - aws
-            - s3
-            - cp
-            - s3://fab-data/flatland3/environments.zip
-            - /tmp/environments
+            - sh
+          args:
+            - -c
+            - |
+              set -euxo pipefail
+              aws s3 cp  ${S3_URL_ENVIRONMENTS_ZIP} /tmp/environments
           env: [ ] # INSERTED
           image: amazon/aws-cli
           imagePullPolicy: IfNotPresent
@@ -52,7 +53,6 @@ spec:
               # /<submission_id>/<test_id>/<scenario_id> in the pvc mounted under /data:
               mkdir -p ${DATA_DIR}
               ls -al /data
-
           command:
             - sh
           env: [ ] # INSERTED
@@ -61,12 +61,12 @@ spec:
           volumeMounts:
             - mountPath: /tmp/environments
               name: environments
-            - name: pvc-fab-int-submissions
+            - name: pvc-submissions
               mountPath: /data
       volumes:
         - emptyDir: { }
           name: environments
-        - name: pvc-fab-int-submissions
+        - name: pvc-submissions
           persistentVolumeClaim:
-            claimName: fab-int-submissions
+            claimName: # INSERTED
 
