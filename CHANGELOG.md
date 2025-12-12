@@ -3,6 +3,15 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.16.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.15.3...v0.16.0) (2025-12-12)
+
+
+### Features
+
+* **backend:** Rationality check results ([#468](https://github.com/flatland-association/flatland-benchmarks/issues/468)) ([2010d3f](https://github.com/flatland-association/flatland-benchmarks/commit/2010d3f16fc42295fe13001d5765856f7e424e7c))
+* **frontend:** Add filters and sorting to table component ([#505](https://github.com/flatland-association/flatland-benchmarks/issues/505)) ([73b3768](https://github.com/flatland-association/flatland-benchmarks/commit/73b3768bde7b96e4696c88ccf99dbe71e1c7f228))
+* **frontend:** New submission in modal ([#469](https://github.com/flatland-association/flatland-benchmarks/issues/469)) ([5debaba](https://github.com/flatland-association/flatland-benchmarks/commit/5debaba6c32d6fa8bb741eac36425f8d0e07e494))
+
 ## [0.15.3](https://github.com/flatland-association/flatland-benchmarks/compare/v0.15.2...v0.15.3) (2025-12-02)
 
 
