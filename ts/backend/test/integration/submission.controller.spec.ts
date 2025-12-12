@@ -165,10 +165,12 @@ describe.sequential('Submission controller', () => {
       '/submissions/:submission_ids',
       {
         params: { submission_ids: submissionUuid },
+        body: { published: true },
       },
       testUserJwt,
     )
     assertApiResponse(res)
     expect(res.body.body).toHaveLength(1)
+    expect(res.body.body.at(0)?.published).toBeTruthy()
   })
 })
