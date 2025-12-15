@@ -28,7 +28,8 @@ export class MySubmissionsView implements OnInit {
   columns: TableColumn[] = [
     { title: 'Submission', sortable: 'text', filterable: true },
     { title: 'Submitted for', sortable: 'text', filterable: true },
-    { title: 'Started', sortable: 'date' },
+    { title: 'Submitted', sortable: 'date' },
+    { title: 'Status', sortable: 'text', filterable: true },
     { title: 'Score', align: 'right', sortable: 'score' },
   ]
   rows: TableRow[] = []
@@ -59,9 +60,10 @@ export class MySubmissionsView implements OnInit {
           const score = scores?.find((s) => s?.submission_id === submission.id)
           const benchmark = benchmarks?.find((b) => b.id === submission.benchmark_id)
           const suite = suites?.find((s) => s.id === benchmark?.suite_id)
-          const startedAtStr = submission.submitted_at
+          const submittedAtStr = submission.submitted_at
             ? this.datePipe.transform(submission.submitted_at, 'dd/MM/yyyy HH:mm')
             : ''
+          const statusStr = submission.status ?? 'SUBMITTED'
           const isSubmissionScored = isScored(score)
           return {
             routerLink:
@@ -69,7 +71,8 @@ export class MySubmissionsView implements OnInit {
             cells: [
               { text: submission.name },
               { text: `${suite?.name ?? 'NA'} / ${benchmark?.name ?? 'NA'}` },
-              { text: startedAtStr },
+              { text: submittedAtStr },
+              { text: statusStr },
               isSubmissionScored ? { scorings: score!.scorings } : { text: '⚠️' },
             ],
           }
