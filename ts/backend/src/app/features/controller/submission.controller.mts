@@ -607,6 +607,8 @@ export class SubmissionController extends Controller {
    *                - type: object
    *                  properties:
    *                    body:
+   *                      type: array
+   *                      items:
    *                        type: object
    *                        properties:
    *                          submission_id:
