@@ -105,6 +105,7 @@ interface ApiEndpointDefinitions {
     PATCH: ApiEndpoint<Partial<SubmissionRow>, Empty, SubmissionRow[]>
   }
   '/submissions/:submission_ids/statuses': {
+    GET: ApiEndpoint<Empty, Empty, SubmissionStatusRow[]>
     POST: ApiEndpoint<Omit<SubmissionStatusRow, 'submission_id' | 'timestamp'>, Empty, SubmissionStatusRow[]>
   }
   '/results/submissions/:submission_ids': {
