@@ -596,22 +596,31 @@ export class SubmissionController extends Controller {
    *                            type: string
    */
   postSubmissionStatus: PostHandler<'/submissions/:submission_ids/statuses'> = async (req, res) => {
-    const uuid = req.params.submission_ids
+    const uuids = req.params.submission_ids.split(',')
     const status = req.body.status
     const sql = SqlService.getInstance()
-    const statuses = await sql.query<SubmissionStatusRow>`
-      INSERT INTO submission_statuses (
-        submission_id,
-        status,
-        timestamp
-      ) VALUES (
-        ${uuid},
-        ${status},
-        current_timestamp
-      )
+    // valid if submissions exist
+    const submissionMismatches = await sql.query`
+      SELECT reference
+      FROM UNNEST(${uuids}::uuid[]) AS reference
+      LEFT JOIN submissions ON id = reference
+      WHERE id IS NULL
+    `
+    if (submissionMismatches.length) {
+      throw new ControllerError('Referenced submission does not exist', submissionMismatches, StatusCodes.BAD_REQUEST)
+    }
+    const statusInserts = uuids.map((uuid) => {
+      return {
+        submission_id: uuid,
+        status: status,
+        timestamp: sql.fragment`current_timestamp`,
+      }
+    })
+    const statusRows = await sql.query<SubmissionStatusRow>`
+      INSERT INTO submission_statuses ${sql.fragment(statusInserts, ['submission_id', 'status', 'timestamp'])}
       RETURNING *
     `
-    this.respond(req, res, statuses)
+    this.respond(req, res, statusRows)
   }
 
   /**
