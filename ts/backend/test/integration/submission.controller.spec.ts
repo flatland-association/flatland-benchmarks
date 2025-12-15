@@ -188,4 +188,22 @@ describe.sequential('Submission controller', () => {
     expect(res.body.body).toHaveLength(1)
     expect(res.body.body.at(0)?.status).toBe('STARTED')
   })
+
+  test('should list submission statuses', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testGet(
+      `/submissions/:submission_ids/statuses`,
+      {
+        params: { submission_ids: submissionUuid },
+      },
+      testUserJwt,
+    )
+    assertApiResponse(res)
+    // also tests
+    // - SUBMITTED was auto-inserted on creation and
+    // - statuses are returned in anti-chronological order
+    expect(res.body.body).toHaveLength(2)
+    expect(res.body.body.at(0)?.status).toBe('STARTED')
+    expect(res.body.body.at(1)?.status).toBe('SUBMITTED')
+  })
 })

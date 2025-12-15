@@ -32,6 +32,7 @@ export class SubmissionController extends Controller {
     // TODO: only authorize orchestrator
     // https://github.com/flatland-association/flatland-benchmarks/issues/484
     this.attachPost('/submissions/:submission_ids/statuses', this.postSubmissionStatus, { authorizedRoles: ['User'] })
+    this.attachGet('/submissions/:submission_ids/statuses', this.getStubmissionStatuses)
   }
 
   /**
@@ -621,6 +622,57 @@ export class SubmissionController extends Controller {
     const statusRows = await sql.query<SubmissionStatusRow>`
       INSERT INTO submission_statuses ${sql.fragment(statusInserts, ['submission_id', 'status', 'timestamp'])}
       RETURNING *
+    `
+    this.respond(req, res, statusRows)
+  }
+
+  /**
+   * @swagger
+   * /submissions/{submission_ids}/statuses:
+   *  get:
+   *    description: Returns submission statuses.
+   *    parameters:
+   *      - in: path
+   *        name: submission_ids
+   *        description: Submission ID.
+   *        required: true
+   *        schema:
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
+   *    responses:
+   *      200:
+   *        description: Requested statuses.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          submission_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of submission.
+   *                          status:
+   *                            type: string
+   *                            description: Submission status.
+   *                          timestamp:
+   *                            type: string
+   */
+  getStubmissionStatuses: GetHandler<'/submissions/:submission_ids/statuses'> = async (req, res) => {
+    const uuids = req.params.submission_ids.split(',')
+    const sql = SqlService.getInstance()
+    const statusRows = await sql.query<SubmissionStatusRow>`
+      SELECT * FROM submission_statuses
+      WHERE submission_id=ANY(${uuids})
+      ORDER BY timestamp DESC
     `
     this.respond(req, res, statusRows)
   }
