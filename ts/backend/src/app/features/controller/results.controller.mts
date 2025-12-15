@@ -1,4 +1,4 @@
-import { ResultRow } from '@common/interfaces'
+import { ResultRow, SuiteSetup } from '@common/interfaces'
 import { StripId } from '@common/utility-types'
 import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
@@ -99,6 +99,23 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const score = await aggregator.getSubmissionScore(submissionIds)
+
+    // filter child scores in COMPETITION
+    const sql = SqlService.getInstance()
+    const setups = await sql.query<{ id: string; setup: SuiteSetup }>`
+      SELECT submissions.id, suites.setup
+      FROM submissions
+      LEFT JOIN benchmarks ON benchmarks.id = submissions.benchmark_id
+      LEFT JOIN suites ON benchmarks.id = ANY(suites.benchmark_ids)
+      WHERE submissions.id = ANY(${submissionIds})
+    `
+    score.forEach((submissionScore) => {
+      const setup = setups.find((s) => s.id === submissionScore.submission_id)
+      if (setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN') {
+        submissionScore.test_scorings = []
+      }
+    })
+
     this.respond(req, res, score)
   }
 
@@ -169,6 +186,23 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const score = await aggregator.getSubmissionTestScore(submissionId, testIds)
+
+    // filter child scores in COMPETITION
+    const sql = SqlService.getInstance()
+    const setups = await sql.query<{ id: string; setup: SuiteSetup }>`
+      SELECT tests.id, suites.setup
+      FROM tests
+      LEFT JOIN benchmarks ON tests.id = ANY(benchmarks.test_ids)
+      LEFT JOIN suites ON benchmarks.id = ANY(suites.benchmark_ids)
+      WHERE tests.id = ANY(${testIds})
+    `
+    score.forEach((submissionTestScore) => {
+      const setup = setups.find((s) => s.id === submissionTestScore.test_id)
+      if (setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN') {
+        submissionTestScore.scenario_scorings = []
+      }
+    })
+
     this.respondAfterPresenceCheck(req, res, score, testIds, 'test_id')
   }
 
@@ -415,6 +449,24 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getBenchmarkLeaderboard(benchmarkIds)
+
+    // filter child scores in COMPETITION
+    const sql = SqlService.getInstance()
+    const setups = await sql.query<{ id: string; setup: SuiteSetup }>`
+      SELECT benchmarks.id, suites.setup
+      FROM benchmarks
+      LEFT JOIN suites ON benchmarks.id = ANY(suites.benchmark_ids)
+      WHERE benchmarks.id = ANY(${benchmarkIds})
+    `
+    board.forEach((leaderboard) => {
+      const setup = setups.find((s) => s.id === leaderboard.benchmark_id)
+      if (setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN') {
+        leaderboard.items.forEach((submissionScore) => {
+          submissionScore.test_scorings = []
+        })
+      }
+    })
+
     this.respondAfterPresenceCheck(req, res, board, benchmarkIds, 'benchmark_id')
   }
 
@@ -648,6 +700,25 @@ export class ResultsController extends Controller {
 
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getBenchmarkTestLeaderboard(benchmarkId, testIds)
+
+    // filter child scores in COMPETITION
+    const sql = SqlService.getInstance()
+    const setups = await sql.query<{ id: string; setup: SuiteSetup }>`
+      SELECT tests.id, suites.setup
+      FROM tests
+      LEFT JOIN benchmarks ON tests.id = ANY(benchmarks.test_ids)
+      LEFT JOIN suites ON benchmarks.id = ANY(suites.benchmark_ids)
+      WHERE tests.id = ANY(${testIds})
+    `
+    board.forEach((leaderboard) => {
+      const setup = setups.find((s) => s.id === leaderboard.test_id)
+      if (setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN') {
+        leaderboard.items.forEach((submissionScore) => {
+          submissionScore.test_scorings = []
+        })
+      }
+    })
+
     this.respondAfterPresenceCheck(req, res, board, testIds, 'test_id')
   }
 
