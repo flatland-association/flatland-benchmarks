@@ -2,4 +2,6 @@
   <span class="basis-full">Total score</span>
   <span>{{ totalScore }}</span>
 </div>
-<app-table [columns]="columns" [rows]="rows" class="w-full"></app-table>
+@if (suite?.setup === 'DEFAULT' || suite?.setup === 'CAMPAIGN') {
+  <app-table [columns]="columns" [rows]="rows" class="w-full"></app-table>
+}
