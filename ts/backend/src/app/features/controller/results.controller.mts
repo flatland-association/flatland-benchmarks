@@ -189,7 +189,7 @@ export class ResultsController extends Controller {
    *          format: uuid
    *      - in: path
    *        name: test_ids
-   *        description: Comma-separated list of test IDs.
+   *        description: Test ID.
    *        required: true
    *        schema:
    *          type: array
@@ -235,8 +235,6 @@ export class ResultsController extends Controller {
    */
   postTestResults: PostHandler<'/results/submissions/:submission_id/tests/:test_ids'> = async (req, res) => {
     const submissionId = req.params.submission_id
-
-    // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple test_ids
     const testId = req.params.test_ids
     const resultRows = req.body.data.flatMap((score) => {
       const resultRows: ResultRow[] = []
