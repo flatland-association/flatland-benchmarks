@@ -29,7 +29,8 @@ export class SubmissionController extends Controller {
     this.attachGet('/submissions/own', this.getOwnSubmissions, { authorizedRoles: ['User'] })
     this.attachGet('/submissions/:submission_ids', this.getSubmissionByUuid)
     this.attachPatch('/submissions/:submission_ids', this.patchSubmissionByUuid, { authorizedRoles: ['User'] })
-    // TODO: only authorize technical user
+    // TODO: only authorize orchestrator
+    // https://github.com/flatland-association/flatland-benchmarks/issues/484
     this.attachPost('/submissions/:submission_ids/statuses', this.postSubmissionStatus, { authorizedRoles: ['User'] })
   }
 
@@ -508,9 +509,8 @@ export class SubmissionController extends Controller {
     const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
-    // assert user only patches own submissions
-    // TODO: role for admin/technical user, allowed to update any submission
-    if (!auth['roles'].includes('TBD_ADMIN')) {
+    // unless Admin, assert User only patches own submissions
+    if (!auth['roles'].includes('Admin')) {
       const submissionMismatches = await sql.query`
         SELECT reference
         FROM UNNEST(${uuids}::uuid[]) AS reference
