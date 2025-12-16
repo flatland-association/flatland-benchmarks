@@ -160,6 +160,7 @@ export class SubmissionController extends Controller {
    *            type: string
    *            format: uuid
    *        description: Filter submissions by benchmark.
+   *        explode: false
    *    responses:
    *      200:
    *        description: Requested submissions.
@@ -207,15 +208,14 @@ export class SubmissionController extends Controller {
    *                            type: boolean
    */
   getSubmissions: GetHandler<'/submissions'> = async (req, res) => {
-    const benchmarkId = req.query['benchmark_ids']
+    const benchmarkIds = req.query['benchmark_ids']?.split(',')
 
     const sql = SqlService.getInstance()
 
     // per default, list for all benchmarks
     let whereBenchmark = sql.fragment`1=1`
-    if (benchmarkId) {
-      // TODO https://github.com/flatland-association/flatland-benchmarks/issues/317 support multiple benchmark_ids
-      whereBenchmark = sql.fragment`benchmark_id = ${benchmarkId}`
+    if (benchmarkIds) {
+      whereBenchmark = sql.fragment`benchmark_id = ANY(${benchmarkIds})`
     }
 
     const submissions = await sql.query<SubmissionRow>`
