@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing'
 
+import { BenchmarkDefinitionRow } from '@common/interfaces'
 import { MAX_UUIDS_PER_REQUEST } from '@common/utility-functions'
 import { ApiService } from '../api/api.service'
 import { ResourceService } from './resource.service'
@@ -18,7 +19,7 @@ interface TestCase {
   description: string
   method: 'load' | 'loadGrouped' | 'loadOrdered'
   request: { suite_ids: string | string[] }
-  response: DummySuiteRow[]
+  response?: DummySuiteRow[]
   apiMocks?: {
     request: { suite_ids: string }
     response: DummySuiteRow[]
@@ -46,11 +47,14 @@ describe('ResourceService', async () => {
       apiServiceSpy.get.and.rejectWith()
     }
     // test if the resource service returns the expected value
-    await expectAsync(
-      service[testCase.method]('/definitions/suites/:suite_ids', { params: testCase.request }) as Promise<
-        DummySuiteRow[]
-      >,
-    ).toBeResolvedTo(testCase.response)
+    const call = service[testCase.method]('/definitions/suites/:suite_ids', { params: testCase.request }) as Promise<
+      DummySuiteRow[]
+    >
+    if (testCase.response) {
+      await expectAsync(call).toBeResolvedTo(testCase.response)
+    } else {
+      await expectAsync(call).toBeRejected()
+    }
     // since the api was mocked with a spy, also test if it was invoked correctly
     if (testCase.apiMocks) {
       testCase.apiMocks.map((mock) => {
@@ -62,7 +66,7 @@ describe('ResourceService', async () => {
     }
   }
 
-  describe('(general behavior)', async () => {
+  describe('(basic behavior)', async () => {
     // init for each test
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -73,6 +77,24 @@ describe('ResourceService', async () => {
 
     it('should be created', () => {
       expect(service).toBeTruthy()
+    })
+
+    // will take the non-spread path
+    it('should load a simple list', async () => {
+      const dummyBenchmarks: BenchmarkDefinitionRow[] = []
+      apiServiceSpy.get.and.resolveTo({ body: dummyBenchmarks })
+      await expectAsync(service.load('/definitions/benchmarks')).toBeResolvedTo(dummyBenchmarks)
+      apiServiceSpy.get.calls.reset()
+    })
+  })
+
+  describe('(spreading, loading)', async () => {
+    // init for each test
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: ApiService, useValue: apiServiceSpy }],
+      })
+      service = TestBed.inject(ResourceService)
     })
 
     const testCases: TestCase[] = [
@@ -156,7 +178,7 @@ describe('ResourceService', async () => {
     })
   })
 
-  describe('(caching)', async () => {
+  describe('(spreading, caching)', async () => {
     // init only once to keep cache around (remind that in test cases!)
     beforeAll(() => {
       TestBed.configureTestingModule({
@@ -204,6 +226,29 @@ describe('ResourceService', async () => {
         request: { suite_ids: '1' },
         response: [dummySuites[1]],
         // api request should not be made as all resources are already cached
+      },
+      {
+        description: 'should not cache unresolved resources',
+        method: 'load',
+        request: { suite_ids: '9000' },
+        apiMocks: [
+          {
+            request: { suite_ids: '9000' },
+            response: [],
+          },
+        ],
+      },
+      {
+        description: 'should then again try to load from api',
+        method: 'load',
+        request: { suite_ids: '9000' },
+        // not resolved previously, will replay request
+        apiMocks: [
+          {
+            request: { suite_ids: '9000' },
+            response: [],
+          },
+        ],
       },
     ]
 
