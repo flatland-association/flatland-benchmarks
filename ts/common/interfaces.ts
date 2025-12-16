@@ -20,6 +20,12 @@ export interface Test {
 }
 
 export interface PageContents {
+  headerImage?: {
+    /** Image source relative to `/public/` */
+    url: string
+    /** Image size, default is `LOGO` */
+    size?: 'LOGO' | 'FULL'
+  }
   introduction?: string
   tabs?: Tab[]
   cta?: string

@@ -1,6 +1,9 @@
-<div class="pb-8 flex w-full">
-  <h2 class="basis-full text-2xl font-bold text-neutral-500">{{ title }}</h2>
-  @if (logo) {
-    <img class="max-w-40 max-h-24 -my-2" [src]="logo" [alt]="logo">
+<div class="pb-8 flex flex-wrap justify-between w-full gap-8">
+  <h2 class="text-2xl font-bold text-neutral-500">{{ title }}</h2>
+  @if (headerImage) {
+    <img [ngClass]="HEADERIMAGE_SIZES[headerImage.size ?? 'LOGO']" [src]="headerImage.url | publicResource" [alt]="headerImage.url">
+  }
+  @else if (logo) {
+    <img class="max-w-40 max-h-24 -my-2 object-contain ml-auto" [src]="logo" [alt]="logo">
   }
 </div>
