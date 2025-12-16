@@ -2,7 +2,6 @@ import { DecimalPipe } from '@angular/common'
 import { Component, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core'
 import { BenchmarkDefinitionRow, SubmissionRow, SuiteDefinitionRow } from '@common/interfaces'
 import { isScored } from '@common/scoring-utils'
-import { MAX_UUIDS_PER_REQUEST, splitArrayIntoChunks } from '@common/utility-functions'
 import { Customization, CustomizationService } from '../../features/customization/customization.service'
 import { ResourceService } from '../../features/resource/resource.service'
 import { TableColumn, TableComponent, TableRow } from '../table/table.component'
@@ -70,33 +69,28 @@ export class SubmissionResultsComponent implements OnInit, OnChanges {
       const fieldsToFetch = new Set<string>()
       // fetch all tests and scenarios referenced in submissionScore
       await Promise.all([
-        ...splitArrayIntoChunks(
-          submissionScore?.test_scorings?.map((ts) => ts.test_id) ?? [],
-          MAX_UUIDS_PER_REQUEST,
-        ).map((chunk) => {
-          return this.resourceService
-            .loadGrouped('/definitions/tests/:test_ids', { params: { test_ids: chunk } })
-            .then((tests) => {
-              tests?.forEach((test) => test.field_ids.forEach((id) => fieldsToFetch.add(id)))
-            })
-        }),
-        ...splitArrayIntoChunks(
-          submissionScore?.test_scorings?.flatMap((ts) => ts.scenario_scorings.map((ss) => ss.scenario_id)) ?? [],
-          MAX_UUIDS_PER_REQUEST,
-        ).map((chunk) => {
-          return this.resourceService
-            .loadGrouped('/definitions/scenarios/:scenario_ids', { params: { scenario_ids: chunk } })
-            .then((scenarios) => {
-              scenarios?.forEach((scenario) => scenario.field_ids.forEach((id) => fieldsToFetch.add(id)))
-            })
-        }),
+        this.resourceService
+          .loadGrouped('/definitions/tests/:test_ids', {
+            params: { test_ids: submissionScore?.test_scorings?.map((ts) => ts.test_id) ?? [] },
+          })
+          .then((tests) => {
+            tests?.forEach((test) => test.field_ids.forEach((id) => fieldsToFetch.add(id)))
+          }),
+        this.resourceService
+          .loadGrouped('/definitions/scenarios/:scenario_ids', {
+            params: {
+              scenario_ids:
+                submissionScore?.test_scorings?.flatMap((ts) => ts.scenario_scorings.map((ss) => ss.scenario_id)) ?? [],
+            },
+          })
+          .then((scenarios) => {
+            scenarios?.forEach((scenario) => scenario.field_ids.forEach((id) => fieldsToFetch.add(id)))
+          }),
       ])
       //... now all tests and scenarios are loaded, fetch all referenced fields
-      await Promise.all(
-        splitArrayIntoChunks(Array.from(fieldsToFetch), MAX_UUIDS_PER_REQUEST).map((chunk) => {
-          return this.resourceService.loadGrouped('/definitions/fields/:field_ids', { params: { field_ids: chunk } })
-        }),
-      )
+      await this.resourceService.loadGrouped('/definitions/fields/:field_ids', {
+        params: { field_ids: Array.from(fieldsToFetch) },
+      })
       //... now, the resource service will return cached resources
       // build in temporary table first i.o.t. reduce flicker
       const rows: TableRow[] = []
