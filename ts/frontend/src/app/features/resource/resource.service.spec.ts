@@ -1,37 +1,29 @@
 import { TestBed } from '@angular/core/testing'
 
-import { SuiteDefinitionRow } from '@common/interfaces'
+import { BenchmarkDefinitionRow } from '@common/interfaces'
+import { MAX_UUIDS_PER_REQUEST } from '@common/utility-functions'
 import { ApiService } from '../api/api.service'
 import { ResourceService } from './resource.service'
 
-const dummySuites: SuiteDefinitionRow[] = [
-  {
-    id: 'a',
-    name: 'Suite A',
-    description: 'For testing',
-    contents: null,
-    setup: 'DEFAULT',
-    benchmark_ids: [],
-  },
-  {
-    id: 'b',
-    name: 'Suite B',
-    description: 'For testing',
-    contents: null,
-    setup: 'DEFAULT',
-    benchmark_ids: [],
-  },
-]
+interface DummySuiteRow {
+  id: string
+}
+
+const dummySuites: DummySuiteRow[] = Array.from({ length: MAX_UUIDS_PER_REQUEST + 1 }, (_, i) => {
+  return {
+    id: `${i}`,
+  }
+})
 
 interface TestCase {
   description: string
   method: 'load' | 'loadGrouped' | 'loadOrdered'
   request: { suite_ids: string | string[] }
-  response: SuiteDefinitionRow[]
-  apiMock?: {
+  response?: DummySuiteRow[]
+  apiMocks?: {
     request: { suite_ids: string }
-    response: SuiteDefinitionRow[]
-  }
+    response: DummySuiteRow[]
+  }[]
 }
 
 describe('ResourceService', async () => {
@@ -40,27 +32,41 @@ describe('ResourceService', async () => {
 
   const testCaseAssertion = async (testCase: TestCase) => {
     // if apiMock is present, use that
-    if (testCase.apiMock) {
-      apiServiceSpy.get.and.resolveTo({ body: testCase.apiMock.response })
+    if (testCase.apiMocks) {
+      // apiServiceSpy.get.and.resolveTo({ body: testCase.apiMock.response })
+      let callNr = 0
+      // resolve with mocked responses in order
+      apiServiceSpy.get.and.callFake(() => {
+        const ret = Promise.resolve({ body: testCase.apiMocks![callNr].response })
+        callNr += 1
+        return ret
+      })
     }
     // otherwise reject calling the api
     else {
       apiServiceSpy.get.and.rejectWith()
     }
     // test if the resource service returns the expected value
-    await expectAsync(
-      service[testCase.method]('/definitions/suites/:suite_ids', { params: testCase.request }),
-    ).toBeResolvedTo(testCase.response)
+    const call = service[testCase.method]('/definitions/suites/:suite_ids', { params: testCase.request }) as Promise<
+      DummySuiteRow[]
+    >
+    if (testCase.response) {
+      await expectAsync(call).toBeResolvedTo(testCase.response)
+    } else {
+      await expectAsync(call).toBeRejected()
+    }
     // since the api was mocked with a spy, also test if it was invoked correctly
-    if (testCase.apiMock) {
-      expect(apiServiceSpy.get).toHaveBeenCalledWith('/definitions/suites/:suite_ids', {
-        params: testCase.apiMock.request,
+    if (testCase.apiMocks) {
+      testCase.apiMocks.map((mock) => {
+        expect(apiServiceSpy.get).toHaveBeenCalledWith('/definitions/suites/:suite_ids', {
+          params: mock.request,
+        })
       })
       apiServiceSpy.get.calls.reset()
     }
   }
 
-  describe('(general behavior)', async () => {
+  describe('(basic behavior)', async () => {
     // init for each test
     beforeEach(() => {
       TestBed.configureTestingModule({
@@ -73,40 +79,92 @@ describe('ResourceService', async () => {
       expect(service).toBeTruthy()
     })
 
+    // will take the non-spread path
+    it('should load a simple list', async () => {
+      const dummyBenchmarks: BenchmarkDefinitionRow[] = []
+      apiServiceSpy.get.and.resolveTo({ body: dummyBenchmarks })
+      await expectAsync(service.load('/definitions/benchmarks')).toBeResolvedTo(dummyBenchmarks)
+      apiServiceSpy.get.calls.reset()
+    })
+  })
+
+  describe('(spreading, loading)', async () => {
+    // init for each test
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [{ provide: ApiService, useValue: apiServiceSpy }],
+      })
+      service = TestBed.inject(ResourceService)
+    })
+
     const testCases: TestCase[] = [
       {
         description: 'should load resource from api',
         method: 'load',
-        request: { suite_ids: 'a' },
+        request: { suite_ids: '0' },
         response: [dummySuites[0]],
-        apiMock: {
-          request: { suite_ids: 'a' },
-          response: [dummySuites[0]],
-        },
+        apiMocks: [
+          {
+            request: { suite_ids: '0' },
+            response: [dummySuites[0]],
+          },
+        ],
       },
       {
         description: 'should load resources (grouped) from api',
         method: 'loadGrouped',
         // response will be requested resources but grouped
-        request: { suite_ids: ['a', 'b', 'a'] },
+        request: { suite_ids: ['0', '1', '0'] },
         response: [dummySuites[0], dummySuites[1]],
         // api request should already be consolidated
-        apiMock: {
-          request: { suite_ids: 'a,b' },
-          response: [dummySuites[0], dummySuites[1]],
-        },
+        apiMocks: [
+          {
+            request: { suite_ids: '0,1' },
+            response: [dummySuites[0], dummySuites[1]],
+          },
+        ],
       },
       {
         description: 'should load resources (ordered) from api',
         method: 'loadOrdered',
         // response will be requested resources in exact order
-        request: { suite_ids: ['a', 'b', 'a'] },
+        request: { suite_ids: ['0', '1', '0'] },
         response: [dummySuites[0], dummySuites[1], dummySuites[0]],
         // api request should already be consolidated
-        apiMock: {
-          request: { suite_ids: 'a,b' },
-          response: [dummySuites[0], dummySuites[1]],
-        },
+        apiMocks: [
+          {
+            request: { suite_ids: '0,1' },
+            response: [dummySuites[0], dummySuites[1]],
+          },
+        ],
+      },
+      {
+        description: 'should split long requests into multiple chunks',
+        method: 'loadOrdered',
+        // response will be all requested resources in exact order
+        request: { suite_ids: dummySuites.map((d) => d.id) },
+        response: [...dummySuites],
+        // api request should be split into chunks
+        apiMocks: [
+          {
+            request: {
+              suite_ids: dummySuites
+                .slice(0, MAX_UUIDS_PER_REQUEST)
+                .map((d) => d.id)
+                .join(','),
+            },
+            response: dummySuites.slice(0, MAX_UUIDS_PER_REQUEST),
+          },
+          {
+            request: {
+              suite_ids: dummySuites
+                .slice(MAX_UUIDS_PER_REQUEST)
+                .map((d) => d.id)
+                .join(','),
+            },
+            response: dummySuites.slice(MAX_UUIDS_PER_REQUEST),
+          },
+        ],
       },
     ]
 
@@ -120,7 +178,7 @@ describe('ResourceService', async () => {
     })
   })
 
-  describe('(caching)', async () => {
+  describe('(spreading, caching)', async () => {
     // init only once to keep cache around (remind that in test cases!)
     beforeAll(() => {
       TestBed.configureTestingModule({
@@ -133,37 +191,64 @@ describe('ResourceService', async () => {
       {
         description: 'should load resource from api',
         method: 'load',
-        request: { suite_ids: 'a' },
+        request: { suite_ids: '0' },
         response: [dummySuites[0]],
-        apiMock: {
-          request: { suite_ids: 'a' },
-          response: [dummySuites[0]],
-        },
+        apiMocks: [
+          {
+            request: { suite_ids: '0' },
+            response: [dummySuites[0]],
+          },
+        ],
       },
       {
         description: 'should then return resource from cache',
         method: 'load',
-        request: { suite_ids: 'a' },
+        request: { suite_ids: '0' },
         response: [dummySuites[0]],
       },
       {
         description: 'should respect cache in multi-requests',
         method: 'loadGrouped',
         // response will be requested resources but grouped
-        request: { suite_ids: ['a', 'b'] },
+        request: { suite_ids: ['0', '1'] },
         response: [dummySuites[0], dummySuites[1]],
         // api request should only request non-cached resources
-        apiMock: {
-          request: { suite_ids: 'b' },
-          response: [dummySuites[1]],
-        },
+        apiMocks: [
+          {
+            request: { suite_ids: '1' },
+            response: [dummySuites[1]],
+          },
+        ],
       },
       {
         description: 'should respect cache in single requests after multi-request',
         method: 'loadGrouped',
-        request: { suite_ids: 'b' },
+        request: { suite_ids: '1' },
         response: [dummySuites[1]],
         // api request should not be made as all resources are already cached
+      },
+      {
+        description: 'should not cache unresolved resources',
+        method: 'load',
+        request: { suite_ids: '9000' },
+        apiMocks: [
+          {
+            request: { suite_ids: '9000' },
+            response: [],
+          },
+        ],
+      },
+      {
+        description: 'should then again try to load from api',
+        method: 'load',
+        request: { suite_ids: '9000' },
+        // not resolved previously, will replay request
+        apiMocks: [
+          {
+            request: { suite_ids: '9000' },
+            response: [],
+          },
+        ],
       },
     ]
 
