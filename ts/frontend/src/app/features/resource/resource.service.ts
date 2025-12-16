@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core'
 import { ApiGetEndpoints } from '@common/api-endpoints'
 import { ApiGetOptions } from '@common/api-types'
 import { interpolateEndpoint } from '@common/endpoint-utils'
+import { MAX_UUIDS_PER_REQUEST, splitArrayIntoChunks } from '@common/utility-functions'
 import { BanEmpty, Empty, OptionalEmpty } from '@common/utility-types'
 import { RouteParameters } from 'express-serve-static-core'
 import { ApiService } from '../api/api.service'
@@ -262,23 +263,34 @@ export class ResourceService {
       }
     })
 
-    // Make actual API request - deliberately using the singular here, as per
+    // Make actual API requests. As per
     // - function signature, all requested resources are of same type
     // - dev.005, same-type GET requests can be pooled with comma separated ids
-    // which leads to the conclusion that all remaining requests can be merged
-    // into one. (And also: if there are actually multiple requests, they only
-    // differ by the id param)
+    // However, the request URL is limited in size, hence a long* request can
+    // be split into multiple requests which only differ by the id param.
+    // *) in terms of passed ids
     if (apiRequests.size > 0) {
       const requests = Array.from(apiRequests.values())
+      // use 0th - requests do not differ in structure
       const actualRequest = window.structuredClone(requests[0])
-      // merge ids from requests if spreading is active
+      // options could differ by value if spreading is active and url too long
+      let actualRequestOptions = [actualRequest.options]
+      // merge ids from requests into manageable chunks if spreading is active
       if (spread) {
         const actualIds = requests.map((request) => request.options!.params![spread!])
-        actualRequest.options!.params![spread!] = actualIds.join(',')
+        actualRequestOptions = splitArrayIntoChunks(actualIds, MAX_UUIDS_PER_REQUEST).map((ids) => {
+          const options = window.structuredClone(actualRequest.options)
+          options!.params![spread!] = ids.join(',')
+          return options
+        })
       }
-      const resources = (
-        await this.apiService.get(actualRequest.endpoint, actualRequest.options as BanEmpty<ApiGetOptions<E>>)
-      ).body
+      const resourcesMixedType = await Promise.all(
+        actualRequestOptions.map(
+          async (options) =>
+            (await this.apiService.get(actualRequest.endpoint, options as BanEmpty<ApiGetOptions<E>>)).body,
+        ),
+      )
+      const resources = resourcesMixedType.flat() as (typeof resourcesMixedType)[0]
       if (resources) {
         // when spreading is active, treat all items in response as individual
         // set of resources
