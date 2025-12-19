@@ -19,7 +19,14 @@ export interface Test {
   description: string
 }
 
+// contents column in suites and benchmarks
 export interface PageContents {
+  headerImage?: {
+    /** Image source relative to `/public/` */
+    url: string
+    /** Image size, default is `LOGO` */
+    size?: 'LOGO' | 'FULL'
+  }
   introduction?: string
   tabs?: Tab[]
   cta?: string

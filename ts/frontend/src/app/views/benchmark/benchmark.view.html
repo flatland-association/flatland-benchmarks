@@ -1,5 +1,5 @@
 <lib-content>
-  <app-site-heading class="bp-8 flex w-full" [title]="benchmark?.name" [logo]="customization?.content?.logo | publicResource"></app-site-heading>
+  <app-site-heading class="bp-8 flex w-full" [title]="benchmark?.name" [logo]="customization?.content?.logo | publicResource" [headerImage]="benchmark?.contents?.headerImage"></app-site-heading>
 
   <div class="w-full" [innerHTML]="benchmark?.description"></div>
 </lib-content>
