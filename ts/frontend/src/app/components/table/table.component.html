@@ -17,7 +17,7 @@
             }
             {{ column.title }}
             @if (column.filterable) {
-              <button type="button" class="px-1 text-sm" [ngClass]="filtering[$index] ? 'text-primary-600' : 'text-neutral-300'" (click)="showFilterForColumn($index)">
+              <button type="button" class="px-1 text-sm" [ngClass]="filtering[$index]?.enabled ? 'text-primary-600' : 'text-neutral-300'" (click)="showFilterForColumn($index)">
                 <fa-icon [icon]="faFilter"></fa-icon>
               </button>
             }
@@ -48,37 +48,58 @@
 
 <lib-modal [(open)]="showFilterModal" contentClass="w-96">
   <div class="flex flex-col gap-y-2">
+    <div class="text-sm pb-2 min-h-24">
+      <div class="text-right">
+        <button type="button" (click)="removeAllFilterTerms()">Remove all <fa-icon [icon]="faBan"></fa-icon></button>
+      </div>
+      <div class="flex pt-1">
+        <ul class="flex flex-wrap gap-1">
+          @for (term of filtering[filterColumn]?.terms; track $index) {
+            <li class="px-2 rounded bg-neutral-50">
+              {{ term }}
+              <button type="button" (click)="removeFilterTerm(term)"><fa-icon [icon]="faCircleMinus"></fa-icon></button>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
     <div class="grid grid-cols-[1fr,2em,2em]">
       <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" #filterFreeTextRef [ngModel]="filterFreeText" (ngModelChange)="updateDisplayFilterOptions($event)" (keydown)="onFilterKeyDown($event)">
-      <button type="button" class="p-1" [ngClass]="filterFreeText ? 'text-neutral-500' : 'text-neutral-100'" (click)="onFilterDelete()">
+      <button type="button" class="p-1" [ngClass]="filterFreeText ? 'text-neutral-500' : 'text-neutral-100'" (click)="onFilterTextDelete()">
         <fa-icon [icon]="faTrash"></fa-icon>
       </button>
-      <button type="button" class="p-1 text-neutral-500" (click)="onFilterApply()">
-        @if (filterOptionSelected === -1) {
-          <fa-icon [icon]="faArrowTurnDown" [rotate]="90" class="text-neutral-500"></fa-icon>
+      <button type="button" class="p-1" [ngClass]="filterOptionSelected === -1 && filterFreeText ? 'text-neutral-500' : 'text-neutral-100'" (click)="onFilterTextAction()">
+        @if (isActiveTerm(filterFreeText)) {
+          <fa-icon [icon]="faCircleMinus"></fa-icon>
         } @else {
-          <fa-icon [icon]="faCheck"></fa-icon>
+          <fa-icon [icon]="faCirclePlus"></fa-icon>
         }
       </button>
     </div>
     <ul class="divide-y divide-neutral-100 leading-6 h-64">
-      @for (option of displayFilterOptions.slice(0, NUM_FILTER_OPTIONS); track $index) {
+      @for (option of displayFilterOptions.slice(filterOptionOffset, filterOptionOffset + NUM_FILTER_OPTIONS); track $index) {
         <li>
-          <button type="button" class="py-2 w-full grid grid-cols-[1fr,2em]" (click)="applyFilter(option)">
+          <button type="button" class="py-2 w-full grid grid-cols-[1fr,2em] hover:text-neutral-700" [ngClass]="filterOptionSelected === $index ? 'text-neutral-700' : 'text-neutral-300'" (click)="onFilterOptionAction(option)">
             <span class="w-full justify-self-start overflow-hidden text-nowrap text-left">
               {{ option }}
             </span>
-            @if (filterOptionSelected === $index) {
-              <fa-icon [icon]="faArrowTurnDown" [rotate]="90" class="text-neutral-500"></fa-icon>
+            @if (isActiveTerm(option)) {
+              <fa-icon [icon]="faCircleMinus"></fa-icon>
+            } @else {
+              <fa-icon [icon]="faCirclePlus"></fa-icon>
             }
           </button>
         </li>
       }
-      @if (displayFilterOptions.length > NUM_FILTER_OPTIONS) {
+      @if ((displayFilterOptions.length - filterOptionOffset) > NUM_FILTER_OPTIONS) {
         <li class="py-2 text-center">
           <fa-icon [icon]="faEllipsis" class="text-neutral-300"></fa-icon>
         </li>
       }
     </ul>
+    <div class="flex justify-between">
+      <button type="button" class="bg-neutral-500 hover:bg-neutral-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="applyFilter(false)">Unset</button>
+      <button type="button" class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="applyFilter()">Apply</button>
+    </div>
   </div>
 </lib-modal>
