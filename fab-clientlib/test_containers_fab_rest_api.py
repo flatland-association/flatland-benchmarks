@@ -7,7 +7,7 @@ import pytest
 from testcontainers.compose import DockerCompose
 
 from fab_clientlib import SubmissionsPostRequest, ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest, \
-  ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
+  ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner, SubmissionsSubmissionIdsStatusesPostRequest, SubmissionsSubmissionIdsPatchRequest
 from fab_clientlib.api.default_api import DefaultApi
 from fab_clientlib.api_client import ApiClient
 from fab_clientlib.configuration import Configuration
@@ -151,7 +151,7 @@ def test_submissions_get():
   assert len(response.body) >= 1
   assert response.body[0].id == uuid.UUID("db5eaa85-3304-4804-b76f-14d23adb5d4c")
   assert response.body[0].benchmark_id == uuid.UUID("20ccc7c1-034c-4880-8946-bffc3fed1359")
-  assert response.body[0].status == "SUCCESS"
+  assert response.body[0].status is None
   assert response.body[0].published == True
 
 
@@ -169,7 +169,7 @@ def test_submissions_uuid_get():
   assert response.body[0].id == uuid.UUID("db5eaa85-3304-4804-b76f-14d23adb5d4c")
   assert response.body[0].benchmark_id == uuid.UUID("20ccc7c1-034c-4880-8946-bffc3fed1359")
   assert response.body[0].test_ids == [uuid.UUID("557d9a00-7e6d-410b-9bca-a017ca7fe3aa")]
-  assert response.body[0].status == "SUCCESS"
+  assert response.body[0].status is None
   assert response.body[0].published == True
 
 
@@ -311,12 +311,21 @@ def test_submission_roundtrip():
   assert scenario_results2.body[0].scorings[1].field_key == "secondary"
   assert scenario_results2.body[0].scorings[1].score == 0.8
 
-  published_submission = fab.submissions_submission_ids_patch(submission_ids=[submission_id])
-  assert len(published_submission.body) >= 1
-  assert published_submission.body[0].id == submission_id
-  assert published_submission.body[0].benchmark_id == benchmark_id
-  assert published_submission.body[0].submitted_by_username == "service-account-fab-client-credentials"
+  status = fab.submissions_submission_ids_statuses_post(submission_ids=[submission_id],
+                                                        submissions_submission_ids_statuses_post_request=SubmissionsSubmissionIdsStatusesPostRequest.from_dict(
+                                                          {"status": "SUCCESS"}))
+  assert status.body[0].status == "SUCCESS"
+  published_submission = fab.submissions_submission_ids_patch(submission_ids=[submission_id],
+                                                              submissions_submission_ids_patch_request=SubmissionsSubmissionIdsPatchRequest.from_dict(
+                                                                {"published": True}))
   assert published_submission.body[0].published == True
+
+  successful_published_submission = fab.submissions_submission_ids_get(submission_ids=[submission_id])
+  assert len(successful_published_submission.body) >= 1
+  assert successful_published_submission.body[0].id == submission_id
+  assert successful_published_submission.body[0].benchmark_id == benchmark_id
+  assert successful_published_submission.body[0].submitted_by_username == "service-account-fab-client-credentials"
+  assert successful_published_submission.body[0].published == True
 
 
 # GET /definitions/tests/{ids}
