@@ -19,6 +19,7 @@ export interface Test {
   description: string
 }
 
+// contents column in suites and benchmarks
 export interface PageContents {
   headerImage?: {
     /** Image source relative to `/public/` */
