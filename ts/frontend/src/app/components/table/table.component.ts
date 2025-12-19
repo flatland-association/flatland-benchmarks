@@ -6,8 +6,9 @@ import { Scoring } from '@common/interfaces'
 import { ModalComponent } from '@flatland-association/flatland-ui'
 import { FaIconComponent } from '@fortawesome/angular-fontawesome'
 import {
-  faArrowTurnDown,
-  faCheck,
+  faBan,
+  faCircleMinus,
+  faCirclePlus,
   faEllipsis,
   faFilter,
   faSort,
@@ -76,6 +77,11 @@ export interface TableRow {
   cells: TableCell[]
 }
 
+interface Filter {
+  enabled: boolean
+  terms: string[]
+}
+
 @Component({
   selector: 'app-table',
   imports: [CommonModule, FormsModule, RouterModule, FaIconComponent, ModalComponent],
@@ -94,9 +100,10 @@ export class TableComponent {
   filterFreeText = ''
   filterOptions: string[] = []
   displayFilterOptions: string[] = []
+  filterOptionOffset = 0
   filterOptionSelected = -1
   filterColumn = -1
-  filtering: Record<number, string> = {}
+  filtering: Record<number, Filter> = {}
   NUM_FILTER_OPTIONS = 5
 
   faSort = faSort
@@ -104,9 +111,10 @@ export class TableComponent {
   faSortDown = faSortDown
   faFilter = faFilter
   faEllipsis = faEllipsis
-  faCheck = faCheck
-  faArrowTurnDown = faArrowTurnDown
   faTrash = faTrash
+  faCirclePlus = faCirclePlus
+  faCircleMinus = faCircleMinus
+  faBan = faBan
 
   constructor() {
     effect(() => {
@@ -148,13 +156,19 @@ export class TableComponent {
     return text.toLocaleLowerCase()
   }
 
+  isActiveTerm(filter: string) {
+    return this.filtering[this.filterColumn]?.terms.includes(this.getComparableTerm(filter))
+  }
+
   showFilterForColumn(columnIndex: number) {
     if (this.columns()[columnIndex].filterable) {
       // reset keyboard navigation if column changed
       if (columnIndex !== this.filterColumn) {
         this.filterOptionSelected = -1
       }
-      this.filterFreeText = this.filtering[columnIndex] ?? ''
+      // prepare filter object
+      this.filtering[columnIndex] ??= { enabled: false, terms: [] }
+      this.filterFreeText = this.filtering[columnIndex].terms[-1] ?? ''
       this.showFilterModal = true
       this.filterColumn = columnIndex
       setTimeout(() => {
@@ -177,6 +191,9 @@ export class TableComponent {
   // apply filter to filter options for sleek UI
   updateDisplayFilterOptions(text: string) {
     this.filterFreeText = text
+
+    this.filterOptionSelected = -1
+    this.filterOptionOffset = 0
     if (this.filterFreeText) {
       const searchTerm = this.getComparableTerm(this.filterFreeText)
       this.displayFilterOptions = this.filterOptions.filter((option) =>
@@ -187,7 +204,7 @@ export class TableComponent {
     }
   }
 
-  onFilterDelete() {
+  onFilterTextDelete() {
     this.updateDisplayFilterOptions('')
     this.filterOptionSelected = -1
     setTimeout(() => {
@@ -195,40 +212,82 @@ export class TableComponent {
     }, 0)
   }
 
-  onFilterApply() {
-    this.applyFilter(this.filterFreeText)
+  onFilterTextAction() {
+    this.onFilterOptionAction(this.filterFreeText)
   }
 
   onFilterKeyDown(event: KeyboardEvent) {
     switch (event.key) {
       case 'Enter':
         if (this.filterOptionSelected === -1) {
-          this.applyFilter(this.filterFreeText)
+          this.onFilterOptionAction(this.filterFreeText)
+          this.filterFreeText = ''
         } else {
-          this.applyFilter(this.displayFilterOptions[this.filterOptionSelected])
+          this.onFilterOptionAction(this.displayFilterOptions[this.filterOptionSelected + this.filterOptionOffset])
         }
         break
-      case 'ArrowDown':
-        this.filterOptionSelected += 1
-        if (this.filterOptionSelected === this.NUM_FILTER_OPTIONS) this.filterOptionSelected = -1
+      case 'ArrowDown': {
+        const listLength = Math.min(this.displayFilterOptions.length, this.NUM_FILTER_OPTIONS)
+        if (this.filterOptionSelected < listLength - 1) {
+          this.filterOptionSelected += 1
+        } else {
+          if (this.NUM_FILTER_OPTIONS + this.filterOptionOffset < this.filterOptions.length) {
+            this.filterOptionOffset += 1
+          } else {
+            this.filterOptionSelected = -1
+            this.filterOptionOffset = 0
+          }
+        }
         event.preventDefault()
         break
-      case 'ArrowUp':
-        this.filterOptionSelected -= 1
-        if (this.filterOptionSelected < -1) this.filterOptionSelected = this.NUM_FILTER_OPTIONS - 1
+      }
+      case 'ArrowUp': {
+        if (this.filterOptionSelected >= 0) {
+          this.filterOptionSelected -= 1
+        } else {
+          if (this.filterOptionOffset > 0) {
+            this.filterOptionOffset -= 1
+          } else {
+            this.filterOptionSelected = this.NUM_FILTER_OPTIONS - 1
+            this.filterOptionOffset = this.displayFilterOptions.length - this.NUM_FILTER_OPTIONS
+          }
+        }
+        if (this.filterOptionSelected < -1) {
+          this.filterOptionSelected = this.NUM_FILTER_OPTIONS - 1
+        }
         event.preventDefault()
         break
+      }
       default:
         break
     }
   }
 
-  applyFilter(filter: string) {
-    if (filter) {
-      this.filtering[this.filterColumn] = filter
+  onFilterOptionAction(filter: string) {
+    if (!filter) return
+    if (this.isActiveTerm(filter)) {
+      this.removeFilterTerm(filter)
     } else {
-      delete this.filtering[this.filterColumn]
+      this.addFilterTerm(filter)
     }
+  }
+
+  addFilterTerm(term: string) {
+    this.filtering[this.filterColumn].terms.push(this.getComparableTerm(term))
+  }
+
+  removeFilterTerm(term: string) {
+    const index = this.filtering[this.filterColumn].terms.indexOf(this.getComparableTerm(term))
+    this.filtering[this.filterColumn].terms.splice(index, 1)
+  }
+
+  removeAllFilterTerms() {
+    this.filtering[this.filterColumn].terms = []
+  }
+
+  applyFilter(enable = true) {
+    const filtering = this.filtering[this.filterColumn]
+    filtering.enabled = enable && filtering.terms.length > 0
     this.sortAndFilterRows()
     this.showFilterModal = false
   }
@@ -238,10 +297,13 @@ export class TableComponent {
     this.displayRows = [...this.rows()]
     // filter
     for (const cidx in this.filtering) {
-      const searchTerm = this.getComparableTerm(this.filtering[cidx])
-      this.displayRows = this.displayRows.filter((row) => {
-        return this.getComparableTerm(this.getRowCellText(row, +cidx)).includes(searchTerm)
-      })
+      const filter = this.filtering[cidx]
+      if (filter.enabled) {
+        this.displayRows = this.displayRows.filter((row) => {
+          const rowText = this.getComparableTerm(this.getRowCellText(row, +cidx))
+          return filter.terms.some((term) => rowText.includes(term))
+        })
+      }
     }
     // sort
     const cidx = this.sorting.column
