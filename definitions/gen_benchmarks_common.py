@@ -100,12 +100,18 @@ def gen_sqls(data) -> str:
 # convention:
 # - by default scenario, test, benchmark have key primary
 # - railway may have keys [punctuality, success_rate] resp. [network_impact_propagation] at scenario level, test level only has [punctuality], [successrate]
-
-# test '98ceb866-5479-47e6-a735-81292de8ca65', 'KPI-PF-026: Punctuality (Railway)'
-#  |    -> field '1de0f52c-ae47-4847-9148-97b8568952d3', 'punctuality', 'Test score (MEAN of scenario scores)', 'MEAN', NULL, NULL
-#  |- scenario '5a60713d-01f2-4d32-9867-21904629e254', 'Scenario 000 - Punctuality measures the percentage of trains arriving at thei....
-#  |    -> field 'c2a66425-186d-423b-b002-391c091b33c6', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
-#  |    -> field 'f56b119f-719d-4601-94ff-e511b2aaeeed', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL
-#  |- scenario '0db72a40-43e8-477b-89b3-a7bd1224660a'
-#      -> field 'f0f478d6-436e-476f-be79-33d8c34f20c1'
-#      -> field 'a5c6d789-0c00-413d-b689-862806dd9b56'
+#
+# Example:
+#
+# benchmark '3b1bdca6-ed90-4938-bd63-fd657aa7dcd7', 'Effectiveness'
+# |       -> field '33c1f8a3-5764-44cc-988b-0f9a53b7f4a1', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "punctuality", "primary", "primary", "primary", "primary"]')
+# |- test 'aba10b3f-0d5c-4f90-aec4-69460bbb098b', 'KPI-AF-008: Assistant alert accuracy (P...
+# |   ...
+# |- test '98ceb866-5479-47e6-a735-81292de8ca65', 'KPI-PF-026: Punctuality (Railway)'
+#    |    -> field '1de0f52c-ae47-4847-9148-97b8568952d3', 'punctuality', 'Test score (MEAN of scenario scores)', 'MEAN', NULL, NULL
+#    |- scenario '5a60713d-01f2-4d32-9867-21904629e254', 'Scenario 000 - Punctuality measures the percentage of trains arriving at thei....
+#    |    -> field 'c2a66425-186d-423b-b002-391c091b33c6', 'punctuality', 'Primary scenario score (raw values): punctuality', NULL, NULL)
+#    |    -> field 'f56b119f-719d-4601-94ff-e511b2aaeeed', 'success_rate', 'Secondary scenario score (raw values): success_rate', NULL, NULL
+#    |- scenario '0db72a40-43e8-477b-89b3-a7bd1224660a'
+#         -> field 'f0f478d6-436e-476f-be79-33d8c34f20c1'
+#         -> field 'a5c6d789-0c00-413d-b689-862806dd9b56'
