@@ -41,7 +41,10 @@ def extract_ai4realnet_from_csv(csv):
       "ID": row["BENCHMARK_FIELD_ID"],
       "BENCHMARK_FIELD_NAME": row["BENCHMARK_FIELD_NAME"],
       "BENCHMARK_FIELD_DESCRIPTION": row["BENCHMARK_FIELD_DESCRIPTION"],
-      "BENCHMARK_AGG": row["BENCHMARK_AGG"]
+      # TODO fix in KPIs_database_cards.csv instead
+      # TODO not working in aggregator yet?
+      # "BENCHMARK_AGG": row["BENCHMARK_AGG"]
+      "BENCHMARK_AGG": "NANMEAN"
     }
 
     benchmark["tests"] = benchmark.get("tests", defaultdict(lambda: {}))
@@ -52,6 +55,7 @@ def extract_ai4realnet_from_csv(csv):
     test["TEST_NAME"] = row["TEST_NAME"]
     test["TEST_DESCRIPTION"] = row["TEST_DESCRIPTION"]
     test["TEST_FIELDS"] = test.get("TEST_FIELDS", {})
+    # row in csv describes which TEST_FIELD_NAME its first field maps to.
     test["TEST_FIELDS"][row["TEST_FIELD_ID"]] = {
       "ID": row["TEST_FIELD_ID"],
       "TEST_FIELD_NAME": row["TEST_FIELD_NAME"],
@@ -73,6 +77,17 @@ def extract_ai4realnet_from_csv(csv):
       "SCENARIO_FIELD_NAME": row["SCENARIO_FIELD_NAME"],
       "SCENARIO_FIELD_DESCRIPTION": row["SCENARIO_FIELD_DESCRIPTION"],
     }
+
+  # TODO can we collect above already?
+  for suite_id, suite in data.items():
+    for benchmark_id, benchmark in suite["benchmarks"].items():
+      benchmark_agg_fields = []
+      for test_id, test in benchmark["tests"].items():
+        test["TEST_AGG_FIELDS"] = [tf["TEST_FIELD_NAME"] for tf in test["TEST_FIELDS"].values()]
+        # take first sc
+        benchmark_agg_fields.append(test["TEST_AGG_FIELDS"][0])
+      assert len(benchmark["BENCHMARK_FIELDS"].values()) == 1
+      list(benchmark["BENCHMARK_FIELDS"].values())[0]["BENCHMARK_AGG_FIELDS"] = benchmark_agg_fields
   return data
 
 

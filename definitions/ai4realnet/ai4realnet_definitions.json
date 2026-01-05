@@ -14,7 +14,33 @@
                         "ID": "6d165bd8-cc48-45d2-8b31-08c178ddeff9",
                         "BENCHMARK_FIELD_NAME": "primary",
                         "BENCHMARK_FIELD_DESCRIPTION": "Benchmark score (MEAN of test scores)",
-                        "BENCHMARK_AGG": "MEAN"
+                      "BENCHMARK_AGG": "NANMEAN",
+                      "BENCHMARK_AGG_FIELDS": [
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary"
+                      ]
                     }
                 },
                 "tests": {
@@ -46,7 +72,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "98413684-d114-4f88-a5e9-1e118b106d67": {
                         "ID": "98413684-d114-4f88-a5e9-1e118b106d67",
@@ -76,7 +105,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "9a9b85fb-6b8b-4b42-af5d-1d81d515e6b1": {
                         "ID": "9a9b85fb-6b8b-4b42-af5d-1d81d515e6b1",
@@ -106,7 +138,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "d4bcbd11-740a-478f-8dbc-6d9b53fa6059": {
                         "ID": "d4bcbd11-740a-478f-8dbc-6d9b53fa6059",
@@ -136,7 +171,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "6e005336-6c4c-43ae-ac8d-330d51ab48d4": {
                         "ID": "6e005336-6c4c-43ae-ac8d-330d51ab48d4",
@@ -166,7 +204,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "c2a22379-524a-4294-80b2-c751be726b70": {
                         "ID": "c2a22379-524a-4294-80b2-c751be726b70",
@@ -196,7 +237,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "22c590e5-01ad-4e96-9040-29a13ac9118f": {
                         "ID": "22c590e5-01ad-4e96-9040-29a13ac9118f",
@@ -226,7 +270,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "4a9db7b3-0dd9-4ac2-a211-ef5a991e4ab9": {
                         "ID": "4a9db7b3-0dd9-4ac2-a211-ef5a991e4ab9",
@@ -256,7 +303,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "290debb4-eeff-408c-a680-28fce5b376e7": {
                         "ID": "290debb4-eeff-408c-a680-28fce5b376e7",
@@ -286,7 +336,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "05e91ee6-744b-47ea-85a0-005e26b578e0": {
                         "ID": "05e91ee6-744b-47ea-85a0-005e26b578e0",
@@ -316,7 +369,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "d1ba73c3-6796-44db-8d87-129558e3535d": {
                         "ID": "d1ba73c3-6796-44db-8d87-129558e3535d",
@@ -346,7 +402,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "ebd2a832-1c69-4d87-9de2-4a283e7c7f37": {
                         "ID": "ebd2a832-1c69-4d87-9de2-4a283e7c7f37",
@@ -376,7 +435,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "40398221-b288-46d9-895c-45d278f1b6a3": {
                         "ID": "40398221-b288-46d9-895c-45d278f1b6a3",
@@ -406,7 +468,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "dbd85bfb-2e78-4646-b2da-b4d16e90e657": {
                         "ID": "dbd85bfb-2e78-4646-b2da-b4d16e90e657",
@@ -436,7 +501,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "e52b585d-0da8-4a88-97ff-0953a62a548c": {
                         "ID": "e52b585d-0da8-4a88-97ff-0953a62a548c",
@@ -466,7 +534,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "307bce4c-635f-44c3-9ed2-6d4d45d1bbb2": {
                         "ID": "307bce4c-635f-44c3-9ed2-6d4d45d1bbb2",
@@ -496,7 +567,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "4166c200-b50e-4e2e-a3a7-05f31e7f78f8": {
                         "ID": "4166c200-b50e-4e2e-a3a7-05f31e7f78f8",
@@ -526,7 +600,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "26bf1860-4b1c-4fed-8f81-53dac6a8f8f7": {
                         "ID": "26bf1860-4b1c-4fed-8f81-53dac6a8f8f7",
@@ -556,7 +633,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "343bc5cf-0bab-4fdf-9760-266c5a738b08": {
                         "ID": "343bc5cf-0bab-4fdf-9760-266c5a738b08",
@@ -586,7 +666,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "66c08000-9a5e-42ca-a328-8e6295069142": {
                         "ID": "66c08000-9a5e-42ca-a328-8e6295069142",
@@ -616,7 +699,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "96396992-ab9a-45b8-9833-124b46925da6": {
                         "ID": "96396992-ab9a-45b8-9833-124b46925da6",
@@ -646,7 +732,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "452bb0df-9a9d-4475-ac7b-8e62659c0b13": {
                         "ID": "452bb0df-9a9d-4475-ac7b-8e62659c0b13",
@@ -676,7 +765,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "62bcfa08-99ce-4bfe-b7a4-08343ef3a316": {
                         "ID": "62bcfa08-99ce-4bfe-b7a4-08343ef3a316",
@@ -706,7 +798,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "ebd44326-8c9b-4144-8e31-8c360b148dd3": {
                         "ID": "ebd44326-8c9b-4144-8e31-8c360b148dd3",
@@ -736,7 +831,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     }
                 }
             },
@@ -749,7 +847,24 @@
                         "ID": "980dfc15-2183-4429-9478-356fb70063e9",
                         "BENCHMARK_FIELD_NAME": "primary",
                         "BENCHMARK_FIELD_DESCRIPTION": "Benchmark score (MEAN of test scores)",
-                        "BENCHMARK_AGG": "MEAN"
+                      "BENCHMARK_AGG": "NANMEAN",
+                      "BENCHMARK_AGG_FIELDS": [
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary"
+                      ]
                     }
                 },
                 "tests": {
@@ -781,7 +896,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "de7f38de-1f0b-450e-9951-b925523a563d": {
                         "ID": "de7f38de-1f0b-450e-9951-b925523a563d",
@@ -811,7 +929,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "125cc932-43c2-40db-8fb3-e523557b98df": {
                         "ID": "125cc932-43c2-40db-8fb3-e523557b98df",
@@ -841,7 +962,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "fd01a013-c5aa-4ab2-9c01-ec608013c929": {
                         "ID": "fd01a013-c5aa-4ab2-9c01-ec608013c929",
@@ -871,7 +995,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "923fddc9-99f6-4195-a857-00d1493886e6": {
                         "ID": "923fddc9-99f6-4195-a857-00d1493886e6",
@@ -901,7 +1028,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "7a1e72fb-942c-4f54-bc72-adba7d941a0e": {
                         "ID": "7a1e72fb-942c-4f54-bc72-adba7d941a0e",
@@ -931,7 +1061,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "3c249970-1e83-4faa-bcf4-9fdb63ed904d": {
                         "ID": "3c249970-1e83-4faa-bcf4-9fdb63ed904d",
@@ -961,7 +1094,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "66d9dc9e-a163-4afc-b293-9ece9d45f3cf": {
                         "ID": "66d9dc9e-a163-4afc-b293-9ece9d45f3cf",
@@ -991,7 +1127,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "4795ec75-5e16-432a-9a5c-580d649471e2": {
                         "ID": "4795ec75-5e16-432a-9a5c-580d649471e2",
@@ -1021,7 +1160,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "57134a8f-d2bb-4a49-975c-4f6e1e07eb09": {
                         "ID": "57134a8f-d2bb-4a49-975c-4f6e1e07eb09",
@@ -1051,7 +1193,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "b10a5c41-7f19-414c-9ffe-3b73774ce1d9": {
                         "ID": "b10a5c41-7f19-414c-9ffe-3b73774ce1d9",
@@ -1081,7 +1226,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "626c4984-069a-4c6d-8bc6-b63d8eb91d4f": {
                         "ID": "626c4984-069a-4c6d-8bc6-b63d8eb91d4f",
@@ -1111,7 +1259,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "51780641-4f2a-4095-b230-fdddc4bf31af": {
                         "ID": "51780641-4f2a-4095-b230-fdddc4bf31af",
@@ -1141,7 +1292,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "9db74767-f2c3-4f04-aa83-cab1746ab83f": {
                         "ID": "9db74767-f2c3-4f04-aa83-cab1746ab83f",
@@ -1171,7 +1325,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "d3313fc9-8865-49c8-b3a2-ed0742bbcb8d": {
                         "ID": "d3313fc9-8865-49c8-b3a2-ed0742bbcb8d",
@@ -1201,7 +1358,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     }
                 }
             },
@@ -1214,7 +1374,18 @@
                         "ID": "8611b3d7-1682-4f35-b8e1-22142c638cce",
                         "BENCHMARK_FIELD_NAME": "primary",
                         "BENCHMARK_FIELD_DESCRIPTION": "Benchmark score (MEAN of test scores)",
-                        "BENCHMARK_AGG": "MEAN"
+                      "BENCHMARK_AGG": "NANMEAN",
+                      "BENCHMARK_AGG_FIELDS": [
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary"
+                      ]
                     }
                 },
                 "tests": {
@@ -1246,7 +1417,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "bc503fa3-b1ea-4de5-8760-21bd3ede927f": {
                         "ID": "bc503fa3-b1ea-4de5-8760-21bd3ede927f",
@@ -1276,7 +1450,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "8936e99a-3667-404d-97b7-eab2791c0cdc": {
                         "ID": "8936e99a-3667-404d-97b7-eab2791c0cdc",
@@ -1306,7 +1483,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "24eecb84-e881-459c-8116-a224b0253b70": {
                         "ID": "24eecb84-e881-459c-8116-a224b0253b70",
@@ -1336,7 +1516,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "f22c4c5d-1957-4262-b763-12736dd692f9": {
                         "ID": "f22c4c5d-1957-4262-b763-12736dd692f9",
@@ -1366,7 +1549,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "a5cebe71-030b-4d3c-be27-d8c01a862952": {
                         "ID": "a5cebe71-030b-4d3c-be27-d8c01a862952",
@@ -1396,7 +1582,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "74c88d9b-f61b-4162-aefc-75a9d538b8a6": {
                         "ID": "74c88d9b-f61b-4162-aefc-75a9d538b8a6",
@@ -1426,7 +1615,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "44758e37-c1d5-4932-8c17-54147903f214": {
                         "ID": "44758e37-c1d5-4932-8c17-54147903f214",
@@ -1456,7 +1648,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "c489fc51-158f-4224-baba-8d18c34c19d3": {
                         "ID": "c489fc51-158f-4224-baba-8d18c34c19d3",
@@ -1486,7 +1681,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     }
                 }
             },
@@ -1499,7 +1697,15 @@
                         "ID": "932197b6-5a11-4208-84ce-1d0f43d4884e",
                         "BENCHMARK_FIELD_NAME": "primary",
                         "BENCHMARK_FIELD_DESCRIPTION": "Benchmark score (MEAN of test scores)",
-                        "BENCHMARK_AGG": "MEAN"
+                      "BENCHMARK_AGG": "NANMEAN",
+                      "BENCHMARK_AGG_FIELDS": [
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary"
+                      ]
                     }
                 },
                 "tests": {
@@ -1531,7 +1737,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "b2213a56-7841-41e1-afbc-6ef541d1597c": {
                         "ID": "b2213a56-7841-41e1-afbc-6ef541d1597c",
@@ -1561,7 +1770,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "452bff66-df55-47fd-9ad8-725f327bedf3": {
                         "ID": "452bff66-df55-47fd-9ad8-725f327bedf3",
@@ -1591,7 +1803,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "c258c64f-1905-4d7f-93f0-d696c133978e": {
                         "ID": "c258c64f-1905-4d7f-93f0-d696c133978e",
@@ -1621,7 +1836,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "67f77d51-0893-4cbd-b349-b73bd2f73db2": {
                         "ID": "67f77d51-0893-4cbd-b349-b73bd2f73db2",
@@ -1651,7 +1869,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "15de95cc-0ad4-4b78-9984-9bdeac8503dd": {
                         "ID": "15de95cc-0ad4-4b78-9984-9bdeac8503dd",
@@ -1681,7 +1902,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     }
                 }
             },
@@ -1694,7 +1918,17 @@
                         "ID": "33c1f8a3-5764-44cc-988b-0f9a53b7f4a1",
                         "BENCHMARK_FIELD_NAME": "primary",
                         "BENCHMARK_FIELD_DESCRIPTION": "Benchmark score (MEAN of test scores)",
-                        "BENCHMARK_AGG": "MEAN"
+                      "BENCHMARK_AGG": "NANMEAN",
+                      "BENCHMARK_AGG_FIELDS": [
+                        "primary",
+                        "primary",
+                        "primary",
+                        "punctuality",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary"
+                      ]
                     }
                 },
                 "tests": {
@@ -1726,7 +1960,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "6ff3c588-357c-41a6-a45a-2bd946b158c8": {
                         "ID": "6ff3c588-357c-41a6-a45a-2bd946b158c8",
@@ -1756,7 +1993,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "5d1db79c-a7a4-4060-bb03-4629d64b1a43": {
                         "ID": "5d1db79c-a7a4-4060-bb03-4629d64b1a43",
@@ -1786,7 +2026,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "98ceb866-5479-47e6-a735-81292de8ca65": {
                         "ID": "98ceb866-5479-47e6-a735-81292de8ca65",
@@ -4354,7 +4597,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "punctuality"
+                      ]
                     },
                     "9b6bc151-9f25-4d85-bee1-919753934521": {
                         "ID": "9b6bc151-9f25-4d85-bee1-919753934521",
@@ -4384,7 +4630,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "1e226684-a836-468d-9929-b95bbf2f88dc": {
                         "ID": "1e226684-a836-468d-9929-b95bbf2f88dc",
@@ -4414,7 +4663,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "a6cb2703-be7f-44da-a3d8-652fa8797627": {
                         "ID": "a6cb2703-be7f-44da-a3d8-652fa8797627",
@@ -4444,7 +4696,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "58ce79e0-5c14-4c51-8d09-89f856361259": {
                         "ID": "58ce79e0-5c14-4c51-8d09-89f856361259",
@@ -4474,7 +4729,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     }
                 }
             },
@@ -4487,7 +4745,14 @@
                         "ID": "e212421a-0c1a-4b5c-bfdf-b31886439d3f",
                         "BENCHMARK_FIELD_NAME": "primary",
                         "BENCHMARK_FIELD_DESCRIPTION": "Benchmark score (MEAN of test scores)",
-                        "BENCHMARK_AGG": "MEAN"
+                      "BENCHMARK_AGG": "NANMEAN",
+                      "BENCHMARK_AGG_FIELDS": [
+                        "primary",
+                        "primary",
+                        "primary",
+                        "network_impact_propagation",
+                        "primary"
+                      ]
                     }
                 },
                 "tests": {
@@ -4519,7 +4784,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "0b8c02c6-0120-431c-872f-0fb4bc8d5fba": {
                         "ID": "0b8c02c6-0120-431c-872f-0fb4bc8d5fba",
@@ -4549,7 +4817,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "ae4dcac7-c559-457e-902d-ee35d064bb3f": {
                         "ID": "ae4dcac7-c559-457e-902d-ee35d064bb3f",
@@ -4579,7 +4850,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "e075d4a7-5cda-4d3c-83ac-69a0db1d74dd": {
                         "ID": "e075d4a7-5cda-4d3c-83ac-69a0db1d74dd",
@@ -9397,7 +9671,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "network_impact_propagation"
+                      ]
                     },
                     "c69ff5e9-497b-41e8-adff-2221bb823365": {
                         "ID": "c69ff5e9-497b-41e8-adff-2221bb823365",
@@ -9427,7 +9704,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     }
                 }
             },
@@ -9440,7 +9720,15 @@
                         "ID": "b779fc53-d7f5-4494-a977-8b371d2a0033",
                         "BENCHMARK_FIELD_NAME": "primary",
                         "BENCHMARK_FIELD_DESCRIPTION": "Benchmark score (MEAN of test scores)",
-                        "BENCHMARK_AGG": "MEAN"
+                      "BENCHMARK_AGG": "NANMEAN",
+                      "BENCHMARK_AGG_FIELDS": [
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary"
+                      ]
                     }
                 },
                 "tests": {
@@ -9472,7 +9760,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "ed250353-1f97-413e-9971-de83937fe4d9": {
                         "ID": "ed250353-1f97-413e-9971-de83937fe4d9",
@@ -9502,7 +9793,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "5be9d1d9-535a-4940-a29d-d32d087cb197": {
                         "ID": "5be9d1d9-535a-4940-a29d-d32d087cb197",
@@ -9532,7 +9826,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "0d901459-427d-43ea-9c97-3815eaa52bf6": {
                         "ID": "0d901459-427d-43ea-9c97-3815eaa52bf6",
@@ -9562,7 +9859,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "6d372248-1221-4996-ad99-628f056f0799": {
                         "ID": "6d372248-1221-4996-ad99-628f056f0799",
@@ -9592,7 +9892,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "18ae6ae9-d0b4-4af8-bf37-4b7cbdb31a85": {
                         "ID": "18ae6ae9-d0b4-4af8-bf37-4b7cbdb31a85",
@@ -9622,7 +9925,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     }
                 }
             },
@@ -9635,7 +9941,15 @@
                         "ID": "4707c199-adb6-4af9-b8a2-cf70368e7905",
                         "BENCHMARK_FIELD_NAME": "primary",
                         "BENCHMARK_FIELD_DESCRIPTION": "Benchmark score (MEAN of test scores)",
-                        "BENCHMARK_AGG": "MEAN"
+                      "BENCHMARK_AGG": "NANMEAN",
+                      "BENCHMARK_AGG_FIELDS": [
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary"
+                      ]
                     }
                 },
                 "tests": {
@@ -9667,7 +9981,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "5af6ffd9-b0a6-4f53-94bf-058fc1383ecd": {
                         "ID": "5af6ffd9-b0a6-4f53-94bf-058fc1383ecd",
@@ -9697,7 +10014,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "4cba45eb-2512-4e8e-87da-d39a45e529f8": {
                         "ID": "4cba45eb-2512-4e8e-87da-d39a45e529f8",
@@ -9727,7 +10047,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "b2e91a79-1390-414f-bf5d-8a6fd93c6080": {
                         "ID": "b2e91a79-1390-414f-bf5d-8a6fd93c6080",
@@ -9757,7 +10080,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "1409dbf6-0f66-4570-97df-fda84c46c71d": {
                         "ID": "1409dbf6-0f66-4570-97df-fda84c46c71d",
@@ -9787,7 +10113,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "bf76b70f-77ee-4cc0-9c4c-4165eca347d2": {
                         "ID": "bf76b70f-77ee-4cc0-9c4c-4165eca347d2",
@@ -9817,7 +10146,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     }
                 }
             },
@@ -9830,7 +10162,30 @@
                         "ID": "69d2fb08-7e8c-495a-b95d-688de344c989",
                         "BENCHMARK_FIELD_NAME": "primary",
                         "BENCHMARK_FIELD_DESCRIPTION": "Benchmark score (MEAN of test scores)",
-                        "BENCHMARK_AGG": "MEAN"
+                      "BENCHMARK_AGG": "NANMEAN",
+                      "BENCHMARK_AGG_FIELDS": [
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary"
+                      ]
                     }
                 },
                 "tests": {
@@ -9862,7 +10217,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "855729a4-6729-4ae2-bb8d-443ef4867d94": {
                         "ID": "855729a4-6729-4ae2-bb8d-443ef4867d94",
@@ -9892,7 +10250,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "68412020-58d7-4180-8cae-99f2ffa4dbf5": {
                         "ID": "68412020-58d7-4180-8cae-99f2ffa4dbf5",
@@ -9922,7 +10283,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "fba17d1f-2eb7-4c06-8f77-5da14e7b875a": {
                         "ID": "fba17d1f-2eb7-4c06-8f77-5da14e7b875a",
@@ -9952,7 +10316,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "17b805b2-b773-4c22-8ba9-598780e7a40d": {
                         "ID": "17b805b2-b773-4c22-8ba9-598780e7a40d",
@@ -9982,7 +10349,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "aecbfe66-c49f-42cb-b624-d98c3d74fcb1": {
                         "ID": "aecbfe66-c49f-42cb-b624-d98c3d74fcb1",
@@ -10012,7 +10382,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "69259fb3-bba8-4e62-9103-552b439ebaf4": {
                         "ID": "69259fb3-bba8-4e62-9103-552b439ebaf4",
@@ -10042,7 +10415,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "7149a428-b0a7-48f7-ba55-4d553932af41": {
                         "ID": "7149a428-b0a7-48f7-ba55-4d553932af41",
@@ -10072,7 +10448,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "a34741a1-d279-4b5b-a327-2a0f94bea125": {
                         "ID": "a34741a1-d279-4b5b-a327-2a0f94bea125",
@@ -10102,7 +10481,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "dce1c0e9-f2ae-4faa-a6b3-76d037c082d0": {
                         "ID": "dce1c0e9-f2ae-4faa-a6b3-76d037c082d0",
@@ -10132,7 +10514,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "115d6c9d-c0d1-423d-b74e-140f9e5608c5": {
                         "ID": "115d6c9d-c0d1-423d-b74e-140f9e5608c5",
@@ -10162,7 +10547,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "a3adb18d-3b44-4498-8c2c-728d5ff40248": {
                         "ID": "a3adb18d-3b44-4498-8c2c-728d5ff40248",
@@ -10192,7 +10580,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "03e1fcaf-a933-4ad1-abf2-5541574298a2": {
                         "ID": "03e1fcaf-a933-4ad1-abf2-5541574298a2",
@@ -10222,7 +10613,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "07f8625d-c39a-4fd1-9633-012f342352e9": {
                         "ID": "07f8625d-c39a-4fd1-9633-012f342352e9",
@@ -10252,7 +10646,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "defac2f8-5b3b-4de9-ae1b-8e2f74380257": {
                         "ID": "defac2f8-5b3b-4de9-ae1b-8e2f74380257",
@@ -10282,7 +10679,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "d795c7bd-f8be-43c2-ae6e-a931194d3fc5": {
                         "ID": "d795c7bd-f8be-43c2-ae6e-a931194d3fc5",
@@ -10312,7 +10712,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "c5e4f893-4302-47e8-98d6-b5fbcb10963a": {
                         "ID": "c5e4f893-4302-47e8-98d6-b5fbcb10963a",
@@ -10342,7 +10745,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "e75c588d-276f-4c6f-a329-90d570da9b67": {
                         "ID": "e75c588d-276f-4c6f-a329-90d570da9b67",
@@ -10372,7 +10778,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "511f2ab0-da90-4d55-a23f-af5eda0baf7d": {
                         "ID": "511f2ab0-da90-4d55-a23f-af5eda0baf7d",
@@ -10402,7 +10811,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "648afbec-80ad-4490-869f-6c3d8088d50f": {
                         "ID": "648afbec-80ad-4490-869f-6c3d8088d50f",
@@ -10432,7 +10844,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "9c6f7e45-b966-4b55-8315-790577683344": {
                         "ID": "9c6f7e45-b966-4b55-8315-790577683344",
@@ -10462,7 +10877,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     }
                 }
             },
@@ -10475,7 +10893,32 @@
                         "ID": "e0895e55-a5d9-46f2-9c95-9389baf25752",
                         "BENCHMARK_FIELD_NAME": "primary",
                         "BENCHMARK_FIELD_DESCRIPTION": "Benchmark score (MEAN of test scores)",
-                        "BENCHMARK_AGG": "MEAN"
+                      "BENCHMARK_AGG": "NANMEAN",
+                      "BENCHMARK_AGG_FIELDS": [
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary"
+                      ]
                     }
                 },
                 "tests": {
@@ -10507,7 +10950,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "75cc9343-9371-4eb1-9613-22a26c67fc00": {
                         "ID": "75cc9343-9371-4eb1-9613-22a26c67fc00",
@@ -10537,7 +10983,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "07881948-f5e0-4772-83c9-3ca517ac245f": {
                         "ID": "07881948-f5e0-4772-83c9-3ca517ac245f",
@@ -10567,7 +11016,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "a94c858e-4bc3-4d67-bd78-5c81506e39f7": {
                         "ID": "a94c858e-4bc3-4d67-bd78-5c81506e39f7",
@@ -10597,7 +11049,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "1cbb7783-47b4-4289-9abf-27939da69a2f": {
                         "ID": "1cbb7783-47b4-4289-9abf-27939da69a2f",
@@ -10627,7 +11082,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "4819e8f6-a2d4-497f-9b61-fc90883a0dfb": {
                         "ID": "4819e8f6-a2d4-497f-9b61-fc90883a0dfb",
@@ -10657,7 +11115,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "5abadf6b-991c-4d37-810f-f77bb71d490d": {
                         "ID": "5abadf6b-991c-4d37-810f-f77bb71d490d",
@@ -10687,7 +11148,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "acaf712a-c06c-4a04-a00f-0e7feeefb60c": {
                         "ID": "acaf712a-c06c-4a04-a00f-0e7feeefb60c",
@@ -10717,7 +11181,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "f0f94fb1-2aef-44f6-ba80-5b8320725fb0": {
                         "ID": "f0f94fb1-2aef-44f6-ba80-5b8320725fb0",
@@ -10747,7 +11214,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "dce32e78-e827-4994-a0a2-06feee2528cc": {
                         "ID": "dce32e78-e827-4994-a0a2-06feee2528cc",
@@ -10777,7 +11247,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "3d033ec6-942a-4b03-b26e-f8152ba48022": {
                         "ID": "3d033ec6-942a-4b03-b26e-f8152ba48022",
@@ -10807,7 +11280,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "02bfbe09-6e9b-4243-a376-1a51b1beef19": {
                         "ID": "02bfbe09-6e9b-4243-a376-1a51b1beef19",
@@ -10837,7 +11313,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "e5206c56-75a0-41fa-9db3-bec66359337e": {
                         "ID": "e5206c56-75a0-41fa-9db3-bec66359337e",
@@ -10867,7 +11346,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "a121d8bd-1943-41ba-b3a7-472a0154f8f9": {
                         "ID": "a121d8bd-1943-41ba-b3a7-472a0154f8f9",
@@ -10897,7 +11379,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "c466661d-12dc-4d1e-81a4-1db1623e3cc1": {
                         "ID": "c466661d-12dc-4d1e-81a4-1db1623e3cc1",
@@ -10927,7 +11412,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "0ddba8a7-5ef8-45d1-b0d6-0842bc44d2cc": {
                         "ID": "0ddba8a7-5ef8-45d1-b0d6-0842bc44d2cc",
@@ -10957,7 +11445,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "b8a9a411-7cfe-4c1d-b9a6-eef1c0efe920": {
                         "ID": "b8a9a411-7cfe-4c1d-b9a6-eef1c0efe920",
@@ -10987,7 +11478,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "5cfc7e4d-024b-4dd1-82a5-c3d9bf25ba50": {
                         "ID": "5cfc7e4d-024b-4dd1-82a5-c3d9bf25ba50",
@@ -11017,7 +11511,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "8ebc88f0-896c-4910-8997-a44d107e7eb7": {
                         "ID": "8ebc88f0-896c-4910-8997-a44d107e7eb7",
@@ -11047,7 +11544,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "95ba1e9a-8d72-4c0e-9526-7676f70ff067": {
                         "ID": "95ba1e9a-8d72-4c0e-9526-7676f70ff067",
@@ -11077,7 +11577,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "885cab0d-d4fc-4d93-95db-243870506405": {
                         "ID": "885cab0d-d4fc-4d93-95db-243870506405",
@@ -11107,7 +11610,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "89919375-8b53-4e3f-8382-a97e0af7eb56": {
                         "ID": "89919375-8b53-4e3f-8382-a97e0af7eb56",
@@ -11137,7 +11643,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "ce7d0394-1aa0-41c2-84b7-dfcfe006eb8b": {
                         "ID": "ce7d0394-1aa0-41c2-84b7-dfcfe006eb8b",
@@ -11167,7 +11676,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     }
                 }
             },
@@ -11180,7 +11692,21 @@
                         "ID": "7284d7ae-8896-4342-bf8c-58db3362e484",
                         "BENCHMARK_FIELD_NAME": "primary",
                         "BENCHMARK_FIELD_DESCRIPTION": "Benchmark score (MEAN of test scores)",
-                        "BENCHMARK_AGG": "MEAN"
+                      "BENCHMARK_AGG": "NANMEAN",
+                      "BENCHMARK_AGG_FIELDS": [
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary"
+                      ]
                     }
                 },
                 "tests": {
@@ -11212,7 +11738,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "534f5a1f-7115-48a5-b58c-4deb044d425d": {
                         "ID": "534f5a1f-7115-48a5-b58c-4deb044d425d",
@@ -11242,7 +11771,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "5372decd-6a2a-4c50-bf7a-cd57cfebe3de": {
                         "ID": "5372decd-6a2a-4c50-bf7a-cd57cfebe3de",
@@ -11272,7 +11804,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "2c4be118-6108-43b3-b09f-a4bee842167a": {
                         "ID": "2c4be118-6108-43b3-b09f-a4bee842167a",
@@ -11302,7 +11837,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "04a23bfc-fc44-4ec4-a732-c29214130a83": {
                         "ID": "04a23bfc-fc44-4ec4-a732-c29214130a83",
@@ -11332,7 +11870,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "2baef867-c1f2-4b6e-b13c-0eac9463c2fa": {
                         "ID": "2baef867-c1f2-4b6e-b13c-0eac9463c2fa",
@@ -11362,7 +11903,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "2cac54e0-aaf3-4f22-8307-f23878c432f0": {
                         "ID": "2cac54e0-aaf3-4f22-8307-f23878c432f0",
@@ -11392,7 +11936,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "225aaee8-7c7f-4faf-810b-407b551e9f2a": {
                         "ID": "225aaee8-7c7f-4faf-810b-407b551e9f2a",
@@ -11422,7 +11969,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "7b15a7b3-2413-4953-b91a-24f5c0c5b6da": {
                         "ID": "7b15a7b3-2413-4953-b91a-24f5c0c5b6da",
@@ -11452,7 +12002,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "d432299f-dbee-46ba-9e15-77954086440a": {
                         "ID": "d432299f-dbee-46ba-9e15-77954086440a",
@@ -11482,7 +12035,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "7fe4210f-1253-411c-ba03-49d8b37c71fa": {
                         "ID": "7fe4210f-1253-411c-ba03-49d8b37c71fa",
@@ -11512,7 +12068,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "e3fb76a2-2121-4889-adf2-b60ca29c5c71": {
                         "ID": "e3fb76a2-2121-4889-adf2-b60ca29c5c71",
@@ -11542,7 +12101,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     }
                 }
             },
@@ -11555,7 +12117,30 @@
                         "ID": "7cfd40ba-89d3-49e5-8bb9-c3e982d0dd10",
                         "BENCHMARK_FIELD_NAME": "primary",
                         "BENCHMARK_FIELD_DESCRIPTION": "Benchmark score (MEAN of test scores)",
-                        "BENCHMARK_AGG": "MEAN"
+                      "BENCHMARK_AGG": "NANMEAN",
+                      "BENCHMARK_AGG_FIELDS": [
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary",
+                        "primary"
+                      ]
                     }
                 },
                 "tests": {
@@ -11587,7 +12172,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "0eb49c18-fbf7-4797-b4c5-6dabc9795ddb": {
                         "ID": "0eb49c18-fbf7-4797-b4c5-6dabc9795ddb",
@@ -11617,7 +12205,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "4847c6f6-123d-4f5c-ab7c-6ff63b5407e5": {
                         "ID": "4847c6f6-123d-4f5c-ab7c-6ff63b5407e5",
@@ -11647,7 +12238,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "8eb804ef-d122-4c59-a6b3-53f3c9664d2b": {
                         "ID": "8eb804ef-d122-4c59-a6b3-53f3c9664d2b",
@@ -11677,7 +12271,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "b7d124f7-998a-416e-81a0-424cb6192755": {
                         "ID": "b7d124f7-998a-416e-81a0-424cb6192755",
@@ -11707,7 +12304,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "1f368c52-2c18-4658-a5b7-c2524e90b9dc": {
                         "ID": "1f368c52-2c18-4658-a5b7-c2524e90b9dc",
@@ -11737,7 +12337,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "8f5a1908-6319-4e2a-a43b-6528c7c5e92e": {
                         "ID": "8f5a1908-6319-4e2a-a43b-6528c7c5e92e",
@@ -11767,7 +12370,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "e860b491-42b1-416a-b2fb-bea9bd8a249d": {
                         "ID": "e860b491-42b1-416a-b2fb-bea9bd8a249d",
@@ -11797,7 +12403,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "8de9a511-8d9e-4289-a78b-0004737443c9": {
                         "ID": "8de9a511-8d9e-4289-a78b-0004737443c9",
@@ -11827,7 +12436,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "a6a54b1d-54bf-4b09-9887-706eed3e1a57": {
                         "ID": "a6a54b1d-54bf-4b09-9887-706eed3e1a57",
@@ -11857,7 +12469,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "ff1099da-8b25-4dff-8f64-c7ce1d5c9d9d": {
                         "ID": "ff1099da-8b25-4dff-8f64-c7ce1d5c9d9d",
@@ -11887,7 +12502,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "7ce3a25e-219c-4146-b2a7-c4f46bc7b137": {
                         "ID": "7ce3a25e-219c-4146-b2a7-c4f46bc7b137",
@@ -11917,7 +12535,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "0d898adb-7378-4ddd-8afa-a7136f13e3fa": {
                         "ID": "0d898adb-7378-4ddd-8afa-a7136f13e3fa",
@@ -11947,7 +12568,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "afa5288f-3a6f-4933-8bd9-1761d4c97c34": {
                         "ID": "afa5288f-3a6f-4933-8bd9-1761d4c97c34",
@@ -11977,7 +12601,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "81b57209-24e3-4213-a93f-8129b3ca1c1c": {
                         "ID": "81b57209-24e3-4213-a93f-8129b3ca1c1c",
@@ -12007,7 +12634,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "be770a02-c8be-4774-97b6-bc15e91b2fd8": {
                         "ID": "be770a02-c8be-4774-97b6-bc15e91b2fd8",
@@ -12037,7 +12667,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "b67c3a5a-c157-420c-9d3c-8c949413a79b": {
                         "ID": "b67c3a5a-c157-420c-9d3c-8c949413a79b",
@@ -12067,7 +12700,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "733c3705-a1a3-45e1-9fd6-b19e9627bf50": {
                         "ID": "733c3705-a1a3-45e1-9fd6-b19e9627bf50",
@@ -12097,7 +12733,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "2c71e014-3994-4413-a469-e27b0d1e121d": {
                         "ID": "2c71e014-3994-4413-a469-e27b0d1e121d",
@@ -12127,7 +12766,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "f322d495-95e0-49ab-9439-156228593328": {
                         "ID": "f322d495-95e0-49ab-9439-156228593328",
@@ -12157,7 +12799,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     },
                     "de69aa29-4aa0-4473-918e-14004116a9dc": {
                         "ID": "de69aa29-4aa0-4473-918e-14004116a9dc",
@@ -12187,7 +12832,10 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                      "TEST_AGG_FIELDS": [
+                        "primary"
+                      ]
                     }
                 }
             }
