@@ -83,8 +83,14 @@ def extract_ai4realnet_from_csv(csv):
     for benchmark_id, benchmark in suite["benchmarks"].items():
       benchmark_agg_fields = []
       for test_id, test in benchmark["tests"].items():
-        test["TEST_AGG_FIELDS"] = [tf["TEST_FIELD_NAME"] for tf in test["TEST_FIELDS"].values()]
-        # take first sc
+        test_agg_fields = None
+        for scenario_id, scenario in test["scenarios"].items():
+          if test_agg_fields is None:
+            test_agg_fields = [sc["SCENARIO_FIELD_NAME"] for sc in scenario["SCENARIO_FIELDS"].values()]
+          else:
+            # verify all scenarios have the same keys
+            assert test_agg_fields == [sc["SCENARIO_FIELD_NAME"] for sc in scenario["SCENARIO_FIELDS"].values()]
+        test["TEST_AGG_FIELDS"] = test_agg_fields
         benchmark_agg_fields.append(test["TEST_AGG_FIELDS"][0])
       assert len(benchmark["BENCHMARK_FIELDS"].values()) == 1
       list(benchmark["BENCHMARK_FIELDS"].values())[0]["BENCHMARK_AGG_FIELDS"] = benchmark_agg_fields

@@ -4599,7 +4599,8 @@
                             }
                         },
                       "TEST_AGG_FIELDS": [
-                        "punctuality"
+                        "punctuality",
+                        "success_rate"
                       ]
                     },
                     "9b6bc151-9f25-4d85-bee1-919753934521": {
@@ -9673,7 +9674,11 @@
                             }
                         },
                       "TEST_AGG_FIELDS": [
-                        "network_impact_propagation"
+                        "network_impact_propagation",
+                        "success_rate_1",
+                        "punctuality_1",
+                        "success_rate_2",
+                        "punctuality_2"
                       ]
                     },
                     "c69ff5e9-497b-41e8-adff-2221bb823365": {
