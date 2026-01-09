@@ -2,7 +2,7 @@ import { FieldDefinitionRow, SubmissionScore } from '@common/interfaces'
 import { afterEach, beforeAll, beforeEach, describe, expect, MockInstance, test, vi } from 'vitest'
 import { loadConfig } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
-import { AggregatorService } from './aggregator-service.mjs'
+import { AggregatorService, SubmissionScoreSources } from './aggregator-service.mjs'
 
 Logger.setOptions({ '--log-level': 'OFF' })
 
@@ -237,9 +237,8 @@ describe('Aggregator Service', () => {
           ],
           field_ids: ['33c1f8a3-5764-44cc-988b-0f9a53b7f4a1'],
           description: 'Effectiveness',
-          docker_image: null,
-          evaluator_data: null,
           campaign_field_ids: [],
+          suite_id: null,
         },
       ],
       tests: [
@@ -602,7 +601,7 @@ describe('Aggregator Service', () => {
         },
         null,
       ],
-    }
+    } as SubmissionScoreSources
     const submissionId = 'c3ce1c1c-f1ca-4ab4-8da9-b6dc43c588d0'
     const aggregator = AggregatorService.getInstance()
     const scoring = aggregator.calculateSubmissionScore(sources, submissionId)

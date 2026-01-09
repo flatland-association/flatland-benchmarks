@@ -32,7 +32,7 @@ interface SubmissionTestScoreSources extends SubmissionScenarioScoreSources {
   tests: (TestDefinitionRow | null)[]
 }
 
-interface SubmissionScoreSources extends SubmissionTestScoreSources {
+export interface SubmissionScoreSources extends SubmissionTestScoreSources {
   submissions: (SubmissionRow | null)[]
   // benchmarks required as well, because the field definitions for
   // submission score aggregation are stored in there.
