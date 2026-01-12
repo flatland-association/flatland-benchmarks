@@ -20,6 +20,9 @@ from definitions.gen_benchmarks_common import gen_sqls
 
 def extract_ai4realnet_from_csv(csv):
   df = pd.read_csv(csv)  # , on_bad_lines="skip", )
+  if False:
+    df["BENCHMARK_AGG"] = "NANMEAN"
+    df.to_csv(csv, index=False)
 
   data = defaultdict(lambda: {})
 
@@ -41,10 +44,7 @@ def extract_ai4realnet_from_csv(csv):
       "ID": row["BENCHMARK_FIELD_ID"],
       "BENCHMARK_FIELD_NAME": row["BENCHMARK_FIELD_NAME"],
       "BENCHMARK_FIELD_DESCRIPTION": row["BENCHMARK_FIELD_DESCRIPTION"],
-      # TODO fix in KPIs_database_cards.csv instead
-      # TODO not working in aggregator yet?
-      # "BENCHMARK_AGG": row["BENCHMARK_AGG"]
-      "BENCHMARK_AGG": "NANMEAN"
+      "BENCHMARK_AGG": row["BENCHMARK_AGG"]
     }
 
     benchmark["tests"] = benchmark.get("tests", defaultdict(lambda: {}))
