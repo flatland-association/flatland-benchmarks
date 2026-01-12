@@ -32,7 +32,7 @@ interface SubmissionTestScoreSources extends SubmissionScenarioScoreSources {
   tests: (TestDefinitionRow | null)[]
 }
 
-interface SubmissionScoreSources extends SubmissionTestScoreSources {
+export interface SubmissionScoreSources extends SubmissionTestScoreSources {
   submissions: (SubmissionRow | null)[]
   // benchmarks required as well, because the field definitions for
   // submission score aggregation are stored in there.
@@ -553,8 +553,8 @@ export class AggregatorService extends Service {
       const benchmark = this.findBenchmark(sources, benchmarkId)
       if (benchmark) {
         submissionScored.scorings = this.prepareScoringsForFields(sources, benchmark.field_ids)
-        // aggregate child score first
-        submissionScored.test_scorings = submission.test_ids.map((testId) =>
+        // aggregate child score first for all tests in the benchmark (as agg_fields on benchmark works on all tests in order)
+        submissionScored.test_scorings = benchmark.test_ids.map((testId) =>
           this.calculateSubmissionTestScore(sources, submissionId, testId),
         )
         //... then aggregate own score
@@ -564,6 +564,10 @@ export class AggregatorService extends Service {
             this.aggregateScore(submissionScored.scorings, field, submissionScored.test_scorings)
           }
         })
+        // return only the scorings relevant for the submission
+        submissionScored.test_scorings = submissionScored.test_scorings.filter((sc) =>
+          submission.test_ids.includes(sc.test_id),
+        )
       }
     }
     return submissionScored

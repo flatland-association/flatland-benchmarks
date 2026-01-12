@@ -9,8 +9,8 @@ INSERT INTO benchmarks
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6d165bd8-cc48-45d2-8b31-08c178ddeff9', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('6d165bd8-cc48-45d2-8b31-08c178ddeff9', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
@@ -19,8 +19,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2310ad43-2065-44a5-8a6a-100e2c6076f1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('2310ad43-2065-44a5-8a6a-100e2c6076f1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -39,8 +39,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('02890e30-6f7b-4ed3-80a1-abf2e169e43f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('02890e30-6f7b-4ed3-80a1-abf2e169e43f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -59,8 +59,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0c8a5446-bbc4-4a96-82bf-a53a86c10e9f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('0c8a5446-bbc4-4a96-82bf-a53a86c10e9f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -79,8 +79,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1d7ef549-2063-466b-b10a-6c78f79244cb', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('1d7ef549-2063-466b-b10a-6c78f79244cb', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -99,8 +99,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('17130cde-b2a7-44b9-9681-d95bb943ec51', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('17130cde-b2a7-44b9-9681-d95bb943ec51', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -119,8 +119,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7a49884e-90f2-4ba8-946c-5a9039b0e340', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('7a49884e-90f2-4ba8-946c-5a9039b0e340', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -139,8 +139,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('208b30ea-3b59-49fc-b660-c45a1a7e9144', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('208b30ea-3b59-49fc-b660-c45a1a7e9144', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -159,8 +159,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8474f229-ee4f-4e15-b633-ca313e08d852', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('8474f229-ee4f-4e15-b633-ca313e08d852', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -179,8 +179,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('27ccb299-16f8-45dc-b90f-3b715cccaa72', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('27ccb299-16f8-45dc-b90f-3b715cccaa72', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -199,8 +199,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e0522a11-2f30-4cd8-9e88-b3fc9e289dcc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('e0522a11-2f30-4cd8-9e88-b3fc9e289dcc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -219,8 +219,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('78e3f5c5-32b8-4787-bf40-5623e573861b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('78e3f5c5-32b8-4787-bf40-5623e573861b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -239,8 +239,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4cae7347-89b5-4c89-aed4-7d2c374b45d5', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('4cae7347-89b5-4c89-aed4-7d2c374b45d5', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -259,8 +259,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('697e097d-ecd3-4ec5-bd46-cd98129ba28d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('697e097d-ecd3-4ec5-bd46-cd98129ba28d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -279,8 +279,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('bd729f10-2260-4959-b416-5d8c9d04648e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('bd729f10-2260-4959-b416-5d8c9d04648e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -299,8 +299,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b50efa99-b82e-4c75-8204-afa8c17a52f0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('b50efa99-b82e-4c75-8204-afa8c17a52f0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -319,8 +319,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d98d5fed-b2b9-4e3c-a3a6-30e666514ccd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('d98d5fed-b2b9-4e3c-a3a6-30e666514ccd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -339,8 +339,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9c0de891-220a-4bd6-be4d-598fbcc898d0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('9c0de891-220a-4bd6-be4d-598fbcc898d0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -359,8 +359,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e67962af-0e35-4b32-97f9-dc661bf07f10', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('e67962af-0e35-4b32-97f9-dc661bf07f10', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -379,8 +379,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('80e0473e-e63a-4398-b592-66b2541a8dde', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('80e0473e-e63a-4398-b592-66b2541a8dde', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -399,8 +399,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('be9cbb52-ef44-4679-8c8d-f1b3c12e9aaa', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('be9cbb52-ef44-4679-8c8d-f1b3c12e9aaa', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -419,8 +419,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c5762f88-bd6b-45c6-871f-c34ff539b1a1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('c5762f88-bd6b-45c6-871f-c34ff539b1a1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -439,8 +439,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6b69647e-d663-4f90-ab14-dc4f5335f390', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('6b69647e-d663-4f90-ab14-dc4f5335f390', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -459,8 +459,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d839a03d-c127-4c01-84cb-09b3845f8775', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('d839a03d-c127-4c01-84cb-09b3845f8775', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -479,8 +479,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('476cf7e9-c34a-466e-8fed-53e66d55c10a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('476cf7e9-c34a-466e-8fed-53e66d55c10a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -499,8 +499,8 @@ INSERT INTO benchmarks
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('980dfc15-2183-4429-9478-356fb70063e9', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('980dfc15-2183-4429-9478-356fb70063e9', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
@@ -509,8 +509,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4d609eed-8062-4e81-893f-b4b653f8e4b7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('4d609eed-8062-4e81-893f-b4b653f8e4b7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -529,8 +529,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('99f95a40-b75c-47f1-8fd5-b3dc9c5a42c0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('99f95a40-b75c-47f1-8fd5-b3dc9c5a42c0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -549,8 +549,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('874377c7-380e-4e3c-8d6e-23e85ff26cf0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('874377c7-380e-4e3c-8d6e-23e85ff26cf0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -569,8 +569,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a85e44b6-48d9-419f-8c4d-255eb2382531', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('a85e44b6-48d9-419f-8c4d-255eb2382531', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -589,8 +589,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ec13012a-5c41-4c30-964d-fca2599efc94', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('ec13012a-5c41-4c30-964d-fca2599efc94', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -609,8 +609,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f0bc882a-f98f-46aa-8914-1d8859efddc8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('f0bc882a-f98f-46aa-8914-1d8859efddc8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -629,8 +629,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4cf8e1a6-17b5-4de3-a075-29c70641c358', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('4cf8e1a6-17b5-4de3-a075-29c70641c358', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -649,8 +649,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f257dde6-66c6-415e-b1de-96f965c5f39a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('f257dde6-66c6-415e-b1de-96f965c5f39a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -669,8 +669,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0fec6160-d278-4194-bb37-2d580d4b8056', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('0fec6160-d278-4194-bb37-2d580d4b8056', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -689,8 +689,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0050454e-c693-41bc-8c18-67e70716cfc9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('0050454e-c693-41bc-8c18-67e70716cfc9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -709,8 +709,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f3e3b428-5df4-4e6b-af10-430adacdae1b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('f3e3b428-5df4-4e6b-af10-430adacdae1b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -729,8 +729,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e98ae93a-b79a-4238-8702-48bbb87a8609', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('e98ae93a-b79a-4238-8702-48bbb87a8609', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -749,8 +749,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('015f5bd7-ab19-432b-ac75-486d433782ca', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('015f5bd7-ab19-432b-ac75-486d433782ca', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -769,8 +769,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e7d279ae-33b4-4664-ad89-a479462fd579', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('e7d279ae-33b4-4664-ad89-a479462fd579', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -789,8 +789,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('493273d8-0a2b-4b96-b807-667bf651bb2c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('493273d8-0a2b-4b96-b807-667bf651bb2c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -809,8 +809,8 @@ INSERT INTO benchmarks
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8611b3d7-1682-4f35-b8e1-22142c638cce', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('8611b3d7-1682-4f35-b8e1-22142c638cce', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
@@ -819,8 +819,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('bf5d4da4-cf9b-4fca-8b17-11cfd0dacabc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('bf5d4da4-cf9b-4fca-8b17-11cfd0dacabc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -839,8 +839,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6e50a7c4-d178-4561-800b-71d0771365c8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('6e50a7c4-d178-4561-800b-71d0771365c8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -859,8 +859,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f0523454-2778-4047-bce0-dcb3e732b0d2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('f0523454-2778-4047-bce0-dcb3e732b0d2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -879,8 +879,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('843d2e64-3243-4138-90fc-1a4686f27178', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('843d2e64-3243-4138-90fc-1a4686f27178', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -899,8 +899,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('61d44975-5de9-41f4-99b0-dd6e29c48f60', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('61d44975-5de9-41f4-99b0-dd6e29c48f60', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -919,8 +919,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('97e45e9c-41f6-44ec-9c49-748fbdbdbc5e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('97e45e9c-41f6-44ec-9c49-748fbdbdbc5e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -939,8 +939,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('afffdcbf-3044-4571-a234-ab4d55da46fd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('afffdcbf-3044-4571-a234-ab4d55da46fd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -959,8 +959,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2dd6e12b-eb87-47c5-9954-18a7ffeedc61', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('2dd6e12b-eb87-47c5-9954-18a7ffeedc61', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -979,8 +979,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('45f78644-ff33-4685-82d8-71a3101ddad8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('45f78644-ff33-4685-82d8-71a3101ddad8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -999,8 +999,8 @@ INSERT INTO benchmarks
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('932197b6-5a11-4208-84ce-1d0f43d4884e', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('932197b6-5a11-4208-84ce-1d0f43d4884e', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "primary", "primary", "primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
@@ -1009,8 +1009,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('916d5bf1-5bee-4955-93e4-127a41c42a97', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('916d5bf1-5bee-4955-93e4-127a41c42a97', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -1029,8 +1029,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4c6e01fe-e8db-40ab-ac1c-88d8068bfccd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('4c6e01fe-e8db-40ab-ac1c-88d8068bfccd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -1049,8 +1049,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f60128ec-90ef-4307-8966-363b75722e12', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('f60128ec-90ef-4307-8966-363b75722e12', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -1069,8 +1069,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d30fc4e1-2f3e-4b80-945a-f5150a91c3e4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('d30fc4e1-2f3e-4b80-945a-f5150a91c3e4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -1089,8 +1089,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d2ac280c-7583-480a-99c5-7e51b9894f19', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('d2ac280c-7583-480a-99c5-7e51b9894f19', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -1109,8 +1109,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4ca83de7-7f8d-4eed-aee6-4751ed3a31bf', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('4ca83de7-7f8d-4eed-aee6-4751ed3a31bf', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -1129,8 +1129,8 @@ INSERT INTO benchmarks
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('33c1f8a3-5764-44cc-988b-0f9a53b7f4a1', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('33c1f8a3-5764-44cc-988b-0f9a53b7f4a1', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "punctuality", "primary", "primary", "primary", "primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
@@ -1139,8 +1139,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('fcabd61d-91bc-45dc-8bf8-7aeb9724cb67', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('fcabd61d-91bc-45dc-8bf8-7aeb9724cb67', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -1159,8 +1159,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0c1be4b0-c30f-4e38-a698-3b141181ede6', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('0c1be4b0-c30f-4e38-a698-3b141181ede6', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -1179,8 +1179,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('63e93356-5033-451f-a3c2-cd607721661f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('63e93356-5033-451f-a3c2-cd607721661f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -1199,8 +1199,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1de0f52c-ae47-4847-9148-97b8568952d3', 'punctuality', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('1de0f52c-ae47-4847-9148-97b8568952d3', 'punctuality', 'Test score (MEAN of scenario scores)', 'MEAN', '["punctuality", "success_rate"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -3459,8 +3459,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ca6afe0e-a91a-4683-b735-6069e6b0cd8a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('ca6afe0e-a91a-4683-b735-6069e6b0cd8a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -3479,8 +3479,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e00859c3-d3e5-4bdf-9025-2030e22df317', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('e00859c3-d3e5-4bdf-9025-2030e22df317', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -3499,8 +3499,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('67a19c4b-1873-4a44-8c07-e15d9ede1e78', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('67a19c4b-1873-4a44-8c07-e15d9ede1e78', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -3519,8 +3519,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('10aadaaf-daa4-4098-bd9d-2042ecb488e9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('10aadaaf-daa4-4098-bd9d-2042ecb488e9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -3539,8 +3539,8 @@ INSERT INTO benchmarks
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e212421a-0c1a-4b5c-bfdf-b31886439d3f', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('e212421a-0c1a-4b5c-bfdf-b31886439d3f', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "network_impact_propagation", "primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
@@ -3549,8 +3549,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d63f9bce-a639-4d20-aece-c98a16ed1e7d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('d63f9bce-a639-4d20-aece-c98a16ed1e7d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -3569,8 +3569,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('93dc6748-4349-42ed-9bf1-e8541e768dea', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('93dc6748-4349-42ed-9bf1-e8541e768dea', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -3589,8 +3589,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('abe274f7-3401-4fdc-a79c-25c2a4659928', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('abe274f7-3401-4fdc-a79c-25c2a4659928', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -3609,8 +3609,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0cc2a210-4be2-42b6-ba21-885193fdbdbc', 'network_impact_propagation', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('0cc2a210-4be2-42b6-ba21-885193fdbdbc', 'network_impact_propagation', 'Test score (MEAN of scenario scores)', 'MEAN', '["network_impact_propagation", "success_rate_1", "punctuality_1", "success_rate_2", "punctuality_2"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8119,8 +8119,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c428c0f7-85d3-4f40-9710-6f8690f5cc9c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('c428c0f7-85d3-4f40-9710-6f8690f5cc9c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8139,8 +8139,8 @@ INSERT INTO benchmarks
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b779fc53-d7f5-4494-a977-8b371d2a0033', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('b779fc53-d7f5-4494-a977-8b371d2a0033', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "primary", "primary", "primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
@@ -8149,8 +8149,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('769e8da4-b056-486a-8abc-6da526fbd54b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('769e8da4-b056-486a-8abc-6da526fbd54b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8169,8 +8169,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('bfdfa6cc-9491-4cd4-9aa3-99d0e9eea7bd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('bfdfa6cc-9491-4cd4-9aa3-99d0e9eea7bd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8189,8 +8189,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('127ea400-14bd-48aa-9da6-e932a802dcb3', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('127ea400-14bd-48aa-9da6-e932a802dcb3', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8209,8 +8209,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('831bdb0e-c5c3-4df0-b9c4-4e42c6515c09', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('831bdb0e-c5c3-4df0-b9c4-4e42c6515c09', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8229,8 +8229,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('df9918ae-1bb3-4407-8240-6aaa6d67a5ea', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('df9918ae-1bb3-4407-8240-6aaa6d67a5ea', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8249,8 +8249,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('74b82b7a-f693-4423-b221-d9acae930d93', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('74b82b7a-f693-4423-b221-d9acae930d93', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8269,8 +8269,8 @@ INSERT INTO benchmarks
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4707c199-adb6-4af9-b8a2-cf70368e7905', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('4707c199-adb6-4af9-b8a2-cf70368e7905', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "primary", "primary", "primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
@@ -8279,8 +8279,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('91c4f865-5e81-46d3-bd23-990aa361a828', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('91c4f865-5e81-46d3-bd23-990aa361a828', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8299,8 +8299,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a7c2bf7f-7845-4127-8c18-5eb820f5d317', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('a7c2bf7f-7845-4127-8c18-5eb820f5d317', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8319,8 +8319,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0a42cb23-d3a2-4691-b430-61753b745806', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('0a42cb23-d3a2-4691-b430-61753b745806', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8339,8 +8339,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('efee7a16-4bb5-4c6f-965d-272ec8c2631b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('efee7a16-4bb5-4c6f-965d-272ec8c2631b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8359,8 +8359,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c6f944e3-9937-453c-95da-9b69681b023e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('c6f944e3-9937-453c-95da-9b69681b023e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8379,8 +8379,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7ff6b34d-2221-414e-86e8-c26dbd34f8f5', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('7ff6b34d-2221-414e-86e8-c26dbd34f8f5', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8399,8 +8399,8 @@ INSERT INTO benchmarks
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('69d2fb08-7e8c-495a-b95d-688de344c989', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('69d2fb08-7e8c-495a-b95d-688de344c989', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
@@ -8409,8 +8409,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('eac95a57-49b8-4909-a460-54277465030a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('eac95a57-49b8-4909-a460-54277465030a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8429,8 +8429,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('fc6b934f-8cea-4126-a835-6f1450b423ec', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('fc6b934f-8cea-4126-a835-6f1450b423ec', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8449,8 +8449,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f82e887c-f5f0-4ea9-8724-1105035c7ece', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('f82e887c-f5f0-4ea9-8724-1105035c7ece', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8469,8 +8469,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('fdeb371c-e722-49f6-9b2b-7e08784e0bda', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('fdeb371c-e722-49f6-9b2b-7e08784e0bda', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8489,8 +8489,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a7321e2a-6c39-4464-a53d-9d6352b14cb9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('a7321e2a-6c39-4464-a53d-9d6352b14cb9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8509,8 +8509,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('769bd4eb-28c9-40d0-af5b-549adb14ec0e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('769bd4eb-28c9-40d0-af5b-549adb14ec0e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8529,8 +8529,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1bdb0477-ba09-4306-93b2-519e445fd2c2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('1bdb0477-ba09-4306-93b2-519e445fd2c2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8549,8 +8549,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0cdc2df8-7dd6-4e59-b9c8-01d2434ed49b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('0cdc2df8-7dd6-4e59-b9c8-01d2434ed49b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8569,8 +8569,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('adb05676-e33f-45da-a3bc-370a0524d1ee', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('adb05676-e33f-45da-a3bc-370a0524d1ee', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8589,8 +8589,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a8bd1701-c2c9-43da-a199-bcf6c0c3a6dc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('a8bd1701-c2c9-43da-a199-bcf6c0c3a6dc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8609,8 +8609,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8c9d7ce4-0162-472d-88fb-2c19b811ad34', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('8c9d7ce4-0162-472d-88fb-2c19b811ad34', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8629,8 +8629,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1088ae36-888b-443d-af8c-556fc8da4ae4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('1088ae36-888b-443d-af8c-556fc8da4ae4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8649,8 +8649,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('bcdce9ba-dd27-4b16-b749-7229c7674a4e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('bcdce9ba-dd27-4b16-b749-7229c7674a4e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8669,8 +8669,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('26c6119e-12dc-44cd-b862-8f95f1420fa0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('26c6119e-12dc-44cd-b862-8f95f1420fa0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8689,8 +8689,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2834a05b-bf8d-4231-9b1d-7797276bf304', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('2834a05b-bf8d-4231-9b1d-7797276bf304', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8709,8 +8709,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7d368ebc-67ab-44f0-96c6-d13324da9582', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('7d368ebc-67ab-44f0-96c6-d13324da9582', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8729,8 +8729,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('123c3ec2-1cf5-4d73-b86e-7ff4d1671d80', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('123c3ec2-1cf5-4d73-b86e-7ff4d1671d80', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8749,8 +8749,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0a594511-3eab-4e45-818b-901bca21c1db', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('0a594511-3eab-4e45-818b-901bca21c1db', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8769,8 +8769,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('dc6c2dca-d4c2-48d0-9f75-0df01de53c54', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('dc6c2dca-d4c2-48d0-9f75-0df01de53c54', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8789,8 +8789,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('42c553a8-37f1-4abe-a0fd-14daec0078e0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('42c553a8-37f1-4abe-a0fd-14daec0078e0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8809,8 +8809,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9517152b-7271-4aaf-8df8-b2cbdc5d5223', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('9517152b-7271-4aaf-8df8-b2cbdc5d5223', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8829,8 +8829,8 @@ INSERT INTO benchmarks
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e0895e55-a5d9-46f2-9c95-9389baf25752', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('e0895e55-a5d9-46f2-9c95-9389baf25752', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
@@ -8839,8 +8839,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('df5f8939-f85f-4fbb-9bea-017c46b2a8f7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('df5f8939-f85f-4fbb-9bea-017c46b2a8f7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8859,8 +8859,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6e222adc-3153-4763-8bca-256cbb3d8716', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('6e222adc-3153-4763-8bca-256cbb3d8716', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8879,8 +8879,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9916de43-06b8-413f-bc55-3ff7c10757ce', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('9916de43-06b8-413f-bc55-3ff7c10757ce', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8899,8 +8899,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4463c7f3-fbda-44b4-9c75-fdd552a2e3ba', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('4463c7f3-fbda-44b4-9c75-fdd552a2e3ba', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8919,8 +8919,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5cf53de4-c331-4fc6-a54e-a93834b23fef', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('5cf53de4-c331-4fc6-a54e-a93834b23fef', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8939,8 +8939,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4bd8d175-100b-4367-bbce-564d96996b40', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('4bd8d175-100b-4367-bbce-564d96996b40', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8959,8 +8959,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0a658c26-5b6d-4369-b28b-b42acfc95ced', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('0a658c26-5b6d-4369-b28b-b42acfc95ced', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8979,8 +8979,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('64208759-4b1b-415c-ae2e-d5244b328e68', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('64208759-4b1b-415c-ae2e-d5244b328e68', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8999,8 +8999,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9124a4ed-a727-49c7-aab9-dc2473594490', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('9124a4ed-a727-49c7-aab9-dc2473594490', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9019,8 +9019,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1957912f-47fd-4ce6-8596-90a320c4a46e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('1957912f-47fd-4ce6-8596-90a320c4a46e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9039,8 +9039,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('861dc5e2-f3ce-4c74-829b-9c50c891a610', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('861dc5e2-f3ce-4c74-829b-9c50c891a610', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9059,8 +9059,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('da2b5bd3-4bef-4d57-b257-be675bf3dc2a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('da2b5bd3-4bef-4d57-b257-be675bf3dc2a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9079,8 +9079,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b297a241-a1dd-48c5-9dab-bbd58261c3e9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('b297a241-a1dd-48c5-9dab-bbd58261c3e9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9099,8 +9099,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7b373f1a-e892-44f7-a76d-7b93e73f745b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('7b373f1a-e892-44f7-a76d-7b93e73f745b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9119,8 +9119,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5ef0d594-d8c5-4ebe-8adc-ad972481f301', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('5ef0d594-d8c5-4ebe-8adc-ad972481f301', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9139,8 +9139,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('45500bcb-96bc-4b21-87ad-1ae69122cf88', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('45500bcb-96bc-4b21-87ad-1ae69122cf88', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9159,8 +9159,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('cad90039-f91d-4883-9937-8671f8363766', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('cad90039-f91d-4883-9937-8671f8363766', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9179,8 +9179,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('58aa9828-9572-4433-b492-339104be9ad1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('58aa9828-9572-4433-b492-339104be9ad1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9199,8 +9199,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('30d12d61-8f39-4e99-b292-b1f9ed21a6b4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('30d12d61-8f39-4e99-b292-b1f9ed21a6b4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9219,8 +9219,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e248e90c-65e0-4e36-89df-2e3232ed430d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('e248e90c-65e0-4e36-89df-2e3232ed430d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9239,8 +9239,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3813d4e2-3ac4-44b3-9abf-c16dd67f00ac', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('3813d4e2-3ac4-44b3-9abf-c16dd67f00ac', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9259,8 +9259,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a1d636fb-9525-4796-85f6-565ecc4dc2a3', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('a1d636fb-9525-4796-85f6-565ecc4dc2a3', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9279,8 +9279,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('92eb89c5-a934-4f62-b64b-9ff63c3189fc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('92eb89c5-a934-4f62-b64b-9ff63c3189fc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9299,8 +9299,8 @@ INSERT INTO benchmarks
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7284d7ae-8896-4342-bf8c-58db3362e484', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('7284d7ae-8896-4342-bf8c-58db3362e484', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
@@ -9309,8 +9309,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f0163954-829c-4d4b-b677-995c1ade5a4a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('f0163954-829c-4d4b-b677-995c1ade5a4a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9329,8 +9329,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('00fb1d4c-a9b4-4a3f-88ab-eec7f4eb1a76', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('00fb1d4c-a9b4-4a3f-88ab-eec7f4eb1a76', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9349,8 +9349,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('db803996-450c-4462-a2d0-289e9855ff5d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('db803996-450c-4462-a2d0-289e9855ff5d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9369,8 +9369,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('40b5fecc-3ee2-4da9-9f19-3b5c7df27575', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('40b5fecc-3ee2-4da9-9f19-3b5c7df27575', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9389,8 +9389,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('805cc0df-c8f5-4e7d-8a1c-9a1600e18479', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('805cc0df-c8f5-4e7d-8a1c-9a1600e18479', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9409,8 +9409,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('643d28e7-3ec1-45f8-aed8-5364e65a0c05', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('643d28e7-3ec1-45f8-aed8-5364e65a0c05', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9429,8 +9429,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c6d7099f-9893-4d76-8fcd-f6cba430b690', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('c6d7099f-9893-4d76-8fcd-f6cba430b690', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9449,8 +9449,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a6fcdd38-158e-4865-9300-4b061553dcab', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('a6fcdd38-158e-4865-9300-4b061553dcab', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9469,8 +9469,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('58733189-5333-46a5-a759-21ecd5e9a5e7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('58733189-5333-46a5-a759-21ecd5e9a5e7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9489,8 +9489,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0b8ffb01-5523-482f-81c2-47a81c626ab2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('0b8ffb01-5523-482f-81c2-47a81c626ab2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9509,8 +9509,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('36601f97-1681-43ac-a07c-c4cfbb4b3ede', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('36601f97-1681-43ac-a07c-c4cfbb4b3ede', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9529,8 +9529,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b6b65966-5f68-4e31-879c-5f237220a8b4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('b6b65966-5f68-4e31-879c-5f237220a8b4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9549,8 +9549,8 @@ INSERT INTO benchmarks
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7cfd40ba-89d3-49e5-8bb9-c3e982d0dd10', 'primary', 'Benchmark score (MEAN of test scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('7cfd40ba-89d3-49e5-8bb9-c3e982d0dd10', 'primary', 'Benchmark score (MEAN of test scores)', 'NANMEAN', '["primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary", "primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
@@ -9559,8 +9559,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('345b6241-acd6-4d1f-b04d-ccb2b98a84bf', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('345b6241-acd6-4d1f-b04d-ccb2b98a84bf', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9579,8 +9579,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('955e3993-0196-477e-8362-adcb2cc929e0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('955e3993-0196-477e-8362-adcb2cc929e0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9599,8 +9599,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('df393b26-77dd-45e2-9e1f-11e2a603b714', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('df393b26-77dd-45e2-9e1f-11e2a603b714', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9619,8 +9619,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b7a35c88-5413-4abb-bae0-774a27b3c84e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('b7a35c88-5413-4abb-bae0-774a27b3c84e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9639,8 +9639,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1ac0bc44-71c0-427b-bc1e-b7a177809ad7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('1ac0bc44-71c0-427b-bc1e-b7a177809ad7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9659,8 +9659,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e9d6451c-c25b-49e5-a80e-cd84985b3c7c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('e9d6451c-c25b-49e5-a80e-cd84985b3c7c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9679,8 +9679,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('435e4d59-237c-43c9-94bc-f1851d03e7d1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('435e4d59-237c-43c9-94bc-f1851d03e7d1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9699,8 +9699,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('43e38b85-6b62-4898-a0c6-6b1b5e9b7e83', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('43e38b85-6b62-4898-a0c6-6b1b5e9b7e83', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9719,8 +9719,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('68dee536-8f29-4208-a327-48d67900c581', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('68dee536-8f29-4208-a327-48d67900c581', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9739,8 +9739,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('cabb2d9f-8086-4510-9735-8b10321096c6', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('cabb2d9f-8086-4510-9735-8b10321096c6', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9759,8 +9759,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('43eebab4-d111-4f5d-8c3d-1abdaafb2a4b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('43eebab4-d111-4f5d-8c3d-1abdaafb2a4b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9779,8 +9779,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4daf6937-535b-4846-858b-9eaab6ff1b19', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('4daf6937-535b-4846-858b-9eaab6ff1b19', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9799,8 +9799,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e7cf7efc-69fa-4b80-bc56-bb5d7a44f0f9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('e7cf7efc-69fa-4b80-bc56-bb5d7a44f0f9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9819,8 +9819,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('69721968-c18b-4bf4-9223-2ed001231c7f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('69721968-c18b-4bf4-9223-2ed001231c7f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9839,8 +9839,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5839d96c-291b-465d-bfab-ba8951b3853e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('5839d96c-291b-465d-bfab-ba8951b3853e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9859,8 +9859,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6b1b9ae3-ac68-45f7-8706-80ca756e3cfa', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('6b1b9ae3-ac68-45f7-8706-80ca756e3cfa', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9879,8 +9879,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f16522e3-b973-4b1d-bf7a-b728885a0b29', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('f16522e3-b973-4b1d-bf7a-b728885a0b29', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9899,8 +9899,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4c5e593d-4785-45a6-9dfd-5190f909f913', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('4c5e593d-4785-45a6-9dfd-5190f909f913', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9919,8 +9919,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ee00b722-5e1f-4adb-84aa-89dc2c1e698d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('ee00b722-5e1f-4adb-84aa-89dc2c1e698d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9939,8 +9939,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('929eb222-48b9-4652-bb0f-8b71899a02da', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('929eb222-48b9-4652-bb0f-8b71899a02da', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -9959,8 +9959,8 @@ INSERT INTO tests
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0dcc4cb8-a438-49cc-bf19-d5f1bb6999ff', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
+        (id, key, description, agg_func, agg_fields)
+        VALUES ('0dcc4cb8-a438-49cc-bf19-d5f1bb6999ff', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '["primary"]')
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios

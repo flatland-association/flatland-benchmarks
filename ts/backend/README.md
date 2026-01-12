@@ -34,7 +34,8 @@ Furthermore, run-time behavior can be controlled using command-line arguments wh
 To start a local development server, run the following command in `ts/backend`:
 
 ```bash
-npm start
+npm run start.ai4realnet
+npm run start.fab
 ```
 
 This will:
