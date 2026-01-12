@@ -3,6 +3,23 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.17.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.16.0...v0.17.0) (2026-01-12)
+
+
+### Features
+
+* **backend:** Filter child scores in competition setup ([faf9a06](https://github.com/flatland-association/flatland-benchmarks/commit/faf9a06a4a10199f497a3480d17d9cbf08c80ff9))
+* **frontend:** Allow multiple filter options to be active at the same time ([#515](https://github.com/flatland-association/flatland-benchmarks/issues/515)) ([ed9947c](https://github.com/flatland-association/flatland-benchmarks/commit/ed9947cd4617b8e2ebd75915aa7fd412eafa1850))
+* **frontend:** header image per suite/benchmark ([#513](https://github.com/flatland-association/flatland-benchmarks/issues/513)) ([476fc5c](https://github.com/flatland-association/flatland-benchmarks/commit/476fc5c1ff6f0628eeac7cc78ad5e446e6ffda3d))
+* **frontend:** Hide detailed results in COMPETITION setup ([ea5b8ff](https://github.com/flatland-association/flatland-benchmarks/commit/ea5b8ffe9b5187b672d278b230db393cf4f7d8e1))
+
+
+### Bug Fixes
+
+* **backend:** multiple id support in REST endpoints ([#509](https://github.com/flatland-association/flatland-benchmarks/issues/509)) ([d5f25e9](https://github.com/flatland-association/flatland-benchmarks/commit/d5f25e96316002c99f9137e79e98579696e92116))
+* calculate submission score correctly with only selected tests and agg_fields present in the benchmark definition. ([f50b826](https://github.com/flatland-association/flatland-benchmarks/commit/f50b82686d2a0be0a85bd5474f367a298cd444f2))
+* it should be possible to publish submission containing only one test. ([a88f3b7](https://github.com/flatland-association/flatland-benchmarks/commit/a88f3b7648b806ebdcfc5c6e3d5133276ebaf6f8))
+
 ## [0.16.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.15.3...v0.16.0) (2025-12-12)
 
 
