@@ -78,7 +78,6 @@ def extract_ai4realnet_from_csv(csv):
       "SCENARIO_FIELD_DESCRIPTION": row["SCENARIO_FIELD_DESCRIPTION"],
     }
 
-  # TODO can we collect above already?
   for suite_id, suite in data.items():
     for benchmark_id, benchmark in suite["benchmarks"].items():
       benchmark_agg_fields = []
