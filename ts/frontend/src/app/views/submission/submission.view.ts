@@ -6,6 +6,7 @@ import {
   BenchmarkDefinitionRow,
   SubmissionRow,
   SubmissionScore,
+  SubmissionStatusRow,
   SuiteDefinitionRow,
   TestDefinitionRow,
 } from '@common/interfaces'
@@ -46,6 +47,7 @@ export class SubmissionView implements OnInit, OnDestroy {
   test?: TestDefinitionRow
   submission?: SubmissionRow
   submissionScore?: SubmissionScore
+  submissionStatuses?: SubmissionStatusRow[]
   ownSubmission = false
   customization?: Customization
 
@@ -71,6 +73,11 @@ export class SubmissionView implements OnInit, OnDestroy {
           this.ownSubmission = this.submission?.submitted_by === this.authService.userUuid
         })
       this.resourceService
+        .load('/submissions/:submission_ids/statuses', { params: { submission_ids: submission_id } })
+        .then((statuses) => {
+          this.submissionStatuses = statuses
+        })
+      this.resourceService
         .load('/results/submissions/:submission_ids', { params: { submission_ids: submission_id } })
         .then((scores) => {
           this.submissionScore = scores?.at(0)
@@ -91,8 +98,14 @@ export class SubmissionView implements OnInit, OnDestroy {
   }
 
   async publish() {
+    const submissionPatch: Partial<SubmissionRow> = {
+      published: true,
+    }
     this.submission = (
-      await this.apiService.patch('/submissions/:submission_ids', { params: { submission_ids: this.submission!.id } })
+      await this.apiService.patch('/submissions/:submission_ids', {
+        params: { submission_ids: this.submission!.id },
+        body: submissionPatch,
+      })
     ).body?.at(0)
   }
 }
