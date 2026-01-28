@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@angular/build": "^20.3.13",
-    "@angular/cli": "^20.3.13",
+    "@angular/cli": "^20.3.15",
     "@angular/compiler-cli": "^20.3.15",
     "@cypress/schematic": "^4.2.0",
     "@types/amqplib": "^0.8.2",
