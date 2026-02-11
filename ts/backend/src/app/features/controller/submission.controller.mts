@@ -1,4 +1,4 @@
-import { SubmissionRow, TestDefinitionRow } from '@common/interfaces.js'
+import { AuthRole, SubmissionRow, SubmissionStatusRow, TestDefinitionRow } from '@common/interfaces.js'
 import { StripId } from '@common/utility-types'
 import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
@@ -11,6 +11,15 @@ import { Controller, GetHandler, PatchHandler, PostHandler } from './controller.
 
 const logger = new Logger('submission-controller')
 
+type ResourceFieldAccess<T> = { [K in keyof T]?: AuthRole[] }
+
+const PATCHABLE_FIELDS: ResourceFieldAccess<SubmissionRow> = {
+  name: ['User'],
+  description: ['User'],
+  code_repository: ['User'],
+  published: ['User'],
+}
+
 export class SubmissionController extends Controller {
   constructor(config: configuration) {
     super(config)
@@ -20,6 +29,10 @@ export class SubmissionController extends Controller {
     this.attachGet('/submissions/own', this.getOwnSubmissions, { authorizedRoles: ['User'] })
     this.attachGet('/submissions/:submission_ids', this.getSubmissionByUuid)
     this.attachPatch('/submissions/:submission_ids', this.patchSubmissionByUuid, { authorizedRoles: ['User'] })
+    // TODO: only authorize orchestrator
+    // https://github.com/flatland-association/flatland-benchmarks/issues/484
+    this.attachPost('/submissions/:submission_ids/statuses', this.postSubmissionStatus, { authorizedRoles: ['User'] })
+    this.attachGet('/submissions/:submission_ids/statuses', this.getStubmissionStatuses)
   }
 
   /**
@@ -84,7 +97,9 @@ export class SubmissionController extends Controller {
     await this.checkValidity(req.body)
     // save submission in db
     const sql = SqlService.getInstance()
-    const idRow = await sql.query`
+    let id!: string
+    await sql.transaction(async (sql) => {
+      const idRow = await sql.query`
         INSERT INTO submissions (
           benchmark_id,
           test_ids,
@@ -106,11 +121,23 @@ export class SubmissionController extends Controller {
         )
         RETURNING id
       `
-    const id: string | undefined = idRow.at(0)?.['id']
-    if (!id) {
-      this.respondError(req, res, { text: `could not insert submission` }, undefined, { id })
-      return
-    }
+      id = idRow.at(0)?.['id']
+      if (!id) {
+        this.respondError(req, res, { text: `could not insert submission` }, undefined, { id })
+        return
+      }
+      await sql.query`
+        INSERT INTO submission_statuses (
+          submission_id,
+          status,
+          timestamp
+        ) VALUES (
+          ${id},
+          'SUBMITTED',
+          current_timestamp
+        )
+      `
+    })
     // get tests
     const tests = await sql.query<TestDefinitionRow>`
         SELECT * FROM tests
@@ -220,6 +247,12 @@ export class SubmissionController extends Controller {
 
     const submissions = await sql.query<SubmissionRow>`
         SELECT * FROM submissions
+        LEFT JOIN LATERAL (
+          SELECT status FROM submission_statuses
+          WHERE submission_statuses.submission_id = submissions.id
+          ORDER BY timestamp DESC
+          LIMIT 1
+        ) AS status ON true
         WHERE
           published = true AND
           ${whereBenchmark}
@@ -287,6 +320,12 @@ export class SubmissionController extends Controller {
 
     const submissions = await sql.query<SubmissionRow>`
         SELECT * FROM submissions
+        LEFT JOIN LATERAL (
+          SELECT status FROM submission_statuses
+          WHERE submission_statuses.submission_id = submissions.id
+          ORDER BY timestamp DESC
+          LIMIT 1
+        ) AS status ON true
         WHERE
           submitted_by = ${auth.sub}
       `
@@ -370,6 +409,12 @@ export class SubmissionController extends Controller {
     // id=ANY - dev.003
     const submissions = await sql.query<SubmissionRow>`
         SELECT * FROM submissions
+        LEFT JOIN LATERAL (
+          SELECT status FROM submission_statuses
+          WHERE submission_statuses.submission_id = submissions.id
+          ORDER BY timestamp DESC
+          LIMIT 1
+        ) AS status ON true
         WHERE
           id=ANY(${uuids}) AND
           ${wherePublished}
@@ -396,9 +441,25 @@ export class SubmissionController extends Controller {
    *          items:
    *            type: string
    *            format: uuid
+   *    requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *              name:
+   *                type: string
+   *                description: Display name of submission.
+   *              code_repository:
+   *                type: string
+   *                description: URL of submission code repository.
+   *              published:
+   *                type: boolean
+   *                description: Whether submission is published.
    *    responses:
    *      200:
-   *        description: Published submission.
+   *        description: Submission patched.
    *        content:
    *          application/json:
    *            schema:
@@ -444,17 +505,176 @@ export class SubmissionController extends Controller {
    */
   patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res) => {
     logger.info(`patchSubmissionByUuid`)
+    const authService = AuthService.getInstance()
+    const auth = (await authService.authorization(req))!
     const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
+    // unless Admin, assert User only patches own submissions
+    if (!auth['roles'].includes('Admin')) {
+      const submissionMismatches = await sql.query`
+        SELECT reference
+        FROM UNNEST(${uuids}::uuid[]) AS reference
+        LEFT JOIN submissions ON id = reference
+        WHERE id IS NULL OR submitted_by IS DISTINCT FROM ${auth.sub}
+      `
+      if (submissionMismatches.length) {
+        throw new ControllerError('Cannot update submission', submissionMismatches, StatusCodes.FORBIDDEN)
+      }
+    }
+    // assert only patchable fields are provided
+    const submissionRow = req.body
+    const keys = Object.keys(submissionRow) as (keyof SubmissionRow)[]
+    keys.forEach((key) => {
+      if (!(key in PATCHABLE_FIELDS)) {
+        throw new ControllerError('Field is not patchable', key, StatusCodes.BAD_REQUEST)
+      }
+      // at least one of user's roles must be included in field access definition
+      if (!(auth['roles'] as AuthRole[]).some((role) => PATCHABLE_FIELDS[key]?.includes(role))) {
+        throw new ControllerError('Cannot patch field', key, StatusCodes.FORBIDDEN)
+      }
+    })
     const submissions = await sql.query<SubmissionRow>`
-      UPDATE submissions SET published=true
+      UPDATE submissions SET ${sql.fragment(submissionRow)}
         WHERE id=ANY(${uuids})
         RETURNING *
     `
     logger.info(`rows ${submissions}`)
     // return array - dev.002
     this.respond(req, res, submissions)
+  }
+
+  /**
+   * @swagger
+   * /submissions/{submission_ids}/statuses:
+   *  post:
+   *    description: Inserts new submission status.
+   *    security:
+   *      - oauth2: [user]
+   *    parameters:
+   *      - in: path
+   *        name: submission_ids
+   *        description: Submission ID.
+   *        required: true
+   *        schema:
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
+   *    requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *              status:
+   *                type: string
+   *                description: New submission status.
+   *            required:
+   *              - status
+   *    responses:
+   *      200:
+   *        description: Created.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          submission_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of submission.
+   *                          status:
+   *                            type: string
+   *                            description: Submission status.
+   *                          timestamp:
+   *                            type: string
+   */
+  postSubmissionStatus: PostHandler<'/submissions/:submission_ids/statuses'> = async (req, res) => {
+    const uuids = req.params.submission_ids.split(',')
+    const status = req.body.status
+    const sql = SqlService.getInstance()
+    // valid if submissions exist
+    const submissionMismatches = await sql.query`
+      SELECT reference
+      FROM UNNEST(${uuids}::uuid[]) AS reference
+      LEFT JOIN submissions ON id = reference
+      WHERE id IS NULL
+    `
+    if (submissionMismatches.length) {
+      throw new ControllerError('Referenced submission does not exist', submissionMismatches, StatusCodes.BAD_REQUEST)
+    }
+    const statusInserts = uuids.map((uuid) => {
+      return {
+        submission_id: uuid,
+        status: status,
+        timestamp: sql.fragment`current_timestamp`,
+      }
+    })
+    const statusRows = await sql.query<SubmissionStatusRow>`
+      INSERT INTO submission_statuses ${sql.fragment(statusInserts, ['submission_id', 'status', 'timestamp'])}
+      RETURNING *
+    `
+    this.respond(req, res, statusRows)
+  }
+
+  /**
+   * @swagger
+   * /submissions/{submission_ids}/statuses:
+   *  get:
+   *    description: Returns submission statuses.
+   *    parameters:
+   *      - in: path
+   *        name: submission_ids
+   *        description: Submission ID.
+   *        required: true
+   *        schema:
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
+   *    responses:
+   *      200:
+   *        description: Requested statuses.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          submission_id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of submission.
+   *                          status:
+   *                            type: string
+   *                            description: Submission status.
+   *                          timestamp:
+   *                            type: string
+   */
+  getStubmissionStatuses: GetHandler<'/submissions/:submission_ids/statuses'> = async (req, res) => {
+    const uuids = req.params.submission_ids.split(',')
+    const sql = SqlService.getInstance()
+    const statusRows = await sql.query<SubmissionStatusRow>`
+      SELECT * FROM submission_statuses
+      WHERE submission_id=ANY(${uuids})
+      ORDER BY timestamp DESC
+    `
+    this.respond(req, res, statusRows)
   }
 
   /**
