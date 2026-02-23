@@ -149,6 +149,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
 
   @staticmethod
   def load_scenario_data(scenario_id: str) -> str:
+
     # generated with definitions/flatland3_benchmarks/gen_dict.py
     return {
       "289394a5-aa51-446c-9b62-c25101643790": "Test_00/Level_0.pkl",
