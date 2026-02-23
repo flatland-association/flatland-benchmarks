@@ -244,8 +244,10 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
 
   @staticmethod
   def load_scenario_data(scenario_id: str) -> str:
-    # generated with definitions/flatland3_benchmarks/gen_dict.py
+
     return {
+      # flatland3_benchmarks
+      # generated with definitions/benchmarks/flatland3_benchmarks/gen_flatland3_benchmarks_sql.py
       "289394a5-aa51-446c-9b62-c25101643790": "Test_00/Level_0.pkl",
       "01dc6523-a236-4da6-8ca6-934d771fc82d": "Test_00/Level_1.pkl",
       "2148fd5e-6141-4fd6-bcae-a93a66c81e61": "Test_00/Level_2.pkl",
@@ -397,15 +399,43 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       "85dbb9a5-52e2-4ed2-ac6e-0030ce5a85ef": "Test_14/Level_8.pkl",
       "14611e50-ef67-4833-9023-65f21e3208ef": "Test_14/Level_9.pkl",
 
-      # railway competition:
-      "ff0c3bb2-cfac-480c-a1f2-91966787cf05": "scene_1/scene_1_initial.pkl",
-      "c3e9e8ca-123d-4335-be18-14c0513449f6": "scene_2/scene_2_initial.pkl",
-      "ee616a1c-3583-438c-86ec-b2b2b4e0ce22": "scene_3/scene_3_initial.pkl",
-      "3af83068-1e6d-45ce-979f-bddaf130d6ed": "scene_4/scene_4_initial.pkl",
-      "f61e6d16-5975-461d-ad99-1c70d0cec2ec": "scene_5/scene_5_initial.pkl"
+      # ecml2026
+      # generated with definitions/benchmarks/ecml2026/gen_competition_sql.py
+      "5eea815c-7500-42ff-b763-9012fae3ba0a": "level_1/level_1_scenario_1.pkl",
+      "0ca69b1b-5aa2-4e32-8829-fbd876c175e9": "level_1/level_1_scenario_2.pkl",
+      "ec4d780e-7249-4d62-b124-7e3f7f38a441": "level_1/level_1_scenario_3.pkl",
+      "eb690e1f-6b01-4311-98af-195863693775": "level_1/level_1_scenario_4.pkl",
+      "bc398385-b9bc-4f08-91e2-9b70cba8e54f": "level_1/level_1_scenario_5.pkl",
+      "f1bff6c2-297d-4e01-aae1-e6f33a03f708": "level_2/level_2_scenario_1.pkl",
+      "eeea37a7-dfbf-4c40-b851-289458f61a7a": "level_2/level_2_scenario_2.pkl",
+      "e2ff0d91-a5da-4888-ae8e-b5805c38bd8a": "level_2/level_2_scenario_3.pkl",
+      "403e469b-7508-4bb7-9b97-5585b4bf30da": "level_2/level_2_scenario_4.pkl",
+      "ec203d8a-774e-423c-a19d-7b8d39a284c2": "level_2/level_2_scenario_5.pkl",
+      "4b4d5e9f-4753-449c-96e7-f7e477e3e38a": "level_3/level_3_scenario_1.pkl",
+      "cee79764-bfbd-4e8e-a93d-434495926f63": "level_3/level_3_scenario_2.pkl",
+      "f5c3b066-c86b-47ff-a674-ddfcf9a2e308": "level_3/level_3_scenario_3.pkl",
+      "4df80fd3-eb95-457b-b0f3-d2b6925d0024": "level_3/level_3_scenario_4.pkl",
+      "0eb1e6e6-245d-4f41-89e9-155d54271c62": "level_3/level_3_scenario_5.pkl",
+      "0e2cce95-4a55-440e-b723-e58ab5fcb34a": "level_4/level_4_scenario_1.pkl",
+      "85e1179b-1744-4af9-9925-a81387f10bb4": "level_4/level_4_scenario_2.pkl",
+      "a1addd20-c309-4145-a59c-975e971d58d4": "level_4/level_4_scenario_3.pkl",
+      "e913d595-79d3-4fea-866b-a39ac33a29f2": "level_4/level_4_scenario_4.pkl",
+      "53238550-c049-476c-90b5-ccb174e99460": "level_4/level_4_scenario_5.pkl",
+      "9eee4486-fdf0-4873-80bb-777886ed9ca0": "level_5/level_5_scenario_1.pkl",
+      "4111f401-142b-471d-a06d-f839b43dfc5c": "level_5/level_5_scenario_2.pkl",
+      "e2bd8e53-bd5b-4af1-b9ef-48942467d831": "level_5/level_5_scenario_3.pkl",
+      "2bb9d4f9-d96c-490c-ba6e-33226b6a4017": "level_5/level_5_scenario_4.pkl",
+      "aabe8141-e045-4e30-87be-6ccf95818b87": "level_5/level_5_scenario_5.pkl",
+      "103776ff-57d0-43aa-b483-507724926969": "level_6/level_6_scenario_1.pkl",
+      "e5ddeaea-06d8-4a5e-aa86-8ac85bf7d397": "level_6/level_6_scenario_2.pkl",
+      "18a62336-218a-4cd8-a297-16afdbd6c546": "level_6/level_6_scenario_3.pkl",
+      "fbf5049b-332d-4e3a-aad7-f3a369ce91bb": "level_6/level_6_scenario_4.pkl",
+      "7d5e9c8d-ce87-48f3-b793-83489fca8ca0": "level_6/level_6_scenario_5.pkl",
     }[scenario_id]
 
   TEST_TO_SCENARIO_IDS = {
+    # flatland3_benchmarks
+    # generated with definitions/benchmarks/flatland3_benchmarks/gen_flatland3_benchmarks_sql.py
     "fc8f5fb1-4525-4b4f-a022-d3d7800097dc": [
       "289394a5-aa51-446c-9b62-c25101643790",
       "01dc6523-a236-4da6-8ca6-934d771fc82d",
@@ -586,22 +616,50 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       "85dbb9a5-52e2-4ed2-ac6e-0030ce5a85ef",
       "14611e50-ef67-4833-9023-65f21e3208ef"
     ],
-    # railway competition:
-    "d4dd100a-016c-4332-b711-926ea7d2c0c3": [
-      "ff0c3bb2-cfac-480c-a1f2-91966787cf05"
+    # ecml2026
+    # generated with definitions/benchmarks/ecml2026/gen_competition_sql.py
+    "774bf9d6-7bd6-41da-925a-230658d481ec": [
+      "5eea815c-7500-42ff-b763-9012fae3ba0a",
+      "0ca69b1b-5aa2-4e32-8829-fbd876c175e9",
+      "ec4d780e-7249-4d62-b124-7e3f7f38a441",
+      "eb690e1f-6b01-4311-98af-195863693775",
+      "bc398385-b9bc-4f08-91e2-9b70cba8e54f"
     ],
-    "12e03a34-d11b-4635-bf9f-b6d0f7003a66": [
-      "c3e9e8ca-123d-4335-be18-14c0513449f6"
+    "6670be1d-9fc0-48c8-9bc9-fc889f56d615": [
+      "f1bff6c2-297d-4e01-aae1-e6f33a03f708",
+      "eeea37a7-dfbf-4c40-b851-289458f61a7a",
+      "e2ff0d91-a5da-4888-ae8e-b5805c38bd8a",
+      "403e469b-7508-4bb7-9b97-5585b4bf30da",
+      "ec203d8a-774e-423c-a19d-7b8d39a284c2"
     ],
-    "edb50f48-d579-4994-afcd-08e106d375cb": [
-      "ee616a1c-3583-438c-86ec-b2b2b4e0ce22"
+    "f3aefb9c-a79e-413a-b73c-f46c794855c1": [
+      "4b4d5e9f-4753-449c-96e7-f7e477e3e38a",
+      "cee79764-bfbd-4e8e-a93d-434495926f63",
+      "f5c3b066-c86b-47ff-a674-ddfcf9a2e308",
+      "4df80fd3-eb95-457b-b0f3-d2b6925d0024",
+      "0eb1e6e6-245d-4f41-89e9-155d54271c62"
     ],
-    "7f277294-de87-463b-a526-35b70c0bf693": [
-      "3af83068-1e6d-45ce-979f-bddaf130d6ed"
+    "68ade1f2-301f-4d8d-b9d6-f3110b6e7587": [
+      "0e2cce95-4a55-440e-b723-e58ab5fcb34a",
+      "85e1179b-1744-4af9-9925-a81387f10bb4",
+      "a1addd20-c309-4145-a59c-975e971d58d4",
+      "e913d595-79d3-4fea-866b-a39ac33a29f2",
+      "53238550-c049-476c-90b5-ccb174e99460"
     ],
-    "678cdb1e-86c4-42a7-9c0d-0073a80faaf0": [
-      "f61e6d16-5975-461d-ad99-1c70d0cec2ec"
-    ]
+    "d49091c0-793b-401b-a0c8-12df1361deef": [
+      "9eee4486-fdf0-4873-80bb-777886ed9ca0",
+      "4111f401-142b-471d-a06d-f839b43dfc5c",
+      "e2bd8e53-bd5b-4af1-b9ef-48942467d831",
+      "2bb9d4f9-d96c-490c-ba6e-33226b6a4017",
+      "aabe8141-e045-4e30-87be-6ccf95818b87"
+    ],
+    "86225a96-492d-474b-aa80-de166b005e42": [
+      "103776ff-57d0-43aa-b483-507724926969",
+      "e5ddeaea-06d8-4a5e-aa86-8ac85bf7d397",
+      "18a62336-218a-4cd8-a297-16afdbd6c546",
+      "fbf5049b-332d-4e3a-aad7-f3a369ce91bb",
+      "7d5e9c8d-ce87-48f3-b793-83489fca8ca0"
+    ],
   }
 
 

@@ -385,7 +385,8 @@ def test_definitions_benchmarks_get():
   #  1 from V6.1__fab_example.sql
   # 12 from V11.1__ai4realnet_example.sql
   #  1 from V12.1__realworldbaselines_example.sql
-  assert len(benchmarks.body) == 1 + 5 + 1 + 12 + 1
+  #  1 from V13.6__competition.sql
+  assert len(benchmarks.body) == 1 + 5 + 1 + 12 + 1 + 1
 
   filtered_bodies = [body for body in benchmarks.body if body.id == uuid.UUID("255fb1e8-af57-45a0-97dc-ecc3e6721b4f")]
   assert len(filtered_bodies) == 1
