@@ -141,6 +141,7 @@ def gen_data(num_levels_per_test, suite_id, benchmark_id, benchmark_name, benchm
               "BENCHMARK_FIELD_NAME": key,
               "BENCHMARK_FIELD_DESCRIPTION": f'{'Primary' if (i == 0) else 'Secondary'} benchmark score ({agg_func} of corresponding test scores)',
               "BENCHMARK_AGG": agg_func,
+              "BENCHMARK_AGG_FIELDS": key,
 
             } for i, (field_id, (key, agg_func)) in enumerate(zip(benchmark_fields, fields))
           },
@@ -158,6 +159,7 @@ def gen_data(num_levels_per_test, suite_id, benchmark_id, benchmark_name, benchm
                 }
                 for i, (field_id, (key, agg_func)) in enumerate(zip(test_fields, fields))
               },
+              "TEST_AGG_FIELDS": key,
               "LOOP": "CLOSED",
               "scenarios": {
                 scenario_id: {
