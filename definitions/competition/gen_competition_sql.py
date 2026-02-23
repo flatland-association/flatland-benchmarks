@@ -43,7 +43,7 @@ def main(truncate_benchmarks_docker_compose: int = 1, truncate_tests_docker_comp
           del test["scenarios"][scenario_id]
 
   sql = gen_sqls(data)
-  with Path("../../ts/backend/src/migration/data/V13.1__copmetition.sql").open("w", encoding="utf-8") as f:
+  with Path("../../ts/backend/src/migration/data/V13.6__copmetition.sql").open("w", encoding="utf-8") as f:
     f.write(sql)
 
   scenario_data = {}
