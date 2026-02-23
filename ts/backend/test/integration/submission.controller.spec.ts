@@ -171,4 +171,28 @@ describe.sequential('Submission controller', () => {
     assertApiResponse(res)
     expect(res.body.body).toHaveLength(1)
   })
+
+  test('should not prevent submissions if daily limit 0', async ({ skip }) => {
+    const testConfig = await getTestConfig()
+    testConfig.submissions = { global: { dailyLimit: 0 } }
+    controller = new ControllerTestAdapter(SubmissionController, testConfig)
+    const res = await controller.testPost('/submissions', { body: testSubmission }, testUserJwt)
+    assertApiResponse(res, StatusCodes.TOO_MANY_REQUESTS)
+  })
+
+  test('should not prevent submissions if daily limit null', async ({ skip }) => {
+    const testConfig = await getTestConfig()
+    testConfig.submissions = { global: { dailyLimit: null } }
+    controller = new ControllerTestAdapter(SubmissionController, testConfig)
+    const res = await controller.testPost('/submissions', { body: testSubmission }, testUserJwt)
+    assertApiResponse(res)
+  })
+
+  test('should prevent submissions beyond daily limit', async ({ skip }) => {
+    const testConfig = await getTestConfig()
+    testConfig.submissions = { global: { dailyLimit: 999 } }
+    controller = new ControllerTestAdapter(SubmissionController, testConfig)
+    const res = await controller.testPost('/submissions', { body: testSubmission }, testUserJwt)
+    assertApiResponse(res)
+  })
 })
