@@ -84,6 +84,30 @@ export class SubmissionController extends Controller {
     await this.checkValidity(req.body)
     // save submission in db
     const sql = SqlService.getInstance()
+
+    if (
+      this.config?.submissions?.global?.dailyLimit != undefined &&
+      this.config?.submissions?.global?.dailyLimit != null
+    ) {
+      // https://stackoverflow.com/questions/1888544/how-to-select-records-from-last-24-hours-using-sql
+      const submissions = await sql.query<SubmissionRow>`
+    SELECT * FROM submissions
+    WHERE
+      submitted_by = ${auth.sub} AND submitted_at >= NOW() - '1 day'::INTERVAL
+  `
+      if ((submissions?.length || 0) > this.config.submissions.global.dailyLimit) {
+        this.respondError(
+          req,
+          res,
+          { text: 'Daily limit reached.' },
+          undefined,
+          undefined,
+          StatusCodes.TOO_MANY_REQUESTS,
+        )
+        return
+      }
+    }
+
     const idRow = await sql.query`
         INSERT INTO submissions (
           benchmark_id,

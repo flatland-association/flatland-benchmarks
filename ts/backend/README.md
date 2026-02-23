@@ -39,6 +39,7 @@ npm run start.fab
 ```
 
 This will:
+
 * compile the source code to a JavaScript module output to `out-tsc/backend/app`
 * copy (non-overwriting) the `config.jsonc` to `out-tsc/backend/config` for your convenience
 * start the app in Node.js
@@ -71,3 +72,12 @@ There are no CLI code scaffolding tools for FAB Backend. Manually create `.mts` 
 * Manually copy customization data to `public`. The template is `ts/backend/src/public/*`. It's not copied over automatically to ensure the customization template won't overwrite deployment-specific customizations.
 
 * Set up your server to execute `node main.min.mjs` in `app/` (intentionally leaving out further instructions, since this depends on the server in use)
+
+## Run integration tests
+
+```shell
+cd ts
+npm run docker:up
+cd ../ts/backend
+npm run  test-integration-no-setup
+```

@@ -100,7 +100,7 @@
   },
   "scripts": {
     "prepare": "husky",
-    "docker:up": "docker compose --profile tsdev up -d",
+    "docker:up": "docker compose --env-file .env --env-file .env.test --profile tsdev up -d",
     "docker:up:cvolumes": "docker compose --env-file .env.cvolumes --env-file .env --profile tsdev up -d",
     "docker:down": "docker compose --profile tsdev down"
   }

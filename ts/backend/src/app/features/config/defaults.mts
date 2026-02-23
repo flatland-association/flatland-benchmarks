@@ -24,4 +24,9 @@ export const defaults = {
     audience: 'fab', // must be present in JWT's aud
     timeout: 30000, // ms
   },
+  submissions: {
+    global: {
+      dailyLimit: null,
+    },
+  },
 }
