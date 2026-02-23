@@ -43,7 +43,7 @@ def main(truncate_benchmarks_docker_compose: int = 1, truncate_tests_docker_comp
           del test["scenarios"][scenario_id]
 
   sql = gen_sqls(data)
-  with Path("../../ts/backend/src/migration/data/V13.6__copmetition.sql").open("w", encoding="utf-8") as f:
+  with Path("../../ts/backend/src/migration/data/V13.6__competition.sql").open("w", encoding="utf-8") as f:
     f.write(sql)
 
   scenario_data = {}
@@ -51,7 +51,7 @@ def main(truncate_benchmarks_docker_compose: int = 1, truncate_tests_docker_comp
 
   for i, (test_id, test) in enumerate(data[suite_id]["benchmarks"][benchmark_id]['tests'].items()):
     for j, (scenario_id, scenario) in enumerate(test["scenarios"].items()):
-      scenario_data[scenario_id] = f"scene_{i:01d}/scene_{i:01d}_initial.pkl"
+      scenario_data[scenario_id] = f"scene_{i + 1:01d}/scene_{i + 1:01d}_initial.pkl"
       TEST_TO_SCENARIO_IDS[test_id].append(scenario_id)
   print(json.dumps(scenario_data, indent=4))
   print(json.dumps(TEST_TO_SCENARIO_IDS, indent=4))
