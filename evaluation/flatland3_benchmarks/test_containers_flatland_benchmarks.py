@@ -101,8 +101,6 @@ def wait_for_completion(submission_id: str):
 @pytest.mark.parametrize(
   "tests,expected_test_ids,expected_primary_scenario_scores,expected_primary_test_scores,expected_secondary_scenario_scores,expected_secondary_test_scores",
   [
-    (None, ["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"], [[0.6653061224489796, 1], [1, 1, 1]], [1.6653061224489796, 3],
-     [[0, 1], [1, 1, 1]], [0.5, 1]),
     (["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"],
      ["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"], [[0.6653061224489796, 1], [1, 1, 1]], [1.6653061224489796, 3],
      [[0, 1], [1, 1, 1]], [0.5, 1]),
@@ -110,7 +108,6 @@ def wait_for_completion(submission_id: str):
     (["5206f2ee-d0a9-405b-8da3-93625e169811"], ["5206f2ee-d0a9-405b-8da3-93625e169811"], [[1, 1, 1]], [3], [[1, 1, 1]], [1])
   ],
   ids=[
-    "all",
     "Test_0,Test_1",
     "Test0",
     "Test1"
@@ -132,7 +129,7 @@ def test_successful_run(expected_test_ids, tests: List[str], expected_primary_sc
       benchmark_id=benchmark_id,
       name="flatland-baselines-deadlock-avoidance-heuristic",
       submission_data_url="ghcr.io/flatland-association/flatland-baselines-deadlock-avoidance-heuristic:latest",
-      test_ids=expected_test_ids
+      test_ids=tests
     )
   )
   submission_id = str(res.body.id)

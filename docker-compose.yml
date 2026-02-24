@@ -358,6 +358,7 @@ services:
       # Celery configuration
       - BENCHMARK_ID=f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
       - TEST_IDS=${TEST_IDS}
+      - PERCENTAGE_COMPLETE_THRESHOLD=${PERCENTAGE_COMPLETE_THRESHOLD:-0}
       - PYTHONPATH=/app/:/app/fab-clientlib
       - BROKER_URL=amqps://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5671//
       - BACKEND_URL=rpc://
