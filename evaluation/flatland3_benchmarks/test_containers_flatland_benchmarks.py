@@ -3,7 +3,7 @@ import os
 import tempfile
 import time
 import uuid
-from typing import List, Optional
+from typing import List
 
 import boto3
 import pytest
@@ -14,7 +14,7 @@ from requests_oauthlib import OAuth2Session
 from testcontainers.compose import DockerCompose
 
 import s3_utils
-from fab_clientlib import DefaultApi, ApiClient, Configuration
+from fab_clientlib import DefaultApi, ApiClient, Configuration, SubmissionsPostRequest
 from orchestrator_docker_compose import DockerComposeFlatlandBenchmarksOrchestrator
 from s3_utils import download_dir
 
@@ -73,40 +73,41 @@ def test_containers_fixture():
     raise e
 
 
-def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, tests: Optional[List[str]] = None, **kwargs):
+def wait_for_completion(submission_id: str):
   start_time = time.time()
   app = Celery(
     broker="amqp://localhost:5672",
     backend="rpc://",
   )
-  logger.info(f"/ Start simulate submission from portal for submission_id={submission_id}.....")
+  logger.info(f"/ Start waiting for submission from portal for submission_id={submission_id}.....")
+  time.sleep(3)
+  inspect = app.control.inspect()
+  while True:
+    logger.info(inspect.active().values())
+    active = [e2 for e in inspect.active().values() for e2 in e]
+    logger.info(active)
+    if len(active) > 0:
+      seconds = 5
+      time.sleep(seconds)
+    else:
+      break
 
-  ret = app.send_task(
-    benchmark_id,
-    task_id=submission_id,
-    kwargs={
-      "submission_data_url": submission_data_url,
-      "tests": tests,
-      **kwargs
-    },
-    queue=benchmark_id,
-  ).get()
-  logger.info(ret)
   duration = time.time() - start_time
   logger.info(
-    f"\\ End simulate submission from portal for submission_id={submission_id}. Took {duration} seconds.")
-  return ret
+    f"\\ End waiting for submission from portal for submission_id={submission_id}. Took {duration} seconds.")
 
 
 @pytest.mark.usefixtures("test_containers_fixture")
 @pytest.mark.parametrize(
-  "tests,expected_test_ids,expected_total_simulation_count,expected_primary_scenario_scores,expected_primary_test_scores,expected_secondary_scenario_scores,expected_secondary_test_scores",
+  "tests,expected_test_ids,expected_primary_scenario_scores,expected_primary_test_scores,expected_secondary_scenario_scores,expected_secondary_test_scores",
   [
-    (None, ["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"], 5, [[1, 1], [1, 1, 1]], [2, 3], [[1, 1], [1, 1, 1]], [1, 1]),
+    (None, ["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"], [[0.6653061224489796, 1], [1, 1, 1]], [1.6653061224489796, 3],
+     [[0, 1], [1, 1, 1]], [0.5, 1]),
     (["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"],
-     ["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"], 5, [[1, 1], [1, 1, 1]], [2, 3], [[1, 1], [1, 1, 1]], [1, 1]),
-    (["4ecdb9f4-e2ff-41ff-9857-abe649c19c50"], ["4ecdb9f4-e2ff-41ff-9857-abe649c19c50"], 2, [[1, 1]], [2], [[1, 1]], [1]),
-    (["5206f2ee-d0a9-405b-8da3-93625e169811"], ["5206f2ee-d0a9-405b-8da3-93625e169811"], 3, [[1, 1, 1]], [3], [[1, 1, 1]], [1])
+     ["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"], [[0.6653061224489796, 1], [1, 1, 1]], [1.6653061224489796, 3],
+     [[0, 1], [1, 1, 1]], [0.5, 1]),
+    (["4ecdb9f4-e2ff-41ff-9857-abe649c19c50"], ["4ecdb9f4-e2ff-41ff-9857-abe649c19c50"], [[0.6653061224489796, 1]], [1.6653061224489796], [[0, 1]], [0.5]),
+    (["5206f2ee-d0a9-405b-8da3-93625e169811"], ["5206f2ee-d0a9-405b-8da3-93625e169811"], [[1, 1, 1]], [3], [[1, 1, 1]], [1])
   ],
   ids=[
     "all",
@@ -115,17 +116,28 @@ def run_task(benchmark_id: str, submission_id: str, submission_data_url: str, te
     "Test1"
   ]
 )
-def test_successful_run(expected_total_simulation_count, expected_test_ids, tests: List[str], expected_primary_scenario_scores: List[List[float]],
-                        expected_primary_test_scores: List[float], expected_secondary_scenario_scores: List[List[float]],
-                        expected_secondary_test_scores: List[float]):
-  submission_id = str(uuid.uuid4())
+def test_successful_run(expected_test_ids, tests: List[str], expected_primary_scenario_scores: List[List[float]], expected_primary_test_scores: List[float],
+                        expected_secondary_scenario_scores: List[List[float]], expected_secondary_test_scores: List[float]):
+  benchmark_id = 'f669fb8d-80ac-4ba7-8875-0a33ed5d30b9'
   config = dotenv_values("../../.env")
 
-  ret = run_task('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', submission_id,
-                 # use deterministic baselines
-                 submission_data_url="ghcr.io/flatland-association/flatland-baselines-deadlock-avoidance-heuristic:latest",
-                 tests=tests, **config)
-  assert set(ret.keys()) == set(expected_test_ids)
+  token = backend_application_flow(
+    client_id='fab-client-credentials',
+    client_secret='top-secret',
+    token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
+  )
+  fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
+  res = fab.submissions_post(
+    SubmissionsPostRequest(
+      benchmark_id=benchmark_id,
+      name="flatland-baselines-deadlock-avoidance-heuristic",
+      submission_data_url="ghcr.io/flatland-association/flatland-baselines-deadlock-avoidance-heuristic:latest",
+      test_ids=expected_test_ids
+    )
+  )
+  submission_id = str(res.body.id)
+
+  wait_for_completion(submission_id)
 
   logger.info("Download results from S3")
 
@@ -146,13 +158,6 @@ def test_successful_run(expected_total_simulation_count, expected_test_ids, test
       print(f"Checking results present in S3 for test {test_id}, scenario {scenario_id} of submission {submission_id} ")
       with tempfile.TemporaryDirectory() as tmp_dir_name:
         download_dir(prefix=prefix, bucket=s3_bucket, client=s3, local=tmp_dir_name)
-
-  token = backend_application_flow(
-    client_id='fab-client-credentials',
-    client_secret='top-secret',
-    token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
-  )
-  fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
 
   fab.submissions_submission_ids_patch(submission_ids=[uuid.UUID(submission_id)])
 
@@ -178,7 +183,7 @@ def test_successful_run(expected_total_simulation_count, expected_test_ids, test
 def test_failing_run():
   submission_id = str(uuid.uuid4())
   with pytest.raises(Exception) as exc_info:
-    run_task('f669fb8d-80ac-4ba7-8875-0a33ed5d30b9', submission_id, "asdfasdf")
+    wait_for_completion(submission_id)
     assert str(exc_info.value).startswith(f"Failed execution ['sudo', 'docker', 'run', '--name', 'flatland3-submission-{submission_id}'")
 
 
