@@ -2,7 +2,6 @@
 import logging
 import os
 import ssl
-import tempfile
 import time
 from pathlib import Path
 from typing import List
@@ -14,7 +13,6 @@ from celery.signals import after_setup_task_logger
 from kubernetes import client, config
 
 from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError
-from s3_utils import s3_utils, download_dir
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +25,7 @@ ACTIVE_DEADLINE_SECONDS = os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)
 BENCHMARK_ID = os.environ.get("BENCHMARK_ID", "flatland3-evaluation")
 SUBMISSIONS_PVC = os.environ.get("SUBMISSIONS_PVC", "fab-int-submissions")
 S3_URL_ENVIRONMENTS_ZIP = os.environ.get("S3_URL_ENVIRONMENTS_ZIP", "s3://fab-data/flatland3/environments.zip")
+PERCENTAGE_COMPLETE_THRESHOLD = os.environ.get("PERCENTAGE_COMPLETE_THRESHOLD", None)
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
@@ -52,40 +51,19 @@ def setup_task_logger(logger, *args, **kwargs):
 class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
 
   # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
-  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, s3, **kwargs):
-    if tests is None:
-      tests = list(self.TEST_TO_SCENARIO_IDS.keys())
-
-    results = {test_id: {} for test_id in tests}
-    for test_id in tests:
-      for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
-        pkl_path = self.load_scenario_data(scenario_id)
-        prefix = f"{submission_id}/{test_id}/{scenario_id}"
-        core_api = kwargs["core_api"]
-        batch_api = kwargs["batch_api"]
-
-        self._run_submission(test_id, scenario_id, submission_data_url, pkl_path,
-                             core_api, batch_api, aws_access_key_id, aws_endpoint_url, aws_secret_access_key, )
-
-        logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
-        with tempfile.TemporaryDirectory() as tmpdirname:
-          if s3 is None:
-            s3 = s3_utils.get_boto_client(aws_access_key_id, aws_secret_access_key, aws_endpoint_url)
-          download_dir(prefix=prefix, bucket=s3_bucket, client=s3, local=tmpdirname)
-
-          normalized_reward, success_rate = self._extract_stats_from_trajectory(Path(tmpdirname) / submission_id / test_id / scenario_id, scenario_id)
-          results[test_id][scenario_id] = {
-            "normalized_reward": normalized_reward,
-            "percentage_complete": success_rate
-          }
-        logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {results[test_id][scenario_id]}")
-    return results
-
   def _run_submission(self,
-                      test_id, scenario_id, submission_data_url, pkl_path, core_api, batch_api,
-                      aws_access_key_id=None, aws_endpoint_url=None, aws_secret_access_key=None,
-                      ):
+                      test_id,
+                      scenario_id,
+                      submission_data_url,
+                      pkl_path,
+                      aws_endpoint_url: str = None,
+                      aws_access_key_id: str = None,
+                      aws_secret_access_key: str = None,
+                      s3_bucket: str = None,
+                      **kwargs):
     submission_id = self.submission_id
+    core_api = kwargs["core_api"]
+    batch_api = kwargs["batch_api"]
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
 
@@ -98,7 +76,6 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
     submission_container_definition["image"] = submission_data_url
     submission_definition["spec"]["template"]["spec"]["volumes"][1]["persistentVolumeClaim"]["claimName"] = SUBMISSIONS_PVC
-
 
     # submission container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
     data_dir = f"/data/{test_id}/{scenario_id}"
