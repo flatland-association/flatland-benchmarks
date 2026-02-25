@@ -309,6 +309,7 @@ services:
     volumes:
       - flatland3-benchmarks-scenarios:/scenarios
       - flatland3-benchmarks-data:/vol
+      - /Users/che/workspaces/flatland-rl/scenarios/OneDrive_1_23-02-2026:/app/local_scenarios
     entrypoint: [ "/bin/sh","-c" ]
     command:
       - |
@@ -323,6 +324,8 @@ services:
         unzip debug-environments.zip -o -d /scenarios
         rm -fR /scenarios/Test*
         mv -f /scenarios/debug-environments/Test* /scenarios/
+
+        cp -R /app/local_scenarios/* /scenarios/
         find /scenarios
 
   flatland3-benchmarks-orchestrator:
@@ -334,7 +337,7 @@ services:
         set -euxo pipefail
         pwd
         python -m pip install -r /app/fab-clientlib/requirements.txt
-        python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
+        python -m celery -A orchestrator worker -l info -n orchestrator@%n -Q c85d5fc2-15da-4a62-8e14-28d1261c29bd
     build:
       # install sudo for DinD
       dockerfile: docker/flatland3_benchmarks/orchestrator/Dockerfile
@@ -356,7 +359,7 @@ services:
       - flatland3-benchmarks-scenarios:/app/scenarios
     environment:
       # Celery configuration
-      - BENCHMARK_ID=f669fb8d-80ac-4ba7-8875-0a33ed5d30b9
+      - BENCHMARK_ID=c85d5fc2-15da-4a62-8e14-28d1261c29bd
       - TEST_IDS=${TEST_IDS}
       - PYTHONPATH=/app/:/app/fab-clientlib
       - BROKER_URL=amqps://${RABBITMQ_DEFAULT_USER}:${RABBITMQ_DEFAULT_PASS}@${RABBITMQ_HOST}:5671//
