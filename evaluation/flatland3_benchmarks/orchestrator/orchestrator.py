@@ -323,11 +323,11 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       "14611e50-ef67-4833-9023-65f21e3208ef": "Test_14/Level_9.pkl",
 
       # railway competition:
-      "046c6f42-a713-4b3d-94df-99c23753a682": "scene_0/scene_0_initial.pkl",
-      "d2ca9404-f38c-4f01-873a-4e33baf09620": "scene_1/scene_1_initial.pkl",
-      "31fb82ac-fae2-4a78-9148-5a9fe93716c7": "scene_2/scene_2_initial.pkl",
-      "666f08ab-8a2d-41fc-adbe-9644796e439f": "scene_3/scene_3_initial.pkl",
-      "66755e67-1cc8-4898-ad44-704c3e49eec6": "scene_4/scene_4_initial.pkl",
+      "ff0c3bb2-cfac-480c-a1f2-91966787cf05": "scene_1/scene_1_initial.pkl",
+      "c3e9e8ca-123d-4335-be18-14c0513449f6": "scene_2/scene_2_initial.pkl",
+      "ee616a1c-3583-438c-86ec-b2b2b4e0ce22": "scene_3/scene_3_initial.pkl",
+      "3af83068-1e6d-45ce-979f-bddaf130d6ed": "scene_4/scene_4_initial.pkl",
+      "f61e6d16-5975-461d-ad99-1c70d0cec2ec": "scene_5/scene_5_initial.pkl"
     }[scenario_id]
 
   TEST_TO_SCENARIO_IDS = {
@@ -512,20 +512,20 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       "14611e50-ef67-4833-9023-65f21e3208ef"
     ],
     # railway competition:
-    "2a085b24-4cde-428a-977f-4771a25bfc3c": [
-      "046c6f42-a713-4b3d-94df-99c23753a682"
+    "d4dd100a-016c-4332-b711-926ea7d2c0c3": [
+      "ff0c3bb2-cfac-480c-a1f2-91966787cf05"
     ],
-    "b3cde510-701e-440c-931d-8c1c032f8d9d": [
-      "d2ca9404-f38c-4f01-873a-4e33baf09620"
+    "12e03a34-d11b-4635-bf9f-b6d0f7003a66": [
+      "c3e9e8ca-123d-4335-be18-14c0513449f6"
     ],
-    "c2e24c50-a4e2-48c3-8cb8-fe46ff245802": [
-      "31fb82ac-fae2-4a78-9148-5a9fe93716c7"
+    "edb50f48-d579-4994-afcd-08e106d375cb": [
+      "ee616a1c-3583-438c-86ec-b2b2b4e0ce22"
     ],
-    "44ea4b29-37d2-4c04-98a2-8f758173c2ab": [
-      "666f08ab-8a2d-41fc-adbe-9644796e439f"
+    "7f277294-de87-463b-a526-35b70c0bf693": [
+      "3af83068-1e6d-45ce-979f-bddaf130d6ed"
     ],
-    "fbe1bb82-848c-4e65-9c9d-88e1e351265d": [
-      "66755e67-1cc8-4898-ad44-704c3e49eec6"
+    "678cdb1e-86c4-42a7-9c0d-0073a80faaf0": [
+      "f61e6d16-5975-461d-ad99-1c70d0cec2ec"
     ]
   }
 

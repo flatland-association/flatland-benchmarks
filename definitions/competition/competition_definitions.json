@@ -1,25 +1,25 @@
 {
   "6240c685-0fb4-481e-9404-47a570632227": {
     "ID": "6240c685-0fb4-481e-9404-47a570632227",
-    "SUITE_NAME": "Real-World Baselines Challenge",
-    "SUITE_DESCRIPTION": "Towards Real-Time Train Rescheduling: Multi-Agent Reinforcement Learning and Operations Research for Dynamic Train Rescheduling under Stochastic Perturbations",
-    "SUITE_CONTENTS": "{\"introduction\":\"<p><b>In this competition we want to find out how to efficiently manage dense traffic on a complex railway network with unforeseen events.</b></p><p>This competition tackles a real-world problem faced by many transportation companies around the world: the vehicle rescheduling problem (VRSP). It aims to identify novel solutions and advance existing approaches for dynamic railway rescheduling to take a step towards real-time rescheduling demands of future railway networks. Your contribution to this challenge might influence how modern traffic management systems are implemented.</p><p>This competition is part of the <a href=\\\"https://ai4realnet.eu/\\\">AI4REALNET project</a> (AI for REAL-world NETwork operation).</p>\",\"tabs\":[{\"title\":\"What is Flatland?\",\"text\":\"<p><a href=\\\"https://github.com/flatland-association/flatland-rl\\\">Flatland</a> is an open-source framework for developing and comparing Multi-Agent Reinforcement Learning algorithms in little (or ridiculously large!) grid-worlds. Check out the extensive <a href=\\\"https://flatland-association.github.io/flatland-book/intro.html\\\">documentation on GitHub</a> or the <a href=\\\"https://arxiv.org/abs/2012.05893\\\">paper on arXiv</a>.</p>\"},{\"title\":\"Competition Procedure\",\"text\":\"<p>The competition consists of a warm-up round for participants to familiarize themselves with the Flatland environment and the competition setup. After that, the proper competition starts with new and more complex environments to tackle.</p><p><b>Warm-up round:</b> November 10th, 2025 - November 28th, 2025</p><p><b>Proper competition:</b> December 1st, 2025 - January 23rd, 2026</p>\"},{\"title\":\"Prizes\",\"text\":\"There will be a paper written on the competition and the best teams and their solutions will be included. The paper is meant to be published and presented at a relevant conference, e.g. NeurIPS.\"},{\"title\":\"Rules\",\"text\":\"<p><b>General:</b> In the following, Participant refers to a single person or a participating team. By signing up for this competition, Participants agree to the rules of the competition. Anyone registered as Participant has the right to participate in the competition and participants are allowed to form teams.</p><p><b>Daily Submission Cap:</b> Each Participant may submit up to 5 solutions per day.</p><p><b>Runtime Limitation:</b> The evaluation of a solution will be stopped if double the timesteps of the latest scheduled arrival elapsed during a scenario, or if the evaluation lasts longer than 4 hours. The scores for all completed scenarios up to that point will be counted toward to competition.</p><p><b>Open Source:</b> Participants must open source their submissions in order to qualify for prizes.</p><p>Evaluation Procedure: Submissions are initially scored automatically and shown on the leaderboard. Top-performing entries are subjected to a secondary human review to resolve any ties and ensure robustness of the scoring methodology.</p>\"},{\"title\":\"Contact\",\"text\":\"<p>Join the competition on our Revolt server: tba</p><p>Get in touch with us by e-mail <a href=\\\"mailto:competition@flatland-association.org\\\">competition@flatland-association.org</a></p>\"}]}",
+    "SUITE_NAME": "[BETA] Railway Competition 2026",
+    "SUITE_DESCRIPTION": "Lorem ipsum",
+    "SUITE_CONTENTS": "{\"introduction\": \"<p><b>In this competition we want to find out how to efficiently manage dense traffic on a complex railway network with unforeseen events.</b></p><p>This competition tackles a real-world problem faced by many transportation companies around the world: the vehicle rescheduling problem (VRSP). It aims to identify novel solutions and advance existing approaches for dynamic railway rescheduling to take a step towards real-time rescheduling demands of future railway networks. Your contribution to this challenge might influence how modern traffic management systems are implemented.</p><p>This competition is part of the <a href=\\\"https://ai4realnet.eu/\\\">AI4REALNET project</a> (AI for REAL-world NETwork operation).</p>\", \"tabs\": [{\"title\": \"What is Flatland?\", \"text\": \"<p><a href=\\\"https://github.com/flatland-association/flatland-rl\\\">Flatland</a> is an open-source framework for developing and comparing Multi-Agent Reinforcement Learning algorithms in little (or ridiculously large!) grid-worlds. Check out the extensive <a href=\\\"https://flatland-association.github.io/flatland-book/intro.html\\\">documentation on GitHub</a> or the <a href=\\\"https://arxiv.org/abs/2012.05893\\\">paper on arXiv</a>.</p>\"}, {\"title\": \"Competition Procedure\", \"text\": \"<p>The competition consists of a warm-up round for participants to familiarize themselves with the Flatland environment and the competition setup. After that, the proper competition starts with new and more complex environments to tackle.</p><p><b>Warm-up round:</b> November 10th, 2025 - November 28th, 2025</p><p><b>Proper competition:</b> December 1st, 2025 - January 23rd, 2026</p>\"}, {\"title\": \"Prizes\", \"text\": \"There will be a paper written on the competition and the best teams and their solutions will be included. The paper is meant to be published and presented at a relevant conference, e.g. NeurIPS.\"}, {\"title\": \"Rules\", \"text\": \"<p><b>General:</b> In the following, Participant refers to a single person or a participating team. By signing up for this competition, Participants agree to the rules of the competition. Anyone registered as Participant has the right to participate in the competition and participants are allowed to form teams.</p><p><b>Daily Submission Cap:</b> Each Participant may submit up to 5 solutions per day.</p><p><b>Runtime Limitation:</b> The evaluation of a solution will be stopped if double the timesteps of the latest scheduled arrival elapsed during a scenario, or if the evaluation lasts longer than 4 hours. The scores for all completed scenarios up to that point will be counted toward to competition.</p><p><b>Open Source:</b> Participants must open source their submissions in order to qualify for prizes.</p><p>Evaluation Procedure: Submissions are initially scored automatically and shown on the leaderboard. Top-performing entries are subjected to a secondary human review to resolve any ties and ensure robustness of the scoring methodology.</p>\"}, {\"title\": \"Contact\", \"text\": \"<p>Join the competition on our Revolt server: tba</p><p>Get in touch with us by e-mail <a href=\\\"mailto:competition@flatland-association.org\\\">competition@flatland-association.org</a></p>\"}]}",
     "SUITE_SETUP": "COMPETITION",
     "benchmarks": {
       "c85d5fc2-15da-4a62-8e14-28d1261c29bd": {
         "ID": "c85d5fc2-15da-4a62-8e14-28d1261c29bd",
-        "BENCHMARK_NAME": "Railway competition",
-        "BENCHMARK_DESCRIPTION": "The warm-up round runs from November 10th, 2025 - November 28th, 2025",
+        "BENCHMARK_NAME": "[BETA] Railway Competition 2026",
+        "BENCHMARK_DESCRIPTION": "[BETA] Railway Competition 2026",
         "BENCHMARK_FIELDS": {
-          "a2a20282-a423-4478-907b-ee51b602c8b3": {
-            "ID": "a2a20282-a423-4478-907b-ee51b602c8b3",
+          "695aa2ce-9de1-40f0-bbdb-534482b5a44d": {
+            "ID": "695aa2ce-9de1-40f0-bbdb-534482b5a44d",
             "BENCHMARK_FIELD_NAME": "normalized_reward",
             "BENCHMARK_FIELD_DESCRIPTION": "Primary benchmark score (NANSUM of corresponding test scores)",
             "BENCHMARK_AGG": "NANSUM",
             "BENCHMARK_AGG_FIELDS": "normalized_reward"
           },
-          "5eb94715-3faa-4e1a-972e-d75c263e9f17": {
-            "ID": "5eb94715-3faa-4e1a-972e-d75c263e9f17",
+          "124eb391-adce-40c9-bf93-c5725cb92ccb": {
+            "ID": "124eb391-adce-40c9-bf93-c5725cb92ccb",
             "BENCHMARK_FIELD_NAME": "percentage_complete",
             "BENCHMARK_FIELD_DESCRIPTION": "Secondary benchmark score (NANMEAN of corresponding test scores)",
             "BENCHMARK_AGG": "NANMEAN",
@@ -27,19 +27,19 @@
           }
         },
         "tests": {
-          "2a085b24-4cde-428a-977f-4771a25bfc3c": {
-            "ID": "2a085b24-4cde-428a-977f-4771a25bfc3c",
+          "d4dd100a-016c-4332-b711-926ea7d2c0c3": {
+            "ID": "d4dd100a-016c-4332-b711-926ea7d2c0c3",
             "TEST_NAME": "Test 0",
             "TEST_DESCRIPTION": "Test 0: 7 agents,  30x30, 2",
             "TEST_FIELDS": {
-              "f3160df2-1a3a-4564-8349-b6931cf1291c": {
-                "ID": "f3160df2-1a3a-4564-8349-b6931cf1291c",
+              "425fbb2f-1c33-44f5-a3cf-1ead9a7935bb": {
+                "ID": "425fbb2f-1c33-44f5-a3cf-1ead9a7935bb",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "6af22676-c8e0-4ed0-992c-3dad9b4c449b": {
-                "ID": "6af22676-c8e0-4ed0-992c-3dad9b4c449b",
+              "0422d549-cd91-42d9-948a-97f71880450a": {
+                "ID": "0422d549-cd91-42d9-948a-97f71880450a",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -48,18 +48,18 @@
             "TEST_AGG_FIELDS": "percentage_complete",
             "LOOP": "CLOSED",
             "scenarios": {
-              "046c6f42-a713-4b3d-94df-99c23753a682": {
-                "ID": "046c6f42-a713-4b3d-94df-99c23753a682",
-                "SCENARIO_NAME": "046c6f42-a713-4b3d-94df-99c23753a682",
-                "SCENARIO_DESCRIPTION": "046c6f42-a713-4b3d-94df-99c23753a682",
+              "ff0c3bb2-cfac-480c-a1f2-91966787cf05": {
+                "ID": "ff0c3bb2-cfac-480c-a1f2-91966787cf05",
+                "SCENARIO_NAME": "ff0c3bb2-cfac-480c-a1f2-91966787cf05",
+                "SCENARIO_DESCRIPTION": "ff0c3bb2-cfac-480c-a1f2-91966787cf05",
                 "SCENARIO_FIELDS": {
-                  "89672c24-54f0-4acc-a0c8-8b32d76880af": {
-                    "ID": "89672c24-54f0-4acc-a0c8-8b32d76880af",
+                  "0cce49e1-dc6a-455c-87f4-fc858ec2d2e7": {
+                    "ID": "0cce49e1-dc6a-455c-87f4-fc858ec2d2e7",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  "f17cec1e-29c8-4b62-8240-99d97b0405f2": {
-                    "ID": "f17cec1e-29c8-4b62-8240-99d97b0405f2",
+                  "d8181c95-f1a3-4b01-b0ac-dfc5b6cfe38e": {
+                    "ID": "d8181c95-f1a3-4b01-b0ac-dfc5b6cfe38e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
@@ -67,19 +67,19 @@
               }
             }
           },
-          "b3cde510-701e-440c-931d-8c1c032f8d9d": {
-            "ID": "b3cde510-701e-440c-931d-8c1c032f8d9d",
+          "12e03a34-d11b-4635-bf9f-b6d0f7003a66": {
+            "ID": "12e03a34-d11b-4635-bf9f-b6d0f7003a66",
             "TEST_NAME": "Test 1",
             "TEST_DESCRIPTION": "Test 1: 7 agents,  30x30, 2",
             "TEST_FIELDS": {
-              "f3160df2-1a3a-4564-8349-b6931cf1291c": {
-                "ID": "f3160df2-1a3a-4564-8349-b6931cf1291c",
+              "425fbb2f-1c33-44f5-a3cf-1ead9a7935bb": {
+                "ID": "425fbb2f-1c33-44f5-a3cf-1ead9a7935bb",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "6af22676-c8e0-4ed0-992c-3dad9b4c449b": {
-                "ID": "6af22676-c8e0-4ed0-992c-3dad9b4c449b",
+              "0422d549-cd91-42d9-948a-97f71880450a": {
+                "ID": "0422d549-cd91-42d9-948a-97f71880450a",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -88,18 +88,18 @@
             "TEST_AGG_FIELDS": "percentage_complete",
             "LOOP": "CLOSED",
             "scenarios": {
-              "d2ca9404-f38c-4f01-873a-4e33baf09620": {
-                "ID": "d2ca9404-f38c-4f01-873a-4e33baf09620",
-                "SCENARIO_NAME": "d2ca9404-f38c-4f01-873a-4e33baf09620",
-                "SCENARIO_DESCRIPTION": "d2ca9404-f38c-4f01-873a-4e33baf09620",
+              "c3e9e8ca-123d-4335-be18-14c0513449f6": {
+                "ID": "c3e9e8ca-123d-4335-be18-14c0513449f6",
+                "SCENARIO_NAME": "c3e9e8ca-123d-4335-be18-14c0513449f6",
+                "SCENARIO_DESCRIPTION": "c3e9e8ca-123d-4335-be18-14c0513449f6",
                 "SCENARIO_FIELDS": {
-                  "89672c24-54f0-4acc-a0c8-8b32d76880af": {
-                    "ID": "89672c24-54f0-4acc-a0c8-8b32d76880af",
+                  "0cce49e1-dc6a-455c-87f4-fc858ec2d2e7": {
+                    "ID": "0cce49e1-dc6a-455c-87f4-fc858ec2d2e7",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  "f17cec1e-29c8-4b62-8240-99d97b0405f2": {
-                    "ID": "f17cec1e-29c8-4b62-8240-99d97b0405f2",
+                  "d8181c95-f1a3-4b01-b0ac-dfc5b6cfe38e": {
+                    "ID": "d8181c95-f1a3-4b01-b0ac-dfc5b6cfe38e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
@@ -107,19 +107,19 @@
               }
             }
           },
-          "c2e24c50-a4e2-48c3-8cb8-fe46ff245802": {
-            "ID": "c2e24c50-a4e2-48c3-8cb8-fe46ff245802",
+          "edb50f48-d579-4994-afcd-08e106d375cb": {
+            "ID": "edb50f48-d579-4994-afcd-08e106d375cb",
             "TEST_NAME": "Test 2",
             "TEST_DESCRIPTION": "Test 2: 7 agents,  30x30, 2",
             "TEST_FIELDS": {
-              "f3160df2-1a3a-4564-8349-b6931cf1291c": {
-                "ID": "f3160df2-1a3a-4564-8349-b6931cf1291c",
+              "425fbb2f-1c33-44f5-a3cf-1ead9a7935bb": {
+                "ID": "425fbb2f-1c33-44f5-a3cf-1ead9a7935bb",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "6af22676-c8e0-4ed0-992c-3dad9b4c449b": {
-                "ID": "6af22676-c8e0-4ed0-992c-3dad9b4c449b",
+              "0422d549-cd91-42d9-948a-97f71880450a": {
+                "ID": "0422d549-cd91-42d9-948a-97f71880450a",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -128,18 +128,18 @@
             "TEST_AGG_FIELDS": "percentage_complete",
             "LOOP": "CLOSED",
             "scenarios": {
-              "31fb82ac-fae2-4a78-9148-5a9fe93716c7": {
-                "ID": "31fb82ac-fae2-4a78-9148-5a9fe93716c7",
-                "SCENARIO_NAME": "31fb82ac-fae2-4a78-9148-5a9fe93716c7",
-                "SCENARIO_DESCRIPTION": "31fb82ac-fae2-4a78-9148-5a9fe93716c7",
+              "ee616a1c-3583-438c-86ec-b2b2b4e0ce22": {
+                "ID": "ee616a1c-3583-438c-86ec-b2b2b4e0ce22",
+                "SCENARIO_NAME": "ee616a1c-3583-438c-86ec-b2b2b4e0ce22",
+                "SCENARIO_DESCRIPTION": "ee616a1c-3583-438c-86ec-b2b2b4e0ce22",
                 "SCENARIO_FIELDS": {
-                  "89672c24-54f0-4acc-a0c8-8b32d76880af": {
-                    "ID": "89672c24-54f0-4acc-a0c8-8b32d76880af",
+                  "0cce49e1-dc6a-455c-87f4-fc858ec2d2e7": {
+                    "ID": "0cce49e1-dc6a-455c-87f4-fc858ec2d2e7",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  "f17cec1e-29c8-4b62-8240-99d97b0405f2": {
-                    "ID": "f17cec1e-29c8-4b62-8240-99d97b0405f2",
+                  "d8181c95-f1a3-4b01-b0ac-dfc5b6cfe38e": {
+                    "ID": "d8181c95-f1a3-4b01-b0ac-dfc5b6cfe38e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
@@ -147,19 +147,19 @@
               }
             }
           },
-          "44ea4b29-37d2-4c04-98a2-8f758173c2ab": {
-            "ID": "44ea4b29-37d2-4c04-98a2-8f758173c2ab",
+          "7f277294-de87-463b-a526-35b70c0bf693": {
+            "ID": "7f277294-de87-463b-a526-35b70c0bf693",
             "TEST_NAME": "Test 3",
             "TEST_DESCRIPTION": "Test 3: 7 agents,  30x30, 2",
             "TEST_FIELDS": {
-              "f3160df2-1a3a-4564-8349-b6931cf1291c": {
-                "ID": "f3160df2-1a3a-4564-8349-b6931cf1291c",
+              "425fbb2f-1c33-44f5-a3cf-1ead9a7935bb": {
+                "ID": "425fbb2f-1c33-44f5-a3cf-1ead9a7935bb",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "6af22676-c8e0-4ed0-992c-3dad9b4c449b": {
-                "ID": "6af22676-c8e0-4ed0-992c-3dad9b4c449b",
+              "0422d549-cd91-42d9-948a-97f71880450a": {
+                "ID": "0422d549-cd91-42d9-948a-97f71880450a",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -168,18 +168,18 @@
             "TEST_AGG_FIELDS": "percentage_complete",
             "LOOP": "CLOSED",
             "scenarios": {
-              "666f08ab-8a2d-41fc-adbe-9644796e439f": {
-                "ID": "666f08ab-8a2d-41fc-adbe-9644796e439f",
-                "SCENARIO_NAME": "666f08ab-8a2d-41fc-adbe-9644796e439f",
-                "SCENARIO_DESCRIPTION": "666f08ab-8a2d-41fc-adbe-9644796e439f",
+              "3af83068-1e6d-45ce-979f-bddaf130d6ed": {
+                "ID": "3af83068-1e6d-45ce-979f-bddaf130d6ed",
+                "SCENARIO_NAME": "3af83068-1e6d-45ce-979f-bddaf130d6ed",
+                "SCENARIO_DESCRIPTION": "3af83068-1e6d-45ce-979f-bddaf130d6ed",
                 "SCENARIO_FIELDS": {
-                  "89672c24-54f0-4acc-a0c8-8b32d76880af": {
-                    "ID": "89672c24-54f0-4acc-a0c8-8b32d76880af",
+                  "0cce49e1-dc6a-455c-87f4-fc858ec2d2e7": {
+                    "ID": "0cce49e1-dc6a-455c-87f4-fc858ec2d2e7",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  "f17cec1e-29c8-4b62-8240-99d97b0405f2": {
-                    "ID": "f17cec1e-29c8-4b62-8240-99d97b0405f2",
+                  "d8181c95-f1a3-4b01-b0ac-dfc5b6cfe38e": {
+                    "ID": "d8181c95-f1a3-4b01-b0ac-dfc5b6cfe38e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
@@ -187,19 +187,19 @@
               }
             }
           },
-          "fbe1bb82-848c-4e65-9c9d-88e1e351265d": {
-            "ID": "fbe1bb82-848c-4e65-9c9d-88e1e351265d",
+          "678cdb1e-86c4-42a7-9c0d-0073a80faaf0": {
+            "ID": "678cdb1e-86c4-42a7-9c0d-0073a80faaf0",
             "TEST_NAME": "Test 4",
             "TEST_DESCRIPTION": "Test 4: 7 agents,  30x30, 2",
             "TEST_FIELDS": {
-              "f3160df2-1a3a-4564-8349-b6931cf1291c": {
-                "ID": "f3160df2-1a3a-4564-8349-b6931cf1291c",
+              "425fbb2f-1c33-44f5-a3cf-1ead9a7935bb": {
+                "ID": "425fbb2f-1c33-44f5-a3cf-1ead9a7935bb",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
                 "TEST_AGG": "NANSUM"
               },
-              "6af22676-c8e0-4ed0-992c-3dad9b4c449b": {
-                "ID": "6af22676-c8e0-4ed0-992c-3dad9b4c449b",
+              "0422d549-cd91-42d9-948a-97f71880450a": {
+                "ID": "0422d549-cd91-42d9-948a-97f71880450a",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
                 "TEST_AGG": "NANMEAN"
@@ -208,18 +208,18 @@
             "TEST_AGG_FIELDS": "percentage_complete",
             "LOOP": "CLOSED",
             "scenarios": {
-              "66755e67-1cc8-4898-ad44-704c3e49eec6": {
-                "ID": "66755e67-1cc8-4898-ad44-704c3e49eec6",
-                "SCENARIO_NAME": "66755e67-1cc8-4898-ad44-704c3e49eec6",
-                "SCENARIO_DESCRIPTION": "66755e67-1cc8-4898-ad44-704c3e49eec6",
+              "f61e6d16-5975-461d-ad99-1c70d0cec2ec": {
+                "ID": "f61e6d16-5975-461d-ad99-1c70d0cec2ec",
+                "SCENARIO_NAME": "f61e6d16-5975-461d-ad99-1c70d0cec2ec",
+                "SCENARIO_DESCRIPTION": "f61e6d16-5975-461d-ad99-1c70d0cec2ec",
                 "SCENARIO_FIELDS": {
-                  "89672c24-54f0-4acc-a0c8-8b32d76880af": {
-                    "ID": "89672c24-54f0-4acc-a0c8-8b32d76880af",
+                  "0cce49e1-dc6a-455c-87f4-fc858ec2d2e7": {
+                    "ID": "0cce49e1-dc6a-455c-87f4-fc858ec2d2e7",
                     "SCENARIO_FIELD_NAME": "normalized_reward",
                     "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
                   },
-                  "f17cec1e-29c8-4b62-8240-99d97b0405f2": {
-                    "ID": "f17cec1e-29c8-4b62-8240-99d97b0405f2",
+                  "d8181c95-f1a3-4b01-b0ac-dfc5b6cfe38e": {
+                    "ID": "d8181c95-f1a3-4b01-b0ac-dfc5b6cfe38e",
                     "SCENARIO_FIELD_NAME": "percentage_complete",
                     "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
                   }
