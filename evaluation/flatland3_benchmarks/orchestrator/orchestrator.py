@@ -82,6 +82,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     data_dir = f"/data/{test_id}/{scenario_id}"
 
     # https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/
+    # TODO do we need/want to pass seed?
     submission_container_definition["args"] = ["flatland-trajectory-generate-from-policy", "--data-dir", data_dir, "--env-path",
                                                f"/tmp/environments/{pkl_path}", "--ep-id", f"{scenario_id}"]
     additional_submission_args = os.environ.get("ADDITIONAL_SUBMISSION_ARGS", None)
