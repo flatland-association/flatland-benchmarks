@@ -8,7 +8,9 @@ on:
       tag:
         description: 'Image Tag'
         required: true
-
+  # Scheduled workflows will only run on the default branch.
+  schedule:
+    - cron: '30 5 * * *'
 env:
   NODE_VERSION: 16
   JAVA_VERSION: 21
