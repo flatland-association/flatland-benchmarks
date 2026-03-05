@@ -5,7 +5,7 @@ import boto3
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", False)
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", False)
 AWS_ENDPOINT_URL = os.getenv("AWS_ENDPOINT_URL", None)
-S3_UPLOAD_ROOT = os.getenv("S3_UPLOAD_ROOT", "ai4realnet/submissions/")
+S3_UPLOAD_ROOT = os.getenv("S3_UPLOAD_ROOT", "")
 S3_BUCKET = os.getenv("S3_BUCKET", "aicrowd-production")
 
 
