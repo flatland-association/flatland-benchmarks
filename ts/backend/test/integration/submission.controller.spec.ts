@@ -172,7 +172,7 @@ describe.sequential('Submission controller', () => {
     expect(res.body.body).toHaveLength(1)
   })
 
-  test('should not prevent submissions if daily limit 0', async ({ skip }) => {
+  test('should not prevent submissions if daily limit 0', async () => {
     const testConfig = await getTestConfig()
     testConfig.submissions = { global: { dailyLimit: 0 } }
     controller = new ControllerTestAdapter(SubmissionController, testConfig)
@@ -180,7 +180,7 @@ describe.sequential('Submission controller', () => {
     assertApiResponse(res, StatusCodes.TOO_MANY_REQUESTS)
   })
 
-  test('should not prevent submissions if daily limit null', async ({ skip }) => {
+  test('should not prevent submissions if daily limit null', async () => {
     const testConfig = await getTestConfig()
     testConfig.submissions = { global: { dailyLimit: null } }
     controller = new ControllerTestAdapter(SubmissionController, testConfig)
@@ -188,7 +188,7 @@ describe.sequential('Submission controller', () => {
     assertApiResponse(res)
   })
 
-  test('should prevent submissions beyond daily limit', async ({ skip }) => {
+  test('should prevent submissions beyond daily limit', async () => {
     const testConfig = await getTestConfig()
     testConfig.submissions = { global: { dailyLimit: 999 } }
     controller = new ControllerTestAdapter(SubmissionController, testConfig)
