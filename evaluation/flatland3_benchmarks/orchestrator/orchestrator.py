@@ -293,7 +293,14 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       "a0ea19e2-e074-4f9b-bf67-55d05a37ab31": "Test_14/Level_6.pkl",
       "61840b63-3569-4751-95e0-6cc3f23909a8": "Test_14/Level_7.pkl",
       "85dbb9a5-52e2-4ed2-ac6e-0030ce5a85ef": "Test_14/Level_8.pkl",
-      "14611e50-ef67-4833-9023-65f21e3208ef": "Test_14/Level_9.pkl"
+      "14611e50-ef67-4833-9023-65f21e3208ef": "Test_14/Level_9.pkl",
+
+      # railway competition:
+      "ff0c3bb2-cfac-480c-a1f2-91966787cf05": "scene_1/scene_1_initial.pkl",
+      "c3e9e8ca-123d-4335-be18-14c0513449f6": "scene_2/scene_2_initial.pkl",
+      "ee616a1c-3583-438c-86ec-b2b2b4e0ce22": "scene_3/scene_3_initial.pkl",
+      "3af83068-1e6d-45ce-979f-bddaf130d6ed": "scene_4/scene_4_initial.pkl",
+      "f61e6d16-5975-461d-ad99-1c70d0cec2ec": "scene_5/scene_5_initial.pkl"
     }[scenario_id]
 
   TEST_TO_SCENARIO_IDS = {
@@ -476,6 +483,22 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       "61840b63-3569-4751-95e0-6cc3f23909a8",
       "85dbb9a5-52e2-4ed2-ac6e-0030ce5a85ef",
       "14611e50-ef67-4833-9023-65f21e3208ef"
+    ],
+    # railway competition:
+    "d4dd100a-016c-4332-b711-926ea7d2c0c3": [
+      "ff0c3bb2-cfac-480c-a1f2-91966787cf05"
+    ],
+    "12e03a34-d11b-4635-bf9f-b6d0f7003a66": [
+      "c3e9e8ca-123d-4335-be18-14c0513449f6"
+    ],
+    "edb50f48-d579-4994-afcd-08e106d375cb": [
+      "ee616a1c-3583-438c-86ec-b2b2b4e0ce22"
+    ],
+    "7f277294-de87-463b-a526-35b70c0bf693": [
+      "3af83068-1e6d-45ce-979f-bddaf130d6ed"
+    ],
+    "678cdb1e-86c4-42a7-9c0d-0073a80faaf0": [
+      "f61e6d16-5975-461d-ad99-1c70d0cec2ec"
     ]
   }
 
