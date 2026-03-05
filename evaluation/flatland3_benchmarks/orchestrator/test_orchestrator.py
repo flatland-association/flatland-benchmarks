@@ -25,12 +25,19 @@ def test_tasks_successful():
   ]))
   when(core_api).read_namespaced_pod_log("subi", namespace="fab-int").thenReturn("abcd")
 
-  ret = K8sFlatlandBenchmarksOrchestrator(submission_id="1234")._run_submission(
+  ret = K8sFlatlandBenchmarksOrchestrator(
+    submission_id="1234",
+    batch_api=batch_api,
+    core_api=core_api,
+    aws_endpoint_url=None,
+    aws_access_key_id='ignore-me',
+    aws_secret_access_key='ignore-me',
+    s3_bucket=None,
+  )._run_submission(
     test_id="55",
     scenario_id="66",
     submission_data_url="pancy",
     pkl_path="55/66",
-    batch_api=batch_api, core_api=core_api
   )
 
   verify(batch_api, times=1).list_namespaced_job(...)
@@ -64,12 +71,20 @@ def test_tasks_failing():
   when(core_api).read_namespaced_pod_log("subi", namespace="fab-int").thenReturn("abcd")
 
   with pytest.raises(TaskExecutionError) as exc_info:
-    K8sFlatlandBenchmarksOrchestrator(submission_id="1234")._run_submission(
+    K8sFlatlandBenchmarksOrchestrator(
+      submission_id="1234",
+      batch_api=batch_api,
+      core_api=core_api,
+      aws_endpoint_url=None,
+      aws_access_key_id='ignore-me',
+      aws_secret_access_key='ignore-me',
+      s3_bucket=None,
+    )._run_submission(
       test_id="55",
       scenario_id="66",
       submission_data_url="pancy",
       pkl_path="55/66",
-      batch_api=batch_api, core_api=core_api)
+    )
 
   assert exc_info.value.message == 'Failed task with submission_id=1234 with submission_data_url=pancy.'
   ret = exc_info.value.status

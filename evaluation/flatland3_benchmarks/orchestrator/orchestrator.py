@@ -49,6 +49,13 @@ def setup_task_logger(logger, *args, **kwargs):
 
 
 class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
+  def __init__(self,
+               batch_api: client.BatchV1Api,
+               core_api: client.CoreV1Api,
+               **kwargs):
+    super().__init__(**kwargs)
+    self.core_api = core_api
+    self.batch_api = batch_api
 
   # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
   def _run_submission(self,
@@ -56,14 +63,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                       scenario_id,
                       submission_data_url,
                       pkl_path,
-                      aws_endpoint_url: str = None,
-                      aws_access_key_id: str = None,
-                      aws_secret_access_key: str = None,
-                      s3_bucket: str = None,
                       **kwargs):
     submission_id = self.submission_id
-    core_api = kwargs["core_api"]
-    batch_api = kwargs["batch_api"]
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
 
@@ -94,25 +95,20 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_download_initcontainer_definition["env"].append({"name": "S3_URL_ENVIRONMENTS_ZIP", "value": S3_URL_ENVIRONMENTS_ZIP})
 
     submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
-    if aws_endpoint_url:
-      submission_download_initcontainer_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": aws_endpoint_url})
-    if aws_access_key_id:
-      submission_download_initcontainer_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": aws_access_key_id})
-    if aws_secret_access_key:
-      submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": aws_secret_access_key})
+
     # init container has full pvc mounted:
     submission_extractenvs_initcontainer_definition["env"].append({"name": "DATA_DIR", "value": f"/data/{submission_id}/{test_id}/{scenario_id}"})
 
     # print(json.dumps(submission_definition, indent=4))
 
     submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
-    batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
+    self.batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
     all_done = False
     any_failed = False
     ret = {}
     while not all_done and not any_failed:
       time.sleep(1)
-      jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"submission_id={label}")
+      jobs = self.batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"submission_id={label}")
       assert len(jobs.items) == 1
       all_done = True
       status = []
@@ -124,11 +120,11 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         for job in jobs.items:
           status.append(job.status.conditions[0].type)
           job_name = job.metadata.name
-          pods = core_api.list_namespaced_pod(namespace=KUBERNETES_NAMESPACE, label_selector=f"job-name={job_name}")
+          pods = self.core_api.list_namespaced_pod(namespace=KUBERNETES_NAMESPACE, label_selector=f"job-name={job_name}")
 
           # backoff
           pod = pods.items[-1]
-          log = core_api.read_namespaced_pod_log(pod.metadata.name, namespace=KUBERNETES_NAMESPACE)
+          log = self.core_api.read_namespaced_pod_log(pod.metadata.name, namespace=KUBERNETES_NAMESPACE)
 
           _ret = {
             "job_status": job.status.conditions[0].type,
@@ -502,15 +498,16 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
   if not S3_BUCKET:
     raise RuntimeError("Misconfiguration: S3_BUCKET must be set in the orchestrator")
 
-  submission_id = self.request.id
-  return K8sFlatlandBenchmarksOrchestrator(submission_id).orchestrator(
-    submission_data_url=submission_data_url,
-    tests=tests,
+  return K8sFlatlandBenchmarksOrchestrator(
+    submission_id=submission_id,
+    batch_api=batch_api,
+    core_api=core_api,
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_access_key_id=AWS_ACCESS_KEY_ID,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
-    batch_api=batch_api,
-    core_api=core_api,
+  ).orchestrator(
+    submission_data_url=submission_data_url,
+    tests=tests,
     **kwargs
   )

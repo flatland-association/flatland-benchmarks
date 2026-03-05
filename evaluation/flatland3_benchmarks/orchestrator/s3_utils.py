@@ -82,6 +82,8 @@ def download_dir(prefix: str, local: str, bucket: str, client: boto3.session.Ses
       kwargs.update({'ContinuationToken': next_token})
     results = client.list_objects_v2(**kwargs)
     contents = results.get('Contents')
+    if contents is None:
+      return
     for i in contents:
       k = i.get('Key')
       if k[-1] != '/':
