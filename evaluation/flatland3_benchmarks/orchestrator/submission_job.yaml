@@ -34,7 +34,7 @@ spec:
             - -c
             - |
               set -euxo pipefail
-              aws s3 cp  ${S3_URL_ENVIRONMENTS_ZIP} /tmp/environments
+              aws s3 cp  ${S3_URL_ENVIRONMENTS_ZIP} /tmp/environments/environments.zip
           env: [ ] # INSERTED
           image: amazon/aws-cli
           imagePullPolicy: IfNotPresent

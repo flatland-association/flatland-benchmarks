@@ -1,9 +1,11 @@
 # based on https://github.com/codalab/codabench/blob/develop/orchestrator/orchestrator.py
 import logging
 import os
+import tempfile
 import time
 import traceback
 from abc import abstractmethod
+from pathlib import Path
 from typing import Dict, Optional
 from typing import List
 
@@ -15,6 +17,7 @@ from requests_oauthlib import OAuth2Session
 
 from fab_clientlib import DefaultApi, ApiClient, Configuration, ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest, \
   ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
+from s3_utils import s3_utils, download_dir, S3_UPLOAD_ROOT
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +25,7 @@ FAB_API_URL = os.environ.get("FAB_API_URL")
 CLIENT_ID = os.environ.get("CLIENT_ID", 'fab-client-credentials')
 CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
 TOKEN_URL = os.environ.get("TOKEN_URL", "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/token")
+PERCENTAGE_COMPLETE_THRESHOLD = os.environ.get("PERCENTAGE_COMPLETE_THRESHOLD", None)
 
 
 class TaskExecutionError(Exception):
@@ -32,38 +36,50 @@ class TaskExecutionError(Exception):
 
 
 class FlatlandBenchmarksOrchestrator:
-  def __init__(self, submission_id: str):
+  def __init__(self,
+               submission_id: str,
+               aws_endpoint_url: str,
+               aws_access_key_id: str,
+               aws_secret_access_key: str,
+               s3_bucket: str,
+               s3: boto3.session.Session.client = None,
+               **kwargs):
     self.submission_id = submission_id
+    self.aws_endpoint_url = aws_endpoint_url
+    self.aws_access_key_id = aws_access_key_id
+    self.aws_secret_access_key = aws_secret_access_key
+
+    self.s3 = s3
+    if self.s3 is None:
+      self.s3 = s3_utils.get_boto_client(aws_access_key_id, aws_secret_access_key, aws_endpoint_url)
+    self.s3_bucket = s3_bucket
 
   def orchestrator(self,
                    submission_data_url: str,
                    tests: List[str] = None,
-                   aws_endpoint_url=None,
-                   aws_access_key_id=None,
-                   aws_secret_access_key=None,
-                   s3_bucket=None,
-                   s3=None,
                    fab: DefaultApi = None,
                    **kwargs):
+    """
+    Run orchestrator for submission data URL (docker image) on the given tests and upload results to FAB.
+
+    Parameters
+    ----------
+    submission_data_url
+    tests
+    fab
+    kwargs
+
+    Returns
+    -------
+
+    """
     submission_id = self.submission_id
-    try:
-      start_time = time.time()
-      if aws_endpoint_url is None:
-        aws_endpoint_url = os.environ.get("AWS_ENDPOINT_URL", None)
-      if aws_access_key_id is None:
-        aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID", None)
-      if aws_secret_access_key is None:
-        aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
-      if s3_bucket is None:
-        s3_bucket = os.environ.get("S3_BUCKET", None)
+    logger.info(f"// START task submission_id={submission_id} with submission_data_url={submission_data_url}.")
 
-      ret = self.run_flatland(submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, s3, **kwargs)
+    start_time = time.time()
+    ret = self.run_flatland(submission_id, submission_data_url, tests, **kwargs)
 
-    except BaseException as e:
-      logger.error("Failed get results from S3 and uploading to FAB with exception \"%s\"", e, exc_info=e)
-      raise Exception(
-        f"Failed get results from S3 and uploading to FAB with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}") from e
-
+    logger.info(f"// START uploading results for submission_id={submission_id} with submission_data_url={submission_data_url}.")
     try:
       if fab is None:
         token = backend_application_flow(CLIENT_ID, CLIENT_SECRET, TOKEN_URL)
@@ -74,7 +90,6 @@ class FlatlandBenchmarksOrchestrator:
       for test_id, scenarios in ret.items():
         for scenario_id, result in scenarios.items():
           logger.info(f"uploading results for submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {result}")
-
           fab.results_submissions_submission_id_tests_test_ids_post(
             submission_id=submission_id,
             test_ids=[test_id],
@@ -87,19 +102,98 @@ class FlatlandBenchmarksOrchestrator:
               ]
             ),
           )
-      duration = time.time() - start_time
       logger.info(
-        f"\\ end task with submission_id={submission_id} with submission_data_url={submission_data_url}. Took {duration:.2f} seconds.")
+        f"\\\\ END uploading results for with submission_id={submission_id} with submission_data_url={submission_data_url}.")
+      duration = time.time() - start_time
+      logger.info(f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds.")
       return ret
     except BaseException as e:
-      logger.error("Failed get results from S3 and uploading to FAB with exception \"%s\"", e, exc_info=e)
+      logger.error("Failed uploading results for with exception \"%s\"", e, exc_info=e)
       raise Exception(
-        f"Failed get results from S3 and uploading to FAB with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}") from e
+        f"Failed uploading results for with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}") from e
 
   @abstractmethod
-  def run_flatland(self, submission_id: str, submission_data_url: str, tests: Optional[List[str]], aws_endpoint_url: str, aws_access_key_id: str,
-                   aws_secret_access_key: str, s3_bucket: str, s3: Optional[boto3.session.Session.client], **kwargs):
+  def _run_submission(self,
+                      test_id,
+                      scenario_id,
+                      submission_data_url,
+                      pkl_path,
+                      **kwargs):
+    """
+    Run the submission from submission data URL (docker image) for one scenario, which is at pkl path.
+
+    Parameters
+    ----------
+    test_id
+    scenario_id
+    submission_data_url
+    pkl_path
+    kwargs
+
+    Returns
+    -------
+
+    """
     raise NotImplementedError()
+
+  def run_flatland(self, submission_id: str, submission_data_url: str, tests: Optional[List[str]], **kwargs) -> dict:
+    """
+    Run submission, download trajectory from S3, re-run with stored actions to verify rewards and return results.
+
+    Parameters
+    ----------
+    submission_id
+    submission_data_url
+    tests
+    kwargs
+
+    Returns
+    -------
+
+    """
+    try:
+
+      if tests is None:
+        tests = list(self.TEST_TO_SCENARIO_IDS.keys())
+
+      logger.info(f"// START running submission submission_id={submission_id},tests={tests}")
+      results = {test_id: {} for test_id in tests}
+      for test_id in tests:
+        mean_success_rate = 0
+        for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
+          pkl_path = self.load_scenario_data(scenario_id)
+          prefix = f"{S3_UPLOAD_ROOT}{submission_id}/{test_id}/{scenario_id}"
+
+          self._run_submission(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
+
+          logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+          with tempfile.TemporaryDirectory() as tmpdirname:
+            logger.info(f"download_dir(prefix={prefix}, bucket={self.s3_bucket}, client={self.s3}, local={tmpdirname})")
+            download_dir(prefix=prefix, bucket=self.s3_bucket, client=self.s3, local=tmpdirname)
+            logger.info(list(Path(tmpdirname).rglob("**/*")))
+
+            local_scenario_path = Path(tmpdirname) / S3_UPLOAD_ROOT / submission_id / test_id / scenario_id
+
+            # TODO trajectory should be verified - got lost in a refactoring?
+            normalized_reward, success_rate = self._extract_stats_from_trajectory(local_scenario_path, scenario_id)
+            results[test_id][scenario_id] = {
+              "normalized_reward": normalized_reward,
+              "percentage_complete": success_rate
+            }
+            mean_success_rate += success_rate
+        mean_success_rate /= len(self.TEST_TO_SCENARIO_IDS[test_id])
+        if PERCENTAGE_COMPLETE_THRESHOLD is not None and success_rate < float(PERCENTAGE_COMPLETE_THRESHOLD):
+          logger.warning(
+            f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The mean percentage of done agents during the last Test ({len(tests)} environments) was too low: {success_rate} < {PERCENTAGE_COMPLETE_THRESHOLD}: {results[test_id][scenario_id]}")
+          return results
+
+      logger.info(
+        f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {results[test_id][scenario_id]}")
+      return results
+    except BaseException as exception:
+      logger.error(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}", exc_info=exception)
+      raise RuntimeError(
+        f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}. Stacktrace: {traceback.format_exception(exception)}") from exception
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):
     trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)

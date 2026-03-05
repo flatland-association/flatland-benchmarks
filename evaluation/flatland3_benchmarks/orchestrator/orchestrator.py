@@ -2,7 +2,6 @@
 import logging
 import os
 import ssl
-import tempfile
 import time
 from pathlib import Path
 from typing import List
@@ -14,7 +13,6 @@ from celery.signals import after_setup_task_logger
 from kubernetes import client, config
 
 from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError
-from s3_utils import s3_utils, download_dir
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +25,7 @@ ACTIVE_DEADLINE_SECONDS = os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)
 BENCHMARK_ID = os.environ.get("BENCHMARK_ID", "flatland3-evaluation")
 SUBMISSIONS_PVC = os.environ.get("SUBMISSIONS_PVC", "fab-int-submissions")
 S3_URL_ENVIRONMENTS_ZIP = os.environ.get("S3_URL_ENVIRONMENTS_ZIP", "s3://fab-data/flatland3/environments.zip")
+PERCENTAGE_COMPLETE_THRESHOLD = os.environ.get("PERCENTAGE_COMPLETE_THRESHOLD", None)
 
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
@@ -50,41 +49,21 @@ def setup_task_logger(logger, *args, **kwargs):
 
 
 class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
+  def __init__(self,
+               batch_api: client.BatchV1Api,
+               core_api: client.CoreV1Api,
+               **kwargs):
+    super().__init__(**kwargs)
+    self.core_api = core_api
+    self.batch_api = batch_api
 
   # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
-  def run_flatland(self, submission_id, submission_data_url, tests, aws_endpoint_url, aws_access_key_id, aws_secret_access_key, s3_bucket, s3, **kwargs):
-    if tests is None:
-      tests = list(self.TEST_TO_SCENARIO_IDS.keys())
-
-    results = {test_id: {} for test_id in tests}
-    for test_id in tests:
-      for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
-        pkl_path = self.load_scenario_data(scenario_id)
-        prefix = f"{submission_id}/{test_id}/{scenario_id}"
-        core_api = kwargs["core_api"]
-        batch_api = kwargs["batch_api"]
-
-        self._run_submission(test_id, scenario_id, submission_data_url, pkl_path,
-                             core_api, batch_api, aws_access_key_id, aws_endpoint_url, aws_secret_access_key, )
-
-        logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
-        with tempfile.TemporaryDirectory() as tmpdirname:
-          if s3 is None:
-            s3 = s3_utils.get_boto_client(aws_access_key_id, aws_secret_access_key, aws_endpoint_url)
-          download_dir(prefix=prefix, bucket=s3_bucket, client=s3, local=tmpdirname)
-
-          normalized_reward, success_rate = self._extract_stats_from_trajectory(Path(tmpdirname) / submission_id / test_id / scenario_id, scenario_id)
-          results[test_id][scenario_id] = {
-            "normalized_reward": normalized_reward,
-            "percentage_complete": success_rate
-          }
-        logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {results[test_id][scenario_id]}")
-    return results
-
   def _run_submission(self,
-                      test_id, scenario_id, submission_data_url, pkl_path, core_api, batch_api,
-                      aws_access_key_id=None, aws_endpoint_url=None, aws_secret_access_key=None,
-                      ):
+                      test_id,
+                      scenario_id,
+                      submission_data_url,
+                      pkl_path,
+                      **kwargs):
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
@@ -98,7 +77,6 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
     submission_container_definition["image"] = submission_data_url
     submission_definition["spec"]["template"]["spec"]["volumes"][1]["persistentVolumeClaim"]["claimName"] = SUBMISSIONS_PVC
-
 
     # submission container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
     data_dir = f"/data/{test_id}/{scenario_id}"
@@ -117,25 +95,27 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_download_initcontainer_definition["env"].append({"name": "S3_URL_ENVIRONMENTS_ZIP", "value": S3_URL_ENVIRONMENTS_ZIP})
 
     submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
-    if aws_endpoint_url:
-      submission_download_initcontainer_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": aws_endpoint_url})
-    if aws_access_key_id:
-      submission_download_initcontainer_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": aws_access_key_id})
-    if aws_secret_access_key:
-      submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": aws_secret_access_key})
-    # init container has full pvc mounted:
+    # inject AWS credentials for downloading pkls:
+    if self.aws_endpoint_url:
+      submission_download_initcontainer_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": self.aws_endpoint_url})
+    if self.aws_access_key_id:
+      submission_download_initcontainer_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": self.aws_access_key_id})
+    if self.aws_secret_access_key:
+      submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": self.aws_secret_access_key})
+
+    # init container has full pvc mounted for submissions:
     submission_extractenvs_initcontainer_definition["env"].append({"name": "DATA_DIR", "value": f"/data/{submission_id}/{test_id}/{scenario_id}"})
 
     # print(json.dumps(submission_definition, indent=4))
 
     submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
-    batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
+    self.batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
     all_done = False
     any_failed = False
     ret = {}
     while not all_done and not any_failed:
       time.sleep(1)
-      jobs = batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"submission_id={label}")
+      jobs = self.batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"submission_id={label}")
       assert len(jobs.items) == 1
       all_done = True
       status = []
@@ -147,11 +127,11 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         for job in jobs.items:
           status.append(job.status.conditions[0].type)
           job_name = job.metadata.name
-          pods = core_api.list_namespaced_pod(namespace=KUBERNETES_NAMESPACE, label_selector=f"job-name={job_name}")
+          pods = self.core_api.list_namespaced_pod(namespace=KUBERNETES_NAMESPACE, label_selector=f"job-name={job_name}")
 
           # backoff
           pod = pods.items[-1]
-          log = core_api.read_namespaced_pod_log(pod.metadata.name, namespace=KUBERNETES_NAMESPACE)
+          log = self.core_api.read_namespaced_pod_log(pod.metadata.name, namespace=KUBERNETES_NAMESPACE)
 
           _ret = {
             "job_status": job.status.conditions[0].type,
@@ -320,7 +300,14 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       "a0ea19e2-e074-4f9b-bf67-55d05a37ab31": "Test_14/Level_6.pkl",
       "61840b63-3569-4751-95e0-6cc3f23909a8": "Test_14/Level_7.pkl",
       "85dbb9a5-52e2-4ed2-ac6e-0030ce5a85ef": "Test_14/Level_8.pkl",
-      "14611e50-ef67-4833-9023-65f21e3208ef": "Test_14/Level_9.pkl"
+      "14611e50-ef67-4833-9023-65f21e3208ef": "Test_14/Level_9.pkl",
+
+      # railway competition:
+      "ff0c3bb2-cfac-480c-a1f2-91966787cf05": "scene_1/scene_1_initial.pkl",
+      "c3e9e8ca-123d-4335-be18-14c0513449f6": "scene_2/scene_2_initial.pkl",
+      "ee616a1c-3583-438c-86ec-b2b2b4e0ce22": "scene_3/scene_3_initial.pkl",
+      "3af83068-1e6d-45ce-979f-bddaf130d6ed": "scene_4/scene_4_initial.pkl",
+      "f61e6d16-5975-461d-ad99-1c70d0cec2ec": "scene_5/scene_5_initial.pkl"
     }[scenario_id]
 
   TEST_TO_SCENARIO_IDS = {
@@ -503,6 +490,22 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       "61840b63-3569-4751-95e0-6cc3f23909a8",
       "85dbb9a5-52e2-4ed2-ac6e-0030ce5a85ef",
       "14611e50-ef67-4833-9023-65f21e3208ef"
+    ],
+    # railway competition:
+    "d4dd100a-016c-4332-b711-926ea7d2c0c3": [
+      "ff0c3bb2-cfac-480c-a1f2-91966787cf05"
+    ],
+    "12e03a34-d11b-4635-bf9f-b6d0f7003a66": [
+      "c3e9e8ca-123d-4335-be18-14c0513449f6"
+    ],
+    "edb50f48-d579-4994-afcd-08e106d375cb": [
+      "ee616a1c-3583-438c-86ec-b2b2b4e0ce22"
+    ],
+    "7f277294-de87-463b-a526-35b70c0bf693": [
+      "3af83068-1e6d-45ce-979f-bddaf130d6ed"
+    ],
+    "678cdb1e-86c4-42a7-9c0d-0073a80faaf0": [
+      "f61e6d16-5975-461d-ad99-1c70d0cec2ec"
     ]
   }
 
@@ -525,15 +528,16 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
   if not S3_BUCKET:
     raise RuntimeError("Misconfiguration: S3_BUCKET must be set in the orchestrator")
 
-  submission_id = self.request.id
-  return K8sFlatlandBenchmarksOrchestrator(submission_id).orchestrator(
-    submission_data_url=submission_data_url,
-    tests=tests,
+  return K8sFlatlandBenchmarksOrchestrator(
+    submission_id=submission_id,
+    batch_api=batch_api,
+    core_api=core_api,
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_access_key_id=AWS_ACCESS_KEY_ID,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
-    batch_api=batch_api,
-    core_api=core_api,
+  ).orchestrator(
+    submission_data_url=submission_data_url,
+    tests=tests,
     **kwargs
   )
