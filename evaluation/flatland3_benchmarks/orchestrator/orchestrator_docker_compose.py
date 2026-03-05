@@ -132,9 +132,13 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
     additional_submission_args = os.environ.get("ADDITIONAL_SUBMISSION_ARGS", None)
     if additional_submission_args is not None:
       generate_policy_args += additional_submission_args.split(" ")
+
+    logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
     self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
 
+
     self.upload_and_empty_local(test_id, submission_id, scenario_id)
+    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
 
   def upload_and_empty_local(self, test_id: str, submission_id: str, scenario_id: str):
     data_volume = Path(DATA_VOLUME_MOUNTPATH)

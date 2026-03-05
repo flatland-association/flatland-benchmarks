@@ -54,7 +54,6 @@ class FlatlandBenchmarksOrchestrator:
       self.s3 = s3_utils.get_boto_client(aws_access_key_id, aws_secret_access_key, aws_endpoint_url)
     self.s3_bucket = s3_bucket
 
-
   def orchestrator(self,
                    submission_data_url: str,
                    tests: List[str] = None,
@@ -62,6 +61,7 @@ class FlatlandBenchmarksOrchestrator:
                    **kwargs):
     """
     Run orchestrator for submission data URL (docker image) on the given tests and upload results to FAB.
+
     Parameters
     ----------
     submission_data_url
@@ -74,15 +74,12 @@ class FlatlandBenchmarksOrchestrator:
 
     """
     submission_id = self.submission_id
-    try:
-      start_time = time.time()
-      ret = self.run_flatland(submission_id, submission_data_url, tests, **kwargs)
+    logger.info(f"// START task submission_id={submission_id} with submission_data_url={submission_data_url}.")
 
-    except BaseException as e:
-      logger.error("Failed get results from S3 and uploading to FAB with exception \"%s\"", e, exc_info=e)
-      raise Exception(
-        f"Failed get results from S3 and uploading to FAB with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}") from e
+    start_time = time.time()
+    ret = self.run_flatland(submission_id, submission_data_url, tests, **kwargs)
 
+    logger.info(f"// START uploading results for submission_id={submission_id} with submission_data_url={submission_data_url}.")
     try:
       if fab is None:
         token = backend_application_flow(CLIENT_ID, CLIENT_SECRET, TOKEN_URL)
@@ -105,14 +102,15 @@ class FlatlandBenchmarksOrchestrator:
               ]
             ),
           )
-      duration = time.time() - start_time
       logger.info(
-        f"\\ end task with submission_id={submission_id} with submission_data_url={submission_data_url}. Took {duration:.2f} seconds.")
+        f"\\\\ END uploading results for with submission_id={submission_id} with submission_data_url={submission_data_url}.")
+      duration = time.time() - start_time
+      logger.info(f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds.")
       return ret
     except BaseException as e:
-      logger.error("Failed get results from S3 and uploading to FAB with exception \"%s\"", e, exc_info=e)
+      logger.error("Failed uploading results for with exception \"%s\"", e, exc_info=e)
       raise Exception(
-        f"Failed get results from S3 and uploading to FAB with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}") from e
+        f"Failed uploading results for with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}") from e
 
   @abstractmethod
   def _run_submission(self,
@@ -154,9 +152,11 @@ class FlatlandBenchmarksOrchestrator:
 
     """
     try:
+
       if tests is None:
         tests = list(self.TEST_TO_SCENARIO_IDS.keys())
 
+      logger.info(f"// START running submission submission_id={submission_id},tests={tests}")
       results = {test_id: {} for test_id in tests}
       for test_id in tests:
         mean_success_rate = 0
@@ -191,8 +191,9 @@ class FlatlandBenchmarksOrchestrator:
         f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {results[test_id][scenario_id]}")
       return results
     except BaseException as exception:
-      logger.error(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}")
-      raise RuntimeError(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}") from exception
+      logger.error(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}", exc_info=exception)
+      raise RuntimeError(
+        f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}. Stacktrace: {traceback.format_exception(exception)}") from exception
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):
     trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)
