@@ -95,8 +95,15 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_download_initcontainer_definition["env"].append({"name": "S3_URL_ENVIRONMENTS_ZIP", "value": S3_URL_ENVIRONMENTS_ZIP})
 
     submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
+    # inject AWS credentials for downloading pkls:
+    if self.aws_endpoint_url:
+      submission_download_initcontainer_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": self.aws_endpoint_url})
+    if self.aws_access_key_id:
+      submission_download_initcontainer_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": self.aws_access_key_id})
+    if self.aws_secret_access_key:
+      submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": self.aws_secret_access_key})
 
-    # init container has full pvc mounted:
+    # init container has full pvc mounted for submissions:
     submission_extractenvs_initcontainer_definition["env"].append({"name": "DATA_DIR", "value": f"/data/{submission_id}/{test_id}/{scenario_id}"})
 
     # print(json.dumps(submission_definition, indent=4))

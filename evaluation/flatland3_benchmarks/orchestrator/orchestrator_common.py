@@ -45,6 +45,9 @@ class FlatlandBenchmarksOrchestrator:
                s3: boto3.session.Session.client = None,
                **kwargs):
     self.submission_id = submission_id
+    self.aws_endpoint_url = aws_endpoint_url
+    self.aws_access_key_id = aws_access_key_id
+    self.aws_secret_access_key = aws_secret_access_key
 
     self.s3 = s3
     if self.s3 is None:
