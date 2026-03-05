@@ -3,6 +3,21 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.18.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.17.0...v0.18.0) (2026-03-05)
+
+
+### Features
+
+* daily submission limit. ([#540](https://github.com/flatland-association/flatland-benchmarks/issues/540)) ([7ed8d57](https://github.com/flatland-association/flatland-benchmarks/commit/7ed8d57873afa4da7bcd86e20393d8e825f67278))
+* daily submissions user limit. ([d8519e8](https://github.com/flatland-association/flatland-benchmarks/commit/d8519e82c3b7e4631a8674a0689344d7a86a7a6d))
+* implement percentage done threshold in flatland orchestrator. ([f949245](https://github.com/flatland-association/flatland-benchmarks/commit/f949245efa3e923af331d0594bf13ff8fb5bd6df))
+* UUIDs of railway competition. ([c2f4b02](https://github.com/flatland-association/flatland-benchmarks/commit/c2f4b02b20e56105c70098713e20604cde89a431))
+
+
+### Bug Fixes
+
+* test_containers_flatland_benchmarks.py with new API requiring submission to be present when uploading results. ([f1fca96](https://github.com/flatland-association/flatland-benchmarks/commit/f1fca9669255b1cb26182139a7a8133bca2d05e4))
+
 ## [0.17.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.16.0...v0.17.0) (2026-02-09)
 
 
