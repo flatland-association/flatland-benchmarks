@@ -122,20 +122,21 @@ def test_make_submission_definition():
     aws_secret_access_key='ignore-me',
     s3_bucket=None,
     kubernetes_namespace="fab-int",
-    active_deadline_seconds="7200",
+    active_deadline_seconds="888",
     submissions_pvc="fab-int-submissions",
     s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
     k8s_resource_allocation='{"requests": {"memory": "22Gi", "cpu": "33"}, "limits": {"memory": "44Gi", "cpu": "55"}}',
     additional_submission_args="--yeah",
-  )._make_submission_definition(
-    submission_data_url="ghcr.io/subi",
-    test_id="55",
-    scenario_id="66",
-    pkl_path="test99/scenario00.pkl",
-    label="junk",
-  )
-  assert len(submission_definition["spec"]["template"]["spec"]["containers"]) == 1
-  container = submission_definition["spec"]["template"]["spec"]["containers"][0]
+  )._make_submission_definition(submission_data_url="ghcr.io/subi", test_id="55", scenario_id="66", pkl_path="test99/scenario00.pkl")
+
+  assert len(submission_definition["metadata"]["labels"]) == 3
+  assert submission_definition["metadata"]["labels"]["submission_id"] == "1234"
+  assert submission_definition["metadata"]["labels"]["test_id"] == "55"
+  assert submission_definition["metadata"]["labels"]["scenario_id"] == "66"
+  spec = submission_definition["spec"]["template"]["spec"]
+  assert spec["activeDeadlineSeconds"] == "888"
+  assert len(spec["containers"]) == 1
+  container = spec["containers"][0]
   assert container["image"] == "ghcr.io/subi"
   assert container["resources"] == {
     "requests": {"memory": "22Gi", "cpu": "33"},
