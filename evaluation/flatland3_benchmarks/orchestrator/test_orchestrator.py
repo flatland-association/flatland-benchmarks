@@ -14,7 +14,7 @@ def test_tasks_successful():
   batch_api: BatchV1Api = mock()
 
   job_subi = V1Job(status=V1JobStatus(conditions=[V1JobCondition(type="Complete", status="blup")]), metadata=V1ObjectMeta(name=f"f3-submission-1234"))
-  when(batch_api).list_namespaced_job(namespace="fab-int", label_selector=f"submission_id=1234-66").thenReturn(
+  when(batch_api).list_namespaced_job(namespace="fab-int", label_selector=f"submission_id=1234,test_id=55,scenario_id=66").thenReturn(
     V1JobList(items=[job_subi]))
 
   pod_subi = V1Pod(metadata=V1ObjectMeta(name="subi"),
@@ -63,7 +63,7 @@ def test_tasks_failing():
   batch_api: BatchV1Api = mock()
 
   job_subi = V1Job(status=V1JobStatus(conditions=[V1JobCondition(type="Somethingelse", status="blup")]), metadata=V1ObjectMeta(name=f"f3-submission-1234"))
-  when(batch_api).list_namespaced_job(namespace="fab-int", label_selector=f"submission_id=1234-66").thenReturn(
+  when(batch_api).list_namespaced_job(namespace="fab-int", label_selector=f"submission_id=1234,test_id=55,scenario_id=66").thenReturn(
     V1JobList(items=[job_subi]))
 
   pod_subi = V1Pod(metadata=V1ObjectMeta(name="subi"),
