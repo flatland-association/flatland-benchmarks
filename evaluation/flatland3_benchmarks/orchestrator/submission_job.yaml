@@ -25,7 +25,13 @@ spec:
               subPath: # INSERTED /<submission_id> in the pvc mounted as /data/<submission_id>
             - name: environments
               mountPath: /tmp/environments
-
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "1"
+            limits:
+              memory: "2Gi"
+              cpu: "2"
       initContainers:
         - name: download-environments
           command:
