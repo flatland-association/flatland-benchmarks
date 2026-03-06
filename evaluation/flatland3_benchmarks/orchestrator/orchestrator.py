@@ -557,7 +557,7 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
   return K8sFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
     kubernetes_namespace=os.environ.get("KUBERNETES_NAMESPACE", "fab-int"),
-    active_deadline_seconds=os.getenv("ACTIVE_DEADLINE_SECONDS", 7200),
+    active_deadline_seconds=int(os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)),
     submissions_pvc=os.environ.get("SUBMISSIONS_PVC", "fab-int-submissions"),
     s3_url_environments_zip=os.environ.get("S3_URL_ENVIRONMENTS_ZIP", "s3://fab-data/flatland3/environments.zip"),
     percentage_complete_threshold=os.environ.get("PERCENTAGE_COMPLETE_THRESHOLD", None),

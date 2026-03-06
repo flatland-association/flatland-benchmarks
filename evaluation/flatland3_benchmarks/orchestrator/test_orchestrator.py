@@ -122,7 +122,7 @@ def test_make_submission_definition():
     aws_secret_access_key='ignore-me',
     s3_bucket=None,
     kubernetes_namespace="fab-int",
-    active_deadline_seconds="888",
+    active_deadline_seconds=888,
     submissions_pvc="fab-int-submissions",
     s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
     k8s_resource_allocation='{"requests": {"memory": "22Gi", "cpu": "33"}, "limits": {"memory": "44Gi", "cpu": "55"}}',
@@ -134,7 +134,7 @@ def test_make_submission_definition():
   assert submission_definition["metadata"]["labels"]["test_id"] == "55"
   assert submission_definition["metadata"]["labels"]["scenario_id"] == "66"
   spec = submission_definition["spec"]["template"]["spec"]
-  assert spec["activeDeadlineSeconds"] == "888"
+  assert spec["activeDeadlineSeconds"] == 888
   assert len(spec["containers"]) == 1
   container = spec["containers"][0]
   assert container["image"] == "ghcr.io/subi"
