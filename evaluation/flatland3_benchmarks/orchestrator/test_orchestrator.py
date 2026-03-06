@@ -33,6 +33,10 @@ def test_tasks_successful():
     aws_access_key_id='ignore-me',
     aws_secret_access_key='ignore-me',
     s3_bucket=None,
+    kubernetes_namespace="fab-int",
+    active_deadline_seconds="7200",
+    submissions_pvc="fab-int-submissions",
+    s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
   )._run_submission(
     test_id="55",
     scenario_id="66",
@@ -79,6 +83,10 @@ def test_tasks_failing():
       aws_access_key_id='ignore-me',
       aws_secret_access_key='ignore-me',
       s3_bucket=None,
+      kubernetes_namespace="fab-int",
+      active_deadline_seconds="7200",
+      submissions_pvc="fab-int-submissions",
+      s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
     )._run_submission(
       test_id="55",
       scenario_id="66",
@@ -100,4 +108,42 @@ def test_tasks_failing():
   assert ret["f3-sub"]["log"] == "abcd"
   assert ret["f3-sub"]["pod"] == pod_subi.to_dict()
   assert ret["f3-sub"]["job"] == job_subi.to_dict()
+  print(ret)
   mockito.unstub()
+
+
+def test_make_submission_definition():
+  submission_definition = K8sFlatlandBenchmarksOrchestrator(
+    submission_id="1234",
+    batch_api=None,
+    core_api=None,
+    aws_endpoint_url=None,
+    aws_access_key_id='ignore-me',
+    aws_secret_access_key='ignore-me',
+    s3_bucket=None,
+    kubernetes_namespace="fab-int",
+    active_deadline_seconds="7200",
+    submissions_pvc="fab-int-submissions",
+    s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
+    k8s_resource_allocation='{"requests": {"memory": "22Gi", "cpu": "33"}, "limits": {"memory": "44Gi", "cpu": "55"}}',
+    additional_submission_args="--yeah",
+  )._make_submission_definition(
+    submission_data_url="ghcr.io/subi",
+    test_id="55",
+    scenario_id="66",
+    pkl_path="test99/scenario00.pkl",
+    label="junk",
+  )
+  assert len(submission_definition["spec"]["template"]["spec"]["containers"]) == 1
+  container = submission_definition["spec"]["template"]["spec"]["containers"][0]
+  assert container["image"] == "ghcr.io/subi"
+  assert container["resources"] == {
+    "requests": {"memory": "22Gi", "cpu": "33"},
+    "limits": {"memory": "44Gi", "cpu": "55"}
+  }
+  assert len(container["volumeMounts"]) == 2
+  assert container["volumeMounts"][0]["name"] == "pvc-submissions"
+  assert container["volumeMounts"][0]["mountPath"] == "/data"
+  assert container["volumeMounts"][0]["subPath"] == "1234/"
+  assert container["volumeMounts"][1]["name"] == "environments"
+  assert container["volumeMounts"][1]["mountPath"] == "/tmp/environments"
