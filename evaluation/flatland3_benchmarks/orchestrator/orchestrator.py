@@ -74,9 +74,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
-    label = f"{submission_id}-{scenario_id}"[:63].lower()
     metadata_name_ = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))['metadata']['name']
-    submission_definition = self._make_submission_definition(submission_data_url, test_id, scenario_id, label, pkl_path, self.additional_submission_args)
+    submission_definition = self._make_submission_definition(submission_data_url, test_id, scenario_id, pkl_path)
 
     # print(json.dumps(submission_definition, indent=4))
 
@@ -87,7 +86,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     ret = {}
     while not all_done and not any_failed:
       time.sleep(1)
-      jobs = self.batch_api.list_namespaced_job(namespace=self.kubernetes_namespace, label_selector=f"submission_id={label}")
+      jobs = self.batch_api.list_namespaced_job(namespace=self.kubernetes_namespace,
+                                                label_selector=f"submission_id={submission_id},test_id={test_id},scenario_id={scenario_id}")
       assert len(jobs.items) == 1
       all_done = True
       status = []
@@ -119,14 +119,17 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
     return ret
 
-  def _make_submission_definition(self, submission_data_url, test_id, scenario_id, label: str, pkl_path) -> dict:
+  def _make_submission_definition(self, submission_data_url, test_id, scenario_id, pkl_path) -> dict:
     submission_id = self.submission_id
 
     submission_definition = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))
     metadata_name_ = submission_definition['metadata']['name']
     submission_definition["metadata"]["name"] = f"{metadata_name_}--{str(submission_id).lower()[:10]}--{str(scenario_id).lower()}"[:62].rstrip("-")
 
-    submission_definition["metadata"]["labels"]["submission_id"] = label
+    submission_definition["metadata"]["labels"]["submission_id"] = self.submission_id
+    submission_definition["metadata"]["labels"]["test_id"] = test_id
+    submission_definition["metadata"]["labels"]["scenario_id"] = scenario_id
+
     submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = self.active_deadline_seconds
     submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
     submission_container_definition["image"] = submission_data_url
