@@ -26,6 +26,8 @@ CLIENT_ID = os.environ.get("CLIENT_ID", 'fab-client-credentials')
 CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
 TOKEN_URL = os.environ.get("TOKEN_URL", "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/token")
 PERCENTAGE_COMPLETE_THRESHOLD = os.environ.get("PERCENTAGE_COMPLETE_THRESHOLD", None)
+# time limit for the submission container/pod running for one scenario (excluding pulling/initialization).
+RUNNING_TIME_LIMIT = os.environ.get("RUNNING_TIME_LIMIT", None)
 
 
 class TaskExecutionError(Exception):
@@ -164,7 +166,12 @@ class FlatlandBenchmarksOrchestrator:
           pkl_path = self.load_scenario_data(scenario_id)
           prefix = f"{S3_UPLOAD_ROOT}{submission_id}/{test_id}/{scenario_id}"
 
-          self._run_submission(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
+          ret = self._run_submission(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
+          scenario_running_time = ret["running_time"]
+          if RUNNING_TIME_LIMIT is not None and scenario_running_time > float(RUNNING_TIME_LIMIT):
+            logger.warning(
+              f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The scneario running time was exceed : {scenario_running_time:.2f}s > {RUNNING_TIME_LIMIT:.2f}s: {results[test_id][scenario_id]}")
+            return results
 
           logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
           with tempfile.TemporaryDirectory() as tmpdirname:
