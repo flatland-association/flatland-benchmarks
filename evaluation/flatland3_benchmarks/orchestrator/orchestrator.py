@@ -12,6 +12,7 @@ from celery import Celery
 from celery.app.log import TaskFormatter
 from celery.signals import after_setup_task_logger
 from kubernetes import client, config
+from kubernetes.client import V1PodList, V1Pod, V1PodStatus
 
 from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError
 
@@ -76,14 +77,18 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
     metadata_name_ = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))['metadata']['name']
     submission_definition = self._make_submission_definition(submission_data_url, test_id, scenario_id, pkl_path)
-
-    # print(json.dumps(submission_definition, indent=4))
+    job_name = submission_definition["metadata"]["name"]
 
     submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
     self.batch_api.create_namespaced_job(self.kubernetes_namespace, submission)
     all_done = False
     any_failed = False
     ret = {}
+
+    ticks = {}
+    start_time_running = None
+    end_time_running = None
+    running_time = None
     while not all_done and not any_failed:
       time.sleep(1)
       jobs = self.batch_api.list_namespaced_job(namespace=self.kubernetes_namespace,
@@ -91,31 +96,64 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       assert len(jobs.items) == 1
       all_done = True
       status = []
-      for job in jobs.items:
-        all_done = all_done and job.status.conditions is not None
-        any_failed = any_failed or (job.status.conditions is not None and job.status.conditions[0].type != "Complete")
+      job = jobs.items[-1]
+      all_done = all_done and job.status.conditions is not None
+      any_failed = any_failed or (job.status.conditions is not None and job.status.conditions[0].type != "Complete")
 
-      if all_done or any_failed:
-        for job in jobs.items:
-          status.append(job.status.conditions[0].type)
-          job_name = job.metadata.name
-          pods = self.core_api.list_namespaced_pod(namespace=self.kubernetes_namespace, label_selector=f"job-name={job_name}")
+      pods: V1PodList = self.core_api.list_namespaced_pod(namespace=self.kubernetes_namespace, label_selector=f"job-name={job_name}")
+      assert len(pods.items) == 1
+      pod: V1Pod = pods.items[-1]
+      pod_status: V1PodStatus = pod.status
 
-          # backoff
-          pod = pods.items[-1]
-          log = self.core_api.read_namespaced_pod_log(pod.metadata.name, namespace=self.kubernetes_namespace)
+      #  The phase of a Pod is a simple, high-level summary of where the Pod is in its lifecycle. The conditions array, the reason and message fields, and the individual container status arrays contain more detail about the pod's status. There are five possible phase values:
+      #         Pending: The pod has been accepted by the Kubernetes system, but one or more of the container images has not been created. This includes time before being scheduled as well as time spent downloading images over the network, which could take a while.
+      #         Running: The pod has been bound to a node, and all of the containers have been created. At least one container is still running, or is in the process of starting or restarting.
+      #         Succeeded: All containers in the pod have terminated in success, and will not be restarted.
+      #         Failed: All containers in the pod have terminated, and at least one container has terminated in failure. The container either exited with non-zero status or was terminated by the system.
+      #         Unknown: For some reason the state of the pod could not be obtained, typically due to an error in communicating with the host of the pod.  More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase  # noqa: E501
+      ticks[pod_status.phase] = time.time()
+      if "Running" in ticks and start_time_running is None:
+        start_time_running = ticks["Running"]
+      if "Running" in ticks and pod_status.phase != "Running" and end_time_running is None:
+        end_time_running = ticks["Running"]
+        running_time = end_time_running - start_time_running
+        print(f"Submission running for {running_time:.2f} seconds")
 
-          _ret = {
-            "job_status": job.status.conditions[0].type,
-            "image_id": pods.items[-1].status.container_statuses[0].image_id,
-            "log": log,
-            "job": job.to_dict(),
-            "pod": pod.to_dict()
-          }
-          ret[metadata_name_] = _ret
+      if all_done and not any_failed:
+        status.append(job.status.conditions[0].type)
+
+        # backoff
+        assert len(pods.items) == 1
+        pod = pods.items[-1]
+        log = self.core_api.read_namespaced_pod_log(pod.metadata.name, namespace=self.kubernetes_namespace)
+
+        _ret = {
+          "job_status": job.status.conditions[0].type,
+          "pod_status": pod_status.to_dict(),
+          "image_id": pods.items[-1].status.container_statuses[0].image_id,
+          "log": log,
+          "job": job.to_dict(),
+          "pod": pod.to_dict(),
+          "running_time": running_time,
+        }
+        ret[metadata_name_] = _ret
     if any_failed:
-      raise TaskExecutionError(
-        f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}.", ret)
+      try:
+        log = self.core_api.read_namespaced_pod_log(pod.metadata.name, namespace=self.kubernetes_namespace)
+
+        _ret = {
+          "job_status": job.status.conditions[0].type,
+          "pod_status": pod_status.to_dict(),
+          "image_id": pods.items[-1].status.container_statuses[0].image_id,
+          "log": log,
+          "job": job.to_dict(),
+          "pod": pod.to_dict(),
+          "running_time": running_time,
+        }
+        ret[metadata_name_] = _ret
+      finally:
+        raise TaskExecutionError(
+          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. {ret}", ret)
     logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
     return ret
 
