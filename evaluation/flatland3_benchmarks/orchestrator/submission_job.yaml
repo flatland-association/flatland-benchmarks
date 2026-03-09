@@ -5,7 +5,9 @@ metadata:
   annotations: { }
   name: f3-sub
 spec:
-  backoffLimit: 1
+  # https://kubernetes.io/docs/concepts/workloads/controllers/job/
+  # do not back off
+  backoffLimit: 0
   template:
     spec:
       # https://kubernetes.io/docs/concepts/workloads/controllers/job/#handling-pod-and-container-failures
