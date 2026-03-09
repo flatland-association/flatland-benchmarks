@@ -5,6 +5,7 @@ import os
 import shutil
 import ssl
 import subprocess
+import time
 from io import BytesIO, TextIOWrapper
 from pathlib import Path
 from typing import List, Optional
@@ -108,7 +109,10 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
 
     args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "chmod", "-R", "a=rwx",
             f"/vol/{submission_id}/{test_id}/{scenario_id}"]
+    start_time_running = time.time()
     exec_with_logging(args if not SUDO else ["sudo"] + args)
+    end_time_running = time.time()
+    return {"running_time": end_time_running - start_time_running}
 
   # docker implementation has volume mapped into submission container - data is uploaded to S3 by orchestrator itself
   def _run_submission(self,
@@ -134,11 +138,12 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
       generate_policy_args += additional_submission_args.split(" ")
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
-    self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
+    ret = self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
 
 
     self.upload_and_empty_local(test_id, submission_id, scenario_id)
-    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
+    return ret
 
   def upload_and_empty_local(self, test_id: str, submission_id: str, scenario_id: str):
     data_volume = Path(DATA_VOLUME_MOUNTPATH)
