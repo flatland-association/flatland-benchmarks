@@ -1,32 +1,24 @@
 # based on https://github.com/codalab/codabench/blob/develop/orchestrator/orchestrator.py
+import json
 import logging
 import os
 import ssl
 import time
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 import yaml
 from celery import Celery
 from celery.app.log import TaskFormatter
 from celery.signals import after_setup_task_logger
 from kubernetes import client, config
+from kubernetes.client import V1PodList, V1Pod, V1PodStatus
 
 from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError
 
 logger = logging.getLogger(__name__)
 
-KUBERNETES_NAMESPACE = os.environ.get("KUBERNETES_NAMESPACE", "fab-int")
-AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
-AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
-AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
-S3_BUCKET = os.environ.get("S3_BUCKET", None)
-ACTIVE_DEADLINE_SECONDS = os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)
 BENCHMARK_ID = os.environ.get("BENCHMARK_ID", "flatland3-evaluation")
-SUBMISSIONS_PVC = os.environ.get("SUBMISSIONS_PVC", "fab-int-submissions")
-S3_URL_ENVIRONMENTS_ZIP = os.environ.get("S3_URL_ENVIRONMENTS_ZIP", "s3://fab-data/flatland3/environments.zip")
-PERCENTAGE_COMPLETE_THRESHOLD = os.environ.get("PERCENTAGE_COMPLETE_THRESHOLD", None)
-
 app = Celery(
   broker=os.environ.get('BROKER_URL'),
   backend=os.environ.get('BACKEND_URL'),
@@ -52,10 +44,26 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
   def __init__(self,
                batch_api: client.BatchV1Api,
                core_api: client.CoreV1Api,
+               kubernetes_namespace=None,
+               active_deadline_seconds=None,
+               submissions_pvc=None,
+               s3_url_environments_zip=None,
+               percentage_complete_threshold=None,
+               k8s_resource_allocation=None,
+               additional_submission_args=None,
                **kwargs):
     super().__init__(**kwargs)
     self.core_api = core_api
     self.batch_api = batch_api
+
+    self.additional_submission_args = additional_submission_args
+    self.kubernetes_namespace = kubernetes_namespace
+    self.active_deadline_seconds = active_deadline_seconds
+    self.benchmark_id = BENCHMARK_ID
+    self.submissions_pvc = submissions_pvc
+    self.s3_url_environments_zip = s3_url_environments_zip
+    self.percentage_complete_threshold = percentage_complete_threshold
+    self.k8s_resource_allocation = k8s_resource_allocation
 
   # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
   def _run_submission(self,
@@ -67,32 +75,123 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+    metadata_name_ = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))['metadata']['name']
+    submission_definition = self._make_submission_definition(submission_data_url, test_id, scenario_id, pkl_path)
+    job_name = submission_definition["metadata"]["name"]
+
+    submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
+    self.batch_api.create_namespaced_job(self.kubernetes_namespace, submission)
+    all_done = False
+    any_failed = False
+    ret = {}
+
+    ticks = {}
+    start_time_running = None
+    end_time_running = None
+    running_time = None
+    while not all_done and not any_failed:
+      time.sleep(1)
+      jobs = self.batch_api.list_namespaced_job(namespace=self.kubernetes_namespace,
+                                                label_selector=f"submission_id={submission_id},test_id={test_id},scenario_id={scenario_id}")
+      assert len(jobs.items) == 1
+      all_done = True
+      status = []
+      job = jobs.items[-1]
+      all_done = all_done and job.status.conditions is not None
+      any_failed = any_failed or (job.status.conditions is not None and job.status.conditions[0].type != "Complete")
+
+      pods: V1PodList = self.core_api.list_namespaced_pod(namespace=self.kubernetes_namespace, label_selector=f"job-name={job_name}")
+      assert len(pods.items) == 1
+      pod: V1Pod = pods.items[-1]
+      pod_status: V1PodStatus = pod.status
+
+      #  The phase of a Pod is a simple, high-level summary of where the Pod is in its lifecycle. The conditions array, the reason and message fields, and the individual container status arrays contain more detail about the pod's status. There are five possible phase values:
+      #         Pending: The pod has been accepted by the Kubernetes system, but one or more of the container images has not been created. This includes time before being scheduled as well as time spent downloading images over the network, which could take a while.
+      #         Running: The pod has been bound to a node, and all of the containers have been created. At least one container is still running, or is in the process of starting or restarting.
+      #         Succeeded: All containers in the pod have terminated in success, and will not be restarted.
+      #         Failed: All containers in the pod have terminated, and at least one container has terminated in failure. The container either exited with non-zero status or was terminated by the system.
+      #         Unknown: For some reason the state of the pod could not be obtained, typically due to an error in communicating with the host of the pod.  More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase  # noqa: E501
+      ticks[pod_status.phase] = time.time()
+      if "Running" in ticks and start_time_running is None:
+        start_time_running = ticks["Running"]
+      if "Running" in ticks and pod_status.phase != "Running" and end_time_running is None:
+        end_time_running = ticks["Running"]
+        running_time = end_time_running - start_time_running
+        print(f"Submission running for {running_time:.2f} seconds")
+
+      if all_done and not any_failed:
+        status.append(job.status.conditions[0].type)
+
+        # backoff
+        assert len(pods.items) == 1
+        pod = pods.items[-1]
+        log = self.core_api.read_namespaced_pod_log(pod.metadata.name, namespace=self.kubernetes_namespace)
+
+        _ret = {
+          "job_status": job.status.conditions[0].type,
+          "pod_status": pod_status.to_dict(),
+          "image_id": pods.items[-1].status.container_statuses[0].image_id,
+          "log": log,
+          "job": job.to_dict(),
+          "pod": pod.to_dict(),
+          "running_time": running_time,
+        }
+        ret[metadata_name_] = _ret
+    if any_failed:
+      try:
+        log = self.core_api.read_namespaced_pod_log(pod.metadata.name, namespace=self.kubernetes_namespace)
+
+        _ret = {
+          "job_status": job.status.conditions[0].type,
+          "pod_status": pod_status.to_dict(),
+          "image_id": pods.items[-1].status.container_statuses[0].image_id,
+          "log": log,
+          "job": job.to_dict(),
+          "pod": pod.to_dict(),
+          "running_time": running_time,
+        }
+        ret[metadata_name_] = _ret
+      finally:
+        raise TaskExecutionError(
+          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. {ret}", ret)
+    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
+    return ret
+
+  def _make_submission_definition(self, submission_data_url, test_id, scenario_id, pkl_path) -> dict:
+    submission_id = self.submission_id
 
     submission_definition = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))
     metadata_name_ = submission_definition['metadata']['name']
     submission_definition["metadata"]["name"] = f"{metadata_name_}--{str(submission_id).lower()[:10]}--{str(scenario_id).lower()}"[:62].rstrip("-")
-    label = f"{submission_id}-{scenario_id}"[:63].lower()
-    submission_definition["metadata"]["labels"]["submission_id"] = label
-    submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = ACTIVE_DEADLINE_SECONDS
+
+    submission_definition["metadata"]["labels"]["submission_id"] = self.submission_id
+    submission_definition["metadata"]["labels"]["test_id"] = test_id
+    submission_definition["metadata"]["labels"]["scenario_id"] = scenario_id
+
+    submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = self.active_deadline_seconds
     submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
     submission_container_definition["image"] = submission_data_url
-    submission_definition["spec"]["template"]["spec"]["volumes"][1]["persistentVolumeClaim"]["claimName"] = SUBMISSIONS_PVC
+    submission_definition["spec"]["template"]["spec"]["volumes"][1]["persistentVolumeClaim"]["claimName"] = self.submissions_pvc
 
     # submission container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
     data_dir = f"/data/{test_id}/{scenario_id}"
 
     # https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/
-    submission_container_definition["args"] = ["flatland-trajectory-generate-from-policy", "--data-dir", data_dir, "--env-path",
-                                               f"/tmp/environments/{pkl_path}", "--ep-id", f"{scenario_id}"]
-    additional_submission_args = os.environ.get("ADDITIONAL_SUBMISSION_ARGS", None)
-    if additional_submission_args is not None:
-      submission_container_definition["args"] += additional_submission_args.split(" ")
+    container_args = self._make_args(data_dir, pkl_path, scenario_id)
+    if container_args is not None:
+      submission_container_definition["args"] = container_args
+    container_command = self._make_command(data_dir, pkl_path, scenario_id)
+    if container_command is not None:
+      submission_container_definition["command"] = container_command
+
+    if self.k8s_resource_allocation is not None:
+      submission_container_definition["resources"] = json.loads(self.k8s_resource_allocation)
 
     sub_path = f"{submission_id}/"
     submission_container_definition["volumeMounts"][0]["subPath"] = sub_path
 
     submission_download_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
-    submission_download_initcontainer_definition["env"].append({"name": "S3_URL_ENVIRONMENTS_ZIP", "value": S3_URL_ENVIRONMENTS_ZIP})
+    submission_download_initcontainer_definition["env"].append({"name": "S3_URL_ENVIRONMENTS_ZIP", "value": self.s3_url_environments_zip})
 
     submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
     # inject AWS credentials for downloading pkls:
@@ -105,47 +204,17 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
 
     # init container has full pvc mounted for submissions:
     submission_extractenvs_initcontainer_definition["env"].append({"name": "DATA_DIR", "value": f"/data/{submission_id}/{test_id}/{scenario_id}"})
+    return submission_definition
 
-    # print(json.dumps(submission_definition, indent=4))
+  def _make_args(self, data_dir: str, pkl_path, scenario_id) -> List[str]:
+    args = ["flatland-trajectory-generate-from-policy", "--data-dir", data_dir, "--env-path", f"/tmp/environments/{pkl_path}", "--ep-id", f"{scenario_id}"]
+    if self.additional_submission_args is not None:
+      args += self.additional_submission_args.split(" ")
+    return args
 
-    submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
-    self.batch_api.create_namespaced_job(KUBERNETES_NAMESPACE, submission)
-    all_done = False
-    any_failed = False
-    ret = {}
-    while not all_done and not any_failed:
-      time.sleep(1)
-      jobs = self.batch_api.list_namespaced_job(namespace=KUBERNETES_NAMESPACE, label_selector=f"submission_id={label}")
-      assert len(jobs.items) == 1
-      all_done = True
-      status = []
-      for job in jobs.items:
-        all_done = all_done and job.status.conditions is not None
-        any_failed = any_failed or (job.status.conditions is not None and job.status.conditions[0].type != "Complete")
-
-      if all_done or any_failed:
-        for job in jobs.items:
-          status.append(job.status.conditions[0].type)
-          job_name = job.metadata.name
-          pods = self.core_api.list_namespaced_pod(namespace=KUBERNETES_NAMESPACE, label_selector=f"job-name={job_name}")
-
-          # backoff
-          pod = pods.items[-1]
-          log = self.core_api.read_namespaced_pod_log(pod.metadata.name, namespace=KUBERNETES_NAMESPACE)
-
-          _ret = {
-            "job_status": job.status.conditions[0].type,
-            "image_id": pods.items[-1].status.container_statuses[0].image_id,
-            "log": log,
-            "job": job.to_dict(),
-            "pod": pod.to_dict()
-          }
-          ret[metadata_name_] = _ret
-    if any_failed:
-      raise TaskExecutionError(
-        f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}.", ret)
-    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
-    return ret
+  def _make_command(self, data_dir: str, pkl_path, scenario_id) -> Optional[List[str]]:
+    # use default entrypoint
+    return None
 
   @staticmethod
   def load_scenario_data(scenario_id: str) -> str:
@@ -519,6 +588,12 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
   # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py
   batch_api = client.BatchV1Api()
   core_api = client.CoreV1Api()
+
+  AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
+  AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
+  AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
+  S3_BUCKET = os.environ.get("S3_BUCKET", None)
+
   if not AWS_ENDPOINT_URL:
     raise RuntimeError("Misconfiguration: AWS_ENDPOINT_URL must be set in the orchestrator")
   if not AWS_ACCESS_KEY_ID:
@@ -530,6 +605,13 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
 
   return K8sFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
+    kubernetes_namespace=os.environ.get("KUBERNETES_NAMESPACE", "fab-int"),
+    active_deadline_seconds=int(os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)),
+    submissions_pvc=os.environ.get("SUBMISSIONS_PVC", "fab-int-submissions"),
+    s3_url_environments_zip=os.environ.get("S3_URL_ENVIRONMENTS_ZIP", "s3://fab-data/flatland3/environments.zip"),
+    percentage_complete_threshold=os.environ.get("PERCENTAGE_COMPLETE_THRESHOLD", None),
+    k8s_resource_allocation=os.environ.get("K8S_RESOURCE_ALLOCATION", '{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}'),
+    additional_submission_args=os.environ.get("ADDITIONAL_SUBMISSION_ARGS", None),
     batch_api=batch_api,
     core_api=core_api,
     aws_endpoint_url=AWS_ENDPOINT_URL,
