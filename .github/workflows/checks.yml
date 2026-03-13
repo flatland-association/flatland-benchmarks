@@ -66,8 +66,9 @@ jobs:
         working-directory: evaluation/flatland3_benchmarks
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
-          pytest -s --ignore test_containers_flatland_benchmarks_percentage.py
+          pytest -s --ignore test_containers_flatland_benchmarks_percentage.py test_containers_flatland_benchmarks_running_time_limit.py
           pytest -s test_containers_flatland_benchmarks_percentage.py
+          pytest -s test_containers_flatland_benchmarks_running_time_limit.py
 
   test-ai4realnet-orchestrator-railway:
     runs-on: ubuntu-22.04
