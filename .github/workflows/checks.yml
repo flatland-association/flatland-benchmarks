@@ -43,9 +43,9 @@ jobs:
         run: |
           df -h
           docker system df
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install pytest
@@ -57,7 +57,7 @@ jobs:
           python -m pip list
       # N.B. required for docker compose --profile full
       - name: Clone ai4realnet-orchestrators for integration tests
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: flatland-association/ai4realnet-orchestrators
           path: evaluation/ai4realnet_orchestrators
@@ -93,7 +93,7 @@ jobs:
         run: |
           df -h
           docker system df
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -108,11 +108,11 @@ jobs:
         run: |
           cp ts/backend/src/swagger/swagger.json  fab-clientlib/openapi.json
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - name: Clone ai4realnet-orchestrators for integration tests
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: flatland-association/ai4realnet-orchestrators
           path: evaluation/ai4realnet_orchestrators
@@ -151,9 +151,9 @@ jobs:
       matrix:
         python-version: [ "3.13" ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
       - name: Run fab-clientlib unit tests
@@ -185,7 +185,7 @@ jobs:
         run: |
           python -m pip install .
       - name: Clone ai4realnet-orchestrators for integration tests
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: flatland-association/ai4realnet-orchestrators
           path: evaluation/ai4realnet_orchestrators
@@ -203,7 +203,7 @@ jobs:
       matrix:
         node-version: [ "22.x" ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -223,7 +223,7 @@ jobs:
       matrix:
         node-version: [ "22.x" ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -243,7 +243,7 @@ jobs:
       matrix:
         node-version: [ "22.x" ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -259,7 +259,7 @@ jobs:
         working-directory: ts/backend/
         run: npm run build
       - name: Set up Python 3.13
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: 3.13
       - name: validate swagger.json
@@ -281,7 +281,7 @@ jobs:
       matrix:
         node-version: [ "22.x" ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
@@ -289,7 +289,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Clone ai4realnet-orchestrators for integration tests
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: flatland-association/ai4realnet-orchestrators
           path: evaluation/ai4realnet_orchestrators
