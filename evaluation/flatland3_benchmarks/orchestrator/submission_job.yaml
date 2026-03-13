@@ -13,6 +13,7 @@ spec:
       # https://kubernetes.io/docs/concepts/workloads/controllers/job/#handling-pod-and-container-failures
       # https://kubernetes.io/docs/concepts/workloads/controllers/job/#pod-backoff-failure-policy
       activeDeadlineSeconds: 7200
+      # do not restart
       restartPolicy: Never
       containers:
         - name: f3-submission

@@ -5,7 +5,7 @@ import os
 import ssl
 import time
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 
 import yaml
 from celery import Celery
@@ -177,7 +177,12 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     data_dir = f"/data/{test_id}/{scenario_id}"
 
     # https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/
-    submission_container_definition["args"] = self._make_args(data_dir, pkl_path, scenario_id)
+    container_args = self._make_args(data_dir, pkl_path, scenario_id)
+    if container_args is not None:
+      submission_container_definition["args"] = container_args
+    container_command = self._make_command(data_dir, pkl_path, scenario_id)
+    if container_command is not None:
+      submission_container_definition["command"] = container_command
 
     if self.k8s_resource_allocation is not None:
       submission_container_definition["resources"] = json.loads(self.k8s_resource_allocation)
@@ -201,11 +206,15 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_extractenvs_initcontainer_definition["env"].append({"name": "DATA_DIR", "value": f"/data/{submission_id}/{test_id}/{scenario_id}"})
     return submission_definition
 
-  def _make_args(self, data_dir: str, pkl_path, scenario_id) -> list[str]:
+  def _make_args(self, data_dir: str, pkl_path, scenario_id) -> List[str]:
     args = ["flatland-trajectory-generate-from-policy", "--data-dir", data_dir, "--env-path", f"/tmp/environments/{pkl_path}", "--ep-id", f"{scenario_id}"]
     if self.additional_submission_args is not None:
       args += self.additional_submission_args.split(" ")
     return args
+
+  def _make_command(self, data_dir: str, pkl_path, scenario_id) -> Optional[List[str]]:
+    # use default entrypoint
+    return None
 
   @staticmethod
   def load_scenario_data(scenario_id: str) -> str:
