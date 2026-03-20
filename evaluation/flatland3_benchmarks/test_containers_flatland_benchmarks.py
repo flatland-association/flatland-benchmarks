@@ -102,7 +102,7 @@ def test_successful_run(expected_test_ids, tests: List[str], expected_primary_sc
     SubmissionsPostRequest(
       benchmark_id=benchmark_id,
       name="flatland-baselines-deadlock-avoidance-heuristic",
-      submission_data_url="ghcr.io/flatland-association/flatland-baselines-deadlock-avoidance-heuristic:latest",
+      submission_data_url="ghcr.io/enliteai-maze/flatland-benchmarks-f3-starterkit:xgboost-maze-test",
       test_ids=tests
     )
   )
