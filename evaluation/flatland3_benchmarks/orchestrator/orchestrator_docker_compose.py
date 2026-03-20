@@ -127,7 +127,7 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
       "--ep-id", scenario_id,
       "--env-path", f"{SCENARIOS_VOLUME_MOUNTPATH}/{env_path}",
       # TODO old debug-environments have np_random not persisted, so pass seed to have envs behave deterministically. Should do this everywhere or assume envs are reset?
-      "--seed", "1001"
+      "--post-seed", "1001"
     ]
     additional_submission_args = os.environ.get("ADDITIONAL_SUBMISSION_ARGS", None)
     if additional_submission_args is not None:
@@ -202,18 +202,21 @@ def orchestrator(self,
 
 
 # https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
-def exec_with_logging(exec_args: List[str], log_level_stdout=logging.INFO, log_level_stderr=logging.INFO, collect: bool = False):
+def exec_with_logging(exec_args: List[str], log_level_stdout=logging.INFO, log_level_stderr=logging.WARN, collect: bool = False):
   logger.info(f"/ Start %s", exec_args)
   try:
     proc = subprocess.Popen(exec_args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     stdout, stderr = proc.communicate()
     stdo = log_subprocess_output(TextIOWrapper(BytesIO(stdout)), level=log_level_stdout, label=str(exec_args), collect=collect)
     stde = log_subprocess_output(TextIOWrapper(BytesIO(stderr)), level=log_level_stderr, label=str(exec_args), collect=collect)
-    logger.info("\\ End %s", exec_args)
+    logger.info("\\ End %s with code %s", exec_args, proc.returncode)
+    if proc.returncode != 0:
+      logger.info(stdo)
+      logger.error(stde)
+      raise RuntimeError(f"Failed to run {exec_args}. Stdout={stdo}. Stderr={stde}")
     return stdo, stde
   except (OSError, subprocess.CalledProcessError) as exception:
-    logger.error(stderr)
-    raise RuntimeError(f"Failed to run {exec_args}. Stdout={stdout}. Stderr={stderr}") from exception
+    raise RuntimeError(f"Failed to run {exec_args}.") from exception
 
 
 # https://stackoverflow.com/questions/21953835/run-subprocess-and-print-output-to-logging
