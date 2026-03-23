@@ -16,7 +16,7 @@ from kubernetes import config
 from orchestrator import K8sFlatlandBenchmarksOrchestrator
 from orchestrator_common import TaskExecutionError
 
-AWS_ENDPOINT_URL = os.getenv(" AWS_ENDPOINT_URL", None) or dotenv_values(Path(__file__).resolve().parent / ".env")["AWS_ENDPOINT_URL"]
+AWS_ENDPOINT_URL = os.getenv("AWS_ENDPOINT_URL", None) or dotenv_values(Path(__file__).resolve().parent / ".env")["AWS_ENDPOINT_URL"]
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", None) or dotenv_values(Path(__file__).resolve().parent / ".env")["AWS_ACCESS_KEY_ID"]
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", None) or dotenv_values(Path(__file__).resolve().parent / ".env")["AWS_SECRET_ACCESS_KEY"]
 S3_BUCKET = os.getenv("S3_BUCKET", None) or dotenv_values(Path(__file__).resolve().parent / ".env")["S3_BUCKET"]
