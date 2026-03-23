@@ -66,6 +66,7 @@ jobs:
         working-directory: evaluation/flatland3_benchmarks
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
+          # run separately
           pytest -s --ignore test_containers_flatland_benchmarks_percentage.py --ignore test_containers_flatland_benchmarks_running_time_limit.py
           pytest -s test_containers_flatland_benchmarks_percentage.py
           pytest -s test_containers_flatland_benchmarks_running_time_limit.py
