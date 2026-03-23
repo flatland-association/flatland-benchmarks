@@ -51,6 +51,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                percentage_complete_threshold=None,
                k8s_resource_allocation=None,
                additional_submission_args=None,
+               max_running_time=None,
                **kwargs):
     super().__init__(**kwargs)
     self.core_api = core_api
@@ -64,6 +65,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.s3_url_environments_zip = s3_url_environments_zip
     self.percentage_complete_threshold = percentage_complete_threshold
     self.k8s_resource_allocation = k8s_resource_allocation
+    self.max_running_time = max_running_time
 
   # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
   def _run_submission(self,
@@ -114,6 +116,12 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       ticks[pod_status.phase] = time.time()
       if "Running" in ticks and start_time_running is None:
         start_time_running = ticks["Running"]
+      if "Running" in ticks and start_time_running is not None:
+        running_time = time.time() - start_time_running
+        if running_time > self.max_running_time:
+          raise TaskExecutionError(
+            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {running_time:.2f}s exceeded max running time {self.max_running_time}s.",
+            ret)
       if "Running" in ticks and pod_status.phase != "Running" and end_time_running is None:
         end_time_running = ticks["Running"]
         running_time = end_time_running - start_time_running
