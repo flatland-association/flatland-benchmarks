@@ -170,7 +170,7 @@ class FlatlandBenchmarksOrchestrator:
           scenario_running_time = ret["running_time"]
           if RUNNING_TIME_LIMIT is not None and scenario_running_time > float(RUNNING_TIME_LIMIT):
             logger.warning(
-              f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The scneario running time was exceed : {scenario_running_time:.2f}s > {RUNNING_TIME_LIMIT:.2f}s: {results[test_id][scenario_id]}")
+              f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The scenario running time was exceeded : {scenario_running_time:.2f}s > {RUNNING_TIME_LIMIT:.2f}s: {results[test_id][scenario_id]}")
             return results
 
           logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
