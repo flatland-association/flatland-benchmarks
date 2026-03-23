@@ -40,9 +40,9 @@ class FlatlandBenchmarksOrchestrator:
                client_id=None,
                client_secret=None,
                token_url=None,
-               percentage_complete_threshold=None,
+               percentage_complete_threshold: float = None,
                # time limit for the submission container/pod running for one scenario (excluding pulling/initialization).
-               running_time_limit=None,
+               running_time_limit: float = None,
                **kwargs):
     self.submission_id = submission_id
     self.aws_endpoint_url = aws_endpoint_url

@@ -45,7 +45,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                batch_api: client.BatchV1Api,
                core_api: client.CoreV1Api,
                kubernetes_namespace=None,
-               active_deadline_seconds=None,
+               active_deadline_seconds: int = None,
                submissions_pvc=None,
                s3_url_environments_zip=None,
                percentage_complete_threshold=None,
