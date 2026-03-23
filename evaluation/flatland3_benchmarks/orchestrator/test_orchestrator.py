@@ -34,7 +34,7 @@ def test_tasks_successful():
     aws_secret_access_key='ignore-me',
     s3_bucket=None,
     kubernetes_namespace="fab-int",
-    active_deadline_seconds="7200",
+    active_deadline_seconds=7200,
     submissions_pvc="fab-int-submissions",
     s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
   )._run_submission(
@@ -85,7 +85,7 @@ def test_tasks_failing():
       aws_secret_access_key='ignore-me',
       s3_bucket=None,
       kubernetes_namespace="fab-int",
-      active_deadline_seconds="7200",
+      active_deadline_seconds=7200,
       submissions_pvc="fab-int-submissions",
       s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
     )._run_submission(
