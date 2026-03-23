@@ -20,6 +20,7 @@ AWS_ENDPOINT_URL = os.getenv("AWS_ENDPOINT_URL", None) or dotenv_values(Path(__f
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", None) or dotenv_values(Path(__file__).resolve().parent / ".env")["AWS_ACCESS_KEY_ID"]
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", None) or dotenv_values(Path(__file__).resolve().parent / ".env")["AWS_SECRET_ACCESS_KEY"]
 S3_BUCKET = os.getenv("S3_BUCKET", None) or dotenv_values(Path(__file__).resolve().parent / ".env")["S3_BUCKET"]
+SUBMISSIONS_PVC = os.getenv("SUBMISSIONS_PVC", None) or dotenv_values(Path(__file__).resolve().parent / ".env")["SUBMISSIONS_PVC"]
 S3_URL_ENVIRONMENTS_ZIP = os.getenv("S3_URL_ENVIRONMENTS_ZIP", None) or dotenv_values(Path(__file__).resolve().parent / ".env")["S3_URL_ENVIRONMENTS_ZIP"]
 KUBERNETES_NAMESPACE = os.getenv("KUBERNETES_NAMESPACE", None) or dotenv_values(Path(__file__).resolve().parent / ".env")["KUBERNETES_NAMESPACE"]
 logging.basicConfig(encoding='utf-8', level=logging.INFO)
@@ -45,7 +46,7 @@ def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatlan
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
     s3_url_environments_zip=S3_URL_ENVIRONMENTS_ZIP,
-    submissions_pvc=S3_BUCKET,
+    submissions_pvc=SUBMISSIONS_PVC,
     active_deadline_seconds=55,
   )
 
@@ -93,7 +94,7 @@ def test_pull_failure_fail_fast(submission_data_url="ghcr.io/flatland-associatio
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
     s3_url_environments_zip=S3_URL_ENVIRONMENTS_ZIP,
-    submissions_pvc=S3_BUCKET,
+    submissions_pvc=SUBMISSIONS_PVC,
     active_deadline_seconds=active_deadline_seconds,
   )
   with pytest.raises(TaskExecutionError) as exc_info:
@@ -137,7 +138,7 @@ def test_time_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/f
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
     s3_url_environments_zip=S3_URL_ENVIRONMENTS_ZIP,
-    submissions_pvc=S3_BUCKET,
+    submissions_pvc=SUBMISSIONS_PVC,
     active_deadline_seconds=active_deadline_seconds,
     running_time_limit=running_time_limit,
   )
