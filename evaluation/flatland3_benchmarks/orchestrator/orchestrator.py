@@ -75,7 +75,9 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
-    metadata_name_ = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))['metadata']['name']
+    submission_job_path = Path(__file__).parent / "submission_job.yaml"
+    with submission_job_path.open() as f:
+      metadata_name_ = yaml.safe_load(f)['metadata']['name']
     submission_definition = self._make_submission_definition(submission_data_url, test_id, scenario_id, pkl_path)
     job_name = submission_definition["metadata"]["name"]
 
