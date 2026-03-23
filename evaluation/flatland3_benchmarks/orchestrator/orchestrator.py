@@ -169,7 +169,9 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
   def _make_submission_definition(self, submission_data_url, test_id, scenario_id, pkl_path) -> dict:
     submission_id = self.submission_id
 
-    submission_definition = yaml.safe_load(open(Path(__file__).parent / "submission_job.yaml"))
+    submission_job_path = Path(__file__).parent / "submission_job.yaml"
+    with submission_job_path.open() as submission_job_file:
+      submission_definition = yaml.safe_load(submission_job_file)
     metadata_name_ = submission_definition['metadata']['name']
     submission_definition["metadata"]["name"] = f"{metadata_name_}--{str(submission_id).lower()[:10]}--{str(scenario_id).lower()}"[:62].rstrip("-")
 
