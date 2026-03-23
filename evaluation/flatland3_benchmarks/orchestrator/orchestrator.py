@@ -125,6 +125,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         # backoff
         assert len(pods.items) == 1
         pod = pods.items[-1]
+
         log = self.core_api.read_namespaced_pod_log(pod.metadata.name, namespace=self.kubernetes_namespace)
 
         _ret = {
@@ -138,19 +139,19 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         }
         ret[metadata_name_] = _ret
     if any_failed:
+      _ret = {
+        "job_status": job.status.conditions[0].type,
+        "pod_status": pod_status.to_dict(),
+        "image_id": pods.items[-1].status.container_statuses[0].image_id,
+        "log": None,
+        "job": job.to_dict(),
+        "pod": pod.to_dict(),
+        "running_time": running_time,
+      }
+      ret[metadata_name_] = _ret
       try:
-        log = self.core_api.read_namespaced_pod_log(pod.metadata.name, namespace=self.kubernetes_namespace)
-
-        _ret = {
-          "job_status": job.status.conditions[0].type,
-          "pod_status": pod_status.to_dict(),
-          "image_id": pods.items[-1].status.container_statuses[0].image_id,
-          "log": log,
-          "job": job.to_dict(),
-          "pod": pod.to_dict(),
-          "running_time": running_time,
-        }
-        ret[metadata_name_] = _ret
+        _ret["events"] = self.core_api.list_namespaced_event(self.kubernetes_namespace, field_selector=f'involvedObject.name={pod._metadata._name}').to_dict()
+        _ret["log"] = self.core_api.read_namespaced_pod_log(pod.metadata.name, namespace=self.kubernetes_namespace)
       finally:
         raise TaskExecutionError(
           f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. {ret}", ret)
