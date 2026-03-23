@@ -51,7 +51,6 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                percentage_complete_threshold=None,
                k8s_resource_allocation=None,
                additional_submission_args=None,
-               max_running_time=None,
                **kwargs):
     super().__init__(**kwargs)
     self.core_api = core_api
@@ -65,7 +64,6 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.s3_url_environments_zip = s3_url_environments_zip
     self.percentage_complete_threshold = percentage_complete_threshold
     self.k8s_resource_allocation = k8s_resource_allocation
-    self.max_running_time = max_running_time
 
   # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
   def _run_submission(self,
@@ -118,9 +116,9 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         start_time_running = ticks["Running"]
       if "Running" in ticks and start_time_running is not None:
         running_time = time.time() - start_time_running
-        if running_time > self.max_running_time:
+        if running_time > self.running_time_limit:
           raise TaskExecutionError(
-            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {running_time:.2f}s exceeded max running time {self.max_running_time}s.",
+            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {running_time:.2f}s exceeded running time limit {self.running_time_limit}s.",
             ret)
       if "Running" in ticks and pod_status.phase != "Running" and end_time_running is None:
         end_time_running = ticks["Running"]
@@ -612,6 +610,13 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
   if not S3_BUCKET:
     raise RuntimeError("Misconfiguration: S3_BUCKET must be set in the orchestrator")
 
+  FAB_API_URL = os.environ.get("FAB_API_URL")
+  CLIENT_ID = os.environ.get("CLIENT_ID", 'fab-client-credentials')
+  CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
+  TOKEN_URL = os.environ.get("TOKEN_URL", "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/token")
+  PERCENTAGE_COMPLETE_THRESHOLD = os.environ.get("PERCENTAGE_COMPLETE_THRESHOLD", None)
+  RUNNING_TIME_LIMIT = os.environ.get("RUNNING_TIME_LIMIT", None)
+
   return K8sFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
     kubernetes_namespace=os.environ.get("KUBERNETES_NAMESPACE", "fab-int"),
@@ -627,6 +632,12 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
     aws_access_key_id=AWS_ACCESS_KEY_ID,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
+    FAB_API_URL=FAB_API_URL,
+    CLIENT_ID=CLIENT_ID,
+    CLIENT_SECRET=CLIENT_SECRET,
+    TOKEN_URL=TOKEN_URL,
+    PERCENTAGE_COMPLETE_THRESHOLD=PERCENTAGE_COMPLETE_THRESHOLD,
+    RUNNING_TIME_LIMIT=RUNNING_TIME_LIMIT,
   ).orchestrator(
     submission_data_url=submission_data_url,
     tests=tests,

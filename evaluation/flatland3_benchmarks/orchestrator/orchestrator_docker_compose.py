@@ -192,6 +192,14 @@ def orchestrator(self,
   aws_endpoint_url = os.environ.get("AWS_ENDPOINT_URL", None)
   aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID", None)
   aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
+
+  FAB_API_URL = os.environ.get("FAB_API_URL")
+  CLIENT_ID = os.environ.get("CLIENT_ID", 'fab-client-credentials')
+  CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
+  TOKEN_URL = os.environ.get("TOKEN_URL", "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/token")
+  PERCENTAGE_COMPLETE_THRESHOLD = os.environ.get("PERCENTAGE_COMPLETE_THRESHOLD", None)
+  RUNNING_TIME_LIMIT = os.environ.get("RUNNING_TIME_LIMIT", None)
+
   s3_bucket = os.environ.get("S3_BUCKET", None)
   return DockerComposeFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
@@ -199,6 +207,12 @@ def orchestrator(self,
     aws_access_key_id=aws_access_key_id,
     aws_secret_access_key=aws_secret_access_key,
     s3_bucket=s3_bucket,
+    fab_api_url=FAB_API_URL,
+    client_id=CLIENT_ID,
+    client_secret=CLIENT_SECRET,
+    token_url=TOKEN_URL,
+    percentage_complete_threshold=PERCENTAGE_COMPLETE_THRESHOLD,
+    running_time_limit=RUNNING_TIME_LIMIT,
   ).orchestrator(
     submission_data_url=submission_data_url,
     tests=tests,
