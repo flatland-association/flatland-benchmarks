@@ -44,13 +44,13 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
   def __init__(self,
                batch_api: client.BatchV1Api,
                core_api: client.CoreV1Api,
-               kubernetes_namespace=None,
-               active_deadline_seconds: int = None,
-               submissions_pvc=None,
-               s3_url_environments_zip=None,
-               percentage_complete_threshold=None,
-               k8s_resource_allocation=None,
-               additional_submission_args=None,
+               kubernetes_namespace: str,
+               active_deadline_seconds: int,
+               submissions_pvc: str,
+               s3_url_environments_zip: str,
+               percentage_complete_threshold: float = None,
+               k8s_resource_allocation: str = None,
+               additional_submission_args: str = None,
                **kwargs):
     super().__init__(**kwargs)
     self.core_api = core_api
@@ -118,7 +118,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         start_time_running = ticks["Running"]
       if "Running" in ticks and start_time_running is not None:
         running_time = time.time() - start_time_running
-        if  self.running_time_limit is not None and running_time > self.running_time_limit:
+        if self.running_time_limit is not None and running_time > self.running_time_limit:
           raise TaskExecutionError(
             f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {running_time:.2f}s exceeded running time limit {self.running_time_limit}s.",
             ret)
