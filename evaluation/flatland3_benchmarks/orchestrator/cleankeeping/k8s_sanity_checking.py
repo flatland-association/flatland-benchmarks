@@ -120,7 +120,7 @@ def test_time_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/f
                                                   pkl_path="Test_00/Level_0.pkl",
                                                   active_deadline_seconds=55,
                                                   delta=10,
-                                                  max_running_time=25
+                                                  running_time_limit=25
                                                   ):
   config.load_kube_config()
   core_api = client.CoreV1Api()
@@ -139,7 +139,7 @@ def test_time_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/f
     s3_url_environments_zip=S3_URL_ENVIRONMENTS_ZIP,
     submissions_pvc=S3_BUCKET,
     active_deadline_seconds=active_deadline_seconds,
-    max_running_time=max_running_time,
+    running_time_limit=running_time_limit,
   )
   orchestrator._make_command = lambda *args, **kwargs: ["bash", "-c"]
   orchestrator._make_args = lambda *args, **kwargs: [""" sleep 55 """]
@@ -154,6 +154,6 @@ def test_time_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/f
   end_time = time.time()
   elapsed_time = end_time - start_time
   print(exc_info.value.message)
-  assert f"exceeded max running time {max_running_time}s" in exc_info.value.message
+  assert f"exceeded running time limit {running_time_limit}s" in exc_info.value.message
 
-  assert max_running_time + delta > elapsed_time > max_running_time
+  assert running_time_limit + delta > elapsed_time > running_time_limit
