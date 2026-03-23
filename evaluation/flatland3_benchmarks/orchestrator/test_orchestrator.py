@@ -1,7 +1,7 @@
 import mockito
 import pytest
 from kubernetes.client import V1JobList, V1Job, V1JobStatus, V1JobCondition, V1ObjectMeta, BatchV1Api, CoreV1Api, V1PodList, V1Pod, V1PodStatus, V1PodCondition, \
-  V1ContainerStatus
+  V1ContainerStatus, V1NamespaceList
 from mockito import mock
 from mockito import verify
 from mockito import when
@@ -73,6 +73,7 @@ def test_tasks_failing():
     pod_subi
   ]))
   when(core_api).read_namespaced_pod_log("subi", namespace="fab-int").thenReturn("abcd")
+  when(core_api).list_namespaced_event("fab-int", field_selector=f'involvedObject.name=subi').thenReturn(V1NamespaceList(items=[]))
 
   with pytest.raises(TaskExecutionError) as exc_info:
     K8sFlatlandBenchmarksOrchestrator(
@@ -102,7 +103,7 @@ def test_tasks_failing():
   verify(core_api, times=1).read_namespaced_pod_log("subi", namespace="fab-int")
 
   assert set(ret.keys()) == {"f3-sub"}
-  assert set(ret["f3-sub"].keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time"}
+  assert set(ret["f3-sub"].keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time", "events"}
   assert ret["f3-sub"]["job_status"] == "Somethingelse"
   assert ret["f3-sub"]["image_id"] == "ghcr.io/subi"
   assert ret["f3-sub"]["log"] == "abcd"
