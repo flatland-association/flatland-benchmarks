@@ -193,7 +193,7 @@ class FlatlandBenchmarksOrchestrator:
             }
             mean_success_rate += success_rate
         mean_success_rate /= len(self.TEST_TO_SCENARIO_IDS[test_id])
-        if self.percentage_complete_threshold is not None and success_rate < self.percentage_complete_threshold:
+        if self.percentage_complete_threshold is not None and mean_success_rate < self.percentage_complete_threshold:
           logger.warning(
             f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The mean percentage of done agents during the last Test ({len(tests)} environments) was too low: {success_rate} < {self.percentage_complete_threshold}: {results[test_id][scenario_id]}")
           return results
