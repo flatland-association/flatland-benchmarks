@@ -9,7 +9,7 @@ def gen_sql_test_benchmark_field(test_or_benchmark_field, key, field_description
   return f"""INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
         VALUES ('{test_or_benchmark_field}', '{key}', '{field_description}', '{agg_func}', {agg_fields})
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 """
 
