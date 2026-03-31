@@ -84,8 +84,6 @@ def extract_ai4realnet_from_csv(csv):
       for test_id, test in benchmark["tests"].items():
         test_agg_fields = None
         for scenario_id, scenario in test["scenarios"].items():
-          if test_id == "98ceb866-5479-47e6-a735-81292de8ca65":
-            a = 5
           if test_agg_fields is None:
             test_agg_fields = list(scenario["SCENARIO_FIELDS"].values())[0]["SCENARIO_FIELD_NAME"]
           else:
