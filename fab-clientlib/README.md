@@ -67,13 +67,14 @@ configuration = fab_clientlib.Configuration(
 with fab_clientlib.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fab_clientlib.DefaultApi(api_client)
+    benchmark_ids = ['benchmark_ids_example'] # List[str] | Comma-separated list of IDs.
 
     try:
-        api_response = api_instance.definitions_benchmark_groups_get()
-        print("The response of DefaultApi->definitions_benchmark_groups_get:\n")
+        api_response = api_instance.definitions_benchmarks_benchmark_ids_get(benchmark_ids)
+        print("The response of DefaultApi->definitions_benchmarks_benchmark_ids_get:\n")
         pprint(api_response)
     except ApiException as e:
-        print("Exception when calling DefaultApi->definitions_benchmark_groups_get: %s\n" % e)
+        print("Exception when calling DefaultApi->definitions_benchmarks_benchmark_ids_get: %s\n" % e)
 
 ```
 
@@ -83,41 +84,44 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultApi* | [**definitions_benchmark_groups_get**](docs/DefaultApi.md#definitions_benchmark_groups_get) | **GET** /definitions/benchmark-groups | 
-*DefaultApi* | [**definitions_benchmark_groups_group_ids_get**](docs/DefaultApi.md#definitions_benchmark_groups_group_ids_get) | **GET** /definitions/benchmark-groups/{group_ids} | 
 *DefaultApi* | [**definitions_benchmarks_benchmark_ids_get**](docs/DefaultApi.md#definitions_benchmarks_benchmark_ids_get) | **GET** /definitions/benchmarks/{benchmark_ids} | 
 *DefaultApi* | [**definitions_benchmarks_get**](docs/DefaultApi.md#definitions_benchmarks_get) | **GET** /definitions/benchmarks/ | 
 *DefaultApi* | [**definitions_fields_field_ids_get**](docs/DefaultApi.md#definitions_fields_field_ids_get) | **GET** /definitions/fields/{field_ids} | 
 *DefaultApi* | [**definitions_scenarios_scenario_ids_get**](docs/DefaultApi.md#definitions_scenarios_scenario_ids_get) | **GET** /definitions/scenarios/{scenario_ids} | 
+*DefaultApi* | [**definitions_suites_get**](docs/DefaultApi.md#definitions_suites_get) | **GET** /definitions/suites | 
+*DefaultApi* | [**definitions_suites_suite_ids_get**](docs/DefaultApi.md#definitions_suites_suite_ids_get) | **GET** /definitions/suites/{suite_ids} | 
 *DefaultApi* | [**definitions_tests_test_ids_get**](docs/DefaultApi.md#definitions_tests_test_ids_get) | **GET** /definitions/tests/{test_ids} | 
 *DefaultApi* | [**health_live_get**](docs/DefaultApi.md#health_live_get) | **GET** /health/live | 
 *DefaultApi* | [**info_get**](docs/DefaultApi.md#info_get) | **GET** /info | 
 *DefaultApi* | [**results_benchmarks_benchmark_id_tests_test_ids_get**](docs/DefaultApi.md#results_benchmarks_benchmark_id_tests_test_ids_get) | **GET** /results/benchmarks/{benchmark_id}/tests/{test_ids} | 
 *DefaultApi* | [**results_benchmarks_benchmark_ids_get**](docs/DefaultApi.md#results_benchmarks_benchmark_ids_get) | **GET** /results/benchmarks/{benchmark_ids} | 
 *DefaultApi* | [**results_campaign_items_benchmark_ids_get**](docs/DefaultApi.md#results_campaign_items_benchmark_ids_get) | **GET** /results/campaign-items/{benchmark_ids} | 
-*DefaultApi* | [**results_campaigns_group_ids_get**](docs/DefaultApi.md#results_campaigns_group_ids_get) | **GET** /results/campaigns/{group_ids} | 
+*DefaultApi* | [**results_campaigns_suite_ids_get**](docs/DefaultApi.md#results_campaigns_suite_ids_get) | **GET** /results/campaigns/{suite_ids} | 
 *DefaultApi* | [**results_submissions_submission_id_scenarios_scenario_ids_get**](docs/DefaultApi.md#results_submissions_submission_id_scenarios_scenario_ids_get) | **GET** /results/submissions/{submission_id}/scenarios/{scenario_ids} | 
 *DefaultApi* | [**results_submissions_submission_id_tests_test_ids_get**](docs/DefaultApi.md#results_submissions_submission_id_tests_test_ids_get) | **GET** /results/submissions/{submission_id}/tests/{test_ids} | 
 *DefaultApi* | [**results_submissions_submission_id_tests_test_ids_post**](docs/DefaultApi.md#results_submissions_submission_id_tests_test_ids_post) | **POST** /results/submissions/{submission_id}/tests/{test_ids} | 
 *DefaultApi* | [**results_submissions_submission_ids_get**](docs/DefaultApi.md#results_submissions_submission_ids_get) | **GET** /results/submissions/{submission_ids} | 
 *DefaultApi* | [**submissions_get**](docs/DefaultApi.md#submissions_get) | **GET** /submissions | 
+*DefaultApi* | [**submissions_own_get**](docs/DefaultApi.md#submissions_own_get) | **GET** /submissions/own | 
 *DefaultApi* | [**submissions_post**](docs/DefaultApi.md#submissions_post) | **POST** /submissions | 
 *DefaultApi* | [**submissions_submission_ids_get**](docs/DefaultApi.md#submissions_submission_ids_get) | **GET** /submissions/{submission_ids} | 
 *DefaultApi* | [**submissions_submission_ids_patch**](docs/DefaultApi.md#submissions_submission_ids_patch) | **PATCH** /submissions/{submission_ids} | 
+*DefaultApi* | [**submissions_submission_ids_statuses_get**](docs/DefaultApi.md#submissions_submission_ids_statuses_get) | **GET** /submissions/{submission_ids}/statuses | 
+*DefaultApi* | [**submissions_submission_ids_statuses_post**](docs/DefaultApi.md#submissions_submission_ids_statuses_post) | **POST** /submissions/{submission_ids}/statuses | 
 
 
 ## Documentation For Models
 
  - [ApiResponse](docs/ApiResponse.md)
  - [ApiResponseError](docs/ApiResponseError.md)
- - [DefinitionsBenchmarkGroupsGet200Response](docs/DefinitionsBenchmarkGroupsGet200Response.md)
- - [DefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner](docs/DefinitionsBenchmarkGroupsGet200ResponseAllOfBodyInner.md)
  - [DefinitionsBenchmarksGet200Response](docs/DefinitionsBenchmarksGet200Response.md)
  - [DefinitionsBenchmarksGet200ResponseAllOfBodyInner](docs/DefinitionsBenchmarksGet200ResponseAllOfBodyInner.md)
  - [DefinitionsFieldsFieldIdsGet200Response](docs/DefinitionsFieldsFieldIdsGet200Response.md)
  - [DefinitionsFieldsFieldIdsGet200ResponseAllOfBodyInner](docs/DefinitionsFieldsFieldIdsGet200ResponseAllOfBodyInner.md)
  - [DefinitionsScenariosScenarioIdsGet200Response](docs/DefinitionsScenariosScenarioIdsGet200Response.md)
  - [DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner](docs/DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner.md)
+ - [DefinitionsSuitesGet200Response](docs/DefinitionsSuitesGet200Response.md)
+ - [DefinitionsSuitesGet200ResponseAllOfBodyInner](docs/DefinitionsSuitesGet200ResponseAllOfBodyInner.md)
  - [DefinitionsTestsTestIdsGet200Response](docs/DefinitionsTestsTestIdsGet200Response.md)
  - [DefinitionsTestsTestIdsGet200ResponseAllOfBodyInner](docs/DefinitionsTestsTestIdsGet200ResponseAllOfBodyInner.md)
  - [HealthLiveGet200Response](docs/HealthLiveGet200Response.md)
@@ -125,14 +129,16 @@ Class | Method | HTTP request | Description
  - [HealthLiveGet200ResponseAllOfBodyChecksInner](docs/HealthLiveGet200ResponseAllOfBodyChecksInner.md)
  - [InfoGet200Response](docs/InfoGet200Response.md)
  - [InfoGet200ResponseAllOfBody](docs/InfoGet200ResponseAllOfBody.md)
+ - [ResultsBenchmarksBenchmarkIdTestsTestIdsGet200Response](docs/ResultsBenchmarksBenchmarkIdTestsTestIdsGet200Response.md)
+ - [ResultsBenchmarksBenchmarkIdTestsTestIdsGet200ResponseAllOfBodyInner](docs/ResultsBenchmarksBenchmarkIdTestsTestIdsGet200ResponseAllOfBodyInner.md)
  - [ResultsBenchmarksBenchmarkIdsGet200Response](docs/ResultsBenchmarksBenchmarkIdsGet200Response.md)
  - [ResultsBenchmarksBenchmarkIdsGet200ResponseAllOfBodyInner](docs/ResultsBenchmarksBenchmarkIdsGet200ResponseAllOfBodyInner.md)
  - [ResultsCampaignItemsBenchmarkIdsGet200Response](docs/ResultsCampaignItemsBenchmarkIdsGet200Response.md)
  - [ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner](docs/ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInner.md)
  - [ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner](docs/ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner.md)
- - [ResultsCampaignsGroupIdsGet200Response](docs/ResultsCampaignsGroupIdsGet200Response.md)
- - [ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner](docs/ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInner.md)
- - [ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner](docs/ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner.md)
+ - [ResultsCampaignsSuiteIdsGet200Response](docs/ResultsCampaignsSuiteIdsGet200Response.md)
+ - [ResultsCampaignsSuiteIdsGet200ResponseAllOfBodyInner](docs/ResultsCampaignsSuiteIdsGet200ResponseAllOfBodyInner.md)
+ - [ResultsCampaignsSuiteIdsGet200ResponseAllOfBodyInnerItemsInner](docs/ResultsCampaignsSuiteIdsGet200ResponseAllOfBodyInnerItemsInner.md)
  - [ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response](docs/ResultsSubmissionsSubmissionIdScenariosScenarioIdsGet200Response.md)
  - [ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response](docs/ResultsSubmissionsSubmissionIdTestsTestIdsGet200Response.md)
  - [ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest](docs/ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest.md)
@@ -147,6 +153,10 @@ Class | Method | HTTP request | Description
  - [SubmissionsPost200Response](docs/SubmissionsPost200Response.md)
  - [SubmissionsPost200ResponseAllOfBody](docs/SubmissionsPost200ResponseAllOfBody.md)
  - [SubmissionsPostRequest](docs/SubmissionsPostRequest.md)
+ - [SubmissionsSubmissionIdsPatchRequest](docs/SubmissionsSubmissionIdsPatchRequest.md)
+ - [SubmissionsSubmissionIdsStatusesGet200Response](docs/SubmissionsSubmissionIdsStatusesGet200Response.md)
+ - [SubmissionsSubmissionIdsStatusesGet200ResponseAllOfBodyInner](docs/SubmissionsSubmissionIdsStatusesGet200ResponseAllOfBodyInner.md)
+ - [SubmissionsSubmissionIdsStatusesPostRequest](docs/SubmissionsSubmissionIdsStatusesPostRequest.md)
 
 
 <a id="documentation-for-authorization"></a>

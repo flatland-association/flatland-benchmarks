@@ -14,17 +14,15 @@
 
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List
-from typing import Optional, Set
+import json
+
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from uuid import UUID
-
-from pydantic import BaseModel, ConfigDict, StrictStr
+from typing import Optional, Set
 from typing_extensions import Self
-
 
 class DefinitionsBenchmarksGet200ResponseAllOfBodyInner(BaseModel):
     """
@@ -33,9 +31,11 @@ class DefinitionsBenchmarksGet200ResponseAllOfBodyInner(BaseModel):
     id: Optional[UUID] = None
     name: Optional[StrictStr] = None
     description: Optional[StrictStr] = None
+    contents: Optional[Dict[str, Any]] = Field(default=None, description="Additional textual contents for page.")
     field_ids: Optional[List[UUID]] = None
     test_ids: Optional[List[UUID]] = None
-    __properties: ClassVar[List[str]] = ["id", "name", "description", "field_ids", "test_ids"]
+    suite_id: Optional[UUID] = None
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "contents", "field_ids", "test_ids", "suite_id"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,8 +91,10 @@ class DefinitionsBenchmarksGet200ResponseAllOfBodyInner(BaseModel):
             "id": obj.get("id"),
             "name": obj.get("name"),
             "description": obj.get("description"),
+            "contents": obj.get("contents"),
             "field_ids": obj.get("field_ids"),
-            "test_ids": obj.get("test_ids")
+            "test_ids": obj.get("test_ids"),
+            "suite_id": obj.get("suite_id")
         })
         return _obj
 

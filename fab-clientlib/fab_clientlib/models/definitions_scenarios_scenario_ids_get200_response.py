@@ -14,20 +14,16 @@
 
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List
-from typing import Optional, Set
+import json
 
 from pydantic import BaseModel, ConfigDict
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List, Optional
 from fab_clientlib.models.api_response_error import ApiResponseError
-from fab_clientlib.models.definitions_scenarios_scenario_ids_get200_response_all_of_body_inner import \
-    DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner
-
+from fab_clientlib.models.definitions_scenarios_scenario_ids_get200_response_all_of_body_inner import DefinitionsScenariosScenarioIdsGet200ResponseAllOfBodyInner
+from typing import Optional, Set
+from typing_extensions import Self
 
 class DefinitionsScenariosScenarioIdsGet200Response(BaseModel):
     """

@@ -14,28 +14,25 @@
 
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List
-from typing import Optional, Set
-from uuid import UUID
+import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from uuid import UUID
+from typing import Optional, Set
 from typing_extensions import Self
-
 
 class DefinitionsTestsTestIdsGet200ResponseAllOfBodyInner(BaseModel):
     """
     DefinitionsTestsTestIdsGet200ResponseAllOfBodyInner
     """ # noqa: E501
-    dir: Optional[StrictStr] = None
     id: Optional[UUID] = None
     name: Optional[StrictStr] = None
     description: Optional[StrictStr] = None
     scenario_ids: Optional[List[UUID]] = None
-    __properties: ClassVar[List[str]] = ["dir", "id", "name", "description", "scenario_ids"]
+    __properties: ClassVar[List[str]] = ["id", "name", "description", "scenario_ids"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,7 +85,6 @@ class DefinitionsTestsTestIdsGet200ResponseAllOfBodyInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "dir": obj.get("dir"),
             "id": obj.get("id"),
             "name": obj.get("name"),
             "description": obj.get("description"),
