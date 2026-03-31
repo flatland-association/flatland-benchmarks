@@ -81,3 +81,6 @@ npm run docker:up
 cd ../ts/backend
 npm run  test-integration-no-setup
 ```
+
+If you need to run the integration tests against already running external services, refer to
+[defaults.mts](src/app/features/config/defaults.mts). The config is merged in [setup.mts](test/integration/setup.mts).
