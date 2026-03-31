@@ -4,6 +4,7 @@ import tempfile
 import time
 import traceback
 from abc import abstractmethod
+from enum import Enum
 from pathlib import Path
 from typing import Dict, Optional
 from typing import List
@@ -15,10 +16,17 @@ from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
 from fab_clientlib import DefaultApi, ApiClient, Configuration, ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest, \
-  ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner
+  ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner, SubmissionsSubmissionIdsStatusesPostRequest
 from s3_utils import s3_utils, download_dir, S3_UPLOAD_ROOT
 
 logger = logging.getLogger(__name__)
+
+
+# TODO update openapi instead
+class Status(Enum):
+  started = "STARTED"
+  success = "SUCCESS"
+  failure = "FAILURE"
 
 
 class TaskExecutionError(Exception):
@@ -80,22 +88,26 @@ class FlatlandBenchmarksOrchestrator:
     """
     submission_id = self.submission_id
     logger.info(f"// START task submission_id={submission_id} with submission_data_url={submission_data_url}.")
+    _fab = self._backend_application_flow(fab)
+    _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
 
     start_time = time.time()
-    ret = self.run_flatland(submission_id, submission_data_url, tests, **kwargs)
+    try:
+      ret = self.run_flatland(submission_id, submission_data_url, tests, **kwargs)
+    except BaseException as e:
+      try:
+        _fab = self._backend_application_flow(fab)
+        _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value))
+      finally:
+        raise e
 
     logger.info(f"// START uploading results for submission_id={submission_id} with submission_data_url={submission_data_url}.")
     try:
-      if fab is None:
-        token = backend_application_flow(self.client_id, self.client_secret, self.token_url)
-        print("token")
-        print(token)
-        fab = DefaultApi(ApiClient(configuration=Configuration(host=self.fab_api_url, access_token=token["access_token"])))
-
+      _fab = self._backend_application_flow(fab)
       for test_id, scenarios in ret.items():
         for scenario_id, result in scenarios.items():
           logger.info(f"uploading results for submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {result}")
-          fab.results_submissions_submission_id_tests_test_ids_post(
+          _fab.results_submissions_submission_id_tests_test_ids_post(
             submission_id=submission_id,
             test_ids=[test_id],
             results_submissions_submission_id_tests_test_ids_post_request=ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest(
@@ -109,6 +121,7 @@ class FlatlandBenchmarksOrchestrator:
           )
       logger.info(
         f"\\\\ END uploading results for with submission_id={submission_id} with submission_data_url={submission_data_url}.")
+      _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value))
       duration = time.time() - start_time
       logger.info(f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds.")
       return ret
@@ -116,6 +129,12 @@ class FlatlandBenchmarksOrchestrator:
       logger.error("Failed uploading results for with exception \"%s\"", e, exc_info=e)
       raise Exception(
         f"Failed uploading results for with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}") from e
+
+  def _backend_application_flow(self, fab: DefaultApi | None) -> DefaultApi:
+    if fab is None:
+      token = backend_application_flow(CLIENT_ID, CLIENT_SECRET, TOKEN_URL)
+      fab = DefaultApi(ApiClient(configuration=Configuration(host=FAB_API_URL, access_token=token["access_token"])))
+    return fab
 
   @abstractmethod
   def _run_submission(self,

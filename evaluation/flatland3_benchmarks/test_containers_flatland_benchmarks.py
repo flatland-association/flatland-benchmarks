@@ -131,8 +131,9 @@ def test_successful_run(expected_test_ids, tests: List[str], expected_primary_sc
       with tempfile.TemporaryDirectory() as tmp_dir_name:
         download_dir(prefix=prefix, bucket=s3_bucket, client=s3, local=tmp_dir_name)
 
+  # TODO breaking change
   fab.submissions_submission_ids_patch(submission_ids=[uuid.UUID(submission_id)],
-                                       submissions_submission_ids_patch_request=SubmissionsSubmissionIdsPatchRequest.from_dict({"published": True}))
+                                       submissions_submission_ids_patch_request=SubmissionsSubmissionIdsPatchRequest(published=True))
 
   for test_id, primary_scenario_scores, primary_test_score, secondary_scenario_scores, secondary_test_score in (
     zip(expected_test_ids, expected_primary_scenario_scores, expected_primary_test_scores, expected_secondary_scenario_scores, expected_secondary_test_scores)):
