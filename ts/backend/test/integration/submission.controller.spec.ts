@@ -174,6 +174,19 @@ describe.sequential('Submission controller', () => {
     expect(res.body.body.at(0)?.published).toBeTruthy()
   })
 
+  test('should allow patching submissions with empty body', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPatch(
+      '/submissions/:submission_ids',
+      {
+        params: { submission_ids: submissionUuid },
+        body: {},
+      },
+      testUserJwt,
+    )
+    assertApiResponse(res)
+  })
+
   test('should not prevent submissions if daily limit 0', async () => {
     const testConfig = await getTestConfig()
     testConfig.submissions = { global: { dailyLimit: 0 } }

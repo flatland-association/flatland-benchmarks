@@ -548,24 +548,28 @@ export class SubmissionController extends Controller {
     }
     // assert only patchable fields are provided
     const submissionRow = req.body
-    const keys = Object.keys(submissionRow) as (keyof SubmissionRow)[]
-    keys.forEach((key) => {
-      if (!(key in PATCHABLE_FIELDS)) {
-        throw new ControllerError('Field is not patchable', key, StatusCodes.BAD_REQUEST)
-      }
-      // at least one of user's roles must be included in field access definition
-      if (!(auth['roles'] as AuthRole[]).some((role) => PATCHABLE_FIELDS[key]?.includes(role))) {
-        throw new ControllerError('Cannot patch field', key, StatusCodes.FORBIDDEN)
-      }
-    })
-    const submissions = await sql.query<SubmissionRow>`
-      UPDATE submissions SET ${sql.fragment(submissionRow)}
-        WHERE id=ANY(${uuids})
-        RETURNING *
-    `
-    logger.info(`rows ${submissions}`)
-    // return array - dev.002
-    this.respond(req, res, submissions)
+    if (Object.keys(submissionRow).length > 0) {
+      const keys = Object.keys(submissionRow) as (keyof SubmissionRow)[]
+      keys.forEach((key) => {
+        if (!(key in PATCHABLE_FIELDS)) {
+          throw new ControllerError('Field is not patchable', key, StatusCodes.BAD_REQUEST)
+        }
+        // at least one of user's roles must be included in field access definition
+        if (!(auth['roles'] as AuthRole[]).some((role) => PATCHABLE_FIELDS[key]?.includes(role))) {
+          throw new ControllerError('Cannot patch field', key, StatusCodes.FORBIDDEN)
+        }
+      })
+      const submissions = await sql.query<SubmissionRow>`
+        UPDATE submissions SET ${sql.fragment(submissionRow)}
+          WHERE id=ANY(${uuids})
+          RETURNING *
+      `
+      logger.info(`rows ${submissions}`)
+      // return array - dev.002
+      this.respond(req, res, submissions)
+    } else {
+      this.respond(req, res, [])
+    }
   }
 
   /**
