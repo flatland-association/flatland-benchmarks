@@ -17,7 +17,7 @@ export interface WrappedSql<SQL extends postgres.Sql> {
    * ```
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates | Tagged Templates}
    */
-  query<T extends object | undefined>(
+  query<T extends object | undefined = postgres.Row>(
     strings: TemplateStringsArray,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ...params: postgres.ParameterOrFragment<any>[]

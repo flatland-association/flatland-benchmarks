@@ -11,6 +11,7 @@ import {
   SubmissionRow,
   SubmissionScenarioScore,
   SubmissionScore,
+  SubmissionStatusRow,
   SubmissionTestScore,
   SuiteDefinitionRow,
   Test,
@@ -101,7 +102,11 @@ interface ApiEndpointDefinitions {
   }
   '/submissions/:submission_ids': {
     GET: ApiEndpoint<Empty, Empty, SubmissionRow[]>
-    PATCH: ApiEndpoint<Empty, Empty, SubmissionRow[]>
+    PATCH: ApiEndpoint<Partial<SubmissionRow>, Empty, SubmissionRow[]>
+  }
+  '/submissions/:submission_ids/statuses': {
+    GET: ApiEndpoint<Empty, Empty, SubmissionStatusRow[]>
+    POST: ApiEndpoint<Omit<SubmissionStatusRow, 'submission_id' | 'timestamp'>, Empty, SubmissionStatusRow[]>
   }
   '/results/submissions/:submission_ids': {
     GET: ApiEndpoint<Empty, Empty, SubmissionScore[]>

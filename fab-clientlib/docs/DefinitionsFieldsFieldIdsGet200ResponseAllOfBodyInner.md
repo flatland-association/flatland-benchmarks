@@ -5,7 +5,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**dir** | **str** |  | [optional] 
 **id** | **str** |  | [optional] 
 **key** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 

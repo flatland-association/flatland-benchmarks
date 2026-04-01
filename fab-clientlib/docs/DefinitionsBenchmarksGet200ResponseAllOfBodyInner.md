@@ -8,8 +8,10 @@ Name | Type | Description | Notes
 **id** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
 **description** | **str** |  | [optional] 
+**contents** | **object** | Additional textual contents for page. | [optional] 
 **field_ids** | **List[str]** |  | [optional] 
 **test_ids** | **List[str]** |  | [optional] 
+**suite_id** | **str** |  | [optional] 
 
 ## Example
 

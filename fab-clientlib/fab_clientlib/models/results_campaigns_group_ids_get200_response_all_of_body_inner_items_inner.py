@@ -14,21 +14,18 @@
 
 
 from __future__ import annotations
-
-import json
 import pprint
 import re  # noqa: F401
-from typing import Any, ClassVar, Dict, List
-from typing import Optional, Set
-from uuid import UUID
+import json
 
 from pydantic import BaseModel, ConfigDict, Field
-from typing_extensions import Self
-
+from typing import Any, ClassVar, Dict, List, Optional
+from uuid import UUID
 from fab_clientlib.models.results_campaign_items_benchmark_ids_get200_response_all_of_body_inner_items_inner import \
-    ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
+  ResultsCampaignItemsBenchmarkIdsGet200ResponseAllOfBodyInnerItemsInner
 from fab_clientlib.models.scoring import Scoring
-
+from typing import Optional, Set
+from typing_extensions import Self
 
 class ResultsCampaignsGroupIdsGet200ResponseAllOfBodyInnerItemsInner(BaseModel):
     """

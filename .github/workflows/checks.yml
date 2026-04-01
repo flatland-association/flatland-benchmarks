@@ -55,6 +55,16 @@ jobs:
           python -m pip install -r requirements-dev.txt
           python -m pip install -r orchestrator/requirements.txt
           python -m pip list
+      - name: Regenerate client lib locally overwriting dependency.
+        working-directory: fab-clientlib
+        run: |
+          python -m pip install openapi-generator-cli==7.15.0
+          openapi-generator-cli generate -i openapi.json -g python -c .openapi-generator-config.json --package-name fab_clientlib
+      - name: Install client lib
+        working-directory: fab-clientlib
+        run: |
+          python -m pip install .
+          python -m pip list
       # N.B. required for docker compose --profile full
       - name: Clone ai4realnet-orchestrators for integration tests
         uses: actions/checkout@v6

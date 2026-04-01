@@ -4,154 +4,31 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**definitions_benchmark_groups_get**](DefaultApi.md#definitions_benchmark_groups_get) | **GET** /definitions/benchmark-groups | 
-[**definitions_benchmark_groups_group_ids_get**](DefaultApi.md#definitions_benchmark_groups_group_ids_get) | **GET** /definitions/benchmark-groups/{group_ids} | 
 [**definitions_benchmarks_benchmark_ids_get**](DefaultApi.md#definitions_benchmarks_benchmark_ids_get) | **GET** /definitions/benchmarks/{benchmark_ids} | 
 [**definitions_benchmarks_get**](DefaultApi.md#definitions_benchmarks_get) | **GET** /definitions/benchmarks/ | 
 [**definitions_fields_field_ids_get**](DefaultApi.md#definitions_fields_field_ids_get) | **GET** /definitions/fields/{field_ids} | 
 [**definitions_scenarios_scenario_ids_get**](DefaultApi.md#definitions_scenarios_scenario_ids_get) | **GET** /definitions/scenarios/{scenario_ids} | 
+[**definitions_suites_get**](DefaultApi.md#definitions_suites_get) | **GET** /definitions/suites | 
+[**definitions_suites_suite_ids_get**](DefaultApi.md#definitions_suites_suite_ids_get) | **GET** /definitions/suites/{suite_ids} | 
 [**definitions_tests_test_ids_get**](DefaultApi.md#definitions_tests_test_ids_get) | **GET** /definitions/tests/{test_ids} | 
 [**health_live_get**](DefaultApi.md#health_live_get) | **GET** /health/live | 
 [**info_get**](DefaultApi.md#info_get) | **GET** /info | 
 [**results_benchmarks_benchmark_id_tests_test_ids_get**](DefaultApi.md#results_benchmarks_benchmark_id_tests_test_ids_get) | **GET** /results/benchmarks/{benchmark_id}/tests/{test_ids} | 
 [**results_benchmarks_benchmark_ids_get**](DefaultApi.md#results_benchmarks_benchmark_ids_get) | **GET** /results/benchmarks/{benchmark_ids} | 
 [**results_campaign_items_benchmark_ids_get**](DefaultApi.md#results_campaign_items_benchmark_ids_get) | **GET** /results/campaign-items/{benchmark_ids} | 
-[**results_campaigns_group_ids_get**](DefaultApi.md#results_campaigns_group_ids_get) | **GET** /results/campaigns/{group_ids} | 
+[**results_campaigns_suite_ids_get**](DefaultApi.md#results_campaigns_suite_ids_get) | **GET** /results/campaigns/{suite_ids} | 
 [**results_submissions_submission_id_scenarios_scenario_ids_get**](DefaultApi.md#results_submissions_submission_id_scenarios_scenario_ids_get) | **GET** /results/submissions/{submission_id}/scenarios/{scenario_ids} | 
 [**results_submissions_submission_id_tests_test_ids_get**](DefaultApi.md#results_submissions_submission_id_tests_test_ids_get) | **GET** /results/submissions/{submission_id}/tests/{test_ids} | 
 [**results_submissions_submission_id_tests_test_ids_post**](DefaultApi.md#results_submissions_submission_id_tests_test_ids_post) | **POST** /results/submissions/{submission_id}/tests/{test_ids} | 
 [**results_submissions_submission_ids_get**](DefaultApi.md#results_submissions_submission_ids_get) | **GET** /results/submissions/{submission_ids} | 
 [**submissions_get**](DefaultApi.md#submissions_get) | **GET** /submissions | 
+[**submissions_own_get**](DefaultApi.md#submissions_own_get) | **GET** /submissions/own | 
 [**submissions_post**](DefaultApi.md#submissions_post) | **POST** /submissions | 
 [**submissions_submission_ids_get**](DefaultApi.md#submissions_submission_ids_get) | **GET** /submissions/{submission_ids} | 
 [**submissions_submission_ids_patch**](DefaultApi.md#submissions_submission_ids_patch) | **PATCH** /submissions/{submission_ids} | 
+[**submissions_submission_ids_statuses_get**](DefaultApi.md#submissions_submission_ids_statuses_get) | **GET** /submissions/{submission_ids}/statuses | 
+[**submissions_submission_ids_statuses_post**](DefaultApi.md#submissions_submission_ids_statuses_post) | **POST** /submissions/{submission_ids}/statuses | 
 
-
-# **definitions_benchmark_groups_get**
-> DefinitionsBenchmarkGroupsGet200Response definitions_benchmark_groups_get()
-
-Lists benchmark-groups.
-
-### Example
-
-
-```python
-import fab_clientlib
-from fab_clientlib.models.definitions_benchmark_groups_get200_response import DefinitionsBenchmarkGroupsGet200Response
-from fab_clientlib.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = fab_clientlib.Configuration(
-    host = "http://localhost"
-)
-
-
-# Enter a context with an instance of the API client
-with fab_clientlib.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = fab_clientlib.DefaultApi(api_client)
-
-    try:
-        api_response = api_instance.definitions_benchmark_groups_get()
-        print("The response of DefaultApi->definitions_benchmark_groups_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->definitions_benchmark_groups_get: %s\n" % e)
-```
-
-
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-[**DefinitionsBenchmarkGroupsGet200Response**](DefinitionsBenchmarkGroupsGet200Response.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | List of benchmark-groups. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **definitions_benchmark_groups_group_ids_get**
-> DefinitionsBenchmarkGroupsGet200Response definitions_benchmark_groups_group_ids_get(group_ids)
-
-Returns benchmark-groups with ID in `group_id`.
-
-### Example
-
-
-```python
-import fab_clientlib
-from fab_clientlib.models.definitions_benchmark_groups_get200_response import DefinitionsBenchmarkGroupsGet200Response
-from fab_clientlib.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = fab_clientlib.Configuration(
-    host = "http://localhost"
-)
-
-
-# Enter a context with an instance of the API client
-with fab_clientlib.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = fab_clientlib.DefaultApi(api_client)
-    group_ids = ['group_ids_example'] # List[str] | Comma-separated list of IDs.
-
-    try:
-        api_response = api_instance.definitions_benchmark_groups_group_ids_get(group_ids)
-        print("The response of DefaultApi->definitions_benchmark_groups_group_ids_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling DefaultApi->definitions_benchmark_groups_group_ids_get: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **group_ids** | [**List[str]**](str.md)| Comma-separated list of IDs. | 
-
-### Return type
-
-[**DefinitionsBenchmarkGroupsGet200Response**](DefinitionsBenchmarkGroupsGet200Response.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | Requested benchmark-groups. |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **definitions_benchmarks_benchmark_ids_get**
 > DefinitionsBenchmarksGet200Response definitions_benchmarks_benchmark_ids_get(benchmark_ids)
@@ -409,6 +286,132 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **definitions_suites_get**
+> DefinitionsSuitesGet200Response definitions_suites_get()
+
+Lists suites.
+
+### Example
+
+
+```python
+import fab_clientlib
+from fab_clientlib.models.definitions_suites_get200_response import DefinitionsSuitesGet200Response
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+    host = "http://localhost"
+)
+
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
+
+    try:
+        api_response = api_instance.definitions_suites_get()
+        print("The response of DefaultApi->definitions_suites_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->definitions_suites_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**DefinitionsSuitesGet200Response**](DefinitionsSuitesGet200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | List of suites. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **definitions_suites_suite_ids_get**
+> DefinitionsSuitesGet200Response definitions_suites_suite_ids_get(suite_ids)
+
+Returns suites with ID in `suite_ids`.
+
+### Example
+
+
+```python
+import fab_clientlib
+from fab_clientlib.models.definitions_suites_get200_response import DefinitionsSuitesGet200Response
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+    host = "http://localhost"
+)
+
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
+    suite_ids = ['suite_ids_example'] # List[str] | Comma-separated list of IDs.
+
+    try:
+        api_response = api_instance.definitions_suites_suite_ids_get(suite_ids)
+        print("The response of DefaultApi->definitions_suites_suite_ids_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->definitions_suites_suite_ids_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **suite_ids** | [**List[str]**](str.md)| Comma-separated list of IDs. | 
+
+### Return type
+
+[**DefinitionsSuitesGet200Response**](DefinitionsSuitesGet200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Requested suites. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **definitions_tests_test_ids_get**
 > DefinitionsTestsTestIdsGet200Response definitions_tests_test_ids_get(test_ids)
 
@@ -597,7 +600,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **results_benchmarks_benchmark_id_tests_test_ids_get**
-> ResultsBenchmarksBenchmarkIdsGet200Response results_benchmarks_benchmark_id_tests_test_ids_get(benchmark_id, test_ids)
+> ResultsBenchmarksBenchmarkIdTestsTestIdsGet200Response results_benchmarks_benchmark_id_tests_test_ids_get(benchmark_id, test_ids)
 
 Get test leaderboard.
 
@@ -606,7 +609,7 @@ Get test leaderboard.
 
 ```python
 import fab_clientlib
-from fab_clientlib.models.results_benchmarks_benchmark_ids_get200_response import ResultsBenchmarksBenchmarkIdsGet200Response
+from fab_clientlib.models.results_benchmarks_benchmark_id_tests_test_ids_get200_response import ResultsBenchmarksBenchmarkIdTestsTestIdsGet200Response
 from fab_clientlib.rest import ApiException
 from pprint import pprint
 
@@ -644,7 +647,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ResultsBenchmarksBenchmarkIdsGet200Response**](ResultsBenchmarksBenchmarkIdsGet200Response.md)
+[**ResultsBenchmarksBenchmarkIdTestsTestIdsGet200Response**](ResultsBenchmarksBenchmarkIdTestsTestIdsGet200Response.md)
 
 ### Authorization
 
@@ -793,17 +796,17 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **results_campaigns_group_ids_get**
-> ResultsCampaignsGroupIdsGet200Response results_campaigns_group_ids_get(group_ids)
+# **results_campaigns_suite_ids_get**
+> ResultsCampaignsSuiteIdsGet200Response results_campaigns_suite_ids_get(suite_ids)
 
-Returns campaign overviews (i.e. all benchmarks in the group with score aggregated from their top submission per test).
+Returns campaign overviews (i.e. all benchmarks in the suite with score aggregated from their top submission per test).
 
 ### Example
 
 
 ```python
 import fab_clientlib
-from fab_clientlib.models.results_campaigns_group_ids_get200_response import ResultsCampaignsGroupIdsGet200Response
+from fab_clientlib.models.results_campaigns_suite_ids_get200_response import ResultsCampaignsSuiteIdsGet200Response
 from fab_clientlib.rest import ApiException
 from pprint import pprint
 
@@ -818,14 +821,14 @@ configuration = fab_clientlib.Configuration(
 with fab_clientlib.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fab_clientlib.DefaultApi(api_client)
-    group_ids = ['group_ids_example'] # List[str] | Comma-separated list of IDs.
+    suite_ids = ['suite_ids_example'] # List[str] | Comma-separated list of IDs.
 
     try:
-        api_response = api_instance.results_campaigns_group_ids_get(group_ids)
-        print("The response of DefaultApi->results_campaigns_group_ids_get:\n")
+        api_response = api_instance.results_campaigns_suite_ids_get(suite_ids)
+        print("The response of DefaultApi->results_campaigns_suite_ids_get:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DefaultApi->results_campaigns_group_ids_get: %s\n" % e)
+        print("Exception when calling DefaultApi->results_campaigns_suite_ids_get: %s\n" % e)
 ```
 
 
@@ -835,11 +838,11 @@ with fab_clientlib.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **group_ids** | [**List[str]**](str.md)| Comma-separated list of IDs. | 
+ **suite_ids** | [**List[str]**](str.md)| Comma-separated list of IDs. | 
 
 ### Return type
 
-[**ResultsCampaignsGroupIdsGet200Response**](ResultsCampaignsGroupIdsGet200Response.md)
+[**ResultsCampaignsSuiteIdsGet200Response**](ResultsCampaignsSuiteIdsGet200Response.md)
 
 ### Authorization
 
@@ -1026,7 +1029,7 @@ with fab_clientlib.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fab_clientlib.DefaultApi(api_client)
     submission_id = 'submission_id_example' # str | Submission ID.
-    test_ids = ['test_ids_example'] # List[str] | Comma-separated list of test IDs.
+    test_ids = ['test_ids_example'] # List[str] | Test ID.
     results_submissions_submission_id_tests_test_ids_post_request = fab_clientlib.ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest() # ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest | 
 
     try:
@@ -1045,7 +1048,7 @@ with fab_clientlib.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **submission_id** | **str**| Submission ID. | 
- **test_ids** | [**List[str]**](str.md)| Comma-separated list of test IDs. | 
+ **test_ids** | [**List[str]**](str.md)| Test ID. | 
  **results_submissions_submission_id_tests_test_ids_post_request** | [**ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest**](ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest.md)|  | 
 
 ### Return type
@@ -1136,9 +1139,74 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submissions_get**
-> SubmissionsGet200Response submissions_get(benchmark_ids=benchmark_ids, submitted_by=submitted_by)
+> SubmissionsGet200Response submissions_get(benchmark_ids=benchmark_ids)
 
 Lists all published submissions.
+
+### Example
+
+
+```python
+import fab_clientlib
+from fab_clientlib.models.submissions_get200_response import SubmissionsGet200Response
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+    host = "http://localhost"
+)
+
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
+    benchmark_ids = ['benchmark_ids_example'] # List[str] | Filter submissions by benchmark. (optional)
+
+    try:
+        api_response = api_instance.submissions_get(benchmark_ids=benchmark_ids)
+        print("The response of DefaultApi->submissions_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->submissions_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **benchmark_ids** | [**List[str]**](str.md)| Filter submissions by benchmark. | [optional] 
+
+### Return type
+
+[**SubmissionsGet200Response**](SubmissionsGet200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Requested submissions. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **submissions_own_get**
+> SubmissionsGet200Response submissions_own_get()
+
+Lists own submissions.
 
 ### Example
 
@@ -1167,26 +1235,20 @@ configuration.access_token = os.environ["ACCESS_TOKEN"]
 with fab_clientlib.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fab_clientlib.DefaultApi(api_client)
-    benchmark_ids = ['benchmark_ids_example'] # List[str] | Filter submissions by benchmark. (optional)
-    submitted_by = 'submitted_by_example' # str | Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too. (optional)
 
     try:
-        api_response = api_instance.submissions_get(benchmark_ids=benchmark_ids, submitted_by=submitted_by)
-        print("The response of DefaultApi->submissions_get:\n")
+        api_response = api_instance.submissions_own_get()
+        print("The response of DefaultApi->submissions_own_get:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DefaultApi->submissions_get: %s\n" % e)
+        print("Exception when calling DefaultApi->submissions_own_get: %s\n" % e)
 ```
 
 
 
 ### Parameters
 
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **benchmark_ids** | [**List[str]**](str.md)| Filter submissions by benchmark. | [optional] 
- **submitted_by** | **str**| Filter submissions by user. If this equals the authenticated user, un-published submissions will be listed too. | [optional] 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -1355,7 +1417,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submissions_submission_ids_patch**
-> SubmissionsGet200Response submissions_submission_ids_patch(submission_ids)
+> SubmissionsGet200Response submissions_submission_ids_patch(submission_ids, submissions_submission_ids_patch_request)
 
 ### Example
 
@@ -1364,6 +1426,7 @@ Name | Type | Description  | Notes
 ```python
 import fab_clientlib
 from fab_clientlib.models.submissions_get200_response import SubmissionsGet200Response
+from fab_clientlib.models.submissions_submission_ids_patch_request import SubmissionsSubmissionIdsPatchRequest
 from fab_clientlib.rest import ApiException
 from pprint import pprint
 
@@ -1385,9 +1448,10 @@ with fab_clientlib.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = fab_clientlib.DefaultApi(api_client)
     submission_ids = ['submission_ids_example'] # List[str] | Comma-separated list of IDs.
+    submissions_submission_ids_patch_request = fab_clientlib.SubmissionsSubmissionIdsPatchRequest() # SubmissionsSubmissionIdsPatchRequest | 
 
     try:
-        api_response = api_instance.submissions_submission_ids_patch(submission_ids)
+        api_response = api_instance.submissions_submission_ids_patch(submission_ids, submissions_submission_ids_patch_request)
         print("The response of DefaultApi->submissions_submission_ids_patch:\n")
         pprint(api_response)
     except Exception as e:
@@ -1402,6 +1466,7 @@ with fab_clientlib.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **submission_ids** | [**List[str]**](str.md)| Comma-separated list of IDs. | 
+ **submissions_submission_ids_patch_request** | [**SubmissionsSubmissionIdsPatchRequest**](SubmissionsSubmissionIdsPatchRequest.md)|  | 
 
 ### Return type
 
@@ -1413,6 +1478,71 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Submission patched. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **submissions_submission_ids_statuses_get**
+> SubmissionsSubmissionIdsStatusesGet200Response submissions_submission_ids_statuses_get(submission_ids)
+
+Returns submission statuses.
+
+### Example
+
+
+```python
+import fab_clientlib
+from fab_clientlib.models.submissions_submission_ids_statuses_get200_response import SubmissionsSubmissionIdsStatusesGet200Response
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+    host = "http://localhost"
+)
+
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
+    submission_ids = ['submission_ids_example'] # List[str] | Submission ID.
+
+    try:
+        api_response = api_instance.submissions_submission_ids_statuses_get(submission_ids)
+        print("The response of DefaultApi->submissions_submission_ids_statuses_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->submissions_submission_ids_statuses_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **submission_ids** | [**List[str]**](str.md)| Submission ID. | 
+
+### Return type
+
+[**SubmissionsSubmissionIdsStatusesGet200Response**](SubmissionsSubmissionIdsStatusesGet200Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
@@ -1420,7 +1550,82 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Published submission. |  -  |
+**200** | Requested statuses. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **submissions_submission_ids_statuses_post**
+> SubmissionsSubmissionIdsStatusesPost200Response submissions_submission_ids_statuses_post(submission_ids, submissions_submission_ids_statuses_post_request)
+
+Inserts new submission status.
+
+### Example
+
+* OAuth Authentication (oauth2):
+
+```python
+import fab_clientlib
+from fab_clientlib.models.submissions_submission_ids_statuses_post200_response import SubmissionsSubmissionIdsStatusesPost200Response
+from fab_clientlib.models.submissions_submission_ids_statuses_post_request import SubmissionsSubmissionIdsStatusesPostRequest
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
+    submission_ids = ['submission_ids_example'] # List[str] | Submission ID.
+    submissions_submission_ids_statuses_post_request = fab_clientlib.SubmissionsSubmissionIdsStatusesPostRequest() # SubmissionsSubmissionIdsStatusesPostRequest | 
+
+    try:
+        api_response = api_instance.submissions_submission_ids_statuses_post(submission_ids, submissions_submission_ids_statuses_post_request)
+        print("The response of DefaultApi->submissions_submission_ids_statuses_post:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->submissions_submission_ids_statuses_post: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **submission_ids** | [**List[str]**](str.md)| Submission ID. | 
+ **submissions_submission_ids_statuses_post_request** | [**SubmissionsSubmissionIdsStatusesPostRequest**](SubmissionsSubmissionIdsStatusesPostRequest.md)|  | 
+
+### Return type
+
+[**SubmissionsSubmissionIdsStatusesPost200Response**](SubmissionsSubmissionIdsStatusesPost200Response.md)
+
+### Authorization
+
+[oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Created. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
