@@ -52,8 +52,8 @@
     "zone.js": "^0.15.1"
   },
   "devDependencies": {
-    "@angular/build": "^20.3.18",
-    "@angular/cli": "^20.3.18",
+    "@angular/build": "^20.3.22",
+    "@angular/cli": "^20.3.22",
     "@angular/compiler-cli": "^20.3.18",
     "@cypress/schematic": "^4.2.0",
     "@types/amqplib": "^0.8.2",
