@@ -5,6 +5,7 @@ import os
 import shutil
 import ssl
 import subprocess
+import time
 from io import BytesIO, TextIOWrapper
 from pathlib import Path
 from typing import List, Optional
@@ -108,7 +109,10 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
 
     args = ["docker", "run", "--rm", "-v", f"{DATA_VOLUME}:/vol", "alpine:latest", "chmod", "-R", "a=rwx",
             f"/vol/{submission_id}/{test_id}/{scenario_id}"]
+    start_time_running = time.time()
     exec_with_logging(args if not SUDO else ["sudo"] + args)
+    end_time_running = time.time()
+    return {"running_time": end_time_running - start_time_running}
 
   # docker implementation has volume mapped into submission container - data is uploaded to S3 by orchestrator itself
   def _run_submission(self,
@@ -134,11 +138,12 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
       generate_policy_args += additional_submission_args.split(" ")
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
-    self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
+    ret = self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
 
 
     self.upload_and_empty_local(test_id, submission_id, scenario_id)
-    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
+    return ret
 
   def upload_and_empty_local(self, test_id: str, submission_id: str, scenario_id: str):
     data_volume = Path(DATA_VOLUME_MOUNTPATH)
@@ -187,6 +192,14 @@ def orchestrator(self,
   aws_endpoint_url = os.environ.get("AWS_ENDPOINT_URL", None)
   aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID", None)
   aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
+
+  FAB_API_URL = os.environ.get("FAB_API_URL")
+  CLIENT_ID = os.environ.get("CLIENT_ID", 'fab-client-credentials')
+  CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
+  TOKEN_URL = os.environ.get("TOKEN_URL", "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/token")
+  PERCENTAGE_COMPLETE_THRESHOLD = os.environ.get("PERCENTAGE_COMPLETE_THRESHOLD", None)
+  RUNNING_TIME_LIMIT = os.environ.get("RUNNING_TIME_LIMIT", None)
+
   s3_bucket = os.environ.get("S3_BUCKET", None)
   return DockerComposeFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
@@ -194,6 +207,12 @@ def orchestrator(self,
     aws_access_key_id=aws_access_key_id,
     aws_secret_access_key=aws_secret_access_key,
     s3_bucket=s3_bucket,
+    fab_api_url=FAB_API_URL,
+    client_id=CLIENT_ID,
+    client_secret=CLIENT_SECRET,
+    token_url=TOKEN_URL,
+    percentage_complete_threshold=float(PERCENTAGE_COMPLETE_THRESHOLD) if PERCENTAGE_COMPLETE_THRESHOLD is not None else None,
+    running_time_limit=float(RUNNING_TIME_LIMIT) if RUNNING_TIME_LIMIT is not None else None,
   ).orchestrator(
     submission_data_url=submission_data_url,
     tests=tests,
