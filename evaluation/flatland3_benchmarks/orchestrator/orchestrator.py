@@ -45,13 +45,13 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                batch_api: client.BatchV1Api,
                core_api: client.CoreV1Api,
                kubernetes_namespace: str,
-               active_deadline_seconds: int,  # total active time incl. pulling/backoffs!
+               active_deadline_seconds: int,  # total active time incl. pulling/backoffs for one pod
                submissions_pvc: str,
                s3_url_environments_zip: str,
                percentage_complete_threshold: float = None,
                k8s_resource_allocation: str = None,
                additional_submission_args: str = None,
-               wait_for_pod_to_start_max: int = 20,  # pod should have started by now, i.e. pulling has started by now.
+               wait_for_pod_to_start_limit: int = 20,  # pod should be listed by now, i.e. pulling has started by now.
                **kwargs):
     super().__init__(**kwargs)
     self.core_api = core_api
@@ -65,7 +65,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.s3_url_environments_zip = s3_url_environments_zip
     self.percentage_complete_threshold = percentage_complete_threshold
     self.k8s_resource_allocation = k8s_resource_allocation
-    self.wait_for_pod_to_start_max = wait_for_pod_to_start_max
+    self.wait_for_pod_to_start_max = wait_for_pod_to_start_limit
 
   # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
   def _run_submission(self,
