@@ -45,12 +45,13 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                batch_api: client.BatchV1Api,
                core_api: client.CoreV1Api,
                kubernetes_namespace: str,
-               active_deadline_seconds: int,
+               active_deadline_seconds: int,  # total active time incl. pulling/backoffs!
                submissions_pvc: str,
                s3_url_environments_zip: str,
                percentage_complete_threshold: float = None,
                k8s_resource_allocation: str = None,
                additional_submission_args: str = None,
+               wait_for_pod_to_start_max: int = 20,  # pod should have started by now, i.e. pulling has started by now.
                **kwargs):
     super().__init__(**kwargs)
     self.core_api = core_api
@@ -64,6 +65,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.s3_url_environments_zip = s3_url_environments_zip
     self.percentage_complete_threshold = percentage_complete_threshold
     self.k8s_resource_allocation = k8s_resource_allocation
+    self.wait_for_pod_to_start_max = wait_for_pod_to_start_max
 
   # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
   def _run_submission(self,
@@ -98,7 +100,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       jobs = self.batch_api.list_namespaced_job(namespace=self.kubernetes_namespace,
                                                 label_selector=f"submission_id={submission_id},test_id={test_id},scenario_id={scenario_id}")
       # Right after job creation it’s common to have 0 pods for a short period, and retries/backoff
-      if len(jobs.items) == 0 and wait_for_pod_to_start < 20:
+      if len(jobs.items) == 0 and wait_for_pod_to_start < self.wait_for_pod_to_start_max:
         continue
       assert len(jobs.items) == 1
       all_done = True
@@ -629,7 +631,7 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
   return K8sFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
     kubernetes_namespace=os.environ.get("KUBERNETES_NAMESPACE", "fab-int"),
-    active_deadline_seconds=int(os.getenv("ACTIVE_DEADLINE_SECONDS", 7200)),
+    active_deadline_seconds=int(os.getenv("ACTIVE_DEADLINE_SECONDS", "7200")),
     submissions_pvc=os.environ.get("SUBMISSIONS_PVC", "fab-int-submissions"),
     s3_url_environments_zip=os.environ.get("S3_URL_ENVIRONMENTS_ZIP", "s3://fab-data/flatland3/environments.zip"),
     k8s_resource_allocation=os.environ.get("K8S_RESOURCE_ALLOCATION", '{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}'),
