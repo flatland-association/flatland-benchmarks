@@ -1651,7 +1651,13 @@
                 "properties": {
                   "status": {
                     "type": "string",
-                    "description": "New submission status."
+                    "description": "New submission status.",
+                    "enum": [
+                      "SUBMITTED",
+                      "STARTED",
+                      "SUCCESS",
+                      "FAILURE"
+                    ]
                   }
                 },
                 "required": [
@@ -1686,7 +1692,13 @@
                               },
                               "status": {
                                 "type": "string",
-                                "description": "Submission status."
+                                "description": "Submission status.",
+                                "enum": [
+                                  "SUBMITTED",
+                                  "STARTED",
+                                  "SUCCESS",
+                                  "FAILURE"
+                                ]
                               },
                               "timestamp": {
                                 "type": "string"

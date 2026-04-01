@@ -1555,7 +1555,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submissions_submission_ids_statuses_post**
-> SubmissionsSubmissionIdsStatusesGet200Response submissions_submission_ids_statuses_post(submission_ids, submissions_submission_ids_statuses_post_request)
+> SubmissionsSubmissionIdsStatusesPost200Response submissions_submission_ids_statuses_post(submission_ids, submissions_submission_ids_statuses_post_request)
 
 Inserts new submission status.
 
@@ -1565,7 +1565,7 @@ Inserts new submission status.
 
 ```python
 import fab_clientlib
-from fab_clientlib.models.submissions_submission_ids_statuses_get200_response import SubmissionsSubmissionIdsStatusesGet200Response
+from fab_clientlib.models.submissions_submission_ids_statuses_post200_response import SubmissionsSubmissionIdsStatusesPost200Response
 from fab_clientlib.models.submissions_submission_ids_statuses_post_request import SubmissionsSubmissionIdsStatusesPostRequest
 from fab_clientlib.rest import ApiException
 from pprint import pprint
@@ -1610,7 +1610,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SubmissionsSubmissionIdsStatusesGet200Response**](SubmissionsSubmissionIdsStatusesGet200Response.md)
+[**SubmissionsSubmissionIdsStatusesPost200Response**](SubmissionsSubmissionIdsStatusesPost200Response.md)
 
 ### Authorization
 

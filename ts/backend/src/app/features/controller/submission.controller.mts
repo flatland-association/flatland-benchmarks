@@ -595,6 +595,7 @@ export class SubmissionController extends Controller {
    *              status:
    *                type: string
    *                description: New submission status.
+   *                enum: [SUBMITTED, STARTED, SUCCESS, FAILURE]
    *            required:
    *              - status
    *    responses:
@@ -619,6 +620,7 @@ export class SubmissionController extends Controller {
    *                          status:
    *                            type: string
    *                            description: Submission status.
+   *                            enum: [SUBMITTED, STARTED, SUCCESS, FAILURE]
    *                          timestamp:
    *                            type: string
    */

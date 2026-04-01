@@ -156,6 +156,8 @@ Class | Method | HTTP request | Description
  - [SubmissionsSubmissionIdsPatchRequest](docs/SubmissionsSubmissionIdsPatchRequest.md)
  - [SubmissionsSubmissionIdsStatusesGet200Response](docs/SubmissionsSubmissionIdsStatusesGet200Response.md)
  - [SubmissionsSubmissionIdsStatusesGet200ResponseAllOfBodyInner](docs/SubmissionsSubmissionIdsStatusesGet200ResponseAllOfBodyInner.md)
+ - [SubmissionsSubmissionIdsStatusesPost200Response](docs/SubmissionsSubmissionIdsStatusesPost200Response.md)
+ - [SubmissionsSubmissionIdsStatusesPost200ResponseAllOfBodyInner](docs/SubmissionsSubmissionIdsStatusesPost200ResponseAllOfBodyInner.md)
  - [SubmissionsSubmissionIdsStatusesPostRequest](docs/SubmissionsSubmissionIdsStatusesPostRequest.md)
 
 

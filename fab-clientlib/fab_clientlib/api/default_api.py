@@ -42,6 +42,7 @@ from fab_clientlib.models.submissions_post200_response import SubmissionsPost200
 from fab_clientlib.models.submissions_post_request import SubmissionsPostRequest
 from fab_clientlib.models.submissions_submission_ids_patch_request import SubmissionsSubmissionIdsPatchRequest
 from fab_clientlib.models.submissions_submission_ids_statuses_get200_response import SubmissionsSubmissionIdsStatusesGet200Response
+from fab_clientlib.models.submissions_submission_ids_statuses_post200_response import SubmissionsSubmissionIdsStatusesPost200Response
 from fab_clientlib.models.submissions_submission_ids_statuses_post_request import SubmissionsSubmissionIdsStatusesPostRequest
 
 from fab_clientlib.api_client import ApiClient, RequestSerialized
@@ -6137,7 +6138,7 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> SubmissionsSubmissionIdsStatusesGet200Response:
+    ) -> SubmissionsSubmissionIdsStatusesPost200Response:
         """submissions_submission_ids_statuses_post
 
         Inserts new submission status.
@@ -6178,7 +6179,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "SubmissionsSubmissionIdsStatusesGet200Response",
+            '200': "SubmissionsSubmissionIdsStatusesPost200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6208,7 +6209,7 @@ class DefaultApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[SubmissionsSubmissionIdsStatusesGet200Response]:
+    ) -> ApiResponse[SubmissionsSubmissionIdsStatusesPost200Response]:
         """submissions_submission_ids_statuses_post
 
         Inserts new submission status.
@@ -6249,7 +6250,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "SubmissionsSubmissionIdsStatusesGet200Response",
+            '200': "SubmissionsSubmissionIdsStatusesPost200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6320,7 +6321,7 @@ class DefaultApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "SubmissionsSubmissionIdsStatusesGet200Response",
+            '200': "SubmissionsSubmissionIdsStatusesPost200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
