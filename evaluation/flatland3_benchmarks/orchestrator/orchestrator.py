@@ -51,7 +51,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                percentage_complete_threshold: float = None,
                k8s_resource_allocation: str = None,
                additional_submission_args: str = None,
-               wait_for_pod_to_start_limit: int = 20,  # pod should be listed by now, i.e. pulling has started by now.
+               wait_for_pod_to_start_limit: int = None,  # pod should be listed by now, i.e. pulling has started by now.
+               wait_for_pod_to_run_limit: int = None,  # pod should have reached running state by now, i.e. pulling should be done by now
                **kwargs):
     super().__init__(**kwargs)
     self.core_api = core_api
@@ -65,7 +66,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.s3_url_environments_zip = s3_url_environments_zip
     self.percentage_complete_threshold = percentage_complete_threshold
     self.k8s_resource_allocation = k8s_resource_allocation
-    self.wait_for_pod_to_start_max = wait_for_pod_to_start_limit
+    self.wait_for_pod_to_start_limit = wait_for_pod_to_start_limit
+    self.wait_for_pod_to_run_limit = wait_for_pod_to_run_limit
 
   # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
   def _run_submission(self,
@@ -85,6 +87,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
 
     submission = client.V1Job(metadata=submission_definition["metadata"], spec=submission_definition["spec"])
     self.batch_api.create_namespaced_job(self.kubernetes_namespace, submission)
+    start_time_job = time.time()
     all_done = False
     any_failed = False
     ret = {}
@@ -100,7 +103,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       jobs = self.batch_api.list_namespaced_job(namespace=self.kubernetes_namespace,
                                                 label_selector=f"submission_id={submission_id},test_id={test_id},scenario_id={scenario_id}")
       # Right after job creation it’s common to have 0 pods for a short period, and retries/backoff
-      if len(jobs.items) == 0 and wait_for_pod_to_start < self.wait_for_pod_to_start_max:
+      if self.wait_for_pod_to_start_limit is not None and len(jobs.items) == 0 and wait_for_pod_to_start < self.wait_for_pod_to_start_limit:
         continue
       assert len(jobs.items) == 1
       all_done = True
@@ -121,6 +124,12 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       #         Failed: All containers in the pod have terminated, and at least one container has terminated in failure. The container either exited with non-zero status or was terminated by the system.
       #         Unknown: For some reason the state of the pod could not be obtained, typically due to an error in communicating with the host of the pod.  More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase  # noqa: E501
       ticks[pod_status.phase] = time.time()
+      elapsed_time = ticks[pod_status.phase] - start_time_job
+      if self.wait_for_pod_to_run_limit is not None and pod_status.phase in ["Pending", "Unknown"] and (elapsed_time > self.wait_for_pod_to_run_limit):
+        raise TaskExecutionError(
+          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because {elapsed_time:.2f}s exceeded start time limit {self.running_time_limit}s.",
+          ret)
+
       if "Running" in ticks and start_time_running is None:
         start_time_running = ticks["Running"]
       if "Running" in ticks and start_time_running is not None:
@@ -132,7 +141,6 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       if "Running" in ticks and pod_status.phase != "Running" and end_time_running is None:
         end_time_running = ticks["Running"]
         running_time = end_time_running - start_time_running
-        print(f"Submission running for {running_time:.2f} seconds")
 
       if all_done and not any_failed:
         status.append(job.status.conditions[0].type)
@@ -626,7 +634,17 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
   CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
   TOKEN_URL = os.environ.get("TOKEN_URL", "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/token")
   PERCENTAGE_COMPLETE_THRESHOLD = os.environ.get("PERCENTAGE_COMPLETE_THRESHOLD", None)
+  if PERCENTAGE_COMPLETE_THRESHOLD is not None:
+    PERCENTAGE_COMPLETE_THRESHOLD = float(PERCENTAGE_COMPLETE_THRESHOLD)
   RUNNING_TIME_LIMIT = os.environ.get("RUNNING_TIME_LIMIT", None)
+  if RUNNING_TIME_LIMIT is not None:
+    RUNNING_TIME_LIMIT = float(RUNNING_TIME_LIMIT)
+  WAIT_FOR_POD_TO_RUN_LIMIT = os.environ.get("WAIT_FOR_POD_TO_RUN_LIMIT", None)
+  if WAIT_FOR_POD_TO_RUN_LIMIT is not None:
+    WAIT_FOR_POD_TO_RUN_LIMIT = int(WAIT_FOR_POD_TO_RUN_LIMIT)
+  WAIT_FOR_POD_TO_START_LIMIT = os.environ.get("WAIT_FOR_POD_TO_START_LIMIT", None)
+  if WAIT_FOR_POD_TO_START_LIMIT is not None:
+    WAIT_FOR_POD_TO_START_LIMIT = int(WAIT_FOR_POD_TO_START_LIMIT)
 
   return K8sFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
@@ -646,8 +664,10 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
     client_id=CLIENT_ID,
     client_secret=CLIENT_SECRET,
     token_url=TOKEN_URL,
-    percentage_complete_threshold=float(PERCENTAGE_COMPLETE_THRESHOLD) if PERCENTAGE_COMPLETE_THRESHOLD is not None else None,
-    running_time_limit=float(RUNNING_TIME_LIMIT) if RUNNING_TIME_LIMIT is not None else None,
+    percentage_complete_threshold=PERCENTAGE_COMPLETE_THRESHOLD,
+    running_time_limit=RUNNING_TIME_LIMIT,
+    wait_for_pod_to_start_limit=WAIT_FOR_POD_TO_START_LIMIT,
+    wait_for_pod_to_run_limit=WAIT_FOR_POD_TO_RUN_LIMIT,
   ).orchestrator(
     submission_data_url=submission_data_url,
     tests=tests,
