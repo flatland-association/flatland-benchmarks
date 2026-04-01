@@ -7,7 +7,7 @@ from typing import List
 import pytest
 from testcontainers.compose import DockerCompose
 
-from fab_clientlib import DefaultApi, ApiClient, Configuration, SubmissionsPostRequest
+from fab_clientlib import DefaultApi, ApiClient, Configuration, SubmissionsPostRequest, SubmissionsSubmissionIdsPatchRequest
 from test_util.container_helpers import wait_for_completion, backend_application_flow
 
 TRACE = 5
@@ -101,7 +101,8 @@ def test_percentage_complete(expected_test_ids, tests: List[str], expected_prima
 
   wait_for_completion(submission_id)
 
-  fab.submissions_submission_ids_patch(submission_ids=[uuid.UUID(submission_id)])
+  fab.submissions_submission_ids_patch(submission_ids=[uuid.UUID(submission_id)],
+                                       submissions_submission_ids_patch_request=SubmissionsSubmissionIdsPatchRequest.from_dict({"published": True}))
 
   for test_id, primary_scenario_scores, primary_test_score, secondary_scenario_scores, secondary_test_score in (
     zip(expected_test_ids, expected_primary_scenario_scores, expected_primary_test_scores, expected_secondary_scenario_scores, expected_secondary_test_scores)):
