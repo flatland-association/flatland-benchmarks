@@ -131,7 +131,6 @@ def test_successful_run(expected_test_ids, tests: List[str], expected_primary_sc
       with tempfile.TemporaryDirectory() as tmp_dir_name:
         download_dir(prefix=prefix, bucket=s3_bucket, client=s3, local=tmp_dir_name)
 
-  # TODO breaking change
   fab.submissions_submission_ids_patch(submission_ids=[uuid.UUID(submission_id)],
                                        submissions_submission_ids_patch_request=SubmissionsSubmissionIdsPatchRequest(published=True))
 

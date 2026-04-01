@@ -22,7 +22,6 @@ from s3_utils import s3_utils, download_dir, S3_UPLOAD_ROOT
 logger = logging.getLogger(__name__)
 
 
-# TODO update openapi instead
 class Status(Enum):
   started = "STARTED"
   success = "SUCCESS"
