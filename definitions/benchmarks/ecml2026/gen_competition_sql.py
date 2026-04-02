@@ -39,9 +39,9 @@ def main(truncate_benchmarks_docker_compose: int = 1, truncate_tests_docker_comp
   )
   print(data)
   sql = gen_sqls(data)
-  with Path("competition_definitions.json").open("w") as f:
+  with Path("ecml2026.json").open("w") as f:
     f.write(json.dumps(data, indent=4))
-  with Path("competition_definitions.sql").open("w") as f:
+  with Path("ecml2026.sql").open("w") as f:
     f.write(sql)
 
   for suite_id, suite in data.items():
