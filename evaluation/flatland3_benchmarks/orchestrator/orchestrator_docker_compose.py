@@ -140,7 +140,6 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
     ret = self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
 
-
     self.upload_and_empty_local(test_id, submission_id, scenario_id)
     logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
     return ret
@@ -170,13 +169,6 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
       '6f3ad83c-3312-4ab3-9740-cbce80feea91': "Test_1/Level_0.pkl",
       'f954a860-e963-431e-a09d-5b1040948f2d': "Test_1/Level_1.pkl",
       'f92bfe0c-5347-4d89-bc17-b6f86d514ef8': "Test_1/Level_2.pkl",
-
-      # railway competition:
-      "046c6f42-a713-4b3d-94df-99c23753a682": "scene_1/scene_1_initial.pkl",
-      "d2ca9404-f38c-4f01-873a-4e33baf09620": "scene_2/scene_2_initial.pkl",
-      "31fb82ac-fae2-4a78-9148-5a9fe93716c7": "scene_3/scene_3_initial.pkl",
-      "666f08ab-8a2d-41fc-adbe-9644796e439f": "scene_4/scene_4_initial.pkl",
-      "66755e67-1cc8-4898-ad44-704c3e49eec6": "scene_5/scene_5_initial.pkl",
     }[scenario_id]
 
   TEST_TO_SCENARIO_IDS = {
@@ -190,23 +182,6 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
       'f954a860-e963-431e-a09d-5b1040948f2d',
       'f92bfe0c-5347-4d89-bc17-b6f86d514ef8',
     ],
-
-    # railway competition:
-    "2a085b24-4cde-428a-977f-4771a25bfc3c": [
-      "046c6f42-a713-4b3d-94df-99c23753a682"
-    ],
-    "b3cde510-701e-440c-931d-8c1c032f8d9d": [
-      "d2ca9404-f38c-4f01-873a-4e33baf09620"
-    ],
-    "c2e24c50-a4e2-48c3-8cb8-fe46ff245802": [
-      "31fb82ac-fae2-4a78-9148-5a9fe93716c7"
-    ],
-    "44ea4b29-37d2-4c04-98a2-8f758173c2ab": [
-      "666f08ab-8a2d-41fc-adbe-9644796e439f"
-    ],
-    "fbe1bb82-848c-4e65-9c9d-88e1e351265d": [
-      "66755e67-1cc8-4898-ad44-704c3e49eec6"
-    ]
   }
 
 
