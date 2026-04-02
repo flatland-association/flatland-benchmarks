@@ -147,7 +147,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     logger.debug(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
     return ret
 
-  def _gather_ret(self, job: V1Job, pods: V1PodList, running_time: float, submission_id: str, submission_data_url: str) -> tuple:
+  def _gather_ret(self, job: V1Job, pods: V1PodList, running_time: float, submission_id: str, submission_data_url: str) -> dict:
     assert len(pods.items) == 1
     pod = pods.items[-1]
 
