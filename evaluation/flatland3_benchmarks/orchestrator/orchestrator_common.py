@@ -131,8 +131,8 @@ class FlatlandBenchmarksOrchestrator:
 
   def _backend_application_flow(self, fab: DefaultApi | None) -> DefaultApi:
     if fab is None:
-      token = backend_application_flow(CLIENT_ID, CLIENT_SECRET, TOKEN_URL)
-      fab = DefaultApi(ApiClient(configuration=Configuration(host=FAB_API_URL, access_token=token["access_token"])))
+      token = backend_application_flow(self.client_id, self.client_secret, self.token_url)
+      fab = DefaultApi(ApiClient(configuration=Configuration(host=self.fab_api_url, access_token=token["access_token"])))
     return fab
 
   @abstractmethod
