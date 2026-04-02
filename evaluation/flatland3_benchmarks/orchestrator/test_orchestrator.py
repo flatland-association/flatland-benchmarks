@@ -49,14 +49,14 @@ def test_tasks_successful():
   verify(batch_api, times=1).list_namespaced_job(...)
   verify(core_api, times=1).list_namespaced_pod(namespace="fab-int", label_selector=f"job-name=f3-sub--1234--66")
   verify(core_api, times=1).read_namespaced_pod_log("subi", namespace="fab-int")
+  verify(core_api, times=1).list_namespaced_event('fab-int', field_selector='involvedObject.name=subi')
 
-  assert set(ret.keys()) == {"f3-sub"}
-  assert set(ret["f3-sub"].keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time"}
-  assert ret["f3-sub"]["job_status"] == "Complete"
-  assert ret["f3-sub"]["image_id"] == "ghcr.io/subi"
-  assert ret["f3-sub"]["log"] == "abcd"
-  assert ret["f3-sub"]["pod"] == pod_subi.to_dict()
-  assert ret["f3-sub"]["job"] == job_subi.to_dict()
+  assert set(ret.keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time"}
+  assert ret["job_status"] == "Complete"
+  assert ret["image_id"] == "ghcr.io/subi"
+  assert ret["log"] == "abcd"
+  assert ret["pod"] == pod_subi.to_dict()
+  assert ret["job"] == job_subi.to_dict()
   mockito.unstub()
 
 
@@ -103,14 +103,14 @@ def test_tasks_failing():
   verify(batch_api, times=1).list_namespaced_job(...)
   verify(core_api, times=1).list_namespaced_pod(namespace="fab-int", label_selector=f"job-name=f3-sub--1234--66")
   verify(core_api, times=1).read_namespaced_pod_log("subi", namespace="fab-int")
+  verify(core_api, times=1).list_namespaced_event('fab-int', field_selector='involvedObject.name=subi')
 
-  assert set(ret.keys()) == {"f3-sub"}
-  assert set(ret["f3-sub"].keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time", "events"}
-  assert ret["f3-sub"]["job_status"] == "Somethingelse"
-  assert ret["f3-sub"]["image_id"] == "ghcr.io/subi"
-  assert ret["f3-sub"]["log"] == "abcd"
-  assert ret["f3-sub"]["pod"] == pod_subi.to_dict()
-  assert ret["f3-sub"]["job"] == job_subi.to_dict()
+  assert set(ret.keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time", "events"}
+  assert ret["job_status"] == "Somethingelse"
+  assert ret["image_id"] == "ghcr.io/subi"
+  assert ret["log"] == "abcd"
+  assert ret["pod"] == pod_subi.to_dict()
+  assert ret["job"] == job_subi.to_dict()
   mockito.unstub()
 
 

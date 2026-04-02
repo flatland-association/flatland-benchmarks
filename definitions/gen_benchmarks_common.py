@@ -85,7 +85,7 @@ def gen_sqls(data) -> str:
                             test["LOOP"], test.get("QUEUE", None))
         for test_field in test["TEST_FIELDS"].values():
           sql += gen_sql_test_benchmark_field(test_field["ID"], test_field["TEST_FIELD_NAME"], test_field["TEST_FIELD_DESCRIPTION"],
-                                              test_field["TEST_AGG"], test["TEST_AGG_FIELDS"])
+                                              test_field["TEST_AGG"], test_field["TEST_AGG_FIELDS"])
         for scenario in test["scenarios"].values():
           sql += gen_sql_scenario(scenario["ID"], scenario["SCENARIO_NAME"], scenario["SCENARIO_DESCRIPTION"],
                                   [field["ID"] for field in scenario["SCENARIO_FIELDS"].values()])

@@ -26,17 +26,17 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and Push Container Image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           file: deployment/frontend/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
@@ -51,17 +51,17 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and Push Container Image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           file: deployment/backend/Dockerfile
           platforms: linux/amd64,linux/arm64/v8
@@ -78,17 +78,17 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and Push Container Image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           # TODO https://github.com/flatland-association/flatland-benchmarks/issues/234 harmonize context and move Dockerfile under deployment/
           context: evaluation/flatland3_benchmarks/orchestrator
