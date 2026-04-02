@@ -36,16 +36,17 @@
                 "ID": "75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
-                "TEST_AGG": "NANSUM"
+                "TEST_AGG": "NANSUM",
+                "TEST_AGG_FIELDS": "normalized_reward"
               },
               "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85": {
                 "ID": "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
-                "TEST_AGG": "NANMEAN"
+                "TEST_AGG": "NANMEAN",
+                "TEST_AGG_FIELDS": "percentage_complete"
               }
             },
-            "TEST_AGG_FIELDS": "percentage_complete",
             "LOOP": "CLOSED",
             "scenarios": {
               "5eea815c-7500-42ff-b763-9012fae3ba0a": {
@@ -144,16 +145,17 @@
                 "ID": "75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
-                "TEST_AGG": "NANSUM"
+                "TEST_AGG": "NANSUM",
+                "TEST_AGG_FIELDS": "normalized_reward"
               },
               "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85": {
                 "ID": "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
-                "TEST_AGG": "NANMEAN"
+                "TEST_AGG": "NANMEAN",
+                "TEST_AGG_FIELDS": "percentage_complete"
               }
             },
-            "TEST_AGG_FIELDS": "percentage_complete",
             "LOOP": "CLOSED",
             "scenarios": {
               "f1bff6c2-297d-4e01-aae1-e6f33a03f708": {
@@ -252,16 +254,17 @@
                 "ID": "75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
-                "TEST_AGG": "NANSUM"
+                "TEST_AGG": "NANSUM",
+                "TEST_AGG_FIELDS": "normalized_reward"
               },
               "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85": {
                 "ID": "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
-                "TEST_AGG": "NANMEAN"
+                "TEST_AGG": "NANMEAN",
+                "TEST_AGG_FIELDS": "percentage_complete"
               }
             },
-            "TEST_AGG_FIELDS": "percentage_complete",
             "LOOP": "CLOSED",
             "scenarios": {
               "4b4d5e9f-4753-449c-96e7-f7e477e3e38a": {
@@ -360,16 +363,17 @@
                 "ID": "75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
-                "TEST_AGG": "NANSUM"
+                "TEST_AGG": "NANSUM",
+                "TEST_AGG_FIELDS": "normalized_reward"
               },
               "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85": {
                 "ID": "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
-                "TEST_AGG": "NANMEAN"
+                "TEST_AGG": "NANMEAN",
+                "TEST_AGG_FIELDS": "percentage_complete"
               }
             },
-            "TEST_AGG_FIELDS": "percentage_complete",
             "LOOP": "CLOSED",
             "scenarios": {
               "0e2cce95-4a55-440e-b723-e58ab5fcb34a": {
@@ -468,16 +472,17 @@
                 "ID": "75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
-                "TEST_AGG": "NANSUM"
+                "TEST_AGG": "NANSUM",
+                "TEST_AGG_FIELDS": "normalized_reward"
               },
               "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85": {
                 "ID": "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
-                "TEST_AGG": "NANMEAN"
+                "TEST_AGG": "NANMEAN",
+                "TEST_AGG_FIELDS": "percentage_complete"
               }
             },
-            "TEST_AGG_FIELDS": "percentage_complete",
             "LOOP": "CLOSED",
             "scenarios": {
               "9eee4486-fdf0-4873-80bb-777886ed9ca0": {
@@ -576,16 +581,17 @@
                 "ID": "75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9",
                 "TEST_FIELD_NAME": "normalized_reward",
                 "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
-                "TEST_AGG": "NANSUM"
+                "TEST_AGG": "NANSUM",
+                "TEST_AGG_FIELDS": "normalized_reward"
               },
               "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85": {
                 "ID": "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85",
                 "TEST_FIELD_NAME": "percentage_complete",
                 "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
-                "TEST_AGG": "NANMEAN"
+                "TEST_AGG": "NANMEAN",
+                "TEST_AGG_FIELDS": "percentage_complete"
               }
             },
-            "TEST_AGG_FIELDS": "percentage_complete",
             "LOOP": "CLOSED",
             "scenarios": {
               "103776ff-57d0-43aa-b483-507724926969": {

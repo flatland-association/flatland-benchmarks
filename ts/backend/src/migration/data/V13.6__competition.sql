@@ -37,7 +37,7 @@ UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLU
 INSERT INTO fields
   (id, key, description, agg_func, agg_fields)
 VALUES ('75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9', 'normalized_reward', 'Primary test score (NANSUM of corresponding scenario scores)', 'NANSUM',
-        '"percentage_complete"') ON CONFLICT(id) DO
+        '"normalized_reward"') ON CONFLICT(id) DO
 UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO fields
@@ -137,7 +137,7 @@ UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLU
 INSERT INTO fields
   (id, key, description, agg_func, agg_fields)
 VALUES ('75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9', 'normalized_reward', 'Primary test score (NANSUM of corresponding scenario scores)', 'NANSUM',
-        '"percentage_complete"') ON CONFLICT(id) DO
+        '"normalized_reward"') ON CONFLICT(id) DO
 UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO fields
@@ -237,7 +237,7 @@ UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLU
 INSERT INTO fields
   (id, key, description, agg_func, agg_fields)
 VALUES ('75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9', 'normalized_reward', 'Primary test score (NANSUM of corresponding scenario scores)', 'NANSUM',
-        '"percentage_complete"') ON CONFLICT(id) DO
+        '"normalized_reward"') ON CONFLICT(id) DO
 UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO fields
@@ -337,7 +337,7 @@ UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLU
 INSERT INTO fields
   (id, key, description, agg_func, agg_fields)
 VALUES ('75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9', 'normalized_reward', 'Primary test score (NANSUM of corresponding scenario scores)', 'NANSUM',
-        '"percentage_complete"') ON CONFLICT(id) DO
+        '"normalized_reward"') ON CONFLICT(id) DO
 UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO fields
@@ -437,7 +437,7 @@ UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLU
 INSERT INTO fields
   (id, key, description, agg_func, agg_fields)
 VALUES ('75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9', 'normalized_reward', 'Primary test score (NANSUM of corresponding scenario scores)', 'NANSUM',
-        '"percentage_complete"') ON CONFLICT(id) DO
+        '"normalized_reward"') ON CONFLICT(id) DO
 UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO fields
@@ -537,7 +537,7 @@ UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLU
 INSERT INTO fields
   (id, key, description, agg_func, agg_fields)
 VALUES ('75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9', 'normalized_reward', 'Primary test score (NANSUM of corresponding scenario scores)', 'NANSUM',
-        '"percentage_complete"') ON CONFLICT(id) DO
+        '"normalized_reward"') ON CONFLICT(id) DO
 UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO fields
