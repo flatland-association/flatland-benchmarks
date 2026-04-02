@@ -6,7 +6,9 @@ from mockito import mock
 from mockito import verify
 from mockito import when
 
+from fab_clientlib import SubmissionsSubmissionIdsStatusesPostRequest
 from orchestrator import TaskExecutionError, K8sFlatlandBenchmarksOrchestrator
+from orchestrator_common import Status
 
 
 def test_tasks_successful():
@@ -148,3 +150,51 @@ def test_make_submission_definition():
   assert container["volumeMounts"][0]["subPath"] == "1234/"
   assert container["volumeMounts"][1]["name"] == "environments"
   assert container["volumeMounts"][1]["mountPath"] == "/tmp/environments"
+
+
+def test_submission_status_failure_reported():
+  orchestrator = K8sFlatlandBenchmarksOrchestrator(
+    submission_id="1234",
+    batch_api=None,
+    core_api=None,
+    aws_endpoint_url=None,
+    aws_access_key_id='ignore-me',
+    aws_secret_access_key='ignore-me',
+    s3_bucket=None,
+    kubernetes_namespace="fab-int",
+    active_deadline_seconds=7200,
+    submissions_pvc="fab-int-submissions",
+    s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
+  )
+
+  def _fail(*args, **kwargs):
+    raise Exception()
+
+  orchestrator._run_submission = _fail
+  fab = mock()
+  with pytest.raises(RuntimeError) as exc_info:
+    orchestrator.orchestrator(submission_data_url="funny", fab=fab)
+
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value))
+
+
+def test_submission_status_success_reported():
+  orchestrator = K8sFlatlandBenchmarksOrchestrator(
+    submission_id="1234",
+    batch_api=None,
+    core_api=None,
+    aws_endpoint_url=None,
+    aws_access_key_id='ignore-me',
+    aws_secret_access_key='ignore-me',
+    s3_bucket=None,
+    kubernetes_namespace="fab-int",
+    active_deadline_seconds=7200,
+    submissions_pvc="fab-int-submissions",
+    s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
+  )
+  orchestrator.run_flatland = lambda *args, **kwargs: {}
+  fab = mock()
+  orchestrator.orchestrator(submission_data_url="funny", fab=fab)
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value))
