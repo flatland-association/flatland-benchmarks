@@ -79,7 +79,6 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
-    submission_job_path = Path(__file__).parent / "submission_job.yaml"
     submission_definition = self._make_submission_definition(submission_data_url, test_id, scenario_id, pkl_path)
     job_name = submission_definition["metadata"]["name"]
 
@@ -143,8 +142,9 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     if any_failed:
       ret = self._gather_ret(job, pods, running_time, submission_id, submission_data_url)
       raise TaskExecutionError(
-        f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. {ret}", ret)
-    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
+        f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}.", ret)
+    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}.")
+    logger.debug(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
     return ret
 
   def _gather_ret(self, job: V1Job, pods: V1PodList, running_time: float, submission_id: str, submission_data_url: str) -> tuple:
