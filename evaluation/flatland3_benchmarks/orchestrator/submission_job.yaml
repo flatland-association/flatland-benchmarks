@@ -9,6 +9,8 @@ spec:
   # do not back off
   backoffLimit: 0
   template:
+    metadata:
+      labels: { } # INSERTED
     spec:
       # https://kubernetes.io/docs/concepts/workloads/controllers/job/#handling-pod-and-container-failures
       # https://kubernetes.io/docs/concepts/workloads/controllers/job/#pod-backoff-failure-policy
