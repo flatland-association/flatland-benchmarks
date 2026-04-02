@@ -140,7 +140,6 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
     ret = self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
 
-
     self.upload_and_empty_local(test_id, submission_id, scenario_id)
     logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
     return ret
@@ -161,24 +160,28 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
     for d in scenario_folder.iterdir():
       shutil.rmtree(d)
 
-  # debug environments
   @staticmethod
   def load_scenario_data(scenario_id: str) -> str:
     return {
-      # test 4ecdb9f4-e2ff-41ff-9857-abe649c19c50_
+      # debug environments:
       'd99f4d35-aec5-41c1-a7b0-64f78b35d7ef': "Test_0/Level_0.pkl",
       '04d618b8-84df-406b-b803-d516c7425537': "Test_0/Level_1.pkl",
-
-      # test 5206f2ee-d0a9-405b-8da3-93625e169811:
       '6f3ad83c-3312-4ab3-9740-cbce80feea91': "Test_1/Level_0.pkl",
       'f954a860-e963-431e-a09d-5b1040948f2d': "Test_1/Level_1.pkl",
       'f92bfe0c-5347-4d89-bc17-b6f86d514ef8': "Test_1/Level_2.pkl",
     }[scenario_id]
 
   TEST_TO_SCENARIO_IDS = {
-    '4ecdb9f4-e2ff-41ff-9857-abe649c19c50': ['d99f4d35-aec5-41c1-a7b0-64f78b35d7ef', '04d618b8-84df-406b-b803-d516c7425537', ],
-    '5206f2ee-d0a9-405b-8da3-93625e169811': ['6f3ad83c-3312-4ab3-9740-cbce80feea91', 'f954a860-e963-431e-a09d-5b1040948f2d',
-                                             'f92bfe0c-5347-4d89-bc17-b6f86d514ef8']
+    # debug environments:
+    '4ecdb9f4-e2ff-41ff-9857-abe649c19c50': [
+      'd99f4d35-aec5-41c1-a7b0-64f78b35d7ef',
+      '04d618b8-84df-406b-b803-d516c7425537',
+    ],
+    '5206f2ee-d0a9-405b-8da3-93625e169811': [
+      '6f3ad83c-3312-4ab3-9740-cbce80feea91',
+      'f954a860-e963-431e-a09d-5b1040948f2d',
+      'f92bfe0c-5347-4d89-bc17-b6f86d514ef8',
+    ],
   }
 
 

@@ -323,6 +323,7 @@ services:
         unzip debug-environments.zip -o -d /scenarios
         rm -fR /scenarios/Test*
         mv -f /scenarios/debug-environments/Test* /scenarios/
+
         find /scenarios
 
   flatland3-benchmarks-orchestrator:

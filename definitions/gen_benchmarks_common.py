@@ -55,7 +55,7 @@ def gen_sql_suite(suite_id, suite_setup, suite_name, suite_description, suite_co
   return f""" INSERT INTO suites
     (id, setup, name, description, contents, benchmark_ids)
     VALUES ('{suite_id}', '{suite_setup}', '{suite_name}', '{suite_description}', '{suite_contents}', array['{"', '".join(benchmark_ids)}']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET setup=EXCLUDED.setup, name=EXCLUDED.name, description=EXCLUDED.description, benchmark_ids=EXCLUDED.benchmark_ids;
+    ON CONFLICT(id) DO UPDATE SET setup=EXCLUDED.setup, name=EXCLUDED.name, description=EXCLUDED.description, contents=EXCLUDED.contents, benchmark_ids=EXCLUDED.benchmark_ids;
 
 """
 
