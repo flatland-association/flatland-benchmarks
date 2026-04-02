@@ -49,6 +49,7 @@ def test_tasks_successful():
   verify(batch_api, times=1).list_namespaced_job(...)
   verify(core_api, times=1).list_namespaced_pod(namespace="fab-int", label_selector=f"job-name=f3-sub--1234--66")
   verify(core_api, times=1).read_namespaced_pod_log("subi", namespace="fab-int")
+  verify(core_api, times=1).list_namespaced_event('fab-int', field_selector='involvedObject.name=subi')
 
   assert set(ret.keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time"}
   assert ret["job_status"] == "Complete"
@@ -102,6 +103,7 @@ def test_tasks_failing():
   verify(batch_api, times=1).list_namespaced_job(...)
   verify(core_api, times=1).list_namespaced_pod(namespace="fab-int", label_selector=f"job-name=f3-sub--1234--66")
   verify(core_api, times=1).read_namespaced_pod_log("subi", namespace="fab-int")
+  verify(core_api, times=1).list_namespaced_event('fab-int', field_selector='involvedObject.name=subi')
 
   assert set(ret.keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time", "events"}
   assert ret["job_status"] == "Somethingelse"
