@@ -88,7 +88,10 @@ class FlatlandBenchmarksOrchestrator:
     submission_id = self.submission_id
     logger.info(f"// START task submission_id={submission_id} with submission_data_url={submission_data_url}.")
     _fab = self._backend_application_flow(fab)
-    _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
+    try:
+      _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
+    except Exception as status_post_failure:
+      logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
 
     start_time = time.time()
     try:
@@ -97,7 +100,10 @@ class FlatlandBenchmarksOrchestrator:
       try:
         _fab = self._backend_application_flow(fab)
         _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value))
+      except Exception as status_post_failure:
+        logger.warning(f"Could not post FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
       finally:
+        # re-raise origin failure after posting
         raise e
 
     logger.info(f"// START uploading results for submission_id={submission_id} with submission_data_url={submission_data_url}.")
@@ -120,7 +126,10 @@ class FlatlandBenchmarksOrchestrator:
           )
       logger.info(
         f"\\\\ END uploading results for with submission_id={submission_id} with submission_data_url={submission_data_url}.")
-      _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value))
+      try:
+        _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value))
+      except Exception as status_post_failure:
+        logger.warning(f"Could not post SUCCESS for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
       duration = time.time() - start_time
       logger.info(f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds.")
       return ret
