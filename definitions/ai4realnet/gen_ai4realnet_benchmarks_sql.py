@@ -15,33 +15,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from definitions.benchmarks.flatland_common import gen_data
 from definitions.gen_benchmarks_common import gen_sqls
-
-
-def gen_ai4realnet_playground():
-  test_type = 'CLOSED'
-
-  NUM_LEVELS_PER_BENCHMARK = 1
-  num_levels_per_test = 1
-  test_descriptions = ['lorem ipsum'] * NUM_LEVELS_PER_BENCHMARK
-  suite_id = "0ca46887-897a-463f-bf83-c6cd6269a976"
-  # https://ai4realnet.eu/use-cases/
-  benchmark_name = "Playground Electricity Network"
-  benchmark_name = "Playground Air Traffic Management"
-  benchmark_name = "Playground Railway (interactive)"
-  test_type = 'CLOSED'
-  test_type = 'INTERACTIVE'
-  benchmark_description = ""
-
-  fields = [["normalized_reward", "NANSUM"], ["percentage_complete", "NANMEAN"]]
-  suite_setup = ""
-  suite_name = ""
-  suite_description = ""
-  suite_contents = ""
-
-  gen_data(num_levels_per_test, suite_id, benchmark_name, benchmark_description, fields, test_descriptions, test_type, suite_setup, suite_name,
-           suite_description, suite_contents)
 
 
 def extract_ai4realnet_from_csv(csv):
