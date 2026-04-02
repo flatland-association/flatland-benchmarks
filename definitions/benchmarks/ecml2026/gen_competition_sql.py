@@ -2,7 +2,7 @@ import json
 from collections import defaultdict
 from pathlib import Path
 
-from definitions.benchmarks.flatland3_benchmarks.gen_flatland3_benchmarks_sql import gen_flatland3_benchmarks
+from definitions.benchmarks.flatland_common import gen_flatland_sql
 from definitions.gen_benchmarks_common import gen_sqls
 
 
@@ -10,7 +10,7 @@ def main(truncate_benchmarks_docker_compose: int = 1, truncate_tests_docker_comp
   suite_id = '6240c685-0fb4-481e-9404-47a570632227'
   benchmark_id = "c85d5fc2-15da-4a62-8e14-28d1261c29bd"
   test_descriptions = [f"Level {i + 1}" for i in range(6)]
-  data = gen_flatland3_benchmarks(
+  data = gen_flatland_sql(
     test_type='CLOSED',
     suite_id=suite_id,
     benchmark_id=benchmark_id,
