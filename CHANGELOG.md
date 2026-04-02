@@ -3,6 +3,33 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.18.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.0...v0.18.1) (2026-04-02)
+
+
+### Features
+
+* add railway competition definitions (WiP). ([a7bf615](https://github.com/flatland-association/flatland-benchmarks/commit/a7bf61546706fc9ecf97066d6d2b7920df49e6dd))
+* add railway competition definitions (WiP). ([a7bf615](https://github.com/flatland-association/flatland-benchmarks/commit/a7bf61546706fc9ecf97066d6d2b7920df49e6dd))
+* benchmark orchestrator posting status. ([#568](https://github.com/flatland-association/flatland-benchmarks/issues/568)) ([d1b8fb1](https://github.com/flatland-association/flatland-benchmarks/commit/d1b8fb14c5a3222ee6b8364bf29e9f5fe73479d1))
+* ecml2026 railway competition definitions. ([42adcf6](https://github.com/flatland-association/flatland-benchmarks/commit/42adcf65258a2bfd569aa4e0b103e692687cee95))
+* ecml2026 railway competition definitions. ([a7bf615](https://github.com/flatland-association/flatland-benchmarks/commit/a7bf61546706fc9ecf97066d6d2b7920df49e6dd))
+* make regen json optional. ([1e15e13](https://github.com/flatland-association/flatland-benchmarks/commit/1e15e136364fcca16c2952b6262af662cba6c6a0))
+* normalized submission status. ([3565283](https://github.com/flatland-association/flatland-benchmarks/commit/3565283d40700baea7e4eb74dc0dca3186905d93))
+* update ecml2026 uuids. ([a7bf615](https://github.com/flatland-association/flatland-benchmarks/commit/a7bf61546706fc9ecf97066d6d2b7920df49e6dd))
+
+
+### Bug Fixes
+
+* comply with upstream changes. ([#561](https://github.com/flatland-association/flatland-benchmarks/issues/561)) ([bddcfa3](https://github.com/flatland-association/flatland-benchmarks/commit/bddcfa376919a22ac55d88bc05c7b868e7a3834a))
+* gen sql for benchmarks/railway competitions. ([a7bf615](https://github.com/flatland-association/flatland-benchmarks/commit/a7bf61546706fc9ecf97066d6d2b7920df49e6dd))
+* test agg weights. ([e50c353](https://github.com/flatland-association/flatland-benchmarks/commit/e50c353f86bf18a433c6a2b9c9b22c930ed45910))
+* update suite contents in sql generation. ([a7bf615](https://github.com/flatland-association/flatland-benchmarks/commit/a7bf61546706fc9ecf97066d6d2b7920df49e6dd))
+
+
+### Miscellaneous Chores
+
+* release 0.18.1 ([50cc894](https://github.com/flatland-association/flatland-benchmarks/commit/50cc894ca9a5653f872a4d48160e24581a98e3e8))
+
 ## [0.18.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.17.0...v0.18.0) (2026-03-05)
 
 
