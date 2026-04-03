@@ -41,6 +41,46 @@ KUBERNETES_NAMESPACE = _require_config("KUBERNETES_NAMESPACE")
 logging.basicConfig(encoding='utf-8', level=logging.INFO)
 
 
+def test_success(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
+                 test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
+                 scenario_id="289394a5-aa51-446c-9b62-c25101643790",
+                 pkl_path="Test_00/Level_0.pkl",
+                 ):
+  config.load_kube_config()
+  core_api = client.CoreV1Api()
+  batch_api = client.BatchV1Api()
+  submission_id = str(uuid.uuid4())
+  print(submission_id)
+
+  orchestrator = K8sFlatlandBenchmarksOrchestrator(
+    submission_id=submission_id,
+    batch_api=batch_api,
+    core_api=core_api,
+    kubernetes_namespace=KUBERNETES_NAMESPACE,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_endpoint_url=AWS_ENDPOINT_URL,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    s3_bucket=S3_BUCKET,
+    s3_url_environments_zip=S3_URL_ENVIRONMENTS_ZIP,
+    submissions_pvc=SUBMISSIONS_PVC,
+    active_deadline_seconds=55,
+    k8s_resource_allocation='{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}',
+  )
+
+  start_time = time.time()
+  ret = orchestrator._run_submission(
+    test_id,
+    scenario_id,
+    submission_data_url,
+    pkl_path
+  )
+  end_time = time.time()
+  elapsed_time = end_time - start_time
+
+  print(ret)
+  assert elapsed_time < 500
+
+
 def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
                        test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
                        scenario_id="289394a5-aa51-446c-9b62-c25101643790",
