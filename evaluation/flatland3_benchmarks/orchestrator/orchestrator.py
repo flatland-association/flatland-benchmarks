@@ -75,7 +75,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                       scenario_id,
                       submission_data_url,
                       pkl_path,
-                      **kwargs):
+                      **kwargs) -> dict:
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
