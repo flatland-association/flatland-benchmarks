@@ -41,6 +41,46 @@ KUBERNETES_NAMESPACE = _require_config("KUBERNETES_NAMESPACE")
 logging.basicConfig(encoding='utf-8', level=logging.INFO)
 
 
+def test_success(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
+                 test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
+                 scenario_id="289394a5-aa51-446c-9b62-c25101643790",
+                 pkl_path="Test_00/Level_0.pkl",
+                 ):
+  config.load_kube_config()
+  core_api = client.CoreV1Api()
+  batch_api = client.BatchV1Api()
+  submission_id = str(uuid.uuid4())
+  print(submission_id)
+
+  orchestrator = K8sFlatlandBenchmarksOrchestrator(
+    submission_id=submission_id,
+    batch_api=batch_api,
+    core_api=core_api,
+    kubernetes_namespace=KUBERNETES_NAMESPACE,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_endpoint_url=AWS_ENDPOINT_URL,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    s3_bucket=S3_BUCKET,
+    s3_url_environments_zip=S3_URL_ENVIRONMENTS_ZIP,
+    submissions_pvc=SUBMISSIONS_PVC,
+    active_deadline_seconds=55,
+    k8s_resource_allocation='{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}',
+  )
+
+  start_time = time.time()
+  ret = orchestrator._run_submission(
+    test_id,
+    scenario_id,
+    submission_data_url,
+    pkl_path
+  )
+  end_time = time.time()
+  elapsed_time = end_time - start_time
+
+  print(ret)
+  assert elapsed_time < 500
+
+
 def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
                        test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
                        scenario_id="289394a5-aa51-446c-9b62-c25101643790",
@@ -50,6 +90,7 @@ def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatlan
   core_api = client.CoreV1Api()
   batch_api = client.BatchV1Api()
   submission_id = str(uuid.uuid4())
+  print(submission_id)
 
   orchestrator = K8sFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
@@ -85,7 +126,7 @@ def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatlan
   end_time = time.time()
   elapsed_time = end_time - start_time
   print(exc_info.value.message)
-  assert "OOM" in exc_info.value.message
+  assert "OOM" in str(exc_info.value.status)
   # may fail the image needs to be pulled.
   assert elapsed_time < 30
 
@@ -99,6 +140,7 @@ def test_no_oom_respecting_memory_limit(submission_data_url="ghcr.io/flatland-as
   core_api = client.CoreV1Api()
   batch_api = client.BatchV1Api()
   submission_id = str(uuid.uuid4())
+  print(submission_id)
 
   orchestrator = K8sFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
@@ -150,6 +192,7 @@ def test_pull_failure_active_deadline_fail_fast(submission_data_url="ghcr.io/fla
   core_api = client.CoreV1Api()
   batch_api = client.BatchV1Api()
   submission_id = str(uuid.uuid4())
+  print(submission_id)
 
   orchestrator = K8sFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
@@ -175,9 +218,9 @@ def test_pull_failure_active_deadline_fail_fast(submission_data_url="ghcr.io/fla
   end_time = time.time()
   elapsed_time = end_time - start_time
   print(exc_info.value.message)
-  assert "Job has reached the specified backoff limit" in exc_info.value.message
-  assert 'failed to pull and unpack image "ghcr.io/flatland-association/does-not-exist:latest"' in exc_info.value.message
-  assert 'failed to resolve reference "ghcr.io/flatland-association/does-not-exist:latest"' in exc_info.value.message
+  assert "Job has reached the specified backoff limit" in str(exc_info.value.status)
+  assert 'failed to pull and unpack image "ghcr.io/flatland-association/does-not-exist:latest"' in str(exc_info.value.status)
+  assert 'failed to resolve reference "ghcr.io/flatland-association/does-not-exist:latest"' in str(exc_info.value.status)
 
   assert active_deadline_seconds + delta > elapsed_time > active_deadline_seconds
 
@@ -196,6 +239,7 @@ def test_pull_failure_start_time_fail_fast(submission_data_url="ghcr.io/flatland
   core_api = client.CoreV1Api()
   batch_api = client.BatchV1Api()
   submission_id = str(uuid.uuid4())
+  print(submission_id)
 
   orchestrator = K8sFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
@@ -243,55 +287,7 @@ def test_time_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/f
   core_api = client.CoreV1Api()
   batch_api = client.BatchV1Api()
   submission_id = str(uuid.uuid4())
-
-  orchestrator = K8sFlatlandBenchmarksOrchestrator(
-    submission_id=submission_id,
-    batch_api=batch_api,
-    core_api=core_api,
-    kubernetes_namespace=KUBERNETES_NAMESPACE,
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_endpoint_url=AWS_ENDPOINT_URL,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-    s3_bucket=S3_BUCKET,
-    s3_url_environments_zip=S3_URL_ENVIRONMENTS_ZIP,
-    submissions_pvc=SUBMISSIONS_PVC,
-    active_deadline_seconds=active_deadline_seconds,
-    running_time_limit=running_time_limit,
-  )
-  orchestrator._make_command = lambda *args, **kwargs: ["bash", "-c"]
-  orchestrator._make_args = lambda *args, **kwargs: [""" sleep 55 """]
-  with pytest.raises(TaskExecutionError) as exc_info:
-    start_time = time.time()
-    orchestrator._run_submission(
-      test_id,
-      scenario_id,
-      submission_data_url,
-      pkl_path
-    )
-  end_time = time.time()
-  elapsed_time = end_time - start_time
-  print(exc_info.value.message)
-  assert f"exceeded running time limit {running_time_limit}s" in exc_info.value.message
-
-  assert running_time_limit + delta > elapsed_time > running_time_limit
-
-
-def test_time_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                                                  test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                                                  scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                                                  pkl_path="Test_00/Level_0.pkl",
-                                                  active_deadline_seconds=55,
-                                                  delta=10,
-                                                  running_time_limit=25
-                                                  ):
-  """
-  Verify failure upon exceeding running time.
-  """
-
-  config.load_kube_config()
-  core_api = client.CoreV1Api()
-  batch_api = client.BatchV1Api()
-  submission_id = str(uuid.uuid4())
+  print(submission_id)
 
   orchestrator = K8sFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
@@ -343,6 +339,7 @@ def test_time_max_running_time_respected_succeeds(submission_data_url="ghcr.io/f
   core_api = client.CoreV1Api()
   batch_api = client.BatchV1Api()
   submission_id = str(uuid.uuid4())
+  print(submission_id)
 
   orchestrator = K8sFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
@@ -373,7 +370,7 @@ def test_time_max_running_time_respected_succeeds(submission_data_url="ghcr.io/f
 
   # may fail the image needs to be pulled.
   print(
-    f"assert {elapsed_time}s in [{running_time_limit - lower_delta:.2f},{running_time_limit - lower_delta:.2f}] {running_time_limit:.2f}+{upper_delta:.2f}-{lower_delta:.2f}")
+    f"assert {elapsed_time}s in [{running_time_limit - lower_delta:.2f},{running_time_limit + upper_delta:.2f}] {running_time_limit:.2f}+{upper_delta:.2f}-{lower_delta:.2f}")
   assert running_time_limit + upper_delta > elapsed_time > running_time_limit - lower_delta
 
 
@@ -395,6 +392,7 @@ def test_time_max_memory_respected_succeeds(submission_data_url="ghcr.io/flatlan
   core_api = client.CoreV1Api()
   batch_api = client.BatchV1Api()
   submission_id = str(uuid.uuid4())
+  print(submission_id)
 
   orchestrator = K8sFlatlandBenchmarksOrchestrator(
     submission_id=submission_id,
@@ -427,3 +425,52 @@ def test_time_max_memory_respected_succeeds(submission_data_url="ghcr.io/flatlan
   print(
     f"assert {elapsed_time}s in [{running_time_limit - lower_delta:.2f},{running_time_limit - lower_delta:.2f}] {running_time_limit:.2f}+{upper_delta:.2f}-{lower_delta:.2f}")
   assert running_time_limit + upper_delta > elapsed_time > running_time_limit - lower_delta
+
+
+def test_egress_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
+                          test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
+                          scenario_id="289394a5-aa51-446c-9b62-c25101643790",
+                          pkl_path="Test_00/Level_0.pkl",
+                          ):
+  config.load_kube_config()
+  core_api = client.CoreV1Api()
+  batch_api = client.BatchV1Api()
+  submission_id = str(uuid.uuid4())
+  print(submission_id)
+
+  orchestrator = K8sFlatlandBenchmarksOrchestrator(
+    submission_id=submission_id,
+    batch_api=batch_api,
+    core_api=core_api,
+    kubernetes_namespace=KUBERNETES_NAMESPACE,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_endpoint_url=AWS_ENDPOINT_URL,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    s3_bucket=S3_BUCKET,
+    s3_url_environments_zip=S3_URL_ENVIRONMENTS_ZIP,
+    submissions_pvc=SUBMISSIONS_PVC,
+    active_deadline_seconds=55,
+    k8s_resource_allocation='{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}',
+  )
+
+  orchestrator._make_command = lambda *args, **kwargs: ["bash", "-c"]
+  orchestrator._make_args = lambda *args, **kwargs: ["""
+      sleep 2
+      wget https://google.com
+      """]
+
+  with pytest.raises(TaskExecutionError) as exc_info:
+    start_time = time.time()
+    ret = orchestrator._run_submission(
+      test_id,
+      scenario_id,
+      submission_data_url,
+      pkl_path
+    )
+    print(ret)
+  end_time = time.time()
+  elapsed_time = end_time - start_time
+  print(exc_info.value.message)
+  assert "OOM" in str(exc_info.value.status)
+  # may fail the image needs to be pulled.
+  assert elapsed_time < 30

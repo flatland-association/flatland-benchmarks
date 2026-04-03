@@ -75,7 +75,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                       scenario_id,
                       submission_data_url,
                       pkl_path,
-                      **kwargs):
+                      **kwargs) -> dict:
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
@@ -138,7 +138,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         end_time_running = ticks["Running"]
         running_time = end_time_running - start_time_running
     if all_done and not any_failed:
-        ret = self._gather_ret(job, pods, running_time, submission_id, submission_data_url)
+      ret = self._gather_ret(job, pods, running_time, submission_id, submission_data_url)
     if any_failed:
       ret = self._gather_ret(job, pods, running_time, submission_id, submission_data_url)
       raise TaskExecutionError(
@@ -182,6 +182,10 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_definition["metadata"]["labels"]["submission_id"] = self.submission_id
     submission_definition["metadata"]["labels"]["test_id"] = test_id
     submission_definition["metadata"]["labels"]["scenario_id"] = scenario_id
+
+    submission_definition["spec"]["template"]["metadata"]["labels"]["submission_id"] = self.submission_id
+    submission_definition["spec"]["template"]["metadata"]["test_id"] = test_id
+    submission_definition["spec"]["template"]["metadata"]["scenario_id"] = scenario_id
 
     submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = self.active_deadline_seconds
     submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
