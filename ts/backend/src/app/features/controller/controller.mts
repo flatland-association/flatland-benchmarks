@@ -152,10 +152,16 @@ export class Controller {
         if (options?.authorizedRoles) {
           const authService = AuthService.getInstance()
           const auth = await authService.authorization(req)
-          if (
-            !Array.isArray(auth?.['roles']) ||
-            !options.authorizedRoles.some((role) => auth['roles'].includes(role))
-          ) {
+          // Example:
+          //  "resource_access": {
+          //                  "fab": {
+          //                    "roles": [
+          //                      "User"
+          //                    ]
+          //                  },
+          const audience = authService?.config?.keycloak?.audience
+          const roles = auth?.['resource_access']?.[audience]?.['roles']
+          if (!audience || !Array.isArray(roles) || !options.authorizedRoles.some((role) => roles.includes(role))) {
             throw new ControllerError('Not authorized', undefined, StatusCodes.UNAUTHORIZED)
           }
         }
