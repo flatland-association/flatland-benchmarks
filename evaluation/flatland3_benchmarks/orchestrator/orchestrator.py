@@ -106,7 +106,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       all_done = True
       job = jobs.items[-1]
       all_done = all_done and job.status.conditions is not None
-      any_failed = any_failed or (job.status.conditions is not None and job.status.conditions[0].type != "Complete")
+      any_failed = any_failed or (job.status.conditions is not None and 'Complete' not in [cond.type for cond in job.status.conditions])
 
       pods: V1PodList = self.core_api.list_namespaced_pod(namespace=self.kubernetes_namespace, label_selector=f"job-name={job_name}")
       assert len(pods.items) == 1

@@ -211,7 +211,6 @@ class FlatlandBenchmarksOrchestrator:
 
             local_scenario_path = Path(tmpdirname) / S3_UPLOAD_ROOT / submission_id / test_id / scenario_id
 
-            # TODO trajectory should be verified - got lost in a refactoring?
             normalized_reward, success_rate = self._extract_stats_from_trajectory(local_scenario_path, scenario_id)
             results[test_id][scenario_id] = {
               "normalized_reward": normalized_reward,
