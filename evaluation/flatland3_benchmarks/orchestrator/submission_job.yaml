@@ -70,5 +70,5 @@ spec:
             claimName: # INSERTED
         - name: pvc-environments
           persistentVolumeClaim:
-            claimName: fab-int-data # TODO
+            claimName: # INSERTED
 

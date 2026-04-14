@@ -47,6 +47,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                kubernetes_namespace: str,
                active_deadline_seconds: int,  # total active time incl. pulling/backoffs for one pod
                submissions_pvc: str,
+               environments_pvc: str,
                environments_zip: str,
                percentage_complete_threshold: float = None,
                k8s_resource_allocation: str = None,
@@ -63,6 +64,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.active_deadline_seconds = active_deadline_seconds
     self.benchmark_id = BENCHMARK_ID
     self.submissions_pvc = submissions_pvc
+    self.environments_pvc = environments_pvc
     self.environments_zip = environments_zip
     self.percentage_complete_threshold = percentage_complete_threshold
     self.k8s_resource_allocation = k8s_resource_allocation
@@ -191,6 +193,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
     submission_container_definition["image"] = submission_data_url
     submission_definition["spec"]["template"]["spec"]["volumes"][1]["persistentVolumeClaim"]["claimName"] = self.submissions_pvc
+    submission_definition["spec"]["template"]["spec"]["volumes"][2]["persistentVolumeClaim"]["claimName"] = self.environments_pvc
 
     # submission container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
     data_dir = f"/data/{test_id}/{scenario_id}"

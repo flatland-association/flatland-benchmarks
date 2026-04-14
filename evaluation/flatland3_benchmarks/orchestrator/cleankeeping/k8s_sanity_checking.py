@@ -37,7 +37,7 @@ AWS_SECRET_ACCESS_KEY = _require_config("AWS_SECRET_ACCESS_KEY")
 S3_BUCKET = _require_config("S3_BUCKET")
 SUBMISSIONS_PVC = _require_config("SUBMISSIONS_PVC")
 ENVIRONMENTS_PVC = _require_config("ENVIRONMENTS_PVC")
-URL_ENVIRONMENTS_ZIP = _require_config("ENVIRONMENTS_ZIP")
+ENVIRONMENTS_ZIP = _require_config("ENVIRONMENTS_ZIP")
 KUBERNETES_NAMESPACE = _require_config("KUBERNETES_NAMESPACE")
 logging.basicConfig(encoding='utf-8', level=logging.INFO)
 
@@ -62,9 +62,9 @@ def test_success(submission_data_url="ghcr.io/flatland-association/flatland-base
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
-    environments_zip=URL_ENVIRONMENTS_ZIP,
-    submissions_pvc=SUBMISSIONS_PVC,
+    environments_zip=ENVIRONMENTS_ZIP,
     environments_pvc=ENVIRONMENTS_PVC,
+    submissions_pvc=SUBMISSIONS_PVC,
     active_deadline_seconds=55,
     k8s_resource_allocation='{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}',
   )
@@ -103,7 +103,7 @@ def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatlan
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
-    environments_zip=URL_ENVIRONMENTS_ZIP,
+    environments_zip=ENVIRONMENTS_ZIP, environments_pvc=ENVIRONMENTS_PVC,
     submissions_pvc=SUBMISSIONS_PVC,
     active_deadline_seconds=55,
     k8s_resource_allocation='{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}',
@@ -153,7 +153,7 @@ def test_no_oom_respecting_memory_limit(submission_data_url="ghcr.io/flatland-as
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
-    environments_zip=URL_ENVIRONMENTS_ZIP,
+    environments_zip=ENVIRONMENTS_ZIP, environments_pvc=ENVIRONMENTS_PVC,
     submissions_pvc=SUBMISSIONS_PVC,
     active_deadline_seconds=55,
     k8s_resource_allocation='{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}',
@@ -205,7 +205,7 @@ def test_pull_failure_active_deadline_fail_fast(submission_data_url="ghcr.io/fla
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
-    environments_zip=URL_ENVIRONMENTS_ZIP,
+    environments_zip=ENVIRONMENTS_ZIP, environments_pvc=ENVIRONMENTS_PVC,
     submissions_pvc=SUBMISSIONS_PVC,
     active_deadline_seconds=active_deadline_seconds,
   )
@@ -252,7 +252,7 @@ def test_pull_failure_start_time_fail_fast(submission_data_url="ghcr.io/flatland
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
-    environments_zip=URL_ENVIRONMENTS_ZIP,
+    environments_zip=ENVIRONMENTS_ZIP, environments_pvc=ENVIRONMENTS_PVC,
     submissions_pvc=SUBMISSIONS_PVC,
     active_deadline_seconds=300,
     wait_for_pod_to_run_limit=wait_for_pod_to_run_limit
@@ -300,7 +300,7 @@ def test_time_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/f
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
-    environments_zip=URL_ENVIRONMENTS_ZIP,
+    environments_zip=ENVIRONMENTS_ZIP, environments_pvc=ENVIRONMENTS_PVC,
     submissions_pvc=SUBMISSIONS_PVC,
     active_deadline_seconds=active_deadline_seconds,
     running_time_limit=running_time_limit,
@@ -352,7 +352,7 @@ def test_time_max_running_time_respected_succeeds(submission_data_url="ghcr.io/f
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
-    environments_zip=URL_ENVIRONMENTS_ZIP,
+    environments_zip=ENVIRONMENTS_ZIP, environments_pvc=ENVIRONMENTS_PVC,
     submissions_pvc=SUBMISSIONS_PVC,
     active_deadline_seconds=active_deadline_seconds,
     running_time_limit=running_time_limit,
@@ -405,7 +405,7 @@ def test_time_max_memory_respected_succeeds(submission_data_url="ghcr.io/flatlan
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
-    environments_zip=URL_ENVIRONMENTS_ZIP,
+    environments_zip=ENVIRONMENTS_ZIP, environments_pvc=ENVIRONMENTS_PVC,
     submissions_pvc=SUBMISSIONS_PVC,
     active_deadline_seconds=active_deadline_seconds,
     running_time_limit=running_time_limit,
@@ -449,7 +449,8 @@ def test_egress_fail_fast(submission_data_url="ghcr.io/flatland-association/flat
     aws_endpoint_url=AWS_ENDPOINT_URL,
     aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
     s3_bucket=S3_BUCKET,
-    environments_zip=URL_ENVIRONMENTS_ZIP,
+    environments_zip=ENVIRONMENTS_ZIP,
+    environments_pvc=ENVIRONMENTS_PVC,
     submissions_pvc=SUBMISSIONS_PVC,
     active_deadline_seconds=55,
     k8s_resource_allocation='{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}',
