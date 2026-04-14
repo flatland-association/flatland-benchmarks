@@ -47,7 +47,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                kubernetes_namespace: str,
                active_deadline_seconds: int,  # total active time incl. pulling/backoffs for one pod
                submissions_pvc: str,
-               s3_url_environments_zip: str,
+               environments_pvc: str,
+               environments_zip: str,
                percentage_complete_threshold: float = None,
                k8s_resource_allocation: str = None,
                additional_submission_args: str = None,
@@ -63,7 +64,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.active_deadline_seconds = active_deadline_seconds
     self.benchmark_id = BENCHMARK_ID
     self.submissions_pvc = submissions_pvc
-    self.s3_url_environments_zip = s3_url_environments_zip
+    self.environments_pvc = environments_pvc
+    self.environments_zip = environments_zip
     self.percentage_complete_threshold = percentage_complete_threshold
     self.k8s_resource_allocation = k8s_resource_allocation
     self.wait_for_pod_to_start_limit = wait_for_pod_to_start_limit
@@ -75,7 +77,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                       scenario_id,
                       submission_data_url,
                       pkl_path,
-                      **kwargs):
+                      **kwargs) -> dict:
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
@@ -106,7 +108,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       all_done = True
       job = jobs.items[-1]
       all_done = all_done and job.status.conditions is not None
-      any_failed = any_failed or (job.status.conditions is not None and job.status.conditions[0].type != "Complete")
+      any_failed = any_failed or (job.status.conditions is not None and 'Complete' not in [cond.type for cond in job.status.conditions])
 
       pods: V1PodList = self.core_api.list_namespaced_pod(namespace=self.kubernetes_namespace, label_selector=f"job-name={job_name}")
       assert len(pods.items) == 1
@@ -138,7 +140,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         end_time_running = ticks["Running"]
         running_time = end_time_running - start_time_running
     if all_done and not any_failed:
-        ret = self._gather_ret(job, pods, running_time, submission_id, submission_data_url)
+      ret = self._gather_ret(job, pods, running_time, submission_id, submission_data_url)
     if any_failed:
       ret = self._gather_ret(job, pods, running_time, submission_id, submission_data_url)
       raise TaskExecutionError(
@@ -183,10 +185,15 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_definition["metadata"]["labels"]["test_id"] = test_id
     submission_definition["metadata"]["labels"]["scenario_id"] = scenario_id
 
+    submission_definition["spec"]["template"]["metadata"]["labels"]["submission_id"] = self.submission_id
+    submission_definition["spec"]["template"]["metadata"]["test_id"] = test_id
+    submission_definition["spec"]["template"]["metadata"]["scenario_id"] = scenario_id
+
     submission_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = self.active_deadline_seconds
     submission_container_definition = submission_definition["spec"]["template"]["spec"]["containers"][0]
     submission_container_definition["image"] = submission_data_url
     submission_definition["spec"]["template"]["spec"]["volumes"][1]["persistentVolumeClaim"]["claimName"] = self.submissions_pvc
+    submission_definition["spec"]["template"]["spec"]["volumes"][2]["persistentVolumeClaim"]["claimName"] = self.environments_pvc
 
     # submission container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
     data_dir = f"/data/{test_id}/{scenario_id}"
@@ -205,19 +212,9 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     sub_path = f"{submission_id}/"
     submission_container_definition["volumeMounts"][0]["subPath"] = sub_path
 
-    submission_download_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
-    submission_download_initcontainer_definition["env"].append({"name": "S3_URL_ENVIRONMENTS_ZIP", "value": self.s3_url_environments_zip})
-
-    submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
-    # inject AWS credentials for downloading pkls:
-    if self.aws_endpoint_url:
-      submission_download_initcontainer_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": self.aws_endpoint_url})
-    if self.aws_access_key_id:
-      submission_download_initcontainer_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": self.aws_access_key_id})
-    if self.aws_secret_access_key:
-      submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": self.aws_secret_access_key})
-
+    submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
     # init container has full pvc mounted for submissions:
+    submission_extractenvs_initcontainer_definition["env"].append({"name": "ENVIRONMENTS_ZIP", "value": self.environments_zip})
     submission_extractenvs_initcontainer_definition["env"].append({"name": "DATA_DIR", "value": f"/data/{submission_id}/{test_id}/{scenario_id}"})
     return submission_definition
 
@@ -698,7 +695,8 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
     kubernetes_namespace=os.environ.get("KUBERNETES_NAMESPACE", "fab-int"),
     active_deadline_seconds=int(os.getenv("ACTIVE_DEADLINE_SECONDS", "7200")),
     submissions_pvc=os.environ.get("SUBMISSIONS_PVC", "fab-int-submissions"),
-    s3_url_environments_zip=os.environ.get("S3_URL_ENVIRONMENTS_ZIP", "s3://fab-data/flatland3/environments.zip"),
+    environments_pvc=os.environ.get("ENVIRONMENTS_PVC", "fab-int-data"),
+    environments_zip=os.environ.get("ENVIRONMENTS_ZIP", "environments.zip"),
     k8s_resource_allocation=os.environ.get("K8S_RESOURCE_ALLOCATION", '{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}'),
     additional_submission_args=os.environ.get("ADDITIONAL_SUBMISSION_ARGS", None),
     batch_api=batch_api,
