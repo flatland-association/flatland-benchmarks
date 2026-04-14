@@ -12,9 +12,11 @@ spec:
     metadata:
       labels: { } # INSERTED
     spec:
+      # https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#opt-out-of-api-credential-automounting
+      automountServiceAccountToken: false
       # https://kubernetes.io/docs/concepts/workloads/controllers/job/#handling-pod-and-container-failures
       # https://kubernetes.io/docs/concepts/workloads/controllers/job/#pod-backoff-failure-policy
-      activeDeadlineSeconds: 7200
+      activeDeadlineSeconds: 7200 # INSERTED
       # do not restart
       restartPolicy: Never
       containers:
