@@ -47,7 +47,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                kubernetes_namespace: str,
                active_deadline_seconds: int,  # total active time incl. pulling/backoffs for one pod
                submissions_pvc: str,
-               s3_url_environments_zip: str,
+               environments_zip: str,
                percentage_complete_threshold: float = None,
                k8s_resource_allocation: str = None,
                additional_submission_args: str = None,
@@ -63,7 +63,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.active_deadline_seconds = active_deadline_seconds
     self.benchmark_id = BENCHMARK_ID
     self.submissions_pvc = submissions_pvc
-    self.s3_url_environments_zip = s3_url_environments_zip
+    self.environments_zip = environments_zip
     self.percentage_complete_threshold = percentage_complete_threshold
     self.k8s_resource_allocation = k8s_resource_allocation
     self.wait_for_pod_to_start_limit = wait_for_pod_to_start_limit
@@ -209,19 +209,9 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     sub_path = f"{submission_id}/"
     submission_container_definition["volumeMounts"][0]["subPath"] = sub_path
 
-    submission_download_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
-    submission_download_initcontainer_definition["env"].append({"name": "S3_URL_ENVIRONMENTS_ZIP", "value": self.s3_url_environments_zip})
-
-    submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
-    # inject AWS credentials for downloading pkls:
-    if self.aws_endpoint_url:
-      submission_download_initcontainer_definition["env"].append({"name": "AWS_ENDPOINT_URL", "value": self.aws_endpoint_url})
-    if self.aws_access_key_id:
-      submission_download_initcontainer_definition["env"].append({"name": "AWS_ACCESS_KEY_ID", "value": self.aws_access_key_id})
-    if self.aws_secret_access_key:
-      submission_download_initcontainer_definition["env"].append({"name": "AWS_SECRET_ACCESS_KEY", "value": self.aws_secret_access_key})
-
+    submission_extractenvs_initcontainer_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][0]
     # init container has full pvc mounted for submissions:
+    submission_extractenvs_initcontainer_definition["env"].append({"name": "ENVIRONMENTS_ZIP", "value": self.environments_zip})
     submission_extractenvs_initcontainer_definition["env"].append({"name": "DATA_DIR", "value": f"/data/{submission_id}/{test_id}/{scenario_id}"})
     return submission_definition
 
@@ -702,7 +692,8 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
     kubernetes_namespace=os.environ.get("KUBERNETES_NAMESPACE", "fab-int"),
     active_deadline_seconds=int(os.getenv("ACTIVE_DEADLINE_SECONDS", "7200")),
     submissions_pvc=os.environ.get("SUBMISSIONS_PVC", "fab-int-submissions"),
-    s3_url_environments_zip=os.environ.get("S3_URL_ENVIRONMENTS_ZIP", "s3://fab-data/flatland3/environments.zip"),
+    environments_pvc=os.environ.get("ENVIRONMENTS_PVC", "fab-int-data"),
+    environments_zip=os.environ.get("ENVIRONMENTS_ZIP", "environments.zip"),
     k8s_resource_allocation=os.environ.get("K8S_RESOURCE_ALLOCATION", '{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}'),
     additional_submission_args=os.environ.get("ADDITIONAL_SUBMISSION_ARGS", None),
     batch_api=batch_api,

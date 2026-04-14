@@ -38,27 +38,13 @@ spec:
               memory: "2Gi"
               cpu: "2"
       initContainers:
-        - name: download-environments
-          command:
-            - sh
-          args:
-            - -c
-            - |
-              set -euxo pipefail
-              aws s3 cp  ${S3_URL_ENVIRONMENTS_ZIP} /tmp/environments/environments.zip
-          env: [ ] # INSERTED
-          image: amazon/aws-cli
-          imagePullPolicy: IfNotPresent
-          volumeMounts:
-            - mountPath: /tmp/environments
-              name: environments
         - name: extract-environments
           args:
             - -c
             - |
               set -euxo pipefail
               find /tmp
-              unzip /tmp/environments/environments.zip -d /tmp/environments/
+              unzip /tmp/environments_zip/${ENVIRONMENTS_ZIP} -d /tmp/environments/
               find /tmp
               ls -al /data
               # /<submission_id>/<test_id>/<scenario_id> in the pvc mounted under /data:
@@ -74,10 +60,15 @@ spec:
               name: environments
             - name: pvc-submissions
               mountPath: /data
+            - name: pvc-environments
+              mountPath: /tmp/environments_zip
       volumes:
         - emptyDir: { }
           name: environments
         - name: pvc-submissions
           persistentVolumeClaim:
             claimName: # INSERTED
+        - name: pvc-environments
+          persistentVolumeClaim:
+            claimName: fab-int-data # TODO
 

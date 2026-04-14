@@ -38,7 +38,8 @@ def test_tasks_successful():
     kubernetes_namespace="fab-int",
     active_deadline_seconds=7200,
     submissions_pvc="fab-int-submissions",
-    s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
+    environments_pvc="fab-int-data",
+    environments_zip="flatland3/environments.zip",
   )._run_submission(
     test_id="55",
     scenario_id="66",
@@ -89,7 +90,8 @@ def test_tasks_failing():
       kubernetes_namespace="fab-int",
       active_deadline_seconds=7200,
       submissions_pvc="fab-int-submissions",
-      s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
+      environments_pvc="fab-int-data",
+      environments_zip="flatland3/environments.zip",
     )._run_submission(
       test_id="55",
       scenario_id="66",
@@ -126,7 +128,8 @@ def test_make_submission_definition():
     kubernetes_namespace="fab-int",
     active_deadline_seconds=888,
     submissions_pvc="fab-int-submissions",
-    s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
+    environments_pvc="fab-int-data",
+    environments_zip="flatland3/environments.zip",
     k8s_resource_allocation='{"requests": {"memory": "22Gi", "cpu": "33"}, "limits": {"memory": "44Gi", "cpu": "55"}}',
     additional_submission_args="--yeah",
   )._make_submission_definition(submission_data_url="ghcr.io/subi", test_id="55", scenario_id="66", pkl_path="test99/scenario00.pkl")
@@ -164,7 +167,8 @@ def test_submission_status_failure_reported():
     kubernetes_namespace="fab-int",
     active_deadline_seconds=7200,
     submissions_pvc="fab-int-submissions",
-    s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
+    environments_pvc="fab-int-data",
+    environments_zip="flatland3/environments.zip",
   )
 
   def _fail(*args, **kwargs):
@@ -191,7 +195,8 @@ def test_submission_status_success_reported():
     kubernetes_namespace="fab-int",
     active_deadline_seconds=7200,
     submissions_pvc="fab-int-submissions",
-    s3_url_environments_zip="s3://fab-data/flatland3/environments.zip",
+    environments_pvc="fab-int-data",
+    environments_zip="flatland3/environments.zip",
   )
   orchestrator.run_flatland = lambda *args, **kwargs: {}
   fab = mock()
