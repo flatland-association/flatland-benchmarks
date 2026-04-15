@@ -12,6 +12,7 @@ import pytest
 from dotenv import dotenv_values
 from kubernetes import client
 from kubernetes import config
+from mockito.mocking import mock
 
 from orchestrator import K8sFlatlandBenchmarksOrchestrator
 from orchestrator_common import TaskExecutionError
@@ -273,14 +274,14 @@ def test_pull_failure_start_time_fail_fast(submission_data_url="ghcr.io/flatland
   assert wait_for_pod_to_run_limit + delta > elapsed_time > wait_for_pod_to_run_limit
 
 
-def test_time_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                                                  test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                                                  scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                                                  pkl_path="Test_00/Level_0.pkl",
-                                                  active_deadline_seconds=55,
-                                                  delta=10,
-                                                  running_time_limit=25
-                                                  ):
+def test_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
+                                             test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
+                                             scenario_id="289394a5-aa51-446c-9b62-c25101643790",
+                                             pkl_path="Test_00/Level_0.pkl",
+                                             active_deadline_seconds=55,
+                                             delta=10,
+                                             running_time_limit=25
+                                             ):
   """
   Verify failure upon exceeding running time.
   """
@@ -318,22 +319,73 @@ def test_time_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/f
   end_time = time.time()
   elapsed_time = end_time - start_time
   print(exc_info.value.message)
-  assert f"exceeded running time limit {running_time_limit}s" in exc_info.value.message
+  assert f"exceeded running time limit {running_time_limit:.2f}s" in exc_info.value.message
 
   assert running_time_limit + delta > elapsed_time > running_time_limit
 
 
-def test_time_max_running_time_respected_succeeds(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                                                  test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                                                  scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                                                  pkl_path="Test_00/Level_0.pkl",
-                                                  active_deadline_seconds=55,
-                                                  # allow for some overhead (starting the pod)
-                                                  upper_delta=10,
-                                                  # allow for some overhead (running)
-                                                  lower_delta=3,
-                                                  running_time_limit=25
-                                                  ):
+def test_max_total_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
+                                                   test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
+                                                   active_deadline_seconds=55,
+                                                   delta=10,
+                                                   total_running_time_limit=10,
+                                                   running_time_limit=25,
+                                                   ):
+  """
+  Verify failure upon exceeding total running time.
+  """
+
+  config.load_kube_config()
+  core_api = client.CoreV1Api()
+  batch_api = client.BatchV1Api()
+  submission_id = str(uuid.uuid4())
+  print(submission_id)
+
+  orchestrator = K8sFlatlandBenchmarksOrchestrator(
+    submission_id=submission_id,
+    batch_api=batch_api,
+    core_api=core_api,
+    kubernetes_namespace=KUBERNETES_NAMESPACE,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_endpoint_url=AWS_ENDPOINT_URL,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    s3_bucket=S3_BUCKET,
+    environments_zip=ENVIRONMENTS_ZIP, environments_pvc=ENVIRONMENTS_PVC,
+    submissions_pvc=SUBMISSIONS_PVC,
+    active_deadline_seconds=active_deadline_seconds,
+    running_time_limit=running_time_limit,
+    total_running_time_limit=total_running_time_limit,
+  )
+
+  orchestrator._extract_stats_from_trajectory = lambda *args, **kwargs: (0, 0)
+  orchestrator._make_command = lambda *args, **kwargs: ["bash", "-c"]
+  orchestrator._make_args = lambda *args, **kwargs: [""" sleep 20 """]
+  with pytest.raises(TaskExecutionError) as exc_info:
+    start_time = time.time()
+    orchestrator.orchestrator(
+      submission_data_url,
+      [test_id],
+      fab=mock()
+    )
+  end_time = time.time()
+  elapsed_time = end_time - start_time
+  print(exc_info.value.message)
+  assert f"exceeded total running time limit {total_running_time_limit:.2f}s" in exc_info.value.message
+
+  assert running_time_limit + delta > elapsed_time > running_time_limit
+
+
+def test_max_running_time_respected_succeeds(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
+                                             test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
+                                             scenario_id="289394a5-aa51-446c-9b62-c25101643790",
+                                             pkl_path="Test_00/Level_0.pkl",
+                                             active_deadline_seconds=55,
+                                             # allow for some overhead (starting the pod)
+                                             upper_delta=10,
+                                             # allow for some overhead (running)
+                                             lower_delta=3,
+                                             running_time_limit=25
+                                             ):
   """
   Verify allocated time can be used effectively.
   """
@@ -376,17 +428,17 @@ def test_time_max_running_time_respected_succeeds(submission_data_url="ghcr.io/f
   assert running_time_limit + upper_delta > elapsed_time > running_time_limit - lower_delta
 
 
-def test_time_max_memory_respected_succeeds(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                                            test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                                            scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                                            pkl_path="Test_00/Level_0.pkl",
-                                            active_deadline_seconds=55,
-                                            # allow for some overhead (starting the pod)
-                                            upper_delta=10,
-                                            # allow for some overhead (running)
-                                            lower_delta=3,
-                                            running_time_limit=25
-                                            ):
+def test_max_memory_respected_succeeds(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
+                                       test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
+                                       scenario_id="289394a5-aa51-446c-9b62-c25101643790",
+                                       pkl_path="Test_00/Level_0.pkl",
+                                       active_deadline_seconds=55,
+                                       # allow for some overhead (starting the pod)
+                                       upper_delta=10,
+                                       # allow for some overhead (running)
+                                       lower_delta=3,
+                                       running_time_limit=25
+                                       ):
   """
   Verify allocated memory can be used effectively.
   """
