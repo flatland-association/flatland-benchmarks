@@ -3,6 +3,19 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.18.3](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.2...v0.18.3) (2026-04-15)
+
+
+### Features
+
+* **railway-orchestrator:** disable auto-mounting service account token and add manual sanity check. ([cf64899](https://github.com/flatland-association/flatland-benchmarks/commit/cf648991353fb4058ec28b0242799c99e3c601a3))
+* **railway-orchestrator:** harden serice account access from submission pod. ([e4c5674](https://github.com/flatland-association/flatland-benchmarks/commit/e4c5674f6d7088cd3bd345ec3487f65597e057dc))
+
+
+### Miscellaneous Chores
+
+* release 0.18.3 ([36311aa](https://github.com/flatland-association/flatland-benchmarks/commit/36311aac115ec42e6855e7b2dcc7c0fc20d78019))
+
 ## [0.18.2](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.1...v0.18.2) (2026-04-14)
 
 
