@@ -134,7 +134,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         running_time = time.time() - start_time_running
         if self.running_time_limit is not None and running_time > self.running_time_limit:
           raise TaskExecutionError(
-            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {running_time:.2f}s exceeded running time limit {self.running_time_limit}s.",
+            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {running_time:.2f}s exceeded running time limit {self.running_time_limit:.2f}s.",
             ret)
       if "Running" in ticks and pod_status.phase != "Running" and end_time_running is None:
         end_time_running = ticks["Running"]
