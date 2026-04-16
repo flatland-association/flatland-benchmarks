@@ -38,6 +38,7 @@ export class NewSubmissionModalComponent implements OnInit, OnChanges {
   submissionName = ''
   submissionDataUrl = ''
   codeRepositoryUrl = ''
+  tags = ''
   testsSelection: boolean[] = []
 
   constructor() {
@@ -154,6 +155,7 @@ export class NewSubmissionModalComponent implements OnInit, OnChanges {
         benchmark_id: this.benchmark?.id ?? '',
         submission_data_url: this.submissionDataUrl,
         code_repository: this.codeRepositoryUrl,
+        tags: this.tags,
         test_ids,
       },
     })
