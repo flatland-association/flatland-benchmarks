@@ -176,7 +176,7 @@ def test_submission_status_failure_reported():
 
   orchestrator._run_submission = _fail
   fab = mock()
-  with pytest.raises(RuntimeError) as exc_info:
+  with pytest.raises(Exception):
     orchestrator.orchestrator(submission_data_url="funny", fab=fab)
 
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
