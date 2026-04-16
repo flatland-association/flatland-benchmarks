@@ -21,7 +21,7 @@ export class BenchmarkOverviewComponent implements OnInit, OnChanges {
 
   columns: TableColumn[] = [
     { title: 'Submission', sortable: 'text', filterable: true },
-    { title: 'Tags', sortable: 'text', filterable: true },
+    { title: 'Track', sortable: 'text', filterable: true },
     { title: 'Score', align: 'right', sortable: 'score' },
   ]
   rows: TableRow[] = []

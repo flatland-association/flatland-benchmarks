@@ -29,7 +29,7 @@ export class MySubmissionsView implements OnInit {
     { title: 'Submission', sortable: 'text', filterable: true },
     { title: 'Submitted for', sortable: 'text', filterable: true },
     { title: 'Submitted', sortable: 'date' },
-    { title: 'Tags', sortable: 'text', filterable: true },
+    { title: 'Track/Tags', sortable: 'text', filterable: true },
     { title: 'Status', sortable: 'text', filterable: true },
     { title: 'Score', align: 'right', sortable: 'score' },
   ]
