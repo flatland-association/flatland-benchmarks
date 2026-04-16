@@ -174,6 +174,21 @@ describe.sequential('Submission controller', () => {
     expect(res.body.body.at(0)?.published).toBeTruthy()
   })
 
+  test('should allow patching submission tags', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPatch(
+      '/submissions/:submission_ids',
+      {
+        params: { submission_ids: submissionUuid },
+        body: { tags: 'abcd' },
+      },
+      testUserJwt,
+    )
+    assertApiResponse(res)
+    expect(res.body.body).toHaveLength(1)
+    expect(res.body.body.at(0)?.tags).toEqual('abcd')
+  })
+
   test('should allow patching submissions with empty body', async ({ skip }) => {
     if (!submissionUuid) skip()
     const res = await controller.testPatch(

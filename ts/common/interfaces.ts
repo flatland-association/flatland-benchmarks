@@ -109,6 +109,7 @@ export interface SubmissionRow {
   description?: string | null
   submission_data_url: string
   code_repository?: string | null
+  tags?: string | null
   submitted_at?: string | null
   submitted_by?: string | null
   submitted_by_username?: string | null

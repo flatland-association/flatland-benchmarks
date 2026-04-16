@@ -17,6 +17,7 @@ const PATCHABLE_FIELDS: ResourceFieldAccess<SubmissionRow> = {
   name: ['User'],
   description: ['User'],
   code_repository: ['User'],
+  tags: ['User'],
   published: ['User'],
 }
 
@@ -62,6 +63,9 @@ export class SubmissionController extends Controller {
    *              code_repository:
    *                type: string
    *                description: URL of submission code repository.
+   *              tags:
+   *                type: string
+   *                description: tags.
    *              test_ids:
    *                type: array
    *                items:
@@ -130,6 +134,7 @@ export class SubmissionController extends Controller {
         name,
         submission_data_url,
         code_repository,
+        tags,
         submitted_at,
         submitted_by,
         submitted_by_username
@@ -139,6 +144,7 @@ export class SubmissionController extends Controller {
         ${req.body.name},
         ${req.body.submission_data_url},
         ${req.body.code_repository ?? null},
+        ${req.body.tags ?? null},
         current_timestamp,
         ${auth.sub ?? null},
         ${auth['preferred_username'] ?? null}
@@ -246,6 +252,8 @@ export class SubmissionController extends Controller {
    *                            type: string
    *                          code_repository:
    *                            type: string
+   *                          tags:
+   *                            type: string
    *                          submitted_at:
    *                            type: string
    *                          submitted_by:
@@ -324,6 +332,8 @@ export class SubmissionController extends Controller {
    *                          submission_data_url:
    *                            type: string
    *                          code_repository:
+   *                            type: string
+   *                          tags:
    *                            type: string
    *                          submitted_at:
    *                            type: string
@@ -407,6 +417,8 @@ export class SubmissionController extends Controller {
    *                          submission_data_url:
    *                            type: string
    *                          code_repository:
+   *                            type: string
+   *                          tags:
    *                            type: string
    *                          submitted_at:
    *                            type: string
@@ -514,6 +526,8 @@ export class SubmissionController extends Controller {
    *                          submission_data_url:
    *                            type: string
    *                          code_repository:
+   *                            type: string
+   *                          tags:
    *                            type: string
    *                          submitted_at:
    *                            type: string
