@@ -66,6 +66,7 @@ export class NewSubmissionModalComponent implements OnInit, OnChanges {
         .load('/definitions/suites/:suite_ids', { params: { suite_ids: this.suiteId } })
         .then((suites) => {
           this.suite = suites?.at(0)
+          this.tags = this.initTags()
         })
     }
     if (changes['benchmarkId'] && this.benchmarkId) {
@@ -112,6 +113,22 @@ export class NewSubmissionModalComponent implements OnInit, OnChanges {
   requiresTestSelection() {
     // tests selection can only be made manually in benchmark setup
     return this.suite?.setup === 'DEFAULT'
+  }
+
+  initTags() {
+    if (this.suite?.setup === 'COMPETITION') {
+      return 'RL'
+    } else {
+      return ''
+    }
+  }
+
+  getTagsName() {
+    if (this.suite?.setup === 'COMPETITION') {
+      return 'Track'
+    } else {
+      return 'Tags'
+    }
   }
 
   canSubmit() {
