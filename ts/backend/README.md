@@ -77,7 +77,7 @@ There are no CLI code scaffolding tools for FAB Backend. Manually create `.mts` 
 
 ```shell
 cd ts
-npm run docker:up
+npm run docker:uptest
 cd ../ts/backend
 npm run  test-integration-no-setup
 ```
