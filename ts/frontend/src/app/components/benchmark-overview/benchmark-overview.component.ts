@@ -21,6 +21,7 @@ export class BenchmarkOverviewComponent implements OnInit, OnChanges {
 
   columns: TableColumn[] = [
     { title: 'Submission', sortable: 'text', filterable: true },
+    { title: 'Tags', sortable: 'text', filterable: true },
     { title: 'Score', align: 'right', sortable: 'score' },
   ]
   rows: TableRow[] = []
@@ -61,7 +62,11 @@ export class BenchmarkOverviewComponent implements OnInit, OnChanges {
           )?.at(0)
           return {
             routerLink: ['/', 'suites', suite.id, benchmark.id, 'submissions', item.submission_id],
-            cells: [{ text: submission?.name ?? 'NA' }, { scorings: item.scorings }],
+            cells: [
+              { text: submission?.name ?? 'NA' },
+              { text: submission?.tags ?? 'NA' },
+              { scorings: item.scorings },
+            ],
           }
         }) ?? [],
       )
