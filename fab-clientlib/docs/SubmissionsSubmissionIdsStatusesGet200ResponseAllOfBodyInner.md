@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **submission_id** | **str** | ID of submission. | [optional] 
 **status** | **str** | Submission status. | [optional] 
+**message** | **str** | Submission status message. | [optional] 
 **timestamp** | **str** |  | [optional] 
 
 ## Example

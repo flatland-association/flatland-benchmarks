@@ -4,9 +4,9 @@ pandas==2.2.3
 boto3==1.35.49
 python-dotenv==1.0.1
 # DEPENDENCY SWITCH:
-git+https://github.com/flatland-association/flatland-benchmarks.git@main#subdirectory=fab-clientlib
 # TODO use released version
 #fab-clientlib==0.15.0
+git+https://github.com/flatland-association/flatland-benchmarks.git@572-failure-reason#subdirectory=fab-clientlib
 # DEPENDENCY SWITCH:
 # TODO use released version
 flatland-rl @ git+https://github.com/flatland-association/flatland-rl.git@main

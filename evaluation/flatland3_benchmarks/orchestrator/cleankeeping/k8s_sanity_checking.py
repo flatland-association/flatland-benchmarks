@@ -71,7 +71,7 @@ def test_success(submission_data_url="ghcr.io/flatland-association/flatland-base
   )
 
   start_time = time.time()
-  ret = orchestrator._run_submission(
+  ret = orchestrator._run_submission_container_for_scenario(
     test_id,
     scenario_id,
     submission_data_url,
@@ -119,7 +119,7 @@ def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatlan
 
   with pytest.raises(TaskExecutionError) as exc_info:
     start_time = time.time()
-    ret = orchestrator._run_submission(
+    ret = orchestrator._run_submission_container_for_scenario(
       test_id,
       scenario_id,
       submission_data_url,
@@ -168,7 +168,7 @@ def test_no_oom_respecting_memory_limit(submission_data_url="ghcr.io/flatland-as
       """]
 
   start_time = time.time()
-  orchestrator._run_submission(
+  orchestrator._run_submission_container_for_scenario(
     test_id,
     scenario_id,
     submission_data_url,
@@ -212,7 +212,7 @@ def test_pull_failure_active_deadline_fail_fast(submission_data_url="ghcr.io/fla
   )
   with pytest.raises(TaskExecutionError) as exc_info:
     start_time = time.time()
-    orchestrator._run_submission(
+    orchestrator._run_submission_container_for_scenario(
       test_id,
       scenario_id,
       submission_data_url,
@@ -260,7 +260,7 @@ def test_pull_failure_start_time_fail_fast(submission_data_url="ghcr.io/flatland
   )
   with pytest.raises(TaskExecutionError) as exc_info:
     start_time = time.time()
-    orchestrator._run_submission(
+    orchestrator._run_submission_container_for_scenario(
       test_id,
       scenario_id,
       submission_data_url,
@@ -310,7 +310,7 @@ def test_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/flatla
   orchestrator._make_args = lambda *args, **kwargs: [""" sleep 55 """]
   with pytest.raises(TaskExecutionError) as exc_info:
     start_time = time.time()
-    orchestrator._run_submission(
+    orchestrator._run_submission_container_for_scenario(
       test_id,
       scenario_id,
       submission_data_url,
@@ -413,7 +413,7 @@ def test_max_running_time_respected_succeeds(submission_data_url="ghcr.io/flatla
 
   orchestrator._make_args = lambda *args, **kwargs: [f""" sleep {running_time_limit - lower_delta} """]
   start_time = time.time()
-  orchestrator._run_submission(
+  orchestrator._run_submission_container_for_scenario(
     test_id,
     scenario_id,
     submission_data_url,
@@ -466,7 +466,7 @@ def test_max_memory_respected_succeeds(submission_data_url="ghcr.io/flatland-ass
 
   orchestrator._make_args = lambda *args, **kwargs: [f""" sleep {running_time_limit - lower_delta} """]
   start_time = time.time()
-  orchestrator._run_submission(
+  orchestrator._run_submission_container_for_scenario(
     test_id,
     scenario_id,
     submission_data_url,
@@ -516,7 +516,7 @@ def test_egress_fail_fast(submission_data_url="ghcr.io/flatland-association/flat
 
   with pytest.raises(TaskExecutionError) as exc_info:
     start_time = time.time()
-    ret = orchestrator._run_submission(
+    ret = orchestrator._run_submission_container_for_scenario(
       test_id,
       scenario_id,
       submission_data_url,
@@ -569,7 +569,7 @@ def test_service_account_hardening(submission_data_url="ghcr.io/flatland-associa
 
   with pytest.raises(TaskExecutionError) as exc_info:
     start_time = time.time()
-    ret = orchestrator._run_submission(
+    ret = orchestrator._run_submission_container_for_scenario(
       test_id,
       scenario_id,
       submission_data_url,

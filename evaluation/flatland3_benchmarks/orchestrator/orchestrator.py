@@ -12,7 +12,7 @@ from celery import Celery
 from celery.app.log import TaskFormatter
 from celery.signals import after_setup_task_logger
 from kubernetes import client, config
-from kubernetes.client import V1PodList, V1Pod, V1PodStatus, V1Job
+from kubernetes.client import V1PodList, V1Pod, V1PodStatus
 
 from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError
 
@@ -72,12 +72,12 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.wait_for_pod_to_run_limit = wait_for_pod_to_run_limit
 
   # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
-  def _run_submission(self,
-                      test_id,
-                      scenario_id,
-                      submission_data_url,
-                      pkl_path,
-                      **kwargs) -> dict:
+  def _run_submission_container_for_scenario(self,
+                                             test_id,
+                                             scenario_id,
+                                             submission_data_url,
+                                             pkl_path,
+                                             **kwargs) -> dict:
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
@@ -108,10 +108,13 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       all_done = True
       job = jobs.items[-1]
       all_done = all_done and job.status.conditions is not None
-      any_failed = any_failed or (job.status.conditions is not None and 'Complete' not in [cond.type for cond in job.status.conditions])
+      job_status_conditions_ = [cond.type for cond in job.status.conditions] if job.status.conditions is not None else None
+      any_failed = any_failed or (job_status_conditions_ is not None and 'Complete' not in job_status_conditions_)
 
       pods: V1PodList = self.core_api.list_namespaced_pod(namespace=self.kubernetes_namespace, label_selector=f"job-name={job_name}")
-      assert len(pods.items) == 1
+      if len(pods.items) != 1:
+        raise TaskExecutionError(
+          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. Could not gather stats there where {len(pods.items)} pods.")
       pod: V1Pod = pods.items[-1]
       pod_status: V1PodStatus = pod.status
 
@@ -139,36 +142,37 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       if "Running" in ticks and pod_status.phase != "Running" and end_time_running is None:
         end_time_running = ticks["Running"]
         running_time = end_time_running - start_time_running
-    if all_done and not any_failed:
-      ret = self._gather_ret(job, pods, running_time, submission_id, submission_data_url)
-    if any_failed:
-      ret = self._gather_ret(job, pods, running_time, submission_id, submission_data_url)
-      raise TaskExecutionError(
-        f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}.", ret)
+
+      if all_done or any_failed:
+        ret = {
+          "job_status": job.status.conditions[0].type,
+          "pod_status": pod.status.to_dict(),
+          "image_id": pods.items[-1].status.container_statuses[0].image_id,
+          "job": job.to_dict(),
+          "pod": pod.to_dict(),
+          "running_time": running_time,
+        }
+        if all_done and not any_failed:
+          ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
+        elif any_failed:
+          ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
+          raise TaskExecutionError(
+            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. Some tasks jobs failed: {job_status_conditions_}.",
+            ret)
     logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}.")
     logger.debug(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
     return ret
 
-  def _gather_ret(self, job: V1Job, pods: V1PodList, running_time: float, submission_id: str, submission_data_url: str) -> dict:
-    assert len(pods.items) == 1
-    pod = pods.items[-1]
-
-    ret = {
-      "job_status": job.status.conditions[0].type,
-      "pod_status": pod.status.to_dict(),
-      "image_id": pods.items[-1].status.container_statuses[0].image_id,
-      "job": job.to_dict(),
-      "pod": pod.to_dict(),
-      "running_time": running_time,
-    }
-
+  def _gather_logs(self, pod: V1PodList, ret: dict, submission_id: str, submission_data_url: str) -> dict:
     try:
       ret["events"] = self.core_api.list_namespaced_event(self.kubernetes_namespace, field_selector=f'involvedObject.name={pod._metadata._name}').to_dict()
     except Exception as e:
+      ret["events"] = f"Failed to fetch events  from pod for submission_id={submission_id} with submission_data_url={submission_data_url}. {e}"
       logger.warning(f"Failed to fetch events or log from pod for submission_id={submission_id} with submission_data_url={submission_data_url}.", exc_info=e)
     try:
       ret["log"] = self.core_api.read_namespaced_pod_log(pod.metadata.name, namespace=self.kubernetes_namespace)
     except Exception as e:
+      ret["log"] = f"Failed to fetch log from pod for submission_id={submission_id} with submission_data_url={submission_data_url}. {e}"
       logger.warning(f"Failed to fetch events or log from pod for submission_id={submission_id} with submission_data_url={submission_data_url}.", exc_info=e)
     return ret
 

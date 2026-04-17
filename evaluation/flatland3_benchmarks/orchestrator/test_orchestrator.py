@@ -40,7 +40,7 @@ def test_tasks_successful():
     submissions_pvc="fab-int-submissions",
     environments_pvc="fab-int-data",
     environments_zip="flatland3/environments.zip",
-  )._run_submission(
+  )._run_submission_container_for_scenario(
     test_id="55",
     scenario_id="66",
     submission_data_url="pancy",
@@ -52,7 +52,7 @@ def test_tasks_successful():
   verify(core_api, times=1).read_namespaced_pod_log("subi", namespace="fab-int")
   verify(core_api, times=1).list_namespaced_event('fab-int', field_selector='involvedObject.name=subi')
 
-  assert set(ret.keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time"}
+  assert set(ret.keys()) == {"job_status", "image_id", "log", "events", "job", "pod", "pod_status", "running_time"}
   assert ret["job_status"] == "Complete"
   assert ret["image_id"] == "ghcr.io/subi"
   assert ret["log"] == "abcd"
@@ -92,7 +92,7 @@ def test_tasks_failing():
       submissions_pvc="fab-int-submissions",
       environments_pvc="fab-int-data",
       environments_zip="flatland3/environments.zip",
-    )._run_submission(
+    )._run_submission_container_for_scenario(
       test_id="55",
       scenario_id="66",
       submission_data_url="pancy",
@@ -155,7 +155,7 @@ def test_make_submission_definition():
   assert container["volumeMounts"][1]["mountPath"] == "/tmp/environments"
 
 
-def test_submission_status_failure_reported():
+def test_submission_status_general_failure_reported():
   orchestrator = K8sFlatlandBenchmarksOrchestrator(
     submission_id="1234",
     batch_api=None,
@@ -174,13 +174,49 @@ def test_submission_status_failure_reported():
   def _fail(*args, **kwargs):
     raise Exception()
 
-  orchestrator._run_submission = _fail
+  orchestrator._run_submission_container_for_scenario = _fail
   fab = mock()
   with pytest.raises(Exception):
     orchestrator.orchestrator(submission_data_url="funny", fab=fab)
 
-  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
-  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value))
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
+                                                                SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value, message=None))
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
+                                                                                                                      message='test fc8f5fb1-4525-4b4f-a022-d3d7800097dc - scenario 289394a5-aa51-446c-9b62-c25101643790'))
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
+                                                                                                                      message="General failure."))
+
+
+def test_submission_status_specific_failure_reported():
+  orchestrator = K8sFlatlandBenchmarksOrchestrator(
+    submission_id="1234",
+    batch_api=None,
+    core_api=None,
+    aws_endpoint_url=None,
+    aws_access_key_id='ignore-me',
+    aws_secret_access_key='ignore-me',
+    s3_bucket=None,
+    kubernetes_namespace="fab-int",
+    active_deadline_seconds=7200,
+    submissions_pvc="fab-int-submissions",
+    environments_pvc="fab-int-data",
+    environments_zip="flatland3/environments.zip",
+  )
+
+  def _fail(*args, **kwargs):
+    raise TaskExecutionError("Specific failure message.", None)
+
+  orchestrator._run_submission_container_for_scenario = _fail
+  fab = mock()
+  with pytest.raises(Exception):
+    orchestrator.orchestrator(submission_data_url="funny", fab=fab)
+
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
+                                                                SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value, message=None))
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
+                                                                                                                      message='test fc8f5fb1-4525-4b4f-a022-d3d7800097dc - scenario 289394a5-aa51-446c-9b62-c25101643790'))
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
+                                                                                                                      message="Specific failure message."))
 
 
 def test_submission_status_success_reported():
@@ -198,8 +234,16 @@ def test_submission_status_success_reported():
     environments_pvc="fab-int-data",
     environments_zip="flatland3/environments.zip",
   )
-  orchestrator.run_flatland = lambda *args, **kwargs: {}
+  orchestrator._run_submission_container_for_scenario = lambda *args, **kwargs: {"running_time": 33}
+  client = mock()
+  orchestrator.s3 = client
+  when(client).list_objects_v2(Bucket=None, Prefix=any).thenReturn({'Contents': None})
+  orchestrator._extract_stats_from_trajectory = lambda *args, **kwargs: (0.11, 0.22)
   fab = mock()
   orchestrator.orchestrator(submission_data_url="funny", fab=fab)
-  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
-  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value))
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
+                                                                SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value, message=None))
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
+                                                                                                                      message='test fc8f5fb1-4525-4b4f-a022-d3d7800097dc - scenario 289394a5-aa51-446c-9b62-c25101643790'))
+  verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
+                                                                SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value, message=None))
