@@ -88,58 +88,63 @@ class FlatlandBenchmarksOrchestrator:
     -------
 
     """
-    submission_id = self.submission_id
-    logger.info(f"// START task submission_id={submission_id} with submission_data_url={submission_data_url}.")
-    _fab = self._backend_application_flow(fab)
     try:
-      _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
-    except Exception as status_post_failure:
-      logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
+      submission_id = self.submission_id
+      logger.info(f"// START task submission_id={submission_id} with submission_data_url={submission_data_url}.")
+      _fab = self._backend_application_flow(fab)
+      try:
+        _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
+      except Exception as status_post_failure:
+        logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
 
-    start_time = time.time()
-    try:
-      ret = self.run_flatland(submission_id, submission_data_url, tests, **kwargs)
-    except BaseException as e:
+      start_time = time.time()
+      try:
+        ret = self.run_flatland(submission_id, submission_data_url, tests, **kwargs)
+      except BaseException as e:
+        try:
+          _fab = self._backend_application_flow(fab)
+          _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value))
+        except Exception as status_post_failure:
+          logger.warning(f"Could not post FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
+        finally:
+          # re-raise origin failure after posting
+          raise e
+
+      logger.info(f"// START uploading results for submission_id={submission_id} with submission_data_url={submission_data_url}.")
       try:
         _fab = self._backend_application_flow(fab)
-        _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value))
-      except Exception as status_post_failure:
-        logger.warning(f"Could not post FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
-      finally:
-        # re-raise origin failure after posting
-        raise e
-
-    logger.info(f"// START uploading results for submission_id={submission_id} with submission_data_url={submission_data_url}.")
-    try:
-      _fab = self._backend_application_flow(fab)
-      for test_id, scenarios in ret.items():
-        for scenario_id, result in scenarios.items():
-          logger.info(f"uploading results for submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {result}")
-          _fab.results_submissions_submission_id_tests_test_ids_post(
-            submission_id=submission_id,
-            test_ids=[test_id],
-            results_submissions_submission_id_tests_test_ids_post_request=ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest(
-              data=[
-                ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
-                  scenario_id=scenario_id,
-                  scores=result,
-                )
-              ]
-            ),
-          )
-      logger.info(
-        f"\\\\ END uploading results for with submission_id={submission_id} with submission_data_url={submission_data_url}.")
-      try:
-        _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value))
-      except Exception as status_post_failure:
-        logger.warning(f"Could not post SUCCESS for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
-      duration = time.time() - start_time
-      logger.info(f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds.")
-      return ret
-    except BaseException as e:
-      logger.error("Failed uploading results for with exception \"%s\"", e, exc_info=e)
-      raise Exception(
-        f"Failed uploading results for with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}") from e
+        for test_id, scenarios in ret.items():
+          for scenario_id, result in scenarios.items():
+            logger.info(f"uploading results for submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {result}")
+            _fab.results_submissions_submission_id_tests_test_ids_post(
+              submission_id=submission_id,
+              test_ids=[test_id],
+              results_submissions_submission_id_tests_test_ids_post_request=ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest(
+                data=[
+                  ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
+                    scenario_id=scenario_id,
+                    scores=result,
+                  )
+                ]
+              ),
+            )
+        logger.info(
+          f"\\\\ END uploading results for with submission_id={submission_id} with submission_data_url={submission_data_url}.")
+        try:
+          _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value))
+        except Exception as status_post_failure:
+          logger.warning(f"Could not post SUCCESS for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
+        duration = time.time() - start_time
+        logger.info(f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds.")
+        return ret
+      except BaseException as e:
+        logger.error("Failed uploading results for with exception \"%s\"", e, exc_info=e)
+        raise TaskExecutionError(f"Failed uploading results for with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}")
+    except Exception as e:
+      logging.error(
+        f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Stacktrace: {traceback.format_exception(e)}",
+        exc_info=e)
+      raise e
 
   def _backend_application_flow(self, fab: DefaultApi | None) -> DefaultApi:
     if fab is None:
@@ -186,62 +191,57 @@ class FlatlandBenchmarksOrchestrator:
     -------
 
     """
-    try:
+    if tests is None:
+      tests = list(self.TEST_TO_SCENARIO_IDS.keys())
 
-      if tests is None:
-        tests = list(self.TEST_TO_SCENARIO_IDS.keys())
+    logger.info(f"// START running submission submission_id={submission_id},tests={tests}")
+    results = {test_id: {} for test_id in tests}
+    summed_scenario_running_time = 0
+    for test_id in tests:
+      mean_success_rate = 0
+      for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
+        pkl_path = self.load_scenario_data(scenario_id)
+        prefix = f"{S3_UPLOAD_ROOT}{submission_id}/{test_id}/{scenario_id}"
 
-      logger.info(f"// START running submission submission_id={submission_id},tests={tests}")
-      results = {test_id: {} for test_id in tests}
-      summed_scenario_running_time = 0
-      for test_id in tests:
-        mean_success_rate = 0
-        for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
-          pkl_path = self.load_scenario_data(scenario_id)
-          prefix = f"{S3_UPLOAD_ROOT}{submission_id}/{test_id}/{scenario_id}"
-
-          ret = self._run_submission(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
-          scenario_running_time = ret["running_time"]
-          summed_scenario_running_time += scenario_running_time
-          if self.running_time_limit is not None and scenario_running_time > self.running_time_limit:
-            logger.warning(
-              f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The scenario running time was exceeded : {scenario_running_time:.2f}s > {self.running_time_limit:.2f}s.")
-            raise TaskExecutionError(
-              f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {scenario_running_time:.2f}s exceeded running time limit {self.running_time_limit:.2f}s.",
-              ret)
-          if self.total_running_time_limit is not None and summed_scenario_running_time > self.total_running_time_limit:
-            logger.warning(
-              f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The scenario total running time was exceeded : {summed_scenario_running_time:.2f}s > {self.total_running_time_limit:.2f}s.")
-            raise TaskExecutionError(
-              f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {summed_scenario_running_time:.2f}s exceeded total running time limit {self.total_running_time_limit:.2f}s.",
-              ret)
-
-          logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
-          with tempfile.TemporaryDirectory() as tmpdirname:
-            logger.info(f"download_dir(prefix={prefix}, bucket={self.s3_bucket}, client={self.s3}, local={tmpdirname})")
-            download_dir(prefix=prefix, bucket=self.s3_bucket, client=self.s3, local=tmpdirname)
-            logger.info(list(Path(tmpdirname).rglob("**/*")))
-
-            local_scenario_path = Path(tmpdirname) / S3_UPLOAD_ROOT / submission_id / test_id / scenario_id
-
-            normalized_reward, success_rate = self._extract_stats_from_trajectory(local_scenario_path, scenario_id)
-            results[test_id][scenario_id] = {
-              "normalized_reward": normalized_reward,
-              "percentage_complete": success_rate
-            }
-            mean_success_rate += success_rate
-        mean_success_rate /= len(self.TEST_TO_SCENARIO_IDS[test_id])
-        if self.percentage_complete_threshold is not None and mean_success_rate < self.percentage_complete_threshold:
+        ret = self._run_submission(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
+        scenario_running_time = ret["running_time"]
+        summed_scenario_running_time += scenario_running_time
+        if self.running_time_limit is not None and scenario_running_time > self.running_time_limit:
           logger.warning(
-            f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The mean percentage of done agents during the last Test ({len(tests)} environments) was too low: {success_rate} < {self.percentage_complete_threshold}: {results[test_id][scenario_id]}")
-          return results
+            f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The scenario running time was exceeded : {scenario_running_time:.2f}s > {self.running_time_limit:.2f}s.")
+          raise TaskExecutionError(
+            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {scenario_running_time:.2f}s exceeded running time limit {self.running_time_limit:.2f}s.",
+            ret)
+        if self.total_running_time_limit is not None and summed_scenario_running_time > self.total_running_time_limit:
+          logger.warning(
+            f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The scenario total running time was exceeded : {summed_scenario_running_time:.2f}s > {self.total_running_time_limit:.2f}s.")
+          raise TaskExecutionError(
+            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {summed_scenario_running_time:.2f}s exceeded total running time limit {self.total_running_time_limit:.2f}s.",
+            ret)
 
-      logger.info(
-        f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {results[test_id][scenario_id]}")
-      return results
-    except BaseException as exception:
-      logger.error(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}", exc_info=exception)
-      raise exception
+        logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+        with tempfile.TemporaryDirectory() as tmpdirname:
+          logger.info(f"download_dir(prefix={prefix}, bucket={self.s3_bucket}, client={self.s3}, local={tmpdirname})")
+          download_dir(prefix=prefix, bucket=self.s3_bucket, client=self.s3, local=tmpdirname)
+          logger.info(list(Path(tmpdirname).rglob("**/*")))
+
+          local_scenario_path = Path(tmpdirname) / S3_UPLOAD_ROOT / submission_id / test_id / scenario_id
+
+          normalized_reward, success_rate = self._extract_stats_from_trajectory(local_scenario_path, scenario_id)
+          results[test_id][scenario_id] = {
+            "normalized_reward": normalized_reward,
+            "percentage_complete": success_rate
+          }
+          mean_success_rate += success_rate
+      mean_success_rate /= len(self.TEST_TO_SCENARIO_IDS[test_id])
+      if self.percentage_complete_threshold is not None and mean_success_rate < self.percentage_complete_threshold:
+        logger.warning(
+          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The mean percentage of done agents during the last Test ({len(tests)} environments) was too low: {success_rate} < {self.percentage_complete_threshold}: {results[test_id][scenario_id]}")
+        return results
+
+    logger.info(
+      f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {results[test_id][scenario_id]}")
+    return results
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):
     trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)
