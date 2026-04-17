@@ -7,7 +7,7 @@ import traceback
 from abc import abstractmethod
 from enum import Enum
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, Optional, Any
 from typing import List
 
 import boto3
@@ -101,8 +101,7 @@ class FlatlandBenchmarksOrchestrator:
         logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
 
       start_time = time.time()
-      ret = self.run_flatland(submission_id, submission_data_url, tests, fab=fab, **kwargs)
-
+      ret = self.run_submission(submission_id, submission_data_url, tests, fab=fab, **kwargs)
       duration = time.time() - start_time
       logger.info(f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds.")
       return ret
@@ -167,12 +166,12 @@ class FlatlandBenchmarksOrchestrator:
     return fab
 
   @abstractmethod
-  def _run_submission(self,
-                      test_id,
-                      scenario_id,
-                      submission_data_url,
-                      pkl_path,
-                      **kwargs):
+  def _run_submission_container_for_scenario(self,
+                                             test_id,
+                                             scenario_id,
+                                             submission_data_url,
+                                             pkl_path,
+                                             **kwargs):
     """
     Run the submission from submission data URL (docker image) for one scenario, which is at pkl path.
 
@@ -190,7 +189,7 @@ class FlatlandBenchmarksOrchestrator:
     """
     raise NotImplementedError()
 
-  def run_flatland(self, submission_id: str, submission_data_url: str, tests: Optional[List[str]], fab: DefaultApi, **kwargs) -> dict:
+  def run_submission(self, submission_id: str, submission_data_url: str, tests: Optional[List[str]], fab: DefaultApi, **kwargs) -> dict:
     """
     Run submission, download trajectory from S3, re-run with stored actions to verify rewards and return results.
 
@@ -203,17 +202,16 @@ class FlatlandBenchmarksOrchestrator:
 
     Returns
     -------
-
+    results
     """
     if tests is None:
       tests = list(self.TEST_TO_SCENARIO_IDS.keys())
 
     logger.info(f"// START running submission submission_id={submission_id},tests={tests}")
     results = {test_id: {} for test_id in tests}
-    ret = {}
     summed_scenario_running_time = 0
     for test_id in tests:
-      mean_success_rate = 0
+      mean_success_rate_of_test = 0
       for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
         try:
           _fab = self._backend_application_flow(fab)
@@ -227,7 +225,7 @@ class FlatlandBenchmarksOrchestrator:
         pkl_path = self.load_scenario_data(scenario_id)
         prefix = f"{S3_UPLOAD_ROOT}{submission_id}/{test_id}/{scenario_id}"
 
-        ret = self._run_submission(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
+        ret = self._run_submission_container_for_scenario(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
         scenario_running_time = ret["running_time"]
         summed_scenario_running_time += scenario_running_time
         if self.running_time_limit is not None and scenario_running_time > self.running_time_limit:
@@ -244,24 +242,15 @@ class FlatlandBenchmarksOrchestrator:
             ret)
 
         logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
-        with tempfile.TemporaryDirectory() as tmpdirname:
-          logger.info(f"download_dir(prefix={prefix}, bucket={self.s3_bucket}, client={self.s3}, local={tmpdirname})")
-          download_dir(prefix=prefix, bucket=self.s3_bucket, client=self.s3, local=tmpdirname)
-          logger.info(list(Path(tmpdirname).rglob("**/*")))
-
-          local_scenario_path = Path(tmpdirname) / S3_UPLOAD_ROOT / submission_id / test_id / scenario_id
-
-          normalized_reward, success_rate = self._extract_stats_from_trajectory(local_scenario_path, scenario_id)
-          results[test_id][scenario_id] = {
-            "normalized_reward": normalized_reward,
-            "percentage_complete": success_rate
-          }
-          mean_success_rate += success_rate
-      mean_success_rate /= len(self.TEST_TO_SCENARIO_IDS[test_id])
-      if self.percentage_complete_threshold is not None and mean_success_rate < self.percentage_complete_threshold:
+        scenario_results, success_rate = self._evaluate_scenario_results_on_s3_locally(prefix, scenario_id, submission_id, test_id)
+        mean_success_rate_of_test += success_rate
+        logger.info(f"\\\\ END evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+        results[test_id][scenario_id] = scenario_results
+      mean_success_rate_of_test /= len(self.TEST_TO_SCENARIO_IDS[test_id])
+      if self.percentage_complete_threshold is not None and mean_success_rate_of_test < self.percentage_complete_threshold:
         logger.warning(
           f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The mean percentage of done agents during the last Test ({len(tests)} environments) was too low: {success_rate} < {self.percentage_complete_threshold}: {results[test_id][scenario_id]}")
-        return ret
+        return results
     logger.info(f"// START uploading results for submission_id={submission_id} with submission_data_url={submission_data_url}.")
     _fab = self._backend_application_flow(fab)
     self._upload_results_for_submission(fab, results=results, ret=ret, submission_id=submission_id)
@@ -274,7 +263,36 @@ class FlatlandBenchmarksOrchestrator:
       logger.warning(f"Could not post SUCCESS for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
     logger.info(
       f"\\\\ END running submission submission_id={submission_id}")
-    return ret
+    return results
+
+  def _evaluate_scenario_results_on_s3_locally(self, prefix: str, scenario_id, submission_id: str, test_id: str) -> tuple[Any, dict[str, float | Any]]:
+    """
+    Download trajectory from S3 and evaluate locally. Results are taken from the controlled local evaluation.
+
+    Parameters
+    ----------
+    prefix
+    scenario_id
+    submission_id
+    test_id
+
+    Returns
+    -------
+
+    """
+    with tempfile.TemporaryDirectory() as tmpdirname:
+      logger.info(f"download_dir(prefix={prefix}, bucket={self.s3_bucket}, client={self.s3}, local={tmpdirname})")
+      download_dir(prefix=prefix, bucket=self.s3_bucket, client=self.s3, local=tmpdirname)
+      logger.info(list(Path(tmpdirname).rglob("**/*")))
+
+      local_scenario_path = Path(tmpdirname) / S3_UPLOAD_ROOT / submission_id / test_id / scenario_id
+
+      normalized_reward, success_rate = self._extract_stats_from_trajectory(local_scenario_path, scenario_id)
+      scenario_results = {
+        "normalized_reward": normalized_reward,
+        "percentage_complete": success_rate
+      }
+    return scenario_results, success_rate
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):
     trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)
