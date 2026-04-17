@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,8 @@ class SubmissionsSubmissionIdsStatusesPostRequest(BaseModel):
     SubmissionsSubmissionIdsStatusesPostRequest
     """ # noqa: E501
     status: StrictStr = Field(description="New submission status.")
-    __properties: ClassVar[List[str]] = ["status"]
+    message: Optional[StrictStr] = Field(default=None, description="Submission status message.")
+    __properties: ClassVar[List[str]] = ["status", "message"]
 
     @field_validator('status')
     def status_validate_enum(cls, value):
@@ -88,7 +89,8 @@ class SubmissionsSubmissionIdsStatusesPostRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "status": obj.get("status")
+            "status": obj.get("status"),
+            "message": obj.get("message")
         })
         return _obj
 
