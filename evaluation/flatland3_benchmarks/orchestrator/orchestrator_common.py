@@ -89,6 +89,8 @@ class FlatlandBenchmarksOrchestrator:
     -------
 
     """
+    # as a last resort, strip whitespace in the orchestrator
+    submission_data_url = submission_data_url.lstrip().rstrip()
     try:
       submission_id = self.submission_id
       logger.info(f"// START task submission_id={submission_id} with submission_data_url={submission_data_url}.")
