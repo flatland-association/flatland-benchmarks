@@ -1,4 +1,5 @@
 # based on https://github.com/codalab/codabench/blob/develop/orchestrator/orchestrator.py
+import json
 import logging
 import tempfile
 import time
@@ -142,8 +143,24 @@ class FlatlandBenchmarksOrchestrator:
         raise TaskExecutionError(f"Failed uploading results for with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}")
     except Exception as e:
       logging.error(
-        f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Stacktrace: {traceback.format_exception(e)}",
+        f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Stacktrace: {'\n'.join(traceback.format_exception(e))}",
         exc_info=e)
+      if isinstance(e, TaskExecutionError):
+        logger.error(
+          f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Status: {json.dumps(e.status, indent=4)}",
+          exc_info=e)
+        _fab = self._backend_application_flow(fab)
+        try:
+          _fab.submissions_submission_ids_statuses_post([submission_id],
+                                                        SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value, message=e.message))
+        except Exception as status_post_failure:
+          logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
+        else:
+          try:
+            _fab.submissions_submission_ids_statuses_post([submission_id],
+                                                          SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value, message="General failure."))
+          except Exception as status_post_failure:
+            logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
       raise e
 
   def _backend_application_flow(self, fab: DefaultApi | None) -> DefaultApi:
