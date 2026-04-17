@@ -99,69 +99,67 @@ class FlatlandBenchmarksOrchestrator:
         logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
 
       start_time = time.time()
-      try:
-        ret = self.run_flatland(submission_id, submission_data_url, tests, **kwargs)
-      except BaseException as e:
-        try:
-          _fab = self._backend_application_flow(fab)
-          _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value))
-        except Exception as status_post_failure:
-          logger.warning(f"Could not post FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
-        finally:
-          # re-raise origin failure after posting
-          raise e
+      ret = self.run_flatland(submission_id, submission_data_url, tests, **kwargs)
 
       logger.info(f"// START uploading results for submission_id={submission_id} with submission_data_url={submission_data_url}.")
+      self._upload_results_for_submission(fab, submission_id, ret)
+      logger.info(
+        f"\\\\ END uploading results for with submission_id={submission_id} with submission_data_url={submission_data_url}.")
       try:
-        _fab = self._backend_application_flow(fab)
-        for test_id, scenarios in ret.items():
-          for scenario_id, result in scenarios.items():
-            logger.info(f"uploading results for submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {result}")
-            _fab.results_submissions_submission_id_tests_test_ids_post(
-              submission_id=submission_id,
-              test_ids=[test_id],
-              results_submissions_submission_id_tests_test_ids_post_request=ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest(
-                data=[
-                  ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
-                    scenario_id=scenario_id,
-                    scores=result,
-                  )
-                ]
-              ),
-            )
-        logger.info(
-          f"\\\\ END uploading results for with submission_id={submission_id} with submission_data_url={submission_data_url}.")
-        try:
-          _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value))
-        except Exception as status_post_failure:
-          logger.warning(f"Could not post SUCCESS for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
-        duration = time.time() - start_time
-        logger.info(f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds.")
-        return ret
-      except BaseException as e:
-        logger.error("Failed uploading results for with exception \"%s\"", e, exc_info=e)
-        raise TaskExecutionError(f"Failed uploading results for with exception \"{e}\". Stacktrace: {traceback.format_exception(e)}")
+        _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value))
+      except Exception as status_post_failure:
+        logger.warning(f"Could not post SUCCESS for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
+      duration = time.time() - start_time
+      logger.info(f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds.")
+      return ret
+
     except Exception as e:
-      logging.error(
-        f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Stacktrace: {'\n'.join(traceback.format_exception(e))}",
-        exc_info=e)
-      if isinstance(e, TaskExecutionError):
-        logger.error(
-          f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Status: {json.dumps(e.status, indent=4)}",
+      try:
+        # log evaluation failures here with stacktrace and re-raise finally
+        logging.error(
+          f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Stacktrace: {'\n'.join(traceback.format_exception(e))}",
           exc_info=e)
-        _fab = self._backend_application_flow(fab)
-        try:
-          _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                        SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value, message=e.message))
-        except Exception as status_post_failure:
-          logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
-        else:
+        if isinstance(e, TaskExecutionError):
+          logger.error(
+            f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Status: {json.dumps(e.status, indent=4)}",
+            exc_info=e)
+          _fab = self._backend_application_flow(fab)
           try:
             _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                          SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value, message="General failure."))
+                                                          SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value, message=e.message))
           except Exception as status_post_failure:
             logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
-      raise e
+          else:
+            try:
+              _fab.submissions_submission_ids_statuses_post([submission_id],
+                                                            SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
+                                                                                                        message="General failure."))
+            except Exception as status_post_failure:
+              logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
+      finally:
+        raise e
+
+  def _upload_results_for_submission(self, fab: DefaultApi | None, ret: dict, submission_id: str) -> DefaultApi:
+    try:
+      _fab = self._backend_application_flow(fab)
+      for test_id, scenarios in ret.items():
+        for scenario_id, result in scenarios.items():
+          logger.info(f"uploading results for submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {result}")
+          _fab.results_submissions_submission_id_tests_test_ids_post(
+            submission_id=submission_id,
+            test_ids=[test_id],
+            results_submissions_submission_id_tests_test_ids_post_request=ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest(
+              data=[
+                ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner(
+                  scenario_id=scenario_id,
+                  scores=result,
+                )
+              ]
+            ),
+          )
+    except BaseException as e:
+      logger.error(f"Failed uploading results for with exception {str(e)}. Stacktrace: {traceback.format_exception(e)}", exc_info=e)
+      raise TaskExecutionError(f"Failed uploading results for with exception.", ret)
 
   def _backend_application_flow(self, fab: DefaultApi | None) -> DefaultApi:
     if fab is None:
