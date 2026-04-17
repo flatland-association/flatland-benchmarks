@@ -200,6 +200,15 @@ class FlatlandBenchmarksOrchestrator:
     for test_id in tests:
       mean_success_rate = 0
       for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
+        _fab = self._backend_application_flow(None)
+        try:
+          _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
+                                                                                                                     message=f"test {test_id} - scenario {scenario_id}"))
+        except Exception as status_post_failure:
+          logger.warning(
+            f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}",
+            status_post_failure)
+
         pkl_path = self.load_scenario_data(scenario_id)
         prefix = f"{S3_UPLOAD_ROOT}{submission_id}/{test_id}/{scenario_id}"
 
