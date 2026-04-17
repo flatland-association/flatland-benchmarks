@@ -108,7 +108,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       all_done = True
       job = jobs.items[-1]
       all_done = all_done and job.status.conditions is not None
-      any_failed = any_failed or (job.status.conditions is not None and 'Complete' not in [cond.type for cond in job.status.conditions])
+      job_status_conditions_ = [cond.type for cond in job.status.conditions] if job.status.conditions is not None else None
+      any_failed = any_failed or (job_status_conditions_ is not None and 'Complete' not in job_status_conditions_)
 
       pods: V1PodList = self.core_api.list_namespaced_pod(namespace=self.kubernetes_namespace, label_selector=f"job-name={job_name}")
       if len(pods.items) != 1:
@@ -156,7 +157,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         elif any_failed:
           ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
           raise TaskExecutionError(
-            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. Some tasks jobs failed.", ret)
+            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. Some tasks jobs failed: {job_status_conditions_}.",
+            ret)
     logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}.")
     logger.debug(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
     return ret
