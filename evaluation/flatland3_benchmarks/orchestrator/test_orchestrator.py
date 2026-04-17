@@ -40,7 +40,7 @@ def test_tasks_successful():
     submissions_pvc="fab-int-submissions",
     environments_pvc="fab-int-data",
     environments_zip="flatland3/environments.zip",
-  )._run_submission(
+  )._run_submission_container_for_scenario(
     test_id="55",
     scenario_id="66",
     submission_data_url="pancy",
@@ -92,7 +92,7 @@ def test_tasks_failing():
       submissions_pvc="fab-int-submissions",
       environments_pvc="fab-int-data",
       environments_zip="flatland3/environments.zip",
-    )._run_submission(
+    )._run_submission_container_for_scenario(
       test_id="55",
       scenario_id="66",
       submission_data_url="pancy",
@@ -174,7 +174,7 @@ def test_submission_status_general_failure_reported():
   def _fail(*args, **kwargs):
     raise Exception()
 
-  orchestrator._run_submission = _fail
+  orchestrator._run_submission_container_for_scenario = _fail
   fab = mock()
   with pytest.raises(Exception):
     orchestrator.orchestrator(submission_data_url="funny", fab=fab)
@@ -206,7 +206,7 @@ def test_submission_status_specific_failure_reported():
   def _fail(*args, **kwargs):
     raise TaskExecutionError("Specific failure message.", None)
 
-  orchestrator._run_submission = _fail
+  orchestrator._run_submission_container_for_scenario = _fail
   fab = mock()
   with pytest.raises(Exception):
     orchestrator.orchestrator(submission_data_url="funny", fab=fab)
@@ -234,7 +234,7 @@ def test_submission_status_success_reported():
     environments_pvc="fab-int-data",
     environments_zip="flatland3/environments.zip",
   )
-  orchestrator._run_submission = lambda *args, **kwargs: {"running_time": 33}
+  orchestrator._run_submission_container_for_scenario = lambda *args, **kwargs: {"running_time": 33}
   client = mock()
   orchestrator.s3 = client
   when(client).list_objects_v2(Bucket=None, Prefix=any).thenReturn({'Contents': None})

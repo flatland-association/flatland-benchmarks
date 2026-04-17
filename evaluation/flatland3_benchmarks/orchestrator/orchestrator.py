@@ -72,12 +72,12 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.wait_for_pod_to_run_limit = wait_for_pod_to_run_limit
 
   # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
-  def _run_submission(self,
-                      test_id,
-                      scenario_id,
-                      submission_data_url,
-                      pkl_path,
-                      **kwargs) -> dict:
+  def _run_submission_container_for_scenario(self,
+                                             test_id,
+                                             scenario_id,
+                                             submission_data_url,
+                                             pkl_path,
+                                             **kwargs) -> dict:
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
