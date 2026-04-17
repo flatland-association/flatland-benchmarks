@@ -614,6 +614,9 @@ export class SubmissionController extends Controller {
    *                type: string
    *                description: New submission status.
    *                enum: [SUBMITTED, STARTED, SUCCESS, FAILURE]
+   *              message:
+   *                type: string
+   *                description: Submission status message.
    *            required:
    *              - status
    *    responses:
@@ -639,12 +642,16 @@ export class SubmissionController extends Controller {
    *                            type: string
    *                            description: Submission status.
    *                            enum: [SUBMITTED, STARTED, SUCCESS, FAILURE]
+   *                          message:
+   *                            type: string
+   *                            description: Submission status message.
    *                          timestamp:
    *                            type: string
    */
   postSubmissionStatus: PostHandler<'/submissions/:submission_ids/statuses'> = async (req, res) => {
     const uuids = req.params.submission_ids.split(',')
     const status = req.body.status
+    const message = req.body?.message
     const sql = SqlService.getInstance()
     // valid if submissions exist
     const submissionMismatches = await sql.query`
@@ -660,11 +667,12 @@ export class SubmissionController extends Controller {
       return {
         submission_id: uuid,
         status: status,
+        message: message ?? null,
         timestamp: sql.fragment`current_timestamp`,
       }
     })
     const statusRows = await sql.query<SubmissionStatusRow>`
-      INSERT INTO submission_statuses ${sql.fragment(statusInserts, ['submission_id', 'status', 'timestamp'])}
+      INSERT INTO submission_statuses ${sql.fragment(statusInserts, ['submission_id', 'status', 'message', 'timestamp'])}
       RETURNING *
     `
     this.respond(req, res, statusRows)
@@ -707,6 +715,10 @@ export class SubmissionController extends Controller {
    *                          status:
    *                            type: string
    *                            description: Submission status.
+   *                            enum: [SUBMITTED, STARTED, SUCCESS, FAILURE]
+   *                          message:
+   *                            type: string
+   *                            description: Submission status message.
    *                          timestamp:
    *                            type: string
    */

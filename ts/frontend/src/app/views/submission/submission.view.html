@@ -10,7 +10,7 @@
       <h3 class="font-bold pb-2">Status</h3>
       <ul>
         @for (status of submissionStatuses?.reverse() ; track $index) {
-          <li>{{ status.timestamp | date:'dd/MM/yyyy HH:mm'}}: {{ status.status }}</li>
+        <li>{{ status.timestamp | date:'dd/MM/yyyy HH:mm'}}: {{ status.status }} {{status.message ?? '' }}</li>
         }
       </ul>
     </div>
