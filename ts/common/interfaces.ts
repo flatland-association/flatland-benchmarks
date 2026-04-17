@@ -98,6 +98,7 @@ export type SubmissionStatus = 'SUBMITTED' | 'STARTED' | 'SUCCESS' | 'FAILURE'
 export interface SubmissionStatusRow {
   submission_id: string
   status: SubmissionStatus
+  message: string | null
   timestamp: string
 }
 

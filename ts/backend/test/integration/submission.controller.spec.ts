@@ -265,13 +265,30 @@ describe.sequential('Submission controller', () => {
       `/submissions/:submission_ids/statuses`,
       {
         params: { submission_ids: submissionUuid },
-        body: { status: 'STARTED' },
+        body: { status: 'STARTED', message: 'taking off' },
       },
       testUserJwt,
     )
     assertApiResponse(res)
     expect(res.body.body).toHaveLength(1)
     expect(res.body.body.at(0)?.status).toBe('STARTED')
+    expect(res.body.body.at(0)?.message).toBe('taking off')
+  })
+
+  test('should allow inserting same submission status twice', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPost(
+      `/submissions/:submission_ids/statuses`,
+      {
+        params: { submission_ids: submissionUuid },
+        body: { status: 'STARTED', message: 'continuing' },
+      },
+      testUserJwt,
+    )
+    assertApiResponse(res)
+    expect(res.body.body).toHaveLength(1)
+    expect(res.body.body.at(0)?.status).toBe('STARTED')
+    expect(res.body.body.at(0)?.message).toBe('continuing')
   })
 
   test('should list submission statuses', async ({ skip }) => {
@@ -287,8 +304,11 @@ describe.sequential('Submission controller', () => {
     // also tests
     // - SUBMITTED was auto-inserted on creation and
     // - statuses are returned in anti-chronological order
-    expect(res.body.body).toHaveLength(2)
+    expect(res.body.body).toHaveLength(3)
     expect(res.body.body.at(0)?.status).toBe('STARTED')
-    expect(res.body.body.at(1)?.status).toBe('SUBMITTED')
+    expect(res.body.body.at(0)?.message).toBe('continuing')
+    expect(res.body.body.at(1)?.status).toBe('STARTED')
+    expect(res.body.body.at(1)?.message).toBe('taking off')
+    expect(res.body.body.at(2)?.status).toBe('SUBMITTED')
   })
 })
