@@ -3,6 +3,22 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.19.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.3...v0.19.0) (2026-04-19)
+
+
+### Features
+
+* add submission tags. ([8a1321a](https://github.com/flatland-association/flatland-benchmarks/commit/8a1321a04186ebd9f3664fa4c0be7768e5a0fb37))
+* **frontend:** allow tags in new submission. ([46c1cc7](https://github.com/flatland-association/flatland-benchmarks/commit/46c1cc772d2f6c5f913157e207e443080c2b5921))
+* **frontend:** display tags in benchmark overview table. ([7280b68](https://github.com/flatland-association/flatland-benchmarks/commit/7280b68fb73149968539f4bd5bc103746d6e77cc))
+* **frontend:** display tags in own submissions. ([a4e436a](https://github.com/flatland-association/flatland-benchmarks/commit/a4e436a36f6f6fe3f7415a47e739f0cdf65e2828))
+* **frontend:** distinguish tracks/tags in column headers as well. ([793891a](https://github.com/flatland-association/flatland-benchmarks/commit/793891a17e329d37b439aa7069c86575036aaaf6))
+* **frontend:** distinguish tracks/tags in new submission modal component. ([b2037ea](https://github.com/flatland-association/flatland-benchmarks/commit/b2037ea172f867fd1eb932bd21fa165b25634d4a))
+* **railway-orchestrator:** add total running time limit (summed pure evaluation time). ([65e21d8](https://github.com/flatland-association/flatland-benchmarks/commit/65e21d8b5ac4a0bb8566a5f5a37fd9de5c9be664))
+* **railway-orchestrator:** add total running time limit (summed pure evaluation time). ([2942d51](https://github.com/flatland-association/flatland-benchmarks/commit/2942d512d12c121c3f395562e46abc41ac0067ea))
+* **railway-orchestrator:** add total running time limit (summed pure evaluation time). ([12ba2b7](https://github.com/flatland-association/flatland-benchmarks/commit/12ba2b7ea27594ecbff9b9fefef9abcbbabb98f9))
+* support for multiple tracks. ([58e3c1d](https://github.com/flatland-association/flatland-benchmarks/commit/58e3c1dbcaf31999a5d7bde176e7eb8534f7f0e3))
+
 ## [0.18.3](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.2...v0.18.3) (2026-04-15)
 
 
