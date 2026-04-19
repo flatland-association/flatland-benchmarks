@@ -33,6 +33,19 @@ The project is configured to lint and format your source code before committing 
 
 > If `lint-staged` fails and **discards** your changes, you can often `git stash pop` them back into existence. Run the `lint` npm script manually beforehand or install the VSCode plugins as described above to limit any surprises.
 
+## Dev setup for ts
+
+```shell
+npm run docker:up
+cd ts/frontend && npm run start
+```
+
+```shell
+CUSTOMIZATION=realworldbaselines
+rm -fR out-tsc
+cd ts/backend && npm run start.${CUSTOMIZATION} && cd -
+```
+
 ## Developer notes
 
 ### dev.001 - GET list returns previews instead of full resources

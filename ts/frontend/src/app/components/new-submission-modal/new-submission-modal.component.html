@@ -29,6 +29,23 @@
               </label>
             }
 
+            @if (suite.setup === 'COMPETITION') {
+            <label class="block text-left cursor-pointer">
+              <h4><span class="font-bold">{{getTagsName()}}</span></h4>
+              <select name="tags" id="tags" [(ngModel)]="tags" data-input-tags->
+                <option value="RL">RL</option>
+                <option value="non-RL">non-RL</option>
+              </select>
+            </label>
+            } @else {
+            <label class="block text-left cursor-pointer">
+              <h4><span class="font-bold">{{getTagsName()}}</span></h4>
+              <input type="text"
+                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                     id="tags" [(ngModel)]="tags" data-input-tags>
+            </label>
+            }
+
             @if (suite.setup === 'CAMPAIGN') {
               <div>
                 <h4 class="bp-2 font-bold">Test</h4>

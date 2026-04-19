@@ -22,6 +22,14 @@ const testSubmission: StripId<SubmissionRow> = {
   submission_data_url: 'none',
 }
 
+const testSubmissionWithTags: StripId<SubmissionRow> = {
+  benchmark_id: '20ccc7c1-034c-4880-8946-bffc3fed1359',
+  test_ids: ['557d9a00-7e6d-410b-9bca-a017ca7fe3aa'],
+  name: 'test',
+  submission_data_url: 'none',
+  tags: 'ml',
+}
+
 const testQueue = 'blabla' // Set in ts\backend\src\migration\data\V8.1__override_queue.sql
 
 describe.sequential('Submission controller', () => {
@@ -92,6 +100,31 @@ describe.sequential('Submission controller', () => {
     )
   })
 
+  test('should allow post submissions with tags', async () => {
+    const res = await controller.testPost('/submissions', { body: testSubmissionWithTags }, testUserJwt)
+    assertApiResponse(res)
+    submissionUuid = res.body.body.id
+    // Asserting this after setting submissionUuid, otherwise failing this would
+    // cause other tests relying on it to fail too:
+    expect(celeryMock).toHaveBeenCalledWith(
+      testQueue,
+      expect.objectContaining({
+        submission_data_url: testSubmission.submission_data_url,
+        tests: testSubmission.test_ids,
+      }),
+      expect.anything(),
+    )
+
+    const resSubmissions = await controller.testGet(
+      '/submissions/:submission_ids',
+      {
+        params: { submission_ids: res.body.body.id },
+      },
+      testUserJwt,
+    )
+    assertApiResponse(resSubmissions)
+    expect(resSubmissions.body.body.at(0)?.tags).toBe('ml')
+  })
   // data set in
   // - ts\backend\src\migration\data\V4.1__ai4realnet_example.sql
   // - ts\backend\src\migration\data\V5.2__publishable_submission.sql
@@ -172,6 +205,21 @@ describe.sequential('Submission controller', () => {
     assertApiResponse(res)
     expect(res.body.body).toHaveLength(1)
     expect(res.body.body.at(0)?.published).toBeTruthy()
+  })
+
+  test('should allow patching submission tags', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPatch(
+      '/submissions/:submission_ids',
+      {
+        params: { submission_ids: submissionUuid },
+        body: { tags: 'abcd' },
+      },
+      testUserJwt,
+    )
+    assertApiResponse(res)
+    expect(res.body.body).toHaveLength(1)
+    expect(res.body.body.at(0)?.tags).toEqual('abcd')
   })
 
   test('should allow patching submissions with empty body', async ({ skip }) => {
