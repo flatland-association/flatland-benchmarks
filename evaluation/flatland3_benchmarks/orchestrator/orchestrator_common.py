@@ -49,6 +49,8 @@ class FlatlandBenchmarksOrchestrator:
                token_url=None,
                percentage_complete_threshold: float = None,
                running_time_limit: float = None,  # time limit for the submission container/pod running for one scenario (excluding pulling/initialization).
+               total_running_time_limit: float = None,
+               # summed time limit for the submission container/pod running a scenario (excluding pulling/initialization).
                **kwargs):
     self.submission_id = submission_id
     self.aws_endpoint_url = aws_endpoint_url
@@ -65,6 +67,7 @@ class FlatlandBenchmarksOrchestrator:
     self.token_url = token_url
     self.percentage_complete_threshold = percentage_complete_threshold
     self.running_time_limit = running_time_limit
+    self.total_running_time_limit = total_running_time_limit
 
   def orchestrator(self,
                    submission_data_url: str,
@@ -190,6 +193,7 @@ class FlatlandBenchmarksOrchestrator:
 
       logger.info(f"// START running submission submission_id={submission_id},tests={tests}")
       results = {test_id: {} for test_id in tests}
+      summed_scenario_running_time = 0
       for test_id in tests:
         mean_success_rate = 0
         for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
@@ -198,10 +202,19 @@ class FlatlandBenchmarksOrchestrator:
 
           ret = self._run_submission(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
           scenario_running_time = ret["running_time"]
+          summed_scenario_running_time += scenario_running_time
           if self.running_time_limit is not None and scenario_running_time > self.running_time_limit:
             logger.warning(
-              f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The scenario running time was exceeded : {scenario_running_time:.2f}s > {self.running_time_limit:.2f}s: {results[test_id][scenario_id]}")
-            return results
+              f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The scenario running time was exceeded : {scenario_running_time:.2f}s > {self.running_time_limit:.2f}s.")
+            raise TaskExecutionError(
+              f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {scenario_running_time:.2f}s exceeded running time limit {self.running_time_limit:.2f}s.",
+              ret)
+          if self.total_running_time_limit is not None and summed_scenario_running_time > self.total_running_time_limit:
+            logger.warning(
+              f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The scenario total running time was exceeded : {summed_scenario_running_time:.2f}s > {self.total_running_time_limit:.2f}s.")
+            raise TaskExecutionError(
+              f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {summed_scenario_running_time:.2f}s exceeded total running time limit {self.total_running_time_limit:.2f}s.",
+              ret)
 
           logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
           with tempfile.TemporaryDirectory() as tmpdirname:
@@ -228,8 +241,7 @@ class FlatlandBenchmarksOrchestrator:
       return results
     except BaseException as exception:
       logger.error(f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}", exc_info=exception)
-      raise RuntimeError(
-        f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}: {str(exception)}. Stacktrace: {traceback.format_exception(exception)}") from exception
+      raise exception
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):
     trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)
