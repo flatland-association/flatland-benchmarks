@@ -211,8 +211,8 @@ class FlatlandBenchmarksOrchestrator:
     results = {test_id: {} for test_id in tests}
     summed_scenario_running_time = 0
     for test_id in tests:
-      test_results, mean_success_rate_of_test = self._run_submission_test(fab, kwargs, results, submission_data_url, submission_id,
-                                                                          summed_scenario_running_time, test_id)
+      test_results, mean_success_rate_of_test = self._run_submission_test(fab, kwargs, submission_data_url, submission_id, summed_scenario_running_time,
+                                                                          test_id)
       results[test_id] = test_results
       if self.percentage_complete_threshold is not None and mean_success_rate_of_test < self.percentage_complete_threshold:
         logger.warning(
