@@ -10,7 +10,7 @@
       <h3 class="font-bold pb-2">Status</h3>
       <table>
         <tbody>
-        @for (status of submissionStatuses?.slice().reverse() ; track $index) {
+        @for (status of submissionStatuses?.slice()?.reverse() ; track $index) {
         <tr>
           <td>{{ status.timestamp | date:'dd/MM/yyyy HH:mm'}}</td>
           <td> {{ status.status }}</td>
