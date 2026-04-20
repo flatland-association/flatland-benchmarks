@@ -8,11 +8,17 @@
   <lib-content>
     <div class="w-full pb-8">
       <h3 class="font-bold pb-2">Status</h3>
-      <ul>
+      <table>
+        <tbody>
         @for (status of submissionStatuses?.reverse() ; track $index) {
-        <li>{{ status.timestamp | date:'dd/MM/yyyy HH:mm'}}: {{ status.status }} {{status.message ?? '' }}</li>
+        <tr>
+          <td>{{ status.timestamp | date:'dd/MM/yyyy HH:mm'}}</td>
+          <td> {{ status.status }}</td>
+          <td>{{status.message ?? '' }}</td>
+        </tr>
         }
-      </ul>
+        </tbody>
+      </table>
     </div>
     @if (isSubmissionScored()) {
       <p data-text-success>This submission has been successfully scored.</p>
