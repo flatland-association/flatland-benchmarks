@@ -27,7 +27,7 @@ def test_tasks_successful():
   ]))
   when(core_api).read_namespaced_pod_log("subi", namespace="fab-int").thenReturn("abcd")
 
-  ret = K8sFlatlandBenchmarksOrchestrator(
+  ret, _ = K8sFlatlandBenchmarksOrchestrator(
     submission_id="1234",
     batch_api=batch_api,
     core_api=core_api,
@@ -234,7 +234,7 @@ def test_submission_status_success_reported():
     environments_pvc="fab-int-data",
     environments_zip="flatland3/environments.zip",
   )
-  orchestrator._run_submission_scenario_container = lambda *args, **kwargs: {"running_time": 33}
+  orchestrator._run_submission_scenario_container = lambda *args, **kwargs: ({"running_time": 33}, None)
   client = mock()
   orchestrator.s3 = client
   when(client).list_objects_v2(Bucket=None, Prefix=any).thenReturn({'Contents': None})
