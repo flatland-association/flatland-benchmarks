@@ -71,12 +71,13 @@ def test_success(submission_data_url="ghcr.io/flatland-association/flatland-base
   )
 
   start_time = time.time()
-  ret = orchestrator._run_submission_container_for_scenario(
+  ret, termination_cause = orchestrator._run_submission_scenario_container(
     test_id,
     scenario_id,
     submission_data_url,
     pkl_path
   )
+  assert termination_cause is None
   end_time = time.time()
   elapsed_time = end_time - start_time
 
@@ -119,7 +120,7 @@ def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatlan
 
   with pytest.raises(TaskExecutionError) as exc_info:
     start_time = time.time()
-    ret = orchestrator._run_submission_container_for_scenario(
+    ret = orchestrator._run_submission_scenario_container(
       test_id,
       scenario_id,
       submission_data_url,
@@ -129,7 +130,12 @@ def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatlan
   end_time = time.time()
   elapsed_time = end_time - start_time
   print(exc_info.value.message)
+  assert exc_info.value.status["events"]["items"][-1]["reason"] == "PodOOMKilling"
   assert "OOM" in str(exc_info.value.status)
+
+  assert exc_info.value.message.startswith(
+    f"Failed task with submission_id={submission_id} with submission_data_url=ghcr.io/flatland-association/flatland-baselines-random:latest. Some tasks jobs failed: ['FailureTarget', 'Failed'].")
+  assert "PodOOMKilling" in exc_info.value.message
   # may fail the image needs to be pulled.
   assert elapsed_time < 30
 
@@ -168,7 +174,7 @@ def test_no_oom_respecting_memory_limit(submission_data_url="ghcr.io/flatland-as
       """]
 
   start_time = time.time()
-  orchestrator._run_submission_container_for_scenario(
+  ret, termination_cause = orchestrator._run_submission_scenario_container(
     test_id,
     scenario_id,
     submission_data_url,
@@ -177,6 +183,7 @@ def test_no_oom_respecting_memory_limit(submission_data_url="ghcr.io/flatland-as
   end_time = time.time()
   elapsed_time = end_time - start_time
 
+  assert termination_cause is None
   # may fail the image needs to be pulled.
   assert elapsed_time < 30
 
@@ -212,7 +219,7 @@ def test_pull_failure_active_deadline_fail_fast(submission_data_url="ghcr.io/fla
   )
   with pytest.raises(TaskExecutionError) as exc_info:
     start_time = time.time()
-    orchestrator._run_submission_container_for_scenario(
+    orchestrator._run_submission_scenario_container(
       test_id,
       scenario_id,
       submission_data_url,
@@ -260,7 +267,7 @@ def test_pull_failure_start_time_fail_fast(submission_data_url="ghcr.io/flatland
   )
   with pytest.raises(TaskExecutionError) as exc_info:
     start_time = time.time()
-    orchestrator._run_submission_container_for_scenario(
+    orchestrator._run_submission_scenario_container(
       test_id,
       scenario_id,
       submission_data_url,
@@ -278,9 +285,10 @@ def test_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/flatla
                                              test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
                                              scenario_id="289394a5-aa51-446c-9b62-c25101643790",
                                              pkl_path="Test_00/Level_0.pkl",
-                                             active_deadline_seconds=55,
+                                             active_deadline_seconds=75,
                                              delta=10,
-                                             running_time_limit=25
+                                             running_time_limit=25,
+                                             sleep=55
                                              ):
   """
   Verify failure upon exceeding running time.
@@ -307,21 +315,19 @@ def test_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/flatla
     running_time_limit=running_time_limit,
   )
   orchestrator._make_command = lambda *args, **kwargs: ["bash", "-c"]
-  orchestrator._make_args = lambda *args, **kwargs: [""" sleep 55 """]
-  with pytest.raises(TaskExecutionError) as exc_info:
-    start_time = time.time()
-    orchestrator._run_submission_container_for_scenario(
-      test_id,
-      scenario_id,
-      submission_data_url,
-      pkl_path
-    )
+  orchestrator._make_args = lambda *args, **kwargs: [f""" sleep {sleep} """]
+  start_time = time.time()
+  ret, termination_cause = orchestrator._run_submission_scenario_container(
+    test_id,
+    scenario_id,
+    submission_data_url,
+    pkl_path
+  )
   end_time = time.time()
   elapsed_time = end_time - start_time
-  print(exc_info.value.message)
-  assert f"exceeded running time limit {running_time_limit:.2f}s" in exc_info.value.message
-
-  assert running_time_limit + delta > elapsed_time > running_time_limit
+  assert termination_cause.startswith('Running time')
+  assert termination_cause.endswith(f'exceeded running time limit {running_time_limit}.00s.')
+  assert sleep + delta > elapsed_time > running_time_limit
 
 
 def test_max_total_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
@@ -360,18 +366,18 @@ def test_max_total_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/
   orchestrator._extract_stats_from_trajectory = lambda *args, **kwargs: (0, 0)
   orchestrator._make_command = lambda *args, **kwargs: ["bash", "-c"]
   orchestrator._make_args = lambda *args, **kwargs: [""" sleep 20 """]
-  with pytest.raises(TaskExecutionError) as exc_info:
-    start_time = time.time()
-    orchestrator.orchestrator(
-      submission_data_url,
-      [test_id],
-      fab=mock()
-    )
+
+  start_time = time.time()
+  ret, termination_cause = orchestrator.orchestrator(
+    submission_data_url,
+    [test_id],
+    fab=mock()
+  )
   end_time = time.time()
   elapsed_time = end_time - start_time
-  print(exc_info.value.message)
-  assert f"exceeded total running time limit {total_running_time_limit:.2f}s" in exc_info.value.message
-
+  # print(exc_info.value.message)
+  assert termination_cause.startswith('Running time')
+  assert termination_cause.endswith(f'exceeded total running time limit {total_running_time_limit}.00s.')
   assert running_time_limit + delta > elapsed_time > running_time_limit
 
 
@@ -413,7 +419,7 @@ def test_max_running_time_respected_succeeds(submission_data_url="ghcr.io/flatla
 
   orchestrator._make_args = lambda *args, **kwargs: [f""" sleep {running_time_limit - lower_delta} """]
   start_time = time.time()
-  orchestrator._run_submission_container_for_scenario(
+  orchestrator._run_submission_scenario_container(
     test_id,
     scenario_id,
     submission_data_url,
@@ -466,7 +472,7 @@ def test_max_memory_respected_succeeds(submission_data_url="ghcr.io/flatland-ass
 
   orchestrator._make_args = lambda *args, **kwargs: [f""" sleep {running_time_limit - lower_delta} """]
   start_time = time.time()
-  orchestrator._run_submission_container_for_scenario(
+  orchestrator._run_submission_scenario_container(
     test_id,
     scenario_id,
     submission_data_url,
@@ -516,7 +522,7 @@ def test_egress_fail_fast(submission_data_url="ghcr.io/flatland-association/flat
 
   with pytest.raises(TaskExecutionError) as exc_info:
     start_time = time.time()
-    ret = orchestrator._run_submission_container_for_scenario(
+    ret = orchestrator._run_submission_scenario_container(
       test_id,
       scenario_id,
       submission_data_url,
@@ -569,7 +575,7 @@ def test_service_account_hardening(submission_data_url="ghcr.io/flatland-associa
 
   with pytest.raises(TaskExecutionError) as exc_info:
     start_time = time.time()
-    ret = orchestrator._run_submission_container_for_scenario(
+    ret = orchestrator._run_submission_scenario_container(
       test_id,
       scenario_id,
       submission_data_url,

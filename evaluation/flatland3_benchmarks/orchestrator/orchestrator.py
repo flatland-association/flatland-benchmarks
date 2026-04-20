@@ -5,7 +5,7 @@ import os
 import ssl
 import time
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 import yaml
 from celery import Celery
@@ -72,12 +72,12 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.wait_for_pod_to_run_limit = wait_for_pod_to_run_limit
 
   # k8s implementation has s3 volume mapped into submission container under subpath - data is uploaded by s3fs in the background and needs to downloaded into orchestrator for evaluation
-  def _run_submission_container_for_scenario(self,
-                                             test_id,
-                                             scenario_id,
-                                             submission_data_url,
-                                             pkl_path,
-                                             **kwargs) -> dict:
+  def _run_submission_scenario_container(self,
+                                         test_id,
+                                         scenario_id,
+                                         submission_data_url,
+                                         pkl_path,
+                                         **kwargs) -> Tuple[dict, Optional[str]]:
     submission_id = self.submission_id
 
     logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
@@ -96,6 +96,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     end_time_running = None
     running_time = None
     wait_for_pod_to_start = 0
+    termination_cause = None
     while not all_done and not any_failed:
       time.sleep(1)
       wait_for_pod_to_start += 1
@@ -136,9 +137,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       if "Running" in ticks and start_time_running is not None:
         running_time = time.time() - start_time_running
         if self.running_time_limit is not None and running_time > self.running_time_limit:
-          raise TaskExecutionError(
-            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {running_time:.2f}s exceeded running time limit {self.running_time_limit:.2f}s.",
-            ret)
+          termination_cause = f"Running time {running_time:.2f}s exceeded running time limit {self.running_time_limit:.2f}s."
+
       if "Running" in ticks and pod_status.phase != "Running" and end_time_running is None:
         end_time_running = ticks["Running"]
         running_time = end_time_running - start_time_running
@@ -154,16 +154,22 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         }
         if all_done and not any_failed:
           ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
+          break
         elif any_failed:
           ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
+          additional_info = ""
+          try:
+            additional_info = str([event["reason"] for event in ret["events"]["items"]])
+          except:
+            pass
           raise TaskExecutionError(
-            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. Some tasks jobs failed: {job_status_conditions_}.",
+            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. Some tasks jobs failed: {job_status_conditions_}. {additional_info}",
             ret)
     logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}.")
     logger.debug(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
-    return ret
+    return ret, termination_cause
 
-  def _gather_logs(self, pod: V1PodList, ret: dict, submission_id: str, submission_data_url: str) -> dict:
+  def _gather_logs(self, pod: V1Pod, ret: dict, submission_id: str, submission_data_url: str) -> dict:
     try:
       ret["events"] = self.core_api.list_namespaced_event(self.kubernetes_namespace, field_selector=f'involvedObject.name={pod._metadata._name}').to_dict()
     except Exception as e:

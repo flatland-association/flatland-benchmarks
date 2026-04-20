@@ -101,10 +101,10 @@ class FlatlandBenchmarksOrchestrator:
         logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
 
       start_time = time.time()
-      ret = self.run_submission(submission_id, submission_data_url, tests, fab=fab, **kwargs)
+      results, termination_cause = self.run_submission(submission_id, submission_data_url, tests, fab=fab, **kwargs)
       duration = time.time() - start_time
       logger.info(f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds.")
-      return ret
+      return results, termination_cause
 
     except Exception as e:
       try:
@@ -166,12 +166,12 @@ class FlatlandBenchmarksOrchestrator:
     return fab
 
   @abstractmethod
-  def _run_submission_container_for_scenario(self,
-                                             test_id,
-                                             scenario_id,
-                                             submission_data_url,
-                                             pkl_path,
-                                             **kwargs):
+  def _run_submission_scenario_container(self,
+                                         test_id,
+                                         scenario_id,
+                                         submission_data_url,
+                                         pkl_path,
+                                         **kwargs) -> Tuple[dict, Optional[str]]:
     """
     Run the submission from submission data URL (docker image) for one scenario, which is at pkl path.
 
@@ -189,7 +189,7 @@ class FlatlandBenchmarksOrchestrator:
     """
     raise NotImplementedError()
 
-  def run_submission(self, submission_id: str, submission_data_url: str, tests: Optional[List[str]], fab: DefaultApi, **kwargs) -> dict:
+  def run_submission(self, submission_id: str, submission_data_url: str, tests: Optional[List[str]], fab: DefaultApi, **kwargs) -> Tuple[dict, Optional[str]]:
     """
     Run submission, download trajectory from S3, re-run with stored actions to verify rewards and return results.
 
@@ -210,15 +210,24 @@ class FlatlandBenchmarksOrchestrator:
     logger.info(f"// START running submission submission_id={submission_id},tests={tests}")
     results = {test_id: {} for test_id in tests}
     summed_scenario_running_time = 0
+    termination_cause = None
     for test_id in tests:
-      test_results, mean_success_rate_of_test, summed_scenario_running_time = self._run_submission_test(fab, submission_data_url, submission_id,
-                                                                                                        summed_scenario_running_time,
-                                                                                                        test_id, **kwargs)
+      test_results, success_rate_of_test, summed_scenario_running_time, termination_cause = self._run_submission_test(fab, submission_data_url, submission_id,
+                                                                                                                      summed_scenario_running_time,
+                                                                                                                      test_id, **kwargs)
       results[test_id] = test_results
-      if self.percentage_complete_threshold is not None and mean_success_rate_of_test < self.percentage_complete_threshold:
-        logger.warning(
-          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}. The mean percentage of done agents during the last test ({len(tests)} environments) was too low: {mean_success_rate_of_test} < {self.percentage_complete_threshold}: {results[test_id]}")
+      if termination_cause is not None:
         break
+      mean_success_rate_of_test = 0
+      if len(test_results) > 0:
+        mean_success_rate_of_test = (sum(success_rate_of_test) / len(success_rate_of_test))
+      if self.percentage_complete_threshold is not None and mean_success_rate_of_test < self.percentage_complete_threshold:
+        termination_cause = f"The mean percentage of done agents during the last test ({len(tests)} environments) was too low: {mean_success_rate_of_test} < {self.percentage_complete_threshold}"
+        logger.warning(
+          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}. Termination cause: {termination_cause}. {results[test_id]}")
+        break
+    logger.warning(
+      f"\\\\ END running submission submission_id={submission_id},tests={tests}. Termination cause: {termination_cause}.")
     logger.info(f"// START uploading results for submission_id={submission_id} with submission_data_url={submission_data_url}.")
     _fab = self._backend_application_flow(fab)
     self._upload_results_for_submission(fab, results=results, submission_id=submission_id)
@@ -226,15 +235,16 @@ class FlatlandBenchmarksOrchestrator:
       f"\\\\ END uploading results for with submission_id={submission_id} with submission_data_url={submission_data_url}.")
     try:
       _fab = self._backend_application_flow(fab)
-      _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value))
+      _fab.submissions_submission_ids_statuses_post([submission_id],
+                                                    SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value, message=termination_cause))
     except Exception as status_post_failure:
       logger.warning(f"Could not post SUCCESS for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
     logger.info(
       f"\\\\ END running submission submission_id={submission_id}")
-    return results
+    return results, termination_cause
 
   def _run_submission_test(self, fab: DefaultApi, submission_data_url: str, submission_id: str,
-                           summed_scenario_running_time: int, test_id: str, **kwargs) -> Tuple[dict, float, float]:
+                           summed_scenario_running_time: int, test_id: str, **kwargs) -> Tuple[dict, List[float], float, Optional[str]]:
     """
     Run submission for single test
     Parameters
@@ -249,10 +259,11 @@ class FlatlandBenchmarksOrchestrator:
 
     Returns
     -------
-    test_results, mean_success_rate_of_test: Tuple[dict,float,float]
+    test_results, mean_success_rate_of_test, termination_cause: Tuple[dict,List[float],float, Optional[str]]
     """
-    mean_success_rate_of_test = 0
+    success_rate_of_test = []
     test_results = {}
+    termination_cause = None
     for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
       try:
         _fab = self._backend_application_flow(fab)
@@ -265,30 +276,33 @@ class FlatlandBenchmarksOrchestrator:
           status_post_failure)
 
       pkl_path = self.load_scenario_data(scenario_id)
-      ret = self._run_submission_container_for_scenario(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
+      ret, termination_cause = self._run_submission_scenario_container(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
+      if termination_cause is not None:
+        logger.warning(
+          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. {termination_cause}")
+        break
       scenario_running_time = ret["running_time"]
       summed_scenario_running_time += scenario_running_time
+
       if self.running_time_limit is not None and scenario_running_time > self.running_time_limit:
+        termination_cause = f"The scenario running time was exceeded : {scenario_running_time:.2f}s > {self.running_time_limit:.2f}s."
         logger.warning(
-          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The scenario running time was exceeded : {scenario_running_time:.2f}s > {self.running_time_limit:.2f}s.")
-        raise TaskExecutionError(
-          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {scenario_running_time:.2f}s exceeded running time limit {self.running_time_limit:.2f}s.",
-          ret)
+          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. {termination_cause}")
+        break
       if self.total_running_time_limit is not None and summed_scenario_running_time > self.total_running_time_limit:
+        termination_cause = f"Running time {summed_scenario_running_time:.2f}s exceeded total running time limit {self.total_running_time_limit:.2f}s."
         logger.warning(
-          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. The scenario total running time was exceeded : {summed_scenario_running_time:.2f}s > {self.total_running_time_limit:.2f}s.")
-        raise TaskExecutionError(
-          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because running time {summed_scenario_running_time:.2f}s exceeded total running time limit {self.total_running_time_limit:.2f}s.",
-          ret)
+          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. {termination_cause}")
+        break
 
       logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
       prefix = f"{S3_UPLOAD_ROOT}{submission_id}/{test_id}/{scenario_id}"
       scenario_results, success_rate = self._evaluate_scenario_results_on_s3_locally(prefix, scenario_id, submission_id, test_id)
-      mean_success_rate_of_test += success_rate
+      success_rate_of_test.append(success_rate)
       logger.info(f"\\\\ END evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
       test_results[scenario_id] = scenario_results
-    mean_success_rate_of_test /= len(self.TEST_TO_SCENARIO_IDS[test_id])
-    return test_results, mean_success_rate_of_test, summed_scenario_running_time
+
+    return test_results, success_rate_of_test, summed_scenario_running_time, termination_cause
 
   def _evaluate_scenario_results_on_s3_locally(self, prefix: str, scenario_id, submission_id: str, test_id: str) -> tuple[Any, dict[str, float | Any]]:
     """
