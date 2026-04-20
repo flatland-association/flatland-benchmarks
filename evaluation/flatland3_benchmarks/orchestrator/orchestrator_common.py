@@ -211,9 +211,9 @@ class FlatlandBenchmarksOrchestrator:
     results = {test_id: {} for test_id in tests}
     summed_scenario_running_time = 0
     for test_id in tests:
-      test_results, mean_success_rate_of_test, summed_scenario_running_time = self._run_submission_test(fab, kwargs, submission_data_url, submission_id,
+      test_results, mean_success_rate_of_test, summed_scenario_running_time = self._run_submission_test(fab, submission_data_url, submission_id,
                                                                                                         summed_scenario_running_time,
-                                                                                                        test_id)
+                                                                                                        test_id, **kwargs)
       results[test_id] = test_results
       if self.percentage_complete_threshold is not None and mean_success_rate_of_test < self.percentage_complete_threshold:
         logger.warning(
@@ -233,18 +233,19 @@ class FlatlandBenchmarksOrchestrator:
       f"\\\\ END running submission submission_id={submission_id}")
     return results
 
-  def _run_submission_test(self, fab: DefaultApi, kwargs: dict[str, Any], submission_data_url: str, submission_id: str,
-                           summed_scenario_running_time: int, test_id: str) -> Tuple[dict, float, float]:
+  def _run_submission_test(self, fab: DefaultApi, submission_data_url: str, submission_id: str,
+                           summed_scenario_running_time: int, test_id: str, **kwargs) -> Tuple[dict, float, float]:
     """
     Run submission for single test
     Parameters
     ----------
     fab
-    kwargs
     submission_data_url
     submission_id
     summed_scenario_running_time
     test_id
+    kwargs
+      passed on to `_run_submission_container_for_scenario`
 
     Returns
     -------
