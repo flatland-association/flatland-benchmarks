@@ -211,8 +211,9 @@ class FlatlandBenchmarksOrchestrator:
     results = {test_id: {} for test_id in tests}
     summed_scenario_running_time = 0
     for test_id in tests:
-      test_results, mean_success_rate_of_test = self._run_submission_test(fab, kwargs, submission_data_url, submission_id, summed_scenario_running_time,
-                                                                          test_id)
+      test_results, mean_success_rate_of_test, summed_scenario_running_time = self._run_submission_test(fab, kwargs, submission_data_url, submission_id,
+                                                                                                        summed_scenario_running_time,
+                                                                                                        test_id)
       results[test_id] = test_results
       if self.percentage_complete_threshold is not None and mean_success_rate_of_test < self.percentage_complete_threshold:
         logger.warning(
@@ -233,7 +234,7 @@ class FlatlandBenchmarksOrchestrator:
     return results
 
   def _run_submission_test(self, fab: DefaultApi, kwargs: dict[str, Any], submission_data_url: str, submission_id: str,
-                           summed_scenario_running_time: int, test_id: str) -> Tuple[dict, float]:
+                           summed_scenario_running_time: int, test_id: str) -> Tuple[dict, float, float]:
     """
     Run submission for single test
     Parameters
@@ -247,7 +248,7 @@ class FlatlandBenchmarksOrchestrator:
 
     Returns
     -------
-    test_results, mean_success_rate_of_test: Tuple[dict,float]
+    test_results, mean_success_rate_of_test: Tuple[dict,float,float]
     """
     mean_success_rate_of_test = 0
     test_results = {}
@@ -286,7 +287,7 @@ class FlatlandBenchmarksOrchestrator:
       logger.info(f"\\\\ END evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
       test_results[scenario_id] = scenario_results
     mean_success_rate_of_test /= len(self.TEST_TO_SCENARIO_IDS[test_id])
-    return test_results, mean_success_rate_of_test
+    return test_results, mean_success_rate_of_test, summed_scenario_running_time
 
   def _evaluate_scenario_results_on_s3_locally(self, prefix: str, scenario_id, submission_id: str, test_id: str) -> tuple[Any, dict[str, float | Any]]:
     """
