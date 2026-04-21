@@ -9,7 +9,6 @@ from pathlib import Path
 
 from dotenv import dotenv_values
 from kubernetes import config
-
 from orchestrator_job import trigger_orchestrator_job
 
 _ENV_PATH = Path(__file__).resolve().parent / ".env"
@@ -40,6 +39,7 @@ logging.basicConfig(encoding='utf-8', level=logging.INFO)
 
 def test_trigger_orchestrator(
   submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
+  orchestrator_image="ghcr.io/flatland-association/fab-flatland3-benchmarks-orchestrator:587-decouple-queue-consumer",
 ):
   submission_id = str(uuid.uuid4())
   print(submission_id)
