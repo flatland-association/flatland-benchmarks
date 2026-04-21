@@ -18,6 +18,8 @@ ADD ./s3_utils.py ./s3_utils.py
 RUN python -m pip install -U -r requirements.txt
 
 ADD ./submission_job.yaml ./submission_job.yaml
+ADD ./orchestration_job.py ./orchestration_job.py
+ADD ./orchestration_job.yaml ./orchestration_job.yaml
 
 # configure runner
 USER runner
