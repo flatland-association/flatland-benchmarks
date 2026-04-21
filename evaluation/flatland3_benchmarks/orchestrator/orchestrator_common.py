@@ -245,7 +245,8 @@ class FlatlandBenchmarksOrchestrator:
     try:
       _fab = self._backend_application_flow(fab)
       _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                    SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value, message=str(termination_cause)))
+                                                    SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value, message=str(
+                                                      termination_cause) if termination_cause is not None else None))
     except Exception as status_post_failure:
       logger.warning(f"Could not post SUCCESS for submission_id={submission_id} with submission_data_url={submission_data_url} ", exc_info=status_post_failure)
     logger.info(
