@@ -118,14 +118,21 @@ class FlatlandBenchmarksOrchestrator:
               f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Status: {json.dumps(e.status, indent=4)}",
               exc_info=e)
           except Exception as logging_error:
-            logger.error(f"Could not log status {str(e.status)}", exc_info=e)
+            logger.error(f"Could not log status {str(e.status)}", exc_info=logging_error)
           _fab = self._backend_application_flow(fab)
           try:
             _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                          SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value, message=e.message))
+                                                          SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value, message=str(e.message)))
           except Exception as status_post_failure:
             logger.warning(f"Could not post specific FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ",
                            status_post_failure)
+            try:
+              _fab.submissions_submission_ids_statuses_post([submission_id],
+                                                            SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
+                                                                                                        message="General failure."))
+            except Exception as status_post_failure:
+              logger.warning(f"Could not post general FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ",
+                             status_post_failure)
         else:
           try:
             _fab.submissions_submission_ids_statuses_post([submission_id],
@@ -236,7 +243,7 @@ class FlatlandBenchmarksOrchestrator:
     try:
       _fab = self._backend_application_flow(fab)
       _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                    SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value, message=termination_cause))
+                                                    SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value, message=str(termination_cause)))
     except Exception as status_post_failure:
       logger.warning(f"Could not post SUCCESS for submission_id={submission_id} with submission_data_url={submission_data_url} ", status_post_failure)
     logger.info(
