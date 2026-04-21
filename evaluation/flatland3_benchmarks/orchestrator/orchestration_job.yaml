@@ -15,6 +15,7 @@ spec:
       activeDeadlineSeconds: 7200 # INSERTED
       # do not restart
       restartPolicy: Never
+      serviceAccountName: INSERTED
       containers:
         - name: f3-submission
           image: INSERTED

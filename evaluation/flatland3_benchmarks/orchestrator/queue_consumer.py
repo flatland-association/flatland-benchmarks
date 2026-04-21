@@ -1,7 +1,8 @@
 # based on https://github.com/codalab/codabench/blob/develop/orchestrator/orchestrator.py
+import json
 import logging
 
-from orchestrator_job import trigger_orchestrator_job
+from orchestration_job import trigger_orchestrator_job, _load_orchestration_config
 
 logger = logging.getLogger(__name__)
 # based on https://github.com/codalab/codabench/blob/develop/orchestrator/orchestrator.py
@@ -40,5 +41,19 @@ def setup_task_logger(logger, *args, **kwargs):
 @app.task(name=BENCHMARK_ID, bind=True)
 def queue_consumer(self, submission_data_url: str, tests: List[str] = None, **kwargs):
   submission_id = self.request.id
+  logger.info(f"// START received message for submission_id={submission_id}")
   config.load_incluster_config()
-  trigger_orchestrator_job(submission_id=submission_id, submission_data_url=submission_data_url, tests=tests, **kwargs)
+  _vars = {}
+  _vars["SUBMISSION_ID"] = submission_id
+  _vars["SUBMISSION_DATA_URL"] = submission_data_url
+  if tests is not None:
+    _vars["TESTS"] = ",".join(tests)
+
+  orch_config = _load_orchestration_config(_vars)
+  logger.info(f"// vars for submission_id={submission_id}: :\n{json.dumps(orch_config, indent=2)}")
+  try:
+    trigger_orchestrator_job(orch_config)
+  except Exception as e:
+    logger.info(f"\\ FAILED received message for submission_id={submission_id}")
+    raise e
+  logger.info(f"\\ END received message for submission_id={submission_id}")
