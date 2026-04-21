@@ -659,10 +659,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
   }
 
 
-# N.B. name to be used by send_task
-@app.task(name=BENCHMARK_ID, bind=True)
-def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwargs):
-  submission_id = self.request.id
+def main(submission_id: str = None, submission_data_url: str = None, tests: List[str] = None, **kwargs):
   config.load_incluster_config()
   # https://github.com/kubernetes-client/python/
   # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py
@@ -682,6 +679,15 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
     raise RuntimeError("Misconfiguration: AWS_SECRET_ACCESS_KEY must be set in the orchestrator")
   if not S3_BUCKET:
     raise RuntimeError("Misconfiguration: S3_BUCKET must be set in the orchestrator")
+
+  if submission_id is None:
+    submission_id = os.environ.get("SUBMISSION_ID")
+  if submission_data_url is None:
+    submission_data_url = os.environ.get("SUBMISSION_DATA_URL")
+  if tests is None:
+    tests = os.environ.get("TESTS")
+    if tests is not None:
+      tests = tests.split(",")
 
   FAB_API_URL = os.environ.get("FAB_API_URL")
   CLIENT_ID = os.environ.get("CLIENT_ID", 'fab-client-credentials')
@@ -728,3 +734,10 @@ def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwar
     tests=tests,
     **kwargs
   )
+
+
+# N.B. name to be used by send_task
+@app.task(name=BENCHMARK_ID, bind=True)
+def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwargs):
+  submission_id = self.request.id
+  main(submission_id=submission_id, submission_data_url=submission_data_url, tests=test, **kwargs)
