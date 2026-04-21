@@ -740,4 +740,4 @@ def main(submission_id: str = None, submission_data_url: str = None, tests: List
 @app.task(name=BENCHMARK_ID, bind=True)
 def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwargs):
   submission_id = self.request.id
-  main(submission_id=submission_id, submission_data_url=submission_data_url, tests=test, **kwargs)
+  main(submission_id=submission_id, submission_data_url=submission_data_url, tests=tests, **kwargs)
