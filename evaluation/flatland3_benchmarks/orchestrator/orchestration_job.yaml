@@ -21,7 +21,7 @@ spec:
           imagePullPolicy: Always
           imagePullSecrets:
             - name: default-secret
-          args: [ "python", "orchestrator_job.py" ]
+          args: [ "python", "orchestration_job.py" ]
           resources:
             requests:
               memory: "1Gi"

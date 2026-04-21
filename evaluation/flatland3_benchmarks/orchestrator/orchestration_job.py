@@ -1,3 +1,4 @@
+import json
 import logging
 
 from kubernetes.client import V1Job, V1JobList
@@ -16,17 +17,18 @@ from kubernetes import client, config
 
 
 def make_orchestration_job_definition(orchestrator_image: str, submission_id: str) -> dict:
+  # TODO add env submission_data_url etc.
   submission_job_path = Path(__file__).parent / "orchestration_job.yaml"
   with submission_job_path.open() as submission_job_file:
     orchestration_job_definition = yaml.safe_load(submission_job_file)
   orchestration_job_definition["metadata"]["labels"]["orchestration"] = submission_id
   orchestration_job_definition["metadata"]["name"] = f"orchestration-{submission_id}"
+  orchestration_job_definition["spec"]["template"]["metadata"]["labels"]["orchestration"] = submission_id
   container_definition = orchestration_job_definition["spec"]["template"]["spec"]["containers"][0]
 
-  orchestration_job_definition["spec"]["template"]["metadata"]["labels"]["orchestration"] = submission_id
-
   container_definition["image"] = orchestrator_image
-
+  container_definition["args"] = ["python", "orchestration_job.py"]
+  print(json.dumps(orchestration_job_definition, indent=4))
   return orchestration_job_definition
 
 
@@ -36,9 +38,9 @@ def trigger_orchestrator_job(submission_id: str,
                              orchestrator_image: str = None,
                              **kwargs):
   if kubernetes_namespace is None:
-    kubernetes_namespace = os.environ.get("KUBERNETES_NAMESPACE", "fab-int")
+    kubernetes_namespace = os.environ.get("KUBERNETES_NAMESPACE")
   if orchestrator_image is None:
-    orchestrator_image = os.environ.get("ORCHESTRATOR_IMAGE", "ghcr.io/flatland-association/fab-flatland3-benchmarks-orchestrator:572-failure-reason")
+    orchestrator_image = os.environ.get("ORCHESTRATOR_IMAGE")
 
   # https://github.com/kubernetes-client/python/
   # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py
@@ -62,7 +64,7 @@ def trigger_orchestrator_job(submission_id: str,
     any_failed = any_failed or (job_status_conditions_ is not None and 'Complete' not in job_status_conditions_)
     end_time = time.time()
     if any_failed:
-      logger.error(job.to_dict())
+      logger.error(json.dumps(job.to_dict(), indent=4), )
       logger.error(f"\\\\ FAILED orchestration for submission submission_id={submission_id}. Took {end_time - start_time_job:.2f} seconds")
       raise RuntimeError(f"Orchestration for submission submission_id={submission_id} failed. Took {end_time - start_time_job:.2f} seconds. {job.to_dict()}")
     if all_done:

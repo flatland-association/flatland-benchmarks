@@ -9,7 +9,8 @@ from pathlib import Path
 
 from dotenv import dotenv_values
 from kubernetes import config
-from orchestrator_job import trigger_orchestrator_job
+
+from orchestration_job import trigger_orchestrator_job
 
 _ENV_PATH = Path(__file__).resolve().parent / ".env"
 _ENV_VARS = dotenv_values(_ENV_PATH)
@@ -47,5 +48,10 @@ def test_trigger_orchestrator(
   trigger_orchestrator_job(
     submission_id=submission_id,
     submission_data_url=submission_data_url,
-    kubernetes_namespace=KUBERNETES_NAMESPACE
+    orchestrator_image=orchestrator_image,
+    kubernetes_namespace=KUBERNETES_NAMESPACE,
   )
+
+
+if __name__ == '__main__':
+  test_trigger_orchestrator()
