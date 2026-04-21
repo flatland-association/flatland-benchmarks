@@ -115,12 +115,12 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
     return {"running_time": end_time_running - start_time_running}
 
   # docker implementation has volume mapped into submission container - data is uploaded to S3 by orchestrator itself
-  def _run_submission(self,
-                      test_id,
-                      scenario_id,
-                      submission_data_url,
-                      pkl_path,
-                      **kwargs):
+  def _run_submission_scenario_container(self,
+                                         test_id,
+                                         scenario_id,
+                                         submission_data_url,
+                                         pkl_path,
+                                         **kwargs):
     submission_id = self.submission_id
     env_path = self.load_scenario_data(scenario_id)
 
@@ -143,7 +143,7 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
     self.upload_and_empty_local(test_id, submission_id, scenario_id)
     logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}.")
     logger.debug(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
-    return ret
+    return ret, None
 
   def upload_and_empty_local(self, test_id: str, submission_id: str, scenario_id: str):
     data_volume = Path(DATA_VOLUME_MOUNTPATH)

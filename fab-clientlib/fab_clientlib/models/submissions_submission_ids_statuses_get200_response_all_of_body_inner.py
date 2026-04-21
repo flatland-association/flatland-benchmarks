@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from uuid import UUID
 from typing import Optional, Set
@@ -30,8 +30,19 @@ class SubmissionsSubmissionIdsStatusesGet200ResponseAllOfBodyInner(BaseModel):
     """ # noqa: E501
     submission_id: Optional[UUID] = Field(default=None, description="ID of submission.")
     status: Optional[StrictStr] = Field(default=None, description="Submission status.")
+    message: Optional[StrictStr] = Field(default=None, description="Submission status message.")
     timestamp: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["submission_id", "status", "timestamp"]
+    __properties: ClassVar[List[str]] = ["submission_id", "status", "message", "timestamp"]
+
+    @field_validator('status')
+    def status_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['SUBMITTED', 'STARTED', 'SUCCESS', 'FAILURE']):
+            raise ValueError("must be one of enum values ('SUBMITTED', 'STARTED', 'SUCCESS', 'FAILURE')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -86,6 +97,7 @@ class SubmissionsSubmissionIdsStatusesGet200ResponseAllOfBodyInner(BaseModel):
         _obj = cls.model_validate({
             "submission_id": obj.get("submission_id"),
             "status": obj.get("status"),
+            "message": obj.get("message"),
             "timestamp": obj.get("timestamp")
         })
         return _obj

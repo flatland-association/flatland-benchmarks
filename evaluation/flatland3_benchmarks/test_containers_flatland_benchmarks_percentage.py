@@ -70,7 +70,8 @@ def test_containers_fixture_percentage_complete():
   "tests,expected_test_ids,expected_primary_scenario_scores,expected_primary_test_scores,expected_secondary_scenario_scores,expected_secondary_test_scores",
   [
     (["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"],
-     ["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"], [[0.6653061224489796, 1], [None, None, None]],
+     ["4ecdb9f4-e2ff-41ff-9857-abe649c19c50", "5206f2ee-d0a9-405b-8da3-93625e169811"],
+     [[0.6653061224489796, 1], [None, None, None]],
      [1.6653061224489796, None],
      [[0, 1], [None, None, None]], [0.5, None]),
   ],

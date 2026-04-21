@@ -6,6 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** | New submission status. | 
+**message** | **str** | Submission status message. | [optional] 
 
 ## Example
 
