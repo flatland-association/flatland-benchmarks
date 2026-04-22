@@ -4,7 +4,9 @@ import logging
 import tempfile
 import time
 import traceback
+import uuid
 from abc import abstractmethod
+from datetime import date, datetime
 from enum import Enum
 from pathlib import Path
 from typing import Dict, Optional, Any, Tuple
@@ -116,7 +118,7 @@ class FlatlandBenchmarksOrchestrator:
         if isinstance(submission_error, TaskExecutionError):
           try:
             logger.error(
-              f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Status: {json.dumps(submission_error.status, indent=4)}",
+              f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Status: {pretty_dumps_dict(submission_error.status)}",
               exc_info=submission_error)
           except Exception as logging_error:
             logger.error(f"Could not log status {str(submission_error.status)}", exc_info=logging_error)
@@ -383,3 +385,22 @@ def backend_application_flow(
     client_secret=client_secret,
   )
   return token
+
+
+# https://stackoverflow.com/questions/36588126/uuid-is-not-json-serializable
+class DictEncoder(json.JSONEncoder):
+  def default(self, obj):
+    if isinstance(obj, uuid.UUID):
+      # if the obj is uuid, we simply return the value of uuid
+      return obj.hex
+    if isinstance(obj, (datetime, date)):
+      return obj.isoformat()
+    return json.JSONEncoder.default(self, obj)
+
+
+def pretty_print_dict(d):
+  print(json.dumps(d, indent=4, cls=DictEncoder))
+
+
+def pretty_dumps_dict(d):
+  return json.dumps(d, indent=4, cls=DictEncoder)

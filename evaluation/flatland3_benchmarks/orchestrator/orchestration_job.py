@@ -1,9 +1,9 @@
-import json
 import logging
 
 from kubernetes.client import V1Job, V1JobList, V1PodList, V1Pod, V1PodStatus
 
 from orchestrator import K8sFlatlandBenchmarksOrchestrator
+from orchestrator_common import pretty_dumps_dict
 
 logger = logging.getLogger(__name__)
 # based on https://github.com/codalab/codabench/blob/develop/orchestrator/orchestrator.py
@@ -32,7 +32,7 @@ def make_orchestration_job_definition(orch_config: Dict[str, str]) -> dict:
   container_definition["image"] = orchestrator_image
   container_definition["args"] = ["python", "orchestration_job.py"]
   container_definition["env"] = [{"name": k.upper(), "value": str(v)} for k, v in orch_config.items() if v is not None]
-  print(json.dumps(orchestration_job_definition, indent=4))
+  print(pretty_dumps_dict(orchestration_job_definition))
   return orchestration_job_definition
 
 
@@ -85,16 +85,16 @@ def trigger_orchestrator_job(orch_config):
         ret["log"] = f"Failed to fetch log from pod for submission_id={submission_id} with submission_data_url={submission_data_url}. {e}"
         logger.warning(f"Failed to fetch events or log from pod for submission_id={submission_id} with submission_data_url={submission_data_url}.", exc_info=e)
       if any_failed:
-        logger.error(json.dumps(job.to_dict(), indent=4, default=json_serial), )
-        logger.error(json.dumps(ret["events"], indent=4, default=json_serial), )
+        logger.error(pretty_dumps_dict(job.to_dict()), )
+        logger.error(pretty_dumps_dict(ret["events"]), )
         logger.error("\n".join(ret["log"].split("\\n")), )
         logger.error(
           f"\\\\ FAILED orchestration for submission submission_id={submission_id}: {job_status_conditions_}. Took {end_time - start_time_job:.2f} seconds")
         raise RuntimeError(
           f"Orchestration for submission submission_id={submission_id} failed: {job_status_conditions_}. Took {end_time - start_time_job:.2f} seconds. {job.to_dict()}")
       if all_done:
-        logger.info(json.dumps(job.to_dict(), indent=4, default=json_serial), )
-        logger.info(json.dumps(ret["events"], indent=4, default=json_serial), )
+        logger.info(pretty_dumps_dict(job.to_dict()), )
+        logger.info(pretty_dumps_dict(ret["events"]), )
         logger.info("\n".join(ret["log"].split("\\n")), )
         logger.info(
           f"\\\\ END orchestration for submission submission_id={submission_id}: {job_status_conditions_}. Took {end_time - start_time_job:.2f} seconds.")
@@ -118,17 +118,6 @@ def main():
     submission_data_url=orch_config["submission_data_url"],
     tests=orch_config["tests"],
   )
-
-
-from datetime import date, datetime
-
-
-def json_serial(obj):
-  """JSON serializer for objects not serializable by default json code"""
-
-  if isinstance(obj, (datetime, date)):
-    return obj.isoformat()
-  raise TypeError("Type %s not serializable" % type(obj))
 
 
 def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
