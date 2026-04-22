@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **benchmark_id** | **str** | ID of benchmark this submission belongs to. | 
 **submission_data_url** | **str** | URL of submission executable image. | [optional] 
 **code_repository** | **str** | URL of submission code repository. | [optional] 
+**tags** | **str** | tags. | [optional] 
 **test_ids** | **List[str]** | IDs of tests to run. | 
 
 ## Example

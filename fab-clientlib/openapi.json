@@ -1171,6 +1171,10 @@
                     "type": "string",
                     "description": "URL of submission code repository."
                   },
+                  "tags": {
+                    "type": "string",
+                    "description": "tags."
+                  },
                   "test_ids": {
                     "type": "array",
                     "items": {
@@ -1283,6 +1287,9 @@
                               "code_repository": {
                                 "type": "string"
                               },
+                              "tags": {
+                                "type": "string"
+                              },
                               "submitted_at": {
                                 "type": "string"
                               },
@@ -1299,6 +1306,95 @@
                               "published": {
                                 "type": "boolean"
                               }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/submissions/skip_enqueue": {
+      "post": {
+        "description": "Inserts new submission without enqueuing evaluation (for testing purposes).",
+        "security": [
+          {
+            "oauth2": [
+              "user"
+            ]
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Display name of submission."
+                  },
+                  "benchmark_id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "description": "ID of benchmark this submission belongs to."
+                  },
+                  "submission_data_url": {
+                    "type": "string",
+                    "description": "URL of submission executable image."
+                  },
+                  "code_repository": {
+                    "type": "string",
+                    "description": "URL of submission code repository."
+                  },
+                  "tags": {
+                    "type": "string",
+                    "description": "tags."
+                  },
+                  "test_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "description": "IDs of tests to run."
+                  }
+                },
+                "required": [
+                  "name",
+                  "benchmark_id",
+                  "test_ids"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/ApiResponse"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "body": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "format": "uuid",
+                              "description": "ID of submission."
                             }
                           }
                         }
@@ -1365,6 +1461,9 @@
                                 "type": "string"
                               },
                               "code_repository": {
+                                "type": "string"
+                              },
+                              "tags": {
                                 "type": "string"
                               },
                               "submitted_at": {
@@ -1465,6 +1564,9 @@
                                 "type": "string"
                               },
                               "code_repository": {
+                                "type": "string"
+                              },
+                              "tags": {
                                 "type": "string"
                               },
                               "submitted_at": {
@@ -1586,6 +1688,9 @@
                                 "type": "string"
                               },
                               "code_repository": {
+                                "type": "string"
+                              },
+                              "tags": {
                                 "type": "string"
                               },
                               "submitted_at": {

@@ -24,6 +24,7 @@ Method | HTTP request | Description
 [**submissions_get**](DefaultApi.md#submissions_get) | **GET** /submissions | 
 [**submissions_own_get**](DefaultApi.md#submissions_own_get) | **GET** /submissions/own | 
 [**submissions_post**](DefaultApi.md#submissions_post) | **POST** /submissions | 
+[**submissions_skip_enqueue_post**](DefaultApi.md#submissions_skip_enqueue_post) | **POST** /submissions/skip_enqueue | 
 [**submissions_submission_ids_get**](DefaultApi.md#submissions_submission_ids_get) | **GET** /submissions/{submission_ids} | 
 [**submissions_submission_ids_patch**](DefaultApi.md#submissions_submission_ids_patch) | **PATCH** /submissions/{submission_ids} | 
 [**submissions_submission_ids_statuses_get**](DefaultApi.md#submissions_submission_ids_statuses_get) | **GET** /submissions/{submission_ids}/statuses | 
@@ -1312,6 +1313,79 @@ with fab_clientlib.ApiClient(configuration) as api_client:
         pprint(api_response)
     except Exception as e:
         print("Exception when calling DefaultApi->submissions_post: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **submissions_post_request** | [**SubmissionsPostRequest**](SubmissionsPostRequest.md)|  | 
+
+### Return type
+
+[**SubmissionsPost200Response**](SubmissionsPost200Response.md)
+
+### Authorization
+
+[oauth2](../README.md#oauth2)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Created. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **submissions_skip_enqueue_post**
+> SubmissionsPost200Response submissions_skip_enqueue_post(submissions_post_request)
+
+Inserts new submission without enqueuing evaluation (for testing purposes).
+
+### Example
+
+* OAuth Authentication (oauth2):
+
+```python
+import fab_clientlib
+from fab_clientlib.models.submissions_post200_response import SubmissionsPost200Response
+from fab_clientlib.models.submissions_post_request import SubmissionsPostRequest
+from fab_clientlib.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = fab_clientlib.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+configuration.access_token = os.environ["ACCESS_TOKEN"]
+
+# Enter a context with an instance of the API client
+with fab_clientlib.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = fab_clientlib.DefaultApi(api_client)
+    submissions_post_request = fab_clientlib.SubmissionsPostRequest() # SubmissionsPostRequest | 
+
+    try:
+        api_response = api_instance.submissions_skip_enqueue_post(submissions_post_request)
+        print("The response of DefaultApi->submissions_skip_enqueue_post:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling DefaultApi->submissions_skip_enqueue_post: %s\n" % e)
 ```
 
 

@@ -104,6 +104,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**submissions_get**](docs/DefaultApi.md#submissions_get) | **GET** /submissions | 
 *DefaultApi* | [**submissions_own_get**](docs/DefaultApi.md#submissions_own_get) | **GET** /submissions/own | 
 *DefaultApi* | [**submissions_post**](docs/DefaultApi.md#submissions_post) | **POST** /submissions | 
+*DefaultApi* | [**submissions_skip_enqueue_post**](docs/DefaultApi.md#submissions_skip_enqueue_post) | **POST** /submissions/skip_enqueue | 
 *DefaultApi* | [**submissions_submission_ids_get**](docs/DefaultApi.md#submissions_submission_ids_get) | **GET** /submissions/{submission_ids} | 
 *DefaultApi* | [**submissions_submission_ids_patch**](docs/DefaultApi.md#submissions_submission_ids_patch) | **PATCH** /submissions/{submission_ids} | 
 *DefaultApi* | [**submissions_submission_ids_statuses_get**](docs/DefaultApi.md#submissions_submission_ids_statuses_get) | **GET** /submissions/{submission_ids}/statuses | 
