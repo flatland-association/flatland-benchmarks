@@ -32,7 +32,7 @@ class Status(Enum):
 
 
 class TaskExecutionError(Exception):
-  def __init__(self, message: str, status: Dict):
+  def __init__(self, message: str, status: Dict=None):
     super().__init__(message)
     self.message = message
     self.status = status
@@ -217,7 +217,7 @@ class FlatlandBenchmarksOrchestrator:
     """
     if tests is None:
       # TODO fallback to all tests - needs splitting of the orchestrator or enhanced configuration, one per benchmark
-      raise TaskExecutionError("Failed running submission_id={submission_id},tests={tests} as not tests passed.")
+      raise TaskExecutionError("Failed running submission_id={submission_id},tests={tests} as not tests passed.",)
 
     logger.info(f"// START running submission submission_id={submission_id},tests={tests}")
     results = {test_id: {} for test_id in tests}

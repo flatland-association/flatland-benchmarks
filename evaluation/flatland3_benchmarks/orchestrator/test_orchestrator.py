@@ -177,7 +177,7 @@ def test_submission_status_general_failure_reported():
   orchestrator._run_submission_scenario_container = _fail
   fab = mock()
   with pytest.raises(Exception):
-    orchestrator.orchestrator(submission_data_url="funny", fab=fab)
+    orchestrator.orchestrator(submission_data_url="funny", fab=fab, tests=["fc8f5fb1-4525-4b4f-a022-d3d7800097dc"])
 
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
                                                                 SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value, message=None))
@@ -209,7 +209,7 @@ def test_submission_status_specific_failure_reported():
   orchestrator._run_submission_scenario_container = _fail
   fab = mock()
   with pytest.raises(Exception):
-    orchestrator.orchestrator(submission_data_url="funny", fab=fab)
+    orchestrator.orchestrator(submission_data_url="funny", fab=fab , tests=["fc8f5fb1-4525-4b4f-a022-d3d7800097dc"])
 
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
                                                                 SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value, message=None))
@@ -240,7 +240,7 @@ def test_submission_status_success_reported():
   when(client).list_objects_v2(Bucket=None, Prefix=any).thenReturn({'Contents': None})
   orchestrator._extract_stats_from_trajectory = lambda *args, **kwargs: (0.11, 0.22)
   fab = mock()
-  orchestrator.orchestrator(submission_data_url="funny", fab=fab)
+  orchestrator.orchestrator(submission_data_url="funny", fab=fab, tests=["fc8f5fb1-4525-4b4f-a022-d3d7800097dc"])
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
                                                                 SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value, message=None))
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
