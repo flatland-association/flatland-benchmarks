@@ -165,23 +165,9 @@ def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
     WAIT_FOR_POD_TO_START_LIMIT = int(WAIT_FOR_POD_TO_START_LIMIT)
 
   orch_config = dict(
+    # args for orchestration job (passed on from queue consumer):
     submission_id=submission_id,
     kubernetes_namespace=_require_config("KUBERNETES_NAMESPACE", "fab-int"),
-    active_deadline_seconds=int(os.getenv("ACTIVE_DEADLINE_SECONDS", "7200")),
-    submissions_pvc=_require_config("SUBMISSIONS_PVC", "fab-int-submissions"),
-    environments_pvc=_require_config("ENVIRONMENTS_PVC", "fab-int-data"),
-    environments_zip=_require_config("ENVIRONMENTS_ZIP", "environments.zip"),
-    k8s_resource_allocation=_require_config("K8S_RESOURCE_ALLOCATION",
-                                            '{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}'),
-    additional_submission_args=_require_config("ADDITIONAL_SUBMISSION_ARGS", None, True),
-    aws_endpoint_url=AWS_ENDPOINT_URL,
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-    s3_bucket=S3_BUCKET,
-    fab_api_url=FAB_API_URL,
-    client_id=CLIENT_ID,
-    client_secret=CLIENT_SECRET,
-    token_url=TOKEN_URL,
     percentage_complete_threshold=PERCENTAGE_COMPLETE_THRESHOLD,
     running_time_limit=RUNNING_TIME_LIMIT,
     total_running_time_limit=TOTAL_RUNNING_TIME_LIMIT,
@@ -191,6 +177,22 @@ def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
     tests=tests,
     orchestrator_image=_require_config("ORCHESTRATOR_IMAGE"),
     service_account_name=_require_config("SERVICE_ACCOUNT_NAME"),
+    aws_endpoint_url=AWS_ENDPOINT_URL,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    s3_bucket=S3_BUCKET,
+    fab_api_url=FAB_API_URL,
+    client_id=CLIENT_ID,
+    client_secret=CLIENT_SECRET,
+    token_url=TOKEN_URL,
+
+    # args for submission job (passed on from orchestration job):
+    active_deadline_seconds=int(os.getenv("ACTIVE_DEADLINE_SECONDS", "7200")),
+    submissions_pvc=_require_config("SUBMISSIONS_PVC", "fab-int-submissions"),
+    environments_pvc=_require_config("ENVIRONMENTS_PVC", "fab-int-data"),
+    environments_zip=_require_config("ENVIRONMENTS_ZIP", "environments.zip"),
+    k8s_resource_allocation=_require_config("K8S_RESOURCE_ALLOCATION", '{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}'),
+    additional_submission_args=_require_config("ADDITIONAL_SUBMISSION_ARGS", None, True),
   )
   return orch_config
 
