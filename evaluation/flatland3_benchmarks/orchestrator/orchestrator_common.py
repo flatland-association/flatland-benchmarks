@@ -32,7 +32,7 @@ class Status(Enum):
 
 
 class TaskExecutionError(Exception):
-  def __init__(self, message: str, status: Dict=None):
+  def __init__(self, message: str, status: Dict = None):
     super().__init__(message)
     self.message = message
     self.status = status
@@ -96,12 +96,7 @@ class FlatlandBenchmarksOrchestrator:
     try:
       submission_id = self.submission_id
       logger.info(f"// START task submission_id={submission_id} with submission_data_url={submission_data_url}.")
-      try:
-        _fab = self._backend_application_flow(fab)
-        _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
-      except Exception as status_post_failure:
-        logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ",
-                       exc_info=status_post_failure)
+      _fab = self._post_submission_status_started(fab, submission_data_url, submission_id)
 
       start_time = time.time()
       results, termination_cause = self.run_submission(submission_id, submission_data_url, tests, fab=fab, **kwargs)
@@ -122,31 +117,42 @@ class FlatlandBenchmarksOrchestrator:
               exc_info=submission_error)
           except Exception as logging_error:
             logger.error(f"Could not log status {str(submission_error.status)}", exc_info=logging_error)
-          _fab = self._backend_application_flow(fab)
-          try:
-            _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                          SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
-                                                                                                      message=str(submission_error.message)))
-          except Exception as status_post_failure:
-            logger.warning(f"Could not post specific FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ",
-                           exc_info=status_post_failure)
-            try:
-              _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                            SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
-                                                                                                        message="General failure."))
-            except Exception as status_post_failure:
-              logger.warning(f"Could not post general FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ",
-                             exc_info=status_post_failure)
+          self._post_submission_status_failed_with_specific_failure(fab, submission_data_url, submission_error, submission_id)
         else:
-          try:
-            _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                          SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
-                                                                                                      message="General failure."))
-          except Exception as status_post_failure:
-            logger.warning(f"Could not post general FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ",
-                           exc_info=status_post_failure)
+          self._post_submission_status_failed_with_general_failure(fab, submission_data_url, submission_id)
       finally:
         raise submission_error
+
+  def _post_submission_status_failed_with_specific_failure(self, fab: DefaultApi | None, submission_data_url: str, submission_error: TaskExecutionError,
+                                                           submission_id: str):
+    try:
+      _fab = self._backend_application_flow(fab)
+      _fab.submissions_submission_ids_statuses_post([submission_id],
+                                                    SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
+                                                                                                message=str(submission_error.message)))
+    except Exception as status_post_failure:
+      logger.warning(f"Could not post specific FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ",
+                     exc_info=status_post_failure)
+      self._post_submission_status_failed_with_general_failure(_fab, submission_data_url, submission_id)
+
+  def _post_submission_status_started(self, fab: DefaultApi | None, submission_data_url: str, submission_id: str) -> DefaultApi:
+    try:
+      _fab = self._backend_application_flow(fab)
+      _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
+    except Exception as status_post_failure:
+      logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ",
+                     exc_info=status_post_failure)
+    return _fab
+
+  def _post_submission_status_failed_with_general_failure(self, fab: DefaultApi, submission_data_url: str, submission_id: str):
+    try:
+      _fab = self._backend_application_flow(fab)
+      _fab.submissions_submission_ids_statuses_post([submission_id],
+                                                    SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
+                                                                                                message="General failure."))
+    except Exception as status_post_failure:
+      logger.warning(f"Could not post general FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ",
+                     exc_info=status_post_failure)
 
   def _upload_results_for_submission(self, fab: DefaultApi | None, results: dict, submission_id: str) -> DefaultApi:
     try:
@@ -217,7 +223,7 @@ class FlatlandBenchmarksOrchestrator:
     """
     if tests is None:
       # TODO fallback to all tests - needs splitting of the orchestrator or enhanced configuration, one per benchmark
-      raise TaskExecutionError("Failed running submission_id={submission_id},tests={tests} as not tests passed.",)
+      raise TaskExecutionError("Failed running submission_id={submission_id},tests={tests} as not tests passed.", )
 
     logger.info(f"// START running submission submission_id={submission_id},tests={tests}")
     results = {test_id: {} for test_id in tests}
