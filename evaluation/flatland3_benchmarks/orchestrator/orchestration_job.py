@@ -32,6 +32,7 @@ def make_orchestration_job_definition(orch_config: Dict[str, str]) -> dict:
   container_definition["image"] = orchestrator_image
   container_definition["args"] = ["python", "orchestration_job.py"]
   container_definition["env"] = [{"name": k.upper(), "value": str(v)} for k, v in orch_config.items() if v is not None]
+  container_definition["env"].append({"name": "LOG_LEVEL", "value": os.getenv("LOG_LEVEL", "INFO")})
   print(pretty_dumps_dict(orchestration_job_definition))
   return orchestration_job_definition
 
@@ -199,4 +200,7 @@ def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
 
 
 if __name__ == '__main__':
+  # https://docs.python.org/3/library/logging.html#logrecord-attributes
+  logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"),
+                      format=os.getenv("LOG_FORMAT", "[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] - %(message)s"))
   main()
