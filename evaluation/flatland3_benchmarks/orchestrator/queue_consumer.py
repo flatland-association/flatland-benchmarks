@@ -41,12 +41,13 @@ def setup_task_logger(logger, *args, **kwargs):
 @app.task(name=BENCHMARK_ID, bind=True)
 def queue_consumer(self, submission_data_url: str, tests: List[str] = None, **kwargs):
   submission_id = self.request.id
-  logger.info(f"// START received message for submission_id={submission_id}")
+  logger.info(f"// START received message for submission_id={submission_id},tests={tests}")
   config.load_incluster_config()
   _vars = {}
   _vars["SUBMISSION_ID"] = submission_id
   _vars["SUBMISSION_DATA_URL"] = submission_data_url
   if tests is not None:
+    # pass on to orchestration job as comma-separated env var
     _vars["TESTS"] = ",".join(tests)
 
   orch_config = _load_orchestration_config(_vars)

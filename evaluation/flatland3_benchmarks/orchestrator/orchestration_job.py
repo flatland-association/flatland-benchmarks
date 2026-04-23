@@ -141,8 +141,6 @@ def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
   submission_id = _require_config("SUBMISSION_ID")
   submission_data_url = _require_config("SUBMISSION_DATA_URL")
   tests = _require_config("TESTS", None, True)
-  if tests is not None:
-    tests = tests.split(",")
 
   FAB_API_URL = _require_config("FAB_API_URL")
   CLIENT_ID = _require_config("CLIENT_ID")
