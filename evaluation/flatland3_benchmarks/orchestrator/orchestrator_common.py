@@ -216,7 +216,8 @@ class FlatlandBenchmarksOrchestrator:
     results
     """
     if tests is None:
-      tests = list(self.TEST_TO_SCENARIO_IDS.keys())
+      # TODO fallback to all tests - needs splitting of the orchestrator or enhanced configuration, one per benchmark
+      raise TaskExecutionError("Failed running submission_id={submission_id},tests={tests} as not tests passed.")
 
     logger.info(f"// START running submission submission_id={submission_id},tests={tests}")
     results = {test_id: {} for test_id in tests}
