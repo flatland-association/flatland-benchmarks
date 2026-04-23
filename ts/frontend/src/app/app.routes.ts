@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router'
 import { ImpressumView, NotFoundView, PrivacyView } from '@flatland-association/flatland-ui'
+import { environment } from '../environments/environment'
 import { Breadcrumb, BreadcrumbData } from './components/breadcrumbs/breadcrumbs.component'
 import { AuthGuard } from './guards/auth.guard'
 import { BenchmarkView } from './views/benchmark/benchmark.view'
@@ -17,14 +18,21 @@ export const routes: Routes = [
     path: 'association',
     redirectTo: () => {
       location.href = 'https://flatland-association.org'
-      return 'home'
+      return location.pathname
     },
   },
   {
     path: 'hub',
     redirectTo: () => {
       location.href = 'https://www.flatland.cloud'
-      return 'home'
+      return location.pathname
+    },
+  },
+  {
+    path: 'api-docs',
+    redirectTo: () => {
+      location.href = `${environment.apiBase}/api-docs`
+      return location.pathname
     },
   },
   {
