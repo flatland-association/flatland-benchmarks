@@ -240,7 +240,7 @@ class FlatlandBenchmarksOrchestrator:
       if len(test_results) > 0:
         mean_success_rate_of_test = (sum(success_rate_of_test) / len(success_rate_of_test))
       if self.percentage_complete_threshold is not None and mean_success_rate_of_test < self.percentage_complete_threshold:
-        termination_cause = f"The mean percentage of done agents during the last test ({len(tests)} environments) was too low: {mean_success_rate_of_test} < {self.percentage_complete_threshold}"
+        termination_cause = f"The mean percentage of done agents during the last test {test_id} ({len(tests)} environments) was too low: {mean_success_rate_of_test} < {self.percentage_complete_threshold}"
         logger.warning(
           f"\\\\ END running submission submission_id={submission_id},test_id={test_id}. Termination cause: {termination_cause}. {results[test_id]}")
         break
@@ -284,15 +284,7 @@ class FlatlandBenchmarksOrchestrator:
     test_results = {}
     termination_cause = None
     for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
-      try:
-        _fab = self._backend_application_flow(fab)
-        _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                      SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
-                                                                                                  message=f"test {test_id} - scenario {scenario_id}"))
-      except Exception as status_post_failure:
-        logger.warning(
-          f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}",
-          exc_info=status_post_failure)
+      self._post_started(fab, scenario_id, submission_data_url, submission_id, test_id)
 
       pkl_path = self.load_scenario_data(scenario_id)
       ret, termination_cause = self._run_submission_scenario_container(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
@@ -304,12 +296,12 @@ class FlatlandBenchmarksOrchestrator:
       summed_scenario_running_time += scenario_running_time
 
       if self.running_time_limit is not None and scenario_running_time > self.running_time_limit:
-        termination_cause = f"The scenario running time was exceeded : {scenario_running_time:.2f}s > {self.running_time_limit:.2f}s."
+        termination_cause = f"The scenario running time was exceeded during evaluation of test_id={test_id}, scenario_id={scenario_id}: {scenario_running_time:.2f}s > {self.running_time_limit:.2f}s."
         logger.warning(
           f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. {termination_cause}")
         break
       if self.total_running_time_limit is not None and summed_scenario_running_time > self.total_running_time_limit:
-        termination_cause = f"Running time {summed_scenario_running_time:.2f}s exceeded total running time limit {self.total_running_time_limit:.2f}s."
+        termination_cause = f"Running time {summed_scenario_running_time:.2f}s exceeded total running time limit {self.total_running_time_limit:.2f}s during evaluation of test_id={test_id}, scenario_id={scenario_id}."
         logger.warning(
           f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. {termination_cause}")
         break
@@ -322,6 +314,17 @@ class FlatlandBenchmarksOrchestrator:
       test_results[scenario_id] = scenario_results
 
     return test_results, success_rate_of_test, summed_scenario_running_time, termination_cause
+
+  def _post_started(self, fab: DefaultApi, scenario_id, submission_data_url: str, submission_id: str, test_id: str):
+    try:
+      _fab = self._backend_application_flow(fab)
+      _fab.submissions_submission_ids_statuses_post([submission_id],
+                                                    SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
+                                                                                                message=f"test {test_id} - scenario {scenario_id}"))
+    except Exception as status_post_failure:
+      logger.warning(
+        f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}",
+        exc_info=status_post_failure)
 
   def _evaluate_scenario_results_on_s3_locally(self, prefix: str, scenario_id, submission_id: str, test_id: str) -> tuple[Any, dict[str, float | Any]]:
     """

@@ -20,6 +20,15 @@ from orchestrator_common import TaskExecutionError
 _ENV_PATH = Path(__file__).resolve().parent / ".env"
 _ENV_VARS = dotenv_values(_ENV_PATH)
 
+# ecml2026
+TEST_ID = '774bf9d6-7bd6-41da-925a-230658d481ec'
+SCENARIO_ID = "5eea815c-7500-42ff-b763-9012fae3ba0a"
+PKL_PATH = "level_1/level_1_scenario_1.pkl"
+
+# flatland3_benchmarks
+TEST_ID = "fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
+SCENARIO_ID = "289394a5-aa51-446c-9b62-c25101643790",
+PKL_PATH = "Test_00/Level_0.pkl",
 
 def _require_config(name: str) -> str:
   """Return a required configuration value from environment or .env, with a clear error if missing."""
@@ -44,9 +53,9 @@ logging.basicConfig(encoding='utf-8', level=logging.INFO)
 
 
 def test_success(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                 test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                 scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                 pkl_path="Test_00/Level_0.pkl",
+                 test_id=TEST_ID,
+                 scenario_id=SCENARIO_ID,
+                 pkl_path=PKL_PATH,
                  ):
   config.load_kube_config()
   core_api = client.CoreV1Api()
@@ -86,9 +95,9 @@ def test_success(submission_data_url="ghcr.io/flatland-association/flatland-base
 
 
 def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                       test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                       scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                       pkl_path="Test_00/Level_0.pkl",
+                       test_id=TEST_ID,
+                       scenario_id=SCENARIO_ID,
+                       pkl_path=PKL_PATH,
                        ):
   config.load_kube_config()
   core_api = client.CoreV1Api()
@@ -141,9 +150,9 @@ def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatlan
 
 
 def test_no_oom_respecting_memory_limit(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                                        test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                                        scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                                        pkl_path="Test_00/Level_0.pkl",
+                                        test_id=TEST_ID,
+                                        scenario_id=SCENARIO_ID,
+                                        pkl_path=PKL_PATH,
                                         ):
   config.load_kube_config()
   core_api = client.CoreV1Api()
@@ -189,9 +198,9 @@ def test_no_oom_respecting_memory_limit(submission_data_url="ghcr.io/flatland-as
 
 
 def test_pull_failure_active_deadline_fail_fast(submission_data_url="ghcr.io/flatland-association/does-not-exist:latest",
-                                                test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                                                scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                                                pkl_path="Test_00/Level_0.pkl",
+                                                test_id=TEST_ID,
+                                                scenario_id=SCENARIO_ID,
+                                                pkl_path=PKL_PATH,
                                                 active_deadline_seconds=55,
                                                 delta=5,
                                                 ):
@@ -236,9 +245,9 @@ def test_pull_failure_active_deadline_fail_fast(submission_data_url="ghcr.io/fla
 
 
 def test_pull_failure_start_time_fail_fast(submission_data_url="ghcr.io/flatland-association/does-not-exist:latest",
-                                           test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                                           scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                                           pkl_path="Test_00/Level_0.pkl",
+                                           test_id=TEST_ID,
+                                           scenario_id=SCENARIO_ID,
+                                           pkl_path=PKL_PATH,
                                            wait_for_pod_to_run_limit=20,
                                            delta=5,
                                            ):
@@ -282,9 +291,9 @@ def test_pull_failure_start_time_fail_fast(submission_data_url="ghcr.io/flatland
 
 
 def test_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                                             test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                                             scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                                             pkl_path="Test_00/Level_0.pkl",
+                                             test_id=TEST_ID,
+                                             scenario_id=SCENARIO_ID,
+                                             pkl_path=PKL_PATH,
                                              active_deadline_seconds=75,
                                              delta=10,
                                              running_time_limit=25,
@@ -331,7 +340,7 @@ def test_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/flatla
 
 
 def test_max_total_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                                                   test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
+                                                   test_id=TEST_ID,
                                                    active_deadline_seconds=55,
                                                    delta=10,
                                                    total_running_time_limit=10,
@@ -382,9 +391,9 @@ def test_max_total_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/
 
 
 def test_max_running_time_respected_succeeds(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                                             test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                                             scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                                             pkl_path="Test_00/Level_0.pkl",
+                                             test_id=TEST_ID,
+                                             scenario_id=SCENARIO_ID,
+                                             pkl_path=PKL_PATH,
                                              active_deadline_seconds=55,
                                              # allow for some overhead (starting the pod)
                                              upper_delta=10,
@@ -435,9 +444,9 @@ def test_max_running_time_respected_succeeds(submission_data_url="ghcr.io/flatla
 
 
 def test_max_memory_respected_succeeds(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                                       test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                                       scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                                       pkl_path="Test_00/Level_0.pkl",
+                                       test_id=TEST_ID,
+                                       scenario_id=SCENARIO_ID,
+                                       pkl_path=PKL_PATH,
                                        active_deadline_seconds=55,
                                        # allow for some overhead (starting the pod)
                                        upper_delta=10,
@@ -488,9 +497,9 @@ def test_max_memory_respected_succeeds(submission_data_url="ghcr.io/flatland-ass
 
 
 def test_egress_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                          test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                          scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                          pkl_path="Test_00/Level_0.pkl",
+                          test_id=TEST_ID,
+                          scenario_id=SCENARIO_ID,
+                          pkl_path=PKL_PATH,
                           ):
   config.load_kube_config()
   core_api = client.CoreV1Api()
@@ -538,9 +547,9 @@ def test_egress_fail_fast(submission_data_url="ghcr.io/flatland-association/flat
 
 
 def test_service_account_hardening(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-                                   test_id="fc8f5fb1-4525-4b4f-a022-d3d7800097dc",
-                                   scenario_id="289394a5-aa51-446c-9b62-c25101643790",
-                                   pkl_path="Test_00/Level_0.pkl",
+                                   test_id=TEST_ID,
+                                   scenario_id=SCENARIO_ID,
+                                   pkl_path=PKL_PATH,
                                    ):
   config.load_kube_config()
   core_api = client.CoreV1Api()

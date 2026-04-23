@@ -99,7 +99,7 @@ def test_tasks_failing():
       pkl_path="55/66",
     )
 
-  assert exc_info.value.message.startswith('Failed task with submission_id=1234 with submission_data_url=pancy.')
+  assert exc_info.value.message.startswith('Failed task with submission_id=1234 with submission_data_url=pancy for test_id=55, scenario_id=66.')
   ret = exc_info.value.status
 
   verify(batch_api, times=1).list_namespaced_job(...)

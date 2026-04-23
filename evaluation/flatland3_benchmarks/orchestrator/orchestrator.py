@@ -87,7 +87,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       pods: V1PodList = self.core_api.list_namespaced_pod(namespace=self.kubernetes_namespace, label_selector=f"job-name={job_name}")
       if len(pods.items) != 1:
         raise TaskExecutionError(
-          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. Could not gather stats there where {len(pods.items)} pods.")
+          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Could not gather stats there where {len(pods.items)} pods.")
       pod: V1Pod = pods.items[-1]
       pod_status: V1PodStatus = pod.status
 
@@ -101,7 +101,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       elapsed_time = ticks[pod_status.phase] - start_time_job
       if self.wait_for_pod_to_run_limit is not None and pod_status.phase in ["Pending", "Unknown"] and (elapsed_time > self.wait_for_pod_to_run_limit):
         raise TaskExecutionError(
-          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because {elapsed_time:.2f}s exceeded start time limit {self.wait_for_pod_to_run_limit}s.",
+          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Elapsed time {elapsed_time:.2f}s exceeded start time limit {self.wait_for_pod_to_run_limit}s.",
           ret)
 
       if "Running" in ticks and start_time_running is None:
@@ -109,7 +109,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       if "Running" in ticks and start_time_running is not None:
         running_time = time.time() - start_time_running
         if self.running_time_limit is not None and running_time > self.running_time_limit:
-          termination_cause = f"Running time {running_time:.2f}s exceeded running time limit {self.running_time_limit:.2f}s."
+          termination_cause = f"Running time {running_time:.2f}s exceeded running time limit {self.running_time_limit:.2f}s during evaluation of test_id={test_id}, scenario_id={scenario_id}."
 
       if "Running" in ticks and pod_status.phase != "Running" and end_time_running is None:
         end_time_running = ticks["Running"]
@@ -135,7 +135,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
           except:
             pass
           raise TaskExecutionError(
-            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. Some tasks jobs failed: {job_status_conditions_}. {additional_info}",
+            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Some tasks jobs failed: {job_status_conditions_}. {additional_info}",
             ret)
     logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}.")
     logger.debug(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
