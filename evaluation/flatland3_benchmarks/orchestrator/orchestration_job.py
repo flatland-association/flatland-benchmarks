@@ -109,6 +109,9 @@ def main():
   core_api = client.CoreV1Api()
 
   orch_config = _load_orchestration_config()
+  if orch_config["tests"] is not None:
+    # passed on from queue consumer to orchestration job as comma-separated env var
+    orch_config["tests"] = orch_config["tests"].split(",")
 
   return K8sFlatlandBenchmarksOrchestrator(
     batch_api=batch_api,
