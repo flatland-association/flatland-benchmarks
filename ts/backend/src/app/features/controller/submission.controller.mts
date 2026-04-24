@@ -336,14 +336,6 @@ export class SubmissionController extends Controller {
       )
     `
     })
-    // get tests
-    const tests = await sql.query<TestDefinitionRow>`
-        SELECT * FROM tests
-        WHERE id=ANY(${req.body.test_ids})
-        LIMIT ${req.body.test_ids!.length}
-      `
-    // if required (not all OFFLINE), send message with test names to evaluator
-
     logger.info('All tests are offline loop, no celery task sent.')
     this.respond(req, res, { id })
   }
