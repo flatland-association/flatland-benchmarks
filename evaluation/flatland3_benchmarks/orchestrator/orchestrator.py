@@ -24,7 +24,6 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                environments_zip: str,
                percentage_complete_threshold: float = None,
                k8s_resource_allocation: str = None,
-               additional_submission_args: str = None,
                wait_for_pod_to_start_limit: int = None,  # pod should be listed by now, i.e. pulling has started by now.
                wait_for_pod_to_run_limit: int = None,  # pod should have reached running state by now, i.e. pulling should be done by now
                **kwargs):
@@ -51,7 +50,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                                          **kwargs) -> Tuple[dict, Optional[str]]:
     submission_id = self.submission_id
 
-    logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+    logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}, pkl_path={pkl_path}")
     submission_definition = self._make_submission_definition(submission_data_url, test_id, scenario_id, pkl_path)
     job_name = submission_definition["metadata"]["name"]
 
@@ -138,7 +137,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
           raise TaskExecutionError(
             f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Some tasks jobs failed: {job_status_conditions_types}. {additional_info}",
             ret)
-    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}.")
+    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}, pkl_path={pkl_path}")
     logger.debug(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
     return ret, termination_cause
 
