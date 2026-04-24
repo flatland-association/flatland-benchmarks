@@ -1,6 +1,7 @@
 import type { Express } from 'express'
 import express from 'express'
 import { StatusCodes } from 'http-status-codes'
+import { TokenExpiredError } from 'jsonwebtoken'
 import supertest from 'supertest'
 import TestAgent from 'supertest/lib/agent'
 import { afterAll, beforeAll, describe, expect, MockInstance, test, vi } from 'vitest'
@@ -56,6 +57,9 @@ describe.sequential('Controller', () => {
       },
       { authorizedRoles: ['Admin'] },
     )
+    controller.attachGet('/test-jwt-expired' as '/mirror', (_req, _res) => {
+      throw new TokenExpiredError('', new Date(Date.now()))
+    })
     controller.attachGet('/test-server-error' as '/mirror', (req, res) => {
       controller.respondError(req, res, { text: 'server error' })
     })
@@ -79,12 +83,13 @@ describe.sequential('Controller', () => {
     expect(routes).toContain('/test-post')
     expect(routes).toContain('/test-patch')
     expect(routes).toContain('/test-auth-error')
+    expect(routes).toContain('/test-jwt-expired')
     expect(routes).toContain('/test-server-error')
     expect(routes).toContain('/test-catch')
     expect(routes).toContain('/test-undefined')
     expect(routes).toContain('/test-presence-check/:suite_ids')
     // no more than the the explicitly attached routes should be present
-    expect(routes).toHaveLength(8)
+    expect(routes).toHaveLength(9)
   })
 
   test.each([
@@ -95,6 +100,13 @@ describe.sequential('Controller', () => {
     {
       route: '/test-auth-error',
       expects: { status: StatusCodes.UNAUTHORIZED, response: { error: { text: 'Not authorized' } } },
+    },
+    {
+      route: '/test-jwt-expired',
+      expects: {
+        status: StatusCodes.UNAUTHORIZED,
+        response: { errorTextStartsWith: 'TokenExpiredError at' },
+      },
     },
     {
       route: '/test-no-such-route',
@@ -128,7 +140,11 @@ describe.sequential('Controller', () => {
     const res = await request.get(testCase.route)
     expect(res.statusCode).toBe(testCase.expects.status)
     if (typeof testCase.expects.response !== 'undefined') {
-      expect(res.body).toEqual(testCase.expects.response)
+      if (typeof testCase.expects.response.errorTextStartsWith !== 'undefined') {
+        expect(res.body.error.text).toEqual(expect.stringContaining(testCase.expects.response.errorTextStartsWith))
+      } else {
+        expect(res.body).toEqual(testCase.expects.response)
+      }
     }
   })
 })

@@ -4,6 +4,7 @@ import { AuthRole } from '@common/interfaces'
 import express, { NextFunction, Request, Response, Router } from 'express'
 import type { RouteParameters } from 'express-serve-static-core'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { TokenExpiredError } from 'jsonwebtoken'
 import { PostgresError } from 'postgres'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
@@ -174,6 +175,12 @@ export class Controller {
             dbg: error.dbg,
           })
           logger.error(`${req.method} ${req.originalUrl}: ControllerError`, error)
+        } else if (error instanceof TokenExpiredError) {
+          res.status(StatusCodes.UNAUTHORIZED)
+          res.json({
+            error: { text: `TokenExpiredError at ${error.expiredAt}` },
+          })
+          logger.error(`${req.method} ${req.originalUrl}: TokenExpiredError at ${error.expiredAt}`, error)
         } else if (error instanceof PostgresError && error.code.startsWith('220')) {
           // https://www.postgresql.org/docs/current/errcodes-appendix.html
           // https://stackoverflow.com/questions/7939137/what-http-status-code-should-be-used-for-wrong-input
