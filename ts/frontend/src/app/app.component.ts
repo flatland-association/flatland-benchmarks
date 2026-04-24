@@ -54,6 +54,7 @@ export class AppComponent implements OnInit {
         lead: (await this.customizationService.getCustomization()).content.title,
       },
       { path: '/hub', label: 'Hub', icon: faArrowUpRightFromSquare },
+      { path: `/api-docs/`, label: 'API Docs', icon: faArrowUpRightFromSquare },
     ]
 
     // initially show the user menu without active user
