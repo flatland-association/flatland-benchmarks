@@ -32,7 +32,6 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.core_api = core_api
     self.batch_api = batch_api
 
-    self.additional_submission_args = additional_submission_args
     self.kubernetes_namespace = kubernetes_namespace
     self.active_deadline_seconds = active_deadline_seconds
     self.submissions_pvc = submissions_pvc
@@ -73,7 +72,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       time.sleep(1)
       wait_for_pod_to_start += 1
       jobs: V1JobList = self.batch_api.list_namespaced_job(namespace=self.kubernetes_namespace,
-                                                label_selector=f"submission_id={submission_id},test_id={test_id},scenario_id={scenario_id}")
+                                                           label_selector=f"submission_id={submission_id},test_id={test_id},scenario_id={scenario_id}")
       # Right after job creation it’s common to have 0 pods for a short period, and retries/backoff
       if self.wait_for_pod_to_start_limit is not None and len(jobs.items) == 0 and wait_for_pod_to_start < self.wait_for_pod_to_start_limit:
         continue
@@ -84,7 +83,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       job_status_conditions_types = [cond.type for cond in job.status.conditions] if job.status.conditions is not None else None
       # https://kubernetes.io/docs/concepts/workloads/controllers/job/
       job_failed = job_failed or (
-          job_status_conditions_types is not None and ('Failed' in job_status_conditions_types or 'FailureTarget' in job_status_conditions_types))
+        job_status_conditions_types is not None and ('Failed' in job_status_conditions_types or 'FailureTarget' in job_status_conditions_types))
 
       pods: V1PodList = self.core_api.list_namespaced_pod(namespace=self.kubernetes_namespace, label_selector=f"job-name={job_name}")
       if len(pods.items) != 1:
@@ -631,5 +630,3 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       "7d5e9c8d-ce87-48f3-b793-83489fca8ca0"
     ],
   }
-
-

@@ -15,6 +15,7 @@ from typing import List
 import boto3
 from flatland.evaluators.trajectory_evaluator import TrajectoryEvaluator
 from flatland.trajectories.trajectories import Trajectory
+from flatland.utils.cli_utils import resolve_type
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
@@ -54,6 +55,7 @@ class FlatlandBenchmarksOrchestrator:
                running_time_limit: float = None,  # time limit for the submission container/pod running for one scenario (excluding pulling/initialization).
                total_running_time_limit: float = None,
                # summed time limit for the submission container/pod running a scenario (excluding pulling/initialization).
+               additional_submission_args: str = None,
                **kwargs):
     self.submission_id = submission_id
     self.aws_endpoint_url = aws_endpoint_url
@@ -71,6 +73,7 @@ class FlatlandBenchmarksOrchestrator:
     self.percentage_complete_threshold = percentage_complete_threshold
     self.running_time_limit = running_time_limit
     self.total_running_time_limit = total_running_time_limit
+    self.additional_submission_args = additional_submission_args
 
   def orchestrator(self,
                    submission_data_url: str,
@@ -356,8 +359,15 @@ class FlatlandBenchmarksOrchestrator:
     return scenario_results, success_rate
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):
+    rewards = None
+    if self.additional_submission_args is not None:
+
+      argv = self.additional_submission_args.split(" ")
+      if "--rewards" in argv:
+        rewards = resolve_type(argv.index("--rewards") + 1)
+
     trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)
-    TrajectoryEvaluator(trajectory).evaluate(tqdm_kwargs={"disable": True})
+    TrajectoryEvaluator(trajectory).evaluate(tqdm_kwargs={"disable": True}, rewards=rewards)
     rail_env = trajectory.load_env()
     df_trains_arrived = trajectory.trains_arrived
     logger.info(f"trains arrived: {df_trains_arrived}")
