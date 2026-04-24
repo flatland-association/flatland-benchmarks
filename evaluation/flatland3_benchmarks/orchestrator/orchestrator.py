@@ -6,7 +6,7 @@ from typing import List, Optional, Tuple
 
 import yaml
 from kubernetes import client
-from kubernetes.client import V1PodList, V1Pod, V1PodStatus
+from kubernetes.client import V1PodList, V1Pod, V1PodStatus, V1JobList, V1Job, V1JobStatus, V1JobCondition
 
 from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError
 
@@ -72,16 +72,18 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     while not all_done and not any_failed:
       time.sleep(1)
       wait_for_pod_to_start += 1
-      jobs = self.batch_api.list_namespaced_job(namespace=self.kubernetes_namespace,
+      jobs: V1JobList = self.batch_api.list_namespaced_job(namespace=self.kubernetes_namespace,
                                                 label_selector=f"submission_id={submission_id},test_id={test_id},scenario_id={scenario_id}")
       # Right after job creation it’s common to have 0 pods for a short period, and retries/backoff
       if self.wait_for_pod_to_start_limit is not None and len(jobs.items) == 0 and wait_for_pod_to_start < self.wait_for_pod_to_start_limit:
         continue
       assert len(jobs.items) == 1
       all_done = True
-      job = jobs.items[-1]
+      job: V1Job = jobs.items[-1]
       all_done = all_done and job.status.conditions is not None
       job_status_conditions_ = [cond.type for cond in job.status.conditions] if job.status.conditions is not None else None
+      V1JobStatus
+      V1JobCondition
       any_failed = any_failed or (job_status_conditions_ is not None and 'Complete' not in job_status_conditions_)
 
       pods: V1PodList = self.core_api.list_namespaced_pod(namespace=self.kubernetes_namespace, label_selector=f"job-name={job_name}")

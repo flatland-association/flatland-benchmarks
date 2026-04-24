@@ -113,7 +113,7 @@ class FlatlandBenchmarksOrchestrator:
         if isinstance(submission_error, TaskExecutionError):
           try:
             logger.error(
-              f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Status: {pretty_dumps_dict(submission_error.status)}",
+              f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}.\nStatus: {pretty_dumps_dict(submission_error.status)}.\nLog: {pretty_dumps_log(submission_error.status)}",
               exc_info=submission_error)
           except Exception as logging_error:
             logger.error(f"Could not log status {str(submission_error.status)}", exc_info=logging_error)
@@ -410,6 +410,13 @@ class DictEncoder(json.JSONEncoder):
 
 def pretty_print_dict(d):
   print(json.dumps(d, indent=4, cls=DictEncoder))
+  print(pretty_dumps_log(d))
+
+
+def pretty_dumps_log(d):
+  if d is not None and "log" in d:
+    return "\n".join(d["log"].split("\\n"))
+  return None
 
 
 def pretty_dumps_dict(d):
