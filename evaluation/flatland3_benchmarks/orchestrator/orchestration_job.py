@@ -1,3 +1,4 @@
+import json
 import logging
 
 from kubernetes.client import V1Job, V1JobList, V1PodList, V1Pod, V1PodStatus
@@ -29,7 +30,7 @@ def make_orchestration_job_definition(orch_config: Dict[str, str]) -> dict:
   orchestration_job_definition["spec"]["template"]["spec"]["serviceAccountName"] = orch_config["service_account_name"]
   container_definition = orchestration_job_definition["spec"]["template"]["spec"]["containers"][0]
   if orch_config["k8s_resource_allocation"] is not None:
-    container_definition["resources"] = orch_config["k8s_resource_allocation"]
+    container_definition["resources"] = json.loads(orch_config["k8s_resource_allocation"])
 
   container_definition["image"] = orchestrator_image
   container_definition["args"] = ["python", "orchestration_job.py"]
