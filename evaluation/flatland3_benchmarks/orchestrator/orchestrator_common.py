@@ -364,7 +364,7 @@ class FlatlandBenchmarksOrchestrator:
 
       argv = self.additional_submission_args.split(" ")
       if "--rewards" in argv:
-        rewards = resolve_type(argv.index("--rewards") + 1)()
+        rewards = resolve_type(argv[argv.index("--rewards") + 1])()
 
     trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)
     TrajectoryEvaluator(trajectory).evaluate(tqdm_kwargs={"disable": True}, rewards=rewards)
