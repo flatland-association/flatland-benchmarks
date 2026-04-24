@@ -5,6 +5,22 @@
     <div class="w-full" [innerHTML]="submission.description"></div>
   </lib-content>
 
+<lib-content>
+  @if (isSubmissionScored()) {
+  <p data-text-success>This submission has been successfully scored.</p>
+  } @else {
+  <p>This submission has not yet been scored completely.</p>
+  }
+  <app-submission-results class="w-full my-8" [suite]="suite" [benchmark]="benchmark" [submission]="submission"></app-submission-results>
+</lib-content>
+
+@if (canPublishSubmission()) {
+<lib-content>
+  <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-primary-100"
+          type="button" (click)="publish()" data-btn-publish>Publish submission
+  </button>
+</lib-content>
+}
   <lib-content>
     <div class="w-full pb-8">
       <h3 class="font-bold pb-2">Status</h3>
@@ -20,18 +36,6 @@
         </tbody>
       </table>
     </div>
-    @if (isSubmissionScored()) {
-      <p data-text-success>This submission has been successfully scored.</p>
-    } @else {
-      <p>This submission has not yet been scored completely.</p>
-    }
-    <app-submission-results class="w-full my-8" [suite]="suite" [benchmark]="benchmark" [submission]="submission"></app-submission-results>
   </lib-content>
-
-  @if (canPublishSubmission()) {
-    <lib-content>
-      <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:bg-primary-100" type="button" (click)="publish()" data-btn-publish>Publish submission</button>
-    </lib-content>
-  }
 
 }
