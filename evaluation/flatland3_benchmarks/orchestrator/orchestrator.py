@@ -6,7 +6,7 @@ from typing import List, Optional, Tuple
 
 import yaml
 from kubernetes import client
-from kubernetes.client import V1PodList, V1Pod, V1PodStatus, V1JobList, V1Job, V1JobStatus, V1JobCondition
+from kubernetes.client import V1PodList, V1Pod, V1PodStatus, V1JobList, V1Job
 
 from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError
 
@@ -60,7 +60,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.batch_api.create_namespaced_job(self.kubernetes_namespace, submission)
     start_time_job = time.time()
     all_done = False
-    any_failed = False
+    job_failed = False
     ret = {}
 
     ticks = {}
@@ -69,7 +69,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     running_time = None
     wait_for_pod_to_start = 0
     termination_cause = None
-    while not all_done and not any_failed:
+    while not all_done and not job_failed:
       time.sleep(1)
       wait_for_pod_to_start += 1
       jobs: V1JobList = self.batch_api.list_namespaced_job(namespace=self.kubernetes_namespace,
@@ -81,10 +81,10 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       all_done = True
       job: V1Job = jobs.items[-1]
       all_done = all_done and job.status.conditions is not None
-      job_status_conditions_ = [cond.type for cond in job.status.conditions] if job.status.conditions is not None else None
-      V1JobStatus
-      V1JobCondition
-      any_failed = any_failed or (job_status_conditions_ is not None and 'Complete' not in job_status_conditions_)
+      job_status_conditions_types = [cond.type for cond in job.status.conditions] if job.status.conditions is not None else None
+      # https://kubernetes.io/docs/concepts/workloads/controllers/job/
+      job_failed = job_failed or (
+          job_status_conditions_types is not None and ('Failed' in job_status_conditions_types or 'FailureTarget' in job_status_conditions_types))
 
       pods: V1PodList = self.core_api.list_namespaced_pod(namespace=self.kubernetes_namespace, label_selector=f"job-name={job_name}")
       if len(pods.items) != 1:
@@ -117,7 +117,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         end_time_running = ticks["Running"]
         running_time = end_time_running - start_time_running
 
-      if all_done or any_failed:
+      if all_done or job_failed:
         ret = {
           "job_status": job.status.conditions[0].type,
           "pod_status": pod.status.to_dict(),
@@ -126,10 +126,10 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
           "pod": pod.to_dict(),
           "running_time": running_time,
         }
-        if all_done and not any_failed:
+        if all_done and not job_failed:
           ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
           break
-        elif any_failed:
+        elif job_failed:
           ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
           additional_info = ""
           try:
@@ -137,7 +137,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
           except:
             pass
           raise TaskExecutionError(
-            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Some tasks jobs failed: {job_status_conditions_}. {additional_info}",
+            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Some tasks jobs failed: {job_status_conditions_types}. {additional_info}",
             ret)
     logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}.")
     logger.debug(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
