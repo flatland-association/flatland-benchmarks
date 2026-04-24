@@ -1,7 +1,7 @@
 import type { Express } from 'express'
 import express from 'express'
 import { StatusCodes } from 'http-status-codes'
-import { TokenExpiredError } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import supertest from 'supertest'
 import TestAgent from 'supertest/lib/agent'
 import { afterAll, beforeAll, describe, expect, MockInstance, test, vi } from 'vitest'
@@ -58,7 +58,7 @@ describe.sequential('Controller', () => {
       { authorizedRoles: ['Admin'] },
     )
     controller.attachGet('/test-jwt-expired' as '/mirror', (_req, _res) => {
-      throw new TokenExpiredError('', new Date(Date.now()))
+      throw new jwt.TokenExpiredError('', new Date(Date.now()))
     })
     controller.attachGet('/test-server-error' as '/mirror', (req, res) => {
       controller.respondError(req, res, { text: 'server error' })

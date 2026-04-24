@@ -4,7 +4,7 @@ import { AuthRole } from '@common/interfaces'
 import express, { NextFunction, Request, Response, Router } from 'express'
 import type { RouteParameters } from 'express-serve-static-core'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { TokenExpiredError } from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 import postgres from 'postgres'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
@@ -175,7 +175,7 @@ export class Controller {
             dbg: error.dbg,
           })
           logger.error(`${req.method} ${req.originalUrl}: ControllerError`, error)
-        } else if (error instanceof TokenExpiredError) {
+        } else if (error instanceof jwt.TokenExpiredError) {
           res.status(StatusCodes.UNAUTHORIZED)
           res.json({
             error: { text: `TokenExpiredError at ${error.expiredAt}` },
