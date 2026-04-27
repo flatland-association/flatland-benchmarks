@@ -316,10 +316,11 @@ class FlatlandBenchmarksOrchestrator:
       logger.info(
         f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}")
       prefix = f"{S3_UPLOAD_ROOT}{submission_id}/{test_id}/{scenario_id}"
+      evaluation_start_time = time.time()
       scenario_results, success_rate = self._evaluate_scenario_results_on_s3_locally(prefix, scenario_id, submission_id, test_id)
       success_rate_of_test.append(success_rate)
       logger.info(
-        f"\\\\ END evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}")
+        f"\\\\ END evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. Took {time.time() - evaluation_start_time:.2f}s.")
       test_results[scenario_id] = scenario_results
 
     return test_results, success_rate_of_test, summed_scenario_running_time, termination_cause
