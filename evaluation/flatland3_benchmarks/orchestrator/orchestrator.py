@@ -369,6 +369,11 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
 
       # ecml2026
       # generated with definitions/benchmarks/ecml2026/gen_competition_sql.py
+      "ee155de0-14f1-4bd7-8cc6-9100276758fa": "level_0/level_0_scenario_1.pkl",
+      "1ee01690-3671-4bad-a8c6-52499e491a34": "level_0/level_0_scenario_2.pkl",
+      "ce775cbf-859b-4389-8c95-9f1c77907991": "level_0/level_0_scenario_3.pkl",
+      "4da1b8d4-f12f-4b2f-bee2-b7dce2653c76": "level_0/level_0_scenario_4.pkl",
+      "77a5a1cf-4c15-41d9-ab96-ec6d13a3a098": "level_0/level_0_scenario_5.pkl",
       "5eea815c-7500-42ff-b763-9012fae3ba0a": "level_1/level_1_scenario_1.pkl",
       "0ca69b1b-5aa2-4e32-8829-fbd876c175e9": "level_1/level_1_scenario_2.pkl",
       "ec4d780e-7249-4d62-b124-7e3f7f38a441": "level_1/level_1_scenario_3.pkl",
@@ -586,6 +591,13 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     ],
     # ecml2026
     # generated with definitions/benchmarks/ecml2026/gen_competition_sql.py
+    "39ae35d8-4b0f-467f-9ec4-ee19c3558c7f": [
+      "ee155de0-14f1-4bd7-8cc6-9100276758fa",
+      "1ee01690-3671-4bad-a8c6-52499e491a34",
+      "ce775cbf-859b-4389-8c95-9f1c77907991",
+      "4da1b8d4-f12f-4b2f-bee2-b7dce2653c76",
+      "77a5a1cf-4c15-41d9-ab96-ec6d13a3a098"
+    ],
     "774bf9d6-7bd6-41da-925a-230658d481ec": [
       "5eea815c-7500-42ff-b763-9012fae3ba0a",
       "0ca69b1b-5aa2-4e32-8829-fbd876c175e9",

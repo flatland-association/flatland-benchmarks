@@ -27,6 +27,115 @@
           }
         },
         "tests": {
+          "39ae35d8-4b0f-467f-9ec4-ee19c3558c7f": {
+            "ID": "39ae35d8-4b0f-467f-9ec4-ee19c3558c7f",
+            "TEST_NAME": "Test 0",
+            "TEST_DESCRIPTION": "Level 0",
+            "TEST_FIELDS": {
+              "75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9": {
+                "ID": "75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9",
+                "TEST_FIELD_NAME": "normalized_reward",
+                "TEST_FIELD_DESCRIPTION": "Primary test score (NANSUM of corresponding scenario scores)",
+                "TEST_AGG": "NANSUM",
+                "TEST_AGG_FIELDS": "normalized_reward"
+              },
+              "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85": {
+                "ID": "7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85",
+                "TEST_FIELD_NAME": "percentage_complete",
+                "TEST_FIELD_DESCRIPTION": "Secondary test score (NANMEAN of corresponding scenario scores)",
+                "TEST_AGG": "NANMEAN",
+                "TEST_AGG_FIELDS": "percentage_complete"
+              }
+            },
+            "LOOP": "CLOSED",
+            "scenarios": {
+              "ee155de0-14f1-4bd7-8cc6-9100276758fa": {
+                "ID": "ee155de0-14f1-4bd7-8cc6-9100276758fa",
+                "SCENARIO_NAME": "ee155de0-14f1-4bd7-8cc6-9100276758fa",
+                "SCENARIO_DESCRIPTION": "ee155de0-14f1-4bd7-8cc6-9100276758fa",
+                "SCENARIO_FIELDS": {
+                  "9900f111-abbb-44d4-b022-3a1d9e2efded": {
+                    "ID": "9900f111-abbb-44d4-b022-3a1d9e2efded",
+                    "SCENARIO_FIELD_NAME": "normalized_reward",
+                    "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
+                  },
+                  "758acf5a-498d-40db-9a8b-39adf47b5d28": {
+                    "ID": "758acf5a-498d-40db-9a8b-39adf47b5d28",
+                    "SCENARIO_FIELD_NAME": "percentage_complete",
+                    "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
+                  }
+                }
+              },
+              "1ee01690-3671-4bad-a8c6-52499e491a34": {
+                "ID": "1ee01690-3671-4bad-a8c6-52499e491a34",
+                "SCENARIO_NAME": "1ee01690-3671-4bad-a8c6-52499e491a34",
+                "SCENARIO_DESCRIPTION": "1ee01690-3671-4bad-a8c6-52499e491a34",
+                "SCENARIO_FIELDS": {
+                  "9900f111-abbb-44d4-b022-3a1d9e2efded": {
+                    "ID": "9900f111-abbb-44d4-b022-3a1d9e2efded",
+                    "SCENARIO_FIELD_NAME": "normalized_reward",
+                    "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
+                  },
+                  "758acf5a-498d-40db-9a8b-39adf47b5d28": {
+                    "ID": "758acf5a-498d-40db-9a8b-39adf47b5d28",
+                    "SCENARIO_FIELD_NAME": "percentage_complete",
+                    "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
+                  }
+                }
+              },
+              "ce775cbf-859b-4389-8c95-9f1c77907991": {
+                "ID": "ce775cbf-859b-4389-8c95-9f1c77907991",
+                "SCENARIO_NAME": "ce775cbf-859b-4389-8c95-9f1c77907991",
+                "SCENARIO_DESCRIPTION": "ce775cbf-859b-4389-8c95-9f1c77907991",
+                "SCENARIO_FIELDS": {
+                  "9900f111-abbb-44d4-b022-3a1d9e2efded": {
+                    "ID": "9900f111-abbb-44d4-b022-3a1d9e2efded",
+                    "SCENARIO_FIELD_NAME": "normalized_reward",
+                    "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
+                  },
+                  "758acf5a-498d-40db-9a8b-39adf47b5d28": {
+                    "ID": "758acf5a-498d-40db-9a8b-39adf47b5d28",
+                    "SCENARIO_FIELD_NAME": "percentage_complete",
+                    "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
+                  }
+                }
+              },
+              "4da1b8d4-f12f-4b2f-bee2-b7dce2653c76": {
+                "ID": "4da1b8d4-f12f-4b2f-bee2-b7dce2653c76",
+                "SCENARIO_NAME": "4da1b8d4-f12f-4b2f-bee2-b7dce2653c76",
+                "SCENARIO_DESCRIPTION": "4da1b8d4-f12f-4b2f-bee2-b7dce2653c76",
+                "SCENARIO_FIELDS": {
+                  "9900f111-abbb-44d4-b022-3a1d9e2efded": {
+                    "ID": "9900f111-abbb-44d4-b022-3a1d9e2efded",
+                    "SCENARIO_FIELD_NAME": "normalized_reward",
+                    "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
+                  },
+                  "758acf5a-498d-40db-9a8b-39adf47b5d28": {
+                    "ID": "758acf5a-498d-40db-9a8b-39adf47b5d28",
+                    "SCENARIO_FIELD_NAME": "percentage_complete",
+                    "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
+                  }
+                }
+              },
+              "77a5a1cf-4c15-41d9-ab96-ec6d13a3a098": {
+                "ID": "77a5a1cf-4c15-41d9-ab96-ec6d13a3a098",
+                "SCENARIO_NAME": "77a5a1cf-4c15-41d9-ab96-ec6d13a3a098",
+                "SCENARIO_DESCRIPTION": "77a5a1cf-4c15-41d9-ab96-ec6d13a3a098",
+                "SCENARIO_FIELDS": {
+                  "9900f111-abbb-44d4-b022-3a1d9e2efded": {
+                    "ID": "9900f111-abbb-44d4-b022-3a1d9e2efded",
+                    "SCENARIO_FIELD_NAME": "normalized_reward",
+                    "SCENARIO_FIELD_DESCRIPTION": "Primary raw scenario score."
+                  },
+                  "758acf5a-498d-40db-9a8b-39adf47b5d28": {
+                    "ID": "758acf5a-498d-40db-9a8b-39adf47b5d28",
+                    "SCENARIO_FIELD_NAME": "percentage_complete",
+                    "SCENARIO_FIELD_DESCRIPTION": "Secondary raw scenario score."
+                  }
+                }
+              }
+            }
+          },
           "774bf9d6-7bd6-41da-925a-230658d481ec": {
             "ID": "774bf9d6-7bd6-41da-925a-230658d481ec",
             "TEST_NAME": "Test 0",

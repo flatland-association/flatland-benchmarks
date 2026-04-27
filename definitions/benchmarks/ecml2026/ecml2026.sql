@@ -9,9 +9,9 @@ UPDATE SET setup=EXCLUDED.setup, name =EXCLUDED.name, description=EXCLUDED.descr
 INSERT INTO benchmarks
   (id, name, description, field_ids, test_ids)
 VALUES ('c85d5fc2-15da-4a62-8e14-28d1261c29bd', 'Real-World Baselines Challenge', 'AI4REALNET Railway Competition 2026',
-        array['ba23a9d1-05a6-4f2a-9d58-878f6fa6917f', '021d12e1-5d56-4716-a2d1-f8f63790fd6c']::uuid[], array['774bf9d6-7bd6-41da-925a-230658d481ec',
-        '6670be1d-9fc0-48c8-9bc9-fc889f56d615', 'f3aefb9c-a79e-413a-b73c-f46c794855c1', '68ade1f2-301f-4d8d-b9d6-f3110b6e7587',
-        'd49091c0-793b-401b-a0c8-12df1361deef', '86225a96-492d-474b-aa80-de166b005e42']::uuid[]) ON CONFLICT(id) DO
+        array['ba23a9d1-05a6-4f2a-9d58-878f6fa6917f', '021d12e1-5d56-4716-a2d1-f8f63790fd6c']::uuid[], array['39ae35d8-4b0f-467f-9ec4-ee19c3558c7f',
+        '774bf9d6-7bd6-41da-925a-230658d481ec', '6670be1d-9fc0-48c8-9bc9-fc889f56d615', 'f3aefb9c-a79e-413a-b73c-f46c794855c1',
+        '68ade1f2-301f-4d8d-b9d6-f3110b6e7587', 'd49091c0-793b-401b-a0c8-12df1361deef', '86225a96-492d-474b-aa80-de166b005e42']::uuid[]) ON CONFLICT(id) DO
 UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, test_ids=EXCLUDED.test_ids;
 
 INSERT INTO fields
@@ -25,6 +25,106 @@ INSERT INTO fields
 VALUES ('021d12e1-5d56-4716-a2d1-f8f63790fd6c', 'percentage_complete', 'Secondary benchmark score (NANMEAN of corresponding test scores)', 'NANMEAN',
         '"percentage_complete"') ON CONFLICT(id) DO
 UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
+
+INSERT INTO tests
+  (id, name, description, field_ids, scenario_ids, loop, queue)
+VALUES ('39ae35d8-4b0f-467f-9ec4-ee19c3558c7f', 'Test 0', 'Level 0', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
+        '7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85']::uuid[], array['ee155de0-14f1-4bd7-8cc6-9100276758fa', '1ee01690-3671-4bad-a8c6-52499e491a34',
+        'ce775cbf-859b-4389-8c95-9f1c77907991', '4da1b8d4-f12f-4b2f-bee2-b7dce2653c76', '77a5a1cf-4c15-41d9-ab96-ec6d13a3a098']::uuid[], 'CLOSED',
+        NULL) ON CONFLICT(id) DO
+UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
+
+INSERT INTO fields
+  (id, key, description, agg_func, agg_fields)
+VALUES ('75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9', 'normalized_reward', 'Primary test score (NANSUM of corresponding scenario scores)', 'NANSUM',
+        '"normalized_reward"') ON CONFLICT(id) DO
+UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
+
+INSERT INTO fields
+  (id, key, description, agg_func, agg_fields)
+VALUES ('7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85', 'percentage_complete', 'Secondary test score (NANMEAN of corresponding scenario scores)', 'NANMEAN',
+        '"percentage_complete"') ON CONFLICT(id) DO
+UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
+
+INSERT INTO scenarios
+  (id, name, description, field_ids)
+VALUES ('ee155de0-14f1-4bd7-8cc6-9100276758fa', 'ee155de0-14f1-4bd7-8cc6-9100276758fa', 'ee155de0-14f1-4bd7-8cc6-9100276758fa',
+        array['9900f111-abbb-44d4-b022-3a1d9e2efded', '758acf5a-498d-40db-9a8b-39adf47b5d28']::uuid[]) ON CONFLICT(id) DO
+UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+  (id, key, description, agg_func, agg_weights)
+VALUES ('9900f111-abbb-44d4-b022-3a1d9e2efded', 'normalized_reward', 'Primary raw scenario score.', NULL, NULL) ON CONFLICT(id) DO
+UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+  (id, key, description, agg_func, agg_weights)
+VALUES ('758acf5a-498d-40db-9a8b-39adf47b5d28', 'percentage_complete', 'Secondary raw scenario score.', NULL, NULL) ON CONFLICT(id) DO
+UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+  (id, name, description, field_ids)
+VALUES ('1ee01690-3671-4bad-a8c6-52499e491a34', '1ee01690-3671-4bad-a8c6-52499e491a34', '1ee01690-3671-4bad-a8c6-52499e491a34',
+        array['9900f111-abbb-44d4-b022-3a1d9e2efded', '758acf5a-498d-40db-9a8b-39adf47b5d28']::uuid[]) ON CONFLICT(id) DO
+UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+  (id, key, description, agg_func, agg_weights)
+VALUES ('9900f111-abbb-44d4-b022-3a1d9e2efded', 'normalized_reward', 'Primary raw scenario score.', NULL, NULL) ON CONFLICT(id) DO
+UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+  (id, key, description, agg_func, agg_weights)
+VALUES ('758acf5a-498d-40db-9a8b-39adf47b5d28', 'percentage_complete', 'Secondary raw scenario score.', NULL, NULL) ON CONFLICT(id) DO
+UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+  (id, name, description, field_ids)
+VALUES ('ce775cbf-859b-4389-8c95-9f1c77907991', 'ce775cbf-859b-4389-8c95-9f1c77907991', 'ce775cbf-859b-4389-8c95-9f1c77907991',
+        array['9900f111-abbb-44d4-b022-3a1d9e2efded', '758acf5a-498d-40db-9a8b-39adf47b5d28']::uuid[]) ON CONFLICT(id) DO
+UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+  (id, key, description, agg_func, agg_weights)
+VALUES ('9900f111-abbb-44d4-b022-3a1d9e2efded', 'normalized_reward', 'Primary raw scenario score.', NULL, NULL) ON CONFLICT(id) DO
+UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+  (id, key, description, agg_func, agg_weights)
+VALUES ('758acf5a-498d-40db-9a8b-39adf47b5d28', 'percentage_complete', 'Secondary raw scenario score.', NULL, NULL) ON CONFLICT(id) DO
+UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+  (id, name, description, field_ids)
+VALUES ('4da1b8d4-f12f-4b2f-bee2-b7dce2653c76', '4da1b8d4-f12f-4b2f-bee2-b7dce2653c76', '4da1b8d4-f12f-4b2f-bee2-b7dce2653c76',
+        array['9900f111-abbb-44d4-b022-3a1d9e2efded', '758acf5a-498d-40db-9a8b-39adf47b5d28']::uuid[]) ON CONFLICT(id) DO
+UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+  (id, key, description, agg_func, agg_weights)
+VALUES ('9900f111-abbb-44d4-b022-3a1d9e2efded', 'normalized_reward', 'Primary raw scenario score.', NULL, NULL) ON CONFLICT(id) DO
+UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+  (id, key, description, agg_func, agg_weights)
+VALUES ('758acf5a-498d-40db-9a8b-39adf47b5d28', 'percentage_complete', 'Secondary raw scenario score.', NULL, NULL) ON CONFLICT(id) DO
+UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+  (id, name, description, field_ids)
+VALUES ('77a5a1cf-4c15-41d9-ab96-ec6d13a3a098', '77a5a1cf-4c15-41d9-ab96-ec6d13a3a098', '77a5a1cf-4c15-41d9-ab96-ec6d13a3a098',
+        array['9900f111-abbb-44d4-b022-3a1d9e2efded', '758acf5a-498d-40db-9a8b-39adf47b5d28']::uuid[]) ON CONFLICT(id) DO
+UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+  (id, key, description, agg_func, agg_weights)
+VALUES ('9900f111-abbb-44d4-b022-3a1d9e2efded', 'normalized_reward', 'Primary raw scenario score.', NULL, NULL) ON CONFLICT(id) DO
+UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+  (id, key, description, agg_func, agg_weights)
+VALUES ('758acf5a-498d-40db-9a8b-39adf47b5d28', 'percentage_complete', 'Secondary raw scenario score.', NULL, NULL) ON CONFLICT(id) DO
+UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
   (id, name, description, field_ids, scenario_ids, loop, queue)
