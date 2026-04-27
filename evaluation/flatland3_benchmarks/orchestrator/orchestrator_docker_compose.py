@@ -138,14 +138,14 @@ class DockerComposeFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator
       generate_policy_args += additional_submission_args.split(" ")
 
     logger.info(
-      f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}")
+      f"// START running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}")
     ret = self.exec(generate_policy_args, test_id, scenario_id, submission_id, f"{submission_id}/{test_id}/{scenario_id}", submission_data_url)
 
     self.upload_and_empty_local(test_id, submission_id, scenario_id)
     logger.info(
-      f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}.")
+      f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}.")
     logger.debug(
-      f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}: {ret}")
+      f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}: {ret}")
     return ret, None
 
   def upload_and_empty_local(self, test_id: str, submission_id: str, scenario_id: str):

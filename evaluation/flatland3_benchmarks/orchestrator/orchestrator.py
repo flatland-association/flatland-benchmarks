@@ -51,7 +51,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     submission_id = self.submission_id
 
     logger.info(
-      f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}, pkl_path={pkl_path}")
+      f"// START running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)} ")
     submission_definition = self._make_submission_definition(submission_data_url, test_id, scenario_id, pkl_path)
     job_name = submission_definition["metadata"]["name"]
 
@@ -139,9 +139,9 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
             f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Some tasks jobs failed: {job_status_conditions_types}. {additional_info}",
             ret)
     logger.info(
-      f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}, pkl_path={pkl_path}")
+      f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)} ")
     logger.debug(
-      f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}: {ret}")
+      f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}: {ret}")
     return ret, termination_cause
 
   def _gather_logs(self, pod: V1Pod, ret: dict, submission_id: str, submission_data_url: str) -> dict:

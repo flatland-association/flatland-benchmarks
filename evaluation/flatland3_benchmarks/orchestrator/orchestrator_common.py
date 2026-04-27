@@ -163,7 +163,7 @@ class FlatlandBenchmarksOrchestrator:
       for test_id, scenarios in results.items():
         for scenario_id, result in scenarios.items():
           logger.info(
-            f"uploading results for submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}: {result}")
+            f"uploading results for submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}: {result}")
           _fab.results_submissions_submission_id_tests_test_ids_post(
             submission_id=submission_id,
             test_ids=[test_id],
@@ -294,33 +294,33 @@ class FlatlandBenchmarksOrchestrator:
       ret, termination_cause = self._run_submission_scenario_container(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
       if termination_cause is not None:
         logger.warning(
-          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. {termination_cause}")
+          f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. {termination_cause}")
         break
       scenario_running_time = ret["running_time"]
       summed_scenario_running_time += scenario_running_time
       logger.info(
-        f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. Took: {scenario_running_time}")
+        f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. Took: {scenario_running_time}")
 
       if self.running_time_limit is not None and scenario_running_time > self.running_time_limit:
         termination_cause = f"The scenario running time was exceeded during evaluation of test_id={test_id}, scenario_id={scenario_id}: {scenario_running_time:.2f}s > {self.running_time_limit:.2f}s."
         logger.warning(
-          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. {termination_cause}")
+          f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. {termination_cause}")
         break
       if self.total_running_time_limit is not None and summed_scenario_running_time > self.total_running_time_limit:
         termination_cause = f"Running time {summed_scenario_running_time:.2f}s exceeded total running time limit {self.total_running_time_limit:.2f}s during evaluation of test_id={test_id}, scenario_id={scenario_id}."
         logger.warning(
-          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. {termination_cause}")
+          f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. {termination_cause}")
         break
 
       self._post_started(fab, scenario_id, submission_data_url, submission_id, test_id, f"Run evaluation env_path={self.load_scenario_data(scenario_id)} ")
       logger.info(
-        f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}")
+        f"// START evaluating submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}")
       prefix = f"{S3_UPLOAD_ROOT}{submission_id}/{test_id}/{scenario_id}"
       evaluation_start_time = time.time()
       scenario_results, success_rate = self._evaluate_scenario_results_on_s3_locally(prefix, scenario_id, submission_id, test_id)
       success_rate_of_test.append(success_rate)
       logger.info(
-        f"\\\\ END evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. Took {time.time() - evaluation_start_time:.2f}s.")
+        f"\\\\ END evaluating submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. Took {time.time() - evaluation_start_time:.2f}s.")
       test_results[scenario_id] = scenario_results
 
     return test_results, success_rate_of_test, summed_scenario_running_time, termination_cause
