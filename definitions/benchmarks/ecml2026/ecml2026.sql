@@ -128,7 +128,7 @@ UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDE
 
 INSERT INTO tests
   (id, name, description, field_ids, scenario_ids, loop, queue)
-VALUES ('774bf9d6-7bd6-41da-925a-230658d481ec', 'Test 0', 'Level 1', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
+VALUES ('774bf9d6-7bd6-41da-925a-230658d481ec', 'Test 1', 'Level 1', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
         '7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85']::uuid[], array['5eea815c-7500-42ff-b763-9012fae3ba0a', '0ca69b1b-5aa2-4e32-8829-fbd876c175e9',
         'ec4d780e-7249-4d62-b124-7e3f7f38a441', 'eb690e1f-6b01-4311-98af-195863693775', 'bc398385-b9bc-4f08-91e2-9b70cba8e54f']::uuid[], 'CLOSED',
         NULL) ON CONFLICT(id) DO
@@ -228,7 +228,7 @@ UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDE
 
 INSERT INTO tests
   (id, name, description, field_ids, scenario_ids, loop, queue)
-VALUES ('6670be1d-9fc0-48c8-9bc9-fc889f56d615', 'Test 1', 'Level 2', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
+VALUES ('6670be1d-9fc0-48c8-9bc9-fc889f56d615', 'Test 2', 'Level 2', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
         '7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85']::uuid[], array['f1bff6c2-297d-4e01-aae1-e6f33a03f708', 'eeea37a7-dfbf-4c40-b851-289458f61a7a',
         'e2ff0d91-a5da-4888-ae8e-b5805c38bd8a', '403e469b-7508-4bb7-9b97-5585b4bf30da', 'ec203d8a-774e-423c-a19d-7b8d39a284c2']::uuid[], 'CLOSED',
         NULL) ON CONFLICT(id) DO
@@ -328,7 +328,7 @@ UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDE
 
 INSERT INTO tests
   (id, name, description, field_ids, scenario_ids, loop, queue)
-VALUES ('f3aefb9c-a79e-413a-b73c-f46c794855c1', 'Test 2', 'Level 3', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
+VALUES ('f3aefb9c-a79e-413a-b73c-f46c794855c1', 'Test 3', 'Level 3', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
         '7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85']::uuid[], array['4b4d5e9f-4753-449c-96e7-f7e477e3e38a', 'cee79764-bfbd-4e8e-a93d-434495926f63',
         'f5c3b066-c86b-47ff-a674-ddfcf9a2e308', '4df80fd3-eb95-457b-b0f3-d2b6925d0024', '0eb1e6e6-245d-4f41-89e9-155d54271c62']::uuid[], 'CLOSED',
         NULL) ON CONFLICT(id) DO
@@ -428,7 +428,7 @@ UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDE
 
 INSERT INTO tests
   (id, name, description, field_ids, scenario_ids, loop, queue)
-VALUES ('68ade1f2-301f-4d8d-b9d6-f3110b6e7587', 'Test 3', 'Level 4', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
+VALUES ('68ade1f2-301f-4d8d-b9d6-f3110b6e7587', 'Test 4', 'Level 4', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
         '7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85']::uuid[], array['0e2cce95-4a55-440e-b723-e58ab5fcb34a', '85e1179b-1744-4af9-9925-a81387f10bb4',
         'a1addd20-c309-4145-a59c-975e971d58d4', 'e913d595-79d3-4fea-866b-a39ac33a29f2', '53238550-c049-476c-90b5-ccb174e99460']::uuid[], 'CLOSED',
         NULL) ON CONFLICT(id) DO
@@ -528,7 +528,7 @@ UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDE
 
 INSERT INTO tests
   (id, name, description, field_ids, scenario_ids, loop, queue)
-VALUES ('d49091c0-793b-401b-a0c8-12df1361deef', 'Test 4', 'Level 5', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
+VALUES ('d49091c0-793b-401b-a0c8-12df1361deef', 'Test 5', 'Level 5', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
         '7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85']::uuid[], array['9eee4486-fdf0-4873-80bb-777886ed9ca0', '4111f401-142b-471d-a06d-f839b43dfc5c',
         'e2bd8e53-bd5b-4af1-b9ef-48942467d831', '2bb9d4f9-d96c-490c-ba6e-33226b6a4017', 'aabe8141-e045-4e30-87be-6ccf95818b87']::uuid[], 'CLOSED',
         NULL) ON CONFLICT(id) DO
@@ -628,7 +628,7 @@ UPDATE SET key =EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDE
 
 INSERT INTO tests
   (id, name, description, field_ids, scenario_ids, loop, queue)
-VALUES ('86225a96-492d-474b-aa80-de166b005e42', 'Test 5', 'Level 6', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
+VALUES ('86225a96-492d-474b-aa80-de166b005e42', 'Test 6', 'Level 6', array['75f7ebf7-e79e-4f2c-bb78-c51f996fc5c9',
         '7bbb3f10-1a1f-4c69-b882-6ed2b84d1e85']::uuid[], array['103776ff-57d0-43aa-b483-507724926969', 'e5ddeaea-06d8-4a5e-aa86-8ac85bf7d397',
         '18a62336-218a-4cd8-a297-16afdbd6c546', 'fbf5049b-332d-4e3a-aad7-f3a369ce91bb', '7d5e9c8d-ce87-48f3-b793-83489fca8ca0']::uuid[], 'CLOSED',
         NULL) ON CONFLICT(id) DO
