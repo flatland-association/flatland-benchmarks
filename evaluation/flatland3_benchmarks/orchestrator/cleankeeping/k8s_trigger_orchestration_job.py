@@ -19,15 +19,16 @@ logging.basicConfig(encoding='utf-8', level=logging.INFO)
 
 
 def test_trigger_orchestrator(
-  submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-  orchestrator_image="ghcr.io/flatland-association/fab-flatland3-benchmarks-orchestrator:587-decouple-queue-consumer",
+  submission_data_url="ghcr.io/flatland-association/flatland-baselines-forward-only-heuristic:latest",
+  orchestrator_image="ghcr.io/flatland-association/fab-flatland3-benchmarks-orchestrator:add-level0",
   # # flatland3_benchmarks
   # benchmark_id="fd6dc299-9d3d-410d-a17c-338dc1cf3752",
   # test_ids=['fc8f5fb1-4525-4b4f-a022-d3d7800097dc'],
 
   # ecml2026
   benchmark_id='c85d5fc2-15da-4a62-8e14-28d1261c29bd',
-  test_ids=['774bf9d6-7bd6-41da-925a-230658d481ec',
+  test_ids=['39ae35d8-4b0f-467f-9ec4-ee19c3558c7f',
+            # '774bf9d6-7bd6-41da-925a-230658d481ec',
             # '6670be1d-9fc0-48c8-9bc9-fc889f56d615', 'f3aefb9c-a79e-413a-b73c-f46c794855c1', '68ade1f2-301f-4d8d-b9d6-f3110b6e7587',
             # 'd49091c0-793b-401b-a0c8-12df1361deef', '86225a96-492d-474b-aa80-de166b005e42'
             ],

@@ -69,7 +69,7 @@ def main(truncate_benchmarks_docker_compose: int = 1, truncate_tests_docker_comp
 
   for i, (test_id, test) in enumerate(data[suite_id]["benchmarks"][benchmark_id]['tests'].items()):
     for j, (scenario_id, scenario) in enumerate(test["scenarios"].items()):
-      scenario_data[scenario_id] = f"level_{i + 1 :01d}/level_{i + 1 :01d}_scenario_{j + 1:01d}.pkl"
+      scenario_data[scenario_id] = f"level_{i :01d}/level_{i :01d}_scenario_{j + 1:01d}.pkl"
       TEST_TO_SCENARIO_IDS[test_id].append(scenario_id)
   print(json.dumps(scenario_data, indent=4))
   print(json.dumps(TEST_TO_SCENARIO_IDS, indent=4))

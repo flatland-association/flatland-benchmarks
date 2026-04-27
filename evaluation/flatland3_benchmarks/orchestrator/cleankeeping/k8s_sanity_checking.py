@@ -21,11 +21,9 @@ _ENV_PATH = Path(__file__).resolve().parent / ".env"
 _ENV_VARS = dotenv_values(_ENV_PATH)
 
 # ecml2026
-TEST_ID = '774bf9d6-7bd6-41da-925a-230658d481ec'
-SCENARIO_ID = "5eea815c-7500-42ff-b763-9012fae3ba0a"
-SCENARIO_ID = "ec4d780e-7249-4d62-b124-7e3f7f38a441"
-SCENARIO_ID = "aabe8141-e045-4e30-87be-6ccf95818b87"
-PKL_PATH = "level_1/level_1_scenario_1.pkl"
+TEST_ID = '39ae35d8-4b0f-467f-9ec4-ee19c3558c7f'
+SCENARIO_ID = "ee155de0-14f1-4bd7-8cc6-9100276758fa"
+PKL_PATH = "level_0/level_0_scenario_1.pkl"
 
 
 # # flatland3_benchmarks
@@ -58,7 +56,7 @@ logging.basicConfig(encoding='utf-8', level=logging.INFO)
 
 def test_success(
   # submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-  submission_data_url="ghcr.io/flatland-association/flatland-baselines-forward-only-heuristic:sanity-check-baselines",
+  submission_data_url="ghcr.io/flatland-association/flatland-baselines-forward-only-heuristic:latest",
   test_id=TEST_ID,
   scenario_id=SCENARIO_ID,
   pkl_path=PKL_PATH,
@@ -149,7 +147,7 @@ def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatlan
   assert "OOM" in str(exc_info.value.status)
 
   assert exc_info.value.message.startswith(
-    f"Failed task with submission_id={submission_id} with submission_data_url=ghcr.io/flatland-association/flatland-baselines-random:latest. Some tasks jobs failed: ['FailureTarget', 'Failed'].")
+    f"Failed task with submission_id={submission_id} with submission_data_url=ghcr.io/flatland-association/flatland-baselines-random:latest for test_id={test_id}, scenario_id={scenario_id}. Some tasks jobs failed: ['FailureTarget', 'Failed'].")
   assert "PodOOMKilling" in exc_info.value.message
   # may fail the image needs to be pulled.
   assert elapsed_time < 30
@@ -342,7 +340,7 @@ def test_max_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/flatla
   end_time = time.time()
   elapsed_time = end_time - start_time
   assert termination_cause.startswith('Running time')
-  assert termination_cause.endswith(f'exceeded running time limit {running_time_limit}.00s.')
+  assert f'exceeded running time limit {running_time_limit}.00s' in termination_cause
   assert sleep + delta > elapsed_time > running_time_limit
 
 
@@ -394,7 +392,7 @@ def test_max_total_running_time_exceeded_fail_fast(submission_data_url="ghcr.io/
   pretty_print_dict(ret)
 
   assert termination_cause.startswith('Running time')
-  assert termination_cause.endswith(f'exceeded total running time limit {total_running_time_limit}.00s.')
+  assert f'exceeded total running time limit {total_running_time_limit}.00s' in termination_cause
   assert running_time_limit + delta > elapsed_time > running_time_limit
 
 
