@@ -3,6 +3,58 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.18.4](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.3...v0.18.4) (2026-04-27)
+
+
+### Features
+
+* add message field to statuses service. ([4a68c82](https://github.com/flatland-association/flatland-benchmarks/commit/4a68c82cf48ad1c86f081026bbc49068d91a4d28))
+* add submission tags. ([8a1321a](https://github.com/flatland-association/flatland-benchmarks/commit/8a1321a04186ebd9f3664fa4c0be7768e5a0fb37))
+* **backend:** allow skipping enqueuing evaluation when POSTing submissions (for testing purposes). ([f64da9c](https://github.com/flatland-association/flatland-benchmarks/commit/f64da9c505cd98f1b7851a5fa7c4d0dd97324c55))
+* **backend:** allow skipping enqueuing evaluation when POSTing submissions (for testing purposes). ([321955c](https://github.com/flatland-association/flatland-benchmarks/commit/321955c74c2011886e1c7dab983f56c7059a52d7))
+* **backend:** fix import. ([81ae204](https://github.com/flatland-association/flatland-benchmarks/commit/81ae204933ba338b62c42fad0f1904b10d4f2153))
+* **backend:** fix import. ([60f411f](https://github.com/flatland-association/flatland-benchmarks/commit/60f411fe0273053c1bae17c716b38b8f30787954))
+* **backend:** improve HTTP status signalling. ([62aff91](https://github.com/flatland-association/flatland-benchmarks/commit/62aff91f604b94e5116d737efb64aeb52a9224bf))
+* **backend:** return 401 instead of 400 upon token expiry. ([9e2694a](https://github.com/flatland-association/flatland-benchmarks/commit/9e2694a17d01a4dbbee1052e180afd07b3f3e8a2))
+* **backend:** return 422 instead of 500 for invalid input. ([f9fc6ec](https://github.com/flatland-association/flatland-benchmarks/commit/f9fc6ec79533a28f1ba5632f3970aabbf4460917))
+* **backend:** widen columns for submission/submission statuses. ([fa32aed](https://github.com/flatland-association/flatland-benchmarks/commit/fa32aedd9e6c9275ef7b3acbba58a54c055a5cd1))
+* **clientlib:** add message field to statuses service. ([9510746](https://github.com/flatland-association/flatland-benchmarks/commit/9510746a824d1c902a240fab90199db1dea9f991))
+* fail fast when no tests provided. ([073cac7](https://github.com/flatland-association/flatland-benchmarks/commit/073cac74cae0473c01e1483268142c242343978d))
+* fail fast when no tests provided. ([83fc56a](https://github.com/flatland-association/flatland-benchmarks/commit/83fc56a991088ba682e07f607047b913ac6cc057))
+* **frontend:** add link to api docs. ([#600](https://github.com/flatland-association/flatland-benchmarks/issues/600)) ([a836aaf](https://github.com/flatland-association/flatland-benchmarks/commit/a836aafba7971bc28a583e1e777f860dbc98d2f8))
+* **frontend:** allow tags in new submission. ([46c1cc7](https://github.com/flatland-association/flatland-benchmarks/commit/46c1cc772d2f6c5f913157e207e443080c2b5921))
+* **frontend:** avoid reversing submissions in place. ([f69b1c7](https://github.com/flatland-association/flatland-benchmarks/commit/f69b1c72dce2ce052995142576e43afe1ea4bea7))
+* **frontend:** avoid reversing submissions in place. ([141bebe](https://github.com/flatland-association/flatland-benchmarks/commit/141bebe44ded5fc5484d970ef93fe9802a15c3ed))
+* **frontend:** display submission statuses as table. ([174613c](https://github.com/flatland-association/flatland-benchmarks/commit/174613ceead4a43f492046acbe3ced45001c6851))
+* **frontend:** display tags in benchmark overview table. ([7280b68](https://github.com/flatland-association/flatland-benchmarks/commit/7280b68fb73149968539f4bd5bc103746d6e77cc))
+* **frontend:** display tags in own submissions. ([a4e436a](https://github.com/flatland-association/flatland-benchmarks/commit/a4e436a36f6f6fe3f7415a47e739f0cdf65e2828))
+* **frontend:** distinguish tracks/tags in column headers as well. ([793891a](https://github.com/flatland-association/flatland-benchmarks/commit/793891a17e329d37b439aa7069c86575036aaaf6))
+* **frontend:** distinguish tracks/tags in new submission modal component. ([b2037ea](https://github.com/flatland-association/flatland-benchmarks/commit/b2037ea172f867fd1eb932bd21fa165b25634d4a))
+* **frontend:** put status to the bottom. ([#601](https://github.com/flatland-association/flatland-benchmarks/issues/601)) ([7e02c4e](https://github.com/flatland-association/flatland-benchmarks/commit/7e02c4e689f98956d9ef371ed0749fa393f7e7b4))
+* **railway-orchestrator:** add level 0 for ECML2026. ([0512567](https://github.com/flatland-association/flatland-benchmarks/commit/0512567d4596b5ad788a1047f87428d19a9c607f))
+* **railway-orchestrator:** add Level 0 for ECML2026. ([2e5d25b](https://github.com/flatland-association/flatland-benchmarks/commit/2e5d25bdbce1a0ad78554d6b30a0e06df6b79a4b))
+* **railway-orchestrator:** add total running time limit (summed pure evaluation time). ([65e21d8](https://github.com/flatland-association/flatland-benchmarks/commit/65e21d8b5ac4a0bb8566a5f5a37fd9de5c9be664))
+* **railway-orchestrator:** add total running time limit (summed pure evaluation time). ([2942d51](https://github.com/flatland-association/flatland-benchmarks/commit/2942d512d12c121c3f395562e46abc41ac0067ea))
+* **railway-orchestrator:** add total running time limit (summed pure evaluation time). ([12ba2b7](https://github.com/flatland-association/flatland-benchmarks/commit/12ba2b7ea27594ecbff9b9fefef9abcbbabb98f9))
+* **railway-orchestrator:** decouple queue consumer. ([5bf323d](https://github.com/flatland-association/flatland-benchmarks/commit/5bf323deed53d134964291d55cdab77635fa68cb))
+* **railway-orchestrator:** post status update for each scenario. ([8c90374](https://github.com/flatland-association/flatland-benchmarks/commit/8c903740a0297e9e7571c8dc9256f1c600b59d22))
+* report failure reason. ([8d86437](https://github.com/flatland-association/flatland-benchmarks/commit/8d8643768421255ff7e8ed16b60b875b4c5fd7c0))
+* support for multiple tracks. ([58e3c1d](https://github.com/flatland-association/flatland-benchmarks/commit/58e3c1dbcaf31999a5d7bde176e7eb8534f7f0e3))
+
+
+### Bug Fixes
+
+* **railway-orchestrator:** extract rewards from additional submission args and pass to evaluation in orchestrator. ([4c31f13](https://github.com/flatland-association/flatland-benchmarks/commit/4c31f1350daf4adfeb1451fc56a908d00abb2fe0))
+* **railway-orchestrator:** extract rewards from additional submission args and pass to evaluation in orchestrator. ([7c9b06a](https://github.com/flatland-association/flatland-benchmarks/commit/7c9b06ae6bb9ea9af13fc18d1b3d32e90b79f66d))
+* **railway-orchestrator:** extract rewards from additional submission args and pass to evaluation in orchestrator. ([d68e0f2](https://github.com/flatland-association/flatland-benchmarks/commit/d68e0f211d37764180f00194dfe69ee5ddf35fd0))
+* reconcile dropdown styling ([cf84611](https://github.com/flatland-association/flatland-benchmarks/commit/cf84611dcd2855a309550e0960c35c5526029da7))
+* reconcile dropdown styling ([1b2be9e](https://github.com/flatland-association/flatland-benchmarks/commit/1b2be9ea343a2ae07e5b85cacc9651ca17403229))
+
+
+### Miscellaneous Chores
+
+* release 0.18.4 ([45a2ca7](https://github.com/flatland-association/flatland-benchmarks/commit/45a2ca72754ee5351205ce3b48938c9e84a16854))
+
 ## [0.18.3](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.2...v0.18.3) (2026-04-15)
 
 
