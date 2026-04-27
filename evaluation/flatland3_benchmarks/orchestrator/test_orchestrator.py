@@ -65,7 +65,7 @@ def test_tasks_failing():
   core_api: CoreV1Api = mock()
   batch_api: BatchV1Api = mock()
 
-  job_subi = V1Job(status=V1JobStatus(conditions=[V1JobCondition(type="Somethingelse", status="blup")]), metadata=V1ObjectMeta(name=f"f3-sub--1234--66"))
+  job_subi = V1Job(status=V1JobStatus(conditions=[V1JobCondition(type="Failed", status="blup")]), metadata=V1ObjectMeta(name=f"f3-sub--1234--66"))
   when(batch_api).list_namespaced_job(namespace="fab-int", label_selector=f"submission_id=1234,test_id=55,scenario_id=66").thenReturn(
     V1JobList(items=[job_subi]))
 
@@ -99,7 +99,7 @@ def test_tasks_failing():
       pkl_path="55/66",
     )
 
-  assert exc_info.value.message.startswith('Failed task with submission_id=1234 with submission_data_url=pancy.')
+  assert exc_info.value.message.startswith('Failed task with submission_id=1234 with submission_data_url=pancy for test_id=55, scenario_id=66.')
   ret = exc_info.value.status
 
   verify(batch_api, times=1).list_namespaced_job(...)
@@ -108,7 +108,7 @@ def test_tasks_failing():
   verify(core_api, times=1).list_namespaced_event('fab-int', field_selector='involvedObject.name=subi')
 
   assert set(ret.keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time", "events"}
-  assert ret["job_status"] == "Somethingelse"
+  assert ret["job_status"] == "Failed"
   assert ret["image_id"] == "ghcr.io/subi"
   assert ret["log"] == "abcd"
   assert ret["pod"] == pod_subi.to_dict()
@@ -177,7 +177,7 @@ def test_submission_status_general_failure_reported():
   orchestrator._run_submission_scenario_container = _fail
   fab = mock()
   with pytest.raises(Exception):
-    orchestrator.orchestrator(submission_data_url="funny", fab=fab)
+    orchestrator.orchestrator(submission_data_url="funny", fab=fab, tests=["fc8f5fb1-4525-4b4f-a022-d3d7800097dc"])
 
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
                                                                 SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value, message=None))
@@ -209,7 +209,7 @@ def test_submission_status_specific_failure_reported():
   orchestrator._run_submission_scenario_container = _fail
   fab = mock()
   with pytest.raises(Exception):
-    orchestrator.orchestrator(submission_data_url="funny", fab=fab)
+    orchestrator.orchestrator(submission_data_url="funny", fab=fab , tests=["fc8f5fb1-4525-4b4f-a022-d3d7800097dc"])
 
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
                                                                 SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value, message=None))
@@ -240,7 +240,7 @@ def test_submission_status_success_reported():
   when(client).list_objects_v2(Bucket=None, Prefix=any).thenReturn({'Contents': None})
   orchestrator._extract_stats_from_trajectory = lambda *args, **kwargs: (0.11, 0.22)
   fab = mock()
-  orchestrator.orchestrator(submission_data_url="funny", fab=fab)
+  orchestrator.orchestrator(submission_data_url="funny", fab=fab, tests=["fc8f5fb1-4525-4b4f-a022-d3d7800097dc"])
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
                                                                 SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value, message=None))
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,

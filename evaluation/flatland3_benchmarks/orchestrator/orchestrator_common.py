@@ -4,7 +4,9 @@ import logging
 import tempfile
 import time
 import traceback
+import uuid
 from abc import abstractmethod
+from datetime import date, datetime
 from enum import Enum
 from pathlib import Path
 from typing import Dict, Optional, Any, Tuple
@@ -13,6 +15,7 @@ from typing import List
 import boto3
 from flatland.evaluators.trajectory_evaluator import TrajectoryEvaluator
 from flatland.trajectories.trajectories import Trajectory
+from flatland.utils.cli_utils import resolve_type
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
@@ -30,7 +33,7 @@ class Status(Enum):
 
 
 class TaskExecutionError(Exception):
-  def __init__(self, message: str, status: Dict):
+  def __init__(self, message: str, status: Dict = None):
     super().__init__(message)
     self.message = message
     self.status = status
@@ -52,6 +55,7 @@ class FlatlandBenchmarksOrchestrator:
                running_time_limit: float = None,  # time limit for the submission container/pod running for one scenario (excluding pulling/initialization).
                total_running_time_limit: float = None,
                # summed time limit for the submission container/pod running a scenario (excluding pulling/initialization).
+               additional_submission_args: str = None,
                **kwargs):
     self.submission_id = submission_id
     self.aws_endpoint_url = aws_endpoint_url
@@ -69,6 +73,7 @@ class FlatlandBenchmarksOrchestrator:
     self.percentage_complete_threshold = percentage_complete_threshold
     self.running_time_limit = running_time_limit
     self.total_running_time_limit = total_running_time_limit
+    self.additional_submission_args = additional_submission_args
 
   def orchestrator(self,
                    submission_data_url: str,
@@ -94,12 +99,7 @@ class FlatlandBenchmarksOrchestrator:
     try:
       submission_id = self.submission_id
       logger.info(f"// START task submission_id={submission_id} with submission_data_url={submission_data_url}.")
-      try:
-        _fab = self._backend_application_flow(fab)
-        _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
-      except Exception as status_post_failure:
-        logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ",
-                       exc_info=status_post_failure)
+      _fab = self._post_submission_status_started(fab, submission_data_url, submission_id)
 
       start_time = time.time()
       results, termination_cause = self.run_submission(submission_id, submission_data_url, tests, fab=fab, **kwargs)
@@ -116,35 +116,46 @@ class FlatlandBenchmarksOrchestrator:
         if isinstance(submission_error, TaskExecutionError):
           try:
             logger.error(
-              f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Status: {json.dumps(submission_error.status, indent=4)}",
+              f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}.\nStatus: {pretty_dumps_dict(submission_error.status)}.\nLog: {pretty_dumps_log(submission_error.status)}",
               exc_info=submission_error)
           except Exception as logging_error:
             logger.error(f"Could not log status {str(submission_error.status)}", exc_info=logging_error)
-          _fab = self._backend_application_flow(fab)
-          try:
-            _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                          SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
-                                                                                                      message=str(submission_error.message)))
-          except Exception as status_post_failure:
-            logger.warning(f"Could not post specific FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ",
-                           exc_info=status_post_failure)
-            try:
-              _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                            SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
-                                                                                                        message="General failure."))
-            except Exception as status_post_failure:
-              logger.warning(f"Could not post general FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ",
-                             exc_info=status_post_failure)
+          self._post_submission_status_failed_with_specific_failure(fab, submission_data_url, submission_error, submission_id)
         else:
-          try:
-            _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                          SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
-                                                                                                      message="General failure."))
-          except Exception as status_post_failure:
-            logger.warning(f"Could not post general FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ",
-                           exc_info=status_post_failure)
+          self._post_submission_status_failed_with_general_failure(fab, submission_data_url, submission_id)
       finally:
         raise submission_error
+
+  def _post_submission_status_failed_with_specific_failure(self, fab: DefaultApi | None, submission_data_url: str, submission_error: TaskExecutionError,
+                                                           submission_id: str):
+    try:
+      _fab = self._backend_application_flow(fab)
+      _fab.submissions_submission_ids_statuses_post([submission_id],
+                                                    SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
+                                                                                                message=str(submission_error.message)))
+    except Exception as status_post_failure:
+      logger.warning(f"Could not post specific FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ",
+                     exc_info=status_post_failure)
+      self._post_submission_status_failed_with_general_failure(_fab, submission_data_url, submission_id)
+
+  def _post_submission_status_started(self, fab: DefaultApi | None, submission_data_url: str, submission_id: str) -> DefaultApi:
+    try:
+      _fab = self._backend_application_flow(fab)
+      _fab.submissions_submission_ids_statuses_post([submission_id], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value))
+    except Exception as status_post_failure:
+      logger.warning(f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} ",
+                     exc_info=status_post_failure)
+    return _fab
+
+  def _post_submission_status_failed_with_general_failure(self, fab: DefaultApi, submission_data_url: str, submission_id: str):
+    try:
+      _fab = self._backend_application_flow(fab)
+      _fab.submissions_submission_ids_statuses_post([submission_id],
+                                                    SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
+                                                                                                message="General failure."))
+    except Exception as status_post_failure:
+      logger.warning(f"Could not post general FAILURE for submission_id={submission_id} with submission_data_url={submission_data_url} ",
+                     exc_info=status_post_failure)
 
   def _upload_results_for_submission(self, fab: DefaultApi | None, results: dict, submission_id: str) -> DefaultApi:
     try:
@@ -214,7 +225,8 @@ class FlatlandBenchmarksOrchestrator:
     results
     """
     if tests is None:
-      tests = list(self.TEST_TO_SCENARIO_IDS.keys())
+      # TODO fallback to all tests - needs splitting of the orchestrator or enhanced configuration, one per benchmark
+      raise TaskExecutionError("Failed running submission_id={submission_id},tests={tests} as not tests passed.", )
 
     logger.info(f"// START running submission submission_id={submission_id},tests={tests}")
     results = {test_id: {} for test_id in tests}
@@ -231,7 +243,7 @@ class FlatlandBenchmarksOrchestrator:
       if len(test_results) > 0:
         mean_success_rate_of_test = (sum(success_rate_of_test) / len(success_rate_of_test))
       if self.percentage_complete_threshold is not None and mean_success_rate_of_test < self.percentage_complete_threshold:
-        termination_cause = f"The mean percentage of done agents during the last test ({len(tests)} environments) was too low: {mean_success_rate_of_test} < {self.percentage_complete_threshold}"
+        termination_cause = f"The mean percentage of done agents during the last test {test_id} ({len(tests)} environments) was too low: {mean_success_rate_of_test} < {self.percentage_complete_threshold}"
         logger.warning(
           f"\\\\ END running submission submission_id={submission_id},test_id={test_id}. Termination cause: {termination_cause}. {results[test_id]}")
         break
@@ -275,15 +287,7 @@ class FlatlandBenchmarksOrchestrator:
     test_results = {}
     termination_cause = None
     for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
-      try:
-        _fab = self._backend_application_flow(fab)
-        _fab.submissions_submission_ids_statuses_post([submission_id],
-                                                      SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
-                                                                                                  message=f"test {test_id} - scenario {scenario_id}"))
-      except Exception as status_post_failure:
-        logger.warning(
-          f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}",
-          exc_info=status_post_failure)
+      self._post_started(fab, scenario_id, submission_data_url, submission_id, test_id)
 
       pkl_path = self.load_scenario_data(scenario_id)
       ret, termination_cause = self._run_submission_scenario_container(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
@@ -295,12 +299,12 @@ class FlatlandBenchmarksOrchestrator:
       summed_scenario_running_time += scenario_running_time
 
       if self.running_time_limit is not None and scenario_running_time > self.running_time_limit:
-        termination_cause = f"The scenario running time was exceeded : {scenario_running_time:.2f}s > {self.running_time_limit:.2f}s."
+        termination_cause = f"The scenario running time was exceeded during evaluation of test_id={test_id}, scenario_id={scenario_id}: {scenario_running_time:.2f}s > {self.running_time_limit:.2f}s."
         logger.warning(
           f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. {termination_cause}")
         break
       if self.total_running_time_limit is not None and summed_scenario_running_time > self.total_running_time_limit:
-        termination_cause = f"Running time {summed_scenario_running_time:.2f}s exceeded total running time limit {self.total_running_time_limit:.2f}s."
+        termination_cause = f"Running time {summed_scenario_running_time:.2f}s exceeded total running time limit {self.total_running_time_limit:.2f}s during evaluation of test_id={test_id}, scenario_id={scenario_id}."
         logger.warning(
           f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. {termination_cause}")
         break
@@ -313,6 +317,17 @@ class FlatlandBenchmarksOrchestrator:
       test_results[scenario_id] = scenario_results
 
     return test_results, success_rate_of_test, summed_scenario_running_time, termination_cause
+
+  def _post_started(self, fab: DefaultApi, scenario_id, submission_data_url: str, submission_id: str, test_id: str):
+    try:
+      _fab = self._backend_application_flow(fab)
+      _fab.submissions_submission_ids_statuses_post([submission_id],
+                                                    SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
+                                                                                                message=f"test {test_id} - scenario {scenario_id}"))
+    except Exception as status_post_failure:
+      logger.warning(
+        f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}",
+        exc_info=status_post_failure)
 
   def _evaluate_scenario_results_on_s3_locally(self, prefix: str, scenario_id, submission_id: str, test_id: str) -> tuple[Any, dict[str, float | Any]]:
     """
@@ -344,8 +359,15 @@ class FlatlandBenchmarksOrchestrator:
     return scenario_results, success_rate
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):
+    rewards = None
+    if self.additional_submission_args is not None:
+
+      argv = self.additional_submission_args.split(" ")
+      if "--rewards" in argv:
+        rewards = resolve_type(argv[argv.index("--rewards") + 1])()
+
     trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)
-    TrajectoryEvaluator(trajectory).evaluate(tqdm_kwargs={"disable": True})
+    TrajectoryEvaluator(trajectory).evaluate(tqdm_kwargs={"disable": True}, rewards=rewards)
     rail_env = trajectory.load_env()
     df_trains_arrived = trajectory.trains_arrived
     logger.info(f"trains arrived: {df_trains_arrived}")
@@ -383,3 +405,29 @@ def backend_application_flow(
     client_secret=client_secret,
   )
   return token
+
+
+# https://stackoverflow.com/questions/36588126/uuid-is-not-json-serializable
+class DictEncoder(json.JSONEncoder):
+  def default(self, obj):
+    if isinstance(obj, uuid.UUID):
+      # if the obj is uuid, we simply return the value of uuid
+      return obj.hex
+    if isinstance(obj, (datetime, date)):
+      return obj.isoformat()
+    return json.JSONEncoder.default(self, obj)
+
+
+def pretty_print_dict(d):
+  print(json.dumps(d, indent=4, cls=DictEncoder))
+  print(pretty_dumps_log(d))
+
+
+def pretty_dumps_log(d):
+  if d is not None and "log" in d:
+    return "\n".join(d["log"].split("\\n"))
+  return None
+
+
+def pretty_dumps_dict(d):
+  return json.dumps(d, indent=4, cls=DictEncoder)

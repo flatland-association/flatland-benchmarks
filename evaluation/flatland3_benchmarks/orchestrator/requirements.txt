@@ -9,4 +9,4 @@ python-dotenv==1.2.2
 git+https://github.com/flatland-association/flatland-benchmarks.git@572-failure-reason#subdirectory=fab-clientlib
 # DEPENDENCY SWITCH:
 # TODO use released version
-flatland-rl @ git+https://github.com/flatland-association/flatland-rl.git@main
+flatland-rl @ git+https://github.com/flatland-association/flatland-rl.git@fix-serialization-ecml2026-rewards

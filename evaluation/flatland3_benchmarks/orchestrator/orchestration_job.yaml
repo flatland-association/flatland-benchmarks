@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels: { } # INSERTED
+  annotations: { }
+  name: f3-sub
+spec:
+  # https://kubernetes.io/docs/concepts/workloads/controllers/job/
+  # do not back off
+  backoffLimit: 0
+  template:
+    metadata:
+      labels: { } # INSERTED
+    spec:
+      activeDeadlineSeconds: 7200 # INSERTED
+      # do not restart
+      restartPolicy: Never
+      serviceAccountName: INSERTED
+      containers:
+        - name: f3-submission
+          image: INSERTED
+          imagePullPolicy: Always
+          imagePullSecrets:
+            - name: default-secret
+          args: [ "python", "orchestration_job.py" ]
+          resources:
+            requests:
+              memory: "1Gi"
+              cpu: "1"
+            limits:
+              memory: "2Gi"
+              cpu: "2"
+

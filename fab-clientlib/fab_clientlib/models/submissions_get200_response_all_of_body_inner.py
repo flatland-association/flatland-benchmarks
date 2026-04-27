@@ -35,12 +35,13 @@ class SubmissionsGet200ResponseAllOfBodyInner(BaseModel):
     description: Optional[StrictStr] = None
     submission_data_url: Optional[StrictStr] = None
     code_repository: Optional[StrictStr] = None
+    tags: Optional[StrictStr] = None
     submitted_at: Optional[StrictStr] = None
     submitted_by: Optional[UUID] = None
     submitted_by_username: Optional[StrictStr] = None
     status: Optional[StrictStr] = None
     published: Optional[StrictBool] = None
-    __properties: ClassVar[List[str]] = ["id", "benchmark_id", "test_ids", "name", "description", "submission_data_url", "code_repository", "submitted_at", "submitted_by", "submitted_by_username", "status", "published"]
+    __properties: ClassVar[List[str]] = ["id", "benchmark_id", "test_ids", "name", "description", "submission_data_url", "code_repository", "tags", "submitted_at", "submitted_by", "submitted_by_username", "status", "published"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -100,6 +101,7 @@ class SubmissionsGet200ResponseAllOfBodyInner(BaseModel):
             "description": obj.get("description"),
             "submission_data_url": obj.get("submission_data_url"),
             "code_repository": obj.get("code_repository"),
+            "tags": obj.get("tags"),
             "submitted_at": obj.get("submitted_at"),
             "submitted_by": obj.get("submitted_by"),
             "submitted_by_username": obj.get("submitted_by_username"),

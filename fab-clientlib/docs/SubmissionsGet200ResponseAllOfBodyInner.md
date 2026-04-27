@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **description** | **str** |  | [optional] 
 **submission_data_url** | **str** |  | [optional] 
 **code_repository** | **str** |  | [optional] 
+**tags** | **str** |  | [optional] 
 **submitted_at** | **str** |  | [optional] 
 **submitted_by** | **str** |  | [optional] 
 **submitted_by_username** | **str** |  | [optional] 

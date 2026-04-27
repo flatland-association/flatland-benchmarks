@@ -100,6 +100,14 @@ describe.sequential('Submission controller', () => {
     )
   })
 
+  test('should allow post submissions with skipping enqueuing message', async () => {
+    const celeryMock = vi.spyOn(CeleryService.prototype, 'sendTask')
+    const res = await controller.testPost('/submissions/skip_enqueue', { body: testSubmission }, testUserJwt)
+    assertApiResponse(res)
+    submissionUuid = res.body.body.id
+    expect(celeryMock).toHaveBeenCalledTimes(0)
+  })
+
   test('should allow post submissions with tags', async () => {
     const res = await controller.testPost('/submissions', { body: testSubmissionWithTags }, testUserJwt)
     assertApiResponse(res)

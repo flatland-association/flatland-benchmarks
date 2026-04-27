@@ -1,43 +1,16 @@
-# based on https://github.com/codalab/codabench/blob/develop/orchestrator/orchestrator.py
 import json
 import logging
-import os
-import ssl
 import time
 from pathlib import Path
 from typing import List, Optional, Tuple
 
 import yaml
-from celery import Celery
-from celery.app.log import TaskFormatter
-from celery.signals import after_setup_task_logger
-from kubernetes import client, config
-from kubernetes.client import V1PodList, V1Pod, V1PodStatus
+from kubernetes import client
+from kubernetes.client import V1PodList, V1Pod, V1PodStatus, V1JobList, V1Job
 
 from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError
 
 logger = logging.getLogger(__name__)
-
-BENCHMARK_ID = os.environ.get("BENCHMARK_ID", "flatland3-evaluation")
-app = Celery(
-  broker=os.environ.get('BROKER_URL'),
-  backend=os.environ.get('BACKEND_URL'),
-  queue=os.environ.get("BENCHMARK_ID"),
-  broker_use_ssl={
-    'keyfile': os.environ.get("RABBITMQ_KEYFILE"),
-    'certfile': os.environ.get("RABBITMQ_CERTFILE"),
-    'ca_certs': os.environ.get("RABBITMQ_CA_CERTS"),
-    'cert_reqs': ssl.CERT_REQUIRED
-  }
-)
-
-
-# https://celery.school/custom-celery-task-logger
-@after_setup_task_logger.connect
-def setup_task_logger(logger, *args, **kwargs):
-  for handler in logger.handlers:
-    tf = TaskFormatter("[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] [%(task_name)s] - [%(task_id)s] - %(message)s")
-    handler.setFormatter(tf)
 
 
 class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
@@ -51,7 +24,6 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                environments_zip: str,
                percentage_complete_threshold: float = None,
                k8s_resource_allocation: str = None,
-               additional_submission_args: str = None,
                wait_for_pod_to_start_limit: int = None,  # pod should be listed by now, i.e. pulling has started by now.
                wait_for_pod_to_run_limit: int = None,  # pod should have reached running state by now, i.e. pulling should be done by now
                **kwargs):
@@ -59,10 +31,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.core_api = core_api
     self.batch_api = batch_api
 
-    self.additional_submission_args = additional_submission_args
     self.kubernetes_namespace = kubernetes_namespace
     self.active_deadline_seconds = active_deadline_seconds
-    self.benchmark_id = BENCHMARK_ID
     self.submissions_pvc = submissions_pvc
     self.environments_pvc = environments_pvc
     self.environments_zip = environments_zip
@@ -80,7 +50,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                                          **kwargs) -> Tuple[dict, Optional[str]]:
     submission_id = self.submission_id
 
-    logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+    logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}, pkl_path={pkl_path}")
     submission_definition = self._make_submission_definition(submission_data_url, test_id, scenario_id, pkl_path)
     job_name = submission_definition["metadata"]["name"]
 
@@ -88,7 +58,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     self.batch_api.create_namespaced_job(self.kubernetes_namespace, submission)
     start_time_job = time.time()
     all_done = False
-    any_failed = False
+    job_failed = False
     ret = {}
 
     ticks = {}
@@ -97,25 +67,27 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     running_time = None
     wait_for_pod_to_start = 0
     termination_cause = None
-    while not all_done and not any_failed:
+    while not all_done and not job_failed:
       time.sleep(1)
       wait_for_pod_to_start += 1
-      jobs = self.batch_api.list_namespaced_job(namespace=self.kubernetes_namespace,
-                                                label_selector=f"submission_id={submission_id},test_id={test_id},scenario_id={scenario_id}")
+      jobs: V1JobList = self.batch_api.list_namespaced_job(namespace=self.kubernetes_namespace,
+                                                           label_selector=f"submission_id={submission_id},test_id={test_id},scenario_id={scenario_id}")
       # Right after job creation it’s common to have 0 pods for a short period, and retries/backoff
       if self.wait_for_pod_to_start_limit is not None and len(jobs.items) == 0 and wait_for_pod_to_start < self.wait_for_pod_to_start_limit:
         continue
       assert len(jobs.items) == 1
       all_done = True
-      job = jobs.items[-1]
+      job: V1Job = jobs.items[-1]
       all_done = all_done and job.status.conditions is not None
-      job_status_conditions_ = [cond.type for cond in job.status.conditions] if job.status.conditions is not None else None
-      any_failed = any_failed or (job_status_conditions_ is not None and 'Complete' not in job_status_conditions_)
+      job_status_conditions_types = [cond.type for cond in job.status.conditions] if job.status.conditions is not None else None
+      # https://kubernetes.io/docs/concepts/workloads/controllers/job/
+      job_failed = job_failed or (
+        job_status_conditions_types is not None and ('Failed' in job_status_conditions_types or 'FailureTarget' in job_status_conditions_types))
 
       pods: V1PodList = self.core_api.list_namespaced_pod(namespace=self.kubernetes_namespace, label_selector=f"job-name={job_name}")
       if len(pods.items) != 1:
         raise TaskExecutionError(
-          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. Could not gather stats there where {len(pods.items)} pods.")
+          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Could not gather stats there where {len(pods.items)} pods.")
       pod: V1Pod = pods.items[-1]
       pod_status: V1PodStatus = pod.status
 
@@ -129,7 +101,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       elapsed_time = ticks[pod_status.phase] - start_time_job
       if self.wait_for_pod_to_run_limit is not None and pod_status.phase in ["Pending", "Unknown"] and (elapsed_time > self.wait_for_pod_to_run_limit):
         raise TaskExecutionError(
-          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} because {elapsed_time:.2f}s exceeded start time limit {self.wait_for_pod_to_run_limit}s.",
+          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Elapsed time {elapsed_time:.2f}s exceeded start time limit {self.wait_for_pod_to_run_limit}s.",
           ret)
 
       if "Running" in ticks and start_time_running is None:
@@ -137,13 +109,13 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       if "Running" in ticks and start_time_running is not None:
         running_time = time.time() - start_time_running
         if self.running_time_limit is not None and running_time > self.running_time_limit:
-          termination_cause = f"Running time {running_time:.2f}s exceeded running time limit {self.running_time_limit:.2f}s."
+          termination_cause = f"Running time {running_time:.2f}s exceeded running time limit {self.running_time_limit:.2f}s during evaluation of test_id={test_id}, scenario_id={scenario_id}."
 
       if "Running" in ticks and pod_status.phase != "Running" and end_time_running is None:
         end_time_running = ticks["Running"]
         running_time = end_time_running - start_time_running
 
-      if all_done or any_failed:
+      if all_done or job_failed:
         ret = {
           "job_status": job.status.conditions[0].type,
           "pod_status": pod.status.to_dict(),
@@ -152,10 +124,10 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
           "pod": pod.to_dict(),
           "running_time": running_time,
         }
-        if all_done and not any_failed:
+        if all_done and not job_failed:
           ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
           break
-        elif any_failed:
+        elif job_failed:
           ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
           additional_info = ""
           try:
@@ -163,9 +135,9 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
           except:
             pass
           raise TaskExecutionError(
-            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url}. Some tasks jobs failed: {job_status_conditions_}. {additional_info}",
+            f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Some tasks jobs failed: {job_status_conditions_types}. {additional_info}",
             ret)
-    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}.")
+    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}, pkl_path={pkl_path}")
     logger.debug(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
     return ret, termination_cause
 
@@ -657,74 +629,3 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       "7d5e9c8d-ce87-48f3-b793-83489fca8ca0"
     ],
   }
-
-
-# N.B. name to be used by send_task
-@app.task(name=BENCHMARK_ID, bind=True)
-def orchestrator(self, submission_data_url: str, tests: List[str] = None, **kwargs):
-  submission_id = self.request.id
-  config.load_incluster_config()
-  # https://github.com/kubernetes-client/python/
-  # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py
-  batch_api = client.BatchV1Api()
-  core_api = client.CoreV1Api()
-
-  AWS_ENDPOINT_URL = os.environ.get("AWS_ENDPOINT_URL", None)
-  AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID", None)
-  AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY", None)
-  S3_BUCKET = os.environ.get("S3_BUCKET", None)
-
-  if not AWS_ENDPOINT_URL:
-    raise RuntimeError("Misconfiguration: AWS_ENDPOINT_URL must be set in the orchestrator")
-  if not AWS_ACCESS_KEY_ID:
-    raise RuntimeError("Misconfiguration: AWS_ACCESS_KEY_ID must be set in the orchestrator")
-  if not AWS_SECRET_ACCESS_KEY:
-    raise RuntimeError("Misconfiguration: AWS_SECRET_ACCESS_KEY must be set in the orchestrator")
-  if not S3_BUCKET:
-    raise RuntimeError("Misconfiguration: S3_BUCKET must be set in the orchestrator")
-
-  FAB_API_URL = os.environ.get("FAB_API_URL")
-  CLIENT_ID = os.environ.get("CLIENT_ID", 'fab-client-credentials')
-  CLIENT_SECRET = os.environ.get("CLIENT_SECRET")
-  TOKEN_URL = os.environ.get("TOKEN_URL", "https://keycloak.flatland.cloud/realms/flatland/protocol/openid-connect/token")
-  PERCENTAGE_COMPLETE_THRESHOLD = os.environ.get("PERCENTAGE_COMPLETE_THRESHOLD", None)
-  if PERCENTAGE_COMPLETE_THRESHOLD is not None:
-    PERCENTAGE_COMPLETE_THRESHOLD = float(PERCENTAGE_COMPLETE_THRESHOLD)
-  RUNNING_TIME_LIMIT = os.environ.get("RUNNING_TIME_LIMIT", None)
-  if RUNNING_TIME_LIMIT is not None:
-    RUNNING_TIME_LIMIT = float(RUNNING_TIME_LIMIT)
-  WAIT_FOR_POD_TO_RUN_LIMIT = os.environ.get("WAIT_FOR_POD_TO_RUN_LIMIT", None)
-  if WAIT_FOR_POD_TO_RUN_LIMIT is not None:
-    WAIT_FOR_POD_TO_RUN_LIMIT = int(WAIT_FOR_POD_TO_RUN_LIMIT)
-  WAIT_FOR_POD_TO_START_LIMIT = os.environ.get("WAIT_FOR_POD_TO_START_LIMIT", None)
-  if WAIT_FOR_POD_TO_START_LIMIT is not None:
-    WAIT_FOR_POD_TO_START_LIMIT = int(WAIT_FOR_POD_TO_START_LIMIT)
-
-  return K8sFlatlandBenchmarksOrchestrator(
-    submission_id=submission_id,
-    kubernetes_namespace=os.environ.get("KUBERNETES_NAMESPACE", "fab-int"),
-    active_deadline_seconds=int(os.getenv("ACTIVE_DEADLINE_SECONDS", "7200")),
-    submissions_pvc=os.environ.get("SUBMISSIONS_PVC", "fab-int-submissions"),
-    environments_pvc=os.environ.get("ENVIRONMENTS_PVC", "fab-int-data"),
-    environments_zip=os.environ.get("ENVIRONMENTS_ZIP", "environments.zip"),
-    k8s_resource_allocation=os.environ.get("K8S_RESOURCE_ALLOCATION", '{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}'),
-    additional_submission_args=os.environ.get("ADDITIONAL_SUBMISSION_ARGS", None),
-    batch_api=batch_api,
-    core_api=core_api,
-    aws_endpoint_url=AWS_ENDPOINT_URL,
-    aws_access_key_id=AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
-    s3_bucket=S3_BUCKET,
-    fab_api_url=FAB_API_URL,
-    client_id=CLIENT_ID,
-    client_secret=CLIENT_SECRET,
-    token_url=TOKEN_URL,
-    percentage_complete_threshold=PERCENTAGE_COMPLETE_THRESHOLD,
-    running_time_limit=RUNNING_TIME_LIMIT,
-    wait_for_pod_to_start_limit=WAIT_FOR_POD_TO_START_LIMIT,
-    wait_for_pod_to_run_limit=WAIT_FOR_POD_TO_RUN_LIMIT,
-  ).orchestrator(
-    submission_data_url=submission_data_url,
-    tests=tests,
-    **kwargs
-  )

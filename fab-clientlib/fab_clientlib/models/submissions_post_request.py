@@ -32,8 +32,9 @@ class SubmissionsPostRequest(BaseModel):
     benchmark_id: UUID = Field(description="ID of benchmark this submission belongs to.")
     submission_data_url: Optional[StrictStr] = Field(default=None, description="URL of submission executable image.")
     code_repository: Optional[StrictStr] = Field(default=None, description="URL of submission code repository.")
+    tags: Optional[StrictStr] = Field(default=None, description="tags.")
     test_ids: List[UUID] = Field(description="IDs of tests to run.")
-    __properties: ClassVar[List[str]] = ["name", "benchmark_id", "submission_data_url", "code_repository", "test_ids"]
+    __properties: ClassVar[List[str]] = ["name", "benchmark_id", "submission_data_url", "code_repository", "tags", "test_ids"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,6 +91,7 @@ class SubmissionsPostRequest(BaseModel):
             "benchmark_id": obj.get("benchmark_id"),
             "submission_data_url": obj.get("submission_data_url"),
             "code_repository": obj.get("code_repository"),
+            "tags": obj.get("tags"),
             "test_ids": obj.get("test_ids")
         })
         return _obj

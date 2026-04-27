@@ -26,6 +26,7 @@ export class SubmissionController extends Controller {
     super(config)
 
     this.attachPost('/submissions', this.postSubmission, { authorizedRoles: ['User'] })
+    this.attachPost('/submissions/skip_enqueue', this.postSubmissionSkipEnqueue, { authorizedRoles: ['User'] })
     this.attachGet('/submissions', this.getSubmissions)
     this.attachGet('/submissions/own', this.getOwnSubmissions, { authorizedRoles: ['User'] })
     this.attachGet('/submissions/:submission_ids', this.getSubmissionByUuid)
@@ -201,6 +202,142 @@ export class SubmissionController extends Controller {
       logger.info('All tests are offline loop, no celery task sent.')
       this.respond(req, res, { id })
     }
+  }
+
+  /**
+   * @swagger
+   * /submissions/skip_enqueue:
+   *  post:
+   *    description: Inserts new submission without enqueuing evaluation (for testing purposes).
+   *    security:
+   *      - oauth2: [user]
+   *    requestBody:
+   *      required: true
+   *      content:
+   *        application/json:
+   *          schema:
+   *            type: object
+   *            properties:
+   *              name:
+   *                type: string
+   *                description: Display name of submission.
+   *              benchmark_id:
+   *                type: string
+   *                format: uuid
+   *                description: ID of benchmark this submission belongs to.
+   *              submission_data_url:
+   *                type: string
+   *                description: URL of submission executable image.
+   *              code_repository:
+   *                type: string
+   *                description: URL of submission code repository.
+   *              tags:
+   *                type: string
+   *                description: tags.
+   *              test_ids:
+   *                type: array
+   *                items:
+   *                  type: string
+   *                  format: uuid
+   *                description: IDs of tests to run.
+   *            required:
+   *              - name
+   *              - benchmark_id
+   *              - test_ids
+   *    responses:
+   *      200:
+   *        description: Created.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                            description: ID of submission.
+   */
+  postSubmissionSkipEnqueue: PostHandler<'/submissions/skip_enqueue'> = async (req, res) => {
+    const authService = AuthService.getInstance()
+    const auth = (await authService.authorization(req))!
+    this.checkCompleteness(req.body)
+    await this.checkValidity(req.body)
+    // save submission in db
+    const sql = SqlService.getInstance()
+
+    if (
+      this.config?.submissions?.global?.dailyLimit != undefined &&
+      this.config?.submissions?.global?.dailyLimit != null
+    ) {
+      // https://stackoverflow.com/questions/1888544/how-to-select-records-from-last-24-hours-using-sql
+      const submissions = await sql.query<SubmissionRow>`
+    SELECT * FROM submissions
+    WHERE
+      submitted_by = ${auth.sub} AND submitted_at >= NOW() - '1 day'::INTERVAL
+  `
+      if ((submissions?.length || 0) > this.config.submissions.global.dailyLimit) {
+        this.respondError(
+          req,
+          res,
+          { text: 'Daily limit reached.' },
+          undefined,
+          undefined,
+          StatusCodes.TOO_MANY_REQUESTS,
+        )
+        return
+      }
+    }
+
+    let id!: string
+    await sql.transaction(async (sql) => {
+      const idRow = await sql.query`
+      INSERT INTO submissions (
+        benchmark_id,
+        test_ids,
+        name,
+        submission_data_url,
+        code_repository,
+        tags,
+        submitted_at,
+        submitted_by,
+        submitted_by_username
+      ) VALUES (
+        ${req.body.benchmark_id},
+        ${req.body.test_ids},
+        ${req.body.name},
+        ${req.body.submission_data_url},
+        ${req.body.code_repository ?? null},
+        ${req.body.tags ?? null},
+        current_timestamp,
+        ${auth.sub ?? null},
+        ${auth['preferred_username'] ?? null}
+      )
+      RETURNING id
+    `
+      id = idRow.at(0)?.['id']
+      if (!id) {
+        this.respondError(req, res, { text: `could not insert submission` }, undefined, { id })
+        return
+      }
+      await sql.query`
+      INSERT INTO submission_statuses (
+        submission_id,
+        status,
+        timestamp
+      ) VALUES (
+        ${id},
+        'SUBMITTED',
+        current_timestamp
+      )
+    `
+    })
+    logger.info('All tests are offline loop, no celery task sent.')
+    this.respond(req, res, { id })
   }
 
   /**
