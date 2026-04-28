@@ -28,6 +28,9 @@ def make_orchestration_job_definition(orch_config: Dict[str, str]) -> dict:
   orchestration_job_definition["metadata"]["name"] = f"orchestration-{submission_id}"
   orchestration_job_definition["spec"]["template"]["metadata"]["labels"]["orchestration"] = submission_id
   orchestration_job_definition["spec"]["template"]["spec"]["serviceAccountName"] = orch_config["service_account_name"]
+  orchestration_job_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = orch_config["orchestration_job_active_deadline_seconds"]
+  if orch_config["orchestration_job_k8s_resource_allocation"] is not None:
+    orchestration_job_definition["resources"] = json.loads(orch_config["orchestration_job_k8s_resource_allocation"])
   container_definition = orchestration_job_definition["spec"]["template"]["spec"]["containers"][0]
   if orch_config["k8s_resource_allocation"] is not None:
     container_definition["resources"] = json.loads(orch_config["k8s_resource_allocation"])
@@ -36,9 +39,7 @@ def make_orchestration_job_definition(orch_config: Dict[str, str]) -> dict:
   container_definition["args"] = ["python", "orchestration_job.py"]
   container_definition["env"] = [{"name": k.upper(), "value": str(v)} for k, v in orch_config.items() if v is not None]
   container_definition["env"].append({"name": "LOG_LEVEL", "value": os.getenv("LOG_LEVEL", "INFO")})
-  orchestration_job_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = orch_config["orchestration_job_active_deadline_seconds"]
-  if orch_config["orchestration_job_k8s_resource_allocation"] is not None:
-    orchestration_job_definition["resources"] = json.loads(orch_config["orchestration_job_k8s_resource_allocation"])
+
   print(pretty_dumps_dict(orchestration_job_definition))
   return orchestration_job_definition
 
