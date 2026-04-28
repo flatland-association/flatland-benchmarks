@@ -237,9 +237,9 @@ class FlatlandBenchmarksOrchestrator:
       test_results, success_rate_of_test, summed_scenario_running_time, termination_cause = self._run_submission_test(fab, submission_data_url, submission_id,
                                                                                                                       summed_scenario_running_time,
                                                                                                                       test_id, **kwargs)
-      results[test_id] = test_results
       if termination_cause is not None:
         break
+      results[test_id] = test_results
       mean_success_rate_of_test = 0
       if len(test_results) > 0:
         mean_success_rate_of_test = (sum(success_rate_of_test) / len(success_rate_of_test))
