@@ -36,6 +36,9 @@ def make_orchestration_job_definition(orch_config: Dict[str, str]) -> dict:
   container_definition["args"] = ["python", "orchestration_job.py"]
   container_definition["env"] = [{"name": k.upper(), "value": str(v)} for k, v in orch_config.items() if v is not None]
   container_definition["env"].append({"name": "LOG_LEVEL", "value": os.getenv("LOG_LEVEL", "INFO")})
+  container_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = orch_config["orchestration_job_active_deadline_seconds"]
+  if orch_config["orchestration_job_k8s_resource_allocation"] is not None:
+    container_definition["resources"] = json.loads(orch_config["orchestration_job_k8s_resource_allocation"])
   print(pretty_dumps_dict(orchestration_job_definition))
   return orchestration_job_definition
 
@@ -199,6 +202,9 @@ def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
     environments_zip=_require_config("ENVIRONMENTS_ZIP", "environments.zip"),
     k8s_resource_allocation=_require_config("K8S_RESOURCE_ALLOCATION", '{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}'),
     additional_submission_args=_require_config("ADDITIONAL_SUBMISSION_ARGS", None, True),
+    orchestration_job_k8s_resource_allocation=_require_config("ORCHESTRATION_JOB_K8S_RESOURCE_ALLOCATION",
+                                                              '{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}'),
+    orchestration_job_active_deadline_seconds=int(os.getenv("ORCHESTRATION_JOB_ACTIVE_DEADLINE_SECONDS", "7200")),
   )
   return orch_config
 
