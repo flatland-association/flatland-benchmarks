@@ -130,6 +130,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         self._dump_dict_("job", ret, submission_id, test_id, scenario_id)
         self._dump_dict_("pod", ret, submission_id, test_id, scenario_id)
         self._dump_dict_("log", ret, submission_id, test_id, scenario_id)
+        self._dump_dict_("events", ret, submission_id, test_id, scenario_id)
 
         try:
           self.batch_api.delete_namespaced_job(namespace=self.kubernetes_namespace, name=job_name)
