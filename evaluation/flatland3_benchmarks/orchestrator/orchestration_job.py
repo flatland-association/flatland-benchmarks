@@ -28,11 +28,13 @@ def make_orchestration_job_definition(orch_config: Dict[str, str]) -> dict:
   orchestration_job_definition["metadata"]["name"] = f"orchestration-{submission_id}"
   orchestration_job_definition["spec"]["template"]["metadata"]["labels"]["orchestration"] = submission_id
   orchestration_job_definition["spec"]["template"]["spec"]["serviceAccountName"] = orch_config["service_account_name"]
-  orchestration_job_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = orch_config["orchestration_job_active_deadline_seconds"]
-  if orch_config["orchestration_job_k8s_resource_allocation"] is not None:
-    orchestration_job_definition["resources"] = json.loads(orch_config["orchestration_job_k8s_resource_allocation"])
-  container_definition = orchestration_job_definition["spec"]["template"]["spec"]["containers"][0]
+  orchestration_job_definition["spec"]["activeDeadlineSeconds"] = orch_config["orchestration_job_active_deadline_seconds"]
   orchestration_job_definition["spec"]["template"]["spec"]["volumes"][0]["persistentVolumeClaim"]["claimName"] = orch_config["submissions_pvc"]
+
+  container_definition = orchestration_job_definition["spec"]["template"]["spec"]["containers"][0]
+
+  if orch_config["orchestration_job_k8s_resource_allocation"] is not None:
+    container_definition["resources"] = json.loads(orch_config["orchestration_job_k8s_resource_allocation"])
 
   # orchestration job container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
   sub_path = f"{submission_id}/"
