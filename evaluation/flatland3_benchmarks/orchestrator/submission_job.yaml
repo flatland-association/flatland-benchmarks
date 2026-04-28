@@ -70,6 +70,7 @@ spec:
         - name: pvc-submissions
           persistentVolumeClaim:
             claimName: # INSERTED
+            subPath: # INSERTED
         - name: pvc-environments
           persistentVolumeClaim:
             claimName: # INSERTED

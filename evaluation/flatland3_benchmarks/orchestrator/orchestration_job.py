@@ -32,8 +32,13 @@ def make_orchestration_job_definition(orch_config: Dict[str, str]) -> dict:
   if orch_config["orchestration_job_k8s_resource_allocation"] is not None:
     orchestration_job_definition["resources"] = json.loads(orch_config["orchestration_job_k8s_resource_allocation"])
   container_definition = orchestration_job_definition["spec"]["template"]["spec"]["containers"][0]
+  orchestration_job_definition["spec"]["template"]["spec"]["volumes"][0]["persistentVolumeClaim"]["claimName"] = orch_config["submissions_pvc"]
+
   if orch_config["k8s_resource_allocation"] is not None:
     container_definition["resources"] = json.loads(orch_config["k8s_resource_allocation"])
+
+  sub_path = f"{submission_id}/"
+  container_definition["volumeMounts"][0]["subPath"] = sub_path
 
   container_definition["image"] = orchestrator_image
   container_definition["args"] = ["python", "orchestration_job.py"]
@@ -212,6 +217,8 @@ def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
 
 if __name__ == '__main__':
   # https://docs.python.org/3/library/logging.html#logrecord-attributes
+  kwargs = {"filename": "/data/orchestration.log"}
   logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"),
-                      format=os.getenv("LOG_FORMAT", "[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] - %(message)s"))
+                      format=os.getenv("LOG_FORMAT", "[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] - %(message)s"), **kwargs)
+
   main()
