@@ -116,20 +116,24 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         end_time_running = ticks["Running"]
         running_time = end_time_running - start_time_running
 
-      if all_done or job_failed:
+      if all_done or job_failed or termination_cause is not None:
         ret = {
-          "job_status": job.status.conditions[0].type,
+          "job_status": job.status.conditions[0].type if job.status.conditions is not None else None,
           "pod_status": pod.status.to_dict(),
           "image_id": pods.items[-1].status.container_statuses[0].image_id,
           "job": job.to_dict(),
           "pod": pod.to_dict(),
           "running_time": running_time,
+          "termination_cause": termination_cause,
         }
-        if all_done and not job_failed:
-          ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
-          break
-        elif job_failed:
-          ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
+        ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
+        try:
+          self.batch_api.delete_namespaced_job(namespace=self.kubernetes_namespace, name=job_name)
+        except Exception as e:
+          logger.warning(
+            f"Could not delete job {job_name} for submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}",
+            exc_info=e)
+        if job_failed:
           additional_info = ""
           try:
             additional_info = str([event["reason"] for event in ret["events"]["items"]])
@@ -138,6 +142,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
           raise TaskExecutionError(
             f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Some tasks jobs failed: {job_status_conditions_types}. {additional_info}",
             ret)
+        break
+
     logger.info(
       f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)} ")
     logger.debug(
