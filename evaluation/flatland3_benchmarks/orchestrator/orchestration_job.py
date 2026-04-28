@@ -118,7 +118,7 @@ def trigger_orchestrator_job(orch_config):
 def main():
   orch_config = _load_orchestration_config()
 
-  kwargs = {"filename": f"/data/{orch_config["submission_id"]}/orchestration_job.log"}
+  kwargs = {"filename": f"/data/orchestration_job.log"}
   # https://docs.python.org/3/library/logging.html#logrecord-attributes
   logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"),
                       format=os.getenv("LOG_FORMAT", "[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] - %(message)s"), **kwargs)
