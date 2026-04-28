@@ -44,7 +44,7 @@ def test_tasks_successful():
   verify(core_api, times=1).read_namespaced_pod_log("subi", namespace="fab-int")
   verify(core_api, times=1).list_namespaced_event('fab-int', field_selector='involvedObject.name=subi')
 
-  assert set(ret.keys()) == {"job_status", "image_id", "log", "events", "job", "pod", "pod_status", "running_time"}
+  assert set(ret.keys()) == {"job_status", "image_id", "log", "events", "job", "pod", "pod_status", "running_time", "termination_cause"}
   assert ret["job_status"] == "Complete"
   assert ret["image_id"] == "ghcr.io/subi"
   assert ret["log"] == "abcd"
@@ -92,7 +92,7 @@ def test_tasks_failing():
   verify(core_api, times=1).read_namespaced_pod_log("subi", namespace="fab-int")
   verify(core_api, times=1).list_namespaced_event('fab-int', field_selector='involvedObject.name=subi')
 
-  assert set(ret.keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time", "events"}
+  assert set(ret.keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time", "events", "termination_cause"}
   assert ret["job_status"] == "Failed"
   assert ret["image_id"] == "ghcr.io/subi"
   assert ret["log"] == "abcd"
