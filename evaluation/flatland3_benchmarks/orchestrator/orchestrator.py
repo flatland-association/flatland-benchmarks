@@ -8,7 +8,7 @@ import yaml
 from kubernetes import client
 from kubernetes.client import V1PodList, V1Pod, V1PodStatus, V1JobList, V1Job
 
-from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError
+from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError, pretty_dumps_dict
 
 logger = logging.getLogger(__name__)
 
@@ -127,6 +127,10 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
           "termination_cause": termination_cause,
         }
         ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
+        self._dump_dict_("job", ret, submission_id, test_id, scenario_id)
+        self._dump_dict_("pod", ret, submission_id, test_id, scenario_id)
+        self._dump_dict_("log", ret, submission_id, test_id, scenario_id)
+
         try:
           self.batch_api.delete_namespaced_job(namespace=self.kubernetes_namespace, name=job_name)
         except Exception as e:
@@ -149,6 +153,14 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     logger.debug(
       f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}: {ret}")
     return ret, termination_cause
+
+  def _dump_dict_(self, item: str, ret: dict, submission_id: str, test_id, scenario_id):
+    p = Path("/data") / submission_id / test_id / scenario_id / f"{item}.json"
+    try:
+      with p.open("w") as f:
+        f.write(pretty_dumps_dict(ret[item]))
+    except Exception as e:
+      logger.warning(f"Could not write to {p}", exc_info=e)
 
   def _gather_logs(self, pod: V1Pod, ret: dict, submission_id: str, submission_data_url: str) -> dict:
     try:
