@@ -116,13 +116,19 @@ def trigger_orchestrator_job(orch_config):
 
 
 def main():
+  orch_config = _load_orchestration_config()
+
+  kwargs = {"filename": f"/data/{orch_config["submission_id"]}/orchestration_job.log"}
+  # https://docs.python.org/3/library/logging.html#logrecord-attributes
+  logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"),
+                      format=os.getenv("LOG_FORMAT", "[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] - %(message)s"), **kwargs)
+
   config.load_incluster_config()
   # https://github.com/kubernetes-client/python/
   # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py
   batch_api = client.BatchV1Api()
   core_api = client.CoreV1Api()
 
-  orch_config = _load_orchestration_config()
   if orch_config["tests"] is not None:
     # passed on from queue consumer to orchestration job as comma-separated env var
     orch_config["tests"] = orch_config["tests"].split(",")
@@ -216,9 +222,4 @@ def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
 
 
 if __name__ == '__main__':
-  # https://docs.python.org/3/library/logging.html#logrecord-attributes
-  kwargs = {"filename": "/data/orchestration.log"}
-  logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"),
-                      format=os.getenv("LOG_FORMAT", "[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] - %(message)s"), **kwargs)
-
   main()
