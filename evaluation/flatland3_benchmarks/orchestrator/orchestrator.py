@@ -156,6 +156,7 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     return ret, termination_cause
 
   def _dump_dict_(self, item: str, ret: dict, submission_id: str, test_id, scenario_id):
+    # orchestration job container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
     p = Path("/data") / test_id / scenario_id / f"{item}.json"
     try:
       with p.open("w") as f:

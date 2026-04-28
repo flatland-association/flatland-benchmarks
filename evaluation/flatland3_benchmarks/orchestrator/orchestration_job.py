@@ -37,6 +37,7 @@ def make_orchestration_job_definition(orch_config: Dict[str, str]) -> dict:
   if orch_config["k8s_resource_allocation"] is not None:
     container_definition["resources"] = json.loads(orch_config["k8s_resource_allocation"])
 
+  # orchestration job container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
   sub_path = f"{submission_id}/"
   container_definition["volumeMounts"][0]["subPath"] = sub_path
 
