@@ -116,10 +116,14 @@ def trigger_orchestrator_job(orch_config):
 def main():
   orch_config = _load_orchestration_config()
 
-  kwargs = {"filename": f"/data/orchestration_job.log"}
   # https://docs.python.org/3/library/logging.html#logrecord-attributes
   logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"),
-                      format=os.getenv("LOG_FORMAT", "[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] - %(message)s"), **kwargs)
+                      format=os.getenv("LOG_FORMAT", "[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] - %(message)s"),
+                      handlers=[
+                        logging.FileHandler(f"/data/orchestration_job.log"),
+                        logging.StreamHandler()
+                      ]
+                      )
 
   config.load_incluster_config()
   # https://github.com/kubernetes-client/python/
