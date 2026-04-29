@@ -117,8 +117,13 @@ class FlatlandBenchmarksOrchestrator:
         if isinstance(submission_error, TaskExecutionError):
           try:
             submission_error_status = submission_error.status
+            log = None
+            try:
+              log = pretty_dumps_log(submission_error_status["log"]) if submission_error_status is not None and "log" in submission_error_status else None
+            except Exception as e:
+              logger.warning(f"Could not dump log from {log}", exc_info=e)
             logger.error(
-              f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}.\nStatus: {pretty_dumps_dict(submission_error.status)}.\nLog: {pretty_dumps_log(submission_error_status) if submission_error_status is not None and "log" in submission_error_status else None}",
+              f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}.\nStatus: {pretty_dumps_dict(submission_error.status)}.\nLog: {log}",
               exc_info=submission_error)
           except Exception as logging_error:
             logger.error(f"Could not log status {str(submission_error.status)}", exc_info=logging_error)
@@ -437,8 +442,8 @@ def pretty_print_dict(d):
     print(pretty_dumps_log(d["log"]))
 
 
-def pretty_dumps_log(d):
-  return "\n".join(d["log"].split("\\n"))
+def pretty_dumps_log(log: str):
+  return "\n".join(log.split("\\n"))
 
 
 def pretty_dumps_dict(d):
