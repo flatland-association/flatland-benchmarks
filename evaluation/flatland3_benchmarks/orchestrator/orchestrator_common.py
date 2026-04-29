@@ -400,7 +400,7 @@ class FlatlandBenchmarksOrchestrator:
     logger.info(f"num_agents: {num_agents}")
     agent_scores = df_trains_rewards_dones_infos["reward"].to_list()
     logger.debug(f"agent_scores: {agent_scores[:10]}...")
-    normalized_reward = rewards.normalize(*agent_scores, num_agents=num_agents, max_episode_steps=rail_env._max_episode_steps)
+    normalized_reward = rail_env.rewards.normalize(*agent_scores, num_agents=num_agents, max_episode_steps=rail_env._max_episode_steps)
     return normalized_reward, success_rate
 
 
