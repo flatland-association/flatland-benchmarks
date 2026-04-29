@@ -28,7 +28,7 @@ def make_orchestration_job_definition(orch_config: Dict[str, str]) -> dict:
   orchestration_job_definition["metadata"]["name"] = f"orchestration-{submission_id}"
   orchestration_job_definition["spec"]["template"]["metadata"]["labels"]["orchestration"] = submission_id
   orchestration_job_definition["spec"]["template"]["spec"]["serviceAccountName"] = orch_config["service_account_name"]
-  orchestration_job_definition["spec"]["activeDeadlineSeconds"] = orch_config["orchestration_job_active_deadline_seconds"]
+  orchestration_job_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = orch_config["orchestration_job_active_deadline_seconds"]
   orchestration_job_definition["spec"]["template"]["spec"]["volumes"][0]["persistentVolumeClaim"]["claimName"] = orch_config["submissions_pvc"]
 
   container_definition = orchestration_job_definition["spec"]["template"]["spec"]["containers"][0]
