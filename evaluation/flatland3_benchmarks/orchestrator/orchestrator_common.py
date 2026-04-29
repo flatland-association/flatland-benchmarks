@@ -13,6 +13,7 @@ from typing import Dict, Optional, Any, Tuple
 from typing import List
 
 import boto3
+from flatland.envs.rewards import Rewards
 from flatland.evaluators.trajectory_evaluator import TrajectoryEvaluator
 from flatland.trajectories.trajectories import Trajectory
 from flatland.utils.cli_utils import resolve_type
@@ -374,6 +375,11 @@ class FlatlandBenchmarksOrchestrator:
       if "--rewards" in argv:
         rewards = resolve_type(argv[argv.index("--rewards") + 1])()
 
+    normalized_reward, success_rate = self._extract_stats_from_trajectory_(data_dir, rewards, scenario_id)
+    return normalized_reward, success_rate
+
+  @staticmethod
+  def _extract_stats_from_trajectory_(data_dir: Path, rewards: Rewards, scenario_id: str) -> Tuple[float, float]:
     trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)
     TrajectoryEvaluator(trajectory).evaluate(tqdm_kwargs={"disable": True}, rewards=rewards)
     rail_env = trajectory.load_env()
@@ -389,8 +395,7 @@ class FlatlandBenchmarksOrchestrator:
     logger.info(f"num_agents: {num_agents}")
     agent_scores = df_trains_rewards_dones_infos["reward"].to_list()
     logger.debug(f"agent_scores: {agent_scores[:10]}...")
-    total_rewards = sum(agent_scores)
-    normalized_reward = total_rewards / (rail_env._max_episode_steps * rail_env.get_num_agents()) + 1
+    normalized_reward = rewards.normalize(*agent_scores, num_agents=num_agents, max_episode_steps=rail_env._max_episode_steps)
     return normalized_reward, success_rate
 
 
