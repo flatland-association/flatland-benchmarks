@@ -212,7 +212,7 @@ def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
     token_url=TOKEN_URL,
 
     # args for submission job (passed on from orchestration job):
-    active_deadline_seconds=int(os.getenv("ACTIVE_DEADLINE_SECONDS", "7200")),
+    active_deadline_seconds=int(_require_config("ACTIVE_DEADLINE_SECONDS", "7200")),
     submissions_pvc=_require_config("SUBMISSIONS_PVC", "fab-int-submissions"),
     environments_pvc=_require_config("ENVIRONMENTS_PVC", "fab-int-data"),
     environments_zip=_require_config("ENVIRONMENTS_ZIP", "environments.zip"),
@@ -220,7 +220,7 @@ def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
     additional_submission_args=_require_config("ADDITIONAL_SUBMISSION_ARGS", None, True),
     orchestration_job_k8s_resource_allocation=_require_config("ORCHESTRATION_JOB_K8S_RESOURCE_ALLOCATION",
                                                               '{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}'),
-    orchestration_job_active_deadline_seconds=int(os.getenv("ORCHESTRATION_JOB_ACTIVE_DEADLINE_SECONDS", "7200")),
+    orchestration_job_active_deadline_seconds=int(_require_config("ORCHESTRATION_JOB_ACTIVE_DEADLINE_SECONDS", "7200")),
   )
   return orch_config
 
