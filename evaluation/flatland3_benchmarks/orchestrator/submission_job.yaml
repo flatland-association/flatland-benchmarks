@@ -19,12 +19,13 @@ spec:
       activeDeadlineSeconds: 7200 # INSERTED
       # do not restart
       restartPolicy: Never
+      imagePullSecrets:
+        - name: default-secret
+        - name: ecml2026-dockerconfigjson
       containers:
         - name: f3-submission
           image: INSERTED
           imagePullPolicy: Always
-          imagePullSecrets:
-            - name: default-secret
           args: [ ] # INSERTED
           volumeMounts:
             - name: pvc-submissions
