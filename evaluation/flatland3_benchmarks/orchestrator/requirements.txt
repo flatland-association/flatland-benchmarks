@@ -8,5 +8,5 @@ python-dotenv==1.2.2
 #fab-clientlib==0.15.0
 git+https://github.com/flatland-association/flatland-benchmarks.git@main#subdirectory=fab-clientlib
 # DEPENDENCY SWITCH:
-# TODO use released version
-flatland-rl @ git+https://github.com/flatland-association/flatland-rl.git@main
+#flatland-rl @ git+https://github.com/flatland-association/flatland-rl.git@main
+flatland-rl==4.2.5
