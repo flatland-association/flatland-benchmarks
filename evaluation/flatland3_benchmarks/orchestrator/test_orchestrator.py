@@ -27,20 +27,12 @@ def test_tasks_successful():
   ]))
   when(core_api).read_namespaced_pod_log("subi", namespace="fab-int").thenReturn("abcd")
 
-  ret, _ = K8sFlatlandBenchmarksOrchestrator(
-    submission_id="1234",
-    batch_api=batch_api,
-    core_api=core_api,
-    aws_endpoint_url=None,
-    aws_access_key_id='ignore-me',
-    aws_secret_access_key='ignore-me',
-    s3_bucket=None,
-    kubernetes_namespace="fab-int",
-    active_deadline_seconds=7200,
-    submissions_pvc="fab-int-submissions",
-    environments_pvc="fab-int-data",
-    environments_zip="flatland3/environments.zip",
-  )._run_submission_scenario_container(
+  orchestrator = K8sFlatlandBenchmarksOrchestrator(submission_id="1234", batch_api=batch_api, core_api=core_api, aws_endpoint_url=None,
+                                                   aws_access_key_id='ignore-me', aws_secret_access_key='ignore-me', s3_bucket=None,
+                                                   kubernetes_namespace="fab-int", active_deadline_seconds=7200, submissions_pvc="fab-int-submissions",
+                                                   environments_pvc="fab-int-data", environments_zip="flatland3/environments.zip", )
+  orchestrator.load_scenario_data = lambda *args, **kwargs: None
+  ret, _ = orchestrator._run_submission_scenario_container(
     test_id="55",
     scenario_id="66",
     submission_data_url="pancy",
@@ -52,7 +44,7 @@ def test_tasks_successful():
   verify(core_api, times=1).read_namespaced_pod_log("subi", namespace="fab-int")
   verify(core_api, times=1).list_namespaced_event('fab-int', field_selector='involvedObject.name=subi')
 
-  assert set(ret.keys()) == {"job_status", "image_id", "log", "events", "job", "pod", "pod_status", "running_time"}
+  assert set(ret.keys()) == {"job_status", "image_id", "log", "events", "job", "pod", "pod_status", "running_time", "termination_cause"}
   assert ret["job_status"] == "Complete"
   assert ret["image_id"] == "ghcr.io/subi"
   assert ret["log"] == "abcd"
@@ -79,25 +71,18 @@ def test_tasks_failing():
   when(core_api).list_namespaced_event("fab-int", field_selector=f'involvedObject.name=subi').thenReturn(V1NamespaceList(items=[]))
 
   with pytest.raises(TaskExecutionError) as exc_info:
-    K8sFlatlandBenchmarksOrchestrator(
-      submission_id="1234",
-      batch_api=batch_api,
-      core_api=core_api,
-      aws_endpoint_url=None,
-      aws_access_key_id='ignore-me',
-      aws_secret_access_key='ignore-me',
-      s3_bucket=None,
-      kubernetes_namespace="fab-int",
-      active_deadline_seconds=7200,
-      submissions_pvc="fab-int-submissions",
-      environments_pvc="fab-int-data",
-      environments_zip="flatland3/environments.zip",
-    )._run_submission_scenario_container(
+    orchestrator = K8sFlatlandBenchmarksOrchestrator(submission_id="1234", batch_api=batch_api, core_api=core_api, aws_endpoint_url=None,
+                                                     aws_access_key_id='ignore-me', aws_secret_access_key='ignore-me', s3_bucket=None,
+                                                     kubernetes_namespace="fab-int", active_deadline_seconds=7200, submissions_pvc="fab-int-submissions",
+                                                     environments_pvc="fab-int-data", environments_zip="flatland3/environments.zip", )
+    orchestrator.load_scenario_data = lambda *args, **kwargs: None
+    orchestrator._run_submission_scenario_container(
       test_id="55",
       scenario_id="66",
       submission_data_url="pancy",
       pkl_path="55/66",
     )
+
 
   assert exc_info.value.message.startswith('Failed task with submission_id=1234 with submission_data_url=pancy for test_id=55, scenario_id=66.')
   ret = exc_info.value.status
@@ -107,7 +92,7 @@ def test_tasks_failing():
   verify(core_api, times=1).read_namespaced_pod_log("subi", namespace="fab-int")
   verify(core_api, times=1).list_namespaced_event('fab-int', field_selector='involvedObject.name=subi')
 
-  assert set(ret.keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time", "events"}
+  assert set(ret.keys()) == {"job_status", "image_id", "log", "job", "pod", "pod_status", "running_time", "events", "termination_cause"}
   assert ret["job_status"] == "Failed"
   assert ret["image_id"] == "ghcr.io/subi"
   assert ret["log"] == "abcd"
@@ -170,6 +155,7 @@ def test_submission_status_general_failure_reported():
     environments_pvc="fab-int-data",
     environments_zip="flatland3/environments.zip",
   )
+  orchestrator.load_scenario_data = lambda *args, **kwargs: None
 
   def _fail(*args, **kwargs):
     raise Exception()
@@ -182,7 +168,7 @@ def test_submission_status_general_failure_reported():
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
                                                                 SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value, message=None))
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
-                                                                                                                      message='test fc8f5fb1-4525-4b4f-a022-d3d7800097dc - scenario 289394a5-aa51-446c-9b62-c25101643790'))
+                                                                                                                      message='Run submission env_path=None test fc8f5fb1-4525-4b4f-a022-d3d7800097dc - scenario 289394a5-aa51-446c-9b62-c25101643790'))
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
                                                                                                                       message="General failure."))
 
@@ -202,6 +188,7 @@ def test_submission_status_specific_failure_reported():
     environments_pvc="fab-int-data",
     environments_zip="flatland3/environments.zip",
   )
+  orchestrator.load_scenario_data = lambda *args, **kwargs: None
 
   def _fail(*args, **kwargs):
     raise TaskExecutionError("Specific failure message.", None)
@@ -214,7 +201,7 @@ def test_submission_status_specific_failure_reported():
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
                                                                 SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value, message=None))
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
-                                                                                                                      message='test fc8f5fb1-4525-4b4f-a022-d3d7800097dc - scenario 289394a5-aa51-446c-9b62-c25101643790'))
+                                                                                                                      message='Run submission env_path=None test fc8f5fb1-4525-4b4f-a022-d3d7800097dc - scenario 289394a5-aa51-446c-9b62-c25101643790'))
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.failure.value,
                                                                                                                       message="Specific failure message."))
 
@@ -234,6 +221,7 @@ def test_submission_status_success_reported():
     environments_pvc="fab-int-data",
     environments_zip="flatland3/environments.zip",
   )
+  orchestrator.load_scenario_data = lambda *args, **kwargs: None
   orchestrator._run_submission_scenario_container = lambda *args, **kwargs: ({"running_time": 33}, None)
   client = mock()
   orchestrator.s3 = client
@@ -244,6 +232,6 @@ def test_submission_status_success_reported():
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
                                                                 SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value, message=None))
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"], SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
-                                                                                                                      message='test fc8f5fb1-4525-4b4f-a022-d3d7800097dc - scenario 289394a5-aa51-446c-9b62-c25101643790'))
+                                                                                                                      message='Run submission env_path=None test fc8f5fb1-4525-4b4f-a022-d3d7800097dc - scenario 289394a5-aa51-446c-9b62-c25101643790'))
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
                                                                 SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value, message=None))

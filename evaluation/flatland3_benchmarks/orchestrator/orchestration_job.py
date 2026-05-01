@@ -28,14 +28,23 @@ def make_orchestration_job_definition(orch_config: Dict[str, str]) -> dict:
   orchestration_job_definition["metadata"]["name"] = f"orchestration-{submission_id}"
   orchestration_job_definition["spec"]["template"]["metadata"]["labels"]["orchestration"] = submission_id
   orchestration_job_definition["spec"]["template"]["spec"]["serviceAccountName"] = orch_config["service_account_name"]
+  orchestration_job_definition["spec"]["template"]["spec"]["activeDeadlineSeconds"] = orch_config["orchestration_job_active_deadline_seconds"]
+  orchestration_job_definition["spec"]["template"]["spec"]["volumes"][0]["persistentVolumeClaim"]["claimName"] = orch_config["submissions_pvc"]
+
   container_definition = orchestration_job_definition["spec"]["template"]["spec"]["containers"][0]
-  if orch_config["k8s_resource_allocation"] is not None:
-    container_definition["resources"] = json.loads(orch_config["k8s_resource_allocation"])
+
+  if orch_config["orchestration_job_k8s_resource_allocation"] is not None:
+    container_definition["resources"] = json.loads(orch_config["orchestration_job_k8s_resource_allocation"])
+
+  # orchestration job container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
+  sub_path = f"{submission_id}/"
+  container_definition["volumeMounts"][0]["subPath"] = sub_path
 
   container_definition["image"] = orchestrator_image
   container_definition["args"] = ["python", "orchestration_job.py"]
   container_definition["env"] = [{"name": k.upper(), "value": str(v)} for k, v in orch_config.items() if v is not None]
   container_definition["env"].append({"name": "LOG_LEVEL", "value": os.getenv("LOG_LEVEL", "INFO")})
+
   print(pretty_dumps_dict(orchestration_job_definition))
   return orchestration_job_definition
 
@@ -58,18 +67,19 @@ def trigger_orchestrator_job(orch_config):
                                   client.V1Job(metadata=orchestration_job_definition["metadata"], spec=orchestration_job_definition["spec"]))
   start_time_job = time.time()
   all_done = False
-  any_failed = False
-  while not all_done and not any_failed:
+  job_failed = False
+  while not all_done and not job_failed:
     time.sleep(1)
     jobs: V1JobList = batch_api.list_namespaced_job(namespace=kubernetes_namespace, label_selector=f"orchestration={submission_id}")
     assert len(jobs.items) == 1
     all_done = True
     job: V1Job = jobs.items[-1]
     all_done = all_done and job.status.conditions is not None
-    job_status_conditions_ = [cond.type for cond in job.status.conditions] if job.status.conditions is not None else None
-    any_failed = any_failed or (job_status_conditions_ is not None and 'Complete' not in job_status_conditions_)
+    job_status_conditions_types = [cond.type for cond in job.status.conditions] if job.status.conditions is not None else None
+    job_failed = job_failed or (
+      job_status_conditions_types is not None and ('Failed' in job_status_conditions_types or 'FailureTarget' in job_status_conditions_types))
 
-    if any_failed or all_done:
+    if job_failed or all_done:
       end_time = time.time()
       ret = {}
       pods: V1PodList = core_api.list_namespaced_pod(namespace=kubernetes_namespace, label_selector=f"job-name={job_name}")
@@ -88,31 +98,41 @@ def trigger_orchestrator_job(orch_config):
       except Exception as e:
         ret["log"] = f"Failed to fetch log from pod for submission_id={submission_id} with submission_data_url={submission_data_url}. {e}"
         logger.warning(f"Failed to fetch events or log from pod for submission_id={submission_id} with submission_data_url={submission_data_url}.", exc_info=e)
-      if any_failed:
+      if job_failed:
         logger.error(pretty_dumps_dict(job.to_dict()), )
         logger.error(pretty_dumps_dict(ret["events"]), )
         logger.error("\n".join(ret["log"].split("\\n")), )
         logger.error(
-          f"\\\\ FAILED orchestration for submission submission_id={submission_id}: {job_status_conditions_}. Took {end_time - start_time_job:.2f} seconds")
+          f"\\\\ FAILED orchestration for submission submission_id={submission_id}: {job_status_conditions_types}. Took {end_time - start_time_job:.2f} seconds")
         raise RuntimeError(
-          f"Orchestration for submission submission_id={submission_id} failed: {job_status_conditions_}. Took {end_time - start_time_job:.2f} seconds. {job.to_dict()}")
+          f"Orchestration for submission submission_id={submission_id} failed: {job_status_conditions_types}. Took {end_time - start_time_job:.2f} seconds. {job.to_dict()}")
       if all_done:
         logger.info(pretty_dumps_dict(job.to_dict()), )
         logger.info(pretty_dumps_dict(ret["events"]), )
         logger.info("\n".join(ret["log"].split("\\n")), )
         logger.info(
-          f"\\\\ END orchestration for submission submission_id={submission_id}: {job_status_conditions_}. Took {end_time - start_time_job:.2f} seconds.")
+          f"\\\\ END orchestration for submission submission_id={submission_id}: {job_status_conditions_types}. Took {end_time - start_time_job:.2f} seconds.")
         break
 
 
 def main():
+  orch_config = _load_orchestration_config()
+
+  # https://docs.python.org/3/library/logging.html#logrecord-attributes
+  logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"),
+                      format=os.getenv("LOG_FORMAT", "[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] - %(message)s"),
+                      handlers=[
+                        logging.FileHandler(f"/data/orchestration_job.log"),
+                        logging.StreamHandler()
+                      ]
+                      )
+
   config.load_incluster_config()
   # https://github.com/kubernetes-client/python/
   # https://github.com/kubernetes-client/python/blob/master/examples/in_cluster_config.py
   batch_api = client.BatchV1Api()
   core_api = client.CoreV1Api()
 
-  orch_config = _load_orchestration_config()
   if orch_config["tests"] is not None:
     # passed on from queue consumer to orchestration job as comma-separated env var
     orch_config["tests"] = orch_config["tests"].split(",")
@@ -192,18 +212,18 @@ def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
     token_url=TOKEN_URL,
 
     # args for submission job (passed on from orchestration job):
-    active_deadline_seconds=int(os.getenv("ACTIVE_DEADLINE_SECONDS", "7200")),
+    active_deadline_seconds=int(_require_config("ACTIVE_DEADLINE_SECONDS", "7200")),
     submissions_pvc=_require_config("SUBMISSIONS_PVC", "fab-int-submissions"),
     environments_pvc=_require_config("ENVIRONMENTS_PVC", "fab-int-data"),
     environments_zip=_require_config("ENVIRONMENTS_ZIP", "environments.zip"),
     k8s_resource_allocation=_require_config("K8S_RESOURCE_ALLOCATION", '{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}'),
     additional_submission_args=_require_config("ADDITIONAL_SUBMISSION_ARGS", None, True),
+    orchestration_job_k8s_resource_allocation=_require_config("ORCHESTRATION_JOB_K8S_RESOURCE_ALLOCATION",
+                                                              '{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}'),
+    orchestration_job_active_deadline_seconds=int(_require_config("ORCHESTRATION_JOB_ACTIVE_DEADLINE_SECONDS", "7200")),
   )
   return orch_config
 
 
 if __name__ == '__main__':
-  # https://docs.python.org/3/library/logging.html#logrecord-attributes
-  logging.basicConfig(level=os.getenv("LOG_LEVEL", "INFO"),
-                      format=os.getenv("LOG_FORMAT", "[%(asctime)s][%(levelname)s][%(process)d][%(pathname)s:%(funcName)s:%(lineno)d] - %(message)s"))
   main()

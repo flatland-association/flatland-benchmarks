@@ -13,6 +13,7 @@ from typing import Dict, Optional, Any, Tuple
 from typing import List
 
 import boto3
+from flatland.envs.rewards import Rewards
 from flatland.evaluators.trajectory_evaluator import TrajectoryEvaluator
 from flatland.trajectories.trajectories import Trajectory
 from flatland.utils.cli_utils import resolve_type
@@ -115,8 +116,14 @@ class FlatlandBenchmarksOrchestrator:
           exc_info=submission_error)
         if isinstance(submission_error, TaskExecutionError):
           try:
+            submission_error_status = submission_error.status
+            log = None
+            try:
+              log = pretty_dumps_log(submission_error_status["log"]) if submission_error_status is not None and "log" in submission_error_status else None
+            except Exception as e:
+              logger.warning(f"Could not dump log from {log}", exc_info=e)
             logger.error(
-              f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}.\nStatus: {pretty_dumps_dict(submission_error.status)}.\nLog: {pretty_dumps_log(submission_error.status)}",
+              f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}.\nStatus: {pretty_dumps_dict(submission_error.status)}.\nLog: {log}",
               exc_info=submission_error)
           except Exception as logging_error:
             logger.error(f"Could not log status {str(submission_error.status)}", exc_info=logging_error)
@@ -162,7 +169,8 @@ class FlatlandBenchmarksOrchestrator:
       _fab = self._backend_application_flow(fab)
       for test_id, scenarios in results.items():
         for scenario_id, result in scenarios.items():
-          logger.info(f"uploading results for submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {result}")
+          logger.info(
+            f"uploading results for submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}: {result}")
           _fab.results_submissions_submission_id_tests_test_ids_post(
             submission_id=submission_id,
             test_ids=[test_id],
@@ -236,9 +244,9 @@ class FlatlandBenchmarksOrchestrator:
       test_results, success_rate_of_test, summed_scenario_running_time, termination_cause = self._run_submission_test(fab, submission_data_url, submission_id,
                                                                                                                       summed_scenario_running_time,
                                                                                                                       test_id, **kwargs)
-      results[test_id] = test_results
       if termination_cause is not None:
         break
+      results[test_id] = test_results
       mean_success_rate_of_test = 0
       if len(test_results) > 0:
         mean_success_rate_of_test = (sum(success_rate_of_test) / len(success_rate_of_test))
@@ -287,43 +295,49 @@ class FlatlandBenchmarksOrchestrator:
     test_results = {}
     termination_cause = None
     for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
-      self._post_started(fab, scenario_id, submission_data_url, submission_id, test_id)
+      self._post_started(fab, scenario_id, submission_data_url, submission_id, test_id, f"Run submission env_path={self.load_scenario_data(scenario_id)} ")
 
       pkl_path = self.load_scenario_data(scenario_id)
       ret, termination_cause = self._run_submission_scenario_container(test_id, scenario_id, submission_data_url, pkl_path, **kwargs)
       if termination_cause is not None:
         logger.warning(
-          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. {termination_cause}")
+          f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. {termination_cause}")
         break
       scenario_running_time = ret["running_time"]
       summed_scenario_running_time += scenario_running_time
+      logger.info(
+        f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. Took: {scenario_running_time}")
 
       if self.running_time_limit is not None and scenario_running_time > self.running_time_limit:
         termination_cause = f"The scenario running time was exceeded during evaluation of test_id={test_id}, scenario_id={scenario_id}: {scenario_running_time:.2f}s > {self.running_time_limit:.2f}s."
         logger.warning(
-          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. {termination_cause}")
+          f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. {termination_cause}")
         break
       if self.total_running_time_limit is not None and summed_scenario_running_time > self.total_running_time_limit:
         termination_cause = f"Running time {summed_scenario_running_time:.2f}s exceeded total running time limit {self.total_running_time_limit:.2f}s during evaluation of test_id={test_id}, scenario_id={scenario_id}."
         logger.warning(
-          f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}. {termination_cause}")
+          f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. {termination_cause}")
         break
 
-      logger.info(f"// START evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+      self._post_started(fab, scenario_id, submission_data_url, submission_id, test_id, f"Run evaluation env_path={self.load_scenario_data(scenario_id)} ")
+      logger.info(
+        f"// START evaluating submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}")
       prefix = f"{S3_UPLOAD_ROOT}{submission_id}/{test_id}/{scenario_id}"
+      evaluation_start_time = time.time()
       scenario_results, success_rate = self._evaluate_scenario_results_on_s3_locally(prefix, scenario_id, submission_id, test_id)
       success_rate_of_test.append(success_rate)
-      logger.info(f"\\\\ END evaluating submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}")
+      logger.info(
+        f"\\\\ END evaluating submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. Took {time.time() - evaluation_start_time:.2f}s.")
       test_results[scenario_id] = scenario_results
 
     return test_results, success_rate_of_test, summed_scenario_running_time, termination_cause
 
-  def _post_started(self, fab: DefaultApi, scenario_id, submission_data_url: str, submission_id: str, test_id: str):
+  def _post_started(self, fab: DefaultApi, scenario_id, submission_data_url: str, submission_id: str, test_id: str, prefix=""):
     try:
       _fab = self._backend_application_flow(fab)
       _fab.submissions_submission_ids_statuses_post([submission_id],
                                                     SubmissionsSubmissionIdsStatusesPostRequest(status=Status.started.value,
-                                                                                                message=f"test {test_id} - scenario {scenario_id}"))
+                                                                                                message=f"{prefix}test {test_id} - scenario {scenario_id}"))
     except Exception as status_post_failure:
       logger.warning(
         f"Could not post STARTED for submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}",
@@ -366,6 +380,11 @@ class FlatlandBenchmarksOrchestrator:
       if "--rewards" in argv:
         rewards = resolve_type(argv[argv.index("--rewards") + 1])()
 
+    normalized_reward, success_rate = self._extract_stats_from_trajectory_(data_dir, rewards, scenario_id)
+    return normalized_reward, success_rate
+
+  @staticmethod
+  def _extract_stats_from_trajectory_(data_dir: Path, rewards: Rewards, scenario_id: str) -> Tuple[float, float]:
     trajectory = Trajectory.load_existing(data_dir=data_dir, ep_id=scenario_id)
     TrajectoryEvaluator(trajectory).evaluate(tqdm_kwargs={"disable": True}, rewards=rewards)
     rail_env = trajectory.load_env()
@@ -381,8 +400,7 @@ class FlatlandBenchmarksOrchestrator:
     logger.info(f"num_agents: {num_agents}")
     agent_scores = df_trains_rewards_dones_infos["reward"].to_list()
     logger.debug(f"agent_scores: {agent_scores[:10]}...")
-    total_rewards = sum(agent_scores)
-    normalized_reward = total_rewards / (rail_env._max_episode_steps * rail_env.get_num_agents()) + 1
+    normalized_reward = rail_env.rewards.normalize(*agent_scores, num_agents=num_agents, max_episode_steps=rail_env._max_episode_steps)
     return normalized_reward, success_rate
 
 
@@ -420,13 +438,12 @@ class DictEncoder(json.JSONEncoder):
 
 def pretty_print_dict(d):
   print(json.dumps(d, indent=4, cls=DictEncoder))
-  print(pretty_dumps_log(d))
-
-
-def pretty_dumps_log(d):
   if d is not None and "log" in d:
-    return "\n".join(d["log"].split("\\n"))
-  return None
+    print(pretty_dumps_log(d["log"]))
+
+
+def pretty_dumps_log(log: str):
+  return "\n".join(log.split("\\n"))
 
 
 def pretty_dumps_dict(d):

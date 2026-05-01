@@ -8,7 +8,7 @@ import yaml
 from kubernetes import client
 from kubernetes.client import V1PodList, V1Pod, V1PodStatus, V1JobList, V1Job
 
-from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError
+from orchestrator_common import FlatlandBenchmarksOrchestrator, TaskExecutionError, pretty_dumps_dict, pretty_dumps_log
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +50,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                                          **kwargs) -> Tuple[dict, Optional[str]]:
     submission_id = self.submission_id
 
-    logger.info(f"// START running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}, pkl_path={pkl_path}")
+    logger.info(
+      f"// START running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)} ")
     submission_definition = self._make_submission_definition(submission_data_url, test_id, scenario_id, pkl_path)
     job_name = submission_definition["metadata"]["name"]
 
@@ -115,20 +116,29 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
         end_time_running = ticks["Running"]
         running_time = end_time_running - start_time_running
 
-      if all_done or job_failed:
+      if all_done or job_failed or termination_cause is not None:
         ret = {
-          "job_status": job.status.conditions[0].type,
+          "job_status": job.status.conditions[0].type if job.status.conditions is not None else None,
           "pod_status": pod.status.to_dict(),
           "image_id": pods.items[-1].status.container_statuses[0].image_id,
           "job": job.to_dict(),
           "pod": pod.to_dict(),
           "running_time": running_time,
+          "termination_cause": termination_cause,
         }
-        if all_done and not job_failed:
-          ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
-          break
-        elif job_failed:
-          ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
+        ret = self._gather_logs(pod, ret, submission_id, submission_data_url)
+        self._dump_ret("job", ret, test_id, scenario_id)
+        self._dump_ret("pod", ret, test_id, scenario_id)
+        self._dump_ret("log", ret, test_id, scenario_id, dumper=pretty_dumps_log, ext="txt")
+        self._dump_ret("events", ret, test_id, scenario_id)
+
+        try:
+          self.batch_api.delete_namespaced_job(namespace=self.kubernetes_namespace, name=job_name)
+        except Exception as e:
+          logger.warning(
+            f"Could not delete job {job_name} for submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}",
+            exc_info=e)
+        if job_failed:
           additional_info = ""
           try:
             additional_info = str([event["reason"] for event in ret["events"]["items"]])
@@ -137,9 +147,22 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
           raise TaskExecutionError(
             f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Some tasks jobs failed: {job_status_conditions_types}. {additional_info}",
             ret)
-    logger.info(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}, pkl_path={pkl_path}")
-    logger.debug(f"\\\\ END running submission submission_id={submission_id},test_id={test_id}, scenario_id={scenario_id}: {ret}")
+        break
+
+    logger.info(
+      f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)} ")
+    logger.debug(
+      f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}: {ret}")
     return ret, termination_cause
+
+  def _dump_ret(self, item: str, ret: dict, test_id, scenario_id, dumper=pretty_dumps_dict, ext="json"):
+    # orchestration job container container has not full pvc mounted, sees only /<submission_id> sub_path mounted as /data/ directly, so data-dir is /data/<test_id>/<scenario_id>:
+    p = Path("/data") / test_id / scenario_id / f"{item}.{ext}"
+    try:
+      with p.open("w") as f:
+        f.write(dumper(ret[item]))
+    except Exception as e:
+      logger.warning(f"Could not write to {p}", exc_info=e)
 
   def _gather_logs(self, pod: V1Pod, ret: dict, submission_id: str, submission_data_url: str) -> dict:
     try:
