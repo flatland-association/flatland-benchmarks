@@ -294,7 +294,8 @@ class FlatlandBenchmarksOrchestrator:
     success_rate_of_test = []
     test_results = {}
     termination_cause = None
-    for scenario_id in self.TEST_TO_SCENARIO_IDS[test_id]:
+    first_test = summed_scenario_running_time == 0
+    for i, scenario_id in enumerate(self.TEST_TO_SCENARIO_IDS[test_id]):
       self._post_started(fab, scenario_id, submission_data_url, submission_id, test_id, f"Run submission env_path={self.load_scenario_data(scenario_id)} ")
 
       pkl_path = self.load_scenario_data(scenario_id)
@@ -324,11 +325,13 @@ class FlatlandBenchmarksOrchestrator:
         f"// START evaluating submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}")
       prefix = f"{S3_UPLOAD_ROOT}{submission_id}/{test_id}/{scenario_id}"
       evaluation_start_time = time.time()
-      scenario_results, success_rate = self._evaluate_scenario_results_on_s3_locally(prefix, scenario_id, submission_id, test_id)
+      scenario_results, success_rate, flatland_version = self._evaluate_scenario_results_on_s3_locally(prefix, scenario_id, submission_id, test_id)
       success_rate_of_test.append(success_rate)
       logger.info(
         f"\\\\ END evaluating submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. Took {time.time() - evaluation_start_time:.2f}s.")
       test_results[scenario_id] = scenario_results
+      if first_test and i == 0:
+        self._post_started(fab, scenario_id, submission_data_url, submission_id, test_id, f"Found Flatland version={flatland_version}. ")
 
     return test_results, success_rate_of_test, summed_scenario_running_time, termination_cause
 
@@ -370,7 +373,15 @@ class FlatlandBenchmarksOrchestrator:
         "normalized_reward": normalized_reward,
         "percentage_complete": success_rate
       }
-    return scenario_results, success_rate
+      p = local_scenario_path / "print-flatland-version.log"
+      flatland_version = None
+      try:
+        with p.open("r") as f:
+          flatland_version = f.read()
+          logger.info(f"Detected Flatland version {flatland_version}")
+      except Exception as e:
+        logger.warning(f"Could not read {p}.", exc_info=e)
+    return scenario_results, success_rate, flatland_version
 
   def _extract_stats_from_trajectory(self, data_dir, scenario_id):
     rewards = None
