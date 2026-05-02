@@ -221,6 +221,20 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     # init container has full pvc mounted for submissions:
     submission_extractenvs_initcontainer_definition["env"].append({"name": "ENVIRONMENTS_ZIP", "value": self.environments_zip})
     submission_extractenvs_initcontainer_definition["env"].append({"name": "DATA_DIR", "value": f"/data/{submission_id}/{test_id}/{scenario_id}"})
+
+    # add to shell script of init container extract-environments
+    submission_extractenvs_initcontainer_definition["args"][1] += f"""
+echo "import flatland" > /data/{submission_id}/{test_id}/{scenario_id}/print-flatland-version.py
+echo "from pathlib import Path" >> /data/{submission_id}/{test_id}/{scenario_id}/print-flatland-version.py
+echo 'with Path("/data/{submission_id}/{test_id}/{scenario_id}/print-flatland-version.log").open("w") as f:' >> /data/{submission_id}/{test_id}/{scenario_id}/print-flatland-version.py
+echo ' f.write(flatland.__version__)' >> /data/{submission_id}/{test_id}/{scenario_id}/print-flatland-version.py
+cat /data/{submission_id}/{test_id}/{scenario_id}/print-flatland-version.py
+"""
+
+    # inject submission image into second init container print-flatland-version
+    submission_print_flatland_version_definition = submission_definition["spec"]["template"]["spec"]["initContainers"][1]
+    submission_print_flatland_version_definition["image"] = submission_data_url
+    submission_print_flatland_version_definition["args"] = ["python", f"/data/{submission_id}/{test_id}/{scenario_id}/print-flatland-version.py"]
     return submission_definition
 
   def _make_args(self, data_dir: str, pkl_path, scenario_id) -> List[str]:

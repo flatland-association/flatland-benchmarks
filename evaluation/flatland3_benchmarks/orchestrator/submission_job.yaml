@@ -65,6 +65,15 @@ spec:
               mountPath: /data
             - name: pvc-environments
               mountPath: /tmp/environments_zip
+        - name: print-flatland-version
+          image: INSERTED
+          imagePullPolicy: Always
+          args: INSERTED
+          volumeMounts:
+            - name: pvc-submissions
+              mountPath: /data
+
+
       volumes:
         - emptyDir: { }
           name: environments
