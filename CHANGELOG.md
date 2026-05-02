@@ -3,6 +3,19 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.18.5](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.4...v0.18.5) (2026-05-02)
+
+
+### Features
+
+* **frontend:** update ECML competition info ([#611](https://github.com/flatland-association/flatland-benchmarks/issues/611)) ([fde45ab](https://github.com/flatland-association/flatland-benchmarks/commit/fde45ab934feb3f9c17b12ea75d2a9372c81dac7))
+* **frontend:** update ECML competition info 2 ([319009f](https://github.com/flatland-association/flatland-benchmarks/commit/319009f0ba6cfdf2e47e234be883d91ac1749371))
+
+
+### Miscellaneous Chores
+
+* release 0.18.5 ([a79d8b9](https://github.com/flatland-association/flatland-benchmarks/commit/a79d8b96864a02bee675b6816e8f7578d6c8a141))
+
 ## [0.18.4](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.3...v0.18.4) (2026-04-27)
 
 
