@@ -251,7 +251,7 @@ class FlatlandBenchmarksOrchestrator:
       if len(test_results) > 0:
         mean_success_rate_of_test = (sum(success_rate_of_test) / len(success_rate_of_test))
       if self.percentage_complete_threshold is not None and mean_success_rate_of_test < self.percentage_complete_threshold:
-        termination_cause = f"The mean percentage of done agents during the last test {test_id} ({len(tests)} environments) was too low: {mean_success_rate_of_test} < {self.percentage_complete_threshold}"
+        termination_cause = f"The mean percentage of done agents during the last test {test_id} ({len(self.TEST_TO_SCENARIO_IDS[test_id])} environments) was too low: {mean_success_rate_of_test} < {self.percentage_complete_threshold}"
         logger.warning(
           f"\\\\ END running submission submission_id={submission_id},test_id={test_id}. Termination cause: {termination_cause}. {results[test_id]}")
         break
