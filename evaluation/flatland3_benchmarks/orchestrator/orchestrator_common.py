@@ -331,7 +331,7 @@ class FlatlandBenchmarksOrchestrator:
         f"\\\\ END evaluating submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}. Took {time.time() - evaluation_start_time:.2f}s.")
       test_results[scenario_id] = scenario_results
       if first_test and i == 0:
-        self._post_started(fab, scenario_id, submission_data_url, submission_id, test_id, f"Found Flatland version={flatland_version}")
+        self._post_started(fab, scenario_id, submission_data_url, submission_id, test_id, f"Found Flatland version={flatland_version}. ")
 
     return test_results, success_rate_of_test, summed_scenario_running_time, termination_cause
 
