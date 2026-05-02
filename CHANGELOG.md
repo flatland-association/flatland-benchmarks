@@ -3,6 +3,18 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.18.6](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.5...v0.18.6) (2026-05-02)
+
+
+### Features
+
+* **railway-orchestrator:** log flatland version. ([215ea48](https://github.com/flatland-association/flatland-benchmarks/commit/215ea48a93664e904d8facc9d0dd34843186cd2e))
+
+
+### Miscellaneous Chores
+
+* release 0.18.6 ([e23c514](https://github.com/flatland-association/flatland-benchmarks/commit/e23c5144c70b92bfd011ea89da41a91d3d4df3ce))
+
 ## [0.18.5](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.4...v0.18.5) (2026-05-02)
 
 
