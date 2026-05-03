@@ -105,7 +105,8 @@ class FlatlandBenchmarksOrchestrator:
       start_time = time.time()
       results, termination_cause = self.run_submission(submission_id, submission_data_url, tests, fab=fab, **kwargs)
       duration = time.time() - start_time
-      logger.info(f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds.")
+      logger.info(
+        f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds. Termination cause: {termination_cause}")
       return results, termination_cause
 
     except Exception as submission_error:
@@ -115,6 +116,9 @@ class FlatlandBenchmarksOrchestrator:
           f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Stacktrace: {'\n'.join(traceback.format_exception(submission_error))}",
           exc_info=submission_error)
         if isinstance(submission_error, TaskExecutionError):
+          logger.error(
+            f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Terminated with: {submission_error.message}. Status: {pretty_dumps_dict(submission_error.status)}.",
+            exc_info=submission_error)
           try:
             submission_error_status = submission_error.status
             log = None
@@ -123,7 +127,7 @@ class FlatlandBenchmarksOrchestrator:
             except Exception as e:
               logger.warning(f"Could not dump log from {log}", exc_info=e)
             logger.error(
-              f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}.\nStatus: {pretty_dumps_dict(submission_error.status)}.\nLog: {log}",
+              f"\\\\ FAILURE running submission submission_id={submission_id},tests={tests}, submission_data_url={submission_data_url}. Terminated with: {submission_error.message}. Status: {pretty_dumps_dict(submission_error.status)}.\nLog: {log}",
               exc_info=submission_error)
           except Exception as logging_error:
             logger.error(f"Could not log status {str(submission_error.status)}", exc_info=logging_error)
