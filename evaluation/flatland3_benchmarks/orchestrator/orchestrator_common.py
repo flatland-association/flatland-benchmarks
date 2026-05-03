@@ -105,7 +105,8 @@ class FlatlandBenchmarksOrchestrator:
       start_time = time.time()
       results, termination_cause = self.run_submission(submission_id, submission_data_url, tests, fab=fab, **kwargs)
       duration = time.time() - start_time
-      logger.info(f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds.")
+      logger.info(
+        f"\\\\ END task submission_id={submission_id} with submission_data_url={submission_data_url}.  Took {duration:.2f} seconds. Termination cause: {termination_cause}")
       return results, termination_cause
 
     except Exception as submission_error:
