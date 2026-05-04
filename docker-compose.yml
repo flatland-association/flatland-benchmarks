@@ -60,14 +60,22 @@ services:
       start-dev --import-realm --http-port ${KEYCLOAK_PORT:-8081} --hostname localhost
     ports:
       - ${KEYCLOAK_PORT:-8081}:${KEYCLOAK_PORT:-8081}
+      - ${KEYCLOAK_HTTPS_PORT:-8443}:8443
     volumes:
       # TODO can we avoid copying the realm config? Download in an init container from the repo....?
       - ./docker/keycloak/flatland-realm.json:/opt/keycloak/data/import/flatland-realm.json
+      - ./docker/keycloak/certs:/opt/keycloak/dev/certs
       # persist data, otherwise restarting the container nills JWTs
       - ${KEYCLOAK_VOLUME:-flatland-benchmarks-keycloak}:/opt/keycloak/data/:delegated
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=flatland
+      - KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/dev/certs/keycloak-server.crt.pem
+      - KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/dev/certs/keycloak-server.key.pem
+      - PROXY_ADDRESS_FORWARDING=true
+      - KEYCLOAK_LOGLEVEL=DEBUG
+      - KC_HEALTH_ENABLED=true
+      - KC_METRICS_ENABLED=true
     networks:
       - flatland-benchmarks
     healthcheck:
