@@ -280,7 +280,7 @@ export class SubmissionController extends Controller {
     WHERE
       submitted_by = ${auth.sub} AND submitted_at >= NOW() - '1 day'::INTERVAL
   `
-      if ((submissions?.length || 0) > this.config.submissions.global.dailyLimit) {
+      if ((submissions?.length || 0) >= this.config.submissions.global.dailyLimit) {
         this.respondError(
           req,
           res,
