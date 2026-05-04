@@ -3,6 +3,13 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.18.8](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.7...v0.18.8) (2026-05-04)
+
+
+### Bug Fixes
+
+* **backend:** fix condition daily limit. ([#622](https://github.com/flatland-association/flatland-benchmarks/issues/622)) ([f664785](https://github.com/flatland-association/flatland-benchmarks/commit/f664785636ba72392eeba7f2b8d48aa4371368cc))
+
 ## [0.18.7](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.6...v0.18.7) (2026-05-03)
 
 
