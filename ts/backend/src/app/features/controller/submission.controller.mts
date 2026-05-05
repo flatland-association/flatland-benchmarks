@@ -686,7 +686,7 @@ export class SubmissionController extends Controller {
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
     // unless Admin, assert User only patches own submissions
-    if (!auth['roles'].includes('Admin')) {
+    if (authService.authorization(req, auth, ['Admin'])) {
       const submissionMismatches = await sql.query`
         SELECT reference
         FROM UNNEST(${uuids}::uuid[]) AS reference
@@ -706,7 +706,8 @@ export class SubmissionController extends Controller {
           throw new ControllerError('Field is not patchable', key, StatusCodes.BAD_REQUEST)
         }
         // at least one of user's roles must be included in field access definition
-        if (!(auth['roles'] as AuthRole[]).some((role) => PATCHABLE_FIELDS[key]?.includes(role))) {
+        const authorizedRoles = PATCHABLE_FIELDS[key] || ([] as AuthRole[])
+        if (!authService.authorization(req, auth, authorizedRoles)) {
           throw new ControllerError('Cannot patch field', key, StatusCodes.FORBIDDEN)
         }
       })

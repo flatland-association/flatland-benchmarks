@@ -161,10 +161,10 @@ export class Controller {
           //                      "User"
           //                    ]
           //                  },
-          const audience = authService?.config?.keycloak?.audience
-          const roles = auth?.['resource_access']?.[audience]?.['roles']
-          if (!audience || !Array.isArray(roles) || !options.authorizedRoles.some((role) => roles.includes(role))) {
+          if (!auth) {
             throw new ControllerError('Not authorized', undefined, StatusCodes.UNAUTHORIZED)
+          } else if (!authService.authorization(req, auth, options.authorizedRoles)) {
+            throw new ControllerError('Forbidden', undefined, StatusCodes.FORBIDDEN)
           }
         }
         await handler(req, res, next)

@@ -1,3 +1,4 @@
+import { AuthRole } from '@common/interfaces'
 import type { Request } from 'express'
 import jwt, { JwtPayload, VerifyCallback } from 'jsonwebtoken'
 import { JwksClient } from 'jwks-rsa'
@@ -81,5 +82,11 @@ export class AuthService extends Service {
       logger.debug(`verifying token for request on ${req.method} ${req.originalUrl}`)
       jwt.verify(token, this.getKey, { audience: this.config.keycloak.audience }, verifyCallback)
     })
+  }
+
+  authorization(req: Request, auth: JwtPayload, authorizedRoles: AuthRole[]) {
+    const audience = this?.config?.keycloak?.audience
+    const roles = auth?.['resource_access']?.[audience]?.['roles']
+    return audience && Array.isArray(roles) && authorizedRoles.some((role) => roles.includes(role))
   }
 }

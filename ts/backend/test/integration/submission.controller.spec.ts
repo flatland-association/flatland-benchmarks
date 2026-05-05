@@ -9,6 +9,7 @@ import {
   assertApiResponse,
   ControllerTestAdapter,
   setupControllerTestEnvironment,
+  testNoRoleJwt,
   testUserJwt,
 } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
@@ -228,6 +229,20 @@ describe.sequential('Submission controller', () => {
     assertApiResponse(res)
     expect(res.body.body).toHaveLength(1)
     expect(res.body.body.at(0)?.tags).toEqual('abcd')
+  })
+
+  test('should deny patching submission', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPatch(
+      '/submissions/:submission_ids',
+      {
+        params: { submission_ids: submissionUuid },
+        body: { tags: 'abcd' },
+      },
+      testNoRoleJwt,
+    )
+    assertApiResponse(res, StatusCodes.FORBIDDEN)
+    expect(res.body.body).toBeUndefined()
   })
 
   test('should allow patching submissions with empty body', async ({ skip }) => {

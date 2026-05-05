@@ -34,14 +34,17 @@ well-defined users.
 export const testUserJwt: JwtPayload = {
   sub: '00000000-0000-0000-0000-000000000001',
   preferred_username: 'Test User',
-  roles: ['User'],
   resource_access: {
     fab: {
       roles: ['User'],
     },
   },
 }
-
+export const testNoRoleJwt: JwtPayload = {
+  sub: '00000000-0000-0000-0000-000000000001',
+  preferred_username: 'Test User',
+  resource_access: {},
+}
 /*
 Globally extend vitest for custom API tests.
 */
