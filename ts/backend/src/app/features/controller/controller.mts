@@ -179,7 +179,10 @@ export class Controller {
           res.json({
             error: { text: `TokenExpiredError at ${authService?.error.expiredAt}` },
           })
-          logger.error(`${req.method} ${req.originalUrl}: TokenExpiredError at ${authService?.error.expiredAt}`, error)
+          logger.error(
+            `${req.method} ${req.originalUrl}: TokenExpiredError at ${authService?.error.expiredAt}`,
+            authService?.error,
+          )
         } else if (error instanceof ControllerError) {
           res.status(error.status)
           res.json({
