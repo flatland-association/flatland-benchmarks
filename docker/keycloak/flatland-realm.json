@@ -532,7 +532,8 @@
             "access.token.claim": "true",
             "claim.name": "resource_access.${client_id}.roles",
             "jsonType.label": "String"
-          },
+          }
+        }
       ],
       "defaultClientScopes": [
         "web-origins",
