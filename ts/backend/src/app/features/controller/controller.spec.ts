@@ -22,7 +22,7 @@ describe.sequential('Controller', () => {
     request = supertest(app)
     authMock = vi.spyOn(AuthService, 'getInstance').mockReturnValue(
       //@ts-expect-error authorization
-      { authorization: () => null },
+      { authentication: () => null },
     )
   })
 
