@@ -87,6 +87,9 @@ export class AuthService extends Service {
   authorization(req: Request, auth: JwtPayload, authorizedRoles: AuthRole[]) {
     const audience = this?.config?.keycloak?.audience
     const roles = auth?.['resource_access']?.[audience]?.['roles']
+    logger.debug(
+      `checking authorization in token for request on ${req.method} ${req.originalUrl}. Roles provided: ${roles}. Roles required: ${authorizedRoles}`,
+    )
     return audience && Array.isArray(roles) && authorizedRoles.some((role) => roles.includes(role))
   }
 }
