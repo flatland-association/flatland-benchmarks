@@ -35,6 +35,11 @@ export const testUserJwt: JwtPayload = {
   sub: '00000000-0000-0000-0000-000000000001',
   preferred_username: 'Test User',
   roles: ['User'],
+  resource_access: {
+    fab: {
+      roles: ['User'],
+    },
+  },
 }
 
 /*
