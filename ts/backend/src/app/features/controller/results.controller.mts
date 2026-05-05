@@ -116,6 +116,7 @@ export class ResultsController extends Controller {
     `
     score.forEach((submissionScore) => {
       const setup = setups.find((s) => s.id === submissionScore.submission_id)
+      // allow admins to retrieve non-slimmed results
       if (!isAdmin && this.slimResults(setup)) {
         submissionScore.test_scorings = []
       }
@@ -207,6 +208,7 @@ export class ResultsController extends Controller {
     `
     score.forEach((submissionTestScore) => {
       const setup = setups.find((s) => s.id === submissionTestScore.test_id)
+      // allow admins to retrieve non-slimmed results
       if (!isAdmin && this.slimResults(setup)) {
         submissionTestScore.scenario_scorings = []
       }
@@ -473,6 +475,7 @@ export class ResultsController extends Controller {
     `
     board.forEach((leaderboard) => {
       const setup = setups.find((s) => s.id === leaderboard.benchmark_id)
+      // allow admins to retrieve non-slimmed results
       if (!isAdmin && this.slimResults(setup)) {
         leaderboard.items.forEach((submissionScore) => {
           submissionScore.test_scorings = []
@@ -729,7 +732,7 @@ export class ResultsController extends Controller {
     `
     board.forEach((leaderboard) => {
       const setup = setups.find((s) => s.id === leaderboard.test_id)
-
+      // allow admins to retrieve non-slimmed results
       if (!isAdmin && this.slimResults(setup)) {
         leaderboard.items.forEach((submissionScore) => {
           submissionScore.test_scorings = []
