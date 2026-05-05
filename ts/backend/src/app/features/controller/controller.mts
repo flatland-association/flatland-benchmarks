@@ -149,10 +149,10 @@ export class Controller {
     options?: ControllerOptions,
   ) {
     this.router[verb](endpoint, async (req, res, next) => {
+      const authService = AuthService.getInstance()
       try {
         logger.debug(`${req.method} ${req.originalUrl}: Request`, req.body)
         if (options?.authorizedRoles) {
-          const authService = AuthService.getInstance()
           const auth = await authService.authentication(req)
           // Example:
           //  "resource_access": {
@@ -174,19 +174,19 @@ export class Controller {
           next('Handler did not respond')
         }
       } catch (error) {
-        if (error instanceof ControllerError) {
+        if (error instanceof ControllerError && authService?.error instanceof jwt.TokenExpiredError) {
+          res.status(StatusCodes.UNAUTHORIZED)
+          res.json({
+            error: { text: `TokenExpiredError at ${authService?.error.expiredAt}` },
+          })
+          logger.error(`${req.method} ${req.originalUrl}: TokenExpiredError at ${authService?.error.expiredAt}`, error)
+        } else if (error instanceof ControllerError) {
           res.status(error.status)
           res.json({
             error: { text: error.text },
             dbg: error.dbg,
           })
           logger.error(`${req.method} ${req.originalUrl}: ControllerError`, error)
-        } else if (error instanceof jwt.TokenExpiredError) {
-          res.status(StatusCodes.UNAUTHORIZED)
-          res.json({
-            error: { text: `TokenExpiredError at ${error.expiredAt}` },
-          })
-          logger.error(`${req.method} ${req.originalUrl}: TokenExpiredError at ${error.expiredAt}`, error)
         } else if (error instanceof postgres.PostgresError && error.code.startsWith('220')) {
           // https://www.postgresql.org/docs/current/errcodes-appendix.html
           // https://stackoverflow.com/questions/7939137/what-http-status-code-should-be-used-for-wrong-input
