@@ -45,6 +45,15 @@ export const testNoRoleJwt: JwtPayload = {
   preferred_username: 'Test User',
   resource_access: {},
 }
+export const testAdminJwt: JwtPayload = {
+  sub: '00000000-0000-0000-0000-000000000001',
+  preferred_username: 'Test User',
+  resource_access: {
+    fab: {
+      roles: ['User', 'Admin'],
+    },
+  },
+}
 /*
 Globally extend vitest for custom API tests.
 */
