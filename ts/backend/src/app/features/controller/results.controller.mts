@@ -111,7 +111,7 @@ export class ResultsController extends Controller {
     `
     score.forEach((submissionScore) => {
       const setup = setups.find((s) => s.id === submissionScore.submission_id)
-      if (setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN') {
+      if (this.slimResults(setup)) {
         submissionScore.test_scorings = []
       }
     })
@@ -198,7 +198,7 @@ export class ResultsController extends Controller {
     `
     score.forEach((submissionTestScore) => {
       const setup = setups.find((s) => s.id === submissionTestScore.test_id)
-      if (setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN') {
+      if (this.slimResults(setup)) {
         submissionTestScore.scenario_scorings = []
       }
     })
@@ -460,7 +460,7 @@ export class ResultsController extends Controller {
     `
     board.forEach((leaderboard) => {
       const setup = setups.find((s) => s.id === leaderboard.benchmark_id)
-      if (setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN') {
+      if (this.slimResults(setup)) {
         leaderboard.items.forEach((submissionScore) => {
           submissionScore.test_scorings = []
         })
@@ -712,7 +712,7 @@ export class ResultsController extends Controller {
     `
     board.forEach((leaderboard) => {
       const setup = setups.find((s) => s.id === leaderboard.test_id)
-      if (setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN') {
+      if (this.slimResults(setup)) {
         leaderboard.items.forEach((submissionScore) => {
           submissionScore.test_scorings = []
         })
@@ -720,6 +720,10 @@ export class ResultsController extends Controller {
     })
 
     this.respondAfterPresenceCheck(req, res, board, testIds, 'test_id')
+  }
+
+  private slimResults(setup: { id: string; setup: SuiteSetup } | undefined) {
+    return setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN'
   }
 
   // not using `validate` to keep the `checkX` pattern up
