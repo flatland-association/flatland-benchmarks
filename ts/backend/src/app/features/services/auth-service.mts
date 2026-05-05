@@ -53,7 +53,7 @@ export class AuthService extends Service {
    * If the provided token can not be verified, an error will be thrown.
    * @param req Request object to extract authorization header from.
    */
-  async authorization(req: Request) {
+  async authentication(req: Request) {
     this.error = undefined
     logger.debug(`authorizing token for request on ${req.method} ${req.originalUrl}`)
 

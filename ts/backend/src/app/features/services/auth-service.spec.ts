@@ -117,7 +117,7 @@ describe('Auth Service', () => {
       req.headers.authorization = `Bearer ${testCase.token}`
     }
     //... and try authorizing with that
-    const auth = await authService.authorization(req)
+    const auth = await authService.authentication(req)
     if (testCase.expectedAuth) {
       expect(auth).toBeTruthy()
       // there will be additional jwt fields - do not test those

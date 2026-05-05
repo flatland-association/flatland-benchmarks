@@ -47,7 +47,7 @@ export class DebugController extends Controller {
   getWhoami: GetHandler<'/whoami'> = async (req, res) => {
     const auth = AuthService.getInstance()
     auth
-      .authorization(req)
+      .authentication(req)
       .then((jwtp) => {
         const iam = jwtp
           ? {

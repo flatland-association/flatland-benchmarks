@@ -104,7 +104,7 @@ export class ControllerTestAdapter {
   // Wraps callback in a mocked authorized state
   private async withMockedAuth<T>(cb: () => Promise<T>, jwt: JwtPayload | null = null) {
     // mock AuthService to always pass authorization with provided jwt
-    const authMock = vi.spyOn(AuthService.prototype, 'authorization').mockResolvedValue(jwt)
+    const authMock = vi.spyOn(AuthService.prototype, 'authentication').mockResolvedValue(jwt)
     // controller callback
     const result = await cb()
     // undo AuthService mocking

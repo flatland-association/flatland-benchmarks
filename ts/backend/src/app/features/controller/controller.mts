@@ -153,7 +153,7 @@ export class Controller {
         logger.debug(`${req.method} ${req.originalUrl}: Request`, req.body)
         if (options?.authorizedRoles) {
           const authService = AuthService.getInstance()
-          const auth = await authService.authorization(req)
+          const auth = await authService.authentication(req)
           if (
             !Array.isArray(auth?.['roles']) ||
             !options.authorizedRoles.some((role) => auth['roles'].includes(role))

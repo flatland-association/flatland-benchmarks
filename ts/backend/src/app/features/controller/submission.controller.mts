@@ -97,7 +97,7 @@ export class SubmissionController extends Controller {
    */
   postSubmission: PostHandler<'/submissions'> = async (req, res) => {
     const authService = AuthService.getInstance()
-    const auth = (await authService.authorization(req))!
+    const auth = (await authService.authentication(req))!
     this.checkCompleteness(req.body)
     await this.checkValidity(req.body)
     // save submission in db
@@ -264,7 +264,7 @@ export class SubmissionController extends Controller {
    */
   postSubmissionSkipEnqueue: PostHandler<'/submissions/skip_enqueue'> = async (req, res) => {
     const authService = AuthService.getInstance()
-    const auth = (await authService.authorization(req))!
+    const auth = (await authService.authentication(req))!
     this.checkCompleteness(req.body)
     await this.checkValidity(req.body)
     // save submission in db
@@ -486,7 +486,7 @@ export class SubmissionController extends Controller {
    */
   getOwnSubmissions: GetHandler<'/submissions/own'> = async (req, res) => {
     const authService = AuthService.getInstance()
-    const auth = (await authService.authorization(req))!
+    const auth = (await authService.authentication(req))!
     const sql = SqlService.getInstance()
 
     const submissions = await sql.query<SubmissionRow>`
@@ -571,7 +571,7 @@ export class SubmissionController extends Controller {
    */
   getSubmissionByUuid: GetHandler<'/submissions/:submission_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
+    const auth = await authService.authentication(req)
     const uuids = req.params.submission_ids.split(',')
     const sql = SqlService.getInstance()
     // per default, list only public submissions
@@ -681,7 +681,7 @@ export class SubmissionController extends Controller {
   patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res) => {
     logger.info(`patchSubmissionByUuid`)
     const authService = AuthService.getInstance()
-    const auth = (await authService.authorization(req))!
+    const auth = (await authService.authentication(req))!
     const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
