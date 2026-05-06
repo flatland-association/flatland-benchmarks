@@ -11,12 +11,6 @@ const logger = new Logger('auth-service')
 export class AuthService extends Service {
   private publicKey?: string
 
-  /**
-   * `VerifyErrors` that occurred during `authorization`. Is reset to
-   * `undefined` upon invoking `authorization`.
-   */
-  error?: jwt.VerifyErrors
-
   constructor(config: configuration) {
     super(config)
   }
@@ -55,29 +49,29 @@ export class AuthService extends Service {
    * @param req Request object to extract authorization header from.
    */
   async authentication(req: Request) {
-    this.error = undefined
     logger.debug(`authorizing token for request on ${req.method} ${req.originalUrl}`)
 
     const token = req.headers.authorization?.split(' ')[1]
 
     if (!token) {
       logger.debug(`no token provided`)
-      return null
+      return [null, null]
     }
-
-    return new Promise<JwtPayload | null>((resolve) => {
+    /**
+     * `VerifyErrors` that occurred during `authentication`.
+     */
+    return new Promise<[JwtPayload | null, jwt.VerifyErrors | null]>((resolve) => {
       const verifyCallback: VerifyCallback<JwtPayload | string> = (
         error: jwt.VerifyErrors | null,
         decoded: string | JwtPayload | undefined,
       ): void => {
         if (error) {
-          this.error = error
           logger.error(`token verification for request on ${req.method} ${req.originalUrl} failed: ${error} `)
-          return resolve(null)
+          return resolve([null, error])
         }
         logger.debug(`token verification successful for request on ${req.method} ${req.originalUrl}.`)
         logger.trace(`authenticated subject ${(decoded as JwtPayload).sub}`)
-        return resolve(decoded as JwtPayload)
+        return resolve([decoded as JwtPayload, null])
       }
       logger.debug(`verifying token for request on ${req.method} ${req.originalUrl}`)
       jwt.verify(token, this.getKey, { audience: this.config.keycloak.audience }, verifyCallback)

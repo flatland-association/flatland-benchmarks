@@ -4,7 +4,6 @@ import { AuthRole } from '@common/interfaces'
 import express, { NextFunction, Request, Response, Router } from 'express'
 import type { RouteParameters } from 'express-serve-static-core'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import jwt from 'jsonwebtoken'
 import postgres from 'postgres'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
@@ -150,10 +149,18 @@ export class Controller {
   ) {
     this.router[verb](endpoint, async (req, res, next) => {
       const authService = AuthService.getInstance()
+      const [auth, authError] = await authService.authentication(req)
+      if (authError) {
+        res.status(StatusCodes.UNAUTHORIZED)
+        res.json({
+          error: { text: `${authError?.message}` },
+        })
+        logger.error(`${req.method} ${req.originalUrl}: ${authError?.message}`, authError)
+        return
+      }
       try {
         logger.debug(`${req.method} ${req.originalUrl}: Request`, req.body)
         if (options?.authorizedRoles) {
-          const auth = await authService.authentication(req)
           // Example:
           //  "resource_access": {
           //                  "fab": {
@@ -162,7 +169,12 @@ export class Controller {
           //                    ]
           //                  },
           if (!auth) {
-            throw new ControllerError('Not authorized', undefined, StatusCodes.UNAUTHORIZED)
+            res.status(StatusCodes.UNAUTHORIZED)
+            res.json({
+              error: { text: `Not authorized` },
+            })
+            logger.error(`${req.method} ${req.originalUrl}: Not authorized`, authError)
+            return
           } else if (!authService.authorization(req, auth, options.authorizedRoles)) {
             throw new ControllerError('Forbidden', undefined, StatusCodes.FORBIDDEN)
           }
@@ -174,16 +186,7 @@ export class Controller {
           next('Handler did not respond')
         }
       } catch (error) {
-        if (error instanceof ControllerError && authService?.error instanceof jwt.TokenExpiredError) {
-          res.status(StatusCodes.UNAUTHORIZED)
-          res.json({
-            error: { text: `TokenExpiredError at ${authService?.error.expiredAt}` },
-          })
-          logger.error(
-            `${req.method} ${req.originalUrl}: TokenExpiredError at ${authService?.error.expiredAt}`,
-            authService?.error,
-          )
-        } else if (error instanceof ControllerError) {
+        if (error instanceof ControllerError) {
           res.status(error.status)
           res.json({
             error: { text: error.text },

@@ -99,7 +99,7 @@ export class ResultsController extends Controller {
     const submissionIds = req.params.submission_ids.split(',')
 
     const authService = AuthService.getInstance()
-    const auth = await authService.authentication(req)
+    const [auth, authError] = await authService.authentication(req)
     const isAdmin = auth && (await authService.authorization(req, auth, ['Admin']))
 
     const aggregator = AggregatorService.getInstance()
@@ -191,7 +191,7 @@ export class ResultsController extends Controller {
     const testIds = req.params.test_ids.split(',')
 
     const authService = AuthService.getInstance()
-    const auth = await authService.authentication(req)
+    const [auth, authError] = await authService.authentication(req)
     const isAdmin = auth && (await authService.authorization(req, auth, ['Admin']))
 
     const aggregator = AggregatorService.getInstance()
@@ -462,7 +462,7 @@ export class ResultsController extends Controller {
     const board = await aggregator.getBenchmarkLeaderboard(benchmarkIds)
 
     const authService = AuthService.getInstance()
-    const auth = await authService.authentication(req)
+    const [auth, authError] = await authService.authentication(req)
     const isAdmin = auth && (await authService.authorization(req, auth, ['Admin']))
 
     // filter child scores in COMPETITION
@@ -718,7 +718,7 @@ export class ResultsController extends Controller {
     const board = await aggregator.getBenchmarkTestLeaderboard(benchmarkId, testIds)
 
     const authService = AuthService.getInstance()
-    const auth = await authService.authentication(req)
+    const [auth, authError] = await authService.authentication(req)
     const isAdmin = auth && (await authService.authorization(req, auth, ['Admin']))
 
     // filter child scores in COMPETITION
