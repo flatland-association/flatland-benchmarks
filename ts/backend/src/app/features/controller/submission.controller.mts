@@ -98,7 +98,15 @@ export class SubmissionController extends Controller {
    */
   postSubmission: PostHandler<'/submissions'> = async (req, res) => {
     const authService = AuthService.getInstance()
-    const auth = (await authService.authentication(req))!
+    const [auth, authError] = await authService.authentication(req)
+    if (!auth) {
+      res.status(StatusCodes.UNAUTHORIZED)
+      res.json({
+        error: { text: `Not authorized` },
+      })
+      logger.error(`${req.method} ${req.originalUrl}: Not authorized`, authError)
+      return
+    }
     this.checkCompleteness(req.body)
     await this.checkValidity(req.body)
     // save submission in db
@@ -251,7 +259,15 @@ export class SubmissionController extends Controller {
    */
   postSubmissionSkipEnqueue: PostHandler<'/submissions/skip_enqueue'> = async (req, res) => {
     const authService = AuthService.getInstance()
-    const auth = (await authService.authentication(req))!
+    const [auth, authError] = await authService.authentication(req)
+    if (!auth) {
+      res.status(StatusCodes.UNAUTHORIZED)
+      res.json({
+        error: { text: `Not authorized` },
+      })
+      logger.error(`${req.method} ${req.originalUrl}: Not authorized`, authError)
+      return
+    }
     this.checkCompleteness(req.body)
     await this.checkValidity(req.body)
     // save submission in db
@@ -458,7 +474,15 @@ export class SubmissionController extends Controller {
    */
   getOwnSubmissions: GetHandler<'/submissions/own'> = async (req, res) => {
     const authService = AuthService.getInstance()
-    const auth = (await authService.authentication(req))!
+    const [auth, authError] = await authService.authentication(req)
+    if (!auth) {
+      res.status(StatusCodes.UNAUTHORIZED)
+      res.json({
+        error: { text: `Not authorized` },
+      })
+      logger.error(`${req.method} ${req.originalUrl}: Not authorized`, authError)
+      return
+    }
     const sql = SqlService.getInstance()
 
     const submissions = await sql.query<SubmissionRow>`
@@ -653,7 +677,15 @@ export class SubmissionController extends Controller {
   patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res) => {
     logger.info(`patchSubmissionByUuid`)
     const authService = AuthService.getInstance()
-    const auth = (await authService.authentication(req))!
+    const [auth, authError] = await authService.authentication(req)
+    if (!auth) {
+      res.status(StatusCodes.UNAUTHORIZED)
+      res.json({
+        error: { text: `Not authorized` },
+      })
+      logger.error(`${req.method} ${req.originalUrl}: Not authorized`, authError)
+      return
+    }
     const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
