@@ -22,7 +22,10 @@ describe('Server', () => {
     process.chdir('test/integration')
     server = new Server(defaults)
     request = supertest(server.app)
-    vi.spyOn(AuthService, 'getInstance').mockReturnValue({ authentication: () => [null, null] })
+    vi.spyOn(AuthService, 'getInstance').mockReturnValue(
+      //@ts-expect-error authorization
+      { authentication: () => [null, null] },
+    )
   })
 
   it('is instantiated', () => {
