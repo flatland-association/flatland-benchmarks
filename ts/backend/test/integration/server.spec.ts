@@ -1,15 +1,17 @@
 import supertest from 'supertest'
 import TestAgent from 'supertest/lib/agent'
+import { MockInstance } from 'vitest'
 import { defaults } from '../../src/app/features/config/defaults.mjs'
 import { Logger } from '../../src/app/features/logger/logger.mjs'
 import { Server } from '../../src/app/features/server/server.mjs'
-import serverTest from '../public/test.json'
+import { AuthService } from '../../src/app/features/services/auth-service.mjs'
 
 Logger.setOptions({ '--log-level': 'OFF' })
 
 describe('Server', () => {
   let server: Server
   let request: TestAgent
+  let authMock: MockInstance
 
   beforeAll(() => {
     // NOTE: Vitest runs tests in ts/backend but the server expects to find
@@ -21,6 +23,7 @@ describe('Server', () => {
     process.chdir('test/integration')
     server = new Server(defaults)
     request = supertest(server.app)
+    authMock = vi.spyOn(AuthService, 'getInstance').mockReturnValue({ authentication: () => [null, null] })
   })
 
   it('is instantiated', () => {
