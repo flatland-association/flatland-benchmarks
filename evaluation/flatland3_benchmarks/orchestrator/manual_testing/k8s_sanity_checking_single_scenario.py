@@ -17,13 +17,18 @@ from mockito.mocking import mock
 from orchestrator import K8sFlatlandBenchmarksOrchestrator
 from orchestrator_common import TaskExecutionError, pretty_print_dict
 
-_ENV_PATH = Path(__file__).resolve().parent / ".env"
+# _ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
+_ENV_PATH = Path(__file__).resolve().parent.parent / ".env.prod"
 _ENV_VARS = dotenv_values(_ENV_PATH)
 
 # ecml2026
 TEST_ID = '39ae35d8-4b0f-467f-9ec4-ee19c3558c7f'
 SCENARIO_ID = "ee155de0-14f1-4bd7-8cc6-9100276758fa"
 PKL_PATH = "level_0/level_0_scenario_1.pkl"
+
+TEST_ID = "86225a96-492d-474b-aa80-de166b005e42"
+SCENARIO_ID = "103776ff-57d0-43aa-b483-507724926969"
+PKL_PATH = "level_6/level_6_scenario_1.pkl"
 
 
 # # flatland3_benchmarks
@@ -56,7 +61,9 @@ logging.basicConfig(encoding='utf-8', level=logging.INFO)
 
 def test_success(
   # submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
-  submission_data_url="ghcr.io/flatland-association/flatland-baselines-forward-only-heuristic:latest",
+  # submission_data_url="ghcr.io/flatland-association/flatland-baselines-forward-only-heuristic:latest",
+  submission_data_url="ghcr.io/flatland-association/flatland-baselines-forward-only-heuristic:v4.2.5",
+  # submission_data_url="ghcr.io/manuschn/ecml2026-test:ppo-fto-test-latest",
   test_id=TEST_ID,
   scenario_id=SCENARIO_ID,
   pkl_path=PKL_PATH,
@@ -96,6 +103,48 @@ def test_success(
 
   pretty_print_dict(ret)
   assert elapsed_time < 500
+
+
+def test_print_flatland_version(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
+                                test_id=TEST_ID,
+                                scenario_id=SCENARIO_ID,
+                                pkl_path=PKL_PATH,
+                                ):
+  config.load_kube_config()
+  core_api = client.CoreV1Api()
+  batch_api = client.BatchV1Api()
+  submission_id = str(uuid.uuid4())
+  print(submission_id)
+
+  orchestrator = K8sFlatlandBenchmarksOrchestrator(
+    submission_id=submission_id,
+    batch_api=batch_api,
+    core_api=core_api,
+    kubernetes_namespace=KUBERNETES_NAMESPACE,
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_endpoint_url=AWS_ENDPOINT_URL,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    s3_bucket=S3_BUCKET,
+    environments_zip=ENVIRONMENTS_ZIP, environments_pvc=ENVIRONMENTS_PVC,
+    submissions_pvc=SUBMISSIONS_PVC,
+    active_deadline_seconds=55,
+    k8s_resource_allocation='{"requests": {"memory": "1Gi", "cpu": "1"}, "limits": {"memory": "2Gi", "cpu": "2"}}',
+  )
+
+  # orchestrator._make_command = lambda *args, **kwargs: ["bash", "-c"]
+  orchestrator._make_args = lambda *args, **kwargs: ["""
+      echo "import flatland; print(flatland.__version__)" > blup.py
+      python blup.py
+      """]
+  start_time = time.time()
+  ret = orchestrator._run_submission_scenario_container(
+    test_id,
+    scenario_id,
+    submission_data_url,
+    pkl_path
+  )
+  pretty_print_dict(ret)
+  end_time = time.time()
 
 
 def test_oom_fail_fast(submission_data_url="ghcr.io/flatland-association/flatland-baselines-random:latest",
