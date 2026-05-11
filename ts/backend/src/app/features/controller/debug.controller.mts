@@ -48,7 +48,7 @@ export class DebugController extends Controller {
     const auth = AuthService.getInstance()
     auth
       .authentication(req)
-      .then(([jwtp, verifyErrors]) => {
+      .then(([jwtp, _]) => {
         const iam = jwtp
           ? {
               id: jwtp.sub,

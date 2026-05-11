@@ -567,7 +567,7 @@ export class SubmissionController extends Controller {
    */
   getSubmissionByUuid: GetHandler<'/submissions/:submission_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
-    const [auth, authError] = await authService.authentication(req)
+    const [auth, _] = await authService.authentication(req)
     const uuids = req.params.submission_ids.split(',')
     const sql = SqlService.getInstance()
     // per default, list only public submissions
