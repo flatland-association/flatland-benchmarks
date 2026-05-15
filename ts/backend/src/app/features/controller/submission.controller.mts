@@ -30,6 +30,7 @@ export class SubmissionController extends Controller {
     this.attachPost('/submissions/skip_enqueue', this.postSubmissionSkipEnqueue, { authorizedRoles: ['User'] })
     this.attachGet('/submissions', this.getSubmissions)
     this.attachGet('/submissions/own', this.getOwnSubmissions, { authorizedRoles: ['User'] })
+    this.attachGet('/submissions/all', this.getAllSubmissions, { authorizedRoles: ['Admin'] })
     this.attachGet('/submissions/:submission_ids', this.getSubmissionByUuid)
     this.attachPatch('/submissions/:submission_ids', this.patchSubmissionByUuid, { authorizedRoles: ['User'] })
     // TODO: only authorize orchestrator
@@ -495,6 +496,90 @@ export class SubmissionController extends Controller {
         ) AS status ON true
         WHERE
           submitted_by = ${auth.sub}
+      `
+    this.respond(req, res, submissions)
+  }
+
+  /**
+   * @swagger
+   * /submissions/all:
+   *  get:
+   *    description: Lists all (incl. unpublished) submissions for benchmarks as admin.
+   *    parameters:
+   *      - in: query
+   *        name: benchmark_ids
+   *        schema:
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
+   *        description: Filter submissions by benchmark.
+   *        explode: false
+   *    security:
+   *      - oauth2: [admin]
+   *    responses:
+   *      200:
+   *        description: Requested submissions.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                          benchmark_id:
+   *                            type: string
+   *                            format: uuid
+   *                          test_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   *                          name:
+   *                            type: string
+   *                          description:
+   *                            type: string
+   *                          submission_data_url:
+   *                            type: string
+   *                          code_repository:
+   *                            type: string
+   *                          tags:
+   *                            type: string
+   *                          submitted_at:
+   *                            type: string
+   *                          submitted_by:
+   *                            type: string
+   *                            format: uuid
+   *                          submitted_by_username:
+   *                            type: string
+   *                          status:
+   *                            type: string
+   *                          published:
+   *                            type: boolean
+   */
+  getAllSubmissions: GetHandler<'/submissions/all'> = async (req, res) => {
+    const benchmarkIds = req.query['benchmark_ids']?.split(',')
+
+    const sql = SqlService.getInstance()
+
+    // per default, list for all benchmarks
+    let whereBenchmark = sql.fragment`1=1`
+    if (benchmarkIds) {
+      whereBenchmark = sql.fragment`benchmark_id = ANY(${benchmarkIds})`
+    }
+
+    const submissions = await sql.query<SubmissionRow>`
+        SELECT * FROM submissions
+        WHERE
+          ${whereBenchmark}
       `
     this.respond(req, res, submissions)
   }

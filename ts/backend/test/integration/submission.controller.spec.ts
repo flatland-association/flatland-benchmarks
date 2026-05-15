@@ -161,6 +161,34 @@ describe.sequential('Submission controller', () => {
     expect(submissionIds).toContain('a8bb32be-a596-4636-898d-7e1fe7c7492d')
   })
 
+  // data set in
+  // - ts/backend/src/migration/data/V18.7__competition_submissions.sql
+  test('should list all submissions for benchmark if admin', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testGet(
+      '/submissions/all',
+      {
+        query: { benchmark_ids: 'c85d5fc2-15da-4a62-8e14-28d1261c29bd' },
+      },
+      testAdminJwt,
+    )
+    assertApiResponse(res)
+    const submissionIds = res.body.body.map((s) => s.id)
+    expect(submissionIds).toContain('c912c1fc-faa0-486c-b6f6-7f3411e4f307')
+  })
+
+  test('should deny listing all submissions for benchmark if only user', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testGet(
+      '/submissions/all',
+      {
+        query: { benchmark_ids: 'c85d5fc2-15da-4a62-8e14-28d1261c29bd' },
+      },
+      testUserJwt,
+    )
+    assertApiResponse(res, StatusCodes.FORBIDDEN)
+  })
+
   test('should deny listing own submissions (no user)', async () => {
     const res = await controller.testGet('/submissions/own', {})
     assertApiResponse(res, StatusCodes.UNAUTHORIZED)
@@ -267,7 +295,7 @@ describe.sequential('Submission controller', () => {
     assertApiResponse(res, StatusCodes.TOO_MANY_REQUESTS)
   })
 
-  test('should not prevent submissions if admin even if daily limit 0', async () => {
+  test('should not prevent posting submissions if admin even if daily limit 0', async () => {
     const testConfig = await getTestConfig()
     testConfig.submissions = { global: { dailyLimit: 0 } }
     controller = new ControllerTestAdapter(SubmissionController, testConfig)

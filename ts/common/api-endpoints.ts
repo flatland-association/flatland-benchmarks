@@ -100,6 +100,9 @@ interface ApiEndpointDefinitions {
   '/submissions/own': {
     GET: ApiEndpoint<Empty, Empty, SubmissionRow[]>
   }
+  '/submissions/all': {
+    GET: ApiEndpoint<Empty, { benchmark_ids?: string }, SubmissionRow[]>
+  }
   '/submissions/skip_enqueue': {
     POST: ApiEndpoint<StripId<SubmissionRow>, Empty, { id: string }>
   }
