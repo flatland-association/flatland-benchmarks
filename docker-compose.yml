@@ -32,7 +32,7 @@ services:
       - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
       - PGADMIN_LISTEN_ADDRESS=0.0.0.0
     ports:
-      - ${PGADMIN_LISTEN_PORT}:15432
+      - ${PGADMIN_LISTEN_PORT}:${PGADMIN_LISTEN_PORT}
     volumes:
       - ${PGADMIN_VOLUME:-flatland-benchmarks-pgadmin}:/var/lib/pgadmin:delegated
     networks:
