@@ -775,7 +775,7 @@ export class SubmissionController extends Controller {
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
     // unless Admin, assert User only patches own submissions
-    if (authService.authorization(req, auth, ['Admin'])) {
+    if (!authService.authorization(req, auth, ['Admin'])) {
       const submissionMismatches = await sql.query`
         SELECT reference
         FROM UNNEST(${uuids}::uuid[]) AS reference

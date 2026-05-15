@@ -11,6 +11,7 @@ import {
   setupControllerTestEnvironment,
   testAdminJwt,
   testNoRoleJwt,
+  testOtherUserJwt,
   testUserJwt,
 } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
@@ -285,6 +286,35 @@ describe.sequential('Submission controller', () => {
       testUserJwt,
     )
     assertApiResponse(res)
+  })
+
+  test('should deny patching other user submission tags', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPatch(
+      '/submissions/:submission_ids',
+      {
+        params: { submission_ids: submissionUuid },
+        body: { tags: 'abcd' },
+      },
+      testOtherUserJwt,
+    )
+    assertApiResponse(res, StatusCodes.FORBIDDEN)
+    expect(res.body.body).toBeUndefined()
+  })
+
+  test('should allow admin to patch other user submission tags', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPatch(
+      '/submissions/:submission_ids',
+      {
+        params: { submission_ids: submissionUuid },
+        body: { tags: 'efg' },
+      },
+      testAdminJwt,
+    )
+    assertApiResponse(res)
+    expect(res.body.body).toHaveLength(1)
+    expect(res.body.body.at(0)?.tags).toEqual('efg')
   })
 
   test('should prevent submissions if daily limit 0', async () => {
