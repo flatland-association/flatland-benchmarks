@@ -148,19 +148,11 @@ export class Controller {
     options?: ControllerOptions,
   ) {
     this.router[verb](endpoint, async (req, res, next) => {
-      const authService = AuthService.getInstance()
-      const [auth, authError] = await authService.authentication(req)
-      if (authError) {
-        res.status(StatusCodes.UNAUTHORIZED)
-        res.json({
-          error: { text: `${authError?.message}` },
-        })
-        logger.error(`${req.method} ${req.originalUrl}: ${authError?.message}`, authError)
-        return
-      }
       try {
         logger.debug(`${req.method} ${req.originalUrl}: Request`, req.body)
         if (options?.authorizedRoles) {
+          const authService = AuthService.getInstance()
+          const [auth, authError] = await authService.authentication(req)
           // Example:
           //  "resource_access": {
           //                  "fab": {
@@ -168,14 +160,23 @@ export class Controller {
           //                      "User"
           //                    ]
           //                  },
+          if (authError) {
+            res.status(StatusCodes.UNAUTHORIZED)
+            res.json({
+              error: { text: `${authError.message}` },
+            })
+            logger.error(`${req.method} ${req.originalUrl}: ${authError.message}`, authError)
+            return
+          }
           if (!auth) {
             res.status(StatusCodes.UNAUTHORIZED)
             res.json({
               error: { text: `Not authorized` },
             })
-            logger.error(`${req.method} ${req.originalUrl}: Not authorized`, authError)
+            logger.error(`${req.method} ${req.originalUrl}: Not authorized`)
             return
-          } else if (!authService.authorization(req, auth, options.authorizedRoles)) {
+          }
+          if (!authService.authorization(req, auth, options.authorizedRoles)) {
             throw new ControllerError('Forbidden', undefined, StatusCodes.FORBIDDEN)
           }
         }
