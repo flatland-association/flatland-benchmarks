@@ -97,23 +97,15 @@ export class SubmissionController extends Controller {
    *                            format: uuid
    *                            description: ID of submission.
    */
-  postSubmission: PostHandler<'/submissions'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const [auth, authError] = await authService.authentication(req)
-    if (!auth) {
-      res.status(StatusCodes.UNAUTHORIZED)
-      res.json({
-        error: { text: `Not authorized` },
-      })
-      logger.error(`${req.method} ${req.originalUrl}: Not authorized`, authError)
-      return
-    }
+  postSubmission: PostHandler<'/submissions'> = async (req, res, _next, _auth) => {
+    const auth = _auth!
     this.checkCompleteness(req.body)
     await this.checkValidity(req.body)
     // save submission in db
     const sql = SqlService.getInstance()
 
-    const isAdmin = auth && (await authService.authorization(req, auth, ['Admin']))
+    const authService = AuthService.getInstance()
+    const isAdmin = authService.authorization(req, auth, ['Admin'])
 
     const dailyLimitReached = await this.isDailyLimitReached(sql, auth)
     // allow users with Admin role to POST submissions beyond daily limit
@@ -258,23 +250,15 @@ export class SubmissionController extends Controller {
    *                            format: uuid
    *                            description: ID of submission.
    */
-  postSubmissionSkipEnqueue: PostHandler<'/submissions/skip_enqueue'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const [auth, authError] = await authService.authentication(req)
-    if (!auth) {
-      res.status(StatusCodes.UNAUTHORIZED)
-      res.json({
-        error: { text: `Not authorized` },
-      })
-      logger.error(`${req.method} ${req.originalUrl}: Not authorized`, authError)
-      return
-    }
+  postSubmissionSkipEnqueue: PostHandler<'/submissions/skip_enqueue'> = async (req, res, _next, _auth) => {
+    const auth = _auth!
     this.checkCompleteness(req.body)
     await this.checkValidity(req.body)
     // save submission in db
     const sql = SqlService.getInstance()
 
-    const isAdmin = auth && (await authService.authorization(req, auth, ['Admin']))
+    const authService = AuthService.getInstance()
+    const isAdmin = authService.authorization(req, auth, ['Admin'])
     const dailyLimitReached = await this.isDailyLimitReached(sql, auth)
     // allow users with Admin role to POST submissions beyond daily limit
     if (dailyLimitReached && !isAdmin) {
@@ -473,17 +457,8 @@ export class SubmissionController extends Controller {
    *                          published:
    *                            type: boolean
    */
-  getOwnSubmissions: GetHandler<'/submissions/own'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const [auth, authError] = await authService.authentication(req)
-    if (!auth) {
-      res.status(StatusCodes.UNAUTHORIZED)
-      res.json({
-        error: { text: `Not authorized` },
-      })
-      logger.error(`${req.method} ${req.originalUrl}: Not authorized`, authError)
-      return
-    }
+  getOwnSubmissions: GetHandler<'/submissions/own'> = async (req, res, _next, _auth) => {
+    const auth = _auth!
     const sql = SqlService.getInstance()
 
     const submissions = await sql.query<SubmissionRow>`
@@ -759,18 +734,10 @@ export class SubmissionController extends Controller {
    *                          published:
    *                            type: boolean
    */
-  patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res) => {
+  patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res, _next, _auth) => {
     logger.info(`patchSubmissionByUuid`)
+    const auth = _auth!
     const authService = AuthService.getInstance()
-    const [auth, authError] = await authService.authentication(req)
-    if (!auth) {
-      res.status(StatusCodes.UNAUTHORIZED)
-      res.json({
-        error: { text: `Not authorized` },
-      })
-      logger.error(`${req.method} ${req.originalUrl}: Not authorized`, authError)
-      return
-    }
     const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()

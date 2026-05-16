@@ -4,6 +4,7 @@ import { AuthRole } from '@common/interfaces'
 import express, { NextFunction, Request, Response, Router } from 'express'
 import type { RouteParameters } from 'express-serve-static-core'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { JwtPayload } from 'jsonwebtoken'
 import postgres from 'postgres'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
@@ -32,6 +33,7 @@ export type HandlerOfVerb<V extends string, E extends keyof ApiEndpointsOfVerb<V
   >,
   res: Response<ApiEndpointsOfVerb<V>[E]['response']>,
   next: NextFunction,
+  auth: JwtPayload | null,
 ) => void | Promise<void>
 
 /**
@@ -150,9 +152,9 @@ export class Controller {
     this.router[verb](endpoint, async (req, res, next) => {
       try {
         logger.debug(`${req.method} ${req.originalUrl}: Request`, req.body)
+        const authService = AuthService.getInstance()
+        const [auth, authError] = await authService.authentication(req)
         if (options?.authorizedRoles) {
-          const authService = AuthService.getInstance()
-          const [auth, authError] = await authService.authentication(req)
           // Example:
           //  "resource_access": {
           //                  "fab": {
@@ -179,8 +181,10 @@ export class Controller {
           if (!authService.authorization(req, auth, options.authorizedRoles)) {
             throw new ControllerError('Forbidden', undefined, StatusCodes.FORBIDDEN)
           }
+          await handler(req, res, next, auth)
+          return
         }
-        await handler(req, res, next)
+        await handler(req, res, next, auth)
         // force a server error if the handler did not respond
         if (!res.writableEnded) {
           logger.error(`${req.method} ${req.originalUrl}: Handler did not respond.`)
