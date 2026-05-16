@@ -100,7 +100,7 @@ export class ResultsController extends Controller {
 
     const authService = AuthService.getInstance()
     const [auth, _] = await authService.authentication(req)
-    const isAdmin = auth && (await authService.authorization(req, auth, ['Admin']))
+    const isAdmin = auth && authService.authorization(req, auth, ['Admin'])
 
     const aggregator = AggregatorService.getInstance()
     const score = await aggregator.getSubmissionScore(submissionIds)
@@ -192,7 +192,7 @@ export class ResultsController extends Controller {
 
     const authService = AuthService.getInstance()
     const [auth, _] = await authService.authentication(req)
-    const isAdmin = auth && (await authService.authorization(req, auth, ['Admin']))
+    const isAdmin = auth && authService.authorization(req, auth, ['Admin'])
 
     const aggregator = AggregatorService.getInstance()
     const score = await aggregator.getSubmissionTestScore(submissionId, testIds)
@@ -463,7 +463,7 @@ export class ResultsController extends Controller {
 
     const authService = AuthService.getInstance()
     const [auth, _] = await authService.authentication(req)
-    const isAdmin = auth && (await authService.authorization(req, auth, ['Admin']))
+    const isAdmin = auth && authService.authorization(req, auth, ['Admin'])
 
     // filter child scores in COMPETITION
     const sql = SqlService.getInstance()
@@ -719,7 +719,7 @@ export class ResultsController extends Controller {
 
     const authService = AuthService.getInstance()
     const [auth, _] = await authService.authentication(req)
-    const isAdmin = auth && (await authService.authorization(req, auth, ['Admin']))
+    const isAdmin = auth && authService.authorization(req, auth, ['Admin'])
 
     // filter child scores in COMPETITION
     const sql = SqlService.getInstance()
