@@ -934,12 +934,12 @@ export class SubmissionController extends Controller {
       this.config?.submissions?.global?.dailyLimit != null
     ) {
       // https://stackoverflow.com/questions/1888544/how-to-select-records-from-last-24-hours-using-sql
-      const submissions = await sql.query<SubmissionRow>`
-    SELECT * FROM submissions
-    WHERE
-      submitted_by = ${auth.sub} AND submitted_at >= NOW() - '1 day'::INTERVAL
-  `
-      if ((submissions?.length || 0) >= this.config.submissions.global.dailyLimit) {
+      const [{ count }] = await sql.query<{ count: number }>`
+        SELECT COUNT(*) ::int AS count
+        FROM submissions
+        WHERE submitted_by = ${auth.sub} AND submitted_at >= NOW() - '1 day':: INTERVAL
+      `
+      if (count >= this.config.submissions.global.dailyLimit) {
         dailyLimitReached = true
       }
     }
