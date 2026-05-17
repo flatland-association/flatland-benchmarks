@@ -3,6 +3,30 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.19.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.8...v0.19.0) (2026-05-17)
+
+
+### Features
+
+* **backend:** add admin-only endpoint for listing all submissions incl. non-published ones. ([904c052](https://github.com/flatland-association/flatland-benchmarks/commit/904c0522983671784703607fa750810f2f6863c8))
+* **backend:** allow admins to retrieve non-slimmed results. ([f1e21c6](https://github.com/flatland-association/flatland-benchmarks/commit/f1e21c68d19b08fff5c0d837010a0e493fffbe24))
+* **backend:** allow admins to retrieve non-slimmed results. ([1c030c0](https://github.com/flatland-association/flatland-benchmarks/commit/1c030c0cb06ca0174702d70df5f609eda1951830))
+* **backend:** allow users with Admin role to POST submissions beyond daily limit. ([e21c4f7](https://github.com/flatland-association/flatland-benchmarks/commit/e21c4f73162da8954da85fd291e160f60e11b91a))
+
+
+### Bug Fixes
+
+* **backend:** authentication service to return auth error instead of dodgy singleton service attribute. ([336a0df](https://github.com/flatland-association/flatland-benchmarks/commit/336a0dffc2d99c5e0f98183682e3fdc999b5b92c))
+* **backend:** authentication service to return auth error instead of dodgy singleton service attribute. ([cad7e87](https://github.com/flatland-association/flatland-benchmarks/commit/cad7e87d878ce6e018ef560fed478c6c5907f9e5))
+* **backend:** authentication service to return auth error instead of dodgy singleton service attribute. ([5bfad03](https://github.com/flatland-association/flatland-benchmarks/commit/5bfad031df7996d52aa68d2cf1684d8704bc23ca))
+* **backend:** authentication service to return auth error instead of dodgy singleton service attribute. ([add6277](https://github.com/flatland-association/flatland-benchmarks/commit/add62777ec7922f43b40c10ba33ce5eeeea87ddb))
+* **backend:** authentication service to return auth error instead of dodgy singleton service attribute. ([56c0975](https://github.com/flatland-association/flatland-benchmarks/commit/56c097518139ed8189a0db9eb5930f5c16b14d5b))
+* **backend:** authentication service to return auth error instead of dodgy singleton service attribute. ([3c31bea](https://github.com/flatland-association/flatland-benchmarks/commit/3c31beab32c8533a2bfde3c450ba04c240c43c6d))
+* **backend:** fix regression - public services should not require authentication. ([82ec6d3](https://github.com/flatland-association/flatland-benchmarks/commit/82ec6d32d85c33cced113d4e5dd6bbaa6fc669c9))
+* **backend:** log token expired properly. ([adcef4a](https://github.com/flatland-association/flatland-benchmarks/commit/adcef4a84d6c58ec45ee65f8f3cf73665c7d884c))
+* **backend:** log token expired properly. ([45390b3](https://github.com/flatland-association/flatland-benchmarks/commit/45390b34486a29a59eb629b33be59530a2141b97))
+* client-specific authorization. ([523de97](https://github.com/flatland-association/flatland-benchmarks/commit/523de97ec9d10f15a4057df82444ab0e5d93ce91))
+
 ## [0.18.8](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.7...v0.18.8) (2026-05-04)
 
 
