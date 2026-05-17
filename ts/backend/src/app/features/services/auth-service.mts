@@ -1,3 +1,4 @@
+import { AuthRole } from '@common/interfaces'
 import type { Request } from 'express'
 import jwt, { JwtPayload, VerifyCallback } from 'jsonwebtoken'
 import { JwksClient } from 'jwks-rsa'
@@ -9,12 +10,6 @@ const logger = new Logger('auth-service')
 
 export class AuthService extends Service {
   private publicKey?: string
-
-  /**
-   * `VerifyErrors` that occurred during `authorization`. Is reset to
-   * `undefined` upon invoking `authorization`.
-   */
-  error?: jwt.VerifyErrors
 
   constructor(config: configuration) {
     super(config)
@@ -53,33 +48,46 @@ export class AuthService extends Service {
    * If the provided token can not be verified, an error will be thrown.
    * @param req Request object to extract authorization header from.
    */
-  async authorization(req: Request) {
-    this.error = undefined
+  async authentication(req: Request) {
     logger.debug(`authorizing token for request on ${req.method} ${req.originalUrl}`)
 
     const token = req.headers.authorization?.split(' ')[1]
 
     if (!token) {
       logger.debug(`no token provided`)
-      return null
+      return [null, null]
     }
-
-    return new Promise<JwtPayload | null>((resolve) => {
+    /**
+     * `VerifyErrors` that occurred during `authentication`.
+     */
+    return new Promise<[JwtPayload | null, jwt.VerifyErrors | null]>((resolve) => {
       const verifyCallback: VerifyCallback<JwtPayload | string> = (
         error: jwt.VerifyErrors | null,
         decoded: string | JwtPayload | undefined,
       ): void => {
         if (error) {
-          this.error = error
           logger.error(`token verification for request on ${req.method} ${req.originalUrl} failed: ${error} `)
-          return resolve(null)
+          return resolve([null, error])
         }
         logger.debug(`token verification successful for request on ${req.method} ${req.originalUrl}.`)
         logger.trace(`authenticated subject ${(decoded as JwtPayload).sub}`)
-        return resolve(decoded as JwtPayload)
+        return resolve([decoded as JwtPayload, null])
       }
       logger.debug(`verifying token for request on ${req.method} ${req.originalUrl}`)
       jwt.verify(token, this.getKey, { audience: this.config.keycloak.audience }, verifyCallback)
     })
+  }
+
+  authorization(req: Request, auth: JwtPayload, authorizedRoles: AuthRole[]) {
+    const audience = this.config?.keycloak?.audience
+    if (!audience) {
+      logger.error(`Misconfiguration: keycloak.audience is not set.`)
+      return false
+    }
+    const roles = auth?.['resource_access']?.[audience]?.['roles']
+    logger.debug(
+      `checking authorization in token for request on ${req.method} ${req.originalUrl}. Roles provided: ${roles}. Roles required: ${authorizedRoles}`,
+    )
+    return Array.isArray(roles) && authorizedRoles.some((role) => roles.includes(role))
   }
 }

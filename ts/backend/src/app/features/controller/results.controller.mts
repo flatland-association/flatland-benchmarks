@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AggregatorService } from '../services/aggregator-service.mjs'
+import { AuthService } from '../services/auth-service.mjs'
 import { SqlService } from '../services/sql-service.mjs'
 import { ControllerError } from './controller-utils.mjs'
 import { Controller, GetHandler, PostHandler } from './controller.mjs'
@@ -97,6 +98,10 @@ export class ResultsController extends Controller {
   getSubmissionResults: GetHandler<'/results/submissions/:submission_ids'> = async (req, res) => {
     const submissionIds = req.params.submission_ids.split(',')
 
+    const authService = AuthService.getInstance()
+    const [auth, _] = await authService.authentication(req)
+    const isAdmin = auth && authService.authorization(req, auth, ['Admin'])
+
     const aggregator = AggregatorService.getInstance()
     const score = await aggregator.getSubmissionScore(submissionIds)
 
@@ -111,7 +116,8 @@ export class ResultsController extends Controller {
     `
     score.forEach((submissionScore) => {
       const setup = setups.find((s) => s.id === submissionScore.submission_id)
-      if (setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN') {
+      // allow admins to retrieve non-slimmed results
+      if (!isAdmin && this.slimResults(setup)) {
         submissionScore.test_scorings = []
       }
     })
@@ -184,6 +190,10 @@ export class ResultsController extends Controller {
     const submissionId = req.params.submission_id
     const testIds = req.params.test_ids.split(',')
 
+    const authService = AuthService.getInstance()
+    const [auth, _] = await authService.authentication(req)
+    const isAdmin = auth && authService.authorization(req, auth, ['Admin'])
+
     const aggregator = AggregatorService.getInstance()
     const score = await aggregator.getSubmissionTestScore(submissionId, testIds)
 
@@ -198,7 +208,8 @@ export class ResultsController extends Controller {
     `
     score.forEach((submissionTestScore) => {
       const setup = setups.find((s) => s.id === submissionTestScore.test_id)
-      if (setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN') {
+      // allow admins to retrieve non-slimmed results
+      if (!isAdmin && this.slimResults(setup)) {
         submissionTestScore.scenario_scorings = []
       }
     })
@@ -450,6 +461,10 @@ export class ResultsController extends Controller {
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getBenchmarkLeaderboard(benchmarkIds)
 
+    const authService = AuthService.getInstance()
+    const [auth, _] = await authService.authentication(req)
+    const isAdmin = auth && authService.authorization(req, auth, ['Admin'])
+
     // filter child scores in COMPETITION
     const sql = SqlService.getInstance()
     const setups = await sql.query<{ id: string; setup: SuiteSetup }>`
@@ -460,7 +475,8 @@ export class ResultsController extends Controller {
     `
     board.forEach((leaderboard) => {
       const setup = setups.find((s) => s.id === leaderboard.benchmark_id)
-      if (setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN') {
+      // allow admins to retrieve non-slimmed results
+      if (!isAdmin && this.slimResults(setup)) {
         leaderboard.items.forEach((submissionScore) => {
           submissionScore.test_scorings = []
         })
@@ -701,6 +717,10 @@ export class ResultsController extends Controller {
     const aggregator = AggregatorService.getInstance()
     const board = await aggregator.getBenchmarkTestLeaderboard(benchmarkId, testIds)
 
+    const authService = AuthService.getInstance()
+    const [auth, _] = await authService.authentication(req)
+    const isAdmin = auth && authService.authorization(req, auth, ['Admin'])
+
     // filter child scores in COMPETITION
     const sql = SqlService.getInstance()
     const setups = await sql.query<{ id: string; setup: SuiteSetup }>`
@@ -712,7 +732,8 @@ export class ResultsController extends Controller {
     `
     board.forEach((leaderboard) => {
       const setup = setups.find((s) => s.id === leaderboard.test_id)
-      if (setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN') {
+      // allow admins to retrieve non-slimmed results
+      if (!isAdmin && this.slimResults(setup)) {
         leaderboard.items.forEach((submissionScore) => {
           submissionScore.test_scorings = []
         })
@@ -720,6 +741,10 @@ export class ResultsController extends Controller {
     })
 
     this.respondAfterPresenceCheck(req, res, board, testIds, 'test_id')
+  }
+
+  private slimResults(setup: { id: string; setup: SuiteSetup } | undefined) {
+    return setup?.setup != 'DEFAULT' && setup?.setup != 'CAMPAIGN'
   }
 
   // not using `validate` to keep the `checkX` pattern up

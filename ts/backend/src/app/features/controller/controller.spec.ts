@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes'
 import jwt from 'jsonwebtoken'
 import supertest from 'supertest'
 import TestAgent from 'supertest/lib/agent'
-import { afterAll, beforeAll, describe, expect, MockInstance, test, vi } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, expect, MockInstance, test, vi } from 'vitest'
 import { defaults } from '../config/defaults.mjs'
 import { AuthService } from '../services/auth-service.mjs'
 import { Controller } from './controller.mjs'
@@ -20,9 +20,11 @@ describe.sequential('Controller', () => {
   beforeAll(() => {
     app = express()
     request = supertest(app)
+  })
+  beforeEach(() => {
     authMock = vi.spyOn(AuthService, 'getInstance').mockReturnValue(
       //@ts-expect-error authorization
-      { authorization: () => null },
+      { authentication: () => [null, null] },
     )
   })
 
@@ -57,9 +59,13 @@ describe.sequential('Controller', () => {
       },
       { authorizedRoles: ['Admin'] },
     )
-    controller.attachGet('/test-jwt-expired' as '/mirror', (_req, _res) => {
-      throw new jwt.TokenExpiredError('', new Date(Date.now()))
-    })
+    controller.attachGet(
+      '/test-jwt-expired' as '/mirror',
+      (_req, _res) => {
+        throw 'error'
+      },
+      { authorizedRoles: ['User'] },
+    )
     controller.attachGet('/test-server-error' as '/mirror', (req, res) => {
       controller.respondError(req, res, { text: 'server error' })
     })
@@ -102,6 +108,12 @@ describe.sequential('Controller', () => {
       expects: { status: StatusCodes.UNAUTHORIZED, response: { error: { text: 'Not authorized' } } },
     },
     {
+      setup: () => {
+        authMock = vi.spyOn(AuthService, 'getInstance').mockReturnValue(
+          //@ts-expect-error authorization
+          { authentication: () => [null, new jwt.TokenExpiredError('TokenExpiredError at', new Date(Date.now()))] },
+        )
+      },
       route: '/test-jwt-expired',
       expects: {
         status: StatusCodes.UNAUTHORIZED,
@@ -137,6 +149,9 @@ describe.sequential('Controller', () => {
       },
     },
   ])('should answer $route with $expects', async (testCase) => {
+    if (testCase.setup) {
+      testCase.setup()
+    }
     const res = await request.get(testCase.route)
     expect(res.statusCode).toBe(testCase.expects.status)
     if (typeof testCase.expects.response !== 'undefined') {

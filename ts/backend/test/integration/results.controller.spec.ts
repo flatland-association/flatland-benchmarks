@@ -6,6 +6,7 @@ import {
   assertApiResponse,
   ControllerTestAdapter,
   setupControllerTestEnvironment,
+  testAdminJwt,
   testUserJwt,
 } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
@@ -108,6 +109,47 @@ describe.sequential('Results controller', () => {
     assertApiResponse(res, 200)
     expect(res.body.body).toHaveLength(1)
     expect(res.body.body.at(0)?.scorings[0]?.score).toBeCloseTo(0.45, 2)
+  })
+
+  test('should return slimmed submission results for user in competition setting', async () => {
+    const res = await controller.testGet(
+      '/results/submissions/:submission_ids',
+      {
+        params: {
+          submission_ids: 'c912c1fc-faa0-486c-b6f6-7f3411e4f307',
+        },
+      },
+      testUserJwt,
+    )
+    assertApiResponse(res, 200)
+    expect(res.body.body).toHaveLength(1)
+    expect(res.body.body.at(0)?.scorings[0]?.score).toBeCloseTo(0.8 + 0.33, 2)
+    expect(res.body.body.at(0)?.scorings[1]?.score).toBeCloseTo(0.9, 2)
+    expect(res.body.body.at(0)?.test_scorings).toHaveLength(0)
+  })
+
+  test('should return full submission results for admin despite competition setting', async () => {
+    const res = await controller.testGet(
+      '/results/submissions/:submission_ids',
+      {
+        params: {
+          submission_ids: 'c912c1fc-faa0-486c-b6f6-7f3411e4f307',
+        },
+      },
+      testAdminJwt,
+    )
+    assertApiResponse(res, 200)
+    expect(res.body.body).toHaveLength(1)
+    expect(res.body.body.at(0)?.scorings[0]?.score).toBeCloseTo(0.8 + 0.33, 2)
+    expect(res.body.body.at(0)?.scorings[1]?.score).toBeCloseTo(0.9, 2)
+    expect(res.body.body.at(0)?.test_scorings).toHaveLength(1)
+    expect(res.body.body.at(0)?.test_scorings[0].scenario_scorings).toHaveLength(5)
+    expect(res.body.body.at(0)?.test_scorings[0].scenario_scorings[0].scorings[0].score).toBeCloseTo(0.8, 2)
+    expect(res.body.body.at(0)?.test_scorings[0].scenario_scorings[0].scorings[1].score).toBeCloseTo(1.0, 2)
+    expect(res.body.body.at(0)?.test_scorings[0].scenario_scorings[1].scorings[0].score).toBeCloseTo(0.33, 2)
+    expect(res.body.body.at(0)?.test_scorings[0].scenario_scorings[1].scorings[1].score).toBeCloseTo(0.8, 2)
+    expect(res.body.body.at(0)?.test_scorings[0].scenario_scorings[2].scorings[0].score).toBeNull()
+    expect(res.body.body.at(0)?.test_scorings[0].scenario_scorings[2].scorings[1].score).toBeNull()
   })
 
   // Benchmark leaderboard does not make valid sense with campaign test data,

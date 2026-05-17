@@ -4,7 +4,7 @@ import { AuthRole } from '@common/interfaces'
 import express, { NextFunction, Request, Response, Router } from 'express'
 import type { RouteParameters } from 'express-serve-static-core'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import jwt from 'jsonwebtoken'
+import { JwtPayload } from 'jsonwebtoken'
 import postgres from 'postgres'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
@@ -33,6 +33,7 @@ export type HandlerOfVerb<V extends string, E extends keyof ApiEndpointsOfVerb<V
   >,
   res: Response<ApiEndpointsOfVerb<V>[E]['response']>,
   next: NextFunction,
+  auth: JwtPayload | null,
 ) => void | Promise<void>
 
 /**
@@ -151,17 +152,39 @@ export class Controller {
     this.router[verb](endpoint, async (req, res, next) => {
       try {
         logger.debug(`${req.method} ${req.originalUrl}: Request`, req.body)
+        const authService = AuthService.getInstance()
+        const [auth, authError] = await authService.authentication(req)
         if (options?.authorizedRoles) {
-          const authService = AuthService.getInstance()
-          const auth = await authService.authorization(req)
-          if (
-            !Array.isArray(auth?.['roles']) ||
-            !options.authorizedRoles.some((role) => auth['roles'].includes(role))
-          ) {
-            throw new ControllerError('Not authorized', undefined, StatusCodes.UNAUTHORIZED)
+          // Example:
+          //  "resource_access": {
+          //                  "fab": {
+          //                    "roles": [
+          //                      "User"
+          //                    ]
+          //                  },
+          if (authError) {
+            res.status(StatusCodes.UNAUTHORIZED)
+            res.json({
+              error: { text: `${authError.message}` },
+            })
+            logger.error(`${req.method} ${req.originalUrl}: ${authError.message}`, authError)
+            return
           }
+          if (!auth) {
+            res.status(StatusCodes.UNAUTHORIZED)
+            res.json({
+              error: { text: `Not authorized` },
+            })
+            logger.error(`${req.method} ${req.originalUrl}: Not authorized`)
+            return
+          }
+          if (!authService.authorization(req, auth, options.authorizedRoles)) {
+            throw new ControllerError('Forbidden', undefined, StatusCodes.FORBIDDEN)
+          }
+          await handler(req, res, next, auth)
+          return
         }
-        await handler(req, res, next)
+        await handler(req, res, next, auth)
         // force a server error if the handler did not respond
         if (!res.writableEnded) {
           logger.error(`${req.method} ${req.originalUrl}: Handler did not respond.`)
@@ -175,12 +198,6 @@ export class Controller {
             dbg: error.dbg,
           })
           logger.error(`${req.method} ${req.originalUrl}: ControllerError`, error)
-        } else if (error instanceof jwt.TokenExpiredError) {
-          res.status(StatusCodes.UNAUTHORIZED)
-          res.json({
-            error: { text: `TokenExpiredError at ${error.expiredAt}` },
-          })
-          logger.error(`${req.method} ${req.originalUrl}: TokenExpiredError at ${error.expiredAt}`, error)
         } else if (error instanceof postgres.PostgresError && error.code.startsWith('220')) {
           // https://www.postgresql.org/docs/current/errcodes-appendix.html
           // https://stackoverflow.com/questions/7939137/what-http-status-code-should-be-used-for-wrong-input

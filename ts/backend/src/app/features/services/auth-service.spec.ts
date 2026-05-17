@@ -1,5 +1,6 @@
+import { AuthRole } from '@common/interfaces'
 import type { Request } from 'express'
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 import { JwksClient } from 'jwks-rsa'
 import { beforeAll, describe, expect, test, vi } from 'vitest'
 import { defaults } from '../config/defaults.mjs'
@@ -117,7 +118,7 @@ describe('Auth Service', () => {
       req.headers.authorization = `Bearer ${testCase.token}`
     }
     //... and try authorizing with that
-    const auth = await authService.authorization(req)
+    const [auth, authError] = await authService.authentication(req)
     if (testCase.expectedAuth) {
       expect(auth).toBeTruthy()
       // there will be additional jwt fields - do not test those
@@ -126,9 +127,65 @@ describe('Auth Service', () => {
       expect(auth).toBeFalsy()
     }
     if (testCase.expectedError) {
-      expect(authService.error?.message).toMatch(testCase.expectedError)
+      expect(authError?.message).toMatch(testCase.expectedError)
     } else {
-      expect(authService.error).toBeUndefined()
+      expect(authError).toBeNull()
     }
+  })
+
+  describe('authorization', () => {
+    const req = { method: 'GET', originalUrl: '/test' } as Request
+
+    test.each([
+      {
+        should: 'return false when audience not configured',
+        audience: undefined,
+        resourceAccess: { 'test-audience': { roles: ['User'] } },
+        authorizedRoles: ['User'] as AuthRole[],
+        expected: false,
+      },
+      {
+        should: 'return false when audience absent from resource_access',
+        audience: 'test-audience',
+        resourceAccess: {},
+        authorizedRoles: ['User'] as AuthRole[],
+        expected: false,
+      },
+      {
+        should: 'return false when roles array missing',
+        audience: 'test-audience',
+        resourceAccess: { 'test-audience': {} },
+        authorizedRoles: ['User'] as AuthRole[],
+        expected: false,
+      },
+      {
+        should: 'return false when no role matches',
+        audience: 'test-audience',
+        resourceAccess: { 'test-audience': { roles: ['Admin'] } },
+        authorizedRoles: ['User'] as AuthRole[],
+        expected: false,
+      },
+      {
+        should: 'return true when required role present',
+        audience: 'test-audience',
+        resourceAccess: { 'test-audience': { roles: ['User'] } },
+        authorizedRoles: ['User'] as AuthRole[],
+        expected: true,
+      },
+      {
+        should: 'return true when one of multiple roles matches',
+        audience: 'test-audience',
+        resourceAccess: { 'test-audience': { roles: ['User'] } },
+        authorizedRoles: ['Admin', 'User'] as AuthRole[],
+        expected: true,
+      },
+    ])('$should', ({ audience, resourceAccess, authorizedRoles, expected }) => {
+      const config = Object.assign({}, defaults, {
+        keycloak: { ...defaults.keycloak, audience: audience as string },
+      })
+      const authService = new AuthService(config)
+      const auth = { resource_access: resourceAccess } as JwtPayload
+      expect(authService.authorization(req, auth, authorizedRoles)).toBe(expected)
+    })
   })
 })

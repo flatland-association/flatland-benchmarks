@@ -9,6 +9,9 @@ import {
   assertApiResponse,
   ControllerTestAdapter,
   setupControllerTestEnvironment,
+  testAdminJwt,
+  testNoRoleJwt,
+  testOtherUserJwt,
   testUserJwt,
 } from '../controller.test-adapter.mjs'
 import { getTestConfig } from './setup.mjs'
@@ -159,6 +162,34 @@ describe.sequential('Submission controller', () => {
     expect(submissionIds).toContain('a8bb32be-a596-4636-898d-7e1fe7c7492d')
   })
 
+  // data set in
+  // - ts/backend/src/migration/data/V18.7__competition_submissions.sql
+  test('should list all submissions for benchmark if admin', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testGet(
+      '/submissions/all',
+      {
+        query: { benchmark_ids: 'c85d5fc2-15da-4a62-8e14-28d1261c29bd' },
+      },
+      testAdminJwt,
+    )
+    assertApiResponse(res)
+    const submissionIds = res.body.body.map((s) => s.id)
+    expect(submissionIds).toContain('c912c1fc-faa0-486c-b6f6-7f3411e4f307')
+  })
+
+  test('should deny listing all submissions for benchmark if only user', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testGet(
+      '/submissions/all',
+      {
+        query: { benchmark_ids: 'c85d5fc2-15da-4a62-8e14-28d1261c29bd' },
+      },
+      testUserJwt,
+    )
+    assertApiResponse(res, StatusCodes.FORBIDDEN)
+  })
+
   test('should deny listing own submissions (no user)', async () => {
     const res = await controller.testGet('/submissions/own', {})
     assertApiResponse(res, StatusCodes.UNAUTHORIZED)
@@ -230,6 +261,20 @@ describe.sequential('Submission controller', () => {
     expect(res.body.body.at(0)?.tags).toEqual('abcd')
   })
 
+  test('should deny patching submission', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPatch(
+      '/submissions/:submission_ids',
+      {
+        params: { submission_ids: submissionUuid },
+        body: { tags: 'abcd' },
+      },
+      testNoRoleJwt,
+    )
+    assertApiResponse(res, StatusCodes.FORBIDDEN)
+    expect(res.body.body).toBeUndefined()
+  })
+
   test('should allow patching submissions with empty body', async ({ skip }) => {
     if (!submissionUuid) skip()
     const res = await controller.testPatch(
@@ -243,12 +288,49 @@ describe.sequential('Submission controller', () => {
     assertApiResponse(res)
   })
 
-  test('should not prevent submissions if daily limit 0', async () => {
+  test('should deny patching other user submission tags', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPatch(
+      '/submissions/:submission_ids',
+      {
+        params: { submission_ids: submissionUuid },
+        body: { tags: 'abcd' },
+      },
+      testOtherUserJwt,
+    )
+    assertApiResponse(res, StatusCodes.FORBIDDEN)
+    expect(res.body.body).toBeUndefined()
+  })
+
+  test('should allow admin to patch other user submission tags', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPatch(
+      '/submissions/:submission_ids',
+      {
+        params: { submission_ids: submissionUuid },
+        body: { tags: 'efg' },
+      },
+      testAdminJwt,
+    )
+    assertApiResponse(res)
+    expect(res.body.body).toHaveLength(1)
+    expect(res.body.body.at(0)?.tags).toEqual('efg')
+  })
+
+  test('should prevent submissions if daily limit 0', async () => {
     const testConfig = await getTestConfig()
     testConfig.submissions = { global: { dailyLimit: 0 } }
     controller = new ControllerTestAdapter(SubmissionController, testConfig)
     const res = await controller.testPost('/submissions', { body: testSubmission }, testUserJwt)
     assertApiResponse(res, StatusCodes.TOO_MANY_REQUESTS)
+  })
+
+  test('should not prevent posting submissions if admin even if daily limit 0', async () => {
+    const testConfig = await getTestConfig()
+    testConfig.submissions = { global: { dailyLimit: 0 } }
+    controller = new ControllerTestAdapter(SubmissionController, testConfig)
+    const res = await controller.testPost('/submissions', { body: testSubmission }, testAdminJwt)
+    assertApiResponse(res)
   })
 
   test('should not prevent submissions if daily limit null', async () => {

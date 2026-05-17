@@ -34,9 +34,35 @@ well-defined users.
 export const testUserJwt: JwtPayload = {
   sub: '00000000-0000-0000-0000-000000000001',
   preferred_username: 'Test User',
-  roles: ['User'],
+  resource_access: {
+    fab: {
+      roles: ['User'],
+    },
+  },
 }
-
+export const testNoRoleJwt: JwtPayload = {
+  sub: '00000000-0000-0000-0000-000000000001',
+  preferred_username: 'Test User No Role',
+  resource_access: {},
+}
+export const testOtherUserJwt: JwtPayload = {
+  sub: '00000000-0000-0000-0000-000000000002',
+  preferred_username: 'Test User 2',
+  resource_access: {
+    fab: {
+      roles: ['User'],
+    },
+  },
+}
+export const testAdminJwt: JwtPayload = {
+  sub: '00000000-0000-0000-0000-000000000001',
+  preferred_username: 'Test Admin',
+  resource_access: {
+    fab: {
+      roles: ['User', 'Admin'],
+    },
+  },
+}
 /*
 Globally extend vitest for custom API tests.
 */
@@ -104,7 +130,7 @@ export class ControllerTestAdapter {
   // Wraps callback in a mocked authorized state
   private async withMockedAuth<T>(cb: () => Promise<T>, jwt: JwtPayload | null = null) {
     // mock AuthService to always pass authorization with provided jwt
-    const authMock = vi.spyOn(AuthService.prototype, 'authorization').mockResolvedValue(jwt)
+    const authMock = vi.spyOn(AuthService.prototype, 'authentication').mockResolvedValue([jwt, null])
     // controller callback
     const result = await cb()
     // undo AuthService mocking

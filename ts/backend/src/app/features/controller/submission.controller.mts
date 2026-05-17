@@ -1,6 +1,7 @@
 import { AuthRole, SubmissionRow, SubmissionStatusRow, TestDefinitionRow } from '@common/interfaces.js'
 import { StripId } from '@common/utility-types'
 import { StatusCodes } from 'http-status-codes'
+import { JwtPayload } from 'jsonwebtoken'
 import { configuration } from '../config/config.mjs'
 import { Logger } from '../logger/logger.mjs'
 import { AuthService } from '../services/auth-service.mjs'
@@ -29,6 +30,7 @@ export class SubmissionController extends Controller {
     this.attachPost('/submissions/skip_enqueue', this.postSubmissionSkipEnqueue, { authorizedRoles: ['User'] })
     this.attachGet('/submissions', this.getSubmissions)
     this.attachGet('/submissions/own', this.getOwnSubmissions, { authorizedRoles: ['User'] })
+    this.attachGet('/submissions/all', this.getAllSubmissions, { authorizedRoles: ['Admin'] })
     this.attachGet('/submissions/:submission_ids', this.getSubmissionByUuid)
     this.attachPatch('/submissions/:submission_ids', this.patchSubmissionByUuid, { authorizedRoles: ['User'] })
     // TODO: only authorize orchestrator
@@ -95,35 +97,21 @@ export class SubmissionController extends Controller {
    *                            format: uuid
    *                            description: ID of submission.
    */
-  postSubmission: PostHandler<'/submissions'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = (await authService.authorization(req))!
+  postSubmission: PostHandler<'/submissions'> = async (req, res, _next, _auth) => {
+    const auth = _auth!
     this.checkCompleteness(req.body)
     await this.checkValidity(req.body)
     // save submission in db
     const sql = SqlService.getInstance()
 
-    if (
-      this.config?.submissions?.global?.dailyLimit != undefined &&
-      this.config?.submissions?.global?.dailyLimit != null
-    ) {
-      // https://stackoverflow.com/questions/1888544/how-to-select-records-from-last-24-hours-using-sql
-      const submissions = await sql.query<SubmissionRow>`
-    SELECT * FROM submissions
-    WHERE
-      submitted_by = ${auth.sub} AND submitted_at >= NOW() - '1 day'::INTERVAL
-  `
-      if ((submissions?.length || 0) > this.config.submissions.global.dailyLimit) {
-        this.respondError(
-          req,
-          res,
-          { text: 'Daily limit reached.' },
-          undefined,
-          undefined,
-          StatusCodes.TOO_MANY_REQUESTS,
-        )
-        return
-      }
+    const authService = AuthService.getInstance()
+    const isAdmin = authService.authorization(req, auth, ['Admin'])
+
+    const dailyLimitReached = await this.isDailyLimitReached(sql, auth)
+    // allow users with Admin role to POST submissions beyond daily limit
+    if (dailyLimitReached && !isAdmin) {
+      this.respondError(req, res, { text: 'Daily limit reached.' }, undefined, undefined, StatusCodes.TOO_MANY_REQUESTS)
+      return
     }
 
     let id!: string
@@ -262,35 +250,20 @@ export class SubmissionController extends Controller {
    *                            format: uuid
    *                            description: ID of submission.
    */
-  postSubmissionSkipEnqueue: PostHandler<'/submissions/skip_enqueue'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = (await authService.authorization(req))!
+  postSubmissionSkipEnqueue: PostHandler<'/submissions/skip_enqueue'> = async (req, res, _next, _auth) => {
+    const auth = _auth!
     this.checkCompleteness(req.body)
     await this.checkValidity(req.body)
     // save submission in db
     const sql = SqlService.getInstance()
 
-    if (
-      this.config?.submissions?.global?.dailyLimit != undefined &&
-      this.config?.submissions?.global?.dailyLimit != null
-    ) {
-      // https://stackoverflow.com/questions/1888544/how-to-select-records-from-last-24-hours-using-sql
-      const submissions = await sql.query<SubmissionRow>`
-    SELECT * FROM submissions
-    WHERE
-      submitted_by = ${auth.sub} AND submitted_at >= NOW() - '1 day'::INTERVAL
-  `
-      if ((submissions?.length || 0) >= this.config.submissions.global.dailyLimit) {
-        this.respondError(
-          req,
-          res,
-          { text: 'Daily limit reached.' },
-          undefined,
-          undefined,
-          StatusCodes.TOO_MANY_REQUESTS,
-        )
-        return
-      }
+    const authService = AuthService.getInstance()
+    const isAdmin = authService.authorization(req, auth, ['Admin'])
+    const dailyLimitReached = await this.isDailyLimitReached(sql, auth)
+    // allow users with Admin role to POST submissions beyond daily limit
+    if (dailyLimitReached && !isAdmin) {
+      this.respondError(req, res, { text: 'Daily limit reached.' }, undefined, undefined, StatusCodes.TOO_MANY_REQUESTS)
+      return
     }
 
     let id!: string
@@ -484,9 +457,8 @@ export class SubmissionController extends Controller {
    *                          published:
    *                            type: boolean
    */
-  getOwnSubmissions: GetHandler<'/submissions/own'> = async (req, res) => {
-    const authService = AuthService.getInstance()
-    const auth = (await authService.authorization(req))!
+  getOwnSubmissions: GetHandler<'/submissions/own'> = async (req, res, _next, _auth) => {
+    const auth = _auth!
     const sql = SqlService.getInstance()
 
     const submissions = await sql.query<SubmissionRow>`
@@ -499,6 +471,90 @@ export class SubmissionController extends Controller {
         ) AS status ON true
         WHERE
           submitted_by = ${auth.sub}
+      `
+    this.respond(req, res, submissions)
+  }
+
+  /**
+   * @swagger
+   * /submissions/all:
+   *  get:
+   *    description: Lists all (incl. unpublished) submissions for benchmarks as admin.
+   *    parameters:
+   *      - in: query
+   *        name: benchmark_ids
+   *        schema:
+   *          type: array
+   *          items:
+   *            type: string
+   *            format: uuid
+   *        description: Filter submissions by benchmark.
+   *        explode: false
+   *    security:
+   *      - oauth2: [admin]
+   *    responses:
+   *      200:
+   *        description: Requested submissions.
+   *        content:
+   *          application/json:
+   *            schema:
+   *              allOf:
+   *                - $ref: "#/components/schemas/ApiResponse"
+   *                - type: object
+   *                  properties:
+   *                    body:
+   *                      type: array
+   *                      items:
+   *                        type: object
+   *                        properties:
+   *                          id:
+   *                            type: string
+   *                            format: uuid
+   *                          benchmark_id:
+   *                            type: string
+   *                            format: uuid
+   *                          test_ids:
+   *                            type: array
+   *                            items:
+   *                              type: string
+   *                              format: uuid
+   *                          name:
+   *                            type: string
+   *                          description:
+   *                            type: string
+   *                          submission_data_url:
+   *                            type: string
+   *                          code_repository:
+   *                            type: string
+   *                          tags:
+   *                            type: string
+   *                          submitted_at:
+   *                            type: string
+   *                          submitted_by:
+   *                            type: string
+   *                            format: uuid
+   *                          submitted_by_username:
+   *                            type: string
+   *                          status:
+   *                            type: string
+   *                          published:
+   *                            type: boolean
+   */
+  getAllSubmissions: GetHandler<'/submissions/all'> = async (req, res) => {
+    const benchmarkIds = req.query['benchmark_ids']?.split(',')
+
+    const sql = SqlService.getInstance()
+
+    // per default, list for all benchmarks
+    let whereBenchmark = sql.fragment`1=1`
+    if (benchmarkIds) {
+      whereBenchmark = sql.fragment`benchmark_id = ANY(${benchmarkIds})`
+    }
+
+    const submissions = await sql.query<SubmissionRow>`
+        SELECT * FROM submissions
+        WHERE
+          ${whereBenchmark}
       `
     this.respond(req, res, submissions)
   }
@@ -571,7 +627,7 @@ export class SubmissionController extends Controller {
    */
   getSubmissionByUuid: GetHandler<'/submissions/:submission_ids'> = async (req, res) => {
     const authService = AuthService.getInstance()
-    const auth = await authService.authorization(req)
+    const [auth, _] = await authService.authentication(req)
     const uuids = req.params.submission_ids.split(',')
     const sql = SqlService.getInstance()
     // per default, list only public submissions
@@ -678,15 +734,15 @@ export class SubmissionController extends Controller {
    *                          published:
    *                            type: boolean
    */
-  patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res) => {
+  patchSubmissionByUuid: PatchHandler<'/submissions/:submission_ids'> = async (req, res, _next, _auth) => {
     logger.info(`patchSubmissionByUuid`)
+    const auth = _auth!
     const authService = AuthService.getInstance()
-    const auth = (await authService.authorization(req))!
     const uuids = req.params.submission_ids.split(',')
     logger.info(`patchSubmissionByUuid list ${uuids}`)
     const sql = SqlService.getInstance()
     // unless Admin, assert User only patches own submissions
-    if (!auth['roles'].includes('Admin')) {
+    if (!authService.authorization(req, auth, ['Admin'])) {
       const submissionMismatches = await sql.query`
         SELECT reference
         FROM UNNEST(${uuids}::uuid[]) AS reference
@@ -706,7 +762,8 @@ export class SubmissionController extends Controller {
           throw new ControllerError('Field is not patchable', key, StatusCodes.BAD_REQUEST)
         }
         // at least one of user's roles must be included in field access definition
-        if (!(auth['roles'] as AuthRole[]).some((role) => PATCHABLE_FIELDS[key]?.includes(role))) {
+        const authorizedRoles = PATCHABLE_FIELDS[key] || ([] as AuthRole[])
+        if (!authService.authorization(req, auth, authorizedRoles)) {
           throw new ControllerError('Cannot patch field', key, StatusCodes.FORBIDDEN)
         }
       })
@@ -868,6 +925,25 @@ export class SubmissionController extends Controller {
       ORDER BY timestamp DESC
     `
     this.respond(req, res, statusRows)
+  }
+
+  private async isDailyLimitReached(sql: SqlService, auth: JwtPayload) {
+    let dailyLimitReached = false
+    if (
+      this.config?.submissions?.global?.dailyLimit != undefined &&
+      this.config?.submissions?.global?.dailyLimit != null
+    ) {
+      // https://stackoverflow.com/questions/1888544/how-to-select-records-from-last-24-hours-using-sql
+      const [{ count }] = await sql.query<{ count: number }>`
+        SELECT COUNT(*) ::int AS count
+        FROM submissions
+        WHERE submitted_by = ${auth.sub} AND submitted_at >= NOW() - '1 day':: INTERVAL
+      `
+      if (count >= this.config.submissions.global.dailyLimit) {
+        dailyLimitReached = true
+      }
+    }
+    return dailyLimitReached
   }
 
   /**

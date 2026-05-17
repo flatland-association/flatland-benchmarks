@@ -3,6 +3,7 @@ import TestAgent from 'supertest/lib/agent'
 import { defaults } from '../../src/app/features/config/defaults.mjs'
 import { Logger } from '../../src/app/features/logger/logger.mjs'
 import { Server } from '../../src/app/features/server/server.mjs'
+import { AuthService } from '../../src/app/features/services/auth-service.mjs'
 import serverTest from '../public/test.json'
 
 Logger.setOptions({ '--log-level': 'OFF' })
@@ -21,6 +22,10 @@ describe('Server', () => {
     process.chdir('test/integration')
     server = new Server(defaults)
     request = supertest(server.app)
+    vi.spyOn(AuthService, 'getInstance').mockReturnValue(
+      //@ts-expect-error authorization
+      { authentication: () => [null, null] },
+    )
   })
 
   it('is instantiated', () => {
