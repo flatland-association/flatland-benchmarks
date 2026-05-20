@@ -23,7 +23,7 @@ export class ErrorHandlerService implements ErrorHandler {
       } else if (error.status >= 400) {
         this.errorMessageService.errorMessage.set({
           title: `HTTP Error ${error.status} - ${error.statusText}`,
-          message: error.message + (error?.error?.text || ''),
+          message: error.message + (error?.error?.error?.text ? ` - ${error?.error?.error?.text}` : ''),
         })
       } else {
         console.error(`No global handler for status ${error.status} defined`)
