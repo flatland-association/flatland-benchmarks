@@ -107,10 +107,17 @@ export class SubmissionController extends Controller {
     const authService = AuthService.getInstance()
     const isAdmin = authService.authorization(req, auth, ['Admin'])
 
-    const dailyLimitReached = await this.isDailyLimitReached(sql, auth)
+    const [dailyLimitReached, lastSubmitted] = await this.isDailyLimitReached(sql, auth)
     // allow users with Admin role to POST submissions beyond daily limit
     if (dailyLimitReached && !isAdmin) {
-      this.respondError(req, res, { text: 'Daily limit reached.' }, undefined, undefined, StatusCodes.TOO_MANY_REQUESTS)
+      this.respondError(
+        req,
+        res,
+        { text: `Daily limit reached. Submitted at ${lastSubmitted}.` },
+        undefined,
+        undefined,
+        StatusCodes.TOO_MANY_REQUESTS,
+      )
       return
     }
 
@@ -259,10 +266,17 @@ export class SubmissionController extends Controller {
 
     const authService = AuthService.getInstance()
     const isAdmin = authService.authorization(req, auth, ['Admin'])
-    const dailyLimitReached = await this.isDailyLimitReached(sql, auth)
+    const [dailyLimitReached, lastSubmitted] = await this.isDailyLimitReached(sql, auth)
     // allow users with Admin role to POST submissions beyond daily limit
     if (dailyLimitReached && !isAdmin) {
-      this.respondError(req, res, { text: 'Daily limit reached.' }, undefined, undefined, StatusCodes.TOO_MANY_REQUESTS)
+      this.respondError(
+        req,
+        res,
+        { text: `Daily limit reached. Submitted at ${lastSubmitted}.` },
+        undefined,
+        undefined,
+        StatusCodes.TOO_MANY_REQUESTS,
+      )
       return
     }
 
@@ -928,22 +942,24 @@ export class SubmissionController extends Controller {
   }
 
   private async isDailyLimitReached(sql: SqlService, auth: JwtPayload) {
-    let dailyLimitReached = false
+    const dailyLimitReached = false
     if (
       this.config?.submissions?.global?.dailyLimit != undefined &&
       this.config?.submissions?.global?.dailyLimit != null
     ) {
       // https://stackoverflow.com/questions/1888544/how-to-select-records-from-last-24-hours-using-sql
-      const [{ count }] = await sql.query<{ count: number }>`
-        SELECT COUNT(*) ::int AS count
+      const submissions = await sql.query<SubmissionRow>`
+        SELECT *
+        from submissions
         FROM submissions
         WHERE submitted_by = ${auth.sub} AND submitted_at >= NOW() - '1 day':: INTERVAL
+        ORDER BY submitted_at ASC
       `
-      if (count >= this.config.submissions.global.dailyLimit) {
-        dailyLimitReached = true
+      if (submissions.length >= this.config.submissions.global.dailyLimit) {
+        return [true, submissions.map((s) => s?.submitted_at).concat(',')]
       }
     }
-    return dailyLimitReached
+    return [dailyLimitReached, '']
   }
 
   /**
