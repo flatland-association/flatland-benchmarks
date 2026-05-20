@@ -950,7 +950,6 @@ export class SubmissionController extends Controller {
       // https://stackoverflow.com/questions/1888544/how-to-select-records-from-last-24-hours-using-sql
       const submissions = await sql.query<SubmissionRow>`
         SELECT *
-        from submissions
         FROM submissions
         WHERE submitted_by = ${auth.sub} AND submitted_at >= NOW() - '1 day':: INTERVAL
         ORDER BY submitted_at ASC
