@@ -334,6 +334,14 @@ describe.sequential('Submission controller', () => {
     assertApiResponse(res)
   })
 
+  test('should not prevent posting skip_enqueue submissions if admin even if daily limit 0', async () => {
+    const testConfig = await getTestConfig()
+    testConfig.submissions = { global: { dailyLimit: 0 } }
+    controller = new ControllerTestAdapter(SubmissionController, testConfig)
+    const res = await controller.testPost('/submissions/skip_enqueue', { body: testSubmission }, testAdminJwt)
+    assertApiResponse(res)
+  })
+
   test('should not prevent submissions if daily limit null', async () => {
     const testConfig = await getTestConfig()
     testConfig.submissions = { global: { dailyLimit: null } }
@@ -348,6 +356,19 @@ describe.sequential('Submission controller', () => {
     controller = new ControllerTestAdapter(SubmissionController, testConfig)
     const res = await controller.testPost('/submissions', { body: testSubmission }, testUserJwt)
     assertApiResponse(res)
+  })
+
+  test('should deny unauthenticated access to POST submission status', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPost(
+      `/submissions/:submission_ids/statuses`,
+      {
+        params: { submission_ids: submissionUuid },
+        body: { status: 'STARTED', message: 'unauthorized attempt' },
+      },
+      null,
+    )
+    assertApiResponse(res, StatusCodes.UNAUTHORIZED)
   })
 
   test('should allow updating submission status', async ({ skip }) => {
