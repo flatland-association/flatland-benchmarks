@@ -371,6 +371,34 @@ describe.sequential('Submission controller', () => {
     assertApiResponse(res, StatusCodes.UNAUTHORIZED)
   })
 
+  test('should deny posting status to another user submission', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPost(
+      `/submissions/:submission_ids/statuses`,
+      {
+        params: { submission_ids: submissionUuid },
+        body: { status: 'STARTED', message: 'hijack attempt' },
+      },
+      testOtherUserJwt,
+    )
+    assertApiResponse(res, StatusCodes.FORBIDDEN)
+  })
+
+  test('should allow admin to post status to any submission', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPost(
+      `/submissions/:submission_ids/statuses`,
+      {
+        params: { submission_ids: submissionUuid },
+        body: { status: 'STARTED', message: 'admin override' },
+      },
+      testAdminJwt,
+    )
+    assertApiResponse(res)
+    expect(res.body.body).toHaveLength(1)
+    expect(res.body.body.at(0)?.status).toBe('STARTED')
+  })
+
   test('should allow updating submission status', async ({ skip }) => {
     if (!submissionUuid) skip()
     const res = await controller.testPost(

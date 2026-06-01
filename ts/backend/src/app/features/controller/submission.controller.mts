@@ -33,8 +33,6 @@ export class SubmissionController extends Controller {
     this.attachGet('/submissions/all', this.getAllSubmissions, { authorizedRoles: ['Admin'] })
     this.attachGet('/submissions/:submission_ids', this.getSubmissionByUuid)
     this.attachPatch('/submissions/:submission_ids', this.patchSubmissionByUuid, { authorizedRoles: ['User'] })
-    // TODO: only authorize orchestrator
-    // https://github.com/flatland-association/flatland-benchmarks/issues/484
     this.attachPost('/submissions/:submission_ids/statuses', this.postSubmissionStatus, { authorizedRoles: ['User'] })
     this.attachGet('/submissions/:submission_ids/statuses', this.getStubmissionStatuses)
   }
@@ -868,7 +866,9 @@ export class SubmissionController extends Controller {
    *                          timestamp:
    *                            type: string
    */
-  postSubmissionStatus: PostHandler<'/submissions/:submission_ids/statuses'> = async (req, res) => {
+  postSubmissionStatus: PostHandler<'/submissions/:submission_ids/statuses'> = async (req, res, _next, _auth) => {
+    const auth = _auth!
+    const authService = AuthService.getInstance()
     const uuids = req.params.submission_ids.split(',')
     const status = req.body.status
     const message = req.body?.message
@@ -882,6 +882,19 @@ export class SubmissionController extends Controller {
     `
     if (submissionMismatches.length) {
       throw new ControllerError('Referenced submission does not exist', submissionMismatches, StatusCodes.BAD_REQUEST)
+    }
+    // unless Admin, assert User only posts status to own submissions
+    if (!authService.authorization(req, auth, ['Admin'])) {
+      const ownershipMismatches = await sql.query`
+        SELECT reference
+        FROM UNNEST(${uuids}::uuid[]) AS reference
+               LEFT JOIN submissions ON id = reference
+        WHERE submitted_by IS DISTINCT
+        FROM ${auth.sub}
+      `
+      if (ownershipMismatches.length) {
+        throw new ControllerError('Cannot update submission', ownershipMismatches, StatusCodes.FORBIDDEN)
+      }
     }
     const statusInserts = uuids.map((uuid) => {
       return {
