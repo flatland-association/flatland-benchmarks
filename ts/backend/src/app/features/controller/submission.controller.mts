@@ -955,7 +955,7 @@ export class SubmissionController extends Controller {
         ORDER BY submitted_at ASC
       `
       if (submissions.length >= this.config.submissions.global.dailyLimit) {
-        return [true, submissions.map((s) => s?.submitted_at).join(',')]
+        return [true, submissions.map((s) => s?.submitted_at).join(', ')]
       }
     }
     return [dailyLimitReached, '']
