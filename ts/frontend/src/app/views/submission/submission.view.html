@@ -28,7 +28,7 @@
         <tbody>
         @for (status of submissionStatuses?.slice()?.reverse() ; track $index) {
         <tr>
-          <td>{{ status.timestamp | date:'dd/MM/yyyy HH:mm'}}</td>
+          <td>{{ status.timestamp | date:'dd/MM/yyyy HH:mm' }} [{{ status.timestamp | date:'z' }}]</td>
           <td> {{ status.status }}</td>
           <td>{{status.message ?? '' }}</td>
         </tr>
