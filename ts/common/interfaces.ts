@@ -80,6 +80,7 @@ export interface BenchmarkDefinitionRow {
   campaign_field_ids: string[]
   test_ids: string[]
   suite_id: string | null
+  deadline?: string | null
 }
 
 export type SuiteSetup = 'DEFAULT' | 'COMPETITION' | 'CAMPAIGN'
