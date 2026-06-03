@@ -62,7 +62,7 @@ export class MySubmissionsView implements OnInit {
           const benchmark = benchmarks?.find((b) => b.id === submission.benchmark_id)
           const suite = suites?.find((s) => s.id === benchmark?.suite_id)
           const submittedAtStr = submission.submitted_at
-            ? this.datePipe.transform(submission.submitted_at, 'dd/MM/yyyy HH:mm')
+            ? `${this.datePipe.transform(submission.submitted_at, 'dd/MM/yyyy HH:mm')} [${this.datePipe.transform(submission.submitted_at, 'z')}]`
             : ''
           const statusStr = submission.status ?? 'SUBMITTED'
           const isSubmissionScored = isScored(score)
