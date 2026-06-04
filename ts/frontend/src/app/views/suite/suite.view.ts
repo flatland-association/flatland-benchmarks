@@ -35,6 +35,7 @@ export class SuiteView implements OnInit, OnDestroy {
   suite?: SuiteDefinitionRow
   customization?: Customization
   firstBenchmark?: BenchmarkDefinitionRow
+  showNewSubmissionModal = false
 
   ngOnInit(): void {
     this.customizationService.getCustomization().then((customization) => {
