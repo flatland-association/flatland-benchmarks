@@ -152,6 +152,76 @@ describe.sequential('Results controller', () => {
     expect(res.body.body.at(0)?.test_scorings[0].scenario_scorings[2].scorings[1].score).toBeNull()
   })
 
+  test('should return slimmed benchmark leaderboard for user in competition setting', async () => {
+    const res = await controller.testGet(
+      '/results/benchmarks/:benchmark_ids',
+      {
+        params: {
+          benchmark_ids: 'c85d5fc2-15da-4a62-8e14-28d1261c29bd',
+        },
+      },
+      testUserJwt,
+    )
+    assertApiResponse(res, 200)
+    expect(res.body.body).toHaveLength(1)
+    res.body.body.at(0)?.items.forEach((item) => {
+      expect(item.test_scorings).toHaveLength(0)
+    })
+  })
+
+  test('should return full benchmark leaderboard for admin despite competition setting', async () => {
+    const res = await controller.testGet(
+      '/results/benchmarks/:benchmark_ids',
+      {
+        params: {
+          benchmark_ids: 'c85d5fc2-15da-4a62-8e14-28d1261c29bd',
+        },
+      },
+      testAdminJwt,
+    )
+    assertApiResponse(res, 200)
+    expect(res.body.body).toHaveLength(1)
+    res.body.body.at(0)?.items.forEach((item) => {
+      expect(item.test_scorings.length).toBeGreaterThan(0)
+    })
+  })
+
+  test('should return slimmed test leaderboard for user in competition setting', async () => {
+    const res = await controller.testGet(
+      '/results/benchmarks/:benchmark_id/tests/:test_ids',
+      {
+        params: {
+          benchmark_id: 'c85d5fc2-15da-4a62-8e14-28d1261c29bd',
+          test_ids: '39ae35d8-4b0f-467f-9ec4-ee19c3558c7f',
+        },
+      },
+      testUserJwt,
+    )
+    assertApiResponse(res, 200)
+    expect(res.body.body).toHaveLength(1)
+    res.body.body.at(0)?.items.forEach((item) => {
+      expect(item.test_scorings).toHaveLength(0)
+    })
+  })
+
+  test('should return full test leaderboard for admin despite competition setting', async () => {
+    const res = await controller.testGet(
+      '/results/benchmarks/:benchmark_id/tests/:test_ids',
+      {
+        params: {
+          benchmark_id: 'c85d5fc2-15da-4a62-8e14-28d1261c29bd',
+          test_ids: '39ae35d8-4b0f-467f-9ec4-ee19c3558c7f',
+        },
+      },
+      testAdminJwt,
+    )
+    assertApiResponse(res, 200)
+    expect(res.body.body).toHaveLength(1)
+    res.body.body.at(0)?.items.forEach((item) => {
+      expect(item.test_scorings.length).toBeGreaterThan(0)
+    })
+  })
+
   // Benchmark leaderboard does not make valid sense with campaign test data,
   // but for testing purposes (checking if the aggregator returns consistent
   // values), probing this leaderboard is good enough.

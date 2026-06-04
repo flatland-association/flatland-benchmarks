@@ -334,6 +334,14 @@ describe.sequential('Submission controller', () => {
     assertApiResponse(res)
   })
 
+  test('should not prevent posting skip_enqueue submissions if admin even if daily limit 0', async () => {
+    const testConfig = await getTestConfig()
+    testConfig.submissions = { global: { dailyLimit: 0 } }
+    controller = new ControllerTestAdapter(SubmissionController, testConfig)
+    const res = await controller.testPost('/submissions/skip_enqueue', { body: testSubmission }, testAdminJwt)
+    assertApiResponse(res)
+  })
+
   test('should not prevent submissions if daily limit null', async () => {
     const testConfig = await getTestConfig()
     testConfig.submissions = { global: { dailyLimit: null } }
@@ -348,6 +356,50 @@ describe.sequential('Submission controller', () => {
     controller = new ControllerTestAdapter(SubmissionController, testConfig)
     const res = await controller.testPost('/submissions', { body: testSubmission }, testUserJwt)
     assertApiResponse(res)
+  })
+
+  test('should deny unauthenticated access to POST submission status', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPost(
+      `/submissions/:submission_ids/statuses`,
+      {
+        params: { submission_ids: submissionUuid },
+        body: { status: 'STARTED', message: 'unauthorized attempt' },
+      },
+      null,
+    )
+    assertApiResponse(res, StatusCodes.UNAUTHORIZED)
+  })
+
+  test('should deny posting status to another user submission', async ({ skip }) => {
+    if (!submissionUuid) skip()
+    const res = await controller.testPost(
+      `/submissions/:submission_ids/statuses`,
+      {
+        params: { submission_ids: submissionUuid },
+        body: { status: 'STARTED', message: 'hijack attempt' },
+      },
+      testOtherUserJwt,
+    )
+    assertApiResponse(res, StatusCodes.FORBIDDEN)
+  })
+
+  test('should allow admin to post status to any submission', async ({ skip }) => {
+    const submission = await controller.testPost('/submissions', { body: testSubmission }, testUserJwt)
+    assertApiResponse(submission)
+    const submissionUuid = submission.body.body.id
+
+    const res = await controller.testPost(
+      `/submissions/:submission_ids/statuses`,
+      {
+        params: { submission_ids: submissionUuid },
+        body: { status: 'STARTED', message: 'admin override' },
+      },
+      testAdminJwt,
+    )
+    assertApiResponse(res)
+    expect(res.body.body).toHaveLength(1)
+    expect(res.body.body.at(0)?.status).toBe('STARTED')
   })
 
   test('should allow updating submission status', async ({ skip }) => {
