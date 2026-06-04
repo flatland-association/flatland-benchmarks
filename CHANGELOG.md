@@ -3,6 +3,31 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.19.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.19.0...v0.19.1) (2026-06-04)
+
+
+### Features
+
+* **backend:** add submission deadline at benchmark level ([29ff64e](https://github.com/flatland-association/flatland-benchmarks/commit/29ff64e275109c28833654c2557628cf99a844a8))
+* **fronend:** display timezone for status timestamps. ([246e033](https://github.com/flatland-association/flatland-benchmarks/commit/246e033fe400e831ff2c546aabcf2b98df392bbc))
+* **fronend:** display timezone for status timestamps. ([4794b35](https://github.com/flatland-association/flatland-benchmarks/commit/4794b3561e8caab0dfd7f71d3a691ddfb0e11e74))
+* **fronend:** display timezone in my submissions. ([6cd88d2](https://github.com/flatland-association/flatland-benchmarks/commit/6cd88d25551e0d0f20f1141e22e29357dcc99cec))
+* **frontend:** improved error display. ([#634](https://github.com/flatland-association/flatland-benchmarks/issues/634)) ([f760e2c](https://github.com/flatland-association/flatland-benchmarks/commit/f760e2c7d1af745d0ed616299c85c81ba92f19e6))
+* **frontend:** in competition setup, display leaderboard directly if there is only one round ([97b7de2](https://github.com/flatland-association/flatland-benchmarks/commit/97b7de2d78c1df2edc5dd46b319c5bab319ac935))
+* **frontend:** in competition setup, display leaderboard directly if there is only one round. ([696bb28](https://github.com/flatland-association/flatland-benchmarks/commit/696bb2845b126947c4ec4be300eb38b404af00b5))
+
+
+### Bug Fixes
+
+* **backend:** allow only `Admin`s to `POST` submission status not their own. ([627f655](https://github.com/flatland-association/flatland-benchmarks/commit/627f655108295cbc9b3d9d7ae6fa990366f60de4))
+* submission deadline extended ([762099a](https://github.com/flatland-association/flatland-benchmarks/commit/762099acd6a82874ea2ca541a9b8de7fc6d63223))
+* update dates after extension ([064f6e4](https://github.com/flatland-association/flatland-benchmarks/commit/064f6e4d3e2fc28592018284d37ce81dbb1e845c))
+
+
+### Miscellaneous Chores
+
+* release 0.19.1 ([72869fc](https://github.com/flatland-association/flatland-benchmarks/commit/72869fc49968a12423a6a8d6c06a2b8d46f9f18c))
+
 ## [0.19.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.18.8...v0.19.0) (2026-05-17)
 
 
