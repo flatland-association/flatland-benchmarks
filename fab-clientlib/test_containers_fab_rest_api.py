@@ -63,9 +63,15 @@ def test_containers_fixture():
   except Exception as e:
     print("An exception occurred during running docker compose:")
     print(e)
-    stdout, stderr = basic.get_logs()
-    print(stdout)
-    print(stderr)
+    print("Fetching stdo/stderr")
+    try:
+      stdout, stderr = basic.get_logs()
+      print("stdout:")
+      print(stdout)
+      print("stderr:")
+      print(stderr)
+    except:
+      print("Failed to fetch logs")
     raise e
 
 
