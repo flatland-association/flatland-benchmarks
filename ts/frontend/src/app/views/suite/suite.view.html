@@ -38,3 +38,7 @@
     <app-suite-overview class="w-full my-8" [suite]="suite"></app-suite-overview>
   </lib-content>
 }
+
+@if (showNewSubmissionModal) {
+<app-new-submission-modal [(open)]="showNewSubmissionModal" [suiteId]="suite?.id" [benchmarkId]="firstBenchmark?.id"></app-new-submission-modal>
+}
