@@ -478,7 +478,13 @@ describe.sequential('Submission controller', () => {
       // status update must still succeed
       const res = await deadlineController.testPost(
         '/submissions/:submission_ids/statuses',
-        { params: { submission_ids: deadlineSubmissionUuid }, body: { status: 'STARTED' } },
+        {
+          params: { submission_ids: deadlineSubmissionUuid },
+          body: {
+            status: 'STARTED',
+            message: null,
+          },
+        },
         testUserJwt,
       )
       assertApiResponse(res)
