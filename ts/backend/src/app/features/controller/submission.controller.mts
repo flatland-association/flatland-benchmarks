@@ -121,6 +121,12 @@ export class SubmissionController extends Controller {
       return
     }
 
+    const deadlinePassed = await this.isDeadlinePassed(req.body.benchmark_id, sql)
+    if (deadlinePassed && !isAdmin) {
+      this.respondError(req, res, { text: 'Submission deadline has passed.' }, undefined, undefined, StatusCodes.GONE)
+      return
+    }
+
     let id!: string
     await sql.transaction(async (sql) => {
       const idRow = await sql.query`
@@ -277,6 +283,12 @@ export class SubmissionController extends Controller {
         undefined,
         StatusCodes.TOO_MANY_REQUESTS,
       )
+      return
+    }
+
+    const deadlinePassed = await this.isDeadlinePassed(req.body.benchmark_id, sql)
+    if (deadlinePassed && !isAdmin) {
+      this.respondError(req, res, { text: 'Submission deadline has passed.' }, undefined, undefined, StatusCodes.GONE)
       return
     }
 
@@ -939,6 +951,15 @@ export class SubmissionController extends Controller {
       ORDER BY timestamp DESC
     `
     this.respond(req, res, statusRows)
+  }
+
+  private async isDeadlinePassed(benchmarkId: string, sql: SqlService): Promise<boolean> {
+    const rows = await sql.query<{ deadline_passed: boolean }>`
+      SELECT (deadline IS NOT NULL AND NOW() > deadline) AS deadline_passed
+      FROM benchmarks
+      WHERE id = ${benchmarkId}
+    `
+    return rows[0]?.deadline_passed ?? false
   }
 
   private async isDailyLimitReached(sql: SqlService, auth: JwtPayload) {

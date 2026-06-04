@@ -5,6 +5,7 @@ import { MockInstance } from 'vitest'
 import { SubmissionController } from '../../src/app/features/controller/submission.controller.mjs'
 import { Logger } from '../../src/app/features/logger/logger.mjs'
 import { CeleryService } from '../../src/app/features/services/celery-client-service.mjs'
+import { SqlService } from '../../src/app/features/services/sql-service.mjs'
 import {
   assertApiResponse,
   ControllerTestAdapter,
@@ -412,5 +413,82 @@ describe.sequential('Submission controller', () => {
 
     const res = await controller.testPost('/submissions', { body: testSubmission }, testUserJwt)
     assertApiResponse(res, StatusCodes.UNPROCESSABLE_ENTITY)
+  })
+
+  describe('submission deadline', () => {
+    const deadlineBenchmarkId = '20ccc7c1-034c-4880-8946-bffc3fed1359'
+    let deadlineController: ControllerTestAdapter
+
+    beforeAll(async () => {
+      const testConfig = await getTestConfig()
+      deadlineController = new ControllerTestAdapter(SubmissionController, testConfig)
+      vi.spyOn(CeleryService.prototype, 'sendTask')
+    })
+
+    afterEach(async () => {
+      const sql = SqlService.getInstance()
+      await sql.query`UPDATE benchmarks SET deadline = NULL WHERE id = ${deadlineBenchmarkId}`
+    })
+
+    test('should reject POST /submissions when deadline is in the past', async () => {
+      const sql = SqlService.getInstance()
+      await sql.query`UPDATE benchmarks SET deadline = NOW() - INTERVAL '1 second' WHERE id = ${deadlineBenchmarkId}`
+      const res = await deadlineController.testPost('/submissions', { body: testSubmission }, testUserJwt)
+      assertApiResponse(res, StatusCodes.GONE)
+    })
+
+    test('should reject POST /submissions/skip_enqueue when deadline is in the past', async () => {
+      const sql = SqlService.getInstance()
+      await sql.query`UPDATE benchmarks SET deadline = NOW() - INTERVAL '1 second' WHERE id = ${deadlineBenchmarkId}`
+      const res = await deadlineController.testPost('/submissions/skip_enqueue', { body: testSubmission }, testUserJwt)
+      assertApiResponse(res, StatusCodes.GONE)
+    })
+
+    test('should allow admin to POST /submissions/skip_enqueue after deadline has passed', async () => {
+      const sql = SqlService.getInstance()
+      await sql.query`UPDATE benchmarks SET deadline = NOW() - INTERVAL '1 second' WHERE id = ${deadlineBenchmarkId}`
+      const res = await deadlineController.testPost('/submissions/skip_enqueue', { body: testSubmission }, testAdminJwt)
+      assertApiResponse(res)
+    })
+
+    test('should allow POST /submissions/skip_enqueue when deadline is in the future', async () => {
+      const sql = SqlService.getInstance()
+      await sql.query`UPDATE benchmarks SET deadline = NOW() + INTERVAL '1 day' WHERE id = ${deadlineBenchmarkId}`
+      const res = await deadlineController.testPost('/submissions/skip_enqueue', { body: testSubmission }, testUserJwt)
+      assertApiResponse(res)
+    })
+
+    test('should allow POST /submissions/skip_enqueue when no deadline is set', async () => {
+      const res = await deadlineController.testPost('/submissions/skip_enqueue', { body: testSubmission }, testUserJwt)
+      assertApiResponse(res)
+    })
+
+    test('should allow POST status update after deadline has passed', async () => {
+      const sql = SqlService.getInstance()
+      // create submission before setting past deadline
+      const createRes = await deadlineController.testPost(
+        '/submissions/skip_enqueue',
+        { body: testSubmission },
+        testUserJwt,
+      )
+      assertApiResponse(createRes)
+      const deadlineSubmissionUuid = createRes.body.body.id
+      // now set a past deadline
+      await sql.query`UPDATE benchmarks SET deadline = NOW() - INTERVAL '1 second' WHERE id = ${deadlineBenchmarkId}`
+      // status update must still succeed
+      const res = await deadlineController.testPost(
+        '/submissions/:submission_ids/statuses',
+        {
+          params: { submission_ids: deadlineSubmissionUuid },
+          body: {
+            status: 'STARTED',
+            message: null,
+          },
+        },
+        testUserJwt,
+      )
+      assertApiResponse(res)
+      expect(res.body.body.at(0)?.status).toBe('STARTED')
+    })
   })
 })
