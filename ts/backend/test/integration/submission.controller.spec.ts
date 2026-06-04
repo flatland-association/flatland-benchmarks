@@ -387,7 +387,7 @@ describe.sequential('Submission controller', () => {
   test('should allow admin to post status to any submission', async ({ skip }) => {
     const submission = await controller.testPost('/submissions', { body: testSubmission }, testUserJwt)
     assertApiResponse(submission)
-    submissionUuid = submission.body.body.id
+    const submissionUuid = submission.body.body.id
 
     const res = await controller.testPost(
       `/submissions/:submission_ids/statuses`,
