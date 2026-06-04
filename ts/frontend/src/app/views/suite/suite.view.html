@@ -17,9 +17,19 @@
     <app-campaign-overview class="w-full my-8" [suite]="suite"></app-campaign-overview>
   </lib-content>
 } @else if (suite?.setup === 'COMPETITION') {
+@if (suite?.benchmark_ids?.length === 1 && firstBenchmark) {
+  <lib-content>
+    <app-site-heading class="bp-8 flex w-full" [title]="firstBenchmark?.name" [logo]="customization?.content?.logo | publicResource" [headerImage]="firstBenchmark?.contents?.headerImage"></app-site-heading>
+    <div class="w-full" [innerHTML]="firstBenchmark?.description"></div>
+    <app-benchmark-overview class="w-full my-8" [suite]="suite" [benchmark]="firstBenchmark"></app-benchmark-overview>
+  </lib-content>
+}
+@else {
   <lib-content>
     <app-suite-overview class="w-full my-8" [suite]="suite" benchmarksTitle="Round"></app-suite-overview>
   </lib-content>
+}
+
 } @else {
   <lib-content>
     <app-suite-overview class="w-full my-8" [suite]="suite"></app-suite-overview>
