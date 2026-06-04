@@ -326,7 +326,7 @@ services:
         chmod a+rwx -R /vol
 
         chmod a+rwx -R /scenarios
-        wget "https://data.flatland.cloud/benchmarks/Flatland3/debug-environments.zip" -O debug-environments.zip -O debug-environments.zip
+        wget "https://github.com/flatland-association/flatland-scenarios/raw/refs/heads/main/competitions/flatland3/debug-environments.zip" -O debug-environments.zip -O debug-environments.zip
         mkdir -p /scenarios
         unzip debug-environments.zip -o -d /scenarios
         rm -fR /scenarios/Test*
