@@ -14,10 +14,3 @@ ALTER
 COLUMN "timestamp" TYPE TIMESTAMPTZ
   USING "timestamp" AT TIME ZONE current_setting('TIMEZONE');
 
-ALTER TABLE results
-ALTER
-COLUMN created_at TYPE TIMESTAMPTZ
-  USING created_at AT TIME ZONE current_setting('TIMEZONE'),
-  ALTER
-COLUMN done_at TYPE TIMESTAMPTZ
-  USING done_at AT TIME ZONE current_setting('TIMEZONE');
