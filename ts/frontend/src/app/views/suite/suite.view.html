@@ -19,8 +19,10 @@
 } @else if (suite?.setup === 'COMPETITION') {
 @if (suite?.benchmark_ids?.length === 1 && firstBenchmark) {
   <lib-content>
-    <app-site-heading class="bp-8 flex w-full" [title]="firstBenchmark?.name" [logo]="customization?.content?.logo | publicResource" [headerImage]="firstBenchmark?.contents?.headerImage"></app-site-heading>
-    <div class="w-full" [innerHTML]="firstBenchmark?.description"></div>
+    <h2>Submissions</h2>
+    <button class="bg-primary-500 hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button"
+            (click)="showNewSubmissionModal = true">Submit solution
+    </button>
     <app-benchmark-overview class="w-full my-8" [suite]="suite" [benchmark]="firstBenchmark"></app-benchmark-overview>
   </lib-content>
 }
@@ -34,4 +36,8 @@
   <lib-content>
     <app-suite-overview class="w-full my-8" [suite]="suite"></app-suite-overview>
   </lib-content>
+}
+
+@if (showNewSubmissionModal) {
+<app-new-submission-modal [(open)]="showNewSubmissionModal" [suiteId]="suite?.id" [benchmarkId]="firstBenchmark?.id"></app-new-submission-modal>
 }
