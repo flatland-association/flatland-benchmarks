@@ -120,6 +120,7 @@ export class SqlService extends Service implements WrappedSql<postgres.Sql> {
       password: this.config.postgres.password,
       database: this.config.postgres.database,
       debug: true, // otherwise errors will be empty object
+      connection: { TimeZone: 'UTC' },
       // default onnotice console.logs, overwrite that to push to notices
       // notices is emptied upon query()
       onnotice: (notice) => {
