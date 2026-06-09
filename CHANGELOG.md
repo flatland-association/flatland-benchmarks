@@ -3,6 +3,25 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.19.2](https://github.com/flatland-association/flatland-benchmarks/compare/v0.19.1...v0.19.2) (2026-06-09)
+
+
+### Features
+
+* **backend:** convert timestamps to UTC. ([1d31696](https://github.com/flatland-association/flatland-benchmarks/commit/1d31696c30c78dfe8aac2e1c2ad927916e8f032c))
+* **backend:** convert timestamps to UTC. ([c2663f6](https://github.com/flatland-association/flatland-benchmarks/commit/c2663f6a62cf3ccd6bdd33edcc1b07459ee65cdb))
+* **backend:** convert timestamps to UTC. ([a0b3087](https://github.com/flatland-association/flatland-benchmarks/commit/a0b3087a7f9b23b800cdc0c69bbafba606f7dcba))
+* **frontend:** in competition setup, display leaderboard directly if there is only one round, only general header. ([81db5fa](https://github.com/flatland-association/flatland-benchmarks/commit/81db5fa7d4e04e8688c20e8838b454b6940e3148))
+* **frontend:** in competition setup, display leaderboard directly if there is only one round, with button. ([0d471a3](https://github.com/flatland-association/flatland-benchmarks/commit/0d471a3cf1579b6c4892820555b607e2d01d171a))
+* **frontend:** in competition setup, display leaderboard directly if there is only one round, with button. ([d4a02e0](https://github.com/flatland-association/flatland-benchmarks/commit/d4a02e0f453372df6ee7ec9c1db0fb490db8ef21))
+* **frontend:** in competition setup, display leaderboard directly if there is only one round, with button. ([d59eba6](https://github.com/flatland-association/flatland-benchmarks/commit/d59eba6931c9d96a592372b492ff7723ed19a2b0))
+* **frontend:** Show leaderboard directly on competition page (without need to navigate away) - part 2. ([#647](https://github.com/flatland-association/flatland-benchmarks/issues/647)) ([0dc7e82](https://github.com/flatland-association/flatland-benchmarks/commit/0dc7e828155f09574edd8fce7f4a9150ec6f3035))
+
+
+### Miscellaneous Chores
+
+* release 0.19.2 ([5ead6a2](https://github.com/flatland-association/flatland-benchmarks/commit/5ead6a259bee56c974e01be003bf2eeb324272bd))
+
 ## [0.19.1](https://github.com/flatland-association/flatland-benchmarks/compare/v0.19.0...v0.19.1) (2026-06-04)
 
 
