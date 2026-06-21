@@ -211,6 +211,14 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
       - CUSTOMIZATION=fab
+      # https://prometheus.io/docs/guides/opentelemetry/#enable-the-otlp-receiver
+      # https://www.npmjs.com/package/@opentelemetry/sdk-node
+      # https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/protocol/exporter.md#configuration-options
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://jaeger:4318/v1/traces
+      - OTEL_METRICS_EXPORTER=prometheus
+      - OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=http://prometheus:9090/api/v1/otlp
     depends_on:
       rabbit:
         condition: service_healthy
@@ -454,6 +462,36 @@ services:
     networks:
       - flatland-benchmarks
 
+  # https://github.com/jaegertracing/jaeger/blob/main/examples/hotrod/docker-compose.yml
+  # https://www.jaegertracing.io/docs/2.dev/getting-started/
+  # https://github.com/jaegertracing/jaeger/tree/v2.19.0/docker-compose/monitor
+  jaeger:
+    profiles: [ telemetry ]
+    image: ${REGISTRY:-}jaegertracing/jaeger:${JAEGER_VERSION:-latest}
+    volumes:
+      - "./docker/jaeger/config.yaml:/etc/jaeger/config.yml"
+    command: [ "--config", "/etc/jaeger/config.yml" ]
+    ports:
+      - "16686:16686"
+      - "16687:16687"
+      - "4317:4317"
+      - "4318:4318"
+    environment:
+      - LOG_LEVEL=debug
+    networks:
+      flatland-benchmarks:
+        # This is the host name used in Prometheus scrape configuration.
+        aliases: [ spm_metrics_source ]
+  # https://github.com/jaegertracing/jaeger/blob/v2.19.0/docker-compose/monitor/docker-compose.yml
+  prometheus:
+    profiles: [ telemetry ]
+    networks:
+      - flatland-benchmarks
+    image: prom/prometheus:v3.11.1@sha256:759ea6db49103737f2a6f420b0d1632062d8ad99dec086c76db605fd0bf23e15
+    volumes:
+      - "./docker/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml"
+    ports:
+      - "9090:9090"
 
 networks:
   flatland-benchmarks:
