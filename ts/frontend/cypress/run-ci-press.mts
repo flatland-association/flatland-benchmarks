@@ -23,7 +23,7 @@ process.on('uncaughtException', (_error) => shutdown())
 const composeFilePath = '../../../' // relative to ts/frontend/cypress
 const composeFile = 'docker-compose.yml'
 const envFile = '.env'
-const DOCKER_COMPOSE_TIMEOUT = 1 * 60 * 1000 // ms
+const DOCKER_COMPOSE_TIMEOUT = 1 * 90 * 1000 // ms
 
 let docker: StartedDockerComposeEnvironment | undefined
 let backend: ChildProcess | undefined
