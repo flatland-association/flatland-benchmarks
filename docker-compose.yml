@@ -184,6 +184,18 @@ services:
     networks:
       - flatland-benchmarks
 
+  # without profile, make sure setup services (flyway migration etc.) have completed before we're up
+  wait-setups:
+    image: busybox
+    depends_on:
+      flyway:
+        condition: service_completed_successfully
+      minio_setup:
+        condition: service_completed_successfully
+    entrypoint: [ "sh", "-c" ]
+    command:
+      - sleep 99999
+
 
   fab-backend:
     profiles: [ full ]
