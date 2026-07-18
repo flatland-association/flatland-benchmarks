@@ -16,7 +16,7 @@ const composeFile = 'docker-compose.yml'
 const envFile = '.env'
 const envTestFile = '.env.test'
 
-const DOCKER_COMPOSE_TIMEOUT = 1 * 60 * 1000 // ms
+const DOCKER_COMPOSE_TIMEOUT = 1 * 90 * 1000 // ms
 
 let environment: StartedDockerComposeEnvironment
 
