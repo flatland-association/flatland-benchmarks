@@ -172,6 +172,7 @@ jobs:
         run: |
           python -m pip install -r requirements.txt
           python -m pip install -r test-requirements.txt
+          python -m pip install -U -r requirements-dev.txt
           python -m pytest test
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6
@@ -205,7 +206,6 @@ jobs:
         working-directory: fab-clientlib
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
-          python -m pip install -U -r requirements-dev.txt
           pytest -s test_containers_fab_rest_api.py
 
   eslint:
