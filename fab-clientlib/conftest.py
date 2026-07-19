@@ -32,7 +32,7 @@ def test_containers_fixture(request):
 
   # test modules may set a module-level ENV_FILE to pass to DockerCompose's env_file
   env_file = getattr(request.module, "ENV_FILE", None)
-  basic = DockerCompose(context="../..", profiles=["full"], env_file=env_file)
+  basic = DockerCompose(context="..", profiles=["full"], env_file=env_file)
 
   logger.info("/ start docker compose build")
   start_time_build = time.time()
