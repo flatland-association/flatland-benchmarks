@@ -29,7 +29,7 @@ def test_containers_fixture_percentage_complete():
   basic = DockerCompose(context="../..", profiles=["full"], env_file=".env.test.percentagecomplete")
   logger.info("/ start docker compose build")
   start_time = time.time() - start_time
-  build_cmd = basic.compose_command_property or []
+  build_cmd = list(basic.compose_command_property or [])  # avoid caching
   build_cmd += ["build"]
   build: CompletedProcess = basic._run_command(cmd=build_cmd)
   duration_build = time.time() - start_time
