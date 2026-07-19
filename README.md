@@ -42,7 +42,7 @@ More details, see [ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ### Nomenclature
 
-| Technical naming | `CAMPAIGN` setup     | `COMPETITION` setup   | `DEFAULT` setup  |
+| Technical naming | `CAMPAIGN` setup     | `COMPETITION` setup   | `DEFAULT` setup   |
 |------------------|----------------------|-----------------------|-------------------|
 | `suite`          | Validation Campaign  | Competition/Challenge | (Benchmark) Suite |
 | `benchmark`      | Evaluation Objective | Round                 | Benchmark         |
@@ -55,8 +55,41 @@ To participate, or even organize your own benchmarks or competitions, you don't 
 
 ```shell
 cd evaluation
-docker compose  -f docker-compose.yml --profile full up --wait
+docker compose  -f docker-compose.yml --profile full --profile telemetry --profile elk up --wait
 ```
+
+### URLs
+
+* FAB:
+* Keycloak: http://localhost:8081/
+
+```text
+- Username: admin
+- Password: admin
+```
+
+* MinIO console: http://localhost:9001/
+
+```text
+- Username: minioadmin
+- Password: minioadmin
+```
+
+* pgAdmin: http://localhost:15432/
+
+```text
+- Username: benchmarks@flatland-association.org
+- Password: benchmarks
+```
+
+* Elasticsearch/Kibana: https://localhost:5601/
+
+```text
+- Username: elastic
+- Password: elastic
+```
+
+* Jaeger: http://localhost:16686/
 
 📑 Documentation
 ----------------

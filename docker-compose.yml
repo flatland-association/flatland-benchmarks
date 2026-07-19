@@ -492,6 +492,215 @@ services:
       - "./docker/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml"
     ports:
       - "9090:9090"
+  # git@github.com:hnamtrg/elk-fullstack-compose.git -> https://www.elastic.co/blog/getting-started-with-the-elastic-stack-and-docker-compose
+  # https://stackoverflow.com/questions/62950008/send-logs-with-filebeat-to-logstash
+  # https://github.com/gnokoheat/elk-with-filebeat-by-docker-compose
+  elk-setup:
+    profiles: [ elk ]
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    volumes:
+      - elkcerts:/usr/share/elasticsearch/config/certs
+    user: "0"
+    command: >
+      bash -c '
+        if [ x${ELASTIC_PASSWORD} == x ]; then
+          echo "Set the ELASTIC_PASSWORD environment variable in the .env file";
+          exit 1;
+        elif [ x${KIBANA_PASSWORD} == x ]; then
+          echo "Set the KIBANA_PASSWORD environment variable in the .env file";
+          exit 1;
+        fi;
+        if [ ! -f config/certs/ca.zip ]; then
+          echo "Creating CA";
+          bin/elasticsearch-certutil ca --silent --pem -out config/certs/ca.zip;
+          unzip config/certs/ca.zip -d config/certs;
+        fi;
+        if [ ! -f config/certs/certs.zip ]; then
+          echo "Creating certs";
+          echo -ne \
+          "instances:\n"\
+          "  - name: es01\n"\
+          "    dns:\n"\
+          "      - es01\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          "  - name: kibana\n"\
+          "    dns:\n"\
+          "      - kibana\n"\
+          "      - localhost\n"\
+          "    ip:\n"\
+          "      - 127.0.0.1\n"\
+          > config/certs/instances.yml;
+          bin/elasticsearch-certutil cert --silent --pem -out config/certs/certs.zip --in config/certs/instances.yml --ca-cert config/certs/ca/ca.crt --ca-key config/certs/ca/ca.key;
+          unzip config/certs/certs.zip -d config/certs;
+        fi;
+        echo "Setting file permissions"
+        chown -R root:root config/certs;
+        find . -type d -exec chmod 750 \{\} \;;
+        find . -type f -exec chmod 640 \{\} \;;
+        echo "Waiting for Elasticsearch availability";
+        until curl -s --cacert config/certs/ca/ca.crt https://es01:9200 | grep -q "missing authentication credentials"; do sleep 30; done;
+        echo "Setting kibana_system password";
+        until curl -s -X POST --cacert config/certs/ca/ca.crt -u "elastic:${ELASTIC_PASSWORD}" -H "Content-Type: application/json" https://es01:9200/_security/user/kibana_system/_password -d "{\"password\":\"${KIBANA_PASSWORD}\"}" | grep -q "^{}"; do sleep 10; done;
+        echo "All done!";
+      '
+    healthcheck:
+      test: [ "CMD-SHELL", "[ -f config/certs/es01/es01.crt ]" ]
+      interval: 1s
+      timeout: 5s
+      retries: 120
+
+  es01:
+    profiles: [ elk ]
+    depends_on:
+      elk-setup:
+        condition: service_healthy
+    image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    labels:
+      co.elastic.logs/module: elasticsearch
+    volumes:
+      - elkcerts:/usr/share/elasticsearch/config/certs
+      - esdata01:/usr/share/elasticsearch/data
+    ports:
+      - ${ES_PORT}:9200
+    environment:
+      - node.name=es01
+      - cluster.name=${CLUSTER_NAME}
+      - discovery.type=single-node
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=true
+      - xpack.security.http.ssl.enabled=true
+      - xpack.security.http.ssl.key=certs/es01/es01.key
+      - xpack.security.http.ssl.certificate=certs/es01/es01.crt
+      - xpack.security.http.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.enabled=true
+      - xpack.security.transport.ssl.key=certs/es01/es01.key
+      - xpack.security.transport.ssl.certificate=certs/es01/es01.crt
+      - xpack.security.transport.ssl.certificate_authorities=certs/ca/ca.crt
+      - xpack.security.transport.ssl.verification_mode=certificate
+      - xpack.license.self_generated.type=${LICENSE}
+    mem_limit: ${ES_MEM_LIMIT}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
+
+  kibana:
+    profiles: [ elk ]
+    depends_on:
+      es01:
+        condition: service_healthy
+    image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
+    labels:
+      co.elastic.logs/module: kibana
+    volumes:
+      - elkcerts:/usr/share/kibana/config/certs
+      - kibanadata:/usr/share/kibana/data
+    ports:
+      - ${KIBANA_PORT}:5601
+    environment:
+      - SERVERNAME=kibana
+      - SERVER_SSL_ENABLED=true
+      - SERVER_SSL_KEY=config/certs/kibana/kibana.key
+      - SERVER_SSL_CERTIFICATE=config/certs/kibana/kibana.crt
+      - ELASTICSEARCH_HOSTS=https://es01:9200
+      - ELASTICSEARCH_USERNAME=kibana_system
+      - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
+      - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
+      - XPACK_SECURITY_ENCRYPTIONKEY=${ENCRYPTION_KEY}
+      - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY=${ENCRYPTION_KEY}
+      - XPACK_REPORTING_ENCRYPTIONKEY=${ENCRYPTION_KEY}
+    mem_limit: ${KB_MEM_LIMIT}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -s -I --cacert /usr/share/kibana/config/certs/ca/ca.crt https://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
+        ]
+      interval: 5s
+      timeout: 10s
+      retries: 1200
+
+  filebeat01:
+    profiles: [ elk ]
+    depends_on:
+      es01:
+        condition: service_healthy
+    image: docker.elastic.co/beats/filebeat:${STACK_VERSION}
+    user: root
+    volumes:
+      - elkcerts:/usr/share/filebeat/certs
+      - filebeatdata01:/usr/share/filebeat/data
+      - "./docker/elk/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    environment:
+      - ELASTIC_USER=elastic
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ELASTIC_HOSTS=https://es01:9200
+      - KIBANA_HOSTS=https://kibana:5601
+      - LOGSTASH_HOSTS=http://logstash01:9600
+    command:
+      - --strict.perms=false
+
+  logstash01:
+    profiles: [ elk ]
+    depends_on:
+      es01:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
+    labels:
+      co.elastic.logs/module: logstash
+    user: root
+    ports:
+      - "5044:5044"
+    volumes:
+      - elkcerts:/usr/share/logstash/certs
+      - logstashdata01:/usr/share/logstash/data
+      - "./docker/elk/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro"
+    environment:
+      - xpack.monitoring.enabled=false
+      - ELASTIC_USER=elastic
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ELASTIC_HOSTS=https://es01:9200
+
+  heartbeat01:
+    profiles: [ elk ]
+    depends_on:
+      es01:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+    image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
+    user: root
+    volumes:
+      - elkcerts:/usr/share/heartbeat/certs
+      - heartbeatdata01:/usr/share/heartbeat/data
+      - "./docker/elk/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro"
+    environment:
+      - ELASTIC_USER=elastic
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ELASTIC_HOSTS=https://es01:9200
+      - KIBANA_HOSTS=https://kibana:5601
+    command:
+      - --strict.perms=false
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -s -I --cacert /usr/share/heartbeat/certs/ca/ca.crt https://kibana:5601 | grep -q 'HTTP/1.1'" ]
+      interval: 10s
+      timeout: 10s
+      retries: 120
 
 networks:
   flatland-benchmarks:
@@ -504,3 +713,16 @@ volumes:
   flatland-benchmarks-postgres:
   flatland3-benchmarks-data:
   flatland3-benchmarks-scenarios:
+
+  elkcerts:
+    driver: local
+  esdata01:
+    driver: local
+  kibanadata:
+    driver: local
+  filebeatdata01:
+    driver: local
+  logstashdata01:
+    driver: local
+  heartbeatdata01:
+    driver: local
