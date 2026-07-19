@@ -34,15 +34,15 @@ def test_containers_fixture(request):
   env_file = getattr(request.module, "ENV_FILE", None)
   basic = DockerCompose(context="../..", profiles=["full"], env_file=env_file)
 
-  logger.info("/ start docker compose build")
-  start_time_build = time.time()
-  build_cmd = list(basic.compose_command_property or [])  # avoid caching
-  build_cmd += ["build"]
-  build: CompletedProcess = basic._run_command(cmd=build_cmd)
-  duration_build = time.time() - start_time_build
-  logger.info(f"\\ end docker compose build. Took {duration_build:.2f} seconds.")
-  _print_output(build.stdout.decode(errors="ignore"), build.stderr.decode(errors="ignore"))
   try:
+    logger.info("/ start docker compose build")
+    start_time_build = time.time()
+    build_cmd = list(basic.compose_command_property or [])  # avoid caching
+    build_cmd += ["build"]
+    build: CompletedProcess = basic._run_command(cmd=build_cmd)
+    duration_build = time.time() - start_time_build
+    logger.info(f"\\ end docker compose build. Took {duration_build:.2f} seconds.")
+    _print_output(build.stdout.decode(errors="ignore"), build.stderr.decode(errors="ignore"))
     start_time = time.time()
     logger.info("/ start docker compose down")
     basic.stop()
