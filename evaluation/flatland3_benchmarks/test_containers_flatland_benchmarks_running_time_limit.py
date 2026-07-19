@@ -1,71 +1,17 @@
-import logging
-import os
-import time
 import uuid
 from typing import List
 
 import pytest
-from testcontainers.compose import DockerCompose
 
 from fab_clientlib import DefaultApi, ApiClient, Configuration, SubmissionsPostRequest, SubmissionsSubmissionIdsPatchRequest
 from test_util.container_helpers import wait_for_completion, backend_application_flow
 
 TRACE = 5
-logger = logging.getLogger(__name__)
+
+ENV_FILE = ".env.test.runningtimelimit"
 
 
-@pytest.fixture(scope="module")
-def test_containers_fixture_running_time_limit():
-  # set env var ATTENDED to True if docker-compose.yml is already up and running
-  if os.environ.get("ATTENDED", "False").lower() == "true":
-    yield
-    return
-
-  global basic
-
-  start_time = time.time()
-
-  basic = DockerCompose(context="../..", profiles=["full"], env_file=".env.test.runningtimelimit")
-  logger.info("/ start docker compose down")
-  basic.stop()
-  duration = time.time() - start_time
-  logger.info(f"\\ end docker compose down. Took {duration:.2f} seconds.")
-  start_time = time.time()
-  logger.info("/ start docker compose up")
-  try:
-    basic.start()
-    duration = time.time() - start_time
-    logger.info(f"\\ end docker compose up. Took {duration:.2f} seconds.")
-
-    submission_id = str(uuid.uuid4())
-    yield submission_id
-
-    # TODO workaround for testcontainers not supporting streaming to logger
-    start_time = time.time()
-    logger.info("/ start get docker compose logs")
-    stdout, stderr = basic.get_logs()
-    logger.info("stdout from docker compose")
-    logger.info(stdout)
-    logger.warning("stderr from docker compose")
-    logger.warning(stderr)
-    duration = time.time() - start_time
-    logger.info(f"\\ end get docker compose logs. Took {duration:.2f} seconds.")
-
-    start_time = time.time()
-    logger.info("/ start docker compose down")
-    basic.stop()
-    duration = time.time() - start_time
-    logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
-  except BaseException as e:
-    print("An exception occurred during running docker compose:")
-    print(e)
-    stdout, stderr = basic.get_logs()
-    print(stdout)
-    print(stderr)
-    raise e
-
-
-@pytest.mark.usefixtures("test_containers_fixture_running_time_limit")
+@pytest.mark.usefixtures("test_containers_fixture")
 @pytest.mark.parametrize(
   "tests,expected_test_ids,expected_primary_scenario_scores,expected_primary_test_scores,expected_secondary_scenario_scores,expected_secondary_test_scores",
   [

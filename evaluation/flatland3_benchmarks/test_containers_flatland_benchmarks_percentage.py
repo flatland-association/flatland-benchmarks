@@ -1,90 +1,17 @@
-import logging
-import os
-import time
 import uuid
-from subprocess import CompletedProcess, CalledProcessError
 from typing import List
 
 import pytest
-from testcontainers.compose import DockerCompose
 
 from fab_clientlib import DefaultApi, ApiClient, Configuration, SubmissionsPostRequest, SubmissionsSubmissionIdsPatchRequest
 from test_util.container_helpers import wait_for_completion, backend_application_flow
 
 TRACE = 5
-logger = logging.getLogger(__name__)
+
+ENV_FILE = ".env.test.percentagecomplete"
 
 
-@pytest.fixture(scope="module")
-def test_containers_fixture_percentage_complete():
-  # set env var ATTENDED to True if docker-compose.yml is already up and running
-  if os.environ.get("ATTENDED", "False").lower() == "true":
-    yield
-    return
-
-  global basic
-
-
-  basic = DockerCompose(context="../..", profiles=["full"], env_file=".env.test.percentagecomplete")
-  logger.info("/ start docker compose build")
-  start_time_build = time.time()
-  build_cmd = list(basic.compose_command_property or [])  # avoid caching
-  build_cmd += ["build"]
-  build: CompletedProcess = basic._run_command(cmd=build_cmd)
-  duration_build = time.time() - start_time_build
-  logger.info(f"\\ end docker compose build. Took {duration_build:.2f} seconds.")
-  print("stdout:", build.stdout.decode(errors="ignore"))
-  print("stderr:", build.stderr.decode(errors="ignore"))
-  try:
-    start_time = time.time()
-    logger.info("/ start docker compose down")
-    basic.stop()
-    duration = time.time() - start_time
-    logger.info(f"\\ end docker compose down. Took {duration:.2f} seconds.")
-    start_time = time.time()
-    logger.info("/ start docker compose up")
-    basic.start()
-    duration = time.time() - start_time
-    logger.info(f"\\ end docker compose up. Took {duration:.2f} seconds.")
-
-    submission_id = str(uuid.uuid4())
-    yield submission_id
-
-    # TODO workaround for testcontainers not supporting streaming to logger
-    start_time = time.time()
-    logger.info("/ start get docker compose logs")
-    stdout, stderr = basic.get_logs()
-    logger.info("stdout from docker compose")
-    logger.info(stdout)
-    logger.warning("stderr from docker compose")
-    logger.warning(stderr)
-    duration = time.time() - start_time
-    logger.info(f"\\ end get docker compose logs. Took {duration:.2f} seconds.")
-
-    start_time = time.time()
-    logger.info("/ start docker compose down")
-    basic.stop()
-    duration = time.time() - start_time
-    logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
-  except CalledProcessError as e:
-    print("Failure:", e)
-    print("stdout:", e.stdout)
-    print("stderr:", e.stderr)
-    raise e
-  except BaseException as e:
-    print("An exception occurred during running docker compose:")
-    print(e)
-    try:
-      stdout, stderr = basic.get_logs()
-      print("stdout:", stdout)
-      print("stderr:", stderr)
-    except:
-      print("Could not get logs from docker compose")
-    finally:
-      raise e
-
-
-@pytest.mark.usefixtures("test_containers_fixture_percentage_complete")
+@pytest.mark.usefixtures("test_containers_fixture")
 @pytest.mark.parametrize(
   "tests,expected_test_ids,expected_primary_scenario_scores,expected_primary_test_scores,expected_secondary_scenario_scores,expected_secondary_test_scores",
   [
