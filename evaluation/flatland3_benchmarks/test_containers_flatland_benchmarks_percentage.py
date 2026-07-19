@@ -2,7 +2,7 @@ import logging
 import os
 import time
 import uuid
-from subprocess import CompletedProcess
+from subprocess import CompletedProcess, CalledProcessError
 from typing import List
 
 import pytest
@@ -36,13 +36,13 @@ def test_containers_fixture_percentage_complete():
   logger.info(f"\\ end docker compose build. Took {duration_build:.2f} seconds.")
   print("stdout:", build.stdout)
   print("stderr:", build.stderr)
-  logger.info("/ start docker compose down")
-  basic.stop()
-  duration = time.time() - start_time
-  logger.info(f"\\ end docker compose down. Took {duration:.2f} seconds.")
-  start_time = time.time()
-  logger.info("/ start docker compose up")
   try:
+    logger.info("/ start docker compose down")
+    basic.stop()
+    duration = time.time() - start_time
+    logger.info(f"\\ end docker compose down. Took {duration:.2f} seconds.")
+    start_time = time.time()
+    logger.info("/ start docker compose up")
     basic.start()
     duration = time.time() - start_time
     logger.info(f"\\ end docker compose up. Took {duration:.2f} seconds.")
@@ -66,13 +66,22 @@ def test_containers_fixture_percentage_complete():
     basic.stop()
     duration = time.time() - start_time
     logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
+  except CalledProcessError as e:
+    print("Failure:", e)
+    print("stdout:", e.stdout)
+    print("stderr:", e.stderr)
+    raise e
   except BaseException as e:
     print("An exception occurred during running docker compose:")
     print(e)
-    stdout, stderr = basic.get_logs()
-    print(stdout)
-    print(stderr)
-    raise e
+    try:
+      stdout, stderr = basic.get_logs()
+      print("stdout:", stdout)
+      print("stderr:", stderr)
+    except:
+      print("Could not get logs from docker compose")
+    finally:
+      raise e
 
 
 @pytest.mark.usefixtures("test_containers_fixture_percentage_complete")
