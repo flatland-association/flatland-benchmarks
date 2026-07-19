@@ -3,7 +3,7 @@ name: Checks
 env:
   # DEPENDENCY SWITCH:
   # TODO use released version
-  ai4realnet-orchestrators-ref: main
+  ai4realnet-orchestrators-ref: feature/railway-orchestrator-base-image
 
 on:
   workflow_dispatch:
