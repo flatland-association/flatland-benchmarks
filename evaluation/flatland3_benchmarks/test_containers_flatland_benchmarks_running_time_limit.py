@@ -29,12 +29,7 @@ def test_running_time_limit(expected_test_ids, tests: List[str], expected_primar
                             expected_secondary_scenario_scores: List[List[float]], expected_secondary_test_scores: List[float]):
   benchmark_id = 'f669fb8d-80ac-4ba7-8875-0a33ed5d30b9'
 
-  token = backend_application_flow(
-    client_id='fab-client-credentials',
-    client_secret='top-secret',
-    token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
-  )
-  fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
+  fab = _authenticate()
   res = fab.submissions_post(
     SubmissionsPostRequest(
       benchmark_id=benchmark_id,
@@ -47,6 +42,7 @@ def test_running_time_limit(expected_test_ids, tests: List[str], expected_primar
 
   wait_for_completion(submission_id)
 
+  fab = _authenticate()
   fab.submissions_submission_ids_patch(submission_ids=[uuid.UUID(submission_id)],
                                        submissions_submission_ids_patch_request=SubmissionsSubmissionIdsPatchRequest.from_dict({"published": True}))
 
@@ -66,3 +62,13 @@ def test_running_time_limit(expected_test_ids, tests: List[str], expected_primar
     assert test_results.body[0].scorings[0].score == primary_test_score
     assert test_results.body[0].scorings[1].field_key == "mean_percentage_complete"
     assert test_results.body[0].scorings[1].score == secondary_test_score
+
+
+def _authenticate() -> DefaultApi:
+  token = backend_application_flow(
+    client_id='fab-client-credentials',
+    client_secret='top-secret',
+    token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
+  )
+  fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
+  return fab
