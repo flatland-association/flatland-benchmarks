@@ -24,19 +24,19 @@ def test_containers_fixture_percentage_complete():
 
   global basic
 
-  start_time = time.time()
 
   basic = DockerCompose(context="../..", profiles=["full"], env_file=".env.test.percentagecomplete")
   logger.info("/ start docker compose build")
-  start_time = time.time() - start_time
+  start_time_build = time.time()
   build_cmd = list(basic.compose_command_property or [])  # avoid caching
   build_cmd += ["build"]
   build: CompletedProcess = basic._run_command(cmd=build_cmd)
-  duration_build = time.time() - start_time
+  duration_build = time.time() - start_time_build
   logger.info(f"\\ end docker compose build. Took {duration_build:.2f} seconds.")
-  print("stdout:", build.stdout)
-  print("stderr:", build.stderr)
+  print("stdout:", build.stdout.decode(errors="ignore"))
+  print("stderr:", build.stderr.decode(errors="ignore"))
   try:
+    start_time = time.time()
     logger.info("/ start docker compose down")
     basic.stop()
     duration = time.time() - start_time
