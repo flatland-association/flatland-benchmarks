@@ -1,10 +1,7 @@
 import logging
-import os
-import time
 import uuid
 
 import pytest
-from testcontainers.compose import DockerCompose
 
 from fab_clientlib import SubmissionsPostRequest, ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest, \
   ResultsSubmissionsSubmissionIdTestsTestIdsPostRequestDataInner, SubmissionsSubmissionIdsStatusesPostRequest, SubmissionsSubmissionIdsPatchRequest
@@ -15,64 +12,6 @@ from fab_oauth_utils import backend_application_flow
 
 TRACE = 5
 logger = logging.getLogger(__name__)
-
-
-@pytest.fixture(scope="module")
-def test_containers_fixture():
-  # set env var ATTENDED to True if docker-compose.yml is already up and running
-  if os.environ.get("ATTENDED", "False").lower() == "true":
-    yield
-    return
-
-  global basic
-
-  start_time = time.time()
-  basic = DockerCompose(context="..", profiles=["full"], build=True)
-  logger.info("/ start docker compose down")
-  basic.stop()
-  duration = time.time() - start_time
-  logger.info(f"\\ end docker compose down. Took {duration:.2f} seconds.")
-  start_time = time.time()
-  logger.info("/ start docker compose up")
-  try:
-    basic.start()
-    duration = time.time() - start_time
-    logger.info(f"\\ end docker compose up. Took {duration:.2f} seconds.")
-
-    submission_id = str(uuid.uuid4())
-    yield submission_id
-
-    # TODO workaround for testcontainers not supporting streaming to logger
-    start_time = time.time()
-    logger.info("/ start get docker compose logs")
-    stdout, stderr = basic.get_logs()
-    logger.info("stdout from docker compose")
-    logger.info(stdout)
-    print(stdout)
-    logger.warning("stderr from docker compose")
-    logger.warning(stderr)
-    print(stderr)
-    duration = time.time() - start_time
-    logger.info(f"\\ end get docker compose logs. Took {duration:.2f} seconds.")
-
-    start_time = time.time()
-    logger.info("/ start docker compose down")
-    basic.stop()
-    duration = time.time() - start_time
-    logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
-  except Exception as e:
-    print("An exception occurred during running docker compose:")
-    print(e)
-    print("Fetching stdo/stderr")
-    try:
-      stdout, stderr = basic.get_logs()
-      print("stdout:")
-      print(stdout)
-      print("stderr:")
-      print(stderr)
-    except:
-      print("Failed to fetch logs")
-    raise e
 
 
 # GET /health/live
