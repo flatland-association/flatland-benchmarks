@@ -65,7 +65,7 @@
     "@vitest/coverage-v8": "^3.2.4",
     "angular-eslint": "20.1.1",
     "autoprefixer": "^10.4.22",
-    "concurrently": "^9.2.1",
+    "concurrently": "^10.0.3",
     "cypress": "15.16.0",
     "cypress-keycloak-commands": "^1.2.0",
     "dotenv": "^16.6.1",
