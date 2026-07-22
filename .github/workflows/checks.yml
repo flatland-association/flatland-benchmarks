@@ -56,6 +56,9 @@ jobs:
           python -m pip install -r requirements-dev.txt
           python -m pip install -r orchestrator/requirements.txt
           python -m pip list
+      - name: Run test_common unit tests
+        working-directory: test_common
+        run: pytest -s test_docker_compose_fixture.py
       - name: Regenerate client lib locally overwriting dependency.
         working-directory: fab-clientlib
         run: |
@@ -173,7 +176,7 @@ jobs:
           python -m pip install -r requirements.txt
           python -m pip install -r test-requirements.txt
           python -m pip install -U -r requirements-dev.txt
-          python -m pytest test
+          PYTHONPATH=${{ github.workspace }}/test_common:$PYTHONPATH python -m pytest test
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6
         with:

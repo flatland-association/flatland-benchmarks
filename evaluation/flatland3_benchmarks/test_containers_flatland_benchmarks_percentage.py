@@ -3,8 +3,8 @@ from typing import List
 
 import pytest
 
-from fab_clientlib import DefaultApi, ApiClient, Configuration, SubmissionsPostRequest, SubmissionsSubmissionIdsPatchRequest
-from test_util.container_helpers import wait_for_completion, backend_application_flow
+from fab_clientlib import SubmissionsPostRequest, SubmissionsSubmissionIdsPatchRequest
+from test_util.container_helpers import authenticate, wait_for_completion
 
 ENV_FILE = ".env.test.percentagecomplete"
 
@@ -28,7 +28,7 @@ def test_percentage_complete(expected_test_ids, tests: List[str], expected_prima
                              expected_secondary_scenario_scores: List[List[float]], expected_secondary_test_scores: List[float]):
   benchmark_id = 'f669fb8d-80ac-4ba7-8875-0a33ed5d30b9'
 
-  fab = _authenticate()
+  fab = authenticate()
   res = fab.submissions_post(
     SubmissionsPostRequest(
       benchmark_id=benchmark_id,
@@ -41,7 +41,7 @@ def test_percentage_complete(expected_test_ids, tests: List[str], expected_prima
 
   wait_for_completion(submission_id)
 
-  fab = _authenticate()
+  fab = authenticate()
   fab.submissions_submission_ids_patch(submission_ids=[uuid.UUID(submission_id)],
                                        submissions_submission_ids_patch_request=SubmissionsSubmissionIdsPatchRequest.from_dict({"published": True}))
 
@@ -61,13 +61,3 @@ def test_percentage_complete(expected_test_ids, tests: List[str], expected_prima
     assert test_results.body[0].scorings[0].score == primary_test_score
     assert test_results.body[0].scorings[1].field_key == "mean_percentage_complete"
     assert test_results.body[0].scorings[1].score == secondary_test_score
-
-
-def _authenticate() -> DefaultApi:
-  token = backend_application_flow(
-    client_id='fab-client-credentials',
-    client_secret='top-secret',
-    token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
-  )
-  fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
-  return fab

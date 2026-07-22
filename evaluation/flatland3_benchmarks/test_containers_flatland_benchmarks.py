@@ -8,11 +8,11 @@ import pytest
 from dotenv import dotenv_values
 
 import s3_utils
-from fab_clientlib import DefaultApi, ApiClient, Configuration, SubmissionsPostRequest
+from fab_clientlib import SubmissionsPostRequest
 from fab_clientlib.models.submissions_submission_ids_patch_request import SubmissionsSubmissionIdsPatchRequest
 from orchestrator_docker_compose import DockerComposeFlatlandBenchmarksOrchestrator
 from s3_utils import download_dir
-from test_util.container_helpers import wait_for_completion, backend_application_flow
+from test_util.container_helpers import authenticate, wait_for_completion
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +40,7 @@ def test_successful_run(expected_test_ids, tests: List[str], expected_primary_sc
   benchmark_id = 'f669fb8d-80ac-4ba7-8875-0a33ed5d30b9'
   config = dotenv_values("../../.env")
 
-  fab = _authenticate()
+  fab = authenticate()
   res = fab.submissions_post(
     SubmissionsPostRequest(
       benchmark_id=benchmark_id,
@@ -73,7 +73,7 @@ def test_successful_run(expected_test_ids, tests: List[str], expected_primary_sc
       with tempfile.TemporaryDirectory() as tmp_dir_name:
         download_dir(prefix=prefix, bucket=s3_bucket, client=s3, local=tmp_dir_name)
 
-  fab = _authenticate()
+  fab = authenticate()
   fab.submissions_submission_ids_patch(submission_ids=[uuid.UUID(submission_id)],
                                        submissions_submission_ids_patch_request=SubmissionsSubmissionIdsPatchRequest.from_dict({"published": True}))
 
@@ -101,13 +101,3 @@ def test_failing_run():
   with pytest.raises(Exception) as exc_info:
     wait_for_completion(submission_id)
     assert str(exc_info.value).startswith(f"Failed execution ['sudo', 'docker', 'run', '--name', 'flatland3-submission-{submission_id}'")
-
-
-def _authenticate() -> DefaultApi:
-  token = backend_application_flow(
-    client_id='fab-client-credentials',
-    client_secret='top-secret',
-    token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
-  )
-  fab = DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))
-  return fab
