@@ -84,7 +84,9 @@ services:
       - flatland-benchmarks
     healthcheck:
       test: [
-        "CMD-SHELL",
+        "CMD",
+        "bash",
+        "-c",
         # https://www.keycloak.org/observability/health#_healthcheck
         "{ printf 'HEAD /health/ready HTTP/1.0\r\n\r\n' >&0; grep 'HTTP/1.0 200'; } 0<>/dev/tcp/localhost/9000"
       ]
