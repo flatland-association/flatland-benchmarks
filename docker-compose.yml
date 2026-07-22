@@ -169,6 +169,7 @@ services:
       - flatland-benchmarks
 
   minio_trace:
+    profiles: [ debug ]
     image: minio/mc:RELEASE.2024-11-05T11-29-45Z
     depends_on:
       minio:
@@ -186,7 +187,9 @@ services:
     networks:
       - flatland-benchmarks
 
-  # without profile, make sure setup services (flyway migration etc.) have completed before we're up
+  # without profile, make sure setup services (flyway migration etc.) have completed before we're up.
+  # same underlying issue as the flyway workaround on fab-backend below: https://forums.docker.com/t/behavior-of-up-wait-changed/147699/4
+  # runs indefinitely (no arbitrary timeout to outlive) so it never needs a restart policy.
   wait-setups:
     image: busybox
     depends_on:
@@ -196,7 +199,7 @@ services:
         condition: service_completed_successfully
     entrypoint: [ "sh", "-c" ]
     command:
-      - sleep 99999
+      - tail -f /dev/null
 
 
   fab-backend:
@@ -218,7 +221,6 @@ services:
         condition: service_healthy
       postgres:
         condition: service_healthy
-      # workaround for docker compose waiting for flyway although exited with 0 https://forums.docker.com/t/behavior-of-up-wait-changed/147699/4
       flyway:
         condition: service_completed_successfully
     volumes:
