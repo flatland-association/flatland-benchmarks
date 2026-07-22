@@ -5,7 +5,8 @@ from celery import Celery
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
-TRACE = 5
+from fab_clientlib import ApiClient, Configuration, DefaultApi
+
 logger = logging.getLogger(__name__)
 
 
@@ -51,3 +52,12 @@ def backend_application_flow(
     client_secret=client_secret,
   )
   return token
+
+
+def authenticate() -> DefaultApi:
+  token = backend_application_flow(
+    client_id='fab-client-credentials',
+    client_secret='top-secret',
+    token_url='http://localhost:8081/realms/flatland/protocol/openid-connect/token',
+  )
+  return DefaultApi(ApiClient(configuration=Configuration(host="http://localhost:8000", access_token=token["access_token"])))

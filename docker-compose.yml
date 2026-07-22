@@ -52,8 +52,7 @@ services:
 
   keycloak:
     profiles: [ tsdev, tsdevwithorchestrators, full ]
-    build:
-      context: docker/keycloak
+    image: keycloak/keycloak:26.6.2
     hostname: keycloak
     # as we need to access keycloak from backend Docker container under docker internal port, we need to start Keycloak on configured port, port forwarding in Docker run is not enough
     command:
@@ -76,10 +75,21 @@ services:
       - KEYCLOAK_LOGLEVEL=DEBUG
       - KC_HEALTH_ENABLED=true
       - KC_METRICS_ENABLED=true
+      - KC_HTTP_MANAGEMENT_SCHEME=http # do not inherit https
+      # https://www.keycloak.org/server/logging#_log_levels
+      # https://www.keycloak.org/server/logging#http-access-logging
+    #      - KC_LOG_LEVEL=DEBUG
+    #      - KC_LOG_CONSOLE_OUTPUT=json
     networks:
       - flatland-benchmarks
     healthcheck:
-      test: [ "CMD", "bash", "-c", "curl -v --fail http://127.0.0.1:${KEYCLOAK_PORT:-8081}/realms/flatland/.well-known/openid-configuration" ]
+      test: [
+        "CMD",
+        "bash",
+        "-c",
+        # https://www.keycloak.org/observability/health#_healthcheck
+        "{ printf 'HEAD /health/ready HTTP/1.0\r\n\r\n' >&0; grep 'HTTP/1.0 200'; } 0<>/dev/tcp/localhost/9000"
+      ]
       interval: 5s
       timeout: 20s
       retries: 50
@@ -132,6 +142,10 @@ services:
       timeout: 1s
       retries: 5
     command: server /data --address :${MINIO_PORT} --console-address :${MINIO_CONSOLE_PORT}
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
     networks:
       - flatland-benchmarks
 
@@ -154,6 +168,39 @@ services:
     networks:
       - flatland-benchmarks
 
+  minio_trace:
+    profiles: [ debug ]
+    image: minio/mc:RELEASE.2024-11-05T11-29-45Z
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: [ "/bin/bash","-c" ]
+    command:
+      - |
+        set -euxo pipefail
+        /usr/bin/mc config host add myminio http://minio:${MINIO_PORT} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
+        /usr/bin/mc admin trace -v myminio
+    logging:
+      options:
+        max-size: "20m"
+        max-file: "5"
+    networks:
+      - flatland-benchmarks
+
+  # without profile, make sure setup services (flyway migration etc.) have completed before we're up.
+  # same underlying issue as the flyway workaround on fab-backend below: https://forums.docker.com/t/behavior-of-up-wait-changed/147699/4
+  # runs indefinitely (no arbitrary timeout to outlive) so it never needs a restart policy.
+  wait-setups:
+    image: busybox
+    depends_on:
+      flyway:
+        condition: service_completed_successfully
+      minio_setup:
+        condition: service_completed_successfully
+    entrypoint: [ "sh", "-c" ]
+    command:
+      - tail -f /dev/null
+
 
   fab-backend:
     profiles: [ full ]
@@ -174,7 +221,6 @@ services:
         condition: service_healthy
       postgres:
         condition: service_healthy
-      # workaround for docker compose waithing for flyway although exited with 0 https://forums.docker.com/t/behavior-of-up-wait-changed/147699/4
       flyway:
         condition: service_completed_successfully
     volumes:
