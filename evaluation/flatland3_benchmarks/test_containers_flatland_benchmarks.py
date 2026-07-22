@@ -8,7 +8,7 @@ import pytest
 from dotenv import dotenv_values
 
 import s3_utils
-from fab_clientlib import SubmissionsPostRequest
+from fab_clientlib import DefaultApi, SubmissionsPostRequest
 from fab_clientlib.models.submissions_submission_ids_patch_request import SubmissionsSubmissionIdsPatchRequest
 from orchestrator_docker_compose import DockerComposeFlatlandBenchmarksOrchestrator
 from s3_utils import download_dir
@@ -38,8 +38,16 @@ ENV_FILE = None
 def test_successful_run(expected_test_ids, tests: List[str], expected_primary_scenario_scores: List[List[float]], expected_primary_test_scores: List[float],
                         expected_secondary_scenario_scores: List[List[float]], expected_secondary_test_scores: List[float]):
   benchmark_id = 'f669fb8d-80ac-4ba7-8875-0a33ed5d30b9'
-  config = dotenv_values("../../.env")
 
+  submission_id = _submit(benchmark_id, tests)
+  wait_for_completion(submission_id)
+  _verify_s3_results(submission_id, expected_test_ids)
+  fab = _publish(submission_id)
+  _assert_scores(fab, submission_id, expected_test_ids, expected_primary_scenario_scores, expected_primary_test_scores,
+                 expected_secondary_scenario_scores, expected_secondary_test_scores)
+
+
+def _submit(benchmark_id: str, tests: List[str]) -> str:
   fab = authenticate()
   res = fab.submissions_post(
     SubmissionsPostRequest(
@@ -49,11 +57,12 @@ def test_successful_run(expected_test_ids, tests: List[str], expected_primary_sc
       test_ids=tests
     )
   )
-  submission_id = str(res.body.id)
+  return str(res.body.id)
 
-  wait_for_completion(submission_id)
 
+def _verify_s3_results(submission_id: str, expected_test_ids: List[str]) -> None:
   logger.info("Download results from S3")
+  config = dotenv_values("../../.env")
 
   aws_endpoint_url = config["AWS_ENDPOINT_URL"]
   s3 = boto3.client(
@@ -73,10 +82,17 @@ def test_successful_run(expected_test_ids, tests: List[str], expected_primary_sc
       with tempfile.TemporaryDirectory() as tmp_dir_name:
         download_dir(prefix=prefix, bucket=s3_bucket, client=s3, local=tmp_dir_name)
 
+
+def _publish(submission_id: str) -> DefaultApi:
   fab = authenticate()
   fab.submissions_submission_ids_patch(submission_ids=[uuid.UUID(submission_id)],
                                        submissions_submission_ids_patch_request=SubmissionsSubmissionIdsPatchRequest.from_dict({"published": True}))
+  return fab
 
+
+def _assert_scores(fab: DefaultApi, submission_id: str, expected_test_ids: List[str], expected_primary_scenario_scores: List[List[float]],
+                   expected_primary_test_scores: List[float], expected_secondary_scenario_scores: List[List[float]],
+                   expected_secondary_test_scores: List[float]) -> None:
   for test_id, primary_scenario_scores, primary_test_score, secondary_scenario_scores, secondary_test_score in (
     zip(expected_test_ids, expected_primary_scenario_scores, expected_primary_test_scores, expected_secondary_scenario_scores, expected_secondary_test_scores)):
     print(f"Checking results for test {test_id} of submission {submission_id} ")
