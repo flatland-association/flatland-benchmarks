@@ -68,6 +68,8 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     running_time = None
     wait_for_pod_to_start = 0
     termination_cause = None
+    counted_pending_time = 0.0  # elapsed Pending/Unknown time, excluding intervals spent actively pulling the image
+    last_check_time = start_time_job
     while not all_done and not job_failed:
       time.sleep(1)
       wait_for_pod_to_start += 1
@@ -98,12 +100,19 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
       #         Succeeded: All containers in the pod have terminated in success, and will not be restarted.
       #         Failed: All containers in the pod have terminated, and at least one container has terminated in failure. The container either exited with non-zero status or was terminated by the system.
       #         Unknown: For some reason the state of the pod could not be obtained, typically due to an error in communicating with the host of the pod.  More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase  # noqa: E501
-      ticks[pod_status.phase] = time.time()
-      elapsed_time = ticks[pod_status.phase] - start_time_job
+      now = time.time()
+      ticks[pod_status.phase] = now
+      interval = now - last_check_time
+      last_check_time = now
+      # a long-running image pull should not count towards the start time limit: only accumulate
+      # elapsed time while Pending/Unknown and NOT actively pulling the submission image.
+      if pod_status.phase in ["Pending", "Unknown"] and not self._is_actively_pulling_image(pod):
+        counted_pending_time += interval
+      elapsed_time = counted_pending_time
       if self.wait_for_pod_to_run_limit is not None and pod_status.phase in ["Pending", "Unknown"] and (elapsed_time > self.wait_for_pod_to_run_limit):
         ret = self._gather_and_dump_logs(job, job_name, pod, running_time, scenario_id, submission_data_url, submission_id, termination_cause, test_id)
         raise TaskExecutionError(
-          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Elapsed time {elapsed_time:.2f}s exceeded start time limit {self.wait_for_pod_to_run_limit}s. Status: {pod_status.phase}",
+          f"Failed task with submission_id={submission_id} with submission_data_url={submission_data_url} for test_id={test_id}, scenario_id={scenario_id}. Elapsed time (excluding active image pulls) {elapsed_time:.2f}s exceeded start time limit {self.wait_for_pod_to_run_limit}s. Status: {pod_status.phase}",
           ret)
 
       if "Running" in ticks and start_time_running is None:
@@ -135,6 +144,20 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
     logger.debug(
       f"\\\\ END running submission submission_id={submission_id},test_id={test_id},scenario_id={scenario_id},env_path={self.load_scenario_data(scenario_id)}: {ret}")
     return ret, termination_cause
+
+  def _is_actively_pulling_image(self, pod: V1Pod) -> bool:
+    """Whether the pod's most recent image-pull-related event is "Pulling" with no subsequent
+    "Pulled"/"Failed"/"BackOff" yet, i.e. a pull is genuinely in progress right now."""
+    try:
+      events = self.core_api.list_namespaced_event(self.kubernetes_namespace, field_selector=f'involvedObject.name={pod.metadata.name}').items
+    except Exception as e:
+      logger.warning(f"Could not fetch events to check image pull status for pod {pod.metadata.name}.", exc_info=e)
+      return False
+    pull_events = [event for event in events if event.reason in ("Pulling", "Pulled", "Failed", "BackOff")]
+    if not pull_events:
+      return False
+    latest = max(pull_events, key=lambda event: event.last_timestamp or event.first_timestamp)
+    return latest.reason == "Pulling"
 
   def _gather_and_dump_logs(self, job: V1Job, job_name, pod: V1Pod, running_time: float | None | Any, scenario_id, submission_data_url, submission_id: str,
                             termination_cause: str | None, test_id) -> dict:
