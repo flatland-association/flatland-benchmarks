@@ -14,7 +14,6 @@ from orchestrator_docker_compose import DockerComposeFlatlandBenchmarksOrchestra
 from s3_utils import download_dir
 from test_util.container_helpers import wait_for_completion, backend_application_flow
 
-TRACE = 5
 logger = logging.getLogger(__name__)
 
 ENV_FILE = None

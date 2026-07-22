@@ -5,7 +5,6 @@ from celery import Celery
 from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
-TRACE = 5
 logger = logging.getLogger(__name__)
 
 

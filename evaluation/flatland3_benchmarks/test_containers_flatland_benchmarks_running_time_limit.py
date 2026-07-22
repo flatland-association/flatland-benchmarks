@@ -6,8 +6,6 @@ import pytest
 from fab_clientlib import DefaultApi, ApiClient, Configuration, SubmissionsPostRequest, SubmissionsSubmissionIdsPatchRequest
 from test_util.container_helpers import wait_for_completion, backend_application_flow
 
-TRACE = 5
-
 ENV_FILE = ".env.test.runningtimelimit"
 
 

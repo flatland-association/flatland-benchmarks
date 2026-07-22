@@ -10,7 +10,6 @@ from fab_clientlib.api_client import ApiClient
 from fab_clientlib.configuration import Configuration
 from fab_oauth_utils import backend_application_flow
 
-TRACE = 5
 logger = logging.getLogger(__name__)
 
 
