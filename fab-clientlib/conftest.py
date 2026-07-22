@@ -75,7 +75,7 @@ def test_containers_fixture(request):
     logger.info(f"\\ end docker down. Took {duration:.2f} seconds.")
   except CalledProcessError as e:
     print(f"Failure: {e}")
-    _print_output(e.stdout, e.stderr)
+    _print_output(e.stdout.decode(errors="ignore"), e.stderr.decode(errors="ignore"))
     _dump_compose_logs(basic)
     raise e
   except BaseException as e:
