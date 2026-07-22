@@ -25,7 +25,21 @@ class K8sFlatlandBenchmarksOrchestrator(FlatlandBenchmarksOrchestrator):
                percentage_complete_threshold: float = None,
                k8s_resource_allocation: str = None,
                wait_for_pod_to_start_limit: int = None,  # pod should be listed by now, i.e. pulling has started by now.
+               # unrelated to image size - only covers Job/Pod-object propagation latency in the k8s API, which
+               # normally resolves in low single-digit seconds. Sensible value: ~60-120s (e.g. 120s), regardless
+               # of how large submission images get; raising this to accommodate slow pulls is the wrong knob
+               # (that's wait_for_pod_to_run_limit below) and would just mask genuine scheduling/quota problems.
                wait_for_pod_to_run_limit: int = None,  # pod should have reached running state by now, i.e. pulling should be done by now
+               # this is where a slow-but-legitimate image pull is expected to eat into the budget, so it must scale
+               # with expected image size, but it competes with running_time_limit for the same active_deadline_seconds
+               # budget on this pod (active_deadline_seconds covers pull + run together). Rule of thumb: keep
+               # wait_for_pod_to_run_limit <= active_deadline_seconds - running_time_limit, so a full running-time
+               # window still fits after the pull. With the current defaults (active_deadline_seconds=3600s,
+               # running_time_limit=1800s) that caps out at 1800s (30 min), which - at the ~6MB/s effective pull
+               # rate observed in https://github.com/flatland-association/flatland-benchmarks/issues/665 - covers
+               # images up to ~11GB. Raising it further requires raising active_deadline_seconds in lockstep,
+               # otherwise a large-but-legitimate pull can survive this check only to be killed mid-run by
+               # Kubernetes' own DeadlineExceeded instead.
                **kwargs):
     super().__init__(**kwargs)
     self.core_api = core_api
