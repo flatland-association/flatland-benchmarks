@@ -77,7 +77,7 @@ jobs:
         working-directory: evaluation/flatland3_benchmarks
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
-          PYTHONPATH=$PWD/orchestrator:$PYTHONPATH pytest -s ${{ matrix.it }}
+          PYTHONPATH=$PWD/orchestrator:${{ github.workspace }}/test_common:$PYTHONPATH pytest -s ${{ matrix.it }}
 
 
   test-ai4realnet-orchestrator-railway:
@@ -206,7 +206,7 @@ jobs:
         working-directory: fab-clientlib
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
-          pytest -s test_containers_fab_rest_api.py
+          PYTHONPATH=${{ github.workspace }}/test_common:$PYTHONPATH pytest -s test_containers_fab_rest_api.py
 
   eslint:
     runs-on: ubuntu-latest
