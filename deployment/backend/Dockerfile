@@ -4,6 +4,7 @@ RUN npm install -g @angular/cli
 WORKDIR /usr/src/app
 
 COPY ./*.json /usr/src/app
+COPY .npmrc /usr/src/app
 COPY ts /usr/src/app/ts
 
 RUN npm ci && cd ts/backend && npm run build
