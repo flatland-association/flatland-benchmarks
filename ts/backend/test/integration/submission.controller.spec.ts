@@ -105,7 +105,9 @@ describe.sequential('Submission controller', () => {
   })
 
   test('should allow post submissions with skipping enqueuing message', async () => {
-    const celeryMock = vi.spyOn(CeleryService.prototype, 'sendTask')
+    // Vitest 4's vi.spyOn returns the existing mock (with prior call history) if already spied,
+    // so re-spying here would not reset the count from the previous test; clear it explicitly instead.
+    celeryMock.mockClear()
     const res = await controller.testPost('/submissions/skip_enqueue', { body: testSubmission }, testUserJwt)
     assertApiResponse(res)
     submissionUuid = res.body.body.id
