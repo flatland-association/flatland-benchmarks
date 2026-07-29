@@ -442,6 +442,7 @@ erDiagram
   results many to one fields: key
   submissions many to 1 benchmarks: "benchmark_id*"
   submissions many to many tests: test_ids
+  submissions one to zero or more submission_statuses: submission_id
 
   fields {
     uuid id PK
@@ -472,8 +473,15 @@ erDiagram
     timestamp submitted_at
     uuid submitted_by FK
     character submitted_by_username
-    submission_status status
     boolean published
+    character tags
+  }
+
+  submission_statuses {
+    uuid submission_id PK, FK
+    timestamp timestamp PK
+    submission_status status
+    character message
   }
 
   suites {
@@ -545,7 +553,7 @@ erDiagram
 
   "TYPE submission_status AS ENUM" {
     v SUBMITTED
-    v RUNNING
+    v STARTED
     v SUCCESS
     v FAILURE
   }
