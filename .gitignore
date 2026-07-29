@@ -181,3 +181,9 @@ swaggererrors.txt
 
 # evaluation orchestrators
 /evaluation/ai4realnet_orchestrators
+
+# Claude Code
+.claude/*.local.json
+.claude/**/*.log
+CLAUDE.local.md
+# .claude/
