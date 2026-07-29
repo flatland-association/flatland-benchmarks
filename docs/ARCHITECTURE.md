@@ -562,23 +562,24 @@ erDiagram
 ### API Roles
 
 - `--`: can view results
-- `user`: can submit and upload results
-- `admin`: can define benchmarks
+- `User`: can submit and upload results
+- `Admin`: can define benchmarks (no API yet)
 
 ### Setups
 
-| ↕️️ aspect / ↔️️setup                         | benchmarking                                | competition                                 | campaign                                             |
-|-----------------------------------------------|---------------------------------------------|---------------------------------------------|------------------------------------------------------|
-| loop                                          | closed-loop                                 | closed-loop                                 | closed/interactive/offline loop                      |
-| submission                                    | any number of tests                         | all tests                                   | single test                                          |
-| results uploader                              | technical user with `results-uploader` role | technical user with `results-uploader` role | technical or human user with `results-uploader` role |
-| user default roles                            | `user`                                      | `user`                                      | `user`, `results-uploader` (dedicate FAB instance)   |
-| top-level overview                            | benchmarks                                  | benchmarks                                  | campaigns                                            |
-| benchmark overview                            | rounds -> benchmark leaderboard per round   | rounds -> benchmark leaderboard per round   | ❌                                                    |
-| campaign overview                             | ❌                                           | ❌                                           | benchmarks (row=benchmark)                           |
-| leaderboard (row=submission, benchmark score) | ✅                                           | ✅                                           | ❌                                                    |
-| benchmark drilldown (row=test)                | ✅                                           | ✅                                           | ✅                                                    |
-| test drilldown (row=scenario)                 | ✅                                           | ✅                                           | ✅                                                    |
+| ↕️️ aspect / ↔️️setup                         | benchmarking                                                                                                   | competition                                                                                                    | campaign                                                                               |
+|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+| loop                                          | closed-loop                                                                                                    | closed-loop                                                                                                    | closed/interactive/offline loop                                                        |
+| submission                                    | any number of tests                                                                                            | all tests                                                                                                      | single test                                                                            |
+| results upload                                | any `User`-role account, typically a technical/orchestrator account (no ownership check against the submitter) | any `User`-role account, typically a technical/orchestrator account (no ownership check against the submitter) | any `User`-role account, technical or human (no ownership check against the submitter) |
+| submission status upload                      | submitter, or any `Admin`-role account on the submitter's behalf                                               | submitter, or any `Admin`-role account on the submitter's behalf                                               | submitter, or any `Admin`-role account on the submitter's behalf                       |
+| user default roles                            | `User`                                                                                                         | `User`                                                                                                         | `User` (dedicated AI4REALNET instance)                                                 |
+| top-level overview                            | benchmarks                                                                                                     | benchmarks                                                                                                     | campaigns                                                                              |
+| benchmark overview                            | rounds -> benchmark leaderboard per round                                                                      | rounds -> benchmark leaderboard per round                                                                      | ❌                                                                                      |
+| campaign overview                             | ❌                                                                                                              | ❌                                                                                                              | benchmarks (row=benchmark)                                                             |
+| leaderboard (row=submission, benchmark score) | ✅                                                                                                              | ✅                                                                                                              | ❌                                                                                      |
+| benchmark drilldown (row=test)                | ✅                                                                                                              | ✅                                                                                                              | ✅                                                                                      |
+| test drilldown (row=scenario)                 | ✅                                                                                                              | ✅                                                                                                              | ✅                                                                                      |
 
 ### Interface 1: Benchmark definition API
 
