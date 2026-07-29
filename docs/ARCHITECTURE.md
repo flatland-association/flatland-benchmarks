@@ -397,7 +397,7 @@ The following diagram shows the building blocks in the Flatland 3 benchmarking c
 
 Implementation:
 
-* closed-loop: backend polls broker, fetches results from S3 and uploads results via SCORES API
+* closed-loop: orchestrator polls broker, fetches results from S3, and uploads them to the backend via the SCORES REST API
 * interactive or offline loop: results uploaded manually via SCORES REST API
 
 ### Level 2
