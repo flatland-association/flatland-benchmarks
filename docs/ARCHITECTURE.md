@@ -595,9 +595,10 @@ We use Celery with the following configuration:
 
 * Broker and backend is RabbitMQ
 * Queue name:
-  * `COMPETITION`/`DEFAULT` setups: Benchmark ID (UUID)
-  * `CAMPAIGN`: domain
-* Task name: Benchmark ID (UUID)
+  * If the submission's request lists exactly one test ID (`test_ids`), and that test has a `queue` override configured (`tests.queue`), that override is used (e.g. the domain name, for `CAMPAIGN`-style single-KPI submissions).
+  * Otherwise, the benchmark ID (UUID) is used
+  * Does not depend on the suite `setup` (`DEFAULT`/`COMPETITION`/`CAMPAIGN`)
+* The task name always equals queue name.
 * Payload:
 
 ```json
