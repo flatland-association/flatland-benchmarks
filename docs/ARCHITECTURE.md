@@ -482,6 +482,7 @@ erDiagram
     text description
     suite_setup setup
     uuid[] benchmark_ids FK
+    json contents
   }
 
   benchmarks {
@@ -493,6 +494,8 @@ erDiagram
     character docker_image
     json evaluator_data
     uuid[] campaign_field_ids FK
+    json contents
+    timestamp deadline
   }
 
   tests {
@@ -585,7 +588,7 @@ We use Celery with the following configuration:
 * Queue name:
   * `COMPETITION`/`DEFAULT` setups: Benchmark ID (UUID)
   * `CAMPAIGN`: domain
-* Task name: Benchmark ID (UUD)
+* Task name: Benchmark ID (UUID)
 * Payload:
 
 ```json
@@ -689,7 +692,7 @@ sequenceDiagram
 ```
 
 (*) In campaign setting, this will be one results upload at test level (corresponding to one KPI). In competition settings, the results for the whole benchmark will be uploaded (multiple calls to test API or batch call). In benchmarking setting, this can be multiple test calls.
-For live update, mutliple result uploads at scenario may also be possible.
+For live update, multiple result uploads at scenario may also be possible.
 
 ## Runtime Scenario Interactive loop
 
