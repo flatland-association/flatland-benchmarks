@@ -397,8 +397,8 @@ The following diagram shows the building blocks in the Flatland 3 benchmarking c
 
 Implementation:
 
-* closed-loop: backend polls broker, fetches results from S3 and uploads results via SCORES API
-* interactive or offline loop: results uploaded manually via SCORES REST API
+* closed-loop: orchestrator polls broker, uploads results to S3 and to the backend via the `/results` REST API
+* interactive or offline loop: results uploaded manually via `/results` REST API
 
 ### Level 2
 
@@ -442,6 +442,7 @@ erDiagram
   results many to one fields: key
   submissions many to 1 benchmarks: "benchmark_id*"
   submissions many to many tests: test_ids
+  submissions one to zero or more submission_statuses: submission_id
 
   fields {
     uuid id PK
@@ -472,8 +473,15 @@ erDiagram
     timestamp submitted_at
     uuid submitted_by FK
     character submitted_by_username
-    submission_status status
     boolean published
+    character tags
+  }
+
+  submission_statuses {
+    uuid submission_id PK, FK
+    timestamp timestamp PK
+    submission_status status
+    character message
   }
 
   suites {
@@ -482,6 +490,7 @@ erDiagram
     text description
     suite_setup setup
     uuid[] benchmark_ids FK
+    json contents
   }
 
   benchmarks {
@@ -493,6 +502,8 @@ erDiagram
     character docker_image
     json evaluator_data
     uuid[] campaign_field_ids FK
+    json contents
+    timestamp deadline
   }
 
   tests {
@@ -542,7 +553,7 @@ erDiagram
 
   "TYPE submission_status AS ENUM" {
     v SUBMITTED
-    v RUNNING
+    v STARTED
     v SUCCESS
     v FAILURE
   }
@@ -551,23 +562,24 @@ erDiagram
 ### API Roles
 
 - `--`: can view results
-- `user`: can submit and upload results
-- `admin`: can define benchmarks
+- `User`: can submit and upload results
+- `Admin`: can define benchmarks (no API yet)
 
 ### Setups
 
-| ↕️️ aspect / ↔️️setup                         | benchmarking                                | competition                                 | campaign                                             |
-|-----------------------------------------------|---------------------------------------------|---------------------------------------------|------------------------------------------------------|
-| loop                                          | closed-loop                                 | closed-loop                                 | closed/interactive/offline loop                      |
-| submission                                    | any number of tests                         | all tests                                   | single test                                          |
-| results uploader                              | technical user with `results-uploader` role | technical user with `results-uploader` role | technical or human user with `results-uploader` role |
-| user default roles                            | `user`                                      | `user`                                      | `user`, `results-uploader` (dedicate FAB instance)   |
-| top-level overview                            | benchmarks                                  | benchmarks                                  | campaigns                                            |
-| benchmark overview                            | rounds -> benchmark leaderboard per round   | rounds -> benchmark leaderboard per round   | ❌                                                    |
-| campaign overview                             | ❌                                           | ❌                                           | benchmarks (row=benchmark)                           |
-| leaderboard (row=submission, benchmark score) | ✅                                           | ✅                                           | ❌                                                    |
-| benchmark drilldown (row=test)                | ✅                                           | ✅                                           | ✅                                                    |
-| test drilldown (row=scenario)                 | ✅                                           | ✅                                           | ✅                                                    |
+| ↕️️ aspect / ↔️️setup                         | benchmarking                                                                                                   | competition                                                                                                    | campaign                                                                               |
+|-----------------------------------------------|----------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+| loop                                          | closed-loop                                                                                                    | closed-loop                                                                                                    | closed/interactive/offline loop                                                        |
+| submission                                    | any number of tests                                                                                            | all tests                                                                                                      | single test                                                                            |
+| results upload                                | any `User`-role account, typically a technical/orchestrator account (no ownership check against the submitter) | any `User`-role account, typically a technical/orchestrator account (no ownership check against the submitter) | any `User`-role account, technical or human (no ownership check against the submitter) |
+| submission status upload                      | submitter, or any `Admin`-role account on the submitter's behalf                                               | submitter, or any `Admin`-role account on the submitter's behalf                                               | submitter, or any `Admin`-role account on the submitter's behalf                       |
+| user default roles                            | `User`                                                                                                         | `User`                                                                                                         | `User`                                                |
+| top-level overview                            | benchmarks                                                                                                     | benchmarks                                                                                                     | campaigns                                                                              |
+| benchmark overview                            | rounds -> benchmark leaderboard per round                                                                      | rounds -> benchmark leaderboard per round                                                                      | ❌                                                                                      |
+| campaign overview                             | ❌                                                                                                              | ❌                                                                                                              | benchmarks (row=benchmark)                                                             |
+| leaderboard (row=submission, benchmark score) | ✅                                                                                                              | ✅                                                                                                              | ❌                                                                                      |
+| benchmark drilldown (row=test)                | ✅                                                                                                              | ✅                                                                                                              | ✅                                                                                      |
+| test drilldown (row=scenario)                 | ✅                                                                                                              | ✅                                                                                                              | ✅                                                                                      |
 
 ### Interface 1: Benchmark definition API
 
@@ -583,9 +595,10 @@ We use Celery with the following configuration:
 
 * Broker and backend is RabbitMQ
 * Queue name:
-  * `COMPETITION`/`DEFAULT` setups: Benchmark ID (UUID)
-  * `CAMPAIGN`: domain
-* Task name: Benchmark ID (UUD)
+  * If the submission's request lists exactly one test ID (`test_ids`), and that test has a `queue` override configured (`tests.queue`), that override is used (e.g. the domain name, for `CAMPAIGN`-style single-KPI submissions).
+  * Otherwise, the benchmark ID (UUID) is used.
+  * Does not depend on the suite `setup` (`DEFAULT`/`COMPETITION`/`CAMPAIGN`).
+* The task name always equals queue name.
 * Payload:
 
 ```json
@@ -689,7 +702,7 @@ sequenceDiagram
 ```
 
 (*) In campaign setting, this will be one results upload at test level (corresponding to one KPI). In competition settings, the results for the whole benchmark will be uploaded (multiple calls to test API or batch call). In benchmarking setting, this can be multiple test calls.
-For live update, mutliple result uploads at scenario may also be possible.
+For live update, multiple result uploads at scenario may also be possible.
 
 ## Runtime Scenario Interactive loop
 
