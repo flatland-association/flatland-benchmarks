@@ -573,7 +573,7 @@ erDiagram
 | submission                                    | any number of tests                                                                                            | all tests                                                                                                      | single test                                                                            |
 | results upload                                | any `User`-role account, typically a technical/orchestrator account (no ownership check against the submitter) | any `User`-role account, typically a technical/orchestrator account (no ownership check against the submitter) | any `User`-role account, technical or human (no ownership check against the submitter) |
 | submission status upload                      | submitter, or any `Admin`-role account on the submitter's behalf                                               | submitter, or any `Admin`-role account on the submitter's behalf                                               | submitter, or any `Admin`-role account on the submitter's behalf                       |
-| user default roles                            | `User`                                                                                                         | `User`                                                                                                         | `User` (dedicated AI4REALNET instance)                                                 |
+| user default roles                            | `User`                                                                                                         | `User`                                                                                                         | `User`                                                |
 | top-level overview                            | benchmarks                                                                                                     | benchmarks                                                                                                     | campaigns                                                                              |
 | benchmark overview                            | rounds -> benchmark leaderboard per round                                                                      | rounds -> benchmark leaderboard per round                                                                      | ❌                                                                                      |
 | campaign overview                             | ❌                                                                                                              | ❌                                                                                                              | benchmarks (row=benchmark)                                                             |
@@ -596,8 +596,8 @@ We use Celery with the following configuration:
 * Broker and backend is RabbitMQ
 * Queue name:
   * If the submission's request lists exactly one test ID (`test_ids`), and that test has a `queue` override configured (`tests.queue`), that override is used (e.g. the domain name, for `CAMPAIGN`-style single-KPI submissions).
-  * Otherwise, the benchmark ID (UUID) is used
-  * Does not depend on the suite `setup` (`DEFAULT`/`COMPETITION`/`CAMPAIGN`)
+  * Otherwise, the benchmark ID (UUID) is used.
+  * Does not depend on the suite `setup` (`DEFAULT`/`COMPETITION`/`CAMPAIGN`).
 * The task name always equals queue name.
 * Payload:
 
