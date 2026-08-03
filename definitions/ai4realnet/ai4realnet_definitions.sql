@@ -1,7 +1,7 @@
  INSERT INTO suites
     (id, setup, name, description, contents, benchmark_ids)
-    VALUES ('0ca46887-897a-463f-bf83-c6cd6269a977', 'CAMPAIGN', 'First Validation Campaign', 'The first validation campaign runs until 31/03/2026.', '{}', array['3237ba20-ccff-45b0-af23-44719e584f41', '2da3781a-25a9-4c89-8b43-9269844f3fef', '8d5c876e-22c2-49e7-bdd5-4c1840d309f0', '65547935-f436-49fa-8d20-f320c6bd46dc', '3b1bdca6-ed90-4938-bd63-fd657aa7dcd7', '4b0be731-8371-4e4e-a673-b630187b0bb8', 'd65cd37a-4830-468c-9100-0f60ee9ff72e', '16706c82-75df-4969-932d-a7f5c941eca2', '43040944-39ac-47c9-b91d-bc8ca5693b3c', '3810191b-8cfd-4b03-86b2-f7e530aab30d', '31ea606b-681a-437a-85b9-7c81d4ccc287', 'df309815-8ec0-4a6f-9d0b-dc3dbfc9055a']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET setup=EXCLUDED.setup, name=EXCLUDED.name, description=EXCLUDED.description, benchmark_ids=EXCLUDED.benchmark_ids;
+    VALUES ('0ca46887-897a-463f-bf83-c6cd6269a977', 'CAMPAIGN', 'First Validation Campaign', 'The first validation campaign runs until 31/03/2026.', '{}', array['3237ba20-ccff-45b0-af23-44719e584f41', '2da3781a-25a9-4c89-8b43-9269844f3fef', '8d5c876e-22c2-49e7-bdd5-4c1840d309f0', '65547935-f436-49fa-8d20-f320c6bd46dc', '3b1bdca6-ed90-4938-bd63-fd657aa7dcd7', '4b0be731-8371-4e4e-a673-b630187b0bb8', 'd65cd37a-4830-468c-9100-0f60ee9ff72e', '16706c82-75df-4969-932d-a7f5c941eca2', '43040944-39ac-47c9-b91d-bc8ca5693b3c', '3810191b-8cfd-4b03-86b2-f7e530aab30d', '31ea606b-681a-437a-85b9-7c81d4ccc287', 'df309815-8ec0-4a6f-9d0b-dc3dbfc9055a']::uuid[]) ON CONFLICT(id) DO
+ UPDATE SET setup=EXCLUDED.setup, name =EXCLUDED.name, description=EXCLUDED.description, contents=EXCLUDED.contents, benchmark_ids=EXCLUDED.benchmark_ids;
 
 INSERT INTO benchmarks
     (id, name, description, field_ids, test_ids)
@@ -20,7 +20,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('2310ad43-2065-44a5-8a6a-100e2c6076f1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('2310ad43-2065-44a5-8a6a-100e2c6076f1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -40,7 +40,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('02890e30-6f7b-4ed3-80a1-abf2e169e43f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('02890e30-6f7b-4ed3-80a1-abf2e169e43f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -60,7 +60,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0c8a5446-bbc4-4a96-82bf-a53a86c10e9f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('0c8a5446-bbc4-4a96-82bf-a53a86c10e9f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -80,7 +80,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('1d7ef549-2063-466b-b10a-6c78f79244cb', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('1d7ef549-2063-466b-b10a-6c78f79244cb', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -100,7 +100,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('17130cde-b2a7-44b9-9681-d95bb943ec51', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('17130cde-b2a7-44b9-9681-d95bb943ec51', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -120,7 +120,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('7a49884e-90f2-4ba8-946c-5a9039b0e340', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('7a49884e-90f2-4ba8-946c-5a9039b0e340', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -140,7 +140,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('208b30ea-3b59-49fc-b660-c45a1a7e9144', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('208b30ea-3b59-49fc-b660-c45a1a7e9144', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -160,7 +160,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('8474f229-ee4f-4e15-b633-ca313e08d852', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('8474f229-ee4f-4e15-b633-ca313e08d852', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -180,7 +180,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('27ccb299-16f8-45dc-b90f-3b715cccaa72', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('27ccb299-16f8-45dc-b90f-3b715cccaa72', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -200,7 +200,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e0522a11-2f30-4cd8-9e88-b3fc9e289dcc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('e0522a11-2f30-4cd8-9e88-b3fc9e289dcc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -220,7 +220,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('78e3f5c5-32b8-4787-bf40-5623e573861b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('78e3f5c5-32b8-4787-bf40-5623e573861b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -240,7 +240,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4cae7347-89b5-4c89-aed4-7d2c374b45d5', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('4cae7347-89b5-4c89-aed4-7d2c374b45d5', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -260,7 +260,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('697e097d-ecd3-4ec5-bd46-cd98129ba28d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('697e097d-ecd3-4ec5-bd46-cd98129ba28d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -280,7 +280,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('bd729f10-2260-4959-b416-5d8c9d04648e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('bd729f10-2260-4959-b416-5d8c9d04648e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -300,7 +300,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('b50efa99-b82e-4c75-8204-afa8c17a52f0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('b50efa99-b82e-4c75-8204-afa8c17a52f0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -320,7 +320,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('d98d5fed-b2b9-4e3c-a3a6-30e666514ccd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('d98d5fed-b2b9-4e3c-a3a6-30e666514ccd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -340,7 +340,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('9c0de891-220a-4bd6-be4d-598fbcc898d0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('9c0de891-220a-4bd6-be4d-598fbcc898d0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -360,7 +360,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e67962af-0e35-4b32-97f9-dc661bf07f10', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('e67962af-0e35-4b32-97f9-dc661bf07f10', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -380,7 +380,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('80e0473e-e63a-4398-b592-66b2541a8dde', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('80e0473e-e63a-4398-b592-66b2541a8dde', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -400,7 +400,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('be9cbb52-ef44-4679-8c8d-f1b3c12e9aaa', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('be9cbb52-ef44-4679-8c8d-f1b3c12e9aaa', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -420,7 +420,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('c5762f88-bd6b-45c6-871f-c34ff539b1a1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('c5762f88-bd6b-45c6-871f-c34ff539b1a1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -440,7 +440,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('6b69647e-d663-4f90-ab14-dc4f5335f390', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('6b69647e-d663-4f90-ab14-dc4f5335f390', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -460,7 +460,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('d839a03d-c127-4c01-84cb-09b3845f8775', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('d839a03d-c127-4c01-84cb-09b3845f8775', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -480,7 +480,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('476cf7e9-c34a-466e-8fed-53e66d55c10a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('476cf7e9-c34a-466e-8fed-53e66d55c10a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -510,7 +510,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4d609eed-8062-4e81-893f-b4b653f8e4b7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('4d609eed-8062-4e81-893f-b4b653f8e4b7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -530,7 +530,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('99f95a40-b75c-47f1-8fd5-b3dc9c5a42c0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('99f95a40-b75c-47f1-8fd5-b3dc9c5a42c0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -550,7 +550,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('874377c7-380e-4e3c-8d6e-23e85ff26cf0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('874377c7-380e-4e3c-8d6e-23e85ff26cf0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -570,7 +570,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('a85e44b6-48d9-419f-8c4d-255eb2382531', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('a85e44b6-48d9-419f-8c4d-255eb2382531', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -590,7 +590,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('ec13012a-5c41-4c30-964d-fca2599efc94', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('ec13012a-5c41-4c30-964d-fca2599efc94', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -610,7 +610,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f0bc882a-f98f-46aa-8914-1d8859efddc8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('f0bc882a-f98f-46aa-8914-1d8859efddc8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -630,7 +630,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4cf8e1a6-17b5-4de3-a075-29c70641c358', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('4cf8e1a6-17b5-4de3-a075-29c70641c358', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -650,7 +650,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f257dde6-66c6-415e-b1de-96f965c5f39a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('f257dde6-66c6-415e-b1de-96f965c5f39a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -670,7 +670,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0fec6160-d278-4194-bb37-2d580d4b8056', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('0fec6160-d278-4194-bb37-2d580d4b8056', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -690,7 +690,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0050454e-c693-41bc-8c18-67e70716cfc9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('0050454e-c693-41bc-8c18-67e70716cfc9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -710,7 +710,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f3e3b428-5df4-4e6b-af10-430adacdae1b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('f3e3b428-5df4-4e6b-af10-430adacdae1b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -730,7 +730,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e98ae93a-b79a-4238-8702-48bbb87a8609', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('e98ae93a-b79a-4238-8702-48bbb87a8609', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -750,7 +750,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('015f5bd7-ab19-432b-ac75-486d433782ca', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('015f5bd7-ab19-432b-ac75-486d433782ca', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -770,7 +770,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e7d279ae-33b4-4664-ad89-a479462fd579', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('e7d279ae-33b4-4664-ad89-a479462fd579', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -790,7 +790,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('493273d8-0a2b-4b96-b807-667bf651bb2c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('493273d8-0a2b-4b96-b807-667bf651bb2c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -820,7 +820,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('bf5d4da4-cf9b-4fca-8b17-11cfd0dacabc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('bf5d4da4-cf9b-4fca-8b17-11cfd0dacabc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -840,7 +840,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('6e50a7c4-d178-4561-800b-71d0771365c8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('6e50a7c4-d178-4561-800b-71d0771365c8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -860,7 +860,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f0523454-2778-4047-bce0-dcb3e732b0d2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('f0523454-2778-4047-bce0-dcb3e732b0d2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -880,7 +880,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('843d2e64-3243-4138-90fc-1a4686f27178', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('843d2e64-3243-4138-90fc-1a4686f27178', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -900,7 +900,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('61d44975-5de9-41f4-99b0-dd6e29c48f60', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('61d44975-5de9-41f4-99b0-dd6e29c48f60', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -920,7 +920,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('97e45e9c-41f6-44ec-9c49-748fbdbdbc5e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('97e45e9c-41f6-44ec-9c49-748fbdbdbc5e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -940,7 +940,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('afffdcbf-3044-4571-a234-ab4d55da46fd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('afffdcbf-3044-4571-a234-ab4d55da46fd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -960,7 +960,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('2dd6e12b-eb87-47c5-9954-18a7ffeedc61', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('2dd6e12b-eb87-47c5-9954-18a7ffeedc61', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -980,7 +980,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('45f78644-ff33-4685-82d8-71a3101ddad8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('45f78644-ff33-4685-82d8-71a3101ddad8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1010,7 +1010,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('916d5bf1-5bee-4955-93e4-127a41c42a97', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('916d5bf1-5bee-4955-93e4-127a41c42a97', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1030,7 +1030,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4c6e01fe-e8db-40ab-ac1c-88d8068bfccd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('4c6e01fe-e8db-40ab-ac1c-88d8068bfccd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1050,7 +1050,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f60128ec-90ef-4307-8966-363b75722e12', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('f60128ec-90ef-4307-8966-363b75722e12', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1070,7 +1070,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('d30fc4e1-2f3e-4b80-945a-f5150a91c3e4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('d30fc4e1-2f3e-4b80-945a-f5150a91c3e4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1090,7 +1090,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('d2ac280c-7583-480a-99c5-7e51b9894f19', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('d2ac280c-7583-480a-99c5-7e51b9894f19', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1110,7 +1110,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4ca83de7-7f8d-4eed-aee6-4751ed3a31bf', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('4ca83de7-7f8d-4eed-aee6-4751ed3a31bf', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1140,7 +1140,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('fcabd61d-91bc-45dc-8bf8-7aeb9724cb67', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('fcabd61d-91bc-45dc-8bf8-7aeb9724cb67', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1160,7 +1160,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0c1be4b0-c30f-4e38-a698-3b141181ede6', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('0c1be4b0-c30f-4e38-a698-3b141181ede6', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1180,7 +1180,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('63e93356-5033-451f-a3c2-cd607721661f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('63e93356-5033-451f-a3c2-cd607721661f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1200,7 +1200,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('1de0f52c-ae47-4847-9148-97b8568952d3', 'punctuality', 'Test score (MEAN of scenario scores)', 'MEAN', '"punctuality"')
+VALUES ('1de0f52c-ae47-4847-9148-97b8568952d3', 'punctuality', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3460,7 +3460,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('ca6afe0e-a91a-4683-b735-6069e6b0cd8a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('ca6afe0e-a91a-4683-b735-6069e6b0cd8a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3480,7 +3480,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e00859c3-d3e5-4bdf-9025-2030e22df317', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('e00859c3-d3e5-4bdf-9025-2030e22df317', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3500,7 +3500,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('67a19c4b-1873-4a44-8c07-e15d9ede1e78', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('67a19c4b-1873-4a44-8c07-e15d9ede1e78', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3520,7 +3520,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('10aadaaf-daa4-4098-bd9d-2042ecb488e9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('10aadaaf-daa4-4098-bd9d-2042ecb488e9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3550,7 +3550,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('d63f9bce-a639-4d20-aece-c98a16ed1e7d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('d63f9bce-a639-4d20-aece-c98a16ed1e7d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3570,7 +3570,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('93dc6748-4349-42ed-9bf1-e8541e768dea', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('93dc6748-4349-42ed-9bf1-e8541e768dea', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3590,7 +3590,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('abe274f7-3401-4fdc-a79c-25c2a4659928', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('abe274f7-3401-4fdc-a79c-25c2a4659928', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3605,43 +3605,31 @@ INSERT INTO fields
 
 INSERT INTO tests
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('e075d4a7-5cda-4d3c-83ac-69a0db1d74dd', 'KPI-NF-045: Network Impact Propagation (Railway)', 'The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', array['0cc2a210-4be2-42b6-ba21-885193fdbdbc']::uuid[], array['bb6302f1-0dc2-43ed-976b-4e5d3126006a', 'f84dcf0c-4bde-460b-9139-ea76e3694267', '89ea38d1-e42e-430e-8a72-f426f1cc0be7', 'ac3d32bf-2694-4405-953b-01849e7923ef', '30286226-29a3-4aa6-8243-562b88967d76', '18276866-5a94-412b-b09c-9cac2ca5add0', '02e163b8-d8a3-44cb-9fb0-65501dfa35b7', 'ab2b11c8-66f4-47c3-9cd3-f765eb772dc7', 'f3ae4180-86f3-409a-a51e-c1deb7e005cd', '7a3ae3eb-b783-44a3-80d4-aa9cb0bd55fb', 'cff75f1a-8ea2-4f1d-b516-60dd0d625fe1', 'aa4fd74f-4680-405b-a184-c9392f9218e3', '01a82553-8d2c-4f84-94df-ccb9f3250734', '70316412-5480-44ca-9c2b-c51426b0390e', '60a6acda-9a1a-4a0a-8c04-75de02304713', 'db614cef-8b86-467d-a638-64c25a91ec78', '43b053bb-5e9b-4538-a490-fee839344203', 'e01032e4-2047-455a-a329-175a40a8de24', '3b68eeb2-96f6-4a87-8a2f-5decaf3cb3f0', 'fdd89c15-3f8d-4381-9cd7-e8b773d06997', '1d8f2bda-38a4-41de-a614-291b9e4697e4', '7277b987-4cc2-4cb5-a308-bb226c832747', '62e20486-eb7f-49d9-a9dc-7aa00fdfefb0', 'ae7a8233-8a80-496a-a2b3-0afd9a28ebe6', '2b4b92d2-6871-4c20-ad58-11dc51718379', '86f360de-8c4d-44d0-b089-3259a91dc3ea', 'f4b1aaeb-a498-428e-8f8f-2ed07aee0641', 'e5968696-5497-496b-8fe4-f40a837f7129', 'dec5cd4e-10b7-4a7e-a803-10e50badaaf5', '139b31bd-22e4-495c-8e21-5e6e34cd5a20', '9b603e03-3e2e-4366-8127-96307d3b2ce1', '54601145-edd9-469f-8180-245e26dff069', '34fa69f7-e0f7-4fd4-adf0-2ed8a47d6abc', '51081d92-2ff1-40a4-b557-38215c125051', 'fef8ec79-80da-4039-9484-6ec49a29263e', 'd9d80121-bf6c-41ee-bc18-dade0e853ada', '5832961b-942f-4d33-8614-c6dd4861ef46', 'e44e2b83-ad54-4e9c-a2ea-c23c1a249c54', '8ca33f45-3839-4ccc-aa88-146b41fee9f3', 'e15fa3d0-0da3-4513-a5bd-6082806039a3', 'e28dc7e5-03ae-4687-ba37-c7ed5914c901', 'ef52b0f5-a147-4333-9817-fbd7e53143ee', '45b93b12-57cc-40ff-b277-82de8ceaec32', 'ae557fe8-2155-42b3-8d17-2e9de47dda4b', '3b2f7caf-2e32-4db9-8377-e01f50e436c2', '9ae1a2b5-fe89-4027-b1d8-8c3888862a5e', '9c221d41-fda7-409e-9ceb-a0f94018a92c', '7da98e75-8c84-4cfc-98f4-0fedf1aec08f', '7b42a1cc-ce70-4d9a-804f-ac9027a1ee48', '48caf228-64f6-4b03-ad20-5a34cf8dd2ee', '49cac9a9-1aac-4542-a01d-6483052bf02b', 'b30319f8-8953-4433-80b6-5b80c9103bc5', '401a5b54-feb8-4eaf-92c3-426cb2f221ef', '06863bb7-48d5-4897-87c7-3328546efdef', '25f59eeb-3baf-4668-bdb1-2beb577fbf73', '2a631e96-a912-4b27-b82e-57ca3dd4aacf', 'a85cd328-09f9-4360-ae04-4479301b5987', 'a35f5412-b565-4f24-9459-eb9ac1f7fe30', '2060f4fe-4f43-4095-b14f-a3c8ce312a42', '4e2e9ee7-26e1-4a2c-bc3c-93761a0ea43c', 'f262ffb3-86b9-4db8-8657-f4a96915cb83', 'b022b575-103d-4ded-8da5-2e9a8f686da6', 'ba5308f8-7e12-4c6e-8e4f-42f6280f537c', 'fec35ca6-d093-4081-8cf1-2f3b8f445bed', 'a410e586-219d-402f-9e34-6a1720ae46bc', 'a82beae8-9b1a-4a00-bea2-4891b56f3014', '14a20672-ea9c-4205-961a-4f2a3585eea2', 'e7f82820-1caf-4b4f-ae70-8ea4d95dcb0c', '989cc7e2-1d39-4334-8130-b704fd7c6c7b', '63b933c7-b63c-4ab7-b602-69aa5f91aec9', '05826982-694c-4ba3-817f-979d69942d36', 'dc280d8b-d3ca-4517-9d31-9e70e2f3aea8', '4223ef16-0a01-404d-8024-5a656203d3f8', '320b95b2-84d6-4827-ba37-0de57a1e6360', 'b9164bdc-9f5e-42b8-8379-7b6f454a3933', '59b4935d-cc5d-4792-a395-770bae030d2d', 'be970bda-465f-42b4-9223-c4ba742b24ea', '8df90815-5b7b-46c6-b388-546efbfa18a0', '10ee5c39-9ae9-4e58-bdc8-8a449887574d', '23ce8d72-6c32-45b4-a04e-34e029eb509e', 'f185083b-3f74-4221-b5c8-7b2e561ae2e4', 'dc4da56a-bf2d-4351-b280-d418736844de', '02183d8b-2328-4467-81e9-97afde5618c9', 'd85cbc22-951e-4926-94f9-9c7a703b54eb', 'd4b12805-017e-46d9-8fe7-220569a21477', '2f5a8e75-521e-4398-bfd2-e7ff7c9e0be4', '701c5b31-06d0-4e54-82b9-08e1612f1042', '6acbd77e-18a8-41c9-af81-1ff0ac1a9b0f', '20ef1912-26a4-48c1-ad1b-f08c95b144e2', '890c8007-a763-4a94-86d5-28d8c11c573f', 'a7a37c14-b2a7-471c-9ed2-af90ee502d39', '848a39f3-e96b-4c41-83b8-78a2eb99403f', '5dbc518b-6a94-4e7f-b140-f99eb30af9b2', '626f428b-0928-48c8-8770-12de6e3b18ed', '6129f9a8-853c-459e-8ac2-aa7cbc65802e', '5869ddd8-fbb9-431e-beb7-64761220e3e3', 'd238a30f-2f16-4e12-83a6-fcf779cd7115', 'e86883e7-53be-4b58-99cb-efd5f23cdb5b', '08c0e125-3ee8-45d4-94fc-84aa5d8c711d', 'ac06a723-e801-470d-991d-b4411368ccfe', '566f099a-2957-4fc9-8e13-f9564311ba33', 'b990e1ab-5a11-4eba-9719-3b8b77846365', '9eb9657e-5c48-461a-a680-7fae151f6800', '2ff0136f-7995-4134-8e4e-9fd92da46ea8', 'fb08a40e-b5cc-4f8a-9b72-c9fe901fcb04', '1667a5c9-ae17-4628-ba55-74e34cb04332', '387dafe7-97ad-4b37-88e4-10785748e04d', '6735f34e-d3a1-41d5-86a0-f623099bf2cf', '2bb4384c-1119-4756-a2ad-fc2e5c00f952', '5a52729c-4f09-4f58-852d-48239e9ce217', '4c6e1a87-a083-46c1-b928-0c1d1763a9db', 'c6ea3dff-9cda-471d-bf8b-a576b17036bb', '49257861-320d-4aa2-aa62-b9c4e1751791', 'be2823fd-5389-4415-9447-ed84006cee4c', '03ffcc01-b691-406f-ac53-5d13e9328175', '220bf75b-d271-4c46-bde2-67b313f10d13', 'eb2a0321-e6d4-49c7-8885-7e046018e12d', '119b0c6b-4ce6-4a7f-b49b-ec904577a182', '492c01f3-a7d4-46e5-b140-e82a22b13cdf', '45107995-4a41-4831-98c9-df7ed79734b1', 'f3ee3bb9-3328-450a-98fb-63692042134f', 'd9f53db5-8cec-4ec4-8d62-d116cb198811', '0c2f1499-dbbe-43df-be32-f3e980ac1691', '6c90d7a4-980f-4e13-856c-13117e2edf82', '7a335c56-af9e-4562-a614-bfe84a75951f', '6267d830-501a-4646-823e-adab3403faf0', 'f7509133-3083-4454-a963-95302eb66764', 'bb2b5fe3-92ed-4270-9235-dafbfffa2d03', '9b3fc207-3e88-4ef8-90b0-8ab1e77ea932', 'bf4447a8-9e3e-4b8c-b9ea-4bc5bb009977', '42b7c577-c4ba-43e0-8ff9-d1839d86a06c', 'ae32ef91-586e-4dfd-b42b-e76002335794', 'd271e605-1b68-4609-884c-0e6b2417980a', 'ef64aa0d-ba0d-4af4-abf3-22395713f0d7', '2f289e62-3b78-4580-90ed-c120947f70b5', '7dd80b01-99c3-4a89-9b4b-f4c878a6d996', '56e0d8cc-b7f0-4e9f-ae77-a7322cc9a2a5', 'ac523ef0-6a7a-470d-a944-795305899de9', 'f9b8c0b3-0968-4324-9b92-35063c49def2', '8540245e-c841-4caa-aeb7-5dd6955bc43d', 'b7a9d4ba-c51f-452d-9128-3f923906ec18', '84db3ada-efe4-4cf7-bf05-3f14bbe2c668', 'c7864f2d-ae67-42a9-bddb-59b6933b0c1c', '4a9d8df0-d87b-4e31-9762-739f03694828', '05eeb2ea-67fe-405e-b630-43f382dbf246', '87e0d07c-cd5f-4506-b112-619d298ce924', 'c3b92403-d342-4d2e-b107-ae4ab443798f', '90071fa0-a560-4c6e-b2ff-fd59588fbdb7', '97bbc19c-de0c-4deb-838d-5675d9525eb8', 'cb55a7a4-460a-48e6-a623-4ebbc88b7be7']::uuid[], 'CLOSED', 'Railway')
+VALUES ('e075d4a7-5cda-4d3c-83ac-69a0db1d74dd', 'KPI-NF-045: Network Impact Propagation (Railway)',
+        'The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ',
+        array['0cc2a210-4be2-42b6-ba21-885193fdbdbc']::uuid[], array['f84dcf0c-4bde-460b-9139-ea76e3694267', '30286226-29a3-4aa6-8243-562b88967d76',
+        'ab2b11c8-66f4-47c3-9cd3-f765eb772dc7', 'cff75f1a-8ea2-4f1d-b516-60dd0d625fe1', '70316412-5480-44ca-9c2b-c51426b0390e',
+        '43b053bb-5e9b-4538-a490-fee839344203', 'fdd89c15-3f8d-4381-9cd7-e8b773d06997', '62e20486-eb7f-49d9-a9dc-7aa00fdfefb0',
+        '86f360de-8c4d-44d0-b089-3259a91dc3ea', 'dec5cd4e-10b7-4a7e-a803-10e50badaaf5', '54601145-edd9-469f-8180-245e26dff069',
+        'fef8ec79-80da-4039-9484-6ec49a29263e', 'e44e2b83-ad54-4e9c-a2ea-c23c1a249c54', 'e28dc7e5-03ae-4687-ba37-c7ed5914c901',
+        'ae557fe8-2155-42b3-8d17-2e9de47dda4b', '9c221d41-fda7-409e-9ceb-a0f94018a92c', '48caf228-64f6-4b03-ad20-5a34cf8dd2ee',
+        '401a5b54-feb8-4eaf-92c3-426cb2f221ef', '2a631e96-a912-4b27-b82e-57ca3dd4aacf', '2060f4fe-4f43-4095-b14f-a3c8ce312a42',
+        'b022b575-103d-4ded-8da5-2e9a8f686da6', 'a410e586-219d-402f-9e34-6a1720ae46bc', 'e7f82820-1caf-4b4f-ae70-8ea4d95dcb0c',
+        '05826982-694c-4ba3-817f-979d69942d36', '320b95b2-84d6-4827-ba37-0de57a1e6360', 'be970bda-465f-42b4-9223-c4ba742b24ea',
+        '23ce8d72-6c32-45b4-a04e-34e029eb509e', '02183d8b-2328-4467-81e9-97afde5618c9', '2f5a8e75-521e-4398-bfd2-e7ff7c9e0be4',
+        '20ef1912-26a4-48c1-ad1b-f08c95b144e2', '848a39f3-e96b-4c41-83b8-78a2eb99403f', '6129f9a8-853c-459e-8ac2-aa7cbc65802e',
+        'e86883e7-53be-4b58-99cb-efd5f23cdb5b', '566f099a-2957-4fc9-8e13-f9564311ba33', '2ff0136f-7995-4134-8e4e-9fd92da46ea8',
+        '387dafe7-97ad-4b37-88e4-10785748e04d', '5a52729c-4f09-4f58-852d-48239e9ce217', '49257861-320d-4aa2-aa62-b9c4e1751791',
+        '220bf75b-d271-4c46-bde2-67b313f10d13', '492c01f3-a7d4-46e5-b140-e82a22b13cdf', 'd9f53db5-8cec-4ec4-8d62-d116cb198811',
+        '7a335c56-af9e-4562-a614-bfe84a75951f', 'bb2b5fe3-92ed-4270-9235-dafbfffa2d03', '42b7c577-c4ba-43e0-8ff9-d1839d86a06c',
+        'ef64aa0d-ba0d-4af4-abf3-22395713f0d7', '56e0d8cc-b7f0-4e9f-ae77-a7322cc9a2a5', '8540245e-c841-4caa-aeb7-5dd6955bc43d',
+        'c7864f2d-ae67-42a9-bddb-59b6933b0c1c', '87e0d07c-cd5f-4506-b112-619d298ce924', '97bbc19c-de0c-4deb-838d-5675d9525eb8']::uuid[], 'CLOSED', 'Railway')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0cc2a210-4be2-42b6-ba21-885193fdbdbc', 'network_impact_propagation', 'Test score (MEAN of scenario scores)', 'MEAN', '"network_impact_propagation"')
+VALUES ('0cc2a210-4be2-42b6-ba21-885193fdbdbc', 'network_impact_propagation', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('bb6302f1-0dc2-43ed-976b-4e5d3126006a', 'Scenario 000 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['87ca95f7-4d83-48ec-94d5-cc654e1b895e', '391325c4-22f8-4243-bde5-48644072fef0', 'ca5d5430-7d3a-4a86-9fbf-2153f10fae55', '7d8d65dd-c85c-4d51-b7f2-f540718c4209', 'b817577b-8d5a-45a4-adbd-19ebfd4b1aa2']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('87ca95f7-4d83-48ec-94d5-cc654e1b895e', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('391325c4-22f8-4243-bde5-48644072fef0', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ca5d5430-7d3a-4a86-9fbf-2153f10fae55', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7d8d65dd-c85c-4d51-b7f2-f540718c4209', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b817577b-8d5a-45a4-adbd-19ebfd4b1aa2', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
@@ -3671,66 +3659,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('ba2bea07-725e-4727-88f2-52534b640f90', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('89ea38d1-e42e-430e-8a72-f426f1cc0be7', 'Scenario 002 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['a20ae871-8c8c-4487-b8d1-eeacf8460a00', '25d61094-9aff-4a40-b275-5263b38ac757', '4309c533-35c5-4df8-a7ad-178f611211dd', '9b01b4f2-31b0-4e2a-bd99-a976673ea22e', 'c2845385-277b-4b7a-8126-ad1c1ec6ca28']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a20ae871-8c8c-4487-b8d1-eeacf8460a00', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('25d61094-9aff-4a40-b275-5263b38ac757', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4309c533-35c5-4df8-a7ad-178f611211dd', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9b01b4f2-31b0-4e2a-bd99-a976673ea22e', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c2845385-277b-4b7a-8126-ad1c1ec6ca28', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('ac3d32bf-2694-4405-953b-01849e7923ef', 'Scenario 003 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['a187e5ce-c19f-41b7-9ac9-6cead41a4364', 'daf5bd59-7ef1-4ebc-97d1-f0743d5b5b16', '2e03631f-94b2-4e71-acb6-3b5478c112fc', '8d7940c4-38f1-4131-902c-f6228bd77d84', '658a7f64-43f9-4952-91b8-ade9078f419c']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a187e5ce-c19f-41b7-9ac9-6cead41a4364', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('daf5bd59-7ef1-4ebc-97d1-f0743d5b5b16', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2e03631f-94b2-4e71-acb6-3b5478c112fc', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8d7940c4-38f1-4131-902c-f6228bd77d84', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('658a7f64-43f9-4952-91b8-ade9078f419c', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -3765,66 +3693,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('18276866-5a94-412b-b09c-9cac2ca5add0', 'Scenario 005 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['cbb91149-4bf1-44c9-a1bd-859e307e4dad', '7a07237d-b90b-407c-b20f-543f29b28590', '0d0536a1-a76c-482d-899b-1937a133f862', '26a8fc0d-ab9b-48ca-bcf7-1bb2c15de193', '81889a6e-955a-4293-a4bd-399d611bd7f4']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('cbb91149-4bf1-44c9-a1bd-859e307e4dad', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7a07237d-b90b-407c-b20f-543f29b28590', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0d0536a1-a76c-482d-899b-1937a133f862', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('26a8fc0d-ab9b-48ca-bcf7-1bb2c15de193', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('81889a6e-955a-4293-a4bd-399d611bd7f4', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('02e163b8-d8a3-44cb-9fb0-65501dfa35b7', 'Scenario 006 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['bf8991e3-2d3d-45bb-80d3-fe749714b149', '174da156-f501-4b06-b523-5f62f2315188', '45c3b28c-3ee1-4759-9f4d-312bbd930b81', '3c3f604b-881d-4240-be2e-25f3162ba2e7', '1a994537-3e45-4035-b32e-7db7ea07e5d5']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('bf8991e3-2d3d-45bb-80d3-fe749714b149', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('174da156-f501-4b06-b523-5f62f2315188', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('45c3b28c-3ee1-4759-9f4d-312bbd930b81', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3c3f604b-881d-4240-be2e-25f3162ba2e7', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1a994537-3e45-4035-b32e-7db7ea07e5d5', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('ab2b11c8-66f4-47c3-9cd3-f765eb772dc7', 'Scenario 007 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['d9173aa3-b5de-488c-b8c2-a412b5e1b7c3', 'fbe56d95-64f8-42de-a53c-deabe9ce1db7', 'e3123cf5-210f-492d-b30c-46eb4f246636', '791ac601-301a-4bb2-9e23-277988578a63', '58dca2bf-338c-433f-ada1-b93ad9ce762b']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -3851,66 +3719,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('58dca2bf-338c-433f-ada1-b93ad9ce762b', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('f3ae4180-86f3-409a-a51e-c1deb7e005cd', 'Scenario 008 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['a3fac105-e5e7-49d1-9d12-55bdbcb62ab5', 'fa7dab49-97b8-476a-bf63-e2d1c8708f03', 'c811ff40-e9b8-4d4a-9604-00a963955f6b', '403bd750-98b4-41c6-bd2d-36cdcacfb2c6', '36e36bbe-11f7-4080-a55a-e85694271e11']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a3fac105-e5e7-49d1-9d12-55bdbcb62ab5', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('fa7dab49-97b8-476a-bf63-e2d1c8708f03', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c811ff40-e9b8-4d4a-9604-00a963955f6b', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('403bd750-98b4-41c6-bd2d-36cdcacfb2c6', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('36e36bbe-11f7-4080-a55a-e85694271e11', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('7a3ae3eb-b783-44a3-80d4-aa9cb0bd55fb', 'Scenario 009 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['20e10dfa-a759-47ba-a23f-45a2eea2fd7e', 'a170b784-d5bf-4851-a5f2-e3d3ee77cc69', 'f5383184-a94a-450b-8dcb-f623a7adfaf1', '14cc9ded-bb23-4b23-a663-b3b76d1469b3', 'bed0b998-f3b4-4d60-b856-9e90d4e84b9d']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('20e10dfa-a759-47ba-a23f-45a2eea2fd7e', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a170b784-d5bf-4851-a5f2-e3d3ee77cc69', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f5383184-a94a-450b-8dcb-f623a7adfaf1', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('14cc9ded-bb23-4b23-a663-b3b76d1469b3', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('bed0b998-f3b4-4d60-b856-9e90d4e84b9d', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -3945,66 +3753,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('aa4fd74f-4680-405b-a184-c9392f9218e3', 'Scenario 011 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['ce6ba715-c3f4-4a4a-bca4-654ddda62b5b', '41f370ea-de94-4c85-a025-589f95feb11e', '3b3d5ab5-f07d-4544-b1f2-26e4826b2a49', '1ad8fa74-91d8-48dc-bc7d-c435c72fd978', '7cbbd50e-27a4-40f9-8f34-2dc38dd4b1cc']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ce6ba715-c3f4-4a4a-bca4-654ddda62b5b', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('41f370ea-de94-4c85-a025-589f95feb11e', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3b3d5ab5-f07d-4544-b1f2-26e4826b2a49', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1ad8fa74-91d8-48dc-bc7d-c435c72fd978', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7cbbd50e-27a4-40f9-8f34-2dc38dd4b1cc', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('01a82553-8d2c-4f84-94df-ccb9f3250734', 'Scenario 012 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['d61ec6be-420d-4587-8aba-3f71233aee23', '3cd8dfa2-d97e-4f39-bccc-1203fcbb8174', 'da41601d-cc8f-4316-9edd-1c57eae530a0', 'f59877ed-2e08-4a9c-b04f-8cb4935fe260', '43d26f56-7393-455e-b01e-9fd3e8028f00']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d61ec6be-420d-4587-8aba-3f71233aee23', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3cd8dfa2-d97e-4f39-bccc-1203fcbb8174', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('da41601d-cc8f-4316-9edd-1c57eae530a0', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f59877ed-2e08-4a9c-b04f-8cb4935fe260', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('43d26f56-7393-455e-b01e-9fd3e8028f00', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('70316412-5480-44ca-9c2b-c51426b0390e', 'Scenario 013 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['808291bd-7ad6-46f9-aac2-2ce7150aa91a', '05277b55-b13e-49da-96ee-789b869c5433', '220ec340-6a34-4d3c-8064-501f4e11bb24', '303165b9-aa6f-4b00-acc2-92c3b0776a8b', 'e85a45c7-db73-4a71-8c91-cd3256b0cde2']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -4031,66 +3779,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('e85a45c7-db73-4a71-8c91-cd3256b0cde2', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('60a6acda-9a1a-4a0a-8c04-75de02304713', 'Scenario 014 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['e316069c-bc52-479f-a0ca-e3276efc89af', 'a2962c30-eabe-4959-8cce-431fddfdd04b', 'dfc8bb70-0d8a-4313-89e8-1ebda162d60d', '5e052db3-ed56-4ea6-8fe0-240ebf17ae10', '8733abcc-ce2f-4b18-9b5f-7a4333da1fff']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e316069c-bc52-479f-a0ca-e3276efc89af', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a2962c30-eabe-4959-8cce-431fddfdd04b', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('dfc8bb70-0d8a-4313-89e8-1ebda162d60d', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5e052db3-ed56-4ea6-8fe0-240ebf17ae10', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8733abcc-ce2f-4b18-9b5f-7a4333da1fff', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('db614cef-8b86-467d-a638-64c25a91ec78', 'Scenario 015 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['b640aae5-41ac-4d84-ba71-5d4a8fe6bd60', '12fac1f6-a900-4162-b5df-3be2448e1010', 'e8bf41a1-4d0e-4ab2-ba63-b67815a75f04', '5d20758e-0e3c-4342-9e19-c135dc369571', '2dab437e-f21f-4a6d-8421-eabe9344941a']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b640aae5-41ac-4d84-ba71-5d4a8fe6bd60', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('12fac1f6-a900-4162-b5df-3be2448e1010', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e8bf41a1-4d0e-4ab2-ba63-b67815a75f04', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5d20758e-0e3c-4342-9e19-c135dc369571', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2dab437e-f21f-4a6d-8421-eabe9344941a', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -4125,66 +3813,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('e01032e4-2047-455a-a329-175a40a8de24', 'Scenario 017 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['44f65d11-6b4b-46e8-8de1-6a84b0ee4c85', '66528aee-bf11-42b1-98bf-77b95bd92f3d', 'a7a95049-d53f-427e-b6ba-f6452274501b', '23d0733f-f70a-47e5-a08f-0b48cb92c20c', 'a7c441f9-fe01-4239-ab3d-af6c34ec6407']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('44f65d11-6b4b-46e8-8de1-6a84b0ee4c85', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('66528aee-bf11-42b1-98bf-77b95bd92f3d', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a7a95049-d53f-427e-b6ba-f6452274501b', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('23d0733f-f70a-47e5-a08f-0b48cb92c20c', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a7c441f9-fe01-4239-ab3d-af6c34ec6407', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('3b68eeb2-96f6-4a87-8a2f-5decaf3cb3f0', 'Scenario 018 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['7ba309a9-255d-46ed-a067-632466f485ad', '89158f85-d180-4baf-b06e-b2e1b2b6064a', '60ce5986-25a9-4de2-b064-2e4de24fe363', '19edad6c-06c3-4060-80d0-477dd530b829', '8b7a717d-1a34-42ce-b608-e0d3ed157efe']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7ba309a9-255d-46ed-a067-632466f485ad', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('89158f85-d180-4baf-b06e-b2e1b2b6064a', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('60ce5986-25a9-4de2-b064-2e4de24fe363', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('19edad6c-06c3-4060-80d0-477dd530b829', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8b7a717d-1a34-42ce-b608-e0d3ed157efe', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('fdd89c15-3f8d-4381-9cd7-e8b773d06997', 'Scenario 019 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['37913f92-7a29-42f3-8b81-d706800eca1e', 'ffe1483e-899f-48d1-a5ba-17e757f068c8', 'fba7c065-faaa-4c20-b544-17645537f90b', 'e72fb5fe-3bf3-450a-968f-047fd83f7f78', 'a8fa2e8f-2497-499b-a47b-bc8b63ee2904']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -4211,66 +3839,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('a8fa2e8f-2497-499b-a47b-bc8b63ee2904', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('1d8f2bda-38a4-41de-a614-291b9e4697e4', 'Scenario 020 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['c2a8167e-ec59-43c9-971d-7b6ebe556f8c', 'b129e883-b150-444e-9544-ff02375273e2', '377a640c-709c-4a19-a2ec-2c4236a5c6fa', '429066e6-1f63-480a-9606-bd24165c354b', '792dbf94-0434-4d7b-ae81-091660647120']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c2a8167e-ec59-43c9-971d-7b6ebe556f8c', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b129e883-b150-444e-9544-ff02375273e2', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('377a640c-709c-4a19-a2ec-2c4236a5c6fa', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('429066e6-1f63-480a-9606-bd24165c354b', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('792dbf94-0434-4d7b-ae81-091660647120', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('7277b987-4cc2-4cb5-a308-bb226c832747', 'Scenario 021 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['ea140db9-861d-46b3-84b2-5857b6a693c3', '0aeaf511-3ec5-457f-8db5-194b7f7a870d', 'b50077d1-bea6-4da5-9466-c325c6fc3b13', '18bb0b64-3619-4f18-9965-9e4791c93d19', '366554bf-b09b-40a8-8a2c-877a70e669de']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ea140db9-861d-46b3-84b2-5857b6a693c3', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0aeaf511-3ec5-457f-8db5-194b7f7a870d', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b50077d1-bea6-4da5-9466-c325c6fc3b13', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('18bb0b64-3619-4f18-9965-9e4791c93d19', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('366554bf-b09b-40a8-8a2c-877a70e669de', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -4305,66 +3873,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('ae7a8233-8a80-496a-a2b3-0afd9a28ebe6', 'Scenario 023 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['5f2fb04c-500d-442e-990c-812a5786ae94', '61b6585a-5506-4a4b-80a9-5639cb0dafb8', '01af699a-2852-476b-8667-8be8ef8689c1', '1c58e7f7-f1e8-40d6-abfa-ac63f75c836f', 'fcf7a52a-985b-4ccb-a0b0-a56e5817181f']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5f2fb04c-500d-442e-990c-812a5786ae94', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('61b6585a-5506-4a4b-80a9-5639cb0dafb8', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('01af699a-2852-476b-8667-8be8ef8689c1', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1c58e7f7-f1e8-40d6-abfa-ac63f75c836f', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('fcf7a52a-985b-4ccb-a0b0-a56e5817181f', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('2b4b92d2-6871-4c20-ad58-11dc51718379', 'Scenario 024 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['500c3db5-97d1-453b-ad18-49fb4e9d2b5c', '9ef582b7-8dc9-4856-beca-975075199fdb', '8aadb724-cd31-42b7-9544-6697a13111d1', '22ca63e4-2709-40c9-a43a-5085a8a86774', '4b0bb169-8f26-47f2-a2e8-d07add4d62fe']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('500c3db5-97d1-453b-ad18-49fb4e9d2b5c', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9ef582b7-8dc9-4856-beca-975075199fdb', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8aadb724-cd31-42b7-9544-6697a13111d1', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('22ca63e4-2709-40c9-a43a-5085a8a86774', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4b0bb169-8f26-47f2-a2e8-d07add4d62fe', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('86f360de-8c4d-44d0-b089-3259a91dc3ea', 'Scenario 025 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['f87184c0-aaa1-4367-8086-202b737c75b6', '05933988-2cc5-40aa-bc69-acbf682bbf71', 'ae6fbde7-e6ab-43b3-9314-4f2050ac484c', '2eee80c0-4aad-49b2-990e-3f8f93b4e9a3', 'c29a41e7-2433-4543-a9d0-ca8e6d59413d']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -4391,66 +3899,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('c29a41e7-2433-4543-a9d0-ca8e6d59413d', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('f4b1aaeb-a498-428e-8f8f-2ed07aee0641', 'Scenario 026 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['89a28292-760c-40bd-86c0-914e7262df3d', '8f0ba389-638e-4266-a289-285be7515642', 'c2efb3ce-777d-4fc6-8105-fd4952c89d9d', '8b557226-873c-426c-9ede-0cec643f37ac', 'eb6d0782-dd90-4e9f-a1ae-3f347eb46a27']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('89a28292-760c-40bd-86c0-914e7262df3d', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8f0ba389-638e-4266-a289-285be7515642', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c2efb3ce-777d-4fc6-8105-fd4952c89d9d', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8b557226-873c-426c-9ede-0cec643f37ac', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('eb6d0782-dd90-4e9f-a1ae-3f347eb46a27', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('e5968696-5497-496b-8fe4-f40a837f7129', 'Scenario 027 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['9c2d1ab5-9ff0-47d1-8e60-89ba6e8caa7d', '225a22c4-3103-48e2-bef9-a80c742ad9e5', '7377dbbe-6719-448a-bfce-d6da61e59d8a', '0ac8f462-c6be-4f8d-8a3b-6e8d32d6d645', '316f2cf4-bda6-4187-9571-5b26e2a655e5']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9c2d1ab5-9ff0-47d1-8e60-89ba6e8caa7d', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('225a22c4-3103-48e2-bef9-a80c742ad9e5', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7377dbbe-6719-448a-bfce-d6da61e59d8a', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0ac8f462-c6be-4f8d-8a3b-6e8d32d6d645', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('316f2cf4-bda6-4187-9571-5b26e2a655e5', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -4485,66 +3933,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('139b31bd-22e4-495c-8e21-5e6e34cd5a20', 'Scenario 029 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['fba95732-08c3-4e3b-8dea-8ab8c1b41ced', '239fb556-005a-4463-a5aa-87b5181e783d', '6f27791c-e48b-4e13-a24f-45865c43b4b4', 'b0823683-3aea-4266-ba11-49de77127690', '1c62f778-a3c8-463e-be2f-ba4b64253429']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('fba95732-08c3-4e3b-8dea-8ab8c1b41ced', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('239fb556-005a-4463-a5aa-87b5181e783d', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6f27791c-e48b-4e13-a24f-45865c43b4b4', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b0823683-3aea-4266-ba11-49de77127690', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1c62f778-a3c8-463e-be2f-ba4b64253429', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('9b603e03-3e2e-4366-8127-96307d3b2ce1', 'Scenario 030 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['c584332f-a7d1-4e7b-9ef6-d7ce669dcafc', '8ef2b3d4-1f12-40ce-829e-0bf51dc2f7b5', '5ddeca97-3077-4cea-ada4-e843d015e25b', 'b9230abd-0dfd-40e2-bba6-62ac5dae2a65', '72e92b4b-17d3-4213-9efb-802be88e78d6']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c584332f-a7d1-4e7b-9ef6-d7ce669dcafc', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8ef2b3d4-1f12-40ce-829e-0bf51dc2f7b5', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5ddeca97-3077-4cea-ada4-e843d015e25b', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b9230abd-0dfd-40e2-bba6-62ac5dae2a65', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('72e92b4b-17d3-4213-9efb-802be88e78d6', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('54601145-edd9-469f-8180-245e26dff069', 'Scenario 031 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['9c8af115-504d-4b73-a787-7877f3f2b9e5', 'ef4e6247-42ff-44e2-8c39-c3a5f511194d', '3ccab7b6-333e-4934-8712-09ec5ba7093c', '4bca10b5-456b-4674-b7a8-da4d5c22d55b', '6dbbfa0b-3c77-485a-a2be-bc220ee39fff']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -4571,66 +3959,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('6dbbfa0b-3c77-485a-a2be-bc220ee39fff', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('34fa69f7-e0f7-4fd4-adf0-2ed8a47d6abc', 'Scenario 032 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['4ea54315-fcfa-40cc-91a6-6b47f9004e07', 'c2f65d91-299c-4668-9b3f-481a72449e7d', 'e01c315e-017a-45df-8e30-def8f7f8cf3c', 'a3275249-b307-4ab6-a0b4-19ff91d4a882', 'abb286ec-fe60-4432-a300-04ed24e369bb']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4ea54315-fcfa-40cc-91a6-6b47f9004e07', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c2f65d91-299c-4668-9b3f-481a72449e7d', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e01c315e-017a-45df-8e30-def8f7f8cf3c', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a3275249-b307-4ab6-a0b4-19ff91d4a882', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('abb286ec-fe60-4432-a300-04ed24e369bb', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('51081d92-2ff1-40a4-b557-38215c125051', 'Scenario 033 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['11cc9bfe-55ff-43e2-942a-757369424808', '4c90bc32-125d-4f30-be3d-a5455de279d9', '98c4dc09-dd63-4b51-a193-09e130a656c0', '31792976-3b88-4b72-9448-6771eda41035', 'f0917a36-ca42-4461-816d-fc533d04b8a6']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('11cc9bfe-55ff-43e2-942a-757369424808', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4c90bc32-125d-4f30-be3d-a5455de279d9', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('98c4dc09-dd63-4b51-a193-09e130a656c0', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('31792976-3b88-4b72-9448-6771eda41035', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f0917a36-ca42-4461-816d-fc533d04b8a6', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -4665,66 +3993,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('d9d80121-bf6c-41ee-bc18-dade0e853ada', 'Scenario 035 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['b9a4f811-5574-4b95-b588-1df80f1cb81d', '636c590e-68ee-4fed-8b71-873b922e9c52', '6e18ad83-d51c-40f7-87dd-ef4c80c14933', '62ddbee3-4b3f-49b0-ac51-220366850786', 'b9079afb-6207-4545-8a40-623497cf23c5']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b9a4f811-5574-4b95-b588-1df80f1cb81d', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('636c590e-68ee-4fed-8b71-873b922e9c52', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6e18ad83-d51c-40f7-87dd-ef4c80c14933', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('62ddbee3-4b3f-49b0-ac51-220366850786', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b9079afb-6207-4545-8a40-623497cf23c5', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('5832961b-942f-4d33-8614-c6dd4861ef46', 'Scenario 036 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['da70bca0-5b6a-4336-8112-3d0c75c2f5e3', '1ae3628e-fd40-4fbf-8baa-1425f2aa2af4', '6cfe6486-ea99-46b9-aa74-ea8e7032c9b3', 'eb525b4f-bdce-49de-80ea-447eba11155e', 'd01a604e-de50-45e5-ad39-98a8eef90f90']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('da70bca0-5b6a-4336-8112-3d0c75c2f5e3', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1ae3628e-fd40-4fbf-8baa-1425f2aa2af4', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6cfe6486-ea99-46b9-aa74-ea8e7032c9b3', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('eb525b4f-bdce-49de-80ea-447eba11155e', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d01a604e-de50-45e5-ad39-98a8eef90f90', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('e44e2b83-ad54-4e9c-a2ea-c23c1a249c54', 'Scenario 037 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['4739013c-3bfa-465e-821a-af1a8dde80ba', 'f6572f12-f076-43e7-91c1-dc505d09c567', '1c8f52f1-9994-474e-a09e-dd6901d10518', 'd1d529ca-6a04-4042-858d-e2fcd37af10e', '2ae00bd9-59b3-4fcc-a852-4b4613c00df4']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -4751,66 +4019,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('2ae00bd9-59b3-4fcc-a852-4b4613c00df4', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('8ca33f45-3839-4ccc-aa88-146b41fee9f3', 'Scenario 038 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['b4b94f6e-af9d-4fde-b333-04a3b016d8a6', '6b670c01-47fb-4a17-b291-db6cad4619d8', 'f9b2b951-4208-4a26-85d7-8238606ee070', '369996a1-5e18-46e4-866f-5da036080088', 'd6cbf77e-3f8b-4b07-87f4-10e1f862d09b']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b4b94f6e-af9d-4fde-b333-04a3b016d8a6', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6b670c01-47fb-4a17-b291-db6cad4619d8', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f9b2b951-4208-4a26-85d7-8238606ee070', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('369996a1-5e18-46e4-866f-5da036080088', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d6cbf77e-3f8b-4b07-87f4-10e1f862d09b', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('e15fa3d0-0da3-4513-a5bd-6082806039a3', 'Scenario 039 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['3e7a98de-20f3-4110-87b0-e7e9c75fa73a', '999e479b-9d2b-4853-9e9a-0d023e614935', 'c20134aa-756d-42fe-b427-9375048f91a8', '70e61718-9313-4510-824e-0855d19497a9', 'cce4d6ca-79de-4eaa-b01e-bf61a5111b88']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3e7a98de-20f3-4110-87b0-e7e9c75fa73a', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('999e479b-9d2b-4853-9e9a-0d023e614935', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c20134aa-756d-42fe-b427-9375048f91a8', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('70e61718-9313-4510-824e-0855d19497a9', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('cce4d6ca-79de-4eaa-b01e-bf61a5111b88', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -4845,66 +4053,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('ef52b0f5-a147-4333-9817-fbd7e53143ee', 'Scenario 041 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['abe320d7-1775-4068-bbe6-d05bea349ac1', '1ed02342-0326-43c6-850e-58fb9315902d', '8c7f9183-bebc-473b-951e-6d0dde022a06', '8d7b6905-bef9-44d8-9ef0-2debb2e37aed', '5f809d45-c9c2-41af-8980-03da3b8d4488']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('abe320d7-1775-4068-bbe6-d05bea349ac1', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1ed02342-0326-43c6-850e-58fb9315902d', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8c7f9183-bebc-473b-951e-6d0dde022a06', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8d7b6905-bef9-44d8-9ef0-2debb2e37aed', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5f809d45-c9c2-41af-8980-03da3b8d4488', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('45b93b12-57cc-40ff-b277-82de8ceaec32', 'Scenario 042 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['c1c68fe9-320e-48e9-8d06-cc1cf89aebf5', 'b5de4122-de16-4408-8e5e-77c8797d571a', '9c21385c-f924-4067-8e8b-0eaa5ed0914e', '3fa1ce52-7640-45dd-81da-df7b612e05a7', '645d03bf-601e-41c7-b82d-1db62c7739b8']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c1c68fe9-320e-48e9-8d06-cc1cf89aebf5', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b5de4122-de16-4408-8e5e-77c8797d571a', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9c21385c-f924-4067-8e8b-0eaa5ed0914e', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3fa1ce52-7640-45dd-81da-df7b612e05a7', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('645d03bf-601e-41c7-b82d-1db62c7739b8', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('ae557fe8-2155-42b3-8d17-2e9de47dda4b', 'Scenario 043 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['777327f0-be79-4874-815c-9ddb43b5f82d', 'bd4a2d55-c6a5-40f7-a956-8f210b2a8cae', '1b751c4b-add5-439b-84c8-0044ad0fd443', 'eff9e0a4-0d69-4367-a0ff-2a51c7af8356', '563d5f9c-28b0-41fc-81c9-c081aee76149']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -4931,66 +4079,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('563d5f9c-28b0-41fc-81c9-c081aee76149', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('3b2f7caf-2e32-4db9-8377-e01f50e436c2', 'Scenario 044 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['2896db1c-4607-4024-b4ab-a0ef99849e02', '68fd1709-338f-4eb1-b7bb-95f8bbc4b43d', 'd56e44e2-7334-48bb-8a39-841a2fae9e5e', 'bf753844-0e96-4042-9228-97e7afb39219', '4ff116e1-bd3d-40bd-86c9-7fba46c8c741']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2896db1c-4607-4024-b4ab-a0ef99849e02', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('68fd1709-338f-4eb1-b7bb-95f8bbc4b43d', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d56e44e2-7334-48bb-8a39-841a2fae9e5e', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('bf753844-0e96-4042-9228-97e7afb39219', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4ff116e1-bd3d-40bd-86c9-7fba46c8c741', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('9ae1a2b5-fe89-4027-b1d8-8c3888862a5e', 'Scenario 045 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['00cd4d87-6d76-4b6a-ab20-bf24fe57475a', 'f6750243-30ab-4d76-a0b5-60665c523731', '83cde996-e9a9-4ff6-9de2-a0481b194b55', '2856d7b2-d442-42af-aa84-14bc1da64dc5', '664d2b31-6907-4dc7-b1e3-0958c2a7bd01']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('00cd4d87-6d76-4b6a-ab20-bf24fe57475a', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f6750243-30ab-4d76-a0b5-60665c523731', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('83cde996-e9a9-4ff6-9de2-a0481b194b55', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2856d7b2-d442-42af-aa84-14bc1da64dc5', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('664d2b31-6907-4dc7-b1e3-0958c2a7bd01', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -5025,66 +4113,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('7da98e75-8c84-4cfc-98f4-0fedf1aec08f', 'Scenario 047 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['49da75cf-27eb-4324-bd2d-adcf3589c79c', '950c3b47-b760-4784-bed1-8e07bb499d78', '09a62769-18af-493e-9ba4-987b8b6849f6', '9195aa79-55f7-45df-b540-f14a1a793a4c', '5896fe3c-e072-4c1a-9660-9fb311b1c288']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('49da75cf-27eb-4324-bd2d-adcf3589c79c', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('950c3b47-b760-4784-bed1-8e07bb499d78', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('09a62769-18af-493e-9ba4-987b8b6849f6', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9195aa79-55f7-45df-b540-f14a1a793a4c', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5896fe3c-e072-4c1a-9660-9fb311b1c288', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('7b42a1cc-ce70-4d9a-804f-ac9027a1ee48', 'Scenario 048 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['3458b653-87c1-49fd-a9ac-36b79c25a121', '74d7ea85-27e9-42b3-8e18-f9c38615cb4d', '55fd0578-d45d-4806-884c-3c4b7a0266f3', '8a7b854c-5b9d-43c5-b5a2-63e0ed90860a', 'f08c5611-d11e-48e7-a327-2b3ab92127d7']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3458b653-87c1-49fd-a9ac-36b79c25a121', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('74d7ea85-27e9-42b3-8e18-f9c38615cb4d', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('55fd0578-d45d-4806-884c-3c4b7a0266f3', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8a7b854c-5b9d-43c5-b5a2-63e0ed90860a', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f08c5611-d11e-48e7-a327-2b3ab92127d7', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('48caf228-64f6-4b03-ad20-5a34cf8dd2ee', 'Scenario 049 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['89dd3ea0-9487-412a-aad2-62043aa6f3c9', '10ef73c0-4b10-450a-9a5c-ec4aa7d69c8d', '181e7ff1-85f2-4571-a923-889e7cfda6bd', 'a1ecd65d-d16a-45be-bc2b-63fe1cc18316', '40b5af91-7a67-4630-b45f-e723eeecd02a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -5111,66 +4139,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('40b5af91-7a67-4630-b45f-e723eeecd02a', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('49cac9a9-1aac-4542-a01d-6483052bf02b', 'Scenario 050 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['52728331-1faf-435f-8314-c2d640255544', '7b922f08-a1dd-4af4-a127-13047fa84394', '3987516f-2927-49cf-bb53-473674bc3416', '8b3c276f-a91c-415f-adfd-54ad2cc7c460', '1cac8862-112e-4687-bc02-770fb058437e']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('52728331-1faf-435f-8314-c2d640255544', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7b922f08-a1dd-4af4-a127-13047fa84394', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3987516f-2927-49cf-bb53-473674bc3416', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8b3c276f-a91c-415f-adfd-54ad2cc7c460', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1cac8862-112e-4687-bc02-770fb058437e', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('b30319f8-8953-4433-80b6-5b80c9103bc5', 'Scenario 051 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['047233a4-f4f1-4259-a119-4ef0c1bbfc8c', '93149af1-7e55-4538-8ffe-834af938dd85', '8646c816-f4db-4848-81ee-ccfbab92fb91', 'eb0cdf2d-21a5-43aa-a880-c61d4f6c6d0e', '9c3d87e8-eee3-4d10-9db5-9a01d67610ee']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('047233a4-f4f1-4259-a119-4ef0c1bbfc8c', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('93149af1-7e55-4538-8ffe-834af938dd85', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8646c816-f4db-4848-81ee-ccfbab92fb91', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('eb0cdf2d-21a5-43aa-a880-c61d4f6c6d0e', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9c3d87e8-eee3-4d10-9db5-9a01d67610ee', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -5205,66 +4173,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('06863bb7-48d5-4897-87c7-3328546efdef', 'Scenario 053 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['1fc6a70e-7a28-4532-99e1-9c0c4d5d59c9', 'b70cd3d6-e081-4f8c-9c45-e794a8a4d622', '182aa7f6-a6df-4b2d-8d14-b2494e0cc924', '87f04950-8367-4639-8202-498aaa91e250', 'e4555ef4-0fa2-4ace-84b3-f944bdcee683']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1fc6a70e-7a28-4532-99e1-9c0c4d5d59c9', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b70cd3d6-e081-4f8c-9c45-e794a8a4d622', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('182aa7f6-a6df-4b2d-8d14-b2494e0cc924', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('87f04950-8367-4639-8202-498aaa91e250', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e4555ef4-0fa2-4ace-84b3-f944bdcee683', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('25f59eeb-3baf-4668-bdb1-2beb577fbf73', 'Scenario 054 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['0dd90195-30c4-4fd4-b534-20daf3e7133c', 'd5437338-bc0c-40e7-89cd-09b20e7f0d72', '55e67858-52d3-4b5f-ad97-d75dd94eddbc', '37833807-f588-4a16-bb24-64b8c0b5442c', 'b738319a-54f3-4a16-b9e0-f8a1c97085aa']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0dd90195-30c4-4fd4-b534-20daf3e7133c', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d5437338-bc0c-40e7-89cd-09b20e7f0d72', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('55e67858-52d3-4b5f-ad97-d75dd94eddbc', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('37833807-f588-4a16-bb24-64b8c0b5442c', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b738319a-54f3-4a16-b9e0-f8a1c97085aa', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('2a631e96-a912-4b27-b82e-57ca3dd4aacf', 'Scenario 055 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['469d4087-583b-4050-8cf3-80a2f714925c', 'ec8eb431-9609-4683-b6f3-e8d8675b87b4', '0df31492-0d91-49ba-b157-10102bc637c7', 'ddf256f5-1b03-4a5d-8719-77300a910125', '2ffab361-6499-4b1e-9067-a68e4eda00d8']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -5291,66 +4199,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('2ffab361-6499-4b1e-9067-a68e4eda00d8', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('a85cd328-09f9-4360-ae04-4479301b5987', 'Scenario 056 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['9e3e7d4b-7fed-40fa-8d68-0266b0408719', '0bd46e13-802b-4f46-9674-defa892a5e11', 'f29fc8fe-3fca-4529-8e2d-143a16f257bf', '24f63cbd-d597-4945-9966-1bc440c7845c', '74fc51a2-d9dc-40a8-bb70-23b4895112c1']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9e3e7d4b-7fed-40fa-8d68-0266b0408719', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0bd46e13-802b-4f46-9674-defa892a5e11', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f29fc8fe-3fca-4529-8e2d-143a16f257bf', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('24f63cbd-d597-4945-9966-1bc440c7845c', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('74fc51a2-d9dc-40a8-bb70-23b4895112c1', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('a35f5412-b565-4f24-9459-eb9ac1f7fe30', 'Scenario 057 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['2ecf01e6-9050-4997-aa30-4e0e6ad08f28', 'a2677225-21c2-481f-bb5a-836bcda904ef', 'a53984cb-4701-49ed-aa81-e6f92d15979e', 'b575dd4e-a378-4c3e-8121-80035a0e97f5', 'a7b30720-7c9a-48a1-9ba2-7601d80ee824']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2ecf01e6-9050-4997-aa30-4e0e6ad08f28', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a2677225-21c2-481f-bb5a-836bcda904ef', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a53984cb-4701-49ed-aa81-e6f92d15979e', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b575dd4e-a378-4c3e-8121-80035a0e97f5', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a7b30720-7c9a-48a1-9ba2-7601d80ee824', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -5385,66 +4233,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('4e2e9ee7-26e1-4a2c-bc3c-93761a0ea43c', 'Scenario 059 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['2fc379cb-1741-407b-bd3f-a9ba45abe458', '2fd08b7e-9022-48f6-a0bc-83e9e2ac83c2', '6c82084e-8a4f-44b1-af9a-0f780f102b68', '8529d4d2-b34c-4956-9b68-d6605081ce02', 'ca91b9ec-ecbd-463c-9448-98f8708ba797']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2fc379cb-1741-407b-bd3f-a9ba45abe458', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2fd08b7e-9022-48f6-a0bc-83e9e2ac83c2', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6c82084e-8a4f-44b1-af9a-0f780f102b68', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8529d4d2-b34c-4956-9b68-d6605081ce02', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ca91b9ec-ecbd-463c-9448-98f8708ba797', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('f262ffb3-86b9-4db8-8657-f4a96915cb83', 'Scenario 060 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['155f5432-a1fd-457f-b046-22a7ec3bcd7d', '1dede706-0da9-497b-87e1-f1f224ae5bbe', '87581bf9-abce-4ebb-9c05-b0a17a73a461', '4874cc0d-136e-4951-9fb9-263acf791e08', 'f47f5cd1-077f-47a3-964a-07d4337785ef']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('155f5432-a1fd-457f-b046-22a7ec3bcd7d', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1dede706-0da9-497b-87e1-f1f224ae5bbe', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('87581bf9-abce-4ebb-9c05-b0a17a73a461', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4874cc0d-136e-4951-9fb9-263acf791e08', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f47f5cd1-077f-47a3-964a-07d4337785ef', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('b022b575-103d-4ded-8da5-2e9a8f686da6', 'Scenario 061 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['77c324af-122c-43d6-98fb-fabffece8f17', '35137133-d5de-4b81-af69-cc20178ff5d7', 'e3ed9074-c0e1-45ac-a890-b80ef97eda10', '15df2d60-6c29-4d2f-ba45-561489afc12d', 'e8c5d273-04c1-497b-879e-cfc277fe6705']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -5471,66 +4259,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('e8c5d273-04c1-497b-879e-cfc277fe6705', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('ba5308f8-7e12-4c6e-8e4f-42f6280f537c', 'Scenario 062 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['cb44f490-e337-4d61-ac44-b19b95ef8789', '4eb98ac5-38c0-4dde-a63d-d95f3f978754', '95595a06-dbf9-42c8-b01e-bcc496ffdc9b', 'e3581914-a467-450e-8673-ea1fd5865123', 'ea137468-fcde-44c2-b603-41d5cd3d07c6']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('cb44f490-e337-4d61-ac44-b19b95ef8789', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4eb98ac5-38c0-4dde-a63d-d95f3f978754', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('95595a06-dbf9-42c8-b01e-bcc496ffdc9b', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e3581914-a467-450e-8673-ea1fd5865123', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ea137468-fcde-44c2-b603-41d5cd3d07c6', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('fec35ca6-d093-4081-8cf1-2f3b8f445bed', 'Scenario 063 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['9c35fa7c-d4f9-4b39-8ae8-2885ea8a287c', '28c0d9f4-4c7a-4682-a9a0-0ee6fee32ca5', '5bca224b-b31e-479c-b451-adbaf8a8ba72', '4e6d0b47-af87-4b10-92c0-963f241fae06', '98b1aeb1-bb6a-4753-b229-5864a2a29dd1']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9c35fa7c-d4f9-4b39-8ae8-2885ea8a287c', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('28c0d9f4-4c7a-4682-a9a0-0ee6fee32ca5', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5bca224b-b31e-479c-b451-adbaf8a8ba72', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4e6d0b47-af87-4b10-92c0-963f241fae06', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('98b1aeb1-bb6a-4753-b229-5864a2a29dd1', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -5565,66 +4293,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('a82beae8-9b1a-4a00-bea2-4891b56f3014', 'Scenario 065 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['ba254db3-524a-4b9c-ae96-81f9793b9a6d', 'e941ee01-8631-43fe-8090-77cb5b526cbf', 'b5c881cf-79fb-484c-98ff-668b13ee445c', 'a39d0eac-66e5-4f21-82a7-7f8a1ec4c8e9', 'f6d8fd78-2c83-4cd9-895e-2becc91d8c28']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ba254db3-524a-4b9c-ae96-81f9793b9a6d', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e941ee01-8631-43fe-8090-77cb5b526cbf', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b5c881cf-79fb-484c-98ff-668b13ee445c', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a39d0eac-66e5-4f21-82a7-7f8a1ec4c8e9', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f6d8fd78-2c83-4cd9-895e-2becc91d8c28', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('14a20672-ea9c-4205-961a-4f2a3585eea2', 'Scenario 066 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['eab05595-a74b-4ae8-abcb-e0d34b356cc0', '4639391d-7088-4900-ae68-c51bfd8974cc', '8d7592ad-349c-4499-aefd-7ab5190caa8e', '9d04e522-a8db-4583-be50-6efe358a8075', 'bc35365e-7239-4fd6-bb87-f7c42aa2ee0e']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('eab05595-a74b-4ae8-abcb-e0d34b356cc0', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4639391d-7088-4900-ae68-c51bfd8974cc', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8d7592ad-349c-4499-aefd-7ab5190caa8e', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9d04e522-a8db-4583-be50-6efe358a8075', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('bc35365e-7239-4fd6-bb87-f7c42aa2ee0e', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('e7f82820-1caf-4b4f-ae70-8ea4d95dcb0c', 'Scenario 067 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['0303386a-e58a-4e17-b813-669bbcf7c88d', 'b51a2ab7-fc16-4ac9-aaa7-b4082403b68e', 'a7395205-d0aa-45ea-87fe-01479e45b8a2', '108c03e4-505f-4700-a657-f9ffb9f87a0d', '1eb01e75-9cf3-4793-a8d6-3626394c9f04']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -5651,66 +4319,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('1eb01e75-9cf3-4793-a8d6-3626394c9f04', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('989cc7e2-1d39-4334-8130-b704fd7c6c7b', 'Scenario 068 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['c09b96dd-93af-424a-8b71-e47dc5e0d339', '603a3f56-cbe2-4c7b-acfe-48cf64611540', '023e874d-e1e1-4437-af61-73ec6b34ac9f', '9af72ad2-5563-4211-9e36-d2d0d1bd9392', '50882528-86dc-4356-9ccb-37f472091958']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c09b96dd-93af-424a-8b71-e47dc5e0d339', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('603a3f56-cbe2-4c7b-acfe-48cf64611540', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('023e874d-e1e1-4437-af61-73ec6b34ac9f', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9af72ad2-5563-4211-9e36-d2d0d1bd9392', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('50882528-86dc-4356-9ccb-37f472091958', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('63b933c7-b63c-4ab7-b602-69aa5f91aec9', 'Scenario 069 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['ec8a10f0-2a3c-412a-abc8-eaa6a71f7d93', '13c405cd-95ce-4cd2-bb4c-bdc5a1f70b3e', 'fb6b3db0-9c0e-48a3-978d-d61f8cee3caf', 'e017fde2-2fd8-4719-832a-0d187d356c5b', 'd9df84b4-c980-4fca-bbeb-95feb59f60cb']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ec8a10f0-2a3c-412a-abc8-eaa6a71f7d93', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('13c405cd-95ce-4cd2-bb4c-bdc5a1f70b3e', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('fb6b3db0-9c0e-48a3-978d-d61f8cee3caf', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e017fde2-2fd8-4719-832a-0d187d356c5b', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d9df84b4-c980-4fca-bbeb-95feb59f60cb', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -5745,66 +4353,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('dc280d8b-d3ca-4517-9d31-9e70e2f3aea8', 'Scenario 071 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['45d8036d-74ca-4a7e-bea4-a82335090260', '88a698af-9918-427b-8065-763814a7ad3d', '6be7ccf7-affa-43ea-b03a-a0259ddfb17c', 'c364f9da-7ea9-44ef-9761-5795e543d786', '79f8a995-2623-427c-aebd-4bc394bec333']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('45d8036d-74ca-4a7e-bea4-a82335090260', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('88a698af-9918-427b-8065-763814a7ad3d', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6be7ccf7-affa-43ea-b03a-a0259ddfb17c', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c364f9da-7ea9-44ef-9761-5795e543d786', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('79f8a995-2623-427c-aebd-4bc394bec333', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('4223ef16-0a01-404d-8024-5a656203d3f8', 'Scenario 072 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['ce6b2188-7883-4338-8432-5a1bea7edc28', '38bdcf51-1ec0-4300-909a-1c2836622817', '6ac117b1-1bd5-4158-9edd-fafaaf986ed1', 'e6c0181b-ae2f-4aea-94d1-666af29413cb', '71c0ca1d-ad7e-435e-93e0-0b6d0390643d']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ce6b2188-7883-4338-8432-5a1bea7edc28', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('38bdcf51-1ec0-4300-909a-1c2836622817', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6ac117b1-1bd5-4158-9edd-fafaaf986ed1', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e6c0181b-ae2f-4aea-94d1-666af29413cb', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('71c0ca1d-ad7e-435e-93e0-0b6d0390643d', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('320b95b2-84d6-4827-ba37-0de57a1e6360', 'Scenario 073 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['5fba6340-f185-43a4-b699-a9b5d0cede7d', 'ae0c0753-5ccc-4102-ab20-74d5fcf6d66a', 'e4a56333-6a60-48cc-9aec-0a69c582ffbc', 'a25d5309-69f8-4290-bd26-affb1f82f854', '976deade-98a2-4a63-9c66-6daab36caccd']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -5831,66 +4379,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('976deade-98a2-4a63-9c66-6daab36caccd', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('b9164bdc-9f5e-42b8-8379-7b6f454a3933', 'Scenario 074 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['01e400f0-d20c-4217-bdad-6eb8f9ff50cf', 'f7de9a76-f123-428c-a6da-d6bc05a04497', '98b7da05-3aef-4474-82c5-c250fbf908c7', '09235f10-a209-49c8-9290-dfdcacece4a1', '1aee2a09-088d-4be3-8b3f-3be847d53d11']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('01e400f0-d20c-4217-bdad-6eb8f9ff50cf', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f7de9a76-f123-428c-a6da-d6bc05a04497', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('98b7da05-3aef-4474-82c5-c250fbf908c7', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('09235f10-a209-49c8-9290-dfdcacece4a1', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1aee2a09-088d-4be3-8b3f-3be847d53d11', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('59b4935d-cc5d-4792-a395-770bae030d2d', 'Scenario 075 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['557f4487-42de-4efc-a990-f87232943c21', '10594ec4-8563-4341-89ef-6f0fe1cbc8d6', 'dd83dbce-c056-4582-963a-f46c4e9a3bd3', '7d820783-fe02-41c3-ba0c-f3a86083c366', '5fe408f1-ea5b-446c-bb0e-50bbace79411']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('557f4487-42de-4efc-a990-f87232943c21', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('10594ec4-8563-4341-89ef-6f0fe1cbc8d6', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('dd83dbce-c056-4582-963a-f46c4e9a3bd3', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7d820783-fe02-41c3-ba0c-f3a86083c366', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5fe408f1-ea5b-446c-bb0e-50bbace79411', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -5925,66 +4413,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('8df90815-5b7b-46c6-b388-546efbfa18a0', 'Scenario 077 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['99f20d05-072c-43d8-964e-2fe87b7d57f6', 'b2685678-fe00-4b9e-b3b4-df5dec383523', '361670e8-54e4-484f-932c-46f11ce6ec0a', 'faa38a9b-389b-454e-b78a-72b2c8a00fc3', '1f12eb21-1f3b-4926-9b0c-bafde0758bd0']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('99f20d05-072c-43d8-964e-2fe87b7d57f6', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b2685678-fe00-4b9e-b3b4-df5dec383523', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('361670e8-54e4-484f-932c-46f11ce6ec0a', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('faa38a9b-389b-454e-b78a-72b2c8a00fc3', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1f12eb21-1f3b-4926-9b0c-bafde0758bd0', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('10ee5c39-9ae9-4e58-bdc8-8a449887574d', 'Scenario 078 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['d3787161-b560-4e4e-89c6-307f77108dd7', '78c0c730-aa31-44c4-a9bd-9450e7ffc4c1', '3fc123ca-c3c6-495e-b3b3-bc5a26ac03f8', '4bbd5f6f-ce29-4003-bc8c-2fc8d529b9e7', 'e09faf81-1355-46bd-8e4f-3fcdc5e67a44']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d3787161-b560-4e4e-89c6-307f77108dd7', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('78c0c730-aa31-44c4-a9bd-9450e7ffc4c1', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3fc123ca-c3c6-495e-b3b3-bc5a26ac03f8', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4bbd5f6f-ce29-4003-bc8c-2fc8d529b9e7', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e09faf81-1355-46bd-8e4f-3fcdc5e67a44', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('23ce8d72-6c32-45b4-a04e-34e029eb509e', 'Scenario 079 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['ac6e2755-52ed-478d-bfc1-65f4d5819181', '7f8d023c-1237-4a4d-ae04-df861e5d4d9c', 'a99d5365-18bb-4419-b37f-b876c57b6814', 'cd5cdab3-4f15-4c9e-aeac-0c9549c62297', '87250658-ab61-4e05-8945-d40ead18a43f']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -6011,66 +4439,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('87250658-ab61-4e05-8945-d40ead18a43f', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('f185083b-3f74-4221-b5c8-7b2e561ae2e4', 'Scenario 080 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['16995230-2d8b-421e-8512-6e858c2ae301', '09ee74ce-7cfa-4b35-9983-d1e9850a37ee', '22514423-ffb8-4e89-96fb-8e84417ca20c', 'c77fd66b-867d-4409-af89-8b60cffc5793', 'e26939cd-73d4-401c-9cb6-e827846ab9b8']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('16995230-2d8b-421e-8512-6e858c2ae301', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('09ee74ce-7cfa-4b35-9983-d1e9850a37ee', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('22514423-ffb8-4e89-96fb-8e84417ca20c', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c77fd66b-867d-4409-af89-8b60cffc5793', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e26939cd-73d4-401c-9cb6-e827846ab9b8', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('dc4da56a-bf2d-4351-b280-d418736844de', 'Scenario 081 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['99a8ff5c-a0fb-48e9-9669-4b5f8b09e462', '6a06c25c-7278-46eb-8e59-2512e0fde276', 'a4370080-727e-4c4e-94eb-c58816044fe6', 'f633a08d-4529-410b-b098-cce3d5d11572', '0301e4a8-7b78-4f67-aff8-7ba87163e615']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('99a8ff5c-a0fb-48e9-9669-4b5f8b09e462', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6a06c25c-7278-46eb-8e59-2512e0fde276', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a4370080-727e-4c4e-94eb-c58816044fe6', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f633a08d-4529-410b-b098-cce3d5d11572', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0301e4a8-7b78-4f67-aff8-7ba87163e615', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -6105,66 +4473,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('d85cbc22-951e-4926-94f9-9c7a703b54eb', 'Scenario 083 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['da35049d-c466-4031-b56b-a7e0c5f017a0', '855db200-9358-49ba-ae5f-97ed84501895', '73f268fe-3b5f-4f4c-8679-5e6207f1f4c6', '9b6e80aa-8f92-40d0-b86d-167bdfd4ee69', '88be7596-a560-4339-b2e5-9be9cdae99bf']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('da35049d-c466-4031-b56b-a7e0c5f017a0', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('855db200-9358-49ba-ae5f-97ed84501895', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('73f268fe-3b5f-4f4c-8679-5e6207f1f4c6', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9b6e80aa-8f92-40d0-b86d-167bdfd4ee69', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('88be7596-a560-4339-b2e5-9be9cdae99bf', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('d4b12805-017e-46d9-8fe7-220569a21477', 'Scenario 084 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['9b675914-ba29-43ff-924e-fc3147b1593c', 'cf0aea3f-9a68-4587-a7c2-cee74009be46', '4e32f8e1-5f53-4794-8744-09c275a911a4', '1167c7c5-09b4-4a60-9c2f-e6a14dad7705', '6ca71e7a-9546-4495-b1fc-fd81c7496055']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9b675914-ba29-43ff-924e-fc3147b1593c', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('cf0aea3f-9a68-4587-a7c2-cee74009be46', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4e32f8e1-5f53-4794-8744-09c275a911a4', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1167c7c5-09b4-4a60-9c2f-e6a14dad7705', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6ca71e7a-9546-4495-b1fc-fd81c7496055', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('2f5a8e75-521e-4398-bfd2-e7ff7c9e0be4', 'Scenario 085 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['2b6a0aa9-5f5c-4b1a-9981-e151fd6ba9e4', '739eb117-574c-4a62-9860-995bb4c038ae', 'affc329c-d457-4929-bb0b-e3b84b9da0d3', 'e822329e-4f99-4259-83ca-d223cbf1baa3', 'a40c99a3-38dc-4e27-b4b6-2680cf41ba7a']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -6191,66 +4499,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('a40c99a3-38dc-4e27-b4b6-2680cf41ba7a', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('701c5b31-06d0-4e54-82b9-08e1612f1042', 'Scenario 086 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['5325d0d1-c6dd-43e5-a6e4-10e5f33d9adf', '36d49bce-e133-4967-b5bf-956f9ac94822', '367ea891-16a2-409e-b71c-a82904e2eca4', '4f2c347c-a8f0-47fe-a55d-877a0e1000e6', 'f2dbd13b-204c-4be3-bd74-aecd3c741597']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5325d0d1-c6dd-43e5-a6e4-10e5f33d9adf', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('36d49bce-e133-4967-b5bf-956f9ac94822', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('367ea891-16a2-409e-b71c-a82904e2eca4', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4f2c347c-a8f0-47fe-a55d-877a0e1000e6', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f2dbd13b-204c-4be3-bd74-aecd3c741597', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('6acbd77e-18a8-41c9-af81-1ff0ac1a9b0f', 'Scenario 087 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['fa77cb93-d65a-426d-b8fd-caf882478ec7', 'd9b42b82-f083-417d-ac7e-1e2fb402385b', '6b65a403-2c52-4f00-886f-b18e0d96a7d5', '09a9292a-47a1-4f02-a086-84f1e96cd9e6', '43b1503a-0d0d-447b-a9e7-d6909fb208fc']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('fa77cb93-d65a-426d-b8fd-caf882478ec7', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d9b42b82-f083-417d-ac7e-1e2fb402385b', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6b65a403-2c52-4f00-886f-b18e0d96a7d5', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('09a9292a-47a1-4f02-a086-84f1e96cd9e6', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('43b1503a-0d0d-447b-a9e7-d6909fb208fc', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -6285,66 +4533,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('890c8007-a763-4a94-86d5-28d8c11c573f', 'Scenario 089 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['23dd897e-baa2-494c-91aa-a4254bef3308', '3366aba4-b157-4791-9a9a-4e106e450402', 'c8561fa1-ffe5-4220-b49f-a0fc297428a8', '7fccc6fd-9262-4092-ab41-b8b3f7b5f37c', 'a89b46af-7d26-4ba0-8aa7-bdcd563d929f']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('23dd897e-baa2-494c-91aa-a4254bef3308', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3366aba4-b157-4791-9a9a-4e106e450402', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c8561fa1-ffe5-4220-b49f-a0fc297428a8', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7fccc6fd-9262-4092-ab41-b8b3f7b5f37c', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a89b46af-7d26-4ba0-8aa7-bdcd563d929f', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('a7a37c14-b2a7-471c-9ed2-af90ee502d39', 'Scenario 090 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['32d6e1e3-c549-49da-9d09-ede04e553e30', 'd6d11fcd-fe82-413b-9f07-1dea11d4e4ab', '8dc052e0-6b6b-41fc-8b2c-2e51d0c9ce9d', '09ae88c8-f4dc-4833-b8f2-d832d9110611', '6c9e0778-9a01-4b24-9cb3-766f1efbce33']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('32d6e1e3-c549-49da-9d09-ede04e553e30', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d6d11fcd-fe82-413b-9f07-1dea11d4e4ab', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8dc052e0-6b6b-41fc-8b2c-2e51d0c9ce9d', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('09ae88c8-f4dc-4833-b8f2-d832d9110611', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6c9e0778-9a01-4b24-9cb3-766f1efbce33', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('848a39f3-e96b-4c41-83b8-78a2eb99403f', 'Scenario 091 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['2463cf4f-0f30-4d00-8739-88fd243b8fc9', '23684a3c-fc1c-428c-b8f0-4b36df75eb08', 'e071f598-31e5-4c8e-8071-745fe5e2c8fc', '4a5d35d2-1a35-4900-ac9f-9b00b1d157ba', '80cb7a13-aaa6-4715-8fca-6b1bb20e8bb1']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -6371,66 +4559,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('80cb7a13-aaa6-4715-8fca-6b1bb20e8bb1', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('5dbc518b-6a94-4e7f-b140-f99eb30af9b2', 'Scenario 092 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['04d4e674-ea30-4169-93f6-7192270653d5', '7e9ce2fe-8716-4bb6-99ca-fa952112e964', '743313a4-fd0c-4c22-86d0-04a20ebff8a1', 'd18f0025-9c90-4d0d-9c99-abae5483dc78', 'c65cb907-9b58-4877-9305-e6ed21da61a3']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('04d4e674-ea30-4169-93f6-7192270653d5', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7e9ce2fe-8716-4bb6-99ca-fa952112e964', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('743313a4-fd0c-4c22-86d0-04a20ebff8a1', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d18f0025-9c90-4d0d-9c99-abae5483dc78', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c65cb907-9b58-4877-9305-e6ed21da61a3', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('626f428b-0928-48c8-8770-12de6e3b18ed', 'Scenario 093 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['5dd8d671-05b5-4baa-be8a-51744cf82cb1', '8d021723-0964-4b85-bf96-fc305b249df8', '403874e9-1c93-4f4a-8f87-5755acc1304c', '54a6468e-eb51-4e63-adb2-ea2b7a9bcff8', 'b3c7add8-4157-46fc-bcf9-c1ec375dcec2']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5dd8d671-05b5-4baa-be8a-51744cf82cb1', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8d021723-0964-4b85-bf96-fc305b249df8', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('403874e9-1c93-4f4a-8f87-5755acc1304c', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('54a6468e-eb51-4e63-adb2-ea2b7a9bcff8', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b3c7add8-4157-46fc-bcf9-c1ec375dcec2', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -6465,66 +4593,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('5869ddd8-fbb9-431e-beb7-64761220e3e3', 'Scenario 095 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['9ab8573d-be01-411d-a4d7-915bc3fa3a3c', 'bfda2d4e-2cd3-4b18-afcf-280627ea8b2e', '79a09707-f6a0-4fd4-aefc-da66531b2ab1', '36dc3bd4-fef6-48e2-b651-375be4259e2b', 'a3023eb7-edff-46e6-be1e-0ae89d18008d']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9ab8573d-be01-411d-a4d7-915bc3fa3a3c', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('bfda2d4e-2cd3-4b18-afcf-280627ea8b2e', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('79a09707-f6a0-4fd4-aefc-da66531b2ab1', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('36dc3bd4-fef6-48e2-b651-375be4259e2b', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a3023eb7-edff-46e6-be1e-0ae89d18008d', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('d238a30f-2f16-4e12-83a6-fcf779cd7115', 'Scenario 096 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['f7ecbade-22a3-4ca6-85bc-de126dbfc00d', 'f1eb13fc-5d29-49ac-8d99-3ae2c901762f', 'd298b253-51ca-4910-b348-b3642f27a68e', '8624838a-a608-430e-ba96-3ed1a80582a6', 'eb64cd0a-e088-46b4-b917-dc9a81fa0a7b']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f7ecbade-22a3-4ca6-85bc-de126dbfc00d', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f1eb13fc-5d29-49ac-8d99-3ae2c901762f', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d298b253-51ca-4910-b348-b3642f27a68e', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8624838a-a608-430e-ba96-3ed1a80582a6', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('eb64cd0a-e088-46b4-b917-dc9a81fa0a7b', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('e86883e7-53be-4b58-99cb-efd5f23cdb5b', 'Scenario 097 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['e554acce-9d98-42ae-9e67-2026e25a9e0c', 'd1ef988b-5a50-43b5-ac26-7af9b6b07ef5', 'ec9ba3bd-d8c1-4500-b49d-8f6aed58e46e', '09941bcd-8eec-44bb-b0e7-97a2d4f5930d', '0e75b37a-fb7a-477c-96c0-5841baf71f0b']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -6551,66 +4619,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('0e75b37a-fb7a-477c-96c0-5841baf71f0b', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('08c0e125-3ee8-45d4-94fc-84aa5d8c711d', 'Scenario 098 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['9afd9aa9-9e5c-4d41-a0b4-52ac8da27919', '7d413bfc-204f-4cfd-844b-f67154722c5f', 'baa7831a-43ed-4e4a-8730-e73ceb94bfc6', '00a4892e-3458-4e79-9be0-a05f33151838', 'b95d9da7-3f04-41a6-8823-b0b7aedb4d5b']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9afd9aa9-9e5c-4d41-a0b4-52ac8da27919', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7d413bfc-204f-4cfd-844b-f67154722c5f', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('baa7831a-43ed-4e4a-8730-e73ceb94bfc6', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('00a4892e-3458-4e79-9be0-a05f33151838', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b95d9da7-3f04-41a6-8823-b0b7aedb4d5b', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('ac06a723-e801-470d-991d-b4411368ccfe', 'Scenario 099 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['91305d06-b799-491b-952c-7485a6a6e0a7', '2875c665-ed68-4703-a105-817bbbdf2dd1', 'b18e7dd3-b3f5-473b-8db9-d2866261f0ac', 'f49ebc98-4dfe-4e82-bba7-ce878baf3257', '9ccc9e69-c4c4-4f79-adaa-8148e5828741']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('91305d06-b799-491b-952c-7485a6a6e0a7', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2875c665-ed68-4703-a105-817bbbdf2dd1', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b18e7dd3-b3f5-473b-8db9-d2866261f0ac', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f49ebc98-4dfe-4e82-bba7-ce878baf3257', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9ccc9e69-c4c4-4f79-adaa-8148e5828741', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -6645,66 +4653,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('b990e1ab-5a11-4eba-9719-3b8b77846365', 'Scenario 101 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['f2807367-5983-4d98-a93f-e5cbba4ae7d2', '12ddaa01-4582-429d-a703-9328dd9b3864', '04bc1fd2-e87d-4c28-837f-c6ceea14c5f4', '178a5cc0-fed0-4ec2-b82e-746a35840e8d', '3524c2da-68a5-4eeb-be5c-24e512faefdc']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f2807367-5983-4d98-a93f-e5cbba4ae7d2', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('12ddaa01-4582-429d-a703-9328dd9b3864', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('04bc1fd2-e87d-4c28-837f-c6ceea14c5f4', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('178a5cc0-fed0-4ec2-b82e-746a35840e8d', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3524c2da-68a5-4eeb-be5c-24e512faefdc', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('9eb9657e-5c48-461a-a680-7fae151f6800', 'Scenario 102 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['eb69d4dd-0223-49cd-a329-38cd59dce67d', '1e6566ea-aa4e-46da-b82d-d957820a9b80', 'd14576a7-b43e-4a4d-8cea-6a3ac1e31ee0', 'b5eeca72-17cf-447a-85fc-ab8348ce5a15', '184c378d-489b-492d-990f-d8be99b7f35c']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('eb69d4dd-0223-49cd-a329-38cd59dce67d', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1e6566ea-aa4e-46da-b82d-d957820a9b80', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d14576a7-b43e-4a4d-8cea-6a3ac1e31ee0', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b5eeca72-17cf-447a-85fc-ab8348ce5a15', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('184c378d-489b-492d-990f-d8be99b7f35c', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('2ff0136f-7995-4134-8e4e-9fd92da46ea8', 'Scenario 103 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['d4de62f8-963f-44ee-9df1-8ff2594d0d02', '2397a62a-06fd-42d8-9592-af7bf2e051ba', '66ddf66f-ebe0-4149-bc89-2c65d467fbfc', '0fce79af-a0be-458d-a903-1ad6bd5896f4', 'a528a52a-ef82-4181-9a81-4a6e82b2bc18']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -6731,66 +4679,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('a528a52a-ef82-4181-9a81-4a6e82b2bc18', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('fb08a40e-b5cc-4f8a-9b72-c9fe901fcb04', 'Scenario 104 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['baf1e2c1-6952-4399-a70a-50e54432c2e1', '64eacc96-259a-4b29-b1bc-debcfac0aa62', '270829d6-3fe0-4f08-8ad7-7ee87801bf28', '776f0497-ae55-4410-8ae7-731855b691f0', '6898b6a9-0b48-43c4-9d4d-3bbe08b2c130']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('baf1e2c1-6952-4399-a70a-50e54432c2e1', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('64eacc96-259a-4b29-b1bc-debcfac0aa62', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('270829d6-3fe0-4f08-8ad7-7ee87801bf28', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('776f0497-ae55-4410-8ae7-731855b691f0', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6898b6a9-0b48-43c4-9d4d-3bbe08b2c130', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('1667a5c9-ae17-4628-ba55-74e34cb04332', 'Scenario 105 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['dedebeae-223a-4d2f-b95c-8b31a9e9a120', '2997f9ba-4574-44eb-9968-7e6d3ca25805', '3d610397-a8be-411d-9877-bc92accfbc90', '480b9b5a-c40f-4166-835c-620c3e2d36ae', '294660a6-1634-4835-b85d-d495831a3abb']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('dedebeae-223a-4d2f-b95c-8b31a9e9a120', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2997f9ba-4574-44eb-9968-7e6d3ca25805', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3d610397-a8be-411d-9877-bc92accfbc90', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('480b9b5a-c40f-4166-835c-620c3e2d36ae', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('294660a6-1634-4835-b85d-d495831a3abb', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -6825,66 +4713,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('6735f34e-d3a1-41d5-86a0-f623099bf2cf', 'Scenario 107 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['72cd6483-3898-4d5b-b240-e9ab70201c8d', 'e306997f-8c86-4753-9b6f-80ae7e855880', '6485683b-3922-4c2e-82d8-ab86cd312416', '62065c6d-47f3-4a8e-9947-f91d0f55c1ea', 'c8de78fc-b34b-445c-8d46-46bbe755ea4d']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('72cd6483-3898-4d5b-b240-e9ab70201c8d', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e306997f-8c86-4753-9b6f-80ae7e855880', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6485683b-3922-4c2e-82d8-ab86cd312416', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('62065c6d-47f3-4a8e-9947-f91d0f55c1ea', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c8de78fc-b34b-445c-8d46-46bbe755ea4d', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('2bb4384c-1119-4756-a2ad-fc2e5c00f952', 'Scenario 108 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['a80b6e0d-6737-42da-a3d7-840613c86d30', '14fcbcf1-1a41-4bd3-a826-2a160a6af2a1', '7d5a151d-ab91-4d97-a125-f46a216e98e3', '7db463c9-bbf4-46fa-8975-cd3946d1a157', 'e025981e-6c2a-4738-8901-2ddaa980963e']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a80b6e0d-6737-42da-a3d7-840613c86d30', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('14fcbcf1-1a41-4bd3-a826-2a160a6af2a1', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7d5a151d-ab91-4d97-a125-f46a216e98e3', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7db463c9-bbf4-46fa-8975-cd3946d1a157', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e025981e-6c2a-4738-8901-2ddaa980963e', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('5a52729c-4f09-4f58-852d-48239e9ce217', 'Scenario 109 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['74fe7de5-8b55-487a-a30c-27eb395c5c2e', '40ff1c1b-786b-47b6-b06c-1efc1380f8de', 'c8cc7125-089d-42dd-b623-a7d673f97402', '14576c36-362f-4185-b3d3-da43ee45416c', 'd0f9da0a-9622-4c0d-aac5-f1b1844c1566']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -6911,66 +4739,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('d0f9da0a-9622-4c0d-aac5-f1b1844c1566', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('4c6e1a87-a083-46c1-b928-0c1d1763a9db', 'Scenario 110 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['897b968e-54ac-4c56-be93-76c5834f1143', 'bbe5bee1-c36a-43aa-9888-f9b00b078661', '73363f26-0760-4635-8249-011b18d69f66', '9583c14a-e19c-4da8-a67b-a734b1e57a3e', '1bf650e7-fd01-4ab4-b22c-76463053d103']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('897b968e-54ac-4c56-be93-76c5834f1143', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('bbe5bee1-c36a-43aa-9888-f9b00b078661', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('73363f26-0760-4635-8249-011b18d69f66', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9583c14a-e19c-4da8-a67b-a734b1e57a3e', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1bf650e7-fd01-4ab4-b22c-76463053d103', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('c6ea3dff-9cda-471d-bf8b-a576b17036bb', 'Scenario 111 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['f44386fa-f585-4b42-a57d-833ad6b224dc', '4f192800-84dd-4505-99d7-e2976aef522d', '4efb4b26-21d5-41e5-969d-c36ed4899a65', 'ed547fbb-bc85-4d16-b39f-c81a388d4787', 'ee21d816-22a8-424d-92c1-1f05ba15a338']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f44386fa-f585-4b42-a57d-833ad6b224dc', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4f192800-84dd-4505-99d7-e2976aef522d', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4efb4b26-21d5-41e5-969d-c36ed4899a65', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ed547fbb-bc85-4d16-b39f-c81a388d4787', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ee21d816-22a8-424d-92c1-1f05ba15a338', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -7005,66 +4773,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('be2823fd-5389-4415-9447-ed84006cee4c', 'Scenario 113 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['c4dcd4dd-0721-41f3-8491-064268ccef00', '3d36b9df-34dd-4917-98cc-55222655fd94', '82a5e7be-4355-4f38-9d37-61456e7257dd', '1008714d-ecdb-4672-a9a4-c79fdb971913', '22cc64a3-1798-4d66-9876-b9c27083b9d4']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c4dcd4dd-0721-41f3-8491-064268ccef00', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3d36b9df-34dd-4917-98cc-55222655fd94', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('82a5e7be-4355-4f38-9d37-61456e7257dd', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1008714d-ecdb-4672-a9a4-c79fdb971913', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('22cc64a3-1798-4d66-9876-b9c27083b9d4', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('03ffcc01-b691-406f-ac53-5d13e9328175', 'Scenario 114 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['91bb6517-5ed6-4dd2-92e9-88a5f58d6673', 'c79ebb01-77ea-43a0-9e2e-5cdf7ed8f4cc', '90763a8c-b125-4797-9de2-cedfa913fb37', 'f9f84b59-ecb6-454e-9790-49e1baa9fa60', '3d39dc7a-b244-4353-97e2-e820fe5e95f2']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('91bb6517-5ed6-4dd2-92e9-88a5f58d6673', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c79ebb01-77ea-43a0-9e2e-5cdf7ed8f4cc', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('90763a8c-b125-4797-9de2-cedfa913fb37', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f9f84b59-ecb6-454e-9790-49e1baa9fa60', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('3d39dc7a-b244-4353-97e2-e820fe5e95f2', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('220bf75b-d271-4c46-bde2-67b313f10d13', 'Scenario 115 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['df539590-b059-4211-a5f8-d130c84540d6', '5bf129f3-deaa-453f-9cf8-62a84e4ba3f3', 'e85c0ae3-ba25-4fab-a20d-0336c6479ae4', 'fd5229e7-a759-464c-a2a3-2534e5aa6304', '19d8da7e-31f8-48bf-8391-b160fd1b5354']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -7091,66 +4799,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('19d8da7e-31f8-48bf-8391-b160fd1b5354', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('eb2a0321-e6d4-49c7-8885-7e046018e12d', 'Scenario 116 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['791e391e-41c2-425d-8526-eb3a588fa4c9', '645d082a-9346-4d49-938f-67db3edc8196', 'fe3da501-c600-4260-a6a5-859b5731f57c', '79168b60-002e-477a-98eb-f47a0b6fd51f', 'd03ce365-7b64-45a6-bc57-3ecab1b656d9']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('791e391e-41c2-425d-8526-eb3a588fa4c9', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('645d082a-9346-4d49-938f-67db3edc8196', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('fe3da501-c600-4260-a6a5-859b5731f57c', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('79168b60-002e-477a-98eb-f47a0b6fd51f', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d03ce365-7b64-45a6-bc57-3ecab1b656d9', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('119b0c6b-4ce6-4a7f-b49b-ec904577a182', 'Scenario 117 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['8acd2262-4b9b-4038-8a51-d18451d05c20', 'e9e6ee99-031e-4ffc-8ac4-a7802e682ebe', '8366ce14-f496-47a9-b06c-56d58f36150b', 'a762669d-6d26-422c-8d9d-4b570727b077', 'd5539336-82b1-4300-9d73-2922fa20d092']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8acd2262-4b9b-4038-8a51-d18451d05c20', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e9e6ee99-031e-4ffc-8ac4-a7802e682ebe', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8366ce14-f496-47a9-b06c-56d58f36150b', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a762669d-6d26-422c-8d9d-4b570727b077', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d5539336-82b1-4300-9d73-2922fa20d092', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -7185,66 +4833,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('45107995-4a41-4831-98c9-df7ed79734b1', 'Scenario 119 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['6d30a235-c8c1-4666-9d9e-7889c8ab727a', 'c8c1696a-4e03-49a0-8ccb-2a7efee4223b', 'e2f73f60-ca68-4c3c-9a08-b4d64f7d7b26', '4a501a77-1b8d-4a39-b66e-ea3adbc778a6', 'ba9146b6-7067-441d-a02e-0d7d1f4a922f']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6d30a235-c8c1-4666-9d9e-7889c8ab727a', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c8c1696a-4e03-49a0-8ccb-2a7efee4223b', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e2f73f60-ca68-4c3c-9a08-b4d64f7d7b26', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4a501a77-1b8d-4a39-b66e-ea3adbc778a6', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ba9146b6-7067-441d-a02e-0d7d1f4a922f', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('f3ee3bb9-3328-450a-98fb-63692042134f', 'Scenario 120 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['980d29f6-4584-4cac-909d-66083f6b4b07', 'fe1a034f-a653-4ebc-a23a-cc88e3fd869a', 'e690b9b3-475d-4ae8-86d9-68b69690e2aa', '41de1140-c439-41db-b012-934fbe0b8d5e', '75655509-09ed-45b7-aa64-d1a20520b207']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('980d29f6-4584-4cac-909d-66083f6b4b07', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('fe1a034f-a653-4ebc-a23a-cc88e3fd869a', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e690b9b3-475d-4ae8-86d9-68b69690e2aa', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('41de1140-c439-41db-b012-934fbe0b8d5e', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('75655509-09ed-45b7-aa64-d1a20520b207', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('d9f53db5-8cec-4ec4-8d62-d116cb198811', 'Scenario 121 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['39b68991-c147-44b3-bd55-24ee603706a6', '934c816c-29f1-447d-9981-4c607d8d90ea', '4a85a509-7663-49b9-99ec-6a9fcd6c9ae1', '5de58c18-74af-47a2-b945-d5b443c1b2f5', '1836c001-881e-4353-89cd-dd7ee1a787bc']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -7271,66 +4859,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('1836c001-881e-4353-89cd-dd7ee1a787bc', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('0c2f1499-dbbe-43df-be32-f3e980ac1691', 'Scenario 122 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['c94bb4d1-2d0e-4945-a815-37d016840db6', '010b687c-12e6-4d0a-98da-f4d3a185f79b', 'ca114068-34ff-4e62-b355-f9a1b80058ad', '7fff14ef-b80e-4df9-98ec-33dffefa6271', '0d4f5b70-3e90-4886-8f92-dab8f82d8aad']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c94bb4d1-2d0e-4945-a815-37d016840db6', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('010b687c-12e6-4d0a-98da-f4d3a185f79b', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ca114068-34ff-4e62-b355-f9a1b80058ad', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7fff14ef-b80e-4df9-98ec-33dffefa6271', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0d4f5b70-3e90-4886-8f92-dab8f82d8aad', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('6c90d7a4-980f-4e13-856c-13117e2edf82', 'Scenario 123 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['181a7646-dee6-4355-8dd2-0e4bf75caa1d', '072f1fd9-2a3f-4fc3-a5c3-c3fb6456d43b', '125da5be-0589-42fd-bf3b-1f834872d47e', '7de99edb-70bd-47a9-ad40-dcbd0d43a4a4', '71e39fc5-5e6b-4f04-9611-1af3d00c1f67']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('181a7646-dee6-4355-8dd2-0e4bf75caa1d', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('072f1fd9-2a3f-4fc3-a5c3-c3fb6456d43b', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('125da5be-0589-42fd-bf3b-1f834872d47e', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7de99edb-70bd-47a9-ad40-dcbd0d43a4a4', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('71e39fc5-5e6b-4f04-9611-1af3d00c1f67', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -7365,66 +4893,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('6267d830-501a-4646-823e-adab3403faf0', 'Scenario 125 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['171783ae-87ea-450c-894c-2b4f6a9ad9cf', '8124b8e0-ac5b-4241-9283-81b72a380831', 'eddeb5a4-3be1-4402-9a38-c1331dbf446f', '20446f0e-2f2a-4552-bf53-ff976f95916d', 'c31fa7f3-4ad1-4ea1-bb32-e49231826a51']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('171783ae-87ea-450c-894c-2b4f6a9ad9cf', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8124b8e0-ac5b-4241-9283-81b72a380831', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('eddeb5a4-3be1-4402-9a38-c1331dbf446f', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('20446f0e-2f2a-4552-bf53-ff976f95916d', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c31fa7f3-4ad1-4ea1-bb32-e49231826a51', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('f7509133-3083-4454-a963-95302eb66764', 'Scenario 126 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['ffc6908c-6898-476d-b8ae-c56c97fe15e3', 'e893666e-bb49-475e-ba1d-fcf8b373e657', 'ac5d9ef6-0dbe-4c28-b479-38f80a83feaf', 'a67c2fb4-d96c-4ab9-9ec1-15bdb7cc1b97', 'e88ec13b-28dc-425c-99ce-5cfc1fd45003']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ffc6908c-6898-476d-b8ae-c56c97fe15e3', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e893666e-bb49-475e-ba1d-fcf8b373e657', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ac5d9ef6-0dbe-4c28-b479-38f80a83feaf', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a67c2fb4-d96c-4ab9-9ec1-15bdb7cc1b97', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e88ec13b-28dc-425c-99ce-5cfc1fd45003', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('bb2b5fe3-92ed-4270-9235-dafbfffa2d03', 'Scenario 127 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['97b85cab-9f57-43b9-a376-ad87e5b11416', 'dfffbb59-22b0-43d5-974c-ecc23d2902b7', '9f25bbd1-e09e-4da4-80b3-aec328c2968f', 'bfb8ab9d-b2f5-4071-9c95-519c474ad741', '5b0974a9-a635-4dcb-8df1-f1d028a91ffd']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -7451,66 +4919,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('5b0974a9-a635-4dcb-8df1-f1d028a91ffd', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('9b3fc207-3e88-4ef8-90b0-8ab1e77ea932', 'Scenario 128 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['f7987f6f-5a06-44fd-99bf-cc4c80f11a02', 'd2ab0b36-bf10-4378-86c5-3e8be42ba5ab', '8fedb7ef-c6d4-45b3-8b79-1f8c0c765b54', 'cc74159b-9c6d-4358-8c35-aa99533602df', '9c31bcfd-cedf-4e75-917f-621c8b39b2de']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f7987f6f-5a06-44fd-99bf-cc4c80f11a02', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d2ab0b36-bf10-4378-86c5-3e8be42ba5ab', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8fedb7ef-c6d4-45b3-8b79-1f8c0c765b54', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('cc74159b-9c6d-4358-8c35-aa99533602df', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9c31bcfd-cedf-4e75-917f-621c8b39b2de', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('bf4447a8-9e3e-4b8c-b9ea-4bc5bb009977', 'Scenario 129 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['be9922e4-6bad-4a78-9782-cb35533a30cc', 'a7de215e-9765-4d94-be98-7ea4bc956101', 'dab68891-c37c-41ba-9a47-a7a54b4c2d5d', '1c181c9a-8c26-4572-9f8f-0ad41d48d3d9', '4c6dd172-854a-4038-bba7-8f8bf4615886']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('be9922e4-6bad-4a78-9782-cb35533a30cc', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a7de215e-9765-4d94-be98-7ea4bc956101', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('dab68891-c37c-41ba-9a47-a7a54b4c2d5d', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1c181c9a-8c26-4572-9f8f-0ad41d48d3d9', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4c6dd172-854a-4038-bba7-8f8bf4615886', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -7545,66 +4953,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('ae32ef91-586e-4dfd-b42b-e76002335794', 'Scenario 131 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['5d8cc251-8070-46e8-9976-4d6ddcbd3270', 'cab64fe7-3327-448e-84d7-73568d606162', 'a821acd3-2966-4bef-a595-f6d50fc88a4a', '4a8580c5-f349-42a6-9bd7-b44f319fc9ae', '181a0a56-60b1-4966-8dbc-5e48efe68d7f']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5d8cc251-8070-46e8-9976-4d6ddcbd3270', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('cab64fe7-3327-448e-84d7-73568d606162', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a821acd3-2966-4bef-a595-f6d50fc88a4a', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4a8580c5-f349-42a6-9bd7-b44f319fc9ae', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('181a0a56-60b1-4966-8dbc-5e48efe68d7f', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('d271e605-1b68-4609-884c-0e6b2417980a', 'Scenario 132 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['ac34c023-6712-4c8b-ad47-b6858a040e14', 'fa4f2dec-5d9b-40e4-a6e6-33073d8b1c01', '6b74b770-d501-4b8a-bf2a-662ac4877143', '88bd47f2-445c-4f70-ba50-181ec7913306', '9f16f544-748e-49de-a460-428166b20106']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ac34c023-6712-4c8b-ad47-b6858a040e14', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('fa4f2dec-5d9b-40e4-a6e6-33073d8b1c01', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('6b74b770-d501-4b8a-bf2a-662ac4877143', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('88bd47f2-445c-4f70-ba50-181ec7913306', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9f16f544-748e-49de-a460-428166b20106', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('ef64aa0d-ba0d-4af4-abf3-22395713f0d7', 'Scenario 133 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['464f51e0-c17e-4f83-ac60-86260ef16973', '6ac5c452-3eb5-4382-b77b-f2bf85f904cd', 'd7281a58-14b9-4ed7-b053-d328f702b932', 'be0b90f8-ac9b-44a5-b73a-5d14ee7943e2', '0aad9db3-fe03-447f-91ea-0b525760d87e']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -7631,66 +4979,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('0aad9db3-fe03-447f-91ea-0b525760d87e', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('2f289e62-3b78-4580-90ed-c120947f70b5', 'Scenario 134 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['8eac3173-e265-442f-a48b-e97905c056e7', 'ab87ea91-7add-4814-8a4b-d2bf37278db0', '431fc476-2823-4138-b01c-6a65500d36da', '0f469b38-921a-4f2b-aea0-5d9a2ba59f63', '33fc7d6a-ede4-4016-9e62-c2cd688d3172']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8eac3173-e265-442f-a48b-e97905c056e7', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ab87ea91-7add-4814-8a4b-d2bf37278db0', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('431fc476-2823-4138-b01c-6a65500d36da', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0f469b38-921a-4f2b-aea0-5d9a2ba59f63', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('33fc7d6a-ede4-4016-9e62-c2cd688d3172', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('7dd80b01-99c3-4a89-9b4b-f4c878a6d996', 'Scenario 135 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['c5329c0f-5a94-437c-9bc7-7ec7069bdcc2', 'e4a7e319-ad42-4590-96c8-5022d87a399e', '220b58a2-fac0-47ec-8b85-3fa87f771ac1', 'bc32b30a-0488-4186-b12f-3dd1d9b5547d', '4ab17e31-39d3-4af7-82f9-5d7fb2bf03fd']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c5329c0f-5a94-437c-9bc7-7ec7069bdcc2', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e4a7e319-ad42-4590-96c8-5022d87a399e', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('220b58a2-fac0-47ec-8b85-3fa87f771ac1', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('bc32b30a-0488-4186-b12f-3dd1d9b5547d', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4ab17e31-39d3-4af7-82f9-5d7fb2bf03fd', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -7725,66 +5013,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('ac523ef0-6a7a-470d-a944-795305899de9', 'Scenario 137 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['7fa4acd4-c67f-4709-830d-a2977c991b57', '8e32c179-0558-41a4-a9d9-bc1612805edf', '55249ea3-0fed-446a-8e2f-a9751da35b20', '1a836c26-13a6-489b-9704-47a541047ae3', '54318176-89b5-4aaf-a6a5-b0dafc80baa3']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7fa4acd4-c67f-4709-830d-a2977c991b57', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8e32c179-0558-41a4-a9d9-bc1612805edf', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('55249ea3-0fed-446a-8e2f-a9751da35b20', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('1a836c26-13a6-489b-9704-47a541047ae3', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('54318176-89b5-4aaf-a6a5-b0dafc80baa3', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('f9b8c0b3-0968-4324-9b92-35063c49def2', 'Scenario 138 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['126698dd-7503-4ee3-b5ac-a286104f41dc', 'c39a8c76-b4ea-4aa3-8d30-7af6f1f4f420', '9f24427a-cda0-4f30-bfef-d2d1d9cf1aec', '5c0efba3-807f-4aff-9ca8-a77b6a0158e7', '38171b24-2fbe-4208-bc9e-781fa7c9ba7c']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('126698dd-7503-4ee3-b5ac-a286104f41dc', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c39a8c76-b4ea-4aa3-8d30-7af6f1f4f420', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('9f24427a-cda0-4f30-bfef-d2d1d9cf1aec', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5c0efba3-807f-4aff-9ca8-a77b6a0158e7', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('38171b24-2fbe-4208-bc9e-781fa7c9ba7c', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('8540245e-c841-4caa-aeb7-5dd6955bc43d', 'Scenario 139 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['e8836a00-b83f-4bb0-b4c3-9b9b70484f70', '544ffc30-e295-4b9d-aa31-f98fe8299124', '59d72f04-e099-4d1b-bb32-d02736806c1f', 'f4d269a6-210e-4b18-b0b4-38224ad0e47a', 'df22b5bb-4c81-484e-8be4-ba1d66a154af']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -7811,66 +5039,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('df22b5bb-4c81-484e-8be4-ba1d66a154af', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('b7a9d4ba-c51f-452d-9128-3f923906ec18', 'Scenario 140 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['57d877d1-633f-4833-bcd5-160608536d96', '43f74780-52fc-43b5-8ea8-50bda0f0d597', '987e4bbd-cda4-4ac3-b156-50e761cc58fe', 'f217ac8f-5a91-411e-ad4e-f86f846f8468', 'c1fb30fe-1c13-4b56-a142-b49d0ae3ffb8']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('57d877d1-633f-4833-bcd5-160608536d96', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('43f74780-52fc-43b5-8ea8-50bda0f0d597', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('987e4bbd-cda4-4ac3-b156-50e761cc58fe', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f217ac8f-5a91-411e-ad4e-f86f846f8468', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c1fb30fe-1c13-4b56-a142-b49d0ae3ffb8', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('84db3ada-efe4-4cf7-bf05-3f14bbe2c668', 'Scenario 141 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['fc9f10d1-4f9d-4854-be61-4414ee5cefd8', '2adcdbc6-03cf-409f-8a52-caf70af8d693', 'ceccccad-6c30-4677-a7d4-844f661daaf2', '33dd6efe-a2f5-4ae9-ab33-cd70e2b1f0e1', 'b5fdef00-fac9-4f67-a8bb-588ea43ffff0']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('fc9f10d1-4f9d-4854-be61-4414ee5cefd8', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2adcdbc6-03cf-409f-8a52-caf70af8d693', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ceccccad-6c30-4677-a7d4-844f661daaf2', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('33dd6efe-a2f5-4ae9-ab33-cd70e2b1f0e1', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b5fdef00-fac9-4f67-a8bb-588ea43ffff0', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -7905,66 +5073,6 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('4a9d8df0-d87b-4e31-9762-739f03694828', 'Scenario 143 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['249a73b8-0984-4e1c-bfee-e555205e7892', '542d2641-e44d-42c7-8fd2-93519ed8c8f5', '5588eb76-a8ae-471c-a185-90bfdb5366ad', '4d6e09ee-ce4f-4c67-add0-7fec18ef087f', '2b37d9c0-f1cf-4454-addd-db831951ff57']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('249a73b8-0984-4e1c-bfee-e555205e7892', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('542d2641-e44d-42c7-8fd2-93519ed8c8f5', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5588eb76-a8ae-471c-a185-90bfdb5366ad', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4d6e09ee-ce4f-4c67-add0-7fec18ef087f', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2b37d9c0-f1cf-4454-addd-db831951ff57', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('05eeb2ea-67fe-405e-b630-43f382dbf246', 'Scenario 144 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['8706e077-6054-486a-8a64-0886a1ce379e', '4c71960b-8145-4572-9bb5-cf52af44d270', 'adbd2469-cb6d-47fb-a3f1-362d48228156', 'df2539fa-8ba0-4edb-9f1b-f5e4651d919b', '86bf12db-5525-4481-ac3e-db804f73fc94']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8706e077-6054-486a-8a64-0886a1ce379e', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('4c71960b-8145-4572-9bb5-cf52af44d270', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('adbd2469-cb6d-47fb-a3f1-362d48228156', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('df2539fa-8ba0-4edb-9f1b-f5e4651d919b', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('86bf12db-5525-4481-ac3e-db804f73fc94', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
     VALUES ('87e0d07c-cd5f-4506-b112-619d298ce924', 'Scenario 145 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['1dc71dac-d1a3-408c-b115-d114e295a218', '1f18bb7d-a96d-4f46-8d0e-9dac4ab11aef', 'c0b5fcb8-4fdb-47ad-a492-4b092176fca7', 'd387db5f-273b-4bf2-b1b0-adb10ff37d67', '48753ea6-fc2b-4a10-b6c3-7b5f6e6cfb0b']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
@@ -7991,66 +5099,6 @@ INSERT INTO fields
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
         VALUES ('48753ea6-fc2b-4a10-b6c3-7b5f6e6cfb0b', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('c3b92403-d342-4d2e-b107-ae4ab443798f', 'Scenario 146 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['8c85026f-fe91-4977-90fb-1380fba48391', '7e47d371-6e80-457f-a589-fbe68e4cb8ed', 'c6a3eab6-8848-4e94-956f-adc7195fa603', 'a118fbe2-7586-4869-a796-4f8da5ff9ba7', 'e406a2c2-7e4f-440b-a62f-162270ef49d0']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('8c85026f-fe91-4977-90fb-1380fba48391', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7e47d371-6e80-457f-a589-fbe68e4cb8ed', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('c6a3eab6-8848-4e94-956f-adc7195fa603', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('a118fbe2-7586-4869-a796-4f8da5ff9ba7', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('e406a2c2-7e4f-440b-a62f-162270ef49d0', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('90071fa0-a560-4c6e-b2ff-fd59588fbdb7', 'Scenario 147 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['52bf91b4-fa09-4201-8677-aa79f8b42eaf', '5f772f10-b2f3-4e0b-826b-d60f6ab2e863', 'd6ab5fcb-eab8-4dab-a714-75604e0547eb', '0ff08157-a392-4fce-b071-08d8104a9bb3', '632c13be-01f7-4592-a4e0-bbfcade7924c']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('52bf91b4-fa09-4201-8677-aa79f8b42eaf', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('5f772f10-b2f3-4e0b-826b-d60f6ab2e863', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('d6ab5fcb-eab8-4dab-a714-75604e0547eb', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('0ff08157-a392-4fce-b071-08d8104a9bb3', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('632c13be-01f7-4592-a4e0-bbfcade7924c', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
@@ -8083,36 +5131,6 @@ INSERT INTO fields
         VALUES ('f43faf59-4f78-4081-86ae-5da93263a5e1', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('cb55a7a4-460a-48e6-a623-4ebbc88b7be7', 'Scenario 149 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['61c1f01c-1bf9-4a7b-81d3-4f29419dfc50', '7dee627e-e14f-47b5-bb46-98b90222c392', 'b972a5cb-a797-46c1-8953-8d5c5a2aa716', '2ce69abd-605e-45bf-9502-02fb940bb7ae', 'f90fb314-b674-41b8-953f-860c31cbb8f8']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('61c1f01c-1bf9-4a7b-81d3-4f29419dfc50', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7dee627e-e14f-47b5-bb46-98b90222c392', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b972a5cb-a797-46c1-8953-8d5c5a2aa716', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('2ce69abd-605e-45bf-9502-02fb940bb7ae', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('f90fb314-b674-41b8-953f-860c31cbb8f8', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
 INSERT INTO tests
     (id, name, description, field_ids, scenario_ids, loop, queue)
     VALUES ('c69ff5e9-497b-41e8-adff-2221bb823365', 'KPI-AS-068: Assistant adaptation to user preferences (Power Grid)', 'Assistant adaptation to user preferences assesses how the AI assistant adapts to operator’s choices and preferences.<br/>The assistant provides several recommendations which represent different trade-offs of different objectives, and the operator eventually makes one single choice.<br/>This KPI assume that an estimation of epistemic uncertainty is calculated for each action recommendation, which can be used later by the human to select the action in a multi-objective setting.<br/>This KPIs thus aims at measuring:<br/>- Whether the choice that the operator makes is in the set of recommendations proposed by the assistant,<br/>- How is the recommendation chosen by the operator ranked compared to the other ones,<br/>- Whether the recommendation chosen by the operator has a high epistemic uncertainty compared to the other recommendations. ', array['c428c0f7-85d3-4f40-9710-6f8690f5cc9c']::uuid[], array['a68e7062-1329-4a34-ac44-4f6075929902']::uuid[], 'INTERACTIVE', 'PowerGrid')
@@ -8120,7 +5138,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('c428c0f7-85d3-4f40-9710-6f8690f5cc9c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('c428c0f7-85d3-4f40-9710-6f8690f5cc9c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8150,7 +5168,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('769e8da4-b056-486a-8abc-6da526fbd54b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('769e8da4-b056-486a-8abc-6da526fbd54b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8170,7 +5188,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('bfdfa6cc-9491-4cd4-9aa3-99d0e9eea7bd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('bfdfa6cc-9491-4cd4-9aa3-99d0e9eea7bd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8190,7 +5208,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('127ea400-14bd-48aa-9da6-e932a802dcb3', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('127ea400-14bd-48aa-9da6-e932a802dcb3', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8210,7 +5228,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('831bdb0e-c5c3-4df0-b9c4-4e42c6515c09', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('831bdb0e-c5c3-4df0-b9c4-4e42c6515c09', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8230,7 +5248,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('df9918ae-1bb3-4407-8240-6aaa6d67a5ea', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('df9918ae-1bb3-4407-8240-6aaa6d67a5ea', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8250,7 +5268,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('74b82b7a-f693-4423-b221-d9acae930d93', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('74b82b7a-f693-4423-b221-d9acae930d93', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8280,7 +5298,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('91c4f865-5e81-46d3-bd23-990aa361a828', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('91c4f865-5e81-46d3-bd23-990aa361a828', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8300,7 +5318,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('a7c2bf7f-7845-4127-8c18-5eb820f5d317', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('a7c2bf7f-7845-4127-8c18-5eb820f5d317', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8320,7 +5338,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0a42cb23-d3a2-4691-b430-61753b745806', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('0a42cb23-d3a2-4691-b430-61753b745806', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8340,7 +5358,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('efee7a16-4bb5-4c6f-965d-272ec8c2631b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('efee7a16-4bb5-4c6f-965d-272ec8c2631b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8360,7 +5378,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('c6f944e3-9937-453c-95da-9b69681b023e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('c6f944e3-9937-453c-95da-9b69681b023e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8380,7 +5398,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('7ff6b34d-2221-414e-86e8-c26dbd34f8f5', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('7ff6b34d-2221-414e-86e8-c26dbd34f8f5', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8410,7 +5428,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('eac95a57-49b8-4909-a460-54277465030a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('eac95a57-49b8-4909-a460-54277465030a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8430,7 +5448,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('fc6b934f-8cea-4126-a835-6f1450b423ec', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('fc6b934f-8cea-4126-a835-6f1450b423ec', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8450,7 +5468,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f82e887c-f5f0-4ea9-8724-1105035c7ece', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('f82e887c-f5f0-4ea9-8724-1105035c7ece', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8470,7 +5488,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('fdeb371c-e722-49f6-9b2b-7e08784e0bda', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('fdeb371c-e722-49f6-9b2b-7e08784e0bda', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8490,7 +5508,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('a7321e2a-6c39-4464-a53d-9d6352b14cb9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('a7321e2a-6c39-4464-a53d-9d6352b14cb9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8510,7 +5528,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('769bd4eb-28c9-40d0-af5b-549adb14ec0e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('769bd4eb-28c9-40d0-af5b-549adb14ec0e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8530,7 +5548,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('1bdb0477-ba09-4306-93b2-519e445fd2c2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('1bdb0477-ba09-4306-93b2-519e445fd2c2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8550,7 +5568,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0cdc2df8-7dd6-4e59-b9c8-01d2434ed49b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('0cdc2df8-7dd6-4e59-b9c8-01d2434ed49b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8570,7 +5588,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('adb05676-e33f-45da-a3bc-370a0524d1ee', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('adb05676-e33f-45da-a3bc-370a0524d1ee', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8590,7 +5608,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('a8bd1701-c2c9-43da-a199-bcf6c0c3a6dc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('a8bd1701-c2c9-43da-a199-bcf6c0c3a6dc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8610,7 +5628,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('8c9d7ce4-0162-472d-88fb-2c19b811ad34', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('8c9d7ce4-0162-472d-88fb-2c19b811ad34', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8630,7 +5648,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('1088ae36-888b-443d-af8c-556fc8da4ae4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('1088ae36-888b-443d-af8c-556fc8da4ae4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8650,7 +5668,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('bcdce9ba-dd27-4b16-b749-7229c7674a4e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('bcdce9ba-dd27-4b16-b749-7229c7674a4e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8670,7 +5688,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('26c6119e-12dc-44cd-b862-8f95f1420fa0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('26c6119e-12dc-44cd-b862-8f95f1420fa0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8690,7 +5708,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('2834a05b-bf8d-4231-9b1d-7797276bf304', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('2834a05b-bf8d-4231-9b1d-7797276bf304', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8710,7 +5728,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('7d368ebc-67ab-44f0-96c6-d13324da9582', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('7d368ebc-67ab-44f0-96c6-d13324da9582', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8730,7 +5748,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('123c3ec2-1cf5-4d73-b86e-7ff4d1671d80', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('123c3ec2-1cf5-4d73-b86e-7ff4d1671d80', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8750,7 +5768,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0a594511-3eab-4e45-818b-901bca21c1db', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('0a594511-3eab-4e45-818b-901bca21c1db', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8770,7 +5788,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('dc6c2dca-d4c2-48d0-9f75-0df01de53c54', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('dc6c2dca-d4c2-48d0-9f75-0df01de53c54', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8790,7 +5808,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('42c553a8-37f1-4abe-a0fd-14daec0078e0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('42c553a8-37f1-4abe-a0fd-14daec0078e0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8810,7 +5828,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('9517152b-7271-4aaf-8df8-b2cbdc5d5223', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('9517152b-7271-4aaf-8df8-b2cbdc5d5223', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8840,7 +5858,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('df5f8939-f85f-4fbb-9bea-017c46b2a8f7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('df5f8939-f85f-4fbb-9bea-017c46b2a8f7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8860,7 +5878,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('6e222adc-3153-4763-8bca-256cbb3d8716', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('6e222adc-3153-4763-8bca-256cbb3d8716', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8880,7 +5898,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('9916de43-06b8-413f-bc55-3ff7c10757ce', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('9916de43-06b8-413f-bc55-3ff7c10757ce', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8900,7 +5918,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4463c7f3-fbda-44b4-9c75-fdd552a2e3ba', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('4463c7f3-fbda-44b4-9c75-fdd552a2e3ba', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8920,7 +5938,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('5cf53de4-c331-4fc6-a54e-a93834b23fef', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('5cf53de4-c331-4fc6-a54e-a93834b23fef', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8940,7 +5958,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4bd8d175-100b-4367-bbce-564d96996b40', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('4bd8d175-100b-4367-bbce-564d96996b40', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8960,7 +5978,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0a658c26-5b6d-4369-b28b-b42acfc95ced', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('0a658c26-5b6d-4369-b28b-b42acfc95ced', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -8980,7 +5998,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('64208759-4b1b-415c-ae2e-d5244b328e68', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('64208759-4b1b-415c-ae2e-d5244b328e68', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9000,7 +6018,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('9124a4ed-a727-49c7-aab9-dc2473594490', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('9124a4ed-a727-49c7-aab9-dc2473594490', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9020,7 +6038,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('1957912f-47fd-4ce6-8596-90a320c4a46e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('1957912f-47fd-4ce6-8596-90a320c4a46e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9040,7 +6058,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('861dc5e2-f3ce-4c74-829b-9c50c891a610', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('861dc5e2-f3ce-4c74-829b-9c50c891a610', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9060,7 +6078,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('da2b5bd3-4bef-4d57-b257-be675bf3dc2a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('da2b5bd3-4bef-4d57-b257-be675bf3dc2a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9080,7 +6098,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('b297a241-a1dd-48c5-9dab-bbd58261c3e9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('b297a241-a1dd-48c5-9dab-bbd58261c3e9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9100,7 +6118,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('7b373f1a-e892-44f7-a76d-7b93e73f745b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('7b373f1a-e892-44f7-a76d-7b93e73f745b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9120,7 +6138,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('5ef0d594-d8c5-4ebe-8adc-ad972481f301', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('5ef0d594-d8c5-4ebe-8adc-ad972481f301', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9140,7 +6158,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('45500bcb-96bc-4b21-87ad-1ae69122cf88', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('45500bcb-96bc-4b21-87ad-1ae69122cf88', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9160,7 +6178,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('cad90039-f91d-4883-9937-8671f8363766', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('cad90039-f91d-4883-9937-8671f8363766', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9180,7 +6198,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('58aa9828-9572-4433-b492-339104be9ad1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('58aa9828-9572-4433-b492-339104be9ad1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9200,7 +6218,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('30d12d61-8f39-4e99-b292-b1f9ed21a6b4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('30d12d61-8f39-4e99-b292-b1f9ed21a6b4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9220,7 +6238,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e248e90c-65e0-4e36-89df-2e3232ed430d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('e248e90c-65e0-4e36-89df-2e3232ed430d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9240,7 +6258,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('3813d4e2-3ac4-44b3-9abf-c16dd67f00ac', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('3813d4e2-3ac4-44b3-9abf-c16dd67f00ac', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9260,7 +6278,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('a1d636fb-9525-4796-85f6-565ecc4dc2a3', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('a1d636fb-9525-4796-85f6-565ecc4dc2a3', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9280,7 +6298,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('92eb89c5-a934-4f62-b64b-9ff63c3189fc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('92eb89c5-a934-4f62-b64b-9ff63c3189fc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9310,7 +6328,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f0163954-829c-4d4b-b677-995c1ade5a4a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('f0163954-829c-4d4b-b677-995c1ade5a4a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9330,7 +6348,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('00fb1d4c-a9b4-4a3f-88ab-eec7f4eb1a76', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('00fb1d4c-a9b4-4a3f-88ab-eec7f4eb1a76', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9350,7 +6368,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('db803996-450c-4462-a2d0-289e9855ff5d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('db803996-450c-4462-a2d0-289e9855ff5d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9370,7 +6388,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('40b5fecc-3ee2-4da9-9f19-3b5c7df27575', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('40b5fecc-3ee2-4da9-9f19-3b5c7df27575', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9390,7 +6408,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('805cc0df-c8f5-4e7d-8a1c-9a1600e18479', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('805cc0df-c8f5-4e7d-8a1c-9a1600e18479', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9410,7 +6428,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('643d28e7-3ec1-45f8-aed8-5364e65a0c05', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('643d28e7-3ec1-45f8-aed8-5364e65a0c05', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9430,7 +6448,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('c6d7099f-9893-4d76-8fcd-f6cba430b690', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('c6d7099f-9893-4d76-8fcd-f6cba430b690', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9450,7 +6468,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('a6fcdd38-158e-4865-9300-4b061553dcab', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('a6fcdd38-158e-4865-9300-4b061553dcab', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9470,7 +6488,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('58733189-5333-46a5-a759-21ecd5e9a5e7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('58733189-5333-46a5-a759-21ecd5e9a5e7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9490,7 +6508,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0b8ffb01-5523-482f-81c2-47a81c626ab2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('0b8ffb01-5523-482f-81c2-47a81c626ab2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9510,7 +6528,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('36601f97-1681-43ac-a07c-c4cfbb4b3ede', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('36601f97-1681-43ac-a07c-c4cfbb4b3ede', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9530,7 +6548,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('b6b65966-5f68-4e31-879c-5f237220a8b4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('b6b65966-5f68-4e31-879c-5f237220a8b4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9560,7 +6578,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('345b6241-acd6-4d1f-b04d-ccb2b98a84bf', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('345b6241-acd6-4d1f-b04d-ccb2b98a84bf', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9580,7 +6598,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('955e3993-0196-477e-8362-adcb2cc929e0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('955e3993-0196-477e-8362-adcb2cc929e0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9600,7 +6618,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('df393b26-77dd-45e2-9e1f-11e2a603b714', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('df393b26-77dd-45e2-9e1f-11e2a603b714', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9620,7 +6638,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('b7a35c88-5413-4abb-bae0-774a27b3c84e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('b7a35c88-5413-4abb-bae0-774a27b3c84e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9640,7 +6658,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('1ac0bc44-71c0-427b-bc1e-b7a177809ad7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('1ac0bc44-71c0-427b-bc1e-b7a177809ad7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9660,7 +6678,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e9d6451c-c25b-49e5-a80e-cd84985b3c7c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('e9d6451c-c25b-49e5-a80e-cd84985b3c7c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9680,7 +6698,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('435e4d59-237c-43c9-94bc-f1851d03e7d1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('435e4d59-237c-43c9-94bc-f1851d03e7d1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9700,7 +6718,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('43e38b85-6b62-4898-a0c6-6b1b5e9b7e83', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('43e38b85-6b62-4898-a0c6-6b1b5e9b7e83', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9720,7 +6738,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('68dee536-8f29-4208-a327-48d67900c581', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('68dee536-8f29-4208-a327-48d67900c581', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9740,7 +6758,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('cabb2d9f-8086-4510-9735-8b10321096c6', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('cabb2d9f-8086-4510-9735-8b10321096c6', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9760,7 +6778,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('43eebab4-d111-4f5d-8c3d-1abdaafb2a4b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('43eebab4-d111-4f5d-8c3d-1abdaafb2a4b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9780,7 +6798,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4daf6937-535b-4846-858b-9eaab6ff1b19', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('4daf6937-535b-4846-858b-9eaab6ff1b19', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9800,7 +6818,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e7cf7efc-69fa-4b80-bc56-bb5d7a44f0f9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('e7cf7efc-69fa-4b80-bc56-bb5d7a44f0f9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9820,7 +6838,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('69721968-c18b-4bf4-9223-2ed001231c7f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('69721968-c18b-4bf4-9223-2ed001231c7f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9840,7 +6858,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('5839d96c-291b-465d-bfab-ba8951b3853e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('5839d96c-291b-465d-bfab-ba8951b3853e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9860,7 +6878,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('6b1b9ae3-ac68-45f7-8706-80ca756e3cfa', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('6b1b9ae3-ac68-45f7-8706-80ca756e3cfa', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9880,7 +6898,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f16522e3-b973-4b1d-bf7a-b728885a0b29', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('f16522e3-b973-4b1d-bf7a-b728885a0b29', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9900,7 +6918,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4c5e593d-4785-45a6-9dfd-5190f909f913', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('4c5e593d-4785-45a6-9dfd-5190f909f913', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9920,7 +6938,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('ee00b722-5e1f-4adb-84aa-89dc2c1e698d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('ee00b722-5e1f-4adb-84aa-89dc2c1e698d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9940,7 +6958,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('929eb222-48b9-4652-bb0f-8b71899a02da', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('929eb222-48b9-4652-bb0f-8b71899a02da', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -9960,7 +6978,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0dcc4cb8-a438-49cc-bf19-d5f1bb6999ff', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+VALUES ('0dcc4cb8-a438-49cc-bf19-d5f1bb6999ff', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
