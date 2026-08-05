@@ -13,6 +13,7 @@ from typing import Dict, Optional, Any, Tuple
 from typing import List
 
 import boto3
+import flatland
 from flatland.envs.rewards import Rewards
 from flatland.evaluators.trajectory_evaluator import TrajectoryEvaluator
 from flatland.trajectories.trajectories import Trajectory
@@ -100,6 +101,7 @@ class FlatlandBenchmarksOrchestrator:
     try:
       submission_id = self.submission_id
       logger.info(f"// START task submission_id={submission_id} with submission_data_url={submission_data_url}.")
+      logger.info(f"flatland.__version__={flatland.__version__}")
       _fab = self._post_submission_status_started(fab, submission_data_url, submission_id)
 
       start_time = time.time()
