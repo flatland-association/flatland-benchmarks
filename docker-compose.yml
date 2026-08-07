@@ -204,9 +204,8 @@ services:
 
   fab-backend:
     profiles: [ full ]
-    # TODO add switch to use pre-built image or local build
-    #image: ghcr.io/flatland-association/fab-backend:latest
-    #pull_policy: always
+    image: ${FAB_BACKEND_IMAGE:-fab-backend:local}
+    pull_policy: ${FAB_BACKEND_PULL_POLICY:-build}
     build:
       dockerfile: deployment/backend/Dockerfile
     # POSTGRES_ variables are required for flyway
@@ -251,9 +250,8 @@ services:
 
   fab-frontend:
     profiles: [ full ]
-    # TODO add switch to use pre-built image or local build
-    #image: ghcr.io/flatland-association/fab-frontend:latest
-    #pull_policy: always
+    image: ${FAB_FRONTEND_IMAGE:-fab-frontend:local}
+    pull_policy: ${FAB_FRONTEND_PULL_POLICY:-build}
     build:
       dockerfile: deployment/frontend/Dockerfile
     depends_on:
@@ -396,6 +394,8 @@ services:
     build:
       # install sudo for DinD
       dockerfile: docker/flatland3_benchmarks/orchestrator/Dockerfile
+      args:
+        ORCHESTRATOR_DEPS_IMAGE: ${ORCHESTRATOR_DEPS_IMAGE:-ghcr.io/flatland-association/fab-flatland3-benchmarks-orchestrator:latest}
     depends_on:
       rabbit:
         condition: service_healthy
