@@ -261,12 +261,16 @@ jobs:
       - uses: actions/checkout@v6
       - name: Determine image tags and reuse strategy
         id: images
-        # only fab-backend/fab-frontend: this job never builds fab-flatland3-benchmarks-orchestrator, and
-        # ai4realnet-orchestrator-railway (built from the externally-cloned repo's own Dockerfile) has no
-        # ci-<hash>/reuse hook at all, so it always rebuilds locally regardless of this step's outcome
+        # fab-backend/fab-frontend/flatland3-benchmarks-orchestrator: --profile full (used by this job too)
+        # brings up flatland3-benchmarks-orchestrator alongside ai4realnet-orchestrator-railway regardless of
+        # which domain's tests actually run, so it benefits from the same orchestrator-deps reuse as the other
+        # two jobs. ai4realnet-orchestrator-railway itself (built from the externally-cloned repo's own
+        # Dockerfile) still has no ci-<hash>/reuse hook — only a GHA cache_from/cache_to scope (see
+        # docker-compose.ci-cache.yml), so it always rebuilds locally, just cache-accelerated after the first run.
         run: |
           BACKEND_HASH=$(git ls-files -s -- ts '*.json' .npmrc deployment/backend | git hash-object --stdin)
           FRONTEND_HASH=$(git ls-files -s -- ts '*.json' .npmrc deployment/frontend | git hash-object --stdin)
+          ORCH_DEPS_HASH=$(git ls-files -s -- evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt | git hash-object --stdin)
           echo "backend-tag=${{ env.REGISTRY }}/fab-backend:ci-${BACKEND_HASH}" >> "$GITHUB_OUTPUT"
           echo "frontend-tag=${{ env.REGISTRY }}/fab-frontend:ci-${FRONTEND_HASH}" >> "$GITHUB_OUTPUT"
           if [ "${{ github.event_name }}" != "schedule" ] && [ "${{ needs.build-images.result }}" == "success" ]; then
@@ -274,6 +278,7 @@ jobs:
             # image already pulled below under this exact tag; reuse it instead of docker-compose.yml's
             # default pull_policy of "build" (which would force a rebuild even without --build)
             echo "pull-policy=missing" >> "$GITHUB_OUTPUT"
+            echo "orchestrator-deps-tag=${{ env.REGISTRY }}/fab-flatland3-benchmarks-orchestrator:ci-deps-${ORCH_DEPS_HASH}" >> "$GITHUB_OUTPUT"
             # the ai4realnet-orchestrators fixture always runs `docker compose build` unconditionally, ignoring
             # pull_policy entirely — docker-compose.ci-prebuilt.yml !reset-clears build: for these two services
             # so that unconditional build call has nothing to do for them and just uses the pulled image: as-is.
@@ -282,6 +287,9 @@ jobs:
           else
             echo "use-prebuilt=false" >> "$GITHUB_OUTPUT"
             echo "pull-policy=build" >> "$GITHUB_OUTPUT"
+            # leave empty (not the computed ci-deps-<hash> tag) so docker-compose.yml's own ARG default
+            # (:latest) applies instead of a Dockerfile FROM failing to resolve a tag build-images never pushed
+            echo "orchestrator-deps-tag=" >> "$GITHUB_OUTPUT"
             echo "compose-file=${{ github.workspace }}/docker-compose.yml:${{ github.workspace }}/docker-compose.ci-cache.yml" >> "$GITHUB_OUTPUT"
           fi
       - name: Inspect disk
@@ -318,6 +326,7 @@ jobs:
         run: |
           docker pull ${{ steps.images.outputs.backend-tag }}
           docker pull ${{ steps.images.outputs.frontend-tag }}
+          docker pull ${{ steps.images.outputs.orchestrator-deps-tag }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6
         with:
@@ -399,6 +408,7 @@ jobs:
           FAB_FRONTEND_IMAGE: ${{ steps.images.outputs.frontend-tag }}
           FAB_BACKEND_PULL_POLICY: ${{ steps.images.outputs.pull-policy }}
           FAB_FRONTEND_PULL_POLICY: ${{ steps.images.outputs.pull-policy }}
+          ORCHESTRATOR_DEPS_IMAGE: ${{ steps.images.outputs.orchestrator-deps-tag }}
           # the fixture in this external repo calls DockerCompose() with no compose_file_name, so it never
           # passes -f itself — Compose falls back to COMPOSE_FILE to pick up our image/pull_policy switches
           # and cache_from/cache_to/build-skip overlays (see "Determine image tags and reuse strategy" above)

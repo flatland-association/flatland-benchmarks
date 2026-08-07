@@ -25,3 +25,10 @@ services:
         - type=gha,scope=fab-flatland3-benchmarks-orchestrator-devbuild
       cache_to:
         - type=gha,scope=fab-flatland3-benchmarks-orchestrator-devbuild,mode=max
+
+  ai4realnet-orchestrator-railway:
+    build:
+      cache_from:
+        - type=gha,scope=ai4realnet-orchestrator-railway
+      cache_to:
+        - type=gha,scope=ai4realnet-orchestrator-railway,mode=max
