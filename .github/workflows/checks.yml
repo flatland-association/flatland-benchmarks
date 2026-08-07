@@ -173,17 +173,39 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          # complements (does not replace) the venv cache below: still speeds up whatever pip install
+          # actually runs on a cache-miss day, e.g. re-resolving the floating git refs in orchestrator/requirements.txt
           cache: pip
           cache-dependency-path: |
             evaluation/flatland3_benchmarks/requirements-dev.txt
             evaluation/flatland3_benchmarks/orchestrator/requirements.txt
+      - name: Get date bucket for cache busting
+        # orchestrator/requirements.txt pins flatland-rl/fab-clientlib to @main (floating refs) rather than a
+        # commit/tag, so its content hash alone never changes when upstream main moves; bucketing the cache key
+        # by day bounds staleness of those two packages to <=24h, matching this workflow's nightly full-rebuild cadence
+        id: date
+        run: echo "date=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+      - name: Restore cached virtualenv
+        id: venv-cache
+        uses: actions/cache@v4
+        with:
+          path: evaluation/flatland3_benchmarks/.venv
+          key: flatland3-venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('evaluation/flatland3_benchmarks/requirements-dev.txt', 'evaluation/flatland3_benchmarks/orchestrator/requirements.txt') }}-${{ steps.date.outputs.date }}
+          restore-keys: |
+            flatland3-venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('evaluation/flatland3_benchmarks/requirements-dev.txt', 'evaluation/flatland3_benchmarks/orchestrator/requirements.txt') }}-
       - name: Install pytest
+        if: steps.venv-cache.outputs.cache-hit != 'true'
         working-directory: evaluation/flatland3_benchmarks
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r requirements-dev.txt
-          python -m pip install -r orchestrator/requirements.txt
-          python -m pip list
+          python -m venv --copies .venv
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/pip install -r requirements-dev.txt
+          .venv/bin/pip install -r orchestrator/requirements.txt
+          .venv/bin/pip list
+      # --copies (not the venv default of symlinking) makes the cached venv self-contained, so a restore on a
+      # later run doesn't depend on setup-python's toolcache interpreter still living at the same absolute path
+      - name: Activate cached virtualenv
+        run: echo "${{ github.workspace }}/evaluation/flatland3_benchmarks/.venv/bin" >> "$GITHUB_PATH"
       - name: Run test_common unit tests
         working-directory: test_common
         run: pytest -s test_docker_compose_fixture.py
@@ -282,15 +304,37 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          # complements (does not replace) the venv cache below: still speeds up whatever pip install
+          # actually runs on a cache-miss day, e.g. re-resolving the floating flatland-rl@main git ref
           cache: pip
           cache-dependency-path: |
             evaluation/ai4realnet_orchestrators/requirements.txt
             evaluation/ai4realnet_orchestrators/requirements-dev.txt
             evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/requirements.txt
+      - name: Get date bucket for cache busting
+        # railway/requirements.txt pins flatland-rl to @main (a floating ref, not a commit/tag), so its content
+        # hash alone never changes when upstream main moves; bucketing the cache key by day bounds staleness of
+        # that package to <=24h, matching this workflow's nightly full-rebuild cadence
+        id: date
+        run: echo "date=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+      - name: Restore cached virtualenv
+        id: venv-cache
+        uses: actions/cache@v4
+        with:
+          path: evaluation/ai4realnet_orchestrators/.venv
+          key: ai4realnet-railway-venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('evaluation/ai4realnet_orchestrators/requirements.txt', 'evaluation/ai4realnet_orchestrators/requirements-dev.txt', 'evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/requirements.txt') }}-${{ steps.date.outputs.date }}
+          restore-keys: |
+            ai4realnet-railway-venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('evaluation/ai4realnet_orchestrators/requirements.txt', 'evaluation/ai4realnet_orchestrators/requirements-dev.txt', 'evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/requirements.txt') }}-
       - name: Install ai4realnet Orchestrators Integration Tests Dependencies
+        if: steps.venv-cache.outputs.cache-hit != 'true'
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
-          python -m pip install -r requirements.txt -r requirements-dev.txt -r ai4realnet_orchestrators/railway/requirements.txt
+          python -m venv --copies .venv
+          .venv/bin/pip install -r requirements.txt -r requirements-dev.txt -r ai4realnet_orchestrators/railway/requirements.txt
+      # --copies (not the venv default of symlinking) makes the cached venv self-contained, so a restore on a
+      # later run doesn't depend on setup-python's toolcache interpreter still living at the same absolute path
+      - name: Activate cached virtualenv
+        run: echo "${{ github.workspace }}/evaluation/ai4realnet_orchestrators/.venv/bin" >> "$GITHUB_PATH"
       - name: Install openapi-generator-cli
         uses: ./.github/actions/install-openapi-generator-cli
       - name: Regenerate client lib locally overwriting dependency.
