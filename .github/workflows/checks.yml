@@ -181,10 +181,11 @@ jobs:
       - name: Run test_common unit tests
         working-directory: test_common
         run: pytest -s test_docker_compose_fixture.py
+      - name: Install openapi-generator-cli
+        uses: ./.github/actions/install-openapi-generator-cli
       - name: Regenerate client lib locally overwriting dependency.
         working-directory: fab-clientlib
         run: |
-          python -m pip install openapi-generator-cli==7.15.0
           openapi-generator-cli generate -i openapi.json -g python -c .openapi-generator-config.json --package-name fab_clientlib
       - name: Install client lib
         working-directory: fab-clientlib
@@ -278,10 +279,11 @@ jobs:
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
           python -m pip install -r requirements.txt -r requirements-dev.txt -r ai4realnet_orchestrators/railway/requirements.txt
+      - name: Install openapi-generator-cli
+        uses: ./.github/actions/install-openapi-generator-cli
       - name: Regenerate client lib locally overwriting dependency.
         working-directory: fab-clientlib
         run: |
-          python -m pip install openapi-generator-cli==7.15.0
           openapi-generator-cli generate -i openapi.json -g python -c .openapi-generator-config.json --package-name fab_clientlib
       - name: Install client lib
         working-directory: fab-clientlib
@@ -369,10 +371,11 @@ jobs:
       - name: Copy swagger.json from backend to openapi.json in client-lib
         run: |
           cp ts/backend/src/swagger/swagger.json  ./fab-clientlib/openapi.json
+      - name: Install openapi-generator-cli
+        uses: ./.github/actions/install-openapi-generator-cli
       - name: Regenerate client lib
         working-directory: fab-clientlib
         run: |
-          python -m pip install openapi-generator-cli==7.15.0
           openapi-generator-cli generate -i openapi.json -g python -c .openapi-generator-config.json --package-name fab_clientlib
       - name: Install client lib
         working-directory: fab-clientlib
@@ -465,9 +468,10 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: 3.13
+      - name: Install openapi-generator-cli
+        uses: ./.github/actions/install-openapi-generator-cli
       - name: validate swagger.json
         run: |
-          python -m pip install openapi-generator-cli==7.15.0
           # workaround for validate always returning 0
           openapi-generator-cli validate -i ts/backend/src/swagger/swagger.json  2> fail.txt
           cat fail.txt
