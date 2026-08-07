@@ -8,7 +8,7 @@ FAB (Flatland Benchmarks) is a web platform for running ML benchmarks and compet
 
 - **Backend:** Node.js + Express (TypeScript/ESM), PostgreSQL, Keycloak (OIDC), RabbitMQ + Celery (evaluation workers), MinIO (S3 storage), Flyway (migrations)
 - **Frontend:** Angular 21, TailwindCSS, Cypress (E2E)
-- **Layout:** `ts/backend`, `ts/frontend`, `ts/common` are separate npm packages under `ts/` (not npm workspaces — `ts/common` is shared purely via TypeScript path aliases, `@common/*` → `../common/*`, configured per-project in each `tsconfig*.json`)
+- **Layout:** `ts/backend`, `ts/frontend`, `ts/common` are separate npm packages under `ts/` (not npm workspaces — `ts/common` is shared purely via TypeScript path aliases, `@common/*` → `../common/*`, configured per-project in each `tsconfig*.json`). `ts/backend/package.json` and `ts/frontend/package.json` declare no `dependencies`/`devDependencies` of their own — every actual npm package (Angular, Express, everything) is declared once in the root `package.json`, and both subprojects are script-only wrappers that resolve it via Node's upward `node_modules` lookup to the repo root. `npm ci`/`npm install` is therefore only ever run at the repo root, never inside `ts/backend` or `ts/frontend`.
 
 Deeper docs live in `docs/`: [ARCHITECTURE.md](docs/ARCHITECTURE.md) (design decisions, ER/data model diagrams), [DEVELOPMENT.md](docs/DEVELOPMENT.md) (API conventions `dev.001`–`dev.005`, referenced directly from code comments), [USER_GUIDE.md](docs/USER_GUIDE.md), [ADMINISTRATION.md](docs/ADMINISTRATION.md), [CONTRIBUTING.md](docs/CONTRIBUTING.md).
 
@@ -25,6 +25,8 @@ git clone https://github.com/flatland-association/ai4realnet-orchestrators.git e
 Pre-commit hooks (Husky + lint-staged) run `eslint --fix` on staged `*.ts`/`*.mts`/`*.html` files. If lint-staged fails, it can discard your working changes — run `git stash pop` to recover them, or run `ts/backend`'s / `ts/frontend`'s `check` script (or use the VSCode ESLint+Prettier extensions) beforehand to avoid surprises.
 
 `.npmrc` sets `legacy-peer-deps=true` — `@flatland-association/flatland-ui@2.3.0` declares peer deps for Angular 20 but is actually used with Angular 21; remove this once that library ships an Angular 21-compatible release.
+
+No `.nvmrc`/`engines` field pins a Node version for local dev; CI (`.github/workflows/checks.yml`) runs on Node 22.x while the production Docker images (`deployment/*/Dockerfile`) build with Node 23.5.0.
 
 ## Commands
 
