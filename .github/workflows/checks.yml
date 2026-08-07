@@ -274,9 +274,15 @@ jobs:
             # image already pulled below under this exact tag; reuse it instead of docker-compose.yml's
             # default pull_policy of "build" (which would force a rebuild even without --build)
             echo "pull-policy=missing" >> "$GITHUB_OUTPUT"
+            # the ai4realnet-orchestrators fixture always runs `docker compose build` unconditionally, ignoring
+            # pull_policy entirely — docker-compose.ci-prebuilt.yml !reset-clears build: for these two services
+            # so that unconditional build call has nothing to do for them and just uses the pulled image: as-is.
+            # Must stay last: any later file touching build.* would resurrect a build section with no context.
+            echo "compose-file=${{ github.workspace }}/docker-compose.yml:${{ github.workspace }}/docker-compose.ci-cache.yml:${{ github.workspace }}/docker-compose.ci-prebuilt.yml" >> "$GITHUB_OUTPUT"
           else
             echo "use-prebuilt=false" >> "$GITHUB_OUTPUT"
             echo "pull-policy=build" >> "$GITHUB_OUTPUT"
+            echo "compose-file=${{ github.workspace }}/docker-compose.yml:${{ github.workspace }}/docker-compose.ci-cache.yml" >> "$GITHUB_OUTPUT"
           fi
       - name: Inspect disk
         run: |
@@ -395,8 +401,8 @@ jobs:
           FAB_FRONTEND_PULL_POLICY: ${{ steps.images.outputs.pull-policy }}
           # the fixture in this external repo calls DockerCompose() with no compose_file_name, so it never
           # passes -f itself — Compose falls back to COMPOSE_FILE to pick up our image/pull_policy switches
-          # and cache_from/cache_to overlay
-          COMPOSE_FILE: ${{ github.workspace }}/docker-compose.yml:${{ github.workspace }}/docker-compose.ci-cache.yml
+          # and cache_from/cache_to/build-skip overlays (see "Determine image tags and reuse strategy" above)
+          COMPOSE_FILE: ${{ steps.images.outputs.compose-file }}
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
           pytest -s -m integration ai4realnet_orchestrators/railway
