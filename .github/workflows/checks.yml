@@ -167,6 +167,10 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: |
+            evaluation/flatland3_benchmarks/requirements-dev.txt
+            evaluation/flatland3_benchmarks/orchestrator/requirements.txt
       - name: Install pytest
         working-directory: evaluation/flatland3_benchmarks
         run: |
@@ -237,6 +241,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Re-generate swagger.json in backend build
@@ -246,10 +251,6 @@ jobs:
       - name: Copy swagger.json from backend to openapi.json in client-lib
         run: |
           cp ts/backend/src/swagger/swagger.json  fab-clientlib/openapi.json
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
       - name: Clone ai4realnet-orchestrators for integration tests
         uses: actions/checkout@v6
         with:
@@ -263,6 +264,16 @@ jobs:
           git remote show origin
           git status
           git branch
+      # runs after the clone above so cache-dependency-path can see the externally-cloned repo's requirements files
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: |
+            evaluation/ai4realnet_orchestrators/requirements.txt
+            evaluation/ai4realnet_orchestrators/requirements-dev.txt
+            evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/requirements.txt
       - name: Install ai4realnet Orchestrators Integration Tests Dependencies
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
@@ -332,6 +343,11 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: |
+            fab-clientlib/requirements.txt
+            fab-clientlib/test-requirements.txt
+            fab-clientlib/requirements-dev.txt
       - name: Run fab-clientlib unit tests
         working-directory: fab-clientlib
         run: |
@@ -343,6 +359,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Re-generate swagger.json in backend build
@@ -391,6 +408,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Type check and eslint backend
@@ -411,6 +429,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Run tests
@@ -431,6 +450,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Copy .env.test
@@ -469,6 +489,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Clone ai4realnet-orchestrators for integration tests
