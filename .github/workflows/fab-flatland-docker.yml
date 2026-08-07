@@ -46,3 +46,5 @@ jobs:
           push: true
           tags: |
             ghcr.io/flatland-association/fab-flatland3-benchmarks-orchestrator:${{ env.TAG }}
+          cache-from: type=gha,scope=fab-flatland3-benchmarks-orchestrator-full
+          cache-to: type=gha,scope=fab-flatland3-benchmarks-orchestrator-full,mode=max

@@ -39,18 +39,21 @@ jobs:
             context: .
             target: ""
             tag-prefix: ci-
+            cache-scope: fab-backend
             hash-paths: "ts '*.json' .npmrc deployment/backend"
           - image: fab-frontend
             file: deployment/frontend/Dockerfile
             context: .
             target: ""
             tag-prefix: ci-
+            cache-scope: fab-frontend
             hash-paths: "ts '*.json' .npmrc deployment/frontend"
           - image: fab-flatland3-benchmarks-orchestrator
             file: evaluation/flatland3_benchmarks/orchestrator/Dockerfile
             context: evaluation/flatland3_benchmarks/orchestrator
             target: deps
             tag-prefix: ci-deps-
+            cache-scope: fab-flatland3-benchmarks-orchestrator-deps
             hash-paths: "evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt"
     steps:
       - uses: actions/checkout@v6
@@ -92,8 +95,8 @@ jobs:
           push: true
           no-cache: ${{ github.event_name == 'schedule' }}
           tags: ${{ env.REGISTRY }}/${{ matrix.image }}:${{ steps.hash.outputs.tag }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=${{ matrix.cache-scope }}
+          cache-to: type=gha,scope=${{ matrix.cache-scope }},mode=max
 
   test-flatland3-benchmarks:
     needs: build-images
