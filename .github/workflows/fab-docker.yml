@@ -44,6 +44,8 @@ jobs:
           push: true
           tags: |
             ghcr.io/flatland-association/fab-frontend:${{ env.TAG }}
+          cache-from: type=gha,scope=fab-frontend
+          cache-to: type=gha,scope=fab-frontend,mode=max
   build-backend-image:
     name: Build FAB Backend
     runs-on: ubuntu-latest
@@ -70,3 +72,5 @@ jobs:
           push: true
           tags: |
             ghcr.io/flatland-association/fab-backend:${{ env.TAG }}
+          cache-from: type=gha,scope=fab-backend
+          cache-to: type=gha,scope=fab-backend,mode=max

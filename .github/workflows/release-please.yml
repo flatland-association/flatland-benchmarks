@@ -43,6 +43,8 @@ jobs:
           push: true
           tags: |
             ghcr.io/flatland-association/fab-frontend:${{ needs.release-please.outputs.tag_name }}
+          cache-from: type=gha,scope=fab-frontend
+          cache-to: type=gha,scope=fab-frontend,mode=max
   build-backend-image:
     needs: release-please
     if: ${{ needs.release-please.outputs.release_created }}
@@ -69,6 +71,8 @@ jobs:
           tags: |
             ghcr.io/flatland-association/fab-backend:${{ needs.release-please.outputs.tag_name }}
           build-args: FAB_VERSION=${{ needs.release-please.outputs.tag_name }}
+          cache-from: type=gha,scope=fab-backend
+          cache-to: type=gha,scope=fab-backend,mode=max
 
   build-fab-flatland3-benchmarks-orchestrator:
     needs: release-please
@@ -97,6 +101,8 @@ jobs:
           push: true
           tags: |
             ghcr.io/flatland-association/fab-flatland3-benchmarks-orchestrator:${{ needs.release-please.outputs.tag_name }}
+          cache-from: type=gha,scope=fab-flatland3-benchmarks-orchestrator-full
+          cache-to: type=gha,scope=fab-flatland3-benchmarks-orchestrator-full,mode=max
 
   publish-fab-client-pypi:
     needs: release-please
