@@ -1,0 +1,27 @@
+# Additive compose override, opted into only via the COMPOSE_FILE env var on specific CI steps
+# (see .github/workflows/checks.yml's test-ai4realnet-orchestrator-railway job) — never applied to
+# local dev, since that requires ACTIONS_CACHE_URL/ACTIONS_RUNTIME_TOKEN, only present in GH Actions.
+# Reuses the same GHA cache scopes written by the build-images job, fab-docker.yml, fab-flatland-docker.yml,
+# and release-please.yml, so an unconditional `docker compose build` here (e.g. from an external test
+# fixture we don't control) becomes a fast cache-hit rebuild instead of a from-scratch one.
+services:
+  fab-backend:
+    build:
+      cache_from:
+        - type=gha,scope=fab-backend
+      cache_to:
+        - type=gha,scope=fab-backend,mode=max
+
+  fab-frontend:
+    build:
+      cache_from:
+        - type=gha,scope=fab-frontend
+      cache_to:
+        - type=gha,scope=fab-frontend,mode=max
+
+  flatland3-benchmarks-orchestrator:
+    build:
+      cache_from:
+        - type=gha,scope=fab-flatland3-benchmarks-orchestrator-devbuild
+      cache_to:
+        - type=gha,scope=fab-flatland3-benchmarks-orchestrator-devbuild,mode=max
