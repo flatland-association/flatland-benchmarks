@@ -33,6 +33,31 @@ def test_fixture_skips_docker_compose_when_attended(monkeypatch):
 
 
 @patch("docker_compose_fixture.DockerCompose")
+def test_fixture_passes_build_false_when_using_prebuilt_images(mock_docker_compose_cls, monkeypatch):
+  monkeypatch.setenv("FAB_TEST_CONTAINERS_USE_PREBUILT_IMAGES", "true")
+  basic = MagicMock()
+  mock_docker_compose_cls.return_value = basic
+  basic.get_logs.return_value = ("log-out", "log-err")
+
+  gen = _test_containers_generator(_fake_request(), context=".")
+  next(gen)
+
+  assert mock_docker_compose_cls.call_args.kwargs["build"] is False
+
+
+@patch("docker_compose_fixture.DockerCompose")
+def test_fixture_passes_build_true_by_default(mock_docker_compose_cls):
+  basic = MagicMock()
+  mock_docker_compose_cls.return_value = basic
+  basic.get_logs.return_value = ("log-out", "log-err")
+
+  gen = _test_containers_generator(_fake_request(), context=".")
+  next(gen)
+
+  assert mock_docker_compose_cls.call_args.kwargs["build"] is True
+
+
+@patch("docker_compose_fixture.DockerCompose")
 def test_fixture_decodes_bytes_on_build_failure(mock_docker_compose_cls, capsys):
   basic = MagicMock()
   mock_docker_compose_cls.return_value = basic

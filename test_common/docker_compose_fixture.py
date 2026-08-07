@@ -10,6 +10,8 @@ from testcontainers.compose import DockerCompose
 
 logger = logging.getLogger(__name__)
 
+_USE_PREBUILT_IMAGES_ENV_VAR = "FAB_TEST_CONTAINERS_USE_PREBUILT_IMAGES"
+
 
 def _print_output(stdout: str, stderr: str) -> None:
   print(f"stdout: {stdout}")
@@ -34,7 +36,8 @@ def _test_containers_generator(request: pytest.FixtureRequest, context: str) -> 
 
   # test modules may set a module-level ENV_FILE to pass to DockerCompose's env_file
   env_file = getattr(request.module, "ENV_FILE", None)
-  basic = DockerCompose(context=context, profiles=["full"], env_file=env_file, build=True)
+  use_prebuilt_images = os.environ.get(_USE_PREBUILT_IMAGES_ENV_VAR, "false").lower() == "true"
+  basic = DockerCompose(context=context, profiles=["full"], env_file=env_file, build=not use_prebuilt_images)
 
   try:
     start_time = time.time()

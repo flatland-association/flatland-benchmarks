@@ -5,9 +5,12 @@ WORKDIR /usr/src/app
 
 COPY ./*.json /usr/src/app
 COPY .npmrc /usr/src/app
+
+RUN npm ci
+
 COPY ts /usr/src/app/ts
 
-RUN npm ci && cd ts/backend && npm run build
+RUN cd ts/backend && npm run build
 
 
 
