@@ -51,6 +51,11 @@
     "wrap-ansi": "^9.0.2",
     "zone.js": "^0.15.1"
   },
+  "overrides": {
+    "@angular/build": {
+      "undici": "^7.29.0"
+    }
+  },
   "devDependencies": {
     "@angular/build": "^21.2.19",
     "@angular/cli": "^21.2.19",
