@@ -109,22 +109,6 @@ jobs:
         python-version: [ "3.13" ]
         it: [ "test_containers_flatland_benchmarks_percentage.py", "test_containers_flatland_benchmarks_running_time_limit.py", "test_containers_flatland_benchmarks.py" ]
     steps:
-      - name: Inspect disk
-        run: |
-          df -h
-          docker system df
-      # https://stackoverflow.com/questions/30604846/docker-complains-about-no-space-left-on-device-how-to-clean-up
-      - name: Prune docker system
-        run: |
-          docker system prune --all --force
-      # https://www.dzombak.com/blog/2024/09/freeing-disk-space-on-github-actions-runners/
-      - name: Free disk space
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/kou/arrow/e49d8ae15583ceff03237571569099a6ad62be32/ci/scripts/util_free_space.sh | bash
-      - name: Inspect disk again
-        run: |
-          df -h
-          docker system df
       - uses: actions/checkout@v6
       - name: Determine image tags and reuse strategy
         id: images
@@ -144,6 +128,25 @@ jobs:
             echo "use-prebuilt=false" >> "$GITHUB_OUTPUT"
             echo "pull-policy=build" >> "$GITHUB_OUTPUT"
           fi
+      - name: Inspect disk
+        run: |
+          df -h
+          docker system df
+      # local docker builds are what eat disk space; skip pruning/freeing when reusing pre-built images from ghcr.io
+      # https://stackoverflow.com/questions/30604846/docker-complains-about-no-space-left-on-device-how-to-clean-up
+      - name: Prune docker system
+        if: steps.images.outputs.use-prebuilt != 'true'
+        run: |
+          docker system prune --all --force
+      # https://www.dzombak.com/blog/2024/09/freeing-disk-space-on-github-actions-runners/
+      - name: Free disk space
+        if: steps.images.outputs.use-prebuilt != 'true'
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/kou/arrow/e49d8ae15583ceff03237571569099a6ad62be32/ci/scripts/util_free_space.sh | bash
+      - name: Inspect disk again
+        run: |
+          df -h
+          docker system df
       - name: Log in to GHCR
         if: steps.images.outputs.use-prebuilt == 'true'
         uses: docker/login-action@v4
