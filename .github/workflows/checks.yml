@@ -2,8 +2,8 @@ name: Checks
 
 env:
   # DEPENDENCY SWITCH:
-  # TODO use released version
-  ai4realnet-orchestrators-ref: main
+  # TODO revert to a released version once the 695-ci-cleanup branch's image-reuse work is merged
+  ai4realnet-orchestrators-ref: 695-ci-cleanup
   REGISTRY: ghcr.io/flatland-association
 
 on:
@@ -245,6 +245,9 @@ jobs:
 
 
   test-ai4realnet-orchestrator-railway:
+    needs: build-images
+    # run even if build-images was skipped (fork PR) or failed; fab-backend/fab-frontend fall back to local build
+    if: always()
     permissions:
       contents: read
       packages: read
@@ -255,23 +258,60 @@ jobs:
         python-version: [ "3.13" ]
         node-version: [ "22.x" ]
     steps:
+      - uses: actions/checkout@v6
+      - name: Determine image tags and reuse strategy
+        id: images
+        # only fab-backend/fab-frontend: this job never builds fab-flatland3-benchmarks-orchestrator, and
+        # ai4realnet-orchestrator-railway (built from the externally-cloned repo's own Dockerfile) has no
+        # ci-<hash>/reuse hook at all, so it always rebuilds locally regardless of this step's outcome
+        run: |
+          BACKEND_HASH=$(git ls-files -s -- ts '*.json' .npmrc deployment/backend | git hash-object --stdin)
+          FRONTEND_HASH=$(git ls-files -s -- ts '*.json' .npmrc deployment/frontend | git hash-object --stdin)
+          echo "backend-tag=${{ env.REGISTRY }}/fab-backend:ci-${BACKEND_HASH}" >> "$GITHUB_OUTPUT"
+          echo "frontend-tag=${{ env.REGISTRY }}/fab-frontend:ci-${FRONTEND_HASH}" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.event_name }}" != "schedule" ] && [ "${{ needs.build-images.result }}" == "success" ]; then
+            echo "use-prebuilt=true" >> "$GITHUB_OUTPUT"
+            # image already pulled below under this exact tag; reuse it instead of docker-compose.yml's
+            # default pull_policy of "build" (which would force a rebuild even without --build)
+            echo "pull-policy=missing" >> "$GITHUB_OUTPUT"
+          else
+            echo "use-prebuilt=false" >> "$GITHUB_OUTPUT"
+            echo "pull-policy=build" >> "$GITHUB_OUTPUT"
+          fi
       - name: Inspect disk
         run: |
           df -h
           docker system df
+      # local docker builds are what eat disk space; skip pruning/freeing when reusing pre-built images from ghcr.io
       # https://stackoverflow.com/questions/30604846/docker-complains-about-no-space-left-on-device-how-to-clean-up
       - name: Prune docker system
+        if: steps.images.outputs.use-prebuilt != 'true'
         run: |
           docker system prune --all --force
       # https://www.dzombak.com/blog/2024/09/freeing-disk-space-on-github-actions-runners/
       - name: Free disk space
+        if: steps.images.outputs.use-prebuilt != 'true'
         run: |
           curl -fsSL https://raw.githubusercontent.com/kou/arrow/e49d8ae15583ceff03237571569099a6ad62be32/ci/scripts/util_free_space.sh | bash
       - name: Inspect disk again
         run: |
           df -h
           docker system df
-      - uses: actions/checkout@v6
+      # needed unconditionally: on the use-prebuilt path to pull the images below, and on the fallback-build
+      # path so the unconditional `docker compose build` further down can use the GHA cache via COMPOSE_FILE
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Pull pre-built images
+        if: steps.images.outputs.use-prebuilt == 'true'
+        run: |
+          docker pull ${{ steps.images.outputs.backend-tag }}
+          docker pull ${{ steps.images.outputs.frontend-tag }}
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6
         with:
@@ -346,23 +386,16 @@ jobs:
         run: |
           python -m pip install .
           python -m pip list
-      # the pytest run below invokes `docker compose build` unconditionally (from an external test fixture
-      # we don't control) — set up buildx as the default builder and log in to GHCR so that unconditional
-      # rebuild can pull GHA-cached layers via docker-compose.ci-cache.yml (see COMPOSE_FILE below) instead
-      # of building from scratch every time.
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
-      - name: Log in to GHCR
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Run ai4realnet Orchestrators Integration Tests
         working-directory: evaluation/ai4realnet_orchestrators
         env:
+          FAB_BACKEND_IMAGE: ${{ steps.images.outputs.backend-tag }}
+          FAB_FRONTEND_IMAGE: ${{ steps.images.outputs.frontend-tag }}
+          FAB_BACKEND_PULL_POLICY: ${{ steps.images.outputs.pull-policy }}
+          FAB_FRONTEND_PULL_POLICY: ${{ steps.images.outputs.pull-policy }}
           # the fixture in this external repo calls DockerCompose() with no compose_file_name, so it never
-          # passes -f itself — Compose falls back to COMPOSE_FILE to pick up our cache_from/cache_to overlay
+          # passes -f itself — Compose falls back to COMPOSE_FILE to pick up our image/pull_policy switches
+          # and cache_from/cache_to overlay
           COMPOSE_FILE: ${{ github.workspace }}/docker-compose.yml:${{ github.workspace }}/docker-compose.ci-cache.yml
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
