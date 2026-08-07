@@ -187,7 +187,7 @@ jobs:
         run: echo "date=$(date -u +%F)" >> "$GITHUB_OUTPUT"
       - name: Restore cached virtualenv
         id: venv-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: evaluation/flatland3_benchmarks/.venv
           key: flatland3-venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('evaluation/flatland3_benchmarks/requirements-dev.txt', 'evaluation/flatland3_benchmarks/orchestrator/requirements.txt') }}-${{ steps.date.outputs.date }}
@@ -374,7 +374,7 @@ jobs:
         run: echo "date=$(date -u +%F)" >> "$GITHUB_OUTPUT"
       - name: Restore cached virtualenv
         id: venv-cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: evaluation/ai4realnet_orchestrators/.venv
           key: ai4realnet-railway-venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('evaluation/ai4realnet_orchestrators/requirements.txt', 'evaluation/ai4realnet_orchestrators/requirements-dev.txt', 'evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/requirements.txt') }}-${{ steps.date.outputs.date }}
