@@ -39,22 +39,22 @@ jobs:
             context: .
             target: ""
             tag-prefix: ci-
-            hash-root: "."
-            hash-paths: "ts .lintstagedrc.json .prettierrc.json .release-please-manifest.json angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend"
+            repo-root: "."
+            hash-paths: &backend-hash-paths "ts .lintstagedrc.json .prettierrc.json .release-please-manifest.json angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend"
           - image: fab-frontend
             file: deployment/frontend/Dockerfile
             context: .
             target: ""
             tag-prefix: ci-
-            hash-root: "."
-            hash-paths: "ts .lintstagedrc.json .prettierrc.json .release-please-manifest.json angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend"
+            repo-root: "."
+            hash-paths: &frontend-hash-paths "ts .lintstagedrc.json .prettierrc.json .release-please-manifest.json angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend"
           - image: fab-flatland3-benchmarks-orchestrator
             file: evaluation/flatland3_benchmarks/orchestrator/Dockerfile
             context: evaluation/flatland3_benchmarks/orchestrator
             target: deps
             tag-prefix: ci-deps-
-            hash-root: "."
-            hash-paths: "evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt"
+            repo-root: "."
+            hash-paths: &orchestrator-deps-hash-paths "evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt"
           - image: ai4realnet-orchestrator-railway
             file: evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/integrationtests/Dockerfile
             context: .
@@ -62,8 +62,8 @@ jobs:
             tag-prefix: ci-deps-
             # evaluation/ai4realnet_orchestrators is gitignored here (it's an external clone) — hash from inside
             # that nested checkout's own git history instead, with paths relative to its root
-            hash-root: evaluation/ai4realnet_orchestrators
-            hash-paths: "ai4realnet_orchestrators/railway/integrationtests/Dockerfile requirements.txt ai4realnet_orchestrators/railway/requirements.txt"
+            repo-root: evaluation/ai4realnet_orchestrators
+            hash-paths: &railway-deps-hash-paths "ai4realnet_orchestrators/railway/integrationtests/Dockerfile requirements.txt ai4realnet_orchestrators/railway/requirements.txt"
     steps:
       - uses: actions/checkout@v6
       - name: Checkout ai4realnet-orchestrators (content hash + build context for that image)
@@ -75,7 +75,7 @@ jobs:
           ref: ${{ env.ai4realnet-orchestrators-ref }}
       - name: Compute content-hash tag
         id: hash
-        working-directory: ${{ matrix.hash-root }}
+        working-directory: ${{ matrix.repo-root }}
         run: |
           HASH=$(git ls-files -s -- ${{ matrix.hash-paths }} | git hash-object --stdin)
           echo "tag=${{ matrix.tag-prefix }}${HASH}" >> "$GITHUB_OUTPUT"
@@ -146,6 +146,9 @@ jobs:
         uses: ./.github/actions/determine-image-reuse-strategy
         with:
           registry: ${{ env.REGISTRY }}
+          backend-hash-paths: *backend-hash-paths
+          frontend-hash-paths: *frontend-hash-paths
+          orchestrator-deps-hash-paths: *orchestrator-deps-hash-paths
       - name: Inspect disk
         run: |
           df -h
@@ -165,12 +168,14 @@ jobs:
         run: |
           df -h
           docker system df
+      # each image is pulled independently based on its own pull-policy/tag, not gated on use-prebuilt (which
+      # only means ALL THREE are reused) — so a single still-cached image is pulled and reused even when the
+      # other two need a local rebuild
       - name: Pull pre-built images
-        if: steps.images.outputs.use-prebuilt == 'true'
         run: |
-          docker pull ${{ steps.images.outputs.backend-tag }}
-          docker pull ${{ steps.images.outputs.frontend-tag }}
-          docker pull ${{ steps.images.outputs.orchestrator-deps-tag }}
+          if [ "${{ steps.images.outputs.backend-pull-policy }}" = "missing" ]; then docker pull ${{ steps.images.outputs.backend-tag }}; fi
+          if [ "${{ steps.images.outputs.frontend-pull-policy }}" = "missing" ]; then docker pull ${{ steps.images.outputs.frontend-tag }}; fi
+          if [ -n "${{ steps.images.outputs.orchestrator-deps-tag }}" ]; then docker pull ${{ steps.images.outputs.orchestrator-deps-tag }}; fi
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
@@ -235,8 +240,8 @@ jobs:
           FAB_TEST_CONTAINERS_USE_PREBUILT_IMAGES: ${{ steps.images.outputs.use-prebuilt }}
           FAB_BACKEND_IMAGE: ${{ steps.images.outputs.backend-tag }}
           FAB_FRONTEND_IMAGE: ${{ steps.images.outputs.frontend-tag }}
-          FAB_BACKEND_PULL_POLICY: ${{ steps.images.outputs.pull-policy }}
-          FAB_FRONTEND_PULL_POLICY: ${{ steps.images.outputs.pull-policy }}
+          FAB_BACKEND_PULL_POLICY: ${{ steps.images.outputs.backend-pull-policy }}
+          FAB_FRONTEND_PULL_POLICY: ${{ steps.images.outputs.frontend-pull-policy }}
           ORCHESTRATOR_DEPS_IMAGE: ${{ steps.images.outputs.orchestrator-deps-tag }}
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
@@ -279,6 +284,9 @@ jobs:
         uses: ./.github/actions/determine-image-reuse-strategy
         with:
           registry: ${{ env.REGISTRY }}
+          backend-hash-paths: *backend-hash-paths
+          frontend-hash-paths: *frontend-hash-paths
+          orchestrator-deps-hash-paths: *orchestrator-deps-hash-paths
       - name: Inspect disk
         run: |
           df -h
@@ -298,12 +306,14 @@ jobs:
         run: |
           df -h
           docker system df
+      # each image is pulled independently based on its own pull-policy/tag, not gated on use-prebuilt (which
+      # only means ALL THREE are reused) — so a single still-cached image is pulled and reused even when the
+      # other two need a local rebuild
       - name: Pull pre-built images
-        if: steps.images.outputs.use-prebuilt == 'true'
         run: |
-          docker pull ${{ steps.images.outputs.backend-tag }}
-          docker pull ${{ steps.images.outputs.frontend-tag }}
-          docker pull ${{ steps.images.outputs.orchestrator-deps-tag }}
+          if [ "${{ steps.images.outputs.backend-pull-policy }}" = "missing" ]; then docker pull ${{ steps.images.outputs.backend-tag }}; fi
+          if [ "${{ steps.images.outputs.frontend-pull-policy }}" = "missing" ]; then docker pull ${{ steps.images.outputs.frontend-tag }}; fi
+          if [ -n "${{ steps.images.outputs.orchestrator-deps-tag }}" ]; then docker pull ${{ steps.images.outputs.orchestrator-deps-tag }}; fi
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6
         with:
@@ -339,6 +349,7 @@ jobs:
         with:
           repo-root: evaluation/ai4realnet_orchestrators
           registry: ${{ env.REGISTRY }}
+          hash-paths: *railway-deps-hash-paths
       # runs after the clone above so cache-dependency-path can see the externally-cloned repo's requirements files
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
@@ -391,8 +402,8 @@ jobs:
         env:
           FAB_BACKEND_IMAGE: ${{ steps.images.outputs.backend-tag }}
           FAB_FRONTEND_IMAGE: ${{ steps.images.outputs.frontend-tag }}
-          FAB_BACKEND_PULL_POLICY: ${{ steps.images.outputs.pull-policy }}
-          FAB_FRONTEND_PULL_POLICY: ${{ steps.images.outputs.pull-policy }}
+          FAB_BACKEND_PULL_POLICY: ${{ steps.images.outputs.backend-pull-policy }}
+          FAB_FRONTEND_PULL_POLICY: ${{ steps.images.outputs.frontend-pull-policy }}
           ORCHESTRATOR_DEPS_IMAGE: ${{ steps.images.outputs.orchestrator-deps-tag }}
           # the fixture in this external repo calls DockerCompose() with no compose_file_name, so it never
           # passes -f itself — Compose falls back to COMPOSE_FILE to pick up our image/pull_policy/build-skip
@@ -434,12 +445,17 @@ jobs:
         uses: ./.github/actions/determine-image-reuse-strategy
         with:
           registry: ${{ env.REGISTRY }}
+          backend-hash-paths: *backend-hash-paths
+          frontend-hash-paths: *frontend-hash-paths
+          orchestrator-deps-hash-paths: *orchestrator-deps-hash-paths
+      # each image is pulled independently based on its own pull-policy/tag, not gated on use-prebuilt (which
+      # only means ALL THREE are reused) — so a single still-cached image is pulled and reused even when the
+      # other two need a local rebuild
       - name: Pull pre-built images
-        if: steps.images.outputs.use-prebuilt == 'true'
         run: |
-          docker pull ${{ steps.images.outputs.backend-tag }}
-          docker pull ${{ steps.images.outputs.frontend-tag }}
-          docker pull ${{ steps.images.outputs.orchestrator-deps-tag }}
+          if [ "${{ steps.images.outputs.backend-pull-policy }}" = "missing" ]; then docker pull ${{ steps.images.outputs.backend-tag }}; fi
+          if [ "${{ steps.images.outputs.frontend-pull-policy }}" = "missing" ]; then docker pull ${{ steps.images.outputs.frontend-tag }}; fi
+          if [ -n "${{ steps.images.outputs.orchestrator-deps-tag }}" ]; then docker pull ${{ steps.images.outputs.orchestrator-deps-tag }}; fi
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
@@ -494,8 +510,8 @@ jobs:
           FAB_TEST_CONTAINERS_USE_PREBUILT_IMAGES: ${{ steps.images.outputs.use-prebuilt }}
           FAB_BACKEND_IMAGE: ${{ steps.images.outputs.backend-tag }}
           FAB_FRONTEND_IMAGE: ${{ steps.images.outputs.frontend-tag }}
-          FAB_BACKEND_PULL_POLICY: ${{ steps.images.outputs.pull-policy }}
-          FAB_FRONTEND_PULL_POLICY: ${{ steps.images.outputs.pull-policy }}
+          FAB_BACKEND_PULL_POLICY: ${{ steps.images.outputs.backend-pull-policy }}
+          FAB_FRONTEND_PULL_POLICY: ${{ steps.images.outputs.frontend-pull-policy }}
           ORCHESTRATOR_DEPS_IMAGE: ${{ steps.images.outputs.orchestrator-deps-tag }}
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
