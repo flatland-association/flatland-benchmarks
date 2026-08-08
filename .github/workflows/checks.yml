@@ -427,6 +427,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [ "3.13" ]
+        node-version: [ "22.x" ]
     steps:
       - uses: actions/checkout@v6
       # needed unconditionally: on the use-prebuilt path to pull the images below (and for the manifest-inspect
