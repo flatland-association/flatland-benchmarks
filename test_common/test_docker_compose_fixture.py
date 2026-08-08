@@ -46,7 +46,8 @@ def test_fixture_passes_build_false_when_using_prebuilt_images(mock_docker_compo
 
 
 @patch("docker_compose_fixture.DockerCompose")
-def test_fixture_passes_build_true_by_default(mock_docker_compose_cls):
+def test_fixture_passes_build_true_by_default(mock_docker_compose_cls, monkeypatch):
+  monkeypatch.delenv("FAB_TEST_CONTAINERS_USE_PREBUILT_IMAGES", raising=False)
   basic = MagicMock()
   mock_docker_compose_cls.return_value = basic
   basic.get_logs.return_value = ("log-out", "log-err")
