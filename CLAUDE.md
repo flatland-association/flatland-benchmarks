@@ -172,6 +172,8 @@ Core entities and their relationships (see `docs/ARCHITECTURE.md` for the full E
 
 Flyway SQL files in `ts/backend/src/migration/schema/` (schema) and `ts/backend/src/migration/data/` (seed data, one file per customization, e.g. `V6.1__fab_example.sql`). Naming: `V{major}.{minor}__{description}.sql`. Run automatically by the `flyway` Docker service on startup.
 
+**Whenever the schema changes** — a new schema migration under `ts/backend/src/migration/schema/`, a column/type change, or a `ts/common/api-endpoints.ts`/swagger change that alters a resource's shape — update the ER/data model diagram in `docs/ARCHITECTURE.md` to match, in the same change.
+
 ### Benchmark/competition definitions (`definitions/`)
 
 Per-customization benchmark definitions (suites/benchmarks/tests/scenarios/fields) are authored as CSV (e.g. `definitions/ai4realnet/KPIs_database_cards.csv`) and generated into `*_definitions.json` + `*_definitions.sql`/`V{n}.{m}__*.sql` seed-data migrations by `gen_*_benchmarks_sql.py` scripts, sharing common SQL-generation helpers in `definitions/gen_benchmarks_common.py`. One subdirectory per customization/benchmark set (`definitions/ai4realnet/`, `definitions/benchmarks/ecml2026/`, `definitions/benchmarks/flatland3_benchmarks/`). Re-run the relevant `gen_*.py` script after editing a CSV, then copy/commit the regenerated SQL into `ts/backend/src/migration/data/`.
