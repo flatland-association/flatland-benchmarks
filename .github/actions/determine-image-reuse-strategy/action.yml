@@ -67,12 +67,12 @@ runs:
           # fab-frontend so that unconditional build call has nothing to do for them and just uses the pulled
           # image: as-is. Must stay last: any later file touching build.* would resurrect a build section with
           # no context/dockerfile.
-          echo "compose-file=$(pwd)/docker-compose.yml:$(pwd)/docker-compose.ci-cache.yml:$(pwd)/docker-compose.ci-prebuilt.yml" >> "$GITHUB_OUTPUT"
+          echo "compose-file=$(pwd)/docker-compose.yml:$(pwd)/docker-compose.ci-prebuilt.yml" >> "$GITHUB_OUTPUT"
         else
           echo "use-prebuilt=false" >> "$GITHUB_OUTPUT"
           echo "pull-policy=build" >> "$GITHUB_OUTPUT"
           # leave empty (not the computed ci-deps-<hash> tag) so docker-compose.yml's own ARG default (:latest)
           # applies instead of a Dockerfile FROM failing to resolve a tag that was never pushed
           echo "orchestrator-deps-tag=" >> "$GITHUB_OUTPUT"
-          echo "compose-file=$(pwd)/docker-compose.yml:$(pwd)/docker-compose.ci-cache.yml" >> "$GITHUB_OUTPUT"
+          echo "compose-file=$(pwd)/docker-compose.yml" >> "$GITHUB_OUTPUT"
         fi
