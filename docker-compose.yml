@@ -307,6 +307,8 @@ services:
         python -m celery -A ai4realnet_orchestrators.railway.orchestrator worker -l info -n orchestrator@%n -Q ${DOMAIN}
     build:
       dockerfile: evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/integrationtests/Dockerfile
+      args:
+        RAILWAY_DEPS_IMAGE: ${RAILWAY_DEPS_IMAGE:-deps}
     depends_on:
       rabbit:
         condition: service_healthy
