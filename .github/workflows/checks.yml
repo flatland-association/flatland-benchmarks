@@ -127,6 +127,7 @@ jobs:
       fail-fast: false
       matrix:
         python-version: [ "3.13" ]
+        node-version: [ "22.x" ]
         it: [ "test_containers_flatland_benchmarks_percentage.py", "test_containers_flatland_benchmarks_running_time_limit.py", "test_containers_flatland_benchmarks.py" ]
     steps:
       - uses: actions/checkout@v6
@@ -216,6 +217,22 @@ jobs:
       - name: Run test_common unit tests
         working-directory: test_common
         run: pytest -s test_docker_compose_fixture.py
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - name: Install dependencies
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Re-generate swagger.json
+        working-directory: ts/backend/
+        run: |
+          npm run private:swagger:prod
+      - name: Copy swagger.json from backend to openapi.json in client-lib
+        run: |
+          cp ts/backend/src/swagger/swagger.json fab-clientlib/openapi.json
       - name: Install openapi-generator-cli
         uses: ./.github/actions/install-openapi-generator-cli
       - name: Regenerate client lib locally overwriting dependency.
