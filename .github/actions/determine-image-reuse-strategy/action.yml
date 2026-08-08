@@ -1,0 +1,78 @@
+name: Determine image tags and reuse strategy
+description: >
+  Computes content-hash ci-<hash> tags for fab-backend/fab-frontend/the flatland3-benchmarks-orchestrator
+  deps image, checks whether they already exist in the registry, and emits the pull_policy/compose-file
+  wiring needed to reuse them instead of building locally. Never reuses on a schedule run, which always
+  force-rebuilds to catch base-image/dependency drift. The caller must already be logged in to the
+  registry (docker/login-action) before this action runs — composite actions can't accept secrets directly.
+inputs:
+  repo-root:
+    description: Path (relative to the job's default working directory) to the flatland-benchmarks checkout to hash/check against.
+    required: false
+    default: "."
+  registry:
+    description: Container registry + namespace the images are tagged under.
+    required: false
+    default: ghcr.io/flatland-association
+outputs:
+  backend-tag:
+    description: Content-hash tag for fab-backend.
+    value: ${{ steps.determine.outputs.backend-tag }}
+  frontend-tag:
+    description: Content-hash tag for fab-frontend.
+    value: ${{ steps.determine.outputs.frontend-tag }}
+  orchestrator-deps-tag:
+    description: Content-hash tag for the flatland3-benchmarks-orchestrator deps stage (empty when not reusing).
+    value: ${{ steps.determine.outputs.orchestrator-deps-tag }}
+  use-prebuilt:
+    description: "'true' if all three tags exist in the registry and should be pulled/reused."
+    value: ${{ steps.determine.outputs.use-prebuilt }}
+  pull-policy:
+    description: Value to feed FAB_BACKEND_PULL_POLICY/FAB_FRONTEND_PULL_POLICY ("missing" or "build").
+    value: ${{ steps.determine.outputs.pull-policy }}
+  compose-file:
+    description: Colon-separated COMPOSE_FILE value, absolute paths, ci-prebuilt override last when reusing.
+    value: ${{ steps.determine.outputs.compose-file }}
+runs:
+  using: composite
+  steps:
+    - name: Determine image tags and reuse strategy
+      id: determine
+      working-directory: ${{ inputs.repo-root }}
+      shell: bash
+      run: |
+        BACKEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend | git hash-object --stdin)
+        FRONTEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend | git hash-object --stdin)
+        ORCH_DEPS_HASH=$(git ls-files -s -- evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt | git hash-object --stdin)
+        BACKEND_TAG="${{ inputs.registry }}/fab-backend:ci-${BACKEND_HASH}"
+        FRONTEND_TAG="${{ inputs.registry }}/fab-frontend:ci-${FRONTEND_HASH}"
+        ORCH_DEPS_TAG="${{ inputs.registry }}/fab-flatland3-benchmarks-orchestrator:ci-deps-${ORCH_DEPS_HASH}"
+        echo "backend-tag=${BACKEND_TAG}" >> "$GITHUB_OUTPUT"
+        echo "frontend-tag=${FRONTEND_TAG}" >> "$GITHUB_OUTPUT"
+        # existence is checked directly via `docker manifest inspect` on all three tags rather than trusting a
+        # `needs: build-images` job result, so one failed leg of that job's matrix doesn't incorrectly mark tags
+        # that DID build/push successfully as unavailable too. Any failure here (auth or not-found) safely falls
+        # back to a local build.
+        if [ "${{ github.event_name }}" != "schedule" ] \
+          && docker manifest inspect "${BACKEND_TAG}" >/dev/null 2>&1 \
+          && docker manifest inspect "${FRONTEND_TAG}" >/dev/null 2>&1 \
+          && docker manifest inspect "${ORCH_DEPS_TAG}" >/dev/null 2>&1; then
+          echo "use-prebuilt=true" >> "$GITHUB_OUTPUT"
+          # image already pulled by the caller under this exact tag; reuse it instead of docker-compose.yml's
+          # default pull_policy of "build" (which would force a rebuild even without --build)
+          echo "pull-policy=missing" >> "$GITHUB_OUTPUT"
+          echo "orchestrator-deps-tag=${ORCH_DEPS_TAG}" >> "$GITHUB_OUTPUT"
+          # some callers (e.g. the ai4realnet-orchestrators fixture) run `docker compose build` unconditionally,
+          # ignoring pull_policy entirely — docker-compose.ci-prebuilt.yml !reset-clears build: for fab-backend/
+          # fab-frontend so that unconditional build call has nothing to do for them and just uses the pulled
+          # image: as-is. Must stay last: any later file touching build.* would resurrect a build section with
+          # no context/dockerfile.
+          echo "compose-file=$(pwd)/docker-compose.yml:$(pwd)/docker-compose.ci-cache.yml:$(pwd)/docker-compose.ci-prebuilt.yml" >> "$GITHUB_OUTPUT"
+        else
+          echo "use-prebuilt=false" >> "$GITHUB_OUTPUT"
+          echo "pull-policy=build" >> "$GITHUB_OUTPUT"
+          # leave empty (not the computed ci-deps-<hash> tag) so docker-compose.yml's own ARG default (:latest)
+          # applies instead of a Dockerfile FROM failing to resolve a tag that was never pushed
+          echo "orchestrator-deps-tag=" >> "$GITHUB_OUTPUT"
+          echo "compose-file=$(pwd)/docker-compose.yml:$(pwd)/docker-compose.ci-cache.yml" >> "$GITHUB_OUTPUT"
+        fi
