@@ -1,0 +1,122 @@
+name: Determine image tags and reuse strategy
+description: >
+  Computes content-hash ci-<hash> tags for fab-backend/fab-frontend/the flatland3-benchmarks-orchestrator
+  deps image, and checks — independently per image — whether each already exists in the registry, emitting
+  the pull_policy/compose-file wiring needed to reuse whichever ones do without forcing the others to rebuild
+  too. Never reuses on a schedule run, which always force-rebuilds to catch base-image/dependency drift. The
+  caller must already be logged in to the registry (docker/login-action) before this action runs — composite
+  actions can't accept secrets directly. Hash-paths are accepted as inputs (not hardcoded here) so callers can
+  share a single source of truth with the build-images job's matrix, which actually builds these images under
+  the same tags.
+inputs:
+  repo-root:
+    description: Path (relative to the job's default working directory) to the flatland-benchmarks checkout to hash/check against.
+    required: false
+    default: "."
+  registry:
+    description: Container registry + namespace the images are tagged under.
+    required: false
+    default: ghcr.io/flatland-association
+  backend-hash-paths:
+    description: Space-separated git-tracked paths to hash for fab-backend — must match build-images' matrix entry for fab-backend.
+    required: true
+  frontend-hash-paths:
+    description: Space-separated git-tracked paths to hash for fab-frontend — must match build-images' matrix entry for fab-frontend.
+    required: true
+  orchestrator-deps-hash-paths:
+    description: Space-separated git-tracked paths to hash for the flatland3-benchmarks-orchestrator deps stage — must match build-images' matrix entry for it.
+    required: true
+outputs:
+  backend-tag:
+    description: Content-hash tag for fab-backend.
+    value: ${{ steps.determine.outputs.backend-tag }}
+  frontend-tag:
+    description: Content-hash tag for fab-frontend.
+    value: ${{ steps.determine.outputs.frontend-tag }}
+  orchestrator-deps-tag:
+    description: Content-hash tag for the flatland3-benchmarks-orchestrator deps stage (empty when not reusing).
+    value: ${{ steps.determine.outputs.orchestrator-deps-tag }}
+  backend-pull-policy:
+    description: Value to feed FAB_BACKEND_PULL_POLICY ("missing" or "build"), decided independently of frontend/orchestrator-deps.
+    value: ${{ steps.determine.outputs.backend-pull-policy }}
+  frontend-pull-policy:
+    description: Value to feed FAB_FRONTEND_PULL_POLICY ("missing" or "build"), decided independently of backend/orchestrator-deps.
+    value: ${{ steps.determine.outputs.frontend-pull-policy }}
+  use-prebuilt:
+    description: >
+      'true' only if ALL THREE tags exist — gates disk-pruning and the pytest fixture's blanket --build flag,
+      which only pay off when nothing needs a local build at all. Reuse of an individual image that IS cached
+      is independent of this and driven instead by that image's own *-tag/*-pull-policy output and, for
+      backend/frontend, by compose-file's per-service override.
+    value: ${{ steps.determine.outputs.use-prebuilt }}
+  compose-file:
+    description: Colon-separated COMPOSE_FILE value, absolute paths; includes each service's own ci-prebuilt override only for the images actually being reused.
+    value: ${{ steps.determine.outputs.compose-file }}
+runs:
+  using: composite
+  steps:
+    - name: Determine image tags and reuse strategy
+      id: determine
+      working-directory: ${{ inputs.repo-root }}
+      shell: bash
+      run: |
+        BACKEND_HASH=$(git ls-files -s -- ${{ inputs.backend-hash-paths }} | git hash-object --stdin)
+        FRONTEND_HASH=$(git ls-files -s -- ${{ inputs.frontend-hash-paths }} | git hash-object --stdin)
+        ORCH_DEPS_HASH=$(git ls-files -s -- ${{ inputs.orchestrator-deps-hash-paths }} | git hash-object --stdin)
+        BACKEND_TAG="${{ inputs.registry }}/fab-backend:ci-${BACKEND_HASH}"
+        FRONTEND_TAG="${{ inputs.registry }}/fab-frontend:ci-${FRONTEND_HASH}"
+        ORCH_DEPS_TAG="${{ inputs.registry }}/fab-flatland3-benchmarks-orchestrator:ci-deps-${ORCH_DEPS_HASH}"
+        echo "backend-tag=${BACKEND_TAG}" >> "$GITHUB_OUTPUT"
+        echo "frontend-tag=${FRONTEND_TAG}" >> "$GITHUB_OUTPUT"
+
+        # Each image's existence is checked independently (three separate `docker manifest inspect` calls, not
+        # chained with &&): one image's hash changing must not force the other two, still-cached images to
+        # rebuild too. Any failure here (auth or not-found) safely falls back to a local build for that image only.
+        BACKEND_FOUND=false
+        FRONTEND_FOUND=false
+        ORCH_DEPS_FOUND=false
+        if [ "${{ github.event_name }}" != "schedule" ]; then
+          docker manifest inspect "${BACKEND_TAG}" >/dev/null 2>&1 && BACKEND_FOUND=true
+          docker manifest inspect "${FRONTEND_TAG}" >/dev/null 2>&1 && FRONTEND_FOUND=true
+          docker manifest inspect "${ORCH_DEPS_TAG}" >/dev/null 2>&1 && ORCH_DEPS_FOUND=true
+        fi
+
+        if [ "${BACKEND_FOUND}" = "true" ]; then
+          echo "backend-pull-policy=missing" >> "$GITHUB_OUTPUT"
+        else
+          echo "backend-pull-policy=build" >> "$GITHUB_OUTPUT"
+        fi
+        if [ "${FRONTEND_FOUND}" = "true" ]; then
+          echo "frontend-pull-policy=missing" >> "$GITHUB_OUTPUT"
+        else
+          echo "frontend-pull-policy=build" >> "$GITHUB_OUTPUT"
+        fi
+        if [ "${ORCH_DEPS_FOUND}" = "true" ]; then
+          echo "orchestrator-deps-tag=${ORCH_DEPS_TAG}" >> "$GITHUB_OUTPUT"
+        else
+          # leave empty (not the computed ci-deps-<hash> tag) so docker-compose.yml's own ARG default (:latest)
+          # applies instead of a Dockerfile FROM failing to resolve a tag that was never pushed
+          echo "orchestrator-deps-tag=" >> "$GITHUB_OUTPUT"
+        fi
+
+        # some callers (e.g. the ai4realnet-orchestrators fixture) run `docker compose build` unconditionally,
+        # ignoring pull_policy entirely — docker-compose.ci-prebuilt-backend.yml/-frontend.yml each !reset-clear
+        # build: for just their one service, so that unconditional build call has nothing to do for a service
+        # that IS being reused and just uses its pulled image: as-is; included independently per service, so
+        # reusing only one of the two still works. Must come last: any later file touching build.* would
+        # resurrect a build section with no context/dockerfile.
+        COMPOSE_FILE="$(pwd)/docker-compose.yml"
+        if [ "${BACKEND_FOUND}" = "true" ]; then
+          COMPOSE_FILE="${COMPOSE_FILE}:$(pwd)/docker-compose.ci-prebuilt-backend.yml"
+        fi
+        if [ "${FRONTEND_FOUND}" = "true" ]; then
+          COMPOSE_FILE="${COMPOSE_FILE}:$(pwd)/docker-compose.ci-prebuilt-frontend.yml"
+        fi
+        echo "compose-file=${COMPOSE_FILE}" >> "$GITHUB_OUTPUT"
+
+        # use-prebuilt stays all-or-nothing by design — see the output's own description above.
+        if [ "${BACKEND_FOUND}" = "true" ] && [ "${FRONTEND_FOUND}" = "true" ] && [ "${ORCH_DEPS_FOUND}" = "true" ]; then
+          echo "use-prebuilt=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "use-prebuilt=false" >> "$GITHUB_OUTPUT"
+        fi

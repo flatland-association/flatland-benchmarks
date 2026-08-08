@@ -1,5 +1,6 @@
 
-FROM ghcr.io/flatland-association/fab-flatland3-benchmarks-orchestrator:latest
+ARG ORCHESTRATOR_DEPS_IMAGE=ghcr.io/flatland-association/fab-flatland3-benchmarks-orchestrator:latest
+FROM ${ORCHESTRATOR_DEPS_IMAGE}
 
 # switch to root again
 USER root

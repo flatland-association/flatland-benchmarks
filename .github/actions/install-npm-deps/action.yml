@@ -1,0 +1,25 @@
+name: Install npm dependencies (cached)
+description: >
+  Restores this repo's single shared root node_modules from actions/cache (keyed on package-lock.json —
+  the lockfile fully pins every resolved version, so unlike the Python venv cache elsewhere in checks.yml
+  there's no floating-ref staleness risk to bound with a date bucket), running `npm ci` only on a cache
+  miss. Complements (does not replace) actions/setup-node's own `cache: npm`, which caches npm's download
+  cache (~/.npm) rather than the installed/linked node_modules tree — that still speeds up whatever `npm ci`
+  does run on a cache-miss day.
+inputs:
+  node-version:
+    description: Node version used in the cache key — should match the actions/setup-node version this job set up.
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: Restore cached node_modules
+      id: node-modules-cache
+      uses: actions/cache@v5
+      with:
+        path: node_modules
+        key: node-modules-${{ runner.os }}-${{ inputs.node-version }}-${{ hashFiles('package-lock.json') }}
+    - name: Install dependencies
+      if: steps.node-modules-cache.outputs.cache-hit != 'true'
+      shell: bash
+      run: npm ci
