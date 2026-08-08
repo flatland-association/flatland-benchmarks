@@ -1,3 +1,7 @@
+# checks.yml's build-images job builds only the deps target (pushed as a ci-deps-<hash> tag for CI test
+# reuse); fab-flatland-docker.yml/release-please.yml build the full target (no --target, last stage wins) for
+# real publishing. Both use the same GHA buildx cache scope (fab-flatland3-benchmarks-orchestrator) so the
+# full build can cache-hit the deps stage's pip install layer instead of rebuilding it from scratch.
 FROM python:3.12 AS deps
 
 # This makes output not buffer and return immediately, nice for seeing results in stdout

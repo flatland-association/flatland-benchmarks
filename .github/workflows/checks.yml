@@ -53,7 +53,10 @@ jobs:
             context: evaluation/flatland3_benchmarks/orchestrator
             target: deps
             tag-prefix: ci-deps-
-            cache-scope: fab-flatland3-benchmarks-orchestrator-deps
+            # shared with fab-flatland-docker.yml/release-please.yml's full-stage build (FROM deps AS full) —
+            # same scope so that build can cache-hit this stage's expensive `pip install` layer instead of
+            # rebuilding it, since deps' layers are a strict prefix of full's build graph
+            cache-scope: fab-flatland3-benchmarks-orchestrator
             hash-paths: "evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt"
     steps:
       - uses: actions/checkout@v6

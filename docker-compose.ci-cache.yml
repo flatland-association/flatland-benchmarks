@@ -1,9 +1,18 @@
 # Additive compose override, opted into only via the COMPOSE_FILE env var on specific CI steps
 # (see .github/workflows/checks.yml's test-ai4realnet-orchestrator-railway job) — never applied to
 # local dev, since that requires ACTIONS_CACHE_URL/ACTIONS_RUNTIME_TOKEN, only present in GH Actions.
-# Reuses the same GHA cache scopes written by the build-images job, fab-docker.yml, fab-flatland-docker.yml,
-# and release-please.yml, so an unconditional `docker compose build` here (e.g. from an external test
-# fixture we don't control) becomes a fast cache-hit rebuild instead of a from-scratch one.
+# Gives every service here a GHA buildx cache scope, so an unconditional `docker compose build` here (e.g.
+# from an external test fixture we don't control) becomes a fast cache-hit rebuild instead of a from-scratch
+# one — but only fab-backend/fab-frontend's scopes are actually SHARED with another workflow (build-images'
+# matrix, fab-docker.yml, release-please.yml all write scope=fab-backend/scope=fab-frontend too). The other
+# two services' scopes are local-only: flatland3-benchmarks-orchestrator here builds
+# docker/flatland3_benchmarks/orchestrator/Dockerfile (the derived sudo+flatland-rl@main layer, a DIFFERENT
+# Dockerfile from evaluation/flatland3_benchmarks/orchestrator/Dockerfile's deps/full stages — see that
+# Dockerfile's own comment for how build-images and fab-flatland-docker.yml/release-please.yml share a single
+# fab-flatland3-benchmarks-orchestrator scope between its deps and full targets), so this
+# fab-flatland3-benchmarks-orchestrator-devbuild scope is correctly its own thing, not a missed-sharing bug.
+# ai4realnet-orchestrator-railway's scope isn't written anywhere else at all (that image is never published),
+# so its cache only ever hits across this file's own repeated local builds.
 services:
   fab-backend:
     build:
