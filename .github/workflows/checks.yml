@@ -310,7 +310,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
       - name: Install dependencies
-        run: npm ci
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Re-generate swagger.json in backend build
         working-directory: ts/backend/
         run: |
@@ -460,7 +462,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
       - name: Install dependencies
-        run: npm ci
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Re-generate swagger.json in backend build
         working-directory: ts/backend/
         run: |
@@ -510,7 +514,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
       - name: Install dependencies
-        run: npm ci
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Type check and eslint backend
         working-directory: ts/backend/
         run: npm run check
@@ -531,7 +537,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
       - name: Install dependencies
-        run: npm ci
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Run tests
         working-directory: ts/frontend/
         run: npm test
@@ -552,7 +560,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
       - name: Install dependencies
-        run: npm ci
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Copy .env.test
         run: cp .env.test.template .env.test
       - name: Run tests
@@ -592,7 +602,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
       - name: Install dependencies
-        run: npm ci
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Clone ai4realnet-orchestrators for integration tests
         uses: actions/checkout@v6
         with:
