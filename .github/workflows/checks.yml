@@ -323,10 +323,10 @@ jobs:
         uses: ./.github/actions/install-npm-deps
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Re-generate swagger.json in backend build
+      - name: Re-generate swagger.json
         working-directory: ts/backend/
         run: |
-          npm run build
+          npm run private:swagger:prod
       - name: Copy swagger.json from backend to openapi.json in client-lib
         run: |
           cp ts/backend/src/swagger/swagger.json  fab-clientlib/openapi.json
@@ -481,10 +481,10 @@ jobs:
         uses: ./.github/actions/install-npm-deps
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Re-generate swagger.json in backend build
+      - name: Re-generate swagger.json
         working-directory: ts/backend/
         run: |
-          npm run build
+          npm run private:swagger:prod
       - name: Copy swagger.json from backend to openapi.json in client-lib
         run: |
           cp ts/backend/src/swagger/swagger.json  ./fab-clientlib/openapi.json
