@@ -40,14 +40,14 @@ jobs:
             target: ""
             tag-prefix: ci-
             cache-scope: fab-backend
-            hash-paths: "ts '*.json' .npmrc deployment/backend"
+            hash-paths: "ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend"
           - image: fab-frontend
             file: deployment/frontend/Dockerfile
             context: .
             target: ""
             tag-prefix: ci-
             cache-scope: fab-frontend
-            hash-paths: "ts '*.json' .npmrc deployment/frontend"
+            hash-paths: "ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend"
           - image: fab-flatland3-benchmarks-orchestrator
             file: evaluation/flatland3_benchmarks/orchestrator/Dockerfile
             context: evaluation/flatland3_benchmarks/orchestrator
@@ -116,8 +116,8 @@ jobs:
       - name: Determine image tags and reuse strategy
         id: images
         run: |
-          BACKEND_HASH=$(git ls-files -s -- ts '*.json' .npmrc deployment/backend | git hash-object --stdin)
-          FRONTEND_HASH=$(git ls-files -s -- ts '*.json' .npmrc deployment/frontend | git hash-object --stdin)
+          BACKEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend | git hash-object --stdin)
+          FRONTEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend | git hash-object --stdin)
           ORCH_DEPS_HASH=$(git ls-files -s -- evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt | git hash-object --stdin)
           echo "backend-tag=${{ env.REGISTRY }}/fab-backend:ci-${BACKEND_HASH}" >> "$GITHUB_OUTPUT"
           echo "frontend-tag=${{ env.REGISTRY }}/fab-frontend:ci-${FRONTEND_HASH}" >> "$GITHUB_OUTPUT"
@@ -268,8 +268,8 @@ jobs:
         # Dockerfile) still has no ci-<hash>/reuse hook — only a GHA cache_from/cache_to scope (see
         # docker-compose.ci-cache.yml), so it always rebuilds locally, just cache-accelerated after the first run.
         run: |
-          BACKEND_HASH=$(git ls-files -s -- ts '*.json' .npmrc deployment/backend | git hash-object --stdin)
-          FRONTEND_HASH=$(git ls-files -s -- ts '*.json' .npmrc deployment/frontend | git hash-object --stdin)
+          BACKEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend | git hash-object --stdin)
+          FRONTEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend | git hash-object --stdin)
           ORCH_DEPS_HASH=$(git ls-files -s -- evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt | git hash-object --stdin)
           echo "backend-tag=${{ env.REGISTRY }}/fab-backend:ci-${BACKEND_HASH}" >> "$GITHUB_OUTPUT"
           echo "frontend-tag=${{ env.REGISTRY }}/fab-frontend:ci-${FRONTEND_HASH}" >> "$GITHUB_OUTPUT"
@@ -434,8 +434,8 @@ jobs:
       - name: Determine image tags and reuse strategy
         id: images
         run: |
-          BACKEND_HASH=$(git ls-files -s -- ts '*.json' .npmrc deployment/backend | git hash-object --stdin)
-          FRONTEND_HASH=$(git ls-files -s -- ts '*.json' .npmrc deployment/frontend | git hash-object --stdin)
+          BACKEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend | git hash-object --stdin)
+          FRONTEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend | git hash-object --stdin)
           ORCH_DEPS_HASH=$(git ls-files -s -- evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt | git hash-object --stdin)
           echo "backend-tag=${{ env.REGISTRY }}/fab-backend:ci-${BACKEND_HASH}" >> "$GITHUB_OUTPUT"
           echo "frontend-tag=${{ env.REGISTRY }}/fab-frontend:ci-${FRONTEND_HASH}" >> "$GITHUB_OUTPUT"
