@@ -273,8 +273,9 @@ jobs:
         # fab-backend/fab-frontend/flatland3-benchmarks-orchestrator: --profile full (used by this job too)
         # brings up flatland3-benchmarks-orchestrator alongside ai4realnet-orchestrator-railway regardless of
         # which domain's tests actually run, so it benefits from the same orchestrator-deps reuse as the other
-        # two jobs. ai4realnet-orchestrator-railway itself has its own separate reuse hook — see the standalone
-        # "Determine ai4realnet-orchestrator-railway deps-image reuse" step further down.
+        # two jobs. ai4realnet-orchestrator-railway itself has its own separate reuse hook — see the
+        # "Determine ai4realnet-orchestrator-railway deps-image reuse" step (a call to the
+        # determine-railway-deps-reuse composite action) further down.
         uses: ./.github/actions/determine-image-reuse-strategy
         with:
           registry: ${{ env.REGISTRY }}
@@ -332,19 +333,10 @@ jobs:
           git branch
       - name: Determine ai4realnet-orchestrator-railway deps-image reuse
         id: railway-deps
-        working-directory: evaluation/ai4realnet_orchestrators
-        # kept independent of the "Determine image tags and reuse strategy" step above: this image has no
-        # publish workflow of its own (unlike fab-backend/fab-frontend/the orchestrator), so its reuse must
-        # never gate whether those three get reused too — a missing tag here only affects this one build
-        run: |
-          HASH=$(git ls-files -s -- ai4realnet_orchestrators/railway/integrationtests/Dockerfile requirements.txt ai4realnet_orchestrators/railway/requirements.txt | git hash-object --stdin)
-          TAG="${{ env.REGISTRY }}/ai4realnet-orchestrator-railway:ci-deps-${HASH}"
-          if [ "${{ github.event_name }}" != "schedule" ] && docker manifest inspect "${TAG}" >/dev/null 2>&1; then
-            docker pull "${TAG}"
-            echo "image=${TAG}" >> "$GITHUB_OUTPUT"
-          else
-            echo "image=" >> "$GITHUB_OUTPUT"
-          fi
+        uses: ./.github/actions/determine-railway-deps-reuse
+        with:
+          repo-root: evaluation/ai4realnet_orchestrators
+          registry: ${{ env.REGISTRY }}
       # runs after the clone above so cache-dependency-path can see the externally-cloned repo's requirements files
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6

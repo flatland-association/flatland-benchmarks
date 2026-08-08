@@ -45,6 +45,34 @@ def test_fixture_passes_build_false_when_using_prebuilt_images(mock_docker_compo
   assert mock_docker_compose_cls.call_args.kwargs["build"] is False
 
 
+@pytest.mark.parametrize("value", ["True", "TRUE", "TrUe"])
+@patch("docker_compose_fixture.DockerCompose")
+def test_fixture_passes_build_false_case_insensitively(mock_docker_compose_cls, monkeypatch, value):
+  monkeypatch.setenv("FAB_TEST_CONTAINERS_USE_PREBUILT_IMAGES", value)
+  basic = MagicMock()
+  mock_docker_compose_cls.return_value = basic
+  basic.get_logs.return_value = ("log-out", "log-err")
+
+  gen = _test_containers_generator(_fake_request(), context=".")
+  next(gen)
+
+  assert mock_docker_compose_cls.call_args.kwargs["build"] is False
+
+
+@pytest.mark.parametrize("value", ["1", "yes", "false"])
+@patch("docker_compose_fixture.DockerCompose")
+def test_fixture_passes_build_true_for_non_true_values(mock_docker_compose_cls, monkeypatch, value):
+  monkeypatch.setenv("FAB_TEST_CONTAINERS_USE_PREBUILT_IMAGES", value)
+  basic = MagicMock()
+  mock_docker_compose_cls.return_value = basic
+  basic.get_logs.return_value = ("log-out", "log-err")
+
+  gen = _test_containers_generator(_fake_request(), context=".")
+  next(gen)
+
+  assert mock_docker_compose_cls.call_args.kwargs["build"] is True
+
+
 @patch("docker_compose_fixture.DockerCompose")
 def test_fixture_passes_build_true_by_default(mock_docker_compose_cls, monkeypatch):
   monkeypatch.delenv("FAB_TEST_CONTAINERS_USE_PREBUILT_IMAGES", raising=False)
