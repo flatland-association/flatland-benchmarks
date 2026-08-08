@@ -1,7 +1,8 @@
 # checks.yml's build-images job builds only the deps target (pushed as a ci-deps-<hash> tag for CI test
 # reuse); fab-flatland-docker.yml/release-please.yml build the full target (no --target, last stage wins) for
-# real publishing. Both use the same GHA buildx cache scope (fab-flatland3-benchmarks-orchestrator) so the
-# full build can cache-hit the deps stage's pip install layer instead of rebuilding it from scratch.
+# real publishing. There is deliberately no BuildKit/GHA layer cache anywhere (see flatland-benchmarks'
+# CLAUDE.md, "CI image reuse and caching") — the full build always reinstalls requirements.txt from scratch;
+# only the pre-pushed ci-deps-<hash> tag (consumed via ORCHESTRATOR_DEPS_IMAGE) gives CI test jobs reuse.
 FROM python:3.12 AS deps
 
 # This makes output not buffer and return immediately, nice for seeing results in stdout
