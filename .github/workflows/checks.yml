@@ -617,10 +617,23 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: npm
+      # install-npm-deps skips `npm ci` entirely on a node_modules cache hit, but the Cypress binary
+      # (~/.cache/Cypress) is normally fetched by `npm ci`'s own postinstall hook, not by node_modules
+      # presence itself — cache it separately so a node_modules cache hit doesn't leave the binary missing
+      # on a fresh runner, and fall back to explicitly installing it (a fast no-op if already present) on a miss.
+      - name: Restore cached Cypress binary
+        id: cypress-cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-binary-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
       - name: Install dependencies
         uses: ./.github/actions/install-npm-deps
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Ensure Cypress binary is installed
+        if: steps.cypress-cache.outputs.cache-hit != 'true'
+        run: npx cypress install
       - name: Clone ai4realnet-orchestrators for integration tests
         uses: actions/checkout@v6
         with:
