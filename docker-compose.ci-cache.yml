@@ -15,7 +15,16 @@
 # matrix leg (deps target only, see that Dockerfile's own ARG RAILWAY_DEPS_IMAGE comment for the primary reuse
 # path — a real ghcr.io pull, not this cache) — this cache_from/cache_to here is the fallback for when that
 # pulled-image path doesn't apply (no matching tag, schedule run, fork PR), so the local `deps` build still
-# gets a same-repo cache-hit on its pip install layer instead of a fully cold rebuild.
+# gets a cache-hit on its pip install layer instead of a fully cold rebuild — but ONLY within flatland-benchmarks'
+# own test-ai4realnet-orchestrator-railway job. GitHub's Actions cache (which the type=gha buildx backend rides
+# on: https://docs.docker.com/build/cache/backends/gha/) is scoped per-repository — "a cache created for a
+# branch in a workflow run can be accessed and restored from another workflow run for the same repository and
+# branch" (https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows).
+# ai4realnet-orchestrators' own checks.yaml consumes this exact same override file (via COMPOSE_FILE, see that
+# repo's test-ai4realnet-orchestrator-railway-integration job) but that job's cache reads/writes land in ITS
+# OWN repo's cache store, never flatland-benchmarks' — so build-images' writes here are invisible to it, and its
+# fallback `deps` build is always fully cold on this layer, contrary to what the sentence above implies for that
+# consumer specifically.
 services:
   fab-backend:
     build:

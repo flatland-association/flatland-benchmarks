@@ -41,7 +41,7 @@ jobs:
             tag-prefix: ci-
             cache-scope: fab-backend
             hash-root: "."
-            hash-paths: "ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend"
+            hash-paths: "ts .lintstagedrc.json .prettierrc.json .release-please-manifest.json angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend"
           - image: fab-frontend
             file: deployment/frontend/Dockerfile
             context: .
@@ -49,7 +49,7 @@ jobs:
             tag-prefix: ci-
             cache-scope: fab-frontend
             hash-root: "."
-            hash-paths: "ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend"
+            hash-paths: "ts .lintstagedrc.json .prettierrc.json .release-please-manifest.json angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend"
           - image: fab-flatland3-benchmarks-orchestrator
             file: evaluation/flatland3_benchmarks/orchestrator/Dockerfile
             context: evaluation/flatland3_benchmarks/orchestrator
