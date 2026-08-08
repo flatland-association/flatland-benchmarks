@@ -40,6 +40,7 @@ jobs:
             target: ""
             tag-prefix: ci-
             cache-scope: fab-backend
+            hash-root: "."
             hash-paths: "ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend"
           - image: fab-frontend
             file: deployment/frontend/Dockerfile
@@ -47,6 +48,7 @@ jobs:
             target: ""
             tag-prefix: ci-
             cache-scope: fab-frontend
+            hash-root: "."
             hash-paths: "ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend"
           - image: fab-flatland3-benchmarks-orchestrator
             file: evaluation/flatland3_benchmarks/orchestrator/Dockerfile
@@ -57,11 +59,33 @@ jobs:
             # same scope so that build can cache-hit this stage's expensive `pip install` layer instead of
             # rebuilding it, since deps' layers are a strict prefix of full's build graph
             cache-scope: fab-flatland3-benchmarks-orchestrator
+            hash-root: "."
             hash-paths: "evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt"
+          - image: ai4realnet-orchestrator-railway
+            file: evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/integrationtests/Dockerfile
+            context: .
+            target: deps
+            tag-prefix: ci-deps-
+            # shared with docker-compose.ci-cache.yml's cache_from/cache_to for this same service, so a local
+            # fallback `docker compose build` (this image has no publish workflow of its own) can still cache-hit
+            # this stage's pip install layer even when the pulled-image reuse path below doesn't apply
+            cache-scope: ai4realnet-orchestrator-railway
+            # evaluation/ai4realnet_orchestrators is gitignored here (it's an external clone) — hash from inside
+            # that nested checkout's own git history instead, with paths relative to its root
+            hash-root: evaluation/ai4realnet_orchestrators
+            hash-paths: "ai4realnet_orchestrators/railway/integrationtests/Dockerfile requirements.txt ai4realnet_orchestrators/railway/requirements.txt"
     steps:
       - uses: actions/checkout@v6
+      - name: Checkout ai4realnet-orchestrators (content hash + build context for that image)
+        if: matrix.image == 'ai4realnet-orchestrator-railway'
+        uses: actions/checkout@v6
+        with:
+          repository: flatland-association/ai4realnet-orchestrators
+          path: evaluation/ai4realnet_orchestrators
+          ref: ${{ env.ai4realnet-orchestrators-ref }}
       - name: Compute content-hash tag
         id: hash
+        working-directory: ${{ matrix.hash-root }}
         run: |
           HASH=$(git ls-files -s -- ${{ matrix.hash-paths }} | git hash-object --stdin)
           echo "tag=${{ matrix.tag-prefix }}${HASH}" >> "$GITHUB_OUTPUT"
@@ -321,6 +345,21 @@ jobs:
           git remote show origin
           git status
           git branch
+      - name: Determine ai4realnet-orchestrator-railway deps-image reuse
+        id: railway-deps
+        working-directory: evaluation/ai4realnet_orchestrators
+        # kept independent of the "Determine image tags and reuse strategy" step above: this image has no
+        # publish workflow of its own (unlike fab-backend/fab-frontend/the orchestrator), so its reuse must
+        # never gate whether those three get reused too — a missing tag here only affects this one build
+        run: |
+          HASH=$(git ls-files -s -- ai4realnet_orchestrators/railway/integrationtests/Dockerfile requirements.txt ai4realnet_orchestrators/railway/requirements.txt | git hash-object --stdin)
+          TAG="${{ env.REGISTRY }}/ai4realnet-orchestrator-railway:ci-deps-${HASH}"
+          if [ "${{ github.event_name }}" != "schedule" ] && docker manifest inspect "${TAG}" >/dev/null 2>&1; then
+            docker pull "${TAG}"
+            echo "image=${TAG}" >> "$GITHUB_OUTPUT"
+          else
+            echo "image=" >> "$GITHUB_OUTPUT"
+          fi
       # runs after the clone above so cache-dependency-path can see the externally-cloned repo's requirements files
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
@@ -380,6 +419,8 @@ jobs:
           # passes -f itself — Compose falls back to COMPOSE_FILE to pick up our image/pull_policy switches
           # and cache_from/cache_to/build-skip overlays (see "Determine image tags and reuse strategy" above)
           COMPOSE_FILE: ${{ steps.images.outputs.compose-file }}
+          # empty falls back to docker-compose.yml's own ${RAILWAY_DEPS_IMAGE:-deps} default (build deps locally)
+          RAILWAY_DEPS_IMAGE: ${{ steps.railway-deps.outputs.image }}
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
           pytest -s -m integration ai4realnet_orchestrators/railway
