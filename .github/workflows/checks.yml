@@ -113,27 +113,22 @@ jobs:
         it: [ "test_containers_flatland_benchmarks_percentage.py", "test_containers_flatland_benchmarks_running_time_limit.py", "test_containers_flatland_benchmarks.py" ]
     steps:
       - uses: actions/checkout@v6
+      # needed unconditionally: on the use-prebuilt path to pull the images below (and for the manifest-inspect
+      # existence check right below), and on the fallback-build path so `docker compose up --build` can pull
+      # the orchestrator's ghcr.io base image and use GHA cache
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Determine image tags and reuse strategy
         id: images
-        run: |
-          BACKEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend | git hash-object --stdin)
-          FRONTEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend | git hash-object --stdin)
-          ORCH_DEPS_HASH=$(git ls-files -s -- evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt | git hash-object --stdin)
-          echo "backend-tag=${{ env.REGISTRY }}/fab-backend:ci-${BACKEND_HASH}" >> "$GITHUB_OUTPUT"
-          echo "frontend-tag=${{ env.REGISTRY }}/fab-frontend:ci-${FRONTEND_HASH}" >> "$GITHUB_OUTPUT"
-          if [ "${{ github.event_name }}" != "schedule" ] && [ "${{ needs.build-images.result }}" == "success" ]; then
-            echo "use-prebuilt=true" >> "$GITHUB_OUTPUT"
-            # image already pulled below under this exact tag; reuse it instead of docker-compose.yml's
-            # default pull_policy of "build" (which would force a rebuild even without --build)
-            echo "pull-policy=missing" >> "$GITHUB_OUTPUT"
-            echo "orchestrator-deps-tag=${{ env.REGISTRY }}/fab-flatland3-benchmarks-orchestrator:ci-deps-${ORCH_DEPS_HASH}" >> "$GITHUB_OUTPUT"
-          else
-            echo "use-prebuilt=false" >> "$GITHUB_OUTPUT"
-            echo "pull-policy=build" >> "$GITHUB_OUTPUT"
-            # leave empty (not the computed ci-deps-<hash> tag) so docker-compose.yml's own ARG default
-            # (:latest) applies instead of a Dockerfile FROM failing to resolve a tag build-images never pushed
-            echo "orchestrator-deps-tag=" >> "$GITHUB_OUTPUT"
-          fi
+        uses: ./.github/actions/determine-image-reuse-strategy
+        with:
+          registry: ${{ env.REGISTRY }}
       - name: Inspect disk
         run: |
           df -h
@@ -153,16 +148,6 @@ jobs:
         run: |
           df -h
           docker system df
-      # needed unconditionally: on the use-prebuilt path to pull the images below, and on the fallback-build
-      # path so `docker compose up --build` can pull the orchestrator's ghcr.io base image and use GHA cache
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
-      - name: Log in to GHCR
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull pre-built images
         if: steps.images.outputs.use-prebuilt == 'true'
         run: |
@@ -259,6 +244,17 @@ jobs:
         node-version: [ "22.x" ]
     steps:
       - uses: actions/checkout@v6
+      # needed unconditionally: on the use-prebuilt path to pull the images below (and for the manifest-inspect
+      # existence check right below), and on the fallback-build path so the unconditional `docker compose build`
+      # further down can use the GHA cache via COMPOSE_FILE
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Determine image tags and reuse strategy
         id: images
         # fab-backend/fab-frontend/flatland3-benchmarks-orchestrator: --profile full (used by this job too)
@@ -267,31 +263,9 @@ jobs:
         # two jobs. ai4realnet-orchestrator-railway itself (built from the externally-cloned repo's own
         # Dockerfile) still has no ci-<hash>/reuse hook — only a GHA cache_from/cache_to scope (see
         # docker-compose.ci-cache.yml), so it always rebuilds locally, just cache-accelerated after the first run.
-        run: |
-          BACKEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend | git hash-object --stdin)
-          FRONTEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend | git hash-object --stdin)
-          ORCH_DEPS_HASH=$(git ls-files -s -- evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt | git hash-object --stdin)
-          echo "backend-tag=${{ env.REGISTRY }}/fab-backend:ci-${BACKEND_HASH}" >> "$GITHUB_OUTPUT"
-          echo "frontend-tag=${{ env.REGISTRY }}/fab-frontend:ci-${FRONTEND_HASH}" >> "$GITHUB_OUTPUT"
-          if [ "${{ github.event_name }}" != "schedule" ] && [ "${{ needs.build-images.result }}" == "success" ]; then
-            echo "use-prebuilt=true" >> "$GITHUB_OUTPUT"
-            # image already pulled below under this exact tag; reuse it instead of docker-compose.yml's
-            # default pull_policy of "build" (which would force a rebuild even without --build)
-            echo "pull-policy=missing" >> "$GITHUB_OUTPUT"
-            echo "orchestrator-deps-tag=${{ env.REGISTRY }}/fab-flatland3-benchmarks-orchestrator:ci-deps-${ORCH_DEPS_HASH}" >> "$GITHUB_OUTPUT"
-            # the ai4realnet-orchestrators fixture always runs `docker compose build` unconditionally, ignoring
-            # pull_policy entirely — docker-compose.ci-prebuilt.yml !reset-clears build: for these two services
-            # so that unconditional build call has nothing to do for them and just uses the pulled image: as-is.
-            # Must stay last: any later file touching build.* would resurrect a build section with no context.
-            echo "compose-file=${{ github.workspace }}/docker-compose.yml:${{ github.workspace }}/docker-compose.ci-cache.yml:${{ github.workspace }}/docker-compose.ci-prebuilt.yml" >> "$GITHUB_OUTPUT"
-          else
-            echo "use-prebuilt=false" >> "$GITHUB_OUTPUT"
-            echo "pull-policy=build" >> "$GITHUB_OUTPUT"
-            # leave empty (not the computed ci-deps-<hash> tag) so docker-compose.yml's own ARG default
-            # (:latest) applies instead of a Dockerfile FROM failing to resolve a tag build-images never pushed
-            echo "orchestrator-deps-tag=" >> "$GITHUB_OUTPUT"
-            echo "compose-file=${{ github.workspace }}/docker-compose.yml:${{ github.workspace }}/docker-compose.ci-cache.yml" >> "$GITHUB_OUTPUT"
-          fi
+        uses: ./.github/actions/determine-image-reuse-strategy
+        with:
+          registry: ${{ env.REGISTRY }}
       - name: Inspect disk
         run: |
           df -h
@@ -311,16 +285,6 @@ jobs:
         run: |
           df -h
           docker system df
-      # needed unconditionally: on the use-prebuilt path to pull the images below, and on the fallback-build
-      # path so the unconditional `docker compose build` further down can use the GHA cache via COMPOSE_FILE
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
-      - name: Log in to GHCR
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Pull pre-built images
         if: steps.images.outputs.use-prebuilt == 'true'
         run: |
@@ -431,29 +395,9 @@ jobs:
         python-version: [ "3.13" ]
     steps:
       - uses: actions/checkout@v6
-      - name: Determine image tags and reuse strategy
-        id: images
-        run: |
-          BACKEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend | git hash-object --stdin)
-          FRONTEND_HASH=$(git ls-files -s -- ts angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend | git hash-object --stdin)
-          ORCH_DEPS_HASH=$(git ls-files -s -- evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt | git hash-object --stdin)
-          echo "backend-tag=${{ env.REGISTRY }}/fab-backend:ci-${BACKEND_HASH}" >> "$GITHUB_OUTPUT"
-          echo "frontend-tag=${{ env.REGISTRY }}/fab-frontend:ci-${FRONTEND_HASH}" >> "$GITHUB_OUTPUT"
-          if [ "${{ github.event_name }}" != "schedule" ] && [ "${{ needs.build-images.result }}" == "success" ]; then
-            echo "use-prebuilt=true" >> "$GITHUB_OUTPUT"
-            # image already pulled below under this exact tag; reuse it instead of docker-compose.yml's
-            # default pull_policy of "build" (which would force a rebuild even without --build)
-            echo "pull-policy=missing" >> "$GITHUB_OUTPUT"
-            echo "orchestrator-deps-tag=${{ env.REGISTRY }}/fab-flatland3-benchmarks-orchestrator:ci-deps-${ORCH_DEPS_HASH}" >> "$GITHUB_OUTPUT"
-          else
-            echo "use-prebuilt=false" >> "$GITHUB_OUTPUT"
-            echo "pull-policy=build" >> "$GITHUB_OUTPUT"
-            # leave empty (not the computed ci-deps-<hash> tag) so docker-compose.yml's own ARG default
-            # (:latest) applies instead of a Dockerfile FROM failing to resolve a tag build-images never pushed
-            echo "orchestrator-deps-tag=" >> "$GITHUB_OUTPUT"
-          fi
-      # needed unconditionally: on the use-prebuilt path to pull the images below, and on the fallback-build
-      # path so `docker compose up --build` can pull the orchestrator's ghcr.io base image and use GHA cache
+      # needed unconditionally: on the use-prebuilt path to pull the images below (and for the manifest-inspect
+      # existence check right below), and on the fallback-build path so `docker compose up --build` can pull
+      # the orchestrator's ghcr.io base image and use GHA cache
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
       - name: Log in to GHCR
@@ -462,6 +406,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Determine image tags and reuse strategy
+        id: images
+        uses: ./.github/actions/determine-image-reuse-strategy
+        with:
+          registry: ${{ env.REGISTRY }}
       - name: Pull pre-built images
         if: steps.images.outputs.use-prebuilt == 'true'
         run: |
