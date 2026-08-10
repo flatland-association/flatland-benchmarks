@@ -2,8 +2,7 @@ name: Checks
 
 env:
   # DEPENDENCY SWITCH:
-  # TODO revert to a released version once the 695-ci-cleanup branch's image-reuse work is merged
-  ai4realnet-orchestrators-ref: 695-ci-cleanup
+  ai4realnet-orchestrators-ref: main
   REGISTRY: ghcr.io/flatland-association
 
 on:
