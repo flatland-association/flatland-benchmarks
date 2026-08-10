@@ -2,8 +2,8 @@ name: Checks
 
 env:
   # DEPENDENCY SWITCH:
-  # TODO use released version
   ai4realnet-orchestrators-ref: main
+  REGISTRY: ghcr.io/flatland-association
 
 on:
   workflow_dispatch:
@@ -20,49 +20,223 @@ concurrency:
 
 jobs:
 
+  build-images:
+    name: Build/reuse ${{ matrix.image }} image
+    runs-on: ubuntu-latest
+    # Fork PRs get a read-only GITHUB_TOKEN with no packages:write and no secrets, so they can't push.
+    # Downstream test jobs fall back to a local `docker compose --build` in that case (see docker_compose_fixture.py).
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: fab-backend
+            file: deployment/backend/Dockerfile
+            context: .
+            target: ""
+            tag-prefix: ci-
+            repo-root: "."
+            hash-paths: &backend-hash-paths "ts .lintstagedrc.json .prettierrc.json .release-please-manifest.json angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/backend"
+          - image: fab-frontend
+            file: deployment/frontend/Dockerfile
+            context: .
+            target: ""
+            tag-prefix: ci-
+            repo-root: "."
+            hash-paths: &frontend-hash-paths "ts .lintstagedrc.json .prettierrc.json .release-please-manifest.json angular.json package-lock.json package.json release-please-config.json tsconfig.json .npmrc deployment/frontend"
+          - image: fab-flatland3-benchmarks-orchestrator
+            file: evaluation/flatland3_benchmarks/orchestrator/Dockerfile
+            context: evaluation/flatland3_benchmarks/orchestrator
+            target: deps
+            tag-prefix: ci-deps-
+            repo-root: "."
+            hash-paths: &orchestrator-deps-hash-paths "evaluation/flatland3_benchmarks/orchestrator/Dockerfile evaluation/flatland3_benchmarks/orchestrator/requirements.txt"
+          - image: ai4realnet-orchestrator-railway
+            file: evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/integrationtests/Dockerfile
+            context: .
+            target: deps
+            tag-prefix: ci-deps-
+            # evaluation/ai4realnet_orchestrators is gitignored here (it's an external clone) — hash from inside
+            # that nested checkout's own git history instead, with paths relative to its root
+            repo-root: evaluation/ai4realnet_orchestrators
+            hash-paths: &railway-deps-hash-paths "ai4realnet_orchestrators/railway/integrationtests/Dockerfile requirements.txt ai4realnet_orchestrators/railway/requirements.txt"
+    steps:
+      - uses: actions/checkout@v6
+      - name: Checkout ai4realnet-orchestrators (content hash + build context for that image)
+        if: matrix.image == 'ai4realnet-orchestrator-railway'
+        uses: actions/checkout@v6
+        with:
+          repository: flatland-association/ai4realnet-orchestrators
+          path: evaluation/ai4realnet_orchestrators
+          ref: ${{ env.ai4realnet-orchestrators-ref }}
+      - name: Compute content-hash tag
+        id: hash
+        working-directory: ${{ matrix.repo-root }}
+        run: |
+          HASH=$(git ls-files -s -- ${{ matrix.hash-paths }} | git hash-object --stdin)
+          echo "tag=${{ matrix.tag-prefix }}${HASH}" >> "$GITHUB_OUTPUT"
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check whether this tag already exists
+        id: exists
+        # always rebuild on nightly schedule runs to catch base-image/dependency drift
+        if: github.event_name != 'schedule'
+        run: |
+          if docker manifest inspect "${{ env.REGISTRY }}/${{ matrix.image }}:${{ steps.hash.outputs.tag }}" >/dev/null 2>&1; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Set up QEMU
+        if: steps.exists.outputs.found != 'true'
+        uses: docker/setup-qemu-action@v4
+      - name: Set up Docker Buildx
+        if: steps.exists.outputs.found != 'true'
+        uses: docker/setup-buildx-action@v4
+      - name: Build and push
+        if: steps.exists.outputs.found != 'true'
+        # no cache-from/cache-to: every build here is either a from-scratch first build of a new content hash,
+        # or (on schedule) a deliberate full rebuild to catch base-image/dependency drift — neither should
+        # reuse layers from a previous build
+        uses: docker/build-push-action@v7
+        with:
+          context: ${{ matrix.context }}
+          file: ${{ matrix.file }}
+          target: ${{ matrix.target }}
+          platforms: linux/amd64
+          push: true
+          tags: ${{ env.REGISTRY }}/${{ matrix.image }}:${{ steps.hash.outputs.tag }}
+
   test-flatland3-benchmarks:
+    needs: build-images
+    # run even if build-images was skipped (fork PR) or failed; the fixture falls back to local build
+    if: always()
+    permissions:
+      contents: read
+      packages: read
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         python-version: [ "3.13" ]
+        node-version: [ "22.x" ]
         it: [ "test_containers_flatland_benchmarks_percentage.py", "test_containers_flatland_benchmarks_running_time_limit.py", "test_containers_flatland_benchmarks.py" ]
     steps:
+      - uses: actions/checkout@v6
+      # needed unconditionally: on the use-prebuilt path to pull the images below (and for the manifest-inspect
+      # existence check right below), and on the fallback-build path so `docker compose up --build` can pull
+      # the orchestrator's ghcr.io base image
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Determine image tags and reuse strategy
+        id: images
+        uses: ./.github/actions/determine-image-reuse-strategy
+        with:
+          registry: ${{ env.REGISTRY }}
+          backend-hash-paths: *backend-hash-paths
+          frontend-hash-paths: *frontend-hash-paths
+          orchestrator-deps-hash-paths: *orchestrator-deps-hash-paths
       - name: Inspect disk
         run: |
           df -h
           docker system df
+      # local docker builds are what eat disk space; skip pruning/freeing when reusing pre-built images from ghcr.io
       # https://stackoverflow.com/questions/30604846/docker-complains-about-no-space-left-on-device-how-to-clean-up
       - name: Prune docker system
+        if: steps.images.outputs.use-prebuilt != 'true'
         run: |
           docker system prune --all --force
       # https://www.dzombak.com/blog/2024/09/freeing-disk-space-on-github-actions-runners/
       - name: Free disk space
+        if: steps.images.outputs.use-prebuilt != 'true'
         run: |
           curl -fsSL https://raw.githubusercontent.com/kou/arrow/e49d8ae15583ceff03237571569099a6ad62be32/ci/scripts/util_free_space.sh | bash
       - name: Inspect disk again
         run: |
           df -h
           docker system df
-      - uses: actions/checkout@v6
+      # each image is pulled independently based on its own pull-policy/tag, not gated on use-prebuilt (which
+      # only means ALL THREE are reused) — so a single still-cached image is pulled and reused even when the
+      # other two need a local rebuild
+      - name: Pull pre-built images
+        run: |
+          if [ "${{ steps.images.outputs.backend-pull-policy }}" = "missing" ]; then docker pull ${{ steps.images.outputs.backend-tag }}; fi
+          if [ "${{ steps.images.outputs.frontend-pull-policy }}" = "missing" ]; then docker pull ${{ steps.images.outputs.frontend-tag }}; fi
+          if [ -n "${{ steps.images.outputs.orchestrator-deps-tag }}" ]; then docker pull ${{ steps.images.outputs.orchestrator-deps-tag }}; fi
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          # complements (does not replace) the venv cache below: still speeds up whatever pip install
+          # actually runs on a cache-miss day, e.g. re-resolving the floating git refs in orchestrator/requirements.txt
+          cache: pip
+          cache-dependency-path: |
+            evaluation/flatland3_benchmarks/requirements-dev.txt
+            evaluation/flatland3_benchmarks/orchestrator/requirements.txt
+      - name: Get date bucket for cache busting
+        # orchestrator/requirements.txt pins flatland-rl/fab-clientlib to @main (floating refs) rather than a
+        # commit/tag, so its content hash alone never changes when upstream main moves; bucketing the cache key
+        # by day bounds staleness of those two packages to <=24h, matching this workflow's nightly full-rebuild cadence
+        id: date
+        run: echo "date=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+      - name: Restore cached virtualenv
+        id: venv-cache
+        uses: actions/cache@v5
+        with:
+          path: evaluation/flatland3_benchmarks/.venv
+          key: flatland3-venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('evaluation/flatland3_benchmarks/requirements-dev.txt', 'evaluation/flatland3_benchmarks/orchestrator/requirements.txt') }}-${{ steps.date.outputs.date }}
+          restore-keys: |
+            flatland3-venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('evaluation/flatland3_benchmarks/requirements-dev.txt', 'evaluation/flatland3_benchmarks/orchestrator/requirements.txt') }}-
       - name: Install pytest
+        if: steps.venv-cache.outputs.cache-hit != 'true'
         working-directory: evaluation/flatland3_benchmarks
         run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r requirements-dev.txt
-          python -m pip install -r orchestrator/requirements.txt
-          python -m pip list
+          python -m venv --copies .venv
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/pip install -r requirements-dev.txt
+          .venv/bin/pip install -r orchestrator/requirements.txt
+          .venv/bin/pip list
+      # --copies (not the venv default of symlinking) makes the cached venv self-contained, so a restore on a
+      # later run doesn't depend on setup-python's toolcache interpreter still living at the same absolute path
+      - name: Activate cached virtualenv
+        run: echo "${{ github.workspace }}/evaluation/flatland3_benchmarks/.venv/bin" >> "$GITHUB_PATH"
       - name: Run test_common unit tests
         working-directory: test_common
         run: pytest -s test_docker_compose_fixture.py
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - name: Install dependencies
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Re-generate swagger.json
+        working-directory: ts/backend/
+        run: |
+          npm run private:swagger:prod
+      - name: Copy swagger.json from backend to openapi.json in client-lib
+        run: |
+          cp ts/backend/src/swagger/swagger.json fab-clientlib/openapi.json
+      - name: Install openapi-generator-cli
+        uses: ./.github/actions/install-openapi-generator-cli
       - name: Regenerate client lib locally overwriting dependency.
         working-directory: fab-clientlib
         run: |
-          python -m pip install openapi-generator-cli==7.15.0
           openapi-generator-cli generate -i openapi.json -g python -c .openapi-generator-config.json --package-name fab_clientlib
       - name: Install client lib
         working-directory: fab-clientlib
@@ -78,12 +252,25 @@ jobs:
           ref: ${{ env.ai4realnet-orchestrators-ref }}
       - name: Run Flatland 3 Benchmarks Integration Tests
         working-directory: evaluation/flatland3_benchmarks
+        env:
+          FAB_TEST_CONTAINERS_USE_PREBUILT_IMAGES: ${{ steps.images.outputs.use-prebuilt }}
+          FAB_BACKEND_IMAGE: ${{ steps.images.outputs.backend-tag }}
+          FAB_FRONTEND_IMAGE: ${{ steps.images.outputs.frontend-tag }}
+          FAB_BACKEND_PULL_POLICY: ${{ steps.images.outputs.backend-pull-policy }}
+          FAB_FRONTEND_PULL_POLICY: ${{ steps.images.outputs.frontend-pull-policy }}
+          ORCHESTRATOR_DEPS_IMAGE: ${{ steps.images.outputs.orchestrator-deps-tag }}
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
           PYTHONPATH=$PWD/orchestrator:${{ github.workspace }}/test_common:$PYTHONPATH pytest -s ${{ matrix.it }}
 
 
   test-ai4realnet-orchestrator-railway:
+    needs: build-images
+    # run even if build-images was skipped (fork PR) or failed; fab-backend/fab-frontend fall back to local build
+    if: always()
+    permissions:
+      contents: read
+      packages: read
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -91,40 +278,74 @@ jobs:
         python-version: [ "3.13" ]
         node-version: [ "22.x" ]
     steps:
+      - uses: actions/checkout@v6
+      # needed unconditionally: on the use-prebuilt path to pull the images below, and on the fallback-build
+      # path so the unconditional `docker compose build` further down has a builder instance to use
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Determine image tags and reuse strategy
+        id: images
+        # fab-backend/fab-frontend/flatland3-benchmarks-orchestrator: --profile full (used by this job too)
+        # brings up flatland3-benchmarks-orchestrator alongside ai4realnet-orchestrator-railway regardless of
+        # which domain's tests actually run, so it benefits from the same orchestrator-deps reuse as the other
+        # two jobs. ai4realnet-orchestrator-railway itself has its own separate reuse hook — see the
+        # "Determine ai4realnet-orchestrator-railway deps-image reuse" step (a call to the
+        # determine-railway-deps-reuse composite action) further down.
+        uses: ./.github/actions/determine-image-reuse-strategy
+        with:
+          registry: ${{ env.REGISTRY }}
+          backend-hash-paths: *backend-hash-paths
+          frontend-hash-paths: *frontend-hash-paths
+          orchestrator-deps-hash-paths: *orchestrator-deps-hash-paths
       - name: Inspect disk
         run: |
           df -h
           docker system df
+      # local docker builds are what eat disk space; skip pruning/freeing when reusing pre-built images from ghcr.io
       # https://stackoverflow.com/questions/30604846/docker-complains-about-no-space-left-on-device-how-to-clean-up
       - name: Prune docker system
+        if: steps.images.outputs.use-prebuilt != 'true'
         run: |
           docker system prune --all --force
       # https://www.dzombak.com/blog/2024/09/freeing-disk-space-on-github-actions-runners/
       - name: Free disk space
+        if: steps.images.outputs.use-prebuilt != 'true'
         run: |
           curl -fsSL https://raw.githubusercontent.com/kou/arrow/e49d8ae15583ceff03237571569099a6ad62be32/ci/scripts/util_free_space.sh | bash
       - name: Inspect disk again
         run: |
           df -h
           docker system df
-      - uses: actions/checkout@v6
+      # each image is pulled independently based on its own pull-policy/tag, not gated on use-prebuilt (which
+      # only means ALL THREE are reused) — so a single still-cached image is pulled and reused even when the
+      # other two need a local rebuild
+      - name: Pull pre-built images
+        run: |
+          if [ "${{ steps.images.outputs.backend-pull-policy }}" = "missing" ]; then docker pull ${{ steps.images.outputs.backend-tag }}; fi
+          if [ "${{ steps.images.outputs.frontend-pull-policy }}" = "missing" ]; then docker pull ${{ steps.images.outputs.frontend-tag }}; fi
+          if [ -n "${{ steps.images.outputs.orchestrator-deps-tag }}" ]; then docker pull ${{ steps.images.outputs.orchestrator-deps-tag }}; fi
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
       - name: Install dependencies
-        run: npm ci
-      - name: Re-generate swagger.json in backend build
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Re-generate swagger.json
         working-directory: ts/backend/
         run: |
-          npm run build
+          npm run private:swagger:prod
       - name: Copy swagger.json from backend to openapi.json in client-lib
         run: |
           cp ts/backend/src/swagger/swagger.json  fab-clientlib/openapi.json
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
       - name: Clone ai4realnet-orchestrators for integration tests
         uses: actions/checkout@v6
         with:
@@ -138,14 +359,54 @@ jobs:
           git remote show origin
           git status
           git branch
+      - name: Determine ai4realnet-orchestrator-railway deps-image reuse
+        id: railway-deps
+        uses: ./.github/actions/determine-railway-deps-reuse
+        with:
+          repo-root: evaluation/ai4realnet_orchestrators
+          registry: ${{ env.REGISTRY }}
+          hash-paths: *railway-deps-hash-paths
+      # runs after the clone above so cache-dependency-path can see the externally-cloned repo's requirements files
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          # complements (does not replace) the venv cache below: still speeds up whatever pip install
+          # actually runs on a cache-miss day, e.g. re-resolving the floating flatland-rl@main git ref
+          cache: pip
+          cache-dependency-path: |
+            evaluation/ai4realnet_orchestrators/requirements.txt
+            evaluation/ai4realnet_orchestrators/requirements-dev.txt
+            evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/requirements.txt
+      - name: Get date bucket for cache busting
+        # railway/requirements.txt pins flatland-rl to @main (a floating ref, not a commit/tag), so its content
+        # hash alone never changes when upstream main moves; bucketing the cache key by day bounds staleness of
+        # that package to <=24h, matching this workflow's nightly full-rebuild cadence
+        id: date
+        run: echo "date=$(date -u +%F)" >> "$GITHUB_OUTPUT"
+      - name: Restore cached virtualenv
+        id: venv-cache
+        uses: actions/cache@v5
+        with:
+          path: evaluation/ai4realnet_orchestrators/.venv
+          key: ai4realnet-railway-venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('evaluation/ai4realnet_orchestrators/requirements.txt', 'evaluation/ai4realnet_orchestrators/requirements-dev.txt', 'evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/requirements.txt') }}-${{ steps.date.outputs.date }}
+          restore-keys: |
+            ai4realnet-railway-venv-${{ runner.os }}-py${{ matrix.python-version }}-${{ hashFiles('evaluation/ai4realnet_orchestrators/requirements.txt', 'evaluation/ai4realnet_orchestrators/requirements-dev.txt', 'evaluation/ai4realnet_orchestrators/ai4realnet_orchestrators/railway/requirements.txt') }}-
       - name: Install ai4realnet Orchestrators Integration Tests Dependencies
+        if: steps.venv-cache.outputs.cache-hit != 'true'
         working-directory: evaluation/ai4realnet_orchestrators
         run: |
-          python -m pip install -r requirements.txt -r requirements-dev.txt -r ai4realnet_orchestrators/railway/requirements.txt
+          python -m venv --copies .venv
+          .venv/bin/pip install -r requirements.txt -r requirements-dev.txt -r ai4realnet_orchestrators/railway/requirements.txt
+      # --copies (not the venv default of symlinking) makes the cached venv self-contained, so a restore on a
+      # later run doesn't depend on setup-python's toolcache interpreter still living at the same absolute path
+      - name: Activate cached virtualenv
+        run: echo "${{ github.workspace }}/evaluation/ai4realnet_orchestrators/.venv/bin" >> "$GITHUB_PATH"
+      - name: Install openapi-generator-cli
+        uses: ./.github/actions/install-openapi-generator-cli
       - name: Regenerate client lib locally overwriting dependency.
         working-directory: fab-clientlib
         run: |
-          python -m pip install openapi-generator-cli==7.15.0
           openapi-generator-cli generate -i openapi.json -g python -c .openapi-generator-config.json --package-name fab_clientlib
       - name: Install client lib
         working-directory: fab-clientlib
@@ -154,22 +415,73 @@ jobs:
           python -m pip list
       - name: Run ai4realnet Orchestrators Integration Tests
         working-directory: evaluation/ai4realnet_orchestrators
+        env:
+          FAB_BACKEND_IMAGE: ${{ steps.images.outputs.backend-tag }}
+          FAB_FRONTEND_IMAGE: ${{ steps.images.outputs.frontend-tag }}
+          FAB_BACKEND_PULL_POLICY: ${{ steps.images.outputs.backend-pull-policy }}
+          FAB_FRONTEND_PULL_POLICY: ${{ steps.images.outputs.frontend-pull-policy }}
+          ORCHESTRATOR_DEPS_IMAGE: ${{ steps.images.outputs.orchestrator-deps-tag }}
+          # the fixture in this external repo calls DockerCompose() with no compose_file_name, so it never
+          # passes -f itself — Compose falls back to COMPOSE_FILE to pick up our image/pull_policy/build-skip
+          # overlays (see "Determine image tags and reuse strategy" above)
+          COMPOSE_FILE: ${{ steps.images.outputs.compose-file }}
+          # empty falls back to docker-compose.yml's own ${RAILWAY_DEPS_IMAGE:-deps} default (build deps locally)
+          RAILWAY_DEPS_IMAGE: ${{ steps.railway-deps.outputs.image }}
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
           pytest -s -m integration ai4realnet_orchestrators/railway
 
   test-clientlib:
+    needs: build-images
+    # run even if build-images was skipped (fork PR) or failed; the fixture falls back to local build
+    if: always()
+    permissions:
+      contents: read
+      packages: read
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         python-version: [ "3.13" ]
+        node-version: [ "22.x" ]
     steps:
       - uses: actions/checkout@v6
+      # needed unconditionally: on the use-prebuilt path to pull the images below (and for the manifest-inspect
+      # existence check right below), and on the fallback-build path so `docker compose up --build` can pull
+      # the orchestrator's ghcr.io base image
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+      - name: Log in to GHCR
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Determine image tags and reuse strategy
+        id: images
+        uses: ./.github/actions/determine-image-reuse-strategy
+        with:
+          registry: ${{ env.REGISTRY }}
+          backend-hash-paths: *backend-hash-paths
+          frontend-hash-paths: *frontend-hash-paths
+          orchestrator-deps-hash-paths: *orchestrator-deps-hash-paths
+      # each image is pulled independently based on its own pull-policy/tag, not gated on use-prebuilt (which
+      # only means ALL THREE are reused) — so a single still-cached image is pulled and reused even when the
+      # other two need a local rebuild
+      - name: Pull pre-built images
+        run: |
+          if [ "${{ steps.images.outputs.backend-pull-policy }}" = "missing" ]; then docker pull ${{ steps.images.outputs.backend-tag }}; fi
+          if [ "${{ steps.images.outputs.frontend-pull-policy }}" = "missing" ]; then docker pull ${{ steps.images.outputs.frontend-tag }}; fi
+          if [ -n "${{ steps.images.outputs.orchestrator-deps-tag }}" ]; then docker pull ${{ steps.images.outputs.orchestrator-deps-tag }}; fi
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: |
+            fab-clientlib/requirements.txt
+            fab-clientlib/test-requirements.txt
+            fab-clientlib/requirements-dev.txt
       - name: Run fab-clientlib unit tests
         working-directory: fab-clientlib
         run: |
@@ -181,19 +493,23 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
       - name: Install dependencies
-        run: npm ci
-      - name: Re-generate swagger.json in backend build
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Re-generate swagger.json
         working-directory: ts/backend/
         run: |
-          npm run build
+          npm run private:swagger:prod
       - name: Copy swagger.json from backend to openapi.json in client-lib
         run: |
           cp ts/backend/src/swagger/swagger.json  ./fab-clientlib/openapi.json
+      - name: Install openapi-generator-cli
+        uses: ./.github/actions/install-openapi-generator-cli
       - name: Regenerate client lib
         working-directory: fab-clientlib
         run: |
-          python -m pip install openapi-generator-cli==7.15.0
           openapi-generator-cli generate -i openapi.json -g python -c .openapi-generator-config.json --package-name fab_clientlib
       - name: Install client lib
         working-directory: fab-clientlib
@@ -207,6 +523,13 @@ jobs:
           ref: ${{ env.ai4realnet-orchestrators-ref }}
       - name: Run fab-clientlib integration tests
         working-directory: fab-clientlib
+        env:
+          FAB_TEST_CONTAINERS_USE_PREBUILT_IMAGES: ${{ steps.images.outputs.use-prebuilt }}
+          FAB_BACKEND_IMAGE: ${{ steps.images.outputs.backend-tag }}
+          FAB_FRONTEND_IMAGE: ${{ steps.images.outputs.frontend-tag }}
+          FAB_BACKEND_PULL_POLICY: ${{ steps.images.outputs.backend-pull-policy }}
+          FAB_FRONTEND_PULL_POLICY: ${{ steps.images.outputs.frontend-pull-policy }}
+          ORCHESTRATOR_DEPS_IMAGE: ${{ steps.images.outputs.orchestrator-deps-tag }}
         run: |
           export OAUTHLIB_INSECURE_TRANSPORT=1
           PYTHONPATH=${{ github.workspace }}/test_common:$PYTHONPATH pytest -s test_containers_fab_rest_api.py
@@ -222,8 +545,11 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
       - name: Install dependencies
-        run: npm ci
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Type check and eslint backend
         working-directory: ts/backend/
         run: npm run check
@@ -242,8 +568,11 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
       - name: Install dependencies
-        run: npm ci
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Run tests
         working-directory: ts/frontend/
         run: npm test
@@ -262,8 +591,11 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
       - name: Install dependencies
-        run: npm ci
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
       - name: Copy .env.test
         run: cp .env.test.template .env.test
       - name: Run tests
@@ -276,9 +608,10 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: 3.13
+      - name: Install openapi-generator-cli
+        uses: ./.github/actions/install-openapi-generator-cli
       - name: validate swagger.json
         run: |
-          python -m pip install openapi-generator-cli==7.15.0
           # workaround for validate always returning 0
           openapi-generator-cli validate -i ts/backend/src/swagger/swagger.json  2> fail.txt
           cat fail.txt
@@ -300,8 +633,24 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: npm
+      # install-npm-deps skips `npm ci` entirely on a node_modules cache hit, but the Cypress binary
+      # (~/.cache/Cypress) is normally fetched by `npm ci`'s own postinstall hook, not by node_modules
+      # presence itself — cache it separately so a node_modules cache hit doesn't leave the binary missing
+      # on a fresh runner, and fall back to explicitly installing it (a fast no-op if already present) on a miss.
+      - name: Restore cached Cypress binary
+        id: cypress-cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-binary-${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('package-lock.json') }}
       - name: Install dependencies
-        run: npm ci
+        uses: ./.github/actions/install-npm-deps
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Ensure Cypress binary is installed
+        if: steps.cypress-cache.outputs.cache-hit != 'true'
+        run: npx cypress install
       - name: Clone ai4realnet-orchestrators for integration tests
         uses: actions/checkout@v6
         with:

@@ -1,0 +1,43 @@
+name: Determine ai4realnet-orchestrator-railway deps-image reuse
+description: >
+  Checks whether a content-hash-tagged ci-deps-<hash> image for
+  ai4realnet-orchestrator-railway's Dockerfile deps stage already exists in the registry, and pulls it if so.
+  Kept as a separate action from determine-image-reuse-strategy: this image has no publish workflow of its
+  own (unlike fab-backend/fab-frontend/the orchestrator), so its reuse must never gate whether those three get
+  reused too. Never reuses on a schedule run, which always force-rebuilds to catch base-image/dependency
+  drift. The caller must already be logged in to the registry (docker/login-action) before this action runs —
+  composite actions can't accept secrets directly. hash-paths is accepted as an input (not hardcoded here) so
+  callers can share a single source of truth with the build-images job's matrix, which builds this image under
+  the same tag.
+inputs:
+  repo-root:
+    description: Path (relative to the job's default working directory) to the ai4realnet-orchestrators checkout to hash/check against.
+    required: false
+    default: "."
+  registry:
+    description: Container registry + namespace the image is tagged under.
+    required: false
+    default: ghcr.io/flatland-association
+  hash-paths:
+    description: Space-separated git-tracked paths (relative to repo-root) to hash — must match build-images' matrix entry for ai4realnet-orchestrator-railway.
+    required: true
+outputs:
+  image:
+    description: Pulled image reference to feed docker-compose.yml's RAILWAY_DEPS_IMAGE build arg (empty when not reusing).
+    value: ${{ steps.determine.outputs.image }}
+runs:
+  using: composite
+  steps:
+    - name: Determine ai4realnet-orchestrator-railway deps-image reuse
+      id: determine
+      working-directory: ${{ inputs.repo-root }}
+      shell: bash
+      run: |
+        HASH=$(git ls-files -s -- ${{ inputs.hash-paths }} | git hash-object --stdin)
+        TAG="${{ inputs.registry }}/ai4realnet-orchestrator-railway:ci-deps-${HASH}"
+        if [ "${{ github.event_name }}" != "schedule" ] && docker manifest inspect "${TAG}" >/dev/null 2>&1; then
+          docker pull "${TAG}"
+          echo "image=${TAG}" >> "$GITHUB_OUTPUT"
+        else
+          echo "image=" >> "$GITHUB_OUTPUT"
+        fi
