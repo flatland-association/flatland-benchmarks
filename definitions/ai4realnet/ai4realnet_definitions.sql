@@ -1155,7 +1155,7 @@ INSERT INTO fields
 
 INSERT INTO tests
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('6ff3c588-357c-41a6-a45a-2bd946b158c8', 'KPI-DF-016: Delay reduction efficiency (Railway)', 'The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', array['0c1be4b0-c30f-4e38-a698-3b141181ede6']::uuid[], array['ba7f9aac-5e96-4436-bae1-23629c4d153b']::uuid[], 'CLOSED', 'Railway')
+    VALUES ('6ff3c588-357c-41a6-a45a-2bd946b158c8', 'KPI-DF-016: Delay reduction efficiency (Railway)', 'The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', array['0c1be4b0-c30f-4e38-a698-3b141181ede6']::uuid[], array['bb6302f1-0dc2-43ed-976b-4e5d3126006a', 'ac3d32bf-2694-4405-953b-01849e7923ef', '02e163b8-d8a3-44cb-9fb0-65501dfa35b7', '7a3ae3eb-b783-44a3-80d4-aa9cb0bd55fb', '01a82553-8d2c-4f84-94df-ccb9f3250734', 'db614cef-8b86-467d-a638-64c25a91ec78', '3b68eeb2-96f6-4a87-8a2f-5decaf3cb3f0', '7277b987-4cc2-4cb5-a308-bb226c832747', '2b4b92d2-6871-4c20-ad58-11dc51718379', 'e5968696-5497-496b-8fe4-f40a837f7129', '9b603e03-3e2e-4366-8127-96307d3b2ce1', '51081d92-2ff1-40a4-b557-38215c125051', '5832961b-942f-4d33-8614-c6dd4861ef46', 'e15fa3d0-0da3-4513-a5bd-6082806039a3', '45b93b12-57cc-40ff-b277-82de8ceaec32', '9ae1a2b5-fe89-4027-b1d8-8c3888862a5e', '7b42a1cc-ce70-4d9a-804f-ac9027a1ee48', 'b30319f8-8953-4433-80b6-5b80c9103bc5', '25f59eeb-3baf-4668-bdb1-2beb577fbf73', 'a35f5412-b565-4f24-9459-eb9ac1f7fe30', 'f262ffb3-86b9-4db8-8657-f4a96915cb83', 'fec35ca6-d093-4081-8cf1-2f3b8f445bed', '14a20672-ea9c-4205-961a-4f2a3585eea2', '63b933c7-b63c-4ab7-b602-69aa5f91aec9', '4223ef16-0a01-404d-8024-5a656203d3f8', '59b4935d-cc5d-4792-a395-770bae030d2d', '10ee5c39-9ae9-4e58-bdc8-8a449887574d', 'dc4da56a-bf2d-4351-b280-d418736844de', 'd4b12805-017e-46d9-8fe7-220569a21477', '6acbd77e-18a8-41c9-af81-1ff0ac1a9b0f', 'a7a37c14-b2a7-471c-9ed2-af90ee502d39', '626f428b-0928-48c8-8770-12de6e3b18ed', 'd238a30f-2f16-4e12-83a6-fcf779cd7115', 'ac06a723-e801-470d-991d-b4411368ccfe', '9eb9657e-5c48-461a-a680-7fae151f6800', '1667a5c9-ae17-4628-ba55-74e34cb04332', '2bb4384c-1119-4756-a2ad-fc2e5c00f952', 'c6ea3dff-9cda-471d-bf8b-a576b17036bb', '03ffcc01-b691-406f-ac53-5d13e9328175', '119b0c6b-4ce6-4a7f-b49b-ec904577a182', 'f3ee3bb9-3328-450a-98fb-63692042134f', '6c90d7a4-980f-4e13-856c-13117e2edf82', 'f7509133-3083-4454-a963-95302eb66764', 'bf4447a8-9e3e-4b8c-b9ea-4bc5bb009977', 'd271e605-1b68-4609-884c-0e6b2417980a', '7dd80b01-99c3-4a89-9b4b-f4c878a6d996', 'f9b8c0b3-0968-4324-9b92-35063c49def2', '84db3ada-efe4-4cf7-bf05-3f14bbe2c668', '05eeb2ea-67fe-405e-b630-43f382dbf246', '90071fa0-a560-4c6e-b2ff-fd59588fbdb7']::uuid[], 'CLOSED', 'Railway')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
@@ -1165,12 +1165,1002 @@ INSERT INTO fields
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
-    VALUES ('ba7f9aac-5e96-4436-bae1-23629c4d153b', 'Scenario 1 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['18da02bc-6f0c-4cac-a080-ee03974d9a8d']::uuid[])
+    VALUES ('bb6302f1-0dc2-43ed-976b-4e5d3126006a', 'Scenario 000 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['68ff8054-5405-4736-b00a-a00fefe14910', '564d4514-87d4-49e9-8ed3-c89fbe88cc25', '3ab379c9-a2dc-4277-becb-c861fa532d10']::uuid[])
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
-        VALUES ('18da02bc-6f0c-4cac-a080-ee03974d9a8d', 'primary', 'Scenario score (raw values)', NULL, NULL)
+        VALUES ('68ff8054-5405-4736-b00a-a00fefe14910', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('564d4514-87d4-49e9-8ed3-c89fbe88cc25', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3ab379c9-a2dc-4277-becb-c861fa532d10', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('ac3d32bf-2694-4405-953b-01849e7923ef', 'Scenario 003 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['fded4d5e-cddc-4190-b1a6-b53ee1af5cf4', '09c67cc9-c0c6-4a73-b3c7-f9e75f4f7fde', '56d3c50c-d406-4576-a652-4a8e9cfc6302']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('fded4d5e-cddc-4190-b1a6-b53ee1af5cf4', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('09c67cc9-c0c6-4a73-b3c7-f9e75f4f7fde', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('56d3c50c-d406-4576-a652-4a8e9cfc6302', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('02e163b8-d8a3-44cb-9fb0-65501dfa35b7', 'Scenario 006 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['55a80a6c-82d9-4ebd-85e0-50238c69b62c', '294649f6-2af4-4b0f-9045-6a147d7b5666', '98193342-4699-476a-8a55-daa2e186df35']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('55a80a6c-82d9-4ebd-85e0-50238c69b62c', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('294649f6-2af4-4b0f-9045-6a147d7b5666', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('98193342-4699-476a-8a55-daa2e186df35', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('7a3ae3eb-b783-44a3-80d4-aa9cb0bd55fb', 'Scenario 009 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['53611a81-c28f-4aea-88a5-30609ddff725', '1be8ca67-5adb-4dfa-96d1-a660f66bbec0', 'e631b54c-c8da-46e4-93e3-fc8dab75334a']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('53611a81-c28f-4aea-88a5-30609ddff725', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1be8ca67-5adb-4dfa-96d1-a660f66bbec0', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e631b54c-c8da-46e4-93e3-fc8dab75334a', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('01a82553-8d2c-4f84-94df-ccb9f3250734', 'Scenario 012 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['f2a83900-d015-49d8-8285-74874c3fffee', '4c8df53c-13a9-4dd6-9dca-3cdbb7edb1e6', 'a212a99a-8586-4167-aff2-6c2658d9b5d6']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f2a83900-d015-49d8-8285-74874c3fffee', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4c8df53c-13a9-4dd6-9dca-3cdbb7edb1e6', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a212a99a-8586-4167-aff2-6c2658d9b5d6', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('db614cef-8b86-467d-a638-64c25a91ec78', 'Scenario 015 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['2f2400a4-913d-4779-8db7-3cdd49c4926a', 'c16041db-763c-42a6-ae29-71bbd566b57e', '4bda35ef-70b8-4c1d-b24f-2db87c40757b']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2f2400a4-913d-4779-8db7-3cdd49c4926a', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c16041db-763c-42a6-ae29-71bbd566b57e', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4bda35ef-70b8-4c1d-b24f-2db87c40757b', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('3b68eeb2-96f6-4a87-8a2f-5decaf3cb3f0', 'Scenario 018 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['42573491-cfbd-48b4-afa9-606adaea772e', '881d7997-d049-4559-9150-70f6f75e8127', '984c90ce-6581-4282-95dd-6d41055543f9']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('42573491-cfbd-48b4-afa9-606adaea772e', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('881d7997-d049-4559-9150-70f6f75e8127', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('984c90ce-6581-4282-95dd-6d41055543f9', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('7277b987-4cc2-4cb5-a308-bb226c832747', 'Scenario 021 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['ca4e39b2-2ddd-4799-b33d-abe2a08360a7', '22221a41-271f-40a5-beac-eeb181a55dc3', '6076ebf9-5186-4eeb-9554-c0bb100c17fa']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ca4e39b2-2ddd-4799-b33d-abe2a08360a7', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('22221a41-271f-40a5-beac-eeb181a55dc3', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6076ebf9-5186-4eeb-9554-c0bb100c17fa', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('2b4b92d2-6871-4c20-ad58-11dc51718379', 'Scenario 024 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['7c35edb9-b318-4cea-9adf-cb35f5806dba', '4f3c7ba9-8d1a-4992-93e5-a6971fa24ca9', 'a7aa337d-657c-4d21-b48b-3595b567892f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7c35edb9-b318-4cea-9adf-cb35f5806dba', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4f3c7ba9-8d1a-4992-93e5-a6971fa24ca9', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a7aa337d-657c-4d21-b48b-3595b567892f', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('e5968696-5497-496b-8fe4-f40a837f7129', 'Scenario 027 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['68b8d532-5bdf-4280-865b-4329df1bd78e', '265cacca-03d9-4ab4-b3b8-379e72f0829e', '6f3086c2-f877-42d9-8401-50a29ece7730']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('68b8d532-5bdf-4280-865b-4329df1bd78e', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('265cacca-03d9-4ab4-b3b8-379e72f0829e', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6f3086c2-f877-42d9-8401-50a29ece7730', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('9b603e03-3e2e-4366-8127-96307d3b2ce1', 'Scenario 030 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['4ef007bd-99d8-4a47-9a34-3cb9e7a3289c', '89fdb413-4f62-4a8b-9dfc-0f2d982640dc', '0cfdf761-20f9-4ef1-bed1-c504573ec4c6']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4ef007bd-99d8-4a47-9a34-3cb9e7a3289c', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('89fdb413-4f62-4a8b-9dfc-0f2d982640dc', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0cfdf761-20f9-4ef1-bed1-c504573ec4c6', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('51081d92-2ff1-40a4-b557-38215c125051', 'Scenario 033 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['17548243-b08e-4b3d-a964-1cacf4cbbae8', '5b0c2159-d11f-4225-a656-08146cc4bc4c', '81951db4-9bb9-43d9-a91b-f644c95781b3']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('17548243-b08e-4b3d-a964-1cacf4cbbae8', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5b0c2159-d11f-4225-a656-08146cc4bc4c', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('81951db4-9bb9-43d9-a91b-f644c95781b3', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('5832961b-942f-4d33-8614-c6dd4861ef46', 'Scenario 036 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['70be6835-5625-422c-9b3d-13f83eb14fc3', 'bc5a209b-11a9-4acc-a5bd-4450f6f0df56', '136492eb-fd24-4e27-bcdc-7dec499dee56']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('70be6835-5625-422c-9b3d-13f83eb14fc3', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bc5a209b-11a9-4acc-a5bd-4450f6f0df56', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('136492eb-fd24-4e27-bcdc-7dec499dee56', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('e15fa3d0-0da3-4513-a5bd-6082806039a3', 'Scenario 039 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['f287b767-d467-402c-ad65-0a3056091a28', 'd203dc67-f740-49ad-b479-411b58bc7cee', '0ef56f01-0fee-4b3f-a21c-0d4dec9aba17']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f287b767-d467-402c-ad65-0a3056091a28', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d203dc67-f740-49ad-b479-411b58bc7cee', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0ef56f01-0fee-4b3f-a21c-0d4dec9aba17', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('45b93b12-57cc-40ff-b277-82de8ceaec32', 'Scenario 042 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['78e3def6-9ccc-4119-a7ac-31977eec10c0', 'ae3d841b-e29c-4b7a-b12c-38477555355c', '02e0f7be-068a-410a-a1ad-2fe1d4a9e236']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('78e3def6-9ccc-4119-a7ac-31977eec10c0', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ae3d841b-e29c-4b7a-b12c-38477555355c', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('02e0f7be-068a-410a-a1ad-2fe1d4a9e236', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('9ae1a2b5-fe89-4027-b1d8-8c3888862a5e', 'Scenario 045 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['9cc209cd-0071-48b8-9a9c-26497122abf7', '7e138edb-7830-4280-bfc9-be54ba807c12', '328f9ae8-cd15-4a61-ad30-0b8b4c6e3a47']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9cc209cd-0071-48b8-9a9c-26497122abf7', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7e138edb-7830-4280-bfc9-be54ba807c12', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('328f9ae8-cd15-4a61-ad30-0b8b4c6e3a47', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('7b42a1cc-ce70-4d9a-804f-ac9027a1ee48', 'Scenario 048 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['8414e078-176d-44a0-914d-e2c6a50d2a5e', '3da01c5d-dbdc-40b6-b05c-33e95f105f32', '6f88ae7b-2db3-4da7-b2d6-aecafb95cd72']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8414e078-176d-44a0-914d-e2c6a50d2a5e', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3da01c5d-dbdc-40b6-b05c-33e95f105f32', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6f88ae7b-2db3-4da7-b2d6-aecafb95cd72', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('b30319f8-8953-4433-80b6-5b80c9103bc5', 'Scenario 051 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['54256eaf-bece-4007-ba90-aac0db881ffb', 'e2029e15-8449-4ad8-9f53-dca02091a5a8', 'd16e0e68-3863-448b-b51b-70fe7e43c888']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('54256eaf-bece-4007-ba90-aac0db881ffb', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e2029e15-8449-4ad8-9f53-dca02091a5a8', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d16e0e68-3863-448b-b51b-70fe7e43c888', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('25f59eeb-3baf-4668-bdb1-2beb577fbf73', 'Scenario 054 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['7335dd9a-d058-45ae-99c5-983fff1df33b', 'f2b59cf3-c773-4244-bc68-a77141c8dbef', 'bbd4b9c8-a162-441e-a740-b480222ecc70']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7335dd9a-d058-45ae-99c5-983fff1df33b', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f2b59cf3-c773-4244-bc68-a77141c8dbef', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bbd4b9c8-a162-441e-a740-b480222ecc70', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('a35f5412-b565-4f24-9459-eb9ac1f7fe30', 'Scenario 057 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['5114581d-2500-4db8-87b9-a7e046f95f93', '41e521be-15a1-4751-b9dc-b88943b1e6fe', 'bbfbf326-551a-4aa3-9354-b1f65f278c96']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5114581d-2500-4db8-87b9-a7e046f95f93', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('41e521be-15a1-4751-b9dc-b88943b1e6fe', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bbfbf326-551a-4aa3-9354-b1f65f278c96', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('f262ffb3-86b9-4db8-8657-f4a96915cb83', 'Scenario 060 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['528b31f0-e628-469c-a6a1-4261f7240334', '27b94d0d-e192-417d-bc95-c3b74176b444', '4ad0cd1c-97f2-4e14-b6f2-94fd3d33843f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('528b31f0-e628-469c-a6a1-4261f7240334', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('27b94d0d-e192-417d-bc95-c3b74176b444', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4ad0cd1c-97f2-4e14-b6f2-94fd3d33843f', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('fec35ca6-d093-4081-8cf1-2f3b8f445bed', 'Scenario 063 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['7f80dc1a-8d6c-433a-8ebc-e3cc6663879d', '97bdd177-f0f0-43b7-a99b-41dfe2dfd920', '01102eb4-e23e-418d-956f-d03eb4248a52']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7f80dc1a-8d6c-433a-8ebc-e3cc6663879d', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('97bdd177-f0f0-43b7-a99b-41dfe2dfd920', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('01102eb4-e23e-418d-956f-d03eb4248a52', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('14a20672-ea9c-4205-961a-4f2a3585eea2', 'Scenario 066 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['ff2381be-48d8-47a5-9cb7-9500f29a0995', 'b705121f-793d-4eba-9539-ffa1616b08bf', 'd310fb04-6556-49b7-8e5f-a693a46352c8']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ff2381be-48d8-47a5-9cb7-9500f29a0995', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b705121f-793d-4eba-9539-ffa1616b08bf', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('d310fb04-6556-49b7-8e5f-a693a46352c8', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('63b933c7-b63c-4ab7-b602-69aa5f91aec9', 'Scenario 069 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['bc46406d-e326-4535-9e36-104db166a507', 'ebab7d40-530f-49b3-972f-0053e16aa17a', '2acaff72-7c5f-4c33-abd0-cd9b06911bcb']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bc46406d-e326-4535-9e36-104db166a507', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ebab7d40-530f-49b3-972f-0053e16aa17a', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2acaff72-7c5f-4c33-abd0-cd9b06911bcb', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('4223ef16-0a01-404d-8024-5a656203d3f8', 'Scenario 072 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['0203c9c5-8243-4f6d-924e-084efe3560bb', 'db31c175-cc02-469b-bac8-1ff2355cf49d', '707fa1e8-dca5-4caa-a142-33dad67a3445']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0203c9c5-8243-4f6d-924e-084efe3560bb', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('db31c175-cc02-469b-bac8-1ff2355cf49d', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('707fa1e8-dca5-4caa-a142-33dad67a3445', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('59b4935d-cc5d-4792-a395-770bae030d2d', 'Scenario 075 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['8c3254a0-6199-40a3-baad-8030c77dc41e', '7519d660-bf1f-43e3-8f41-961d95be8ddd', 'c093280f-fdfd-4931-8a6b-c5f1e26c70c7']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8c3254a0-6199-40a3-baad-8030c77dc41e', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7519d660-bf1f-43e3-8f41-961d95be8ddd', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c093280f-fdfd-4931-8a6b-c5f1e26c70c7', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('10ee5c39-9ae9-4e58-bdc8-8a449887574d', 'Scenario 078 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['ef8c9ced-b9f3-4511-a25f-e9718df2722f', 'bcf8957f-dc46-4273-ad95-84f5645ddd2c', '52dd8a80-e8f7-43f1-a01e-50172e2ff538']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ef8c9ced-b9f3-4511-a25f-e9718df2722f', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bcf8957f-dc46-4273-ad95-84f5645ddd2c', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('52dd8a80-e8f7-43f1-a01e-50172e2ff538', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('dc4da56a-bf2d-4351-b280-d418736844de', 'Scenario 081 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['f0cbc78e-21cb-41e2-ac3e-de8766bd58dd', 'be25f600-a8d1-4ab4-affa-3450a62cdde9', 'aeb2c881-5a70-481e-af19-d62ed0f352dd']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f0cbc78e-21cb-41e2-ac3e-de8766bd58dd', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('be25f600-a8d1-4ab4-affa-3450a62cdde9', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('aeb2c881-5a70-481e-af19-d62ed0f352dd', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('d4b12805-017e-46d9-8fe7-220569a21477', 'Scenario 084 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['a79250c7-fb06-4d2c-97b3-205198a194b8', '4eb44d94-f63c-4f91-a78b-4bd285a60901', '809dc07d-70fd-4b19-a3a2-b71272fbbbb7']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a79250c7-fb06-4d2c-97b3-205198a194b8', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4eb44d94-f63c-4f91-a78b-4bd285a60901', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('809dc07d-70fd-4b19-a3a2-b71272fbbbb7', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('6acbd77e-18a8-41c9-af81-1ff0ac1a9b0f', 'Scenario 087 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['6396e36b-f34b-4e08-b90d-ac0bd1892fde', 'a6cf8e82-786e-49b6-8b04-85e130d63815', '4671aa24-0b1c-44e1-912c-22306ed09ef2']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6396e36b-f34b-4e08-b90d-ac0bd1892fde', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a6cf8e82-786e-49b6-8b04-85e130d63815', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4671aa24-0b1c-44e1-912c-22306ed09ef2', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('a7a37c14-b2a7-471c-9ed2-af90ee502d39', 'Scenario 090 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['3384c6a1-8b69-4845-909c-b94557f35841', 'c1032809-9092-42c5-8fd1-dedebc0bccbc', 'a8ddb82f-52b5-4818-add3-cc2d4d2f769f']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3384c6a1-8b69-4845-909c-b94557f35841', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c1032809-9092-42c5-8fd1-dedebc0bccbc', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a8ddb82f-52b5-4818-add3-cc2d4d2f769f', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('626f428b-0928-48c8-8770-12de6e3b18ed', 'Scenario 093 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['9ea67b9d-1796-4e4c-aeed-a04f80f23621', 'eea7579e-c1d8-4e4a-87c3-2d85854f2b2d', '9a5fd0bc-270c-4c1a-b5e3-6dea765bf5a6']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9ea67b9d-1796-4e4c-aeed-a04f80f23621', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('eea7579e-c1d8-4e4a-87c3-2d85854f2b2d', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9a5fd0bc-270c-4c1a-b5e3-6dea765bf5a6', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('d238a30f-2f16-4e12-83a6-fcf779cd7115', 'Scenario 096 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['3b9442e0-8572-4119-bc58-c2a68bd820e6', '7728b8a1-2bd4-4311-b851-1d9b5be6d897', '423e8a96-1781-4bb0-ae7f-bd741f8437a5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3b9442e0-8572-4119-bc58-c2a68bd820e6', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7728b8a1-2bd4-4311-b851-1d9b5be6d897', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('423e8a96-1781-4bb0-ae7f-bd741f8437a5', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('ac06a723-e801-470d-991d-b4411368ccfe', 'Scenario 099 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['8ba803b9-9ba7-4cee-943f-b3fe210f138c', 'bab75888-1f49-4f0c-b4cd-83b33aaa25fd', '3473144c-e8be-4221-8efb-9de1e633ec01']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8ba803b9-9ba7-4cee-943f-b3fe210f138c', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('bab75888-1f49-4f0c-b4cd-83b33aaa25fd', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3473144c-e8be-4221-8efb-9de1e633ec01', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('9eb9657e-5c48-461a-a680-7fae151f6800', 'Scenario 102 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['57c67ee4-05da-410a-9731-05f918508f3b', '785d649e-3e42-4062-9322-f39d3a45bf96', 'e9e53f2a-a16e-496b-bb03-e3247dd9bc15']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('57c67ee4-05da-410a-9731-05f918508f3b', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('785d649e-3e42-4062-9322-f39d3a45bf96', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e9e53f2a-a16e-496b-bb03-e3247dd9bc15', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('1667a5c9-ae17-4628-ba55-74e34cb04332', 'Scenario 105 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['68036d0c-5a9d-4926-b1ab-d0187c15de3d', '6f73ba0b-bd94-487b-bae5-6c3ed8137e51', 'ae8b41a6-688f-493b-b210-cd0c4a9c3ee4']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('68036d0c-5a9d-4926-b1ab-d0187c15de3d', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('6f73ba0b-bd94-487b-bae5-6c3ed8137e51', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ae8b41a6-688f-493b-b210-cd0c4a9c3ee4', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('2bb4384c-1119-4756-a2ad-fc2e5c00f952', 'Scenario 108 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['55a7f2ec-26c2-45c7-b4e8-3281d96760a2', 'fd715cf1-7eaf-4ab4-836f-88eb40aec65e', 'df059fe2-1eeb-47dc-89d0-ebb3956d1181']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('55a7f2ec-26c2-45c7-b4e8-3281d96760a2', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('fd715cf1-7eaf-4ab4-836f-88eb40aec65e', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('df059fe2-1eeb-47dc-89d0-ebb3956d1181', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('c6ea3dff-9cda-471d-bf8b-a576b17036bb', 'Scenario 111 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['7de0b245-5758-44cd-bb3a-d9cac10e9fc9', '75d4d814-bb97-4199-bbea-8a357df03943', '425195cb-def7-45ae-bc7a-c8a121c2c81d']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('7de0b245-5758-44cd-bb3a-d9cac10e9fc9', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('75d4d814-bb97-4199-bbea-8a357df03943', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('425195cb-def7-45ae-bc7a-c8a121c2c81d', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('03ffcc01-b691-406f-ac53-5d13e9328175', 'Scenario 114 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['02f8cb17-6c90-45e5-ada8-a7524a3072ba', '487ada78-314a-4c72-97dd-0938c76f614f', 'a86b3daa-c98e-4548-b34e-afaa1186586a']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('02f8cb17-6c90-45e5-ada8-a7524a3072ba', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('487ada78-314a-4c72-97dd-0938c76f614f', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a86b3daa-c98e-4548-b34e-afaa1186586a', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('119b0c6b-4ce6-4a7f-b49b-ec904577a182', 'Scenario 117 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['f9e4fe9d-f949-4113-b88e-95a96982cde3', 'e3f0c5b2-3ab0-4019-9d86-46146a9e1dfb', '4875a018-a113-45b1-bde5-2138fa5a6210']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f9e4fe9d-f949-4113-b88e-95a96982cde3', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e3f0c5b2-3ab0-4019-9d86-46146a9e1dfb', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4875a018-a113-45b1-bde5-2138fa5a6210', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('f3ee3bb9-3328-450a-98fb-63692042134f', 'Scenario 120 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['5e2ef191-a641-43fd-a906-6e720463724e', '4abc5c50-2585-4104-b9aa-d6cc790b66c1', 'a498630e-7ac9-4736-a3f0-8bc14858fde4']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5e2ef191-a641-43fd-a906-6e720463724e', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4abc5c50-2585-4104-b9aa-d6cc790b66c1', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a498630e-7ac9-4736-a3f0-8bc14858fde4', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('6c90d7a4-980f-4e13-856c-13117e2edf82', 'Scenario 123 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['32cc3073-b1ce-4e6f-a7ff-57bc131efeaa', '4ce40626-c4cc-4b9d-af61-df6a33e09ef2', 'b57aee4b-3727-46c7-a8bf-ca9dbace0edb']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('32cc3073-b1ce-4e6f-a7ff-57bc131efeaa', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4ce40626-c4cc-4b9d-af61-df6a33e09ef2', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b57aee4b-3727-46c7-a8bf-ca9dbace0edb', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('f7509133-3083-4454-a963-95302eb66764', 'Scenario 126 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['e1c22dab-1348-4453-ba2e-3b882b0367e1', '04e04a6e-b5b3-448d-9f38-a74e5d3183d7', '9ad33abf-9fc4-47a8-8fc7-9230d84b96d4']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e1c22dab-1348-4453-ba2e-3b882b0367e1', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('04e04a6e-b5b3-448d-9f38-a74e5d3183d7', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('9ad33abf-9fc4-47a8-8fc7-9230d84b96d4', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('bf4447a8-9e3e-4b8c-b9ea-4bc5bb009977', 'Scenario 129 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['b28fa0a5-97a8-43b7-a070-1ae7b1e1533c', '50c436b7-46c5-4a9f-ad28-54f52d9cb836', '4246ec72-1d39-4506-bc90-26acfc69534c']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b28fa0a5-97a8-43b7-a070-1ae7b1e1533c', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('50c436b7-46c5-4a9f-ad28-54f52d9cb836', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4246ec72-1d39-4506-bc90-26acfc69534c', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('d271e605-1b68-4609-884c-0e6b2417980a', 'Scenario 132 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['b62bc276-3370-4e7a-969f-664227ec33ac', 'c2b5d659-b5ce-4ef0-a767-0e0fd84b0db4', '2805b2a8-981c-47c9-9ce1-c7dae25170c0']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('b62bc276-3370-4e7a-969f-664227ec33ac', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c2b5d659-b5ce-4ef0-a767-0e0fd84b0db4', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2805b2a8-981c-47c9-9ce1-c7dae25170c0', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('7dd80b01-99c3-4a89-9b4b-f4c878a6d996', 'Scenario 135 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['e1b91510-220a-4325-be57-64c7a8b62949', 'c3731994-f22d-46ea-bfb4-2f35fe09cee9', '78109485-56b9-4623-8597-e374e17cd442']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('e1b91510-220a-4325-be57-64c7a8b62949', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c3731994-f22d-46ea-bfb4-2f35fe09cee9', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('78109485-56b9-4623-8597-e374e17cd442', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('f9b8c0b3-0968-4324-9b92-35063c49def2', 'Scenario 138 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['f7b2d47d-3cd4-4ac1-91e6-8db3805f1b06', '8de28fea-b3cc-419d-b27d-386b9ca3ded6', '1e701e19-906b-4db3-89cc-3f882f371dd5']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('f7b2d47d-3cd4-4ac1-91e6-8db3805f1b06', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('8de28fea-b3cc-419d-b27d-386b9ca3ded6', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1e701e19-906b-4db3-89cc-3f882f371dd5', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('84db3ada-efe4-4cf7-bf05-3f14bbe2c668', 'Scenario 141 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['3b5f9094-dc19-45d6-b0a9-8aa931a9920c', 'df6ab54d-c75f-4756-bb6f-8f8a753f17e8', 'eb99d16d-dece-4fd4-a34d-59a060473baa']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('3b5f9094-dc19-45d6-b0a9-8aa931a9920c', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('df6ab54d-c75f-4756-bb6f-8f8a753f17e8', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('eb99d16d-dece-4fd4-a34d-59a060473baa', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('05eeb2ea-67fe-405e-b630-43f382dbf246', 'Scenario 144 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['ff9e7aa2-9283-44e7-9b15-5790e17b3297', '4b114e32-9173-470d-9361-b962bf9e9ead', 'a59c9318-7b19-4bc0-a365-4f2b1213e9f6']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('ff9e7aa2-9283-44e7-9b15-5790e17b3297', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('4b114e32-9173-470d-9361-b962bf9e9ead', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('a59c9318-7b19-4bc0-a365-4f2b1213e9f6', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('90071fa0-a560-4c6e-b2ff-fd59588fbdb7', 'Scenario 147 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system''s capability to optimize train schedules and minimize disruptions. ', 'This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:<br/>- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.<br/>- To ensure that AI interventions lead to measurable improvements in punctuality.<br/>- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ', array['c8341a11-6497-446b-b936-72ee5f9ed565', '5e85cebc-b3b3-43a3-8d4b-ea31f641df9c', '1ff4be89-4b08-44a4-b52a-5860d59fc7a3']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('c8341a11-6497-446b-b936-72ee5f9ed565', 'primary', 'Primary scenario score (raw values): delay_reduction_efficiency', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('5e85cebc-b3b3-43a3-8d4b-ea31f641df9c', 'delay_1', 'Secondary scenario score (raw values): delay dla baseline', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('1ff4be89-4b08-44a4-b52a-5860d59fc7a3', 'delay_2', 'Secondary scenario score (raw values): delay submission', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
