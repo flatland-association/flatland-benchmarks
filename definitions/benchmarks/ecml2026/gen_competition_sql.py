@@ -6,7 +6,11 @@ from definitions.benchmarks.flatland_common import gen_flatland_sql
 from definitions.gen_benchmarks_common import gen_sqls
 
 
-def main(truncate_benchmarks_docker_compose: int = 1, truncate_tests_docker_compose: int = 1, truncate_scenarios_docker_compose: int = 1, regen_json=False):
+def main(truncate_benchmarks_docker_compose: int = 1, truncate_tests_docker_compose: int = 1, truncate_scenarios_docker_compose: int = 1, regen_json=False,
+         ecml__json="ecml2026.json",
+         ecml__sql="ecml2026.sql",
+         competition_sql="V13.6__competition.sql",
+         ):
   if regen_json:
     suite_id = '6240c685-0fb4-481e-9404-47a570632227'
     benchmark_id = "c85d5fc2-15da-4a62-8e14-28d1261c29bd"
@@ -38,15 +42,15 @@ def main(truncate_benchmarks_docker_compose: int = 1, truncate_tests_docker_comp
       test_descriptions=test_descriptions,
 
     )
-    with Path("ecml2026.json").open("w") as f:
+    with Path(ecml__json).open("w") as f:
       f.write(json.dumps(data, indent=4))
 
-  with Path("ecml2026.json").open("r") as f:
+  with Path(ecml__json).open("r") as f:
     data = json.load(f)
   print(data)
   sql = gen_sqls(data)
 
-  with Path("ecml2026.sql").open("w") as f:
+  with Path(ecml__sql).open("w") as f:
     f.write(sql)
 
   for suite_id, suite in data.items():
@@ -61,7 +65,8 @@ def main(truncate_benchmarks_docker_compose: int = 1, truncate_tests_docker_comp
           del test["scenarios"][scenario_id]
 
   sql = gen_sqls(data)
-  with Path("../../../ts/backend/src/migration/data/V13.6__competition.sql").open("w", encoding="utf-8") as f:
+
+  with Path(f"../../../ts/backend/src/migration/data/{competition_sql}").open("w", encoding="utf-8") as f:
     f.write(sql)
 
   scenario_data = {}
@@ -78,4 +83,15 @@ def main(truncate_benchmarks_docker_compose: int = 1, truncate_tests_docker_comp
 if __name__ == '__main__':
   main(truncate_benchmarks_docker_compose=9999,
        truncate_tests_docker_compose=9999,
-       truncate_scenarios_docker_compose=9999, )
+       truncate_scenarios_docker_compose=9999,
+       ecml__json="ecml2026.json",
+       ecml__sql="ecml2026.sql",
+       competition_sql="V13.6__competition.sql",
+       )
+  main(truncate_benchmarks_docker_compose=9999,
+       truncate_tests_docker_compose=9999,
+       truncate_scenarios_docker_compose=9999,
+       ecml__json="postecml2026.json",
+       ecml__sql="postecml2026.sql",
+       competition_sql="V13.7__postcompetition.sql",
+       )
