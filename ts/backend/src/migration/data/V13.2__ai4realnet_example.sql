@@ -1,7 +1,7 @@
  INSERT INTO suites
     (id, setup, name, description, contents, benchmark_ids)
     VALUES ('0ca46887-897a-463f-bf83-c6cd6269a977', 'CAMPAIGN', 'First Validation Campaign', 'The first validation campaign runs until 31/03/2026.', '{}', array['3237ba20-ccff-45b0-af23-44719e584f41', '2da3781a-25a9-4c89-8b43-9269844f3fef', '8d5c876e-22c2-49e7-bdd5-4c1840d309f0', '65547935-f436-49fa-8d20-f320c6bd46dc', '3b1bdca6-ed90-4938-bd63-fd657aa7dcd7', '4b0be731-8371-4e4e-a673-b630187b0bb8', 'd65cd37a-4830-468c-9100-0f60ee9ff72e', '16706c82-75df-4969-932d-a7f5c941eca2', '43040944-39ac-47c9-b91d-bc8ca5693b3c', '3810191b-8cfd-4b03-86b2-f7e530aab30d', '31ea606b-681a-437a-85b9-7c81d4ccc287', 'df309815-8ec0-4a6f-9d0b-dc3dbfc9055a']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET setup=EXCLUDED.setup, name=EXCLUDED.name, description=EXCLUDED.description, benchmark_ids=EXCLUDED.benchmark_ids;
+    ON CONFLICT(id) DO UPDATE SET setup=EXCLUDED.setup, name=EXCLUDED.name, description=EXCLUDED.description, contents=EXCLUDED.contents, benchmark_ids=EXCLUDED.benchmark_ids;
 
 INSERT INTO benchmarks
     (id, name, description, field_ids, test_ids)
@@ -20,7 +20,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('2310ad43-2065-44a5-8a6a-100e2c6076f1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('2310ad43-2065-44a5-8a6a-100e2c6076f1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -40,7 +40,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('02890e30-6f7b-4ed3-80a1-abf2e169e43f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('02890e30-6f7b-4ed3-80a1-abf2e169e43f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -60,7 +60,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0c8a5446-bbc4-4a96-82bf-a53a86c10e9f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('0c8a5446-bbc4-4a96-82bf-a53a86c10e9f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -80,7 +80,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('1d7ef549-2063-466b-b10a-6c78f79244cb', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('1d7ef549-2063-466b-b10a-6c78f79244cb', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -100,7 +100,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('17130cde-b2a7-44b9-9681-d95bb943ec51', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('17130cde-b2a7-44b9-9681-d95bb943ec51', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -120,7 +120,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('7a49884e-90f2-4ba8-946c-5a9039b0e340', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('7a49884e-90f2-4ba8-946c-5a9039b0e340', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -140,7 +140,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('208b30ea-3b59-49fc-b660-c45a1a7e9144', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('208b30ea-3b59-49fc-b660-c45a1a7e9144', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -160,7 +160,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('8474f229-ee4f-4e15-b633-ca313e08d852', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('8474f229-ee4f-4e15-b633-ca313e08d852', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -180,7 +180,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('27ccb299-16f8-45dc-b90f-3b715cccaa72', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('27ccb299-16f8-45dc-b90f-3b715cccaa72', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -200,7 +200,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e0522a11-2f30-4cd8-9e88-b3fc9e289dcc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('e0522a11-2f30-4cd8-9e88-b3fc9e289dcc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -220,7 +220,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('78e3f5c5-32b8-4787-bf40-5623e573861b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('78e3f5c5-32b8-4787-bf40-5623e573861b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -240,7 +240,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4cae7347-89b5-4c89-aed4-7d2c374b45d5', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('4cae7347-89b5-4c89-aed4-7d2c374b45d5', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -260,7 +260,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('697e097d-ecd3-4ec5-bd46-cd98129ba28d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('697e097d-ecd3-4ec5-bd46-cd98129ba28d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -280,7 +280,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('bd729f10-2260-4959-b416-5d8c9d04648e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('bd729f10-2260-4959-b416-5d8c9d04648e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -300,7 +300,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('b50efa99-b82e-4c75-8204-afa8c17a52f0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('b50efa99-b82e-4c75-8204-afa8c17a52f0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -320,7 +320,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('d98d5fed-b2b9-4e3c-a3a6-30e666514ccd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('d98d5fed-b2b9-4e3c-a3a6-30e666514ccd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -340,7 +340,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('9c0de891-220a-4bd6-be4d-598fbcc898d0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('9c0de891-220a-4bd6-be4d-598fbcc898d0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -360,7 +360,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e67962af-0e35-4b32-97f9-dc661bf07f10', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('e67962af-0e35-4b32-97f9-dc661bf07f10', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -380,7 +380,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('80e0473e-e63a-4398-b592-66b2541a8dde', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('80e0473e-e63a-4398-b592-66b2541a8dde', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -400,7 +400,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('be9cbb52-ef44-4679-8c8d-f1b3c12e9aaa', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('be9cbb52-ef44-4679-8c8d-f1b3c12e9aaa', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -420,7 +420,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('c5762f88-bd6b-45c6-871f-c34ff539b1a1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('c5762f88-bd6b-45c6-871f-c34ff539b1a1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -440,7 +440,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('6b69647e-d663-4f90-ab14-dc4f5335f390', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('6b69647e-d663-4f90-ab14-dc4f5335f390', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -460,7 +460,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('d839a03d-c127-4c01-84cb-09b3845f8775', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('d839a03d-c127-4c01-84cb-09b3845f8775', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -480,7 +480,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('476cf7e9-c34a-466e-8fed-53e66d55c10a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('476cf7e9-c34a-466e-8fed-53e66d55c10a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -510,7 +510,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4d609eed-8062-4e81-893f-b4b653f8e4b7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('4d609eed-8062-4e81-893f-b4b653f8e4b7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -530,7 +530,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('99f95a40-b75c-47f1-8fd5-b3dc9c5a42c0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('99f95a40-b75c-47f1-8fd5-b3dc9c5a42c0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -550,7 +550,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('874377c7-380e-4e3c-8d6e-23e85ff26cf0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('874377c7-380e-4e3c-8d6e-23e85ff26cf0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -570,7 +570,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('a85e44b6-48d9-419f-8c4d-255eb2382531', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('a85e44b6-48d9-419f-8c4d-255eb2382531', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -590,7 +590,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('ec13012a-5c41-4c30-964d-fca2599efc94', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('ec13012a-5c41-4c30-964d-fca2599efc94', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -610,7 +610,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f0bc882a-f98f-46aa-8914-1d8859efddc8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('f0bc882a-f98f-46aa-8914-1d8859efddc8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -630,7 +630,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4cf8e1a6-17b5-4de3-a075-29c70641c358', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('4cf8e1a6-17b5-4de3-a075-29c70641c358', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -650,7 +650,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f257dde6-66c6-415e-b1de-96f965c5f39a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('f257dde6-66c6-415e-b1de-96f965c5f39a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -670,7 +670,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0fec6160-d278-4194-bb37-2d580d4b8056', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('0fec6160-d278-4194-bb37-2d580d4b8056', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -690,7 +690,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0050454e-c693-41bc-8c18-67e70716cfc9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('0050454e-c693-41bc-8c18-67e70716cfc9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -710,7 +710,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f3e3b428-5df4-4e6b-af10-430adacdae1b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('f3e3b428-5df4-4e6b-af10-430adacdae1b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -730,7 +730,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e98ae93a-b79a-4238-8702-48bbb87a8609', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('e98ae93a-b79a-4238-8702-48bbb87a8609', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -750,7 +750,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('015f5bd7-ab19-432b-ac75-486d433782ca', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('015f5bd7-ab19-432b-ac75-486d433782ca', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -770,7 +770,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e7d279ae-33b4-4664-ad89-a479462fd579', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('e7d279ae-33b4-4664-ad89-a479462fd579', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -790,7 +790,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('493273d8-0a2b-4b96-b807-667bf651bb2c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('493273d8-0a2b-4b96-b807-667bf651bb2c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -820,7 +820,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('bf5d4da4-cf9b-4fca-8b17-11cfd0dacabc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('bf5d4da4-cf9b-4fca-8b17-11cfd0dacabc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -840,7 +840,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('6e50a7c4-d178-4561-800b-71d0771365c8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('6e50a7c4-d178-4561-800b-71d0771365c8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -860,7 +860,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f0523454-2778-4047-bce0-dcb3e732b0d2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('f0523454-2778-4047-bce0-dcb3e732b0d2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -880,7 +880,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('843d2e64-3243-4138-90fc-1a4686f27178', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('843d2e64-3243-4138-90fc-1a4686f27178', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -900,7 +900,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('61d44975-5de9-41f4-99b0-dd6e29c48f60', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('61d44975-5de9-41f4-99b0-dd6e29c48f60', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -920,7 +920,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('97e45e9c-41f6-44ec-9c49-748fbdbdbc5e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('97e45e9c-41f6-44ec-9c49-748fbdbdbc5e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -940,7 +940,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('afffdcbf-3044-4571-a234-ab4d55da46fd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('afffdcbf-3044-4571-a234-ab4d55da46fd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -960,7 +960,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('2dd6e12b-eb87-47c5-9954-18a7ffeedc61', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('2dd6e12b-eb87-47c5-9954-18a7ffeedc61', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -980,7 +980,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('45f78644-ff33-4685-82d8-71a3101ddad8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('45f78644-ff33-4685-82d8-71a3101ddad8', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1010,7 +1010,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('916d5bf1-5bee-4955-93e4-127a41c42a97', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('916d5bf1-5bee-4955-93e4-127a41c42a97', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1030,7 +1030,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4c6e01fe-e8db-40ab-ac1c-88d8068bfccd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('4c6e01fe-e8db-40ab-ac1c-88d8068bfccd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1050,7 +1050,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f60128ec-90ef-4307-8966-363b75722e12', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('f60128ec-90ef-4307-8966-363b75722e12', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1070,7 +1070,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('d30fc4e1-2f3e-4b80-945a-f5150a91c3e4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('d30fc4e1-2f3e-4b80-945a-f5150a91c3e4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1090,7 +1090,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('d2ac280c-7583-480a-99c5-7e51b9894f19', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('d2ac280c-7583-480a-99c5-7e51b9894f19', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1110,7 +1110,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4ca83de7-7f8d-4eed-aee6-4751ed3a31bf', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('4ca83de7-7f8d-4eed-aee6-4751ed3a31bf', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1140,7 +1140,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('fcabd61d-91bc-45dc-8bf8-7aeb9724cb67', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('fcabd61d-91bc-45dc-8bf8-7aeb9724cb67', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1160,7 +1160,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0c1be4b0-c30f-4e38-a698-3b141181ede6', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('0c1be4b0-c30f-4e38-a698-3b141181ede6', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1180,7 +1180,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('63e93356-5033-451f-a3c2-cd607721661f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('63e93356-5033-451f-a3c2-cd607721661f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1200,7 +1200,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('1de0f52c-ae47-4847-9148-97b8568952d3', 'punctuality', 'Test score (MEAN of scenario scores)', 'MEAN', '"punctuality"')
+        VALUES ('1de0f52c-ae47-4847-9148-97b8568952d3', 'punctuality', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1240,7 +1240,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('ca6afe0e-a91a-4683-b735-6069e6b0cd8a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('ca6afe0e-a91a-4683-b735-6069e6b0cd8a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1260,7 +1260,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e00859c3-d3e5-4bdf-9025-2030e22df317', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('e00859c3-d3e5-4bdf-9025-2030e22df317', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1280,7 +1280,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('67a19c4b-1873-4a44-8c07-e15d9ede1e78', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('67a19c4b-1873-4a44-8c07-e15d9ede1e78', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1300,7 +1300,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('10aadaaf-daa4-4098-bd9d-2042ecb488e9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('10aadaaf-daa4-4098-bd9d-2042ecb488e9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1330,7 +1330,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('d63f9bce-a639-4d20-aece-c98a16ed1e7d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('d63f9bce-a639-4d20-aece-c98a16ed1e7d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1350,7 +1350,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('93dc6748-4349-42ed-9bf1-e8541e768dea', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('93dc6748-4349-42ed-9bf1-e8541e768dea', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1370,7 +1370,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('abe274f7-3401-4fdc-a79c-25c2a4659928', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('abe274f7-3401-4fdc-a79c-25c2a4659928', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1385,43 +1385,13 @@ INSERT INTO fields
 
 INSERT INTO tests
     (id, name, description, field_ids, scenario_ids, loop, queue)
-    VALUES ('e075d4a7-5cda-4d3c-83ac-69a0db1d74dd', 'KPI-NF-045: Network Impact Propagation (Railway)', 'The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', array['0cc2a210-4be2-42b6-ba21-885193fdbdbc']::uuid[], array['bb6302f1-0dc2-43ed-976b-4e5d3126006a', 'f84dcf0c-4bde-460b-9139-ea76e3694267']::uuid[], 'CLOSED', 'Railway')
+    VALUES ('e075d4a7-5cda-4d3c-83ac-69a0db1d74dd', 'KPI-NF-045: Network Impact Propagation (Railway)', 'The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', array['0cc2a210-4be2-42b6-ba21-885193fdbdbc']::uuid[], array['f84dcf0c-4bde-460b-9139-ea76e3694267', 'e28dc7e5-03ae-4687-ba37-c7ed5914c901']::uuid[], 'CLOSED', 'Railway')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0cc2a210-4be2-42b6-ba21-885193fdbdbc', 'network_impact_propagation', 'Test score (MEAN of scenario scores)', 'MEAN', '"network_impact_propagation"')
+        VALUES ('0cc2a210-4be2-42b6-ba21-885193fdbdbc', 'network_impact_propagation', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
-
-INSERT INTO scenarios
-    (id, name, description, field_ids)
-    VALUES ('bb6302f1-0dc2-43ed-976b-4e5d3126006a', 'Scenario 000 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['87ca95f7-4d83-48ec-94d5-cc654e1b895e', '391325c4-22f8-4243-bde5-48644072fef0', 'ca5d5430-7d3a-4a86-9fbf-2153f10fae55', '7d8d65dd-c85c-4d51-b7f2-f540718c4209', 'b817577b-8d5a-45a4-adbd-19ebfd4b1aa2']::uuid[])
-    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('87ca95f7-4d83-48ec-94d5-cc654e1b895e', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('391325c4-22f8-4243-bde5-48644072fef0', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('ca5d5430-7d3a-4a86-9fbf-2153f10fae55', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('7d8d65dd-c85c-4d51-b7f2-f540718c4209', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
-
-INSERT INTO fields
-        (id, key, description, agg_func, agg_weights)
-        VALUES ('b817577b-8d5a-45a4-adbd-19ebfd4b1aa2', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
-        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO scenarios
     (id, name, description, field_ids)
@@ -1453,6 +1423,36 @@ INSERT INTO fields
         VALUES ('ba2bea07-725e-4727-88f2-52534b640f90', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
+INSERT INTO scenarios
+    (id, name, description, field_ids)
+    VALUES ('e28dc7e5-03ae-4687-ba37-c7ed5914c901', 'Scenario 040 - The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ', 'This KPI contributes to evaluating Solution quality of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective.<br/>- To assess the ripple effects of disruptions across the railway network.<br/>- To quantify how effectively AI-assisted re-scheduling contains and mitigates propagation of delays.<br/>- To support decision-making in optimizing re-scheduling strategies for network-wide efficiency. ', array['2eb7921a-d394-4ddd-8485-ea6f3f9dba55', '04aaf899-66d7-4629-a29d-c563fb502536', '58283e82-d241-42fe-bf22-1a90e2010adf', '10cb0940-06d8-4d95-b29f-46f4335cea88', '0f0389f1-e9bf-4f9f-831b-0881705fdacd']::uuid[])
+    ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('2eb7921a-d394-4ddd-8485-ea6f3f9dba55', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('04aaf899-66d7-4629-a29d-c563fb502536', 'success_rate_1', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('58283e82-d241-42fe-bf22-1a90e2010adf', 'punctuality_1', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('10cb0940-06d8-4d95-b29f-46f4335cea88', 'success_rate_2', 'Secondary scenario score (raw values): success_rate scenario without malfunction', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
+INSERT INTO fields
+        (id, key, description, agg_func, agg_weights)
+        VALUES ('0f0389f1-e9bf-4f9f-831b-0881705fdacd', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
+        ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
+
 INSERT INTO tests
     (id, name, description, field_ids, scenario_ids, loop, queue)
     VALUES ('c69ff5e9-497b-41e8-adff-2221bb823365', 'KPI-AS-068: Assistant adaptation to user preferences (Power Grid)', 'Assistant adaptation to user preferences assesses how the AI assistant adapts to operator’s choices and preferences.<br/>The assistant provides several recommendations which represent different trade-offs of different objectives, and the operator eventually makes one single choice.<br/>This KPI assume that an estimation of epistemic uncertainty is calculated for each action recommendation, which can be used later by the human to select the action in a multi-objective setting.<br/>This KPIs thus aims at measuring:<br/>- Whether the choice that the operator makes is in the set of recommendations proposed by the assistant,<br/>- How is the recommendation chosen by the operator ranked compared to the other ones,<br/>- Whether the recommendation chosen by the operator has a high epistemic uncertainty compared to the other recommendations. ', array['c428c0f7-85d3-4f40-9710-6f8690f5cc9c']::uuid[], array['a68e7062-1329-4a34-ac44-4f6075929902']::uuid[], 'INTERACTIVE', 'PowerGrid')
@@ -1460,7 +1460,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('c428c0f7-85d3-4f40-9710-6f8690f5cc9c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('c428c0f7-85d3-4f40-9710-6f8690f5cc9c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1490,7 +1490,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('769e8da4-b056-486a-8abc-6da526fbd54b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('769e8da4-b056-486a-8abc-6da526fbd54b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1510,7 +1510,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('bfdfa6cc-9491-4cd4-9aa3-99d0e9eea7bd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('bfdfa6cc-9491-4cd4-9aa3-99d0e9eea7bd', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1530,7 +1530,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('127ea400-14bd-48aa-9da6-e932a802dcb3', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('127ea400-14bd-48aa-9da6-e932a802dcb3', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1550,7 +1550,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('831bdb0e-c5c3-4df0-b9c4-4e42c6515c09', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('831bdb0e-c5c3-4df0-b9c4-4e42c6515c09', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1570,7 +1570,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('df9918ae-1bb3-4407-8240-6aaa6d67a5ea', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('df9918ae-1bb3-4407-8240-6aaa6d67a5ea', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1590,7 +1590,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('74b82b7a-f693-4423-b221-d9acae930d93', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('74b82b7a-f693-4423-b221-d9acae930d93', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1620,7 +1620,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('91c4f865-5e81-46d3-bd23-990aa361a828', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('91c4f865-5e81-46d3-bd23-990aa361a828', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1640,7 +1640,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('a7c2bf7f-7845-4127-8c18-5eb820f5d317', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('a7c2bf7f-7845-4127-8c18-5eb820f5d317', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1660,7 +1660,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0a42cb23-d3a2-4691-b430-61753b745806', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('0a42cb23-d3a2-4691-b430-61753b745806', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1680,7 +1680,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('efee7a16-4bb5-4c6f-965d-272ec8c2631b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('efee7a16-4bb5-4c6f-965d-272ec8c2631b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1700,7 +1700,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('c6f944e3-9937-453c-95da-9b69681b023e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('c6f944e3-9937-453c-95da-9b69681b023e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1720,7 +1720,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('7ff6b34d-2221-414e-86e8-c26dbd34f8f5', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('7ff6b34d-2221-414e-86e8-c26dbd34f8f5', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1750,7 +1750,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('eac95a57-49b8-4909-a460-54277465030a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('eac95a57-49b8-4909-a460-54277465030a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1770,7 +1770,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('fc6b934f-8cea-4126-a835-6f1450b423ec', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('fc6b934f-8cea-4126-a835-6f1450b423ec', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1790,7 +1790,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f82e887c-f5f0-4ea9-8724-1105035c7ece', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('f82e887c-f5f0-4ea9-8724-1105035c7ece', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1810,7 +1810,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('fdeb371c-e722-49f6-9b2b-7e08784e0bda', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('fdeb371c-e722-49f6-9b2b-7e08784e0bda', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1830,7 +1830,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('a7321e2a-6c39-4464-a53d-9d6352b14cb9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('a7321e2a-6c39-4464-a53d-9d6352b14cb9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1850,7 +1850,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('769bd4eb-28c9-40d0-af5b-549adb14ec0e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('769bd4eb-28c9-40d0-af5b-549adb14ec0e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1870,7 +1870,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('1bdb0477-ba09-4306-93b2-519e445fd2c2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('1bdb0477-ba09-4306-93b2-519e445fd2c2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1890,7 +1890,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0cdc2df8-7dd6-4e59-b9c8-01d2434ed49b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('0cdc2df8-7dd6-4e59-b9c8-01d2434ed49b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1910,7 +1910,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('adb05676-e33f-45da-a3bc-370a0524d1ee', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('adb05676-e33f-45da-a3bc-370a0524d1ee', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1930,7 +1930,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('a8bd1701-c2c9-43da-a199-bcf6c0c3a6dc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('a8bd1701-c2c9-43da-a199-bcf6c0c3a6dc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1950,7 +1950,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('8c9d7ce4-0162-472d-88fb-2c19b811ad34', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('8c9d7ce4-0162-472d-88fb-2c19b811ad34', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1970,7 +1970,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('1088ae36-888b-443d-af8c-556fc8da4ae4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('1088ae36-888b-443d-af8c-556fc8da4ae4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -1990,7 +1990,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('bcdce9ba-dd27-4b16-b749-7229c7674a4e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('bcdce9ba-dd27-4b16-b749-7229c7674a4e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2010,7 +2010,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('26c6119e-12dc-44cd-b862-8f95f1420fa0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('26c6119e-12dc-44cd-b862-8f95f1420fa0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2030,7 +2030,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('2834a05b-bf8d-4231-9b1d-7797276bf304', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('2834a05b-bf8d-4231-9b1d-7797276bf304', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2050,7 +2050,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('7d368ebc-67ab-44f0-96c6-d13324da9582', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('7d368ebc-67ab-44f0-96c6-d13324da9582', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2070,7 +2070,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('123c3ec2-1cf5-4d73-b86e-7ff4d1671d80', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('123c3ec2-1cf5-4d73-b86e-7ff4d1671d80', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2090,7 +2090,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0a594511-3eab-4e45-818b-901bca21c1db', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('0a594511-3eab-4e45-818b-901bca21c1db', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2110,7 +2110,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('dc6c2dca-d4c2-48d0-9f75-0df01de53c54', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('dc6c2dca-d4c2-48d0-9f75-0df01de53c54', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2130,7 +2130,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('42c553a8-37f1-4abe-a0fd-14daec0078e0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('42c553a8-37f1-4abe-a0fd-14daec0078e0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2150,7 +2150,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('9517152b-7271-4aaf-8df8-b2cbdc5d5223', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('9517152b-7271-4aaf-8df8-b2cbdc5d5223', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2180,7 +2180,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('df5f8939-f85f-4fbb-9bea-017c46b2a8f7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('df5f8939-f85f-4fbb-9bea-017c46b2a8f7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2200,7 +2200,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('6e222adc-3153-4763-8bca-256cbb3d8716', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('6e222adc-3153-4763-8bca-256cbb3d8716', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2220,7 +2220,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('9916de43-06b8-413f-bc55-3ff7c10757ce', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('9916de43-06b8-413f-bc55-3ff7c10757ce', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2240,7 +2240,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4463c7f3-fbda-44b4-9c75-fdd552a2e3ba', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('4463c7f3-fbda-44b4-9c75-fdd552a2e3ba', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2260,7 +2260,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('5cf53de4-c331-4fc6-a54e-a93834b23fef', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('5cf53de4-c331-4fc6-a54e-a93834b23fef', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2280,7 +2280,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4bd8d175-100b-4367-bbce-564d96996b40', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('4bd8d175-100b-4367-bbce-564d96996b40', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2300,7 +2300,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0a658c26-5b6d-4369-b28b-b42acfc95ced', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('0a658c26-5b6d-4369-b28b-b42acfc95ced', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2320,7 +2320,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('64208759-4b1b-415c-ae2e-d5244b328e68', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('64208759-4b1b-415c-ae2e-d5244b328e68', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2340,7 +2340,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('9124a4ed-a727-49c7-aab9-dc2473594490', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('9124a4ed-a727-49c7-aab9-dc2473594490', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2360,7 +2360,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('1957912f-47fd-4ce6-8596-90a320c4a46e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('1957912f-47fd-4ce6-8596-90a320c4a46e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2380,7 +2380,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('861dc5e2-f3ce-4c74-829b-9c50c891a610', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('861dc5e2-f3ce-4c74-829b-9c50c891a610', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2400,7 +2400,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('da2b5bd3-4bef-4d57-b257-be675bf3dc2a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('da2b5bd3-4bef-4d57-b257-be675bf3dc2a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2420,7 +2420,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('b297a241-a1dd-48c5-9dab-bbd58261c3e9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('b297a241-a1dd-48c5-9dab-bbd58261c3e9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2440,7 +2440,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('7b373f1a-e892-44f7-a76d-7b93e73f745b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('7b373f1a-e892-44f7-a76d-7b93e73f745b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2460,7 +2460,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('5ef0d594-d8c5-4ebe-8adc-ad972481f301', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('5ef0d594-d8c5-4ebe-8adc-ad972481f301', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2480,7 +2480,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('45500bcb-96bc-4b21-87ad-1ae69122cf88', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('45500bcb-96bc-4b21-87ad-1ae69122cf88', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2500,7 +2500,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('cad90039-f91d-4883-9937-8671f8363766', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('cad90039-f91d-4883-9937-8671f8363766', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2520,7 +2520,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('58aa9828-9572-4433-b492-339104be9ad1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('58aa9828-9572-4433-b492-339104be9ad1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2540,7 +2540,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('30d12d61-8f39-4e99-b292-b1f9ed21a6b4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('30d12d61-8f39-4e99-b292-b1f9ed21a6b4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2560,7 +2560,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e248e90c-65e0-4e36-89df-2e3232ed430d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('e248e90c-65e0-4e36-89df-2e3232ed430d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2580,7 +2580,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('3813d4e2-3ac4-44b3-9abf-c16dd67f00ac', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('3813d4e2-3ac4-44b3-9abf-c16dd67f00ac', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2600,7 +2600,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('a1d636fb-9525-4796-85f6-565ecc4dc2a3', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('a1d636fb-9525-4796-85f6-565ecc4dc2a3', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2620,7 +2620,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('92eb89c5-a934-4f62-b64b-9ff63c3189fc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('92eb89c5-a934-4f62-b64b-9ff63c3189fc', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2650,7 +2650,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f0163954-829c-4d4b-b677-995c1ade5a4a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('f0163954-829c-4d4b-b677-995c1ade5a4a', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2670,7 +2670,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('00fb1d4c-a9b4-4a3f-88ab-eec7f4eb1a76', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('00fb1d4c-a9b4-4a3f-88ab-eec7f4eb1a76', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2690,7 +2690,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('db803996-450c-4462-a2d0-289e9855ff5d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('db803996-450c-4462-a2d0-289e9855ff5d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2710,7 +2710,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('40b5fecc-3ee2-4da9-9f19-3b5c7df27575', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('40b5fecc-3ee2-4da9-9f19-3b5c7df27575', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2730,7 +2730,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('805cc0df-c8f5-4e7d-8a1c-9a1600e18479', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('805cc0df-c8f5-4e7d-8a1c-9a1600e18479', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2750,7 +2750,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('643d28e7-3ec1-45f8-aed8-5364e65a0c05', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('643d28e7-3ec1-45f8-aed8-5364e65a0c05', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2770,7 +2770,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('c6d7099f-9893-4d76-8fcd-f6cba430b690', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('c6d7099f-9893-4d76-8fcd-f6cba430b690', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2790,7 +2790,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('a6fcdd38-158e-4865-9300-4b061553dcab', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('a6fcdd38-158e-4865-9300-4b061553dcab', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2810,7 +2810,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('58733189-5333-46a5-a759-21ecd5e9a5e7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('58733189-5333-46a5-a759-21ecd5e9a5e7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2830,7 +2830,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0b8ffb01-5523-482f-81c2-47a81c626ab2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('0b8ffb01-5523-482f-81c2-47a81c626ab2', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2850,7 +2850,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('36601f97-1681-43ac-a07c-c4cfbb4b3ede', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('36601f97-1681-43ac-a07c-c4cfbb4b3ede', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2870,7 +2870,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('b6b65966-5f68-4e31-879c-5f237220a8b4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('b6b65966-5f68-4e31-879c-5f237220a8b4', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2900,7 +2900,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('345b6241-acd6-4d1f-b04d-ccb2b98a84bf', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('345b6241-acd6-4d1f-b04d-ccb2b98a84bf', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2920,7 +2920,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('955e3993-0196-477e-8362-adcb2cc929e0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('955e3993-0196-477e-8362-adcb2cc929e0', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2940,7 +2940,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('df393b26-77dd-45e2-9e1f-11e2a603b714', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('df393b26-77dd-45e2-9e1f-11e2a603b714', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2960,7 +2960,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('b7a35c88-5413-4abb-bae0-774a27b3c84e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('b7a35c88-5413-4abb-bae0-774a27b3c84e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -2980,7 +2980,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('1ac0bc44-71c0-427b-bc1e-b7a177809ad7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('1ac0bc44-71c0-427b-bc1e-b7a177809ad7', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3000,7 +3000,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e9d6451c-c25b-49e5-a80e-cd84985b3c7c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('e9d6451c-c25b-49e5-a80e-cd84985b3c7c', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3020,7 +3020,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('435e4d59-237c-43c9-94bc-f1851d03e7d1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('435e4d59-237c-43c9-94bc-f1851d03e7d1', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3040,7 +3040,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('43e38b85-6b62-4898-a0c6-6b1b5e9b7e83', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('43e38b85-6b62-4898-a0c6-6b1b5e9b7e83', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3060,7 +3060,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('68dee536-8f29-4208-a327-48d67900c581', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('68dee536-8f29-4208-a327-48d67900c581', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3080,7 +3080,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('cabb2d9f-8086-4510-9735-8b10321096c6', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('cabb2d9f-8086-4510-9735-8b10321096c6', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3100,7 +3100,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('43eebab4-d111-4f5d-8c3d-1abdaafb2a4b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('43eebab4-d111-4f5d-8c3d-1abdaafb2a4b', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3120,7 +3120,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4daf6937-535b-4846-858b-9eaab6ff1b19', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('4daf6937-535b-4846-858b-9eaab6ff1b19', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3140,7 +3140,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('e7cf7efc-69fa-4b80-bc56-bb5d7a44f0f9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('e7cf7efc-69fa-4b80-bc56-bb5d7a44f0f9', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3160,7 +3160,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('69721968-c18b-4bf4-9223-2ed001231c7f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('69721968-c18b-4bf4-9223-2ed001231c7f', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3180,7 +3180,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('5839d96c-291b-465d-bfab-ba8951b3853e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('5839d96c-291b-465d-bfab-ba8951b3853e', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3200,7 +3200,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('6b1b9ae3-ac68-45f7-8706-80ca756e3cfa', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('6b1b9ae3-ac68-45f7-8706-80ca756e3cfa', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3220,7 +3220,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('f16522e3-b973-4b1d-bf7a-b728885a0b29', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('f16522e3-b973-4b1d-bf7a-b728885a0b29', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3240,7 +3240,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('4c5e593d-4785-45a6-9dfd-5190f909f913', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('4c5e593d-4785-45a6-9dfd-5190f909f913', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3260,7 +3260,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('ee00b722-5e1f-4adb-84aa-89dc2c1e698d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('ee00b722-5e1f-4adb-84aa-89dc2c1e698d', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3280,7 +3280,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('929eb222-48b9-4652-bb0f-8b71899a02da', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('929eb222-48b9-4652-bb0f-8b71899a02da', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
@@ -3300,7 +3300,7 @@ INSERT INTO tests
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_fields)
-        VALUES ('0dcc4cb8-a438-49cc-bf19-d5f1bb6999ff', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', '"primary"')
+        VALUES ('0dcc4cb8-a438-49cc-bf19-d5f1bb6999ff', 'primary', 'Test score (MEAN of scenario scores)', 'MEAN', NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_fields=EXCLUDED.agg_fields;
 
 INSERT INTO scenarios
