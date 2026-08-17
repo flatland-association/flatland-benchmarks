@@ -3,8 +3,7 @@ name: Checks
 env:
   # DEPENDENCY SWITCH:
   # TODO use released version
-  ai4realnet-orchestrators-ref: kpi-nf-045-reduce-scenarios  # revert to main before merging
-  # ai4realnet-orchestrators-ref: main
+  ai4realnet-orchestrators-ref: main
   REGISTRY: ghcr.io/flatland-association
 
 on:
