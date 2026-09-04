@@ -1871,15 +1871,1103 @@
                         "LOOP": "CLOSED",
                         "QUEUE": "Railway",
                         "scenarios": {
-                            "ba7f9aac-5e96-4436-bae1-23629c4d153b": {
-                                "ID": "ba7f9aac-5e96-4436-bae1-23629c4d153b",
-                                "SCENARIO_NAME": "Scenario 1 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                            "bb6302f1-0dc2-43ed-976b-4e5d3126006a": {
+                                "ID": "bb6302f1-0dc2-43ed-976b-4e5d3126006a",
+                                "SCENARIO_NAME": "Scenario 000 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
                                 "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
                                 "SCENARIO_FIELDS": {
-                                    "18da02bc-6f0c-4cac-a080-ee03974d9a8d": {
-                                        "ID": "18da02bc-6f0c-4cac-a080-ee03974d9a8d",
+                                    "68ff8054-5405-4736-b00a-a00fefe14910": {
+                                        "ID": "68ff8054-5405-4736-b00a-a00fefe14910",
                                         "SCENARIO_FIELD_NAME": "primary",
-                                        "SCENARIO_FIELD_DESCRIPTION": "Scenario score (raw values)"
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "564d4514-87d4-49e9-8ed3-c89fbe88cc25": {
+                                        "ID": "564d4514-87d4-49e9-8ed3-c89fbe88cc25",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "3ab379c9-a2dc-4277-becb-c861fa532d10": {
+                                        "ID": "3ab379c9-a2dc-4277-becb-c861fa532d10",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "ac3d32bf-2694-4405-953b-01849e7923ef": {
+                                "ID": "ac3d32bf-2694-4405-953b-01849e7923ef",
+                                "SCENARIO_NAME": "Scenario 003 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "fded4d5e-cddc-4190-b1a6-b53ee1af5cf4": {
+                                        "ID": "fded4d5e-cddc-4190-b1a6-b53ee1af5cf4",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "09c67cc9-c0c6-4a73-b3c7-f9e75f4f7fde": {
+                                        "ID": "09c67cc9-c0c6-4a73-b3c7-f9e75f4f7fde",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "56d3c50c-d406-4576-a652-4a8e9cfc6302": {
+                                        "ID": "56d3c50c-d406-4576-a652-4a8e9cfc6302",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "02e163b8-d8a3-44cb-9fb0-65501dfa35b7": {
+                                "ID": "02e163b8-d8a3-44cb-9fb0-65501dfa35b7",
+                                "SCENARIO_NAME": "Scenario 006 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "55a80a6c-82d9-4ebd-85e0-50238c69b62c": {
+                                        "ID": "55a80a6c-82d9-4ebd-85e0-50238c69b62c",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "294649f6-2af4-4b0f-9045-6a147d7b5666": {
+                                        "ID": "294649f6-2af4-4b0f-9045-6a147d7b5666",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "98193342-4699-476a-8a55-daa2e186df35": {
+                                        "ID": "98193342-4699-476a-8a55-daa2e186df35",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "7a3ae3eb-b783-44a3-80d4-aa9cb0bd55fb": {
+                                "ID": "7a3ae3eb-b783-44a3-80d4-aa9cb0bd55fb",
+                                "SCENARIO_NAME": "Scenario 009 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "53611a81-c28f-4aea-88a5-30609ddff725": {
+                                        "ID": "53611a81-c28f-4aea-88a5-30609ddff725",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "1be8ca67-5adb-4dfa-96d1-a660f66bbec0": {
+                                        "ID": "1be8ca67-5adb-4dfa-96d1-a660f66bbec0",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "e631b54c-c8da-46e4-93e3-fc8dab75334a": {
+                                        "ID": "e631b54c-c8da-46e4-93e3-fc8dab75334a",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "01a82553-8d2c-4f84-94df-ccb9f3250734": {
+                                "ID": "01a82553-8d2c-4f84-94df-ccb9f3250734",
+                                "SCENARIO_NAME": "Scenario 012 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "f2a83900-d015-49d8-8285-74874c3fffee": {
+                                        "ID": "f2a83900-d015-49d8-8285-74874c3fffee",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "4c8df53c-13a9-4dd6-9dca-3cdbb7edb1e6": {
+                                        "ID": "4c8df53c-13a9-4dd6-9dca-3cdbb7edb1e6",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "a212a99a-8586-4167-aff2-6c2658d9b5d6": {
+                                        "ID": "a212a99a-8586-4167-aff2-6c2658d9b5d6",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "db614cef-8b86-467d-a638-64c25a91ec78": {
+                                "ID": "db614cef-8b86-467d-a638-64c25a91ec78",
+                                "SCENARIO_NAME": "Scenario 015 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "2f2400a4-913d-4779-8db7-3cdd49c4926a": {
+                                        "ID": "2f2400a4-913d-4779-8db7-3cdd49c4926a",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "c16041db-763c-42a6-ae29-71bbd566b57e": {
+                                        "ID": "c16041db-763c-42a6-ae29-71bbd566b57e",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "4bda35ef-70b8-4c1d-b24f-2db87c40757b": {
+                                        "ID": "4bda35ef-70b8-4c1d-b24f-2db87c40757b",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "3b68eeb2-96f6-4a87-8a2f-5decaf3cb3f0": {
+                                "ID": "3b68eeb2-96f6-4a87-8a2f-5decaf3cb3f0",
+                                "SCENARIO_NAME": "Scenario 018 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "42573491-cfbd-48b4-afa9-606adaea772e": {
+                                        "ID": "42573491-cfbd-48b4-afa9-606adaea772e",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "881d7997-d049-4559-9150-70f6f75e8127": {
+                                        "ID": "881d7997-d049-4559-9150-70f6f75e8127",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "984c90ce-6581-4282-95dd-6d41055543f9": {
+                                        "ID": "984c90ce-6581-4282-95dd-6d41055543f9",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "7277b987-4cc2-4cb5-a308-bb226c832747": {
+                                "ID": "7277b987-4cc2-4cb5-a308-bb226c832747",
+                                "SCENARIO_NAME": "Scenario 021 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "ca4e39b2-2ddd-4799-b33d-abe2a08360a7": {
+                                        "ID": "ca4e39b2-2ddd-4799-b33d-abe2a08360a7",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "22221a41-271f-40a5-beac-eeb181a55dc3": {
+                                        "ID": "22221a41-271f-40a5-beac-eeb181a55dc3",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "6076ebf9-5186-4eeb-9554-c0bb100c17fa": {
+                                        "ID": "6076ebf9-5186-4eeb-9554-c0bb100c17fa",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "2b4b92d2-6871-4c20-ad58-11dc51718379": {
+                                "ID": "2b4b92d2-6871-4c20-ad58-11dc51718379",
+                                "SCENARIO_NAME": "Scenario 024 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "7c35edb9-b318-4cea-9adf-cb35f5806dba": {
+                                        "ID": "7c35edb9-b318-4cea-9adf-cb35f5806dba",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "4f3c7ba9-8d1a-4992-93e5-a6971fa24ca9": {
+                                        "ID": "4f3c7ba9-8d1a-4992-93e5-a6971fa24ca9",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "a7aa337d-657c-4d21-b48b-3595b567892f": {
+                                        "ID": "a7aa337d-657c-4d21-b48b-3595b567892f",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "e5968696-5497-496b-8fe4-f40a837f7129": {
+                                "ID": "e5968696-5497-496b-8fe4-f40a837f7129",
+                                "SCENARIO_NAME": "Scenario 027 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "68b8d532-5bdf-4280-865b-4329df1bd78e": {
+                                        "ID": "68b8d532-5bdf-4280-865b-4329df1bd78e",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "265cacca-03d9-4ab4-b3b8-379e72f0829e": {
+                                        "ID": "265cacca-03d9-4ab4-b3b8-379e72f0829e",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "6f3086c2-f877-42d9-8401-50a29ece7730": {
+                                        "ID": "6f3086c2-f877-42d9-8401-50a29ece7730",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "9b603e03-3e2e-4366-8127-96307d3b2ce1": {
+                                "ID": "9b603e03-3e2e-4366-8127-96307d3b2ce1",
+                                "SCENARIO_NAME": "Scenario 030 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "4ef007bd-99d8-4a47-9a34-3cb9e7a3289c": {
+                                        "ID": "4ef007bd-99d8-4a47-9a34-3cb9e7a3289c",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "89fdb413-4f62-4a8b-9dfc-0f2d982640dc": {
+                                        "ID": "89fdb413-4f62-4a8b-9dfc-0f2d982640dc",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "0cfdf761-20f9-4ef1-bed1-c504573ec4c6": {
+                                        "ID": "0cfdf761-20f9-4ef1-bed1-c504573ec4c6",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "51081d92-2ff1-40a4-b557-38215c125051": {
+                                "ID": "51081d92-2ff1-40a4-b557-38215c125051",
+                                "SCENARIO_NAME": "Scenario 033 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "17548243-b08e-4b3d-a964-1cacf4cbbae8": {
+                                        "ID": "17548243-b08e-4b3d-a964-1cacf4cbbae8",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "5b0c2159-d11f-4225-a656-08146cc4bc4c": {
+                                        "ID": "5b0c2159-d11f-4225-a656-08146cc4bc4c",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "81951db4-9bb9-43d9-a91b-f644c95781b3": {
+                                        "ID": "81951db4-9bb9-43d9-a91b-f644c95781b3",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "5832961b-942f-4d33-8614-c6dd4861ef46": {
+                                "ID": "5832961b-942f-4d33-8614-c6dd4861ef46",
+                                "SCENARIO_NAME": "Scenario 036 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "70be6835-5625-422c-9b3d-13f83eb14fc3": {
+                                        "ID": "70be6835-5625-422c-9b3d-13f83eb14fc3",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "bc5a209b-11a9-4acc-a5bd-4450f6f0df56": {
+                                        "ID": "bc5a209b-11a9-4acc-a5bd-4450f6f0df56",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "136492eb-fd24-4e27-bcdc-7dec499dee56": {
+                                        "ID": "136492eb-fd24-4e27-bcdc-7dec499dee56",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "e15fa3d0-0da3-4513-a5bd-6082806039a3": {
+                                "ID": "e15fa3d0-0da3-4513-a5bd-6082806039a3",
+                                "SCENARIO_NAME": "Scenario 039 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "f287b767-d467-402c-ad65-0a3056091a28": {
+                                        "ID": "f287b767-d467-402c-ad65-0a3056091a28",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "d203dc67-f740-49ad-b479-411b58bc7cee": {
+                                        "ID": "d203dc67-f740-49ad-b479-411b58bc7cee",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "0ef56f01-0fee-4b3f-a21c-0d4dec9aba17": {
+                                        "ID": "0ef56f01-0fee-4b3f-a21c-0d4dec9aba17",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "45b93b12-57cc-40ff-b277-82de8ceaec32": {
+                                "ID": "45b93b12-57cc-40ff-b277-82de8ceaec32",
+                                "SCENARIO_NAME": "Scenario 042 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "78e3def6-9ccc-4119-a7ac-31977eec10c0": {
+                                        "ID": "78e3def6-9ccc-4119-a7ac-31977eec10c0",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "ae3d841b-e29c-4b7a-b12c-38477555355c": {
+                                        "ID": "ae3d841b-e29c-4b7a-b12c-38477555355c",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "02e0f7be-068a-410a-a1ad-2fe1d4a9e236": {
+                                        "ID": "02e0f7be-068a-410a-a1ad-2fe1d4a9e236",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "9ae1a2b5-fe89-4027-b1d8-8c3888862a5e": {
+                                "ID": "9ae1a2b5-fe89-4027-b1d8-8c3888862a5e",
+                                "SCENARIO_NAME": "Scenario 045 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "9cc209cd-0071-48b8-9a9c-26497122abf7": {
+                                        "ID": "9cc209cd-0071-48b8-9a9c-26497122abf7",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "7e138edb-7830-4280-bfc9-be54ba807c12": {
+                                        "ID": "7e138edb-7830-4280-bfc9-be54ba807c12",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "328f9ae8-cd15-4a61-ad30-0b8b4c6e3a47": {
+                                        "ID": "328f9ae8-cd15-4a61-ad30-0b8b4c6e3a47",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "7b42a1cc-ce70-4d9a-804f-ac9027a1ee48": {
+                                "ID": "7b42a1cc-ce70-4d9a-804f-ac9027a1ee48",
+                                "SCENARIO_NAME": "Scenario 048 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "8414e078-176d-44a0-914d-e2c6a50d2a5e": {
+                                        "ID": "8414e078-176d-44a0-914d-e2c6a50d2a5e",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "3da01c5d-dbdc-40b6-b05c-33e95f105f32": {
+                                        "ID": "3da01c5d-dbdc-40b6-b05c-33e95f105f32",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "6f88ae7b-2db3-4da7-b2d6-aecafb95cd72": {
+                                        "ID": "6f88ae7b-2db3-4da7-b2d6-aecafb95cd72",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "b30319f8-8953-4433-80b6-5b80c9103bc5": {
+                                "ID": "b30319f8-8953-4433-80b6-5b80c9103bc5",
+                                "SCENARIO_NAME": "Scenario 051 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "54256eaf-bece-4007-ba90-aac0db881ffb": {
+                                        "ID": "54256eaf-bece-4007-ba90-aac0db881ffb",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "e2029e15-8449-4ad8-9f53-dca02091a5a8": {
+                                        "ID": "e2029e15-8449-4ad8-9f53-dca02091a5a8",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "d16e0e68-3863-448b-b51b-70fe7e43c888": {
+                                        "ID": "d16e0e68-3863-448b-b51b-70fe7e43c888",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "25f59eeb-3baf-4668-bdb1-2beb577fbf73": {
+                                "ID": "25f59eeb-3baf-4668-bdb1-2beb577fbf73",
+                                "SCENARIO_NAME": "Scenario 054 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "7335dd9a-d058-45ae-99c5-983fff1df33b": {
+                                        "ID": "7335dd9a-d058-45ae-99c5-983fff1df33b",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "f2b59cf3-c773-4244-bc68-a77141c8dbef": {
+                                        "ID": "f2b59cf3-c773-4244-bc68-a77141c8dbef",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "bbd4b9c8-a162-441e-a740-b480222ecc70": {
+                                        "ID": "bbd4b9c8-a162-441e-a740-b480222ecc70",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "a35f5412-b565-4f24-9459-eb9ac1f7fe30": {
+                                "ID": "a35f5412-b565-4f24-9459-eb9ac1f7fe30",
+                                "SCENARIO_NAME": "Scenario 057 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "5114581d-2500-4db8-87b9-a7e046f95f93": {
+                                        "ID": "5114581d-2500-4db8-87b9-a7e046f95f93",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "41e521be-15a1-4751-b9dc-b88943b1e6fe": {
+                                        "ID": "41e521be-15a1-4751-b9dc-b88943b1e6fe",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "bbfbf326-551a-4aa3-9354-b1f65f278c96": {
+                                        "ID": "bbfbf326-551a-4aa3-9354-b1f65f278c96",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "f262ffb3-86b9-4db8-8657-f4a96915cb83": {
+                                "ID": "f262ffb3-86b9-4db8-8657-f4a96915cb83",
+                                "SCENARIO_NAME": "Scenario 060 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "528b31f0-e628-469c-a6a1-4261f7240334": {
+                                        "ID": "528b31f0-e628-469c-a6a1-4261f7240334",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "27b94d0d-e192-417d-bc95-c3b74176b444": {
+                                        "ID": "27b94d0d-e192-417d-bc95-c3b74176b444",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "4ad0cd1c-97f2-4e14-b6f2-94fd3d33843f": {
+                                        "ID": "4ad0cd1c-97f2-4e14-b6f2-94fd3d33843f",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "fec35ca6-d093-4081-8cf1-2f3b8f445bed": {
+                                "ID": "fec35ca6-d093-4081-8cf1-2f3b8f445bed",
+                                "SCENARIO_NAME": "Scenario 063 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "7f80dc1a-8d6c-433a-8ebc-e3cc6663879d": {
+                                        "ID": "7f80dc1a-8d6c-433a-8ebc-e3cc6663879d",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "97bdd177-f0f0-43b7-a99b-41dfe2dfd920": {
+                                        "ID": "97bdd177-f0f0-43b7-a99b-41dfe2dfd920",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "01102eb4-e23e-418d-956f-d03eb4248a52": {
+                                        "ID": "01102eb4-e23e-418d-956f-d03eb4248a52",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "14a20672-ea9c-4205-961a-4f2a3585eea2": {
+                                "ID": "14a20672-ea9c-4205-961a-4f2a3585eea2",
+                                "SCENARIO_NAME": "Scenario 066 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "ff2381be-48d8-47a5-9cb7-9500f29a0995": {
+                                        "ID": "ff2381be-48d8-47a5-9cb7-9500f29a0995",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "b705121f-793d-4eba-9539-ffa1616b08bf": {
+                                        "ID": "b705121f-793d-4eba-9539-ffa1616b08bf",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "d310fb04-6556-49b7-8e5f-a693a46352c8": {
+                                        "ID": "d310fb04-6556-49b7-8e5f-a693a46352c8",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "63b933c7-b63c-4ab7-b602-69aa5f91aec9": {
+                                "ID": "63b933c7-b63c-4ab7-b602-69aa5f91aec9",
+                                "SCENARIO_NAME": "Scenario 069 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "bc46406d-e326-4535-9e36-104db166a507": {
+                                        "ID": "bc46406d-e326-4535-9e36-104db166a507",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "ebab7d40-530f-49b3-972f-0053e16aa17a": {
+                                        "ID": "ebab7d40-530f-49b3-972f-0053e16aa17a",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "2acaff72-7c5f-4c33-abd0-cd9b06911bcb": {
+                                        "ID": "2acaff72-7c5f-4c33-abd0-cd9b06911bcb",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "4223ef16-0a01-404d-8024-5a656203d3f8": {
+                                "ID": "4223ef16-0a01-404d-8024-5a656203d3f8",
+                                "SCENARIO_NAME": "Scenario 072 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "0203c9c5-8243-4f6d-924e-084efe3560bb": {
+                                        "ID": "0203c9c5-8243-4f6d-924e-084efe3560bb",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "db31c175-cc02-469b-bac8-1ff2355cf49d": {
+                                        "ID": "db31c175-cc02-469b-bac8-1ff2355cf49d",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "707fa1e8-dca5-4caa-a142-33dad67a3445": {
+                                        "ID": "707fa1e8-dca5-4caa-a142-33dad67a3445",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "59b4935d-cc5d-4792-a395-770bae030d2d": {
+                                "ID": "59b4935d-cc5d-4792-a395-770bae030d2d",
+                                "SCENARIO_NAME": "Scenario 075 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "8c3254a0-6199-40a3-baad-8030c77dc41e": {
+                                        "ID": "8c3254a0-6199-40a3-baad-8030c77dc41e",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "7519d660-bf1f-43e3-8f41-961d95be8ddd": {
+                                        "ID": "7519d660-bf1f-43e3-8f41-961d95be8ddd",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "c093280f-fdfd-4931-8a6b-c5f1e26c70c7": {
+                                        "ID": "c093280f-fdfd-4931-8a6b-c5f1e26c70c7",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "10ee5c39-9ae9-4e58-bdc8-8a449887574d": {
+                                "ID": "10ee5c39-9ae9-4e58-bdc8-8a449887574d",
+                                "SCENARIO_NAME": "Scenario 078 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "ef8c9ced-b9f3-4511-a25f-e9718df2722f": {
+                                        "ID": "ef8c9ced-b9f3-4511-a25f-e9718df2722f",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "bcf8957f-dc46-4273-ad95-84f5645ddd2c": {
+                                        "ID": "bcf8957f-dc46-4273-ad95-84f5645ddd2c",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "52dd8a80-e8f7-43f1-a01e-50172e2ff538": {
+                                        "ID": "52dd8a80-e8f7-43f1-a01e-50172e2ff538",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "dc4da56a-bf2d-4351-b280-d418736844de": {
+                                "ID": "dc4da56a-bf2d-4351-b280-d418736844de",
+                                "SCENARIO_NAME": "Scenario 081 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "f0cbc78e-21cb-41e2-ac3e-de8766bd58dd": {
+                                        "ID": "f0cbc78e-21cb-41e2-ac3e-de8766bd58dd",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "be25f600-a8d1-4ab4-affa-3450a62cdde9": {
+                                        "ID": "be25f600-a8d1-4ab4-affa-3450a62cdde9",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "aeb2c881-5a70-481e-af19-d62ed0f352dd": {
+                                        "ID": "aeb2c881-5a70-481e-af19-d62ed0f352dd",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "d4b12805-017e-46d9-8fe7-220569a21477": {
+                                "ID": "d4b12805-017e-46d9-8fe7-220569a21477",
+                                "SCENARIO_NAME": "Scenario 084 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "a79250c7-fb06-4d2c-97b3-205198a194b8": {
+                                        "ID": "a79250c7-fb06-4d2c-97b3-205198a194b8",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "4eb44d94-f63c-4f91-a78b-4bd285a60901": {
+                                        "ID": "4eb44d94-f63c-4f91-a78b-4bd285a60901",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "809dc07d-70fd-4b19-a3a2-b71272fbbbb7": {
+                                        "ID": "809dc07d-70fd-4b19-a3a2-b71272fbbbb7",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "6acbd77e-18a8-41c9-af81-1ff0ac1a9b0f": {
+                                "ID": "6acbd77e-18a8-41c9-af81-1ff0ac1a9b0f",
+                                "SCENARIO_NAME": "Scenario 087 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "6396e36b-f34b-4e08-b90d-ac0bd1892fde": {
+                                        "ID": "6396e36b-f34b-4e08-b90d-ac0bd1892fde",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "a6cf8e82-786e-49b6-8b04-85e130d63815": {
+                                        "ID": "a6cf8e82-786e-49b6-8b04-85e130d63815",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "4671aa24-0b1c-44e1-912c-22306ed09ef2": {
+                                        "ID": "4671aa24-0b1c-44e1-912c-22306ed09ef2",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "a7a37c14-b2a7-471c-9ed2-af90ee502d39": {
+                                "ID": "a7a37c14-b2a7-471c-9ed2-af90ee502d39",
+                                "SCENARIO_NAME": "Scenario 090 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "3384c6a1-8b69-4845-909c-b94557f35841": {
+                                        "ID": "3384c6a1-8b69-4845-909c-b94557f35841",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "c1032809-9092-42c5-8fd1-dedebc0bccbc": {
+                                        "ID": "c1032809-9092-42c5-8fd1-dedebc0bccbc",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "a8ddb82f-52b5-4818-add3-cc2d4d2f769f": {
+                                        "ID": "a8ddb82f-52b5-4818-add3-cc2d4d2f769f",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "626f428b-0928-48c8-8770-12de6e3b18ed": {
+                                "ID": "626f428b-0928-48c8-8770-12de6e3b18ed",
+                                "SCENARIO_NAME": "Scenario 093 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "9ea67b9d-1796-4e4c-aeed-a04f80f23621": {
+                                        "ID": "9ea67b9d-1796-4e4c-aeed-a04f80f23621",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "eea7579e-c1d8-4e4a-87c3-2d85854f2b2d": {
+                                        "ID": "eea7579e-c1d8-4e4a-87c3-2d85854f2b2d",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "9a5fd0bc-270c-4c1a-b5e3-6dea765bf5a6": {
+                                        "ID": "9a5fd0bc-270c-4c1a-b5e3-6dea765bf5a6",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "d238a30f-2f16-4e12-83a6-fcf779cd7115": {
+                                "ID": "d238a30f-2f16-4e12-83a6-fcf779cd7115",
+                                "SCENARIO_NAME": "Scenario 096 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "3b9442e0-8572-4119-bc58-c2a68bd820e6": {
+                                        "ID": "3b9442e0-8572-4119-bc58-c2a68bd820e6",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "7728b8a1-2bd4-4311-b851-1d9b5be6d897": {
+                                        "ID": "7728b8a1-2bd4-4311-b851-1d9b5be6d897",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "423e8a96-1781-4bb0-ae7f-bd741f8437a5": {
+                                        "ID": "423e8a96-1781-4bb0-ae7f-bd741f8437a5",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "ac06a723-e801-470d-991d-b4411368ccfe": {
+                                "ID": "ac06a723-e801-470d-991d-b4411368ccfe",
+                                "SCENARIO_NAME": "Scenario 099 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "8ba803b9-9ba7-4cee-943f-b3fe210f138c": {
+                                        "ID": "8ba803b9-9ba7-4cee-943f-b3fe210f138c",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "bab75888-1f49-4f0c-b4cd-83b33aaa25fd": {
+                                        "ID": "bab75888-1f49-4f0c-b4cd-83b33aaa25fd",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "3473144c-e8be-4221-8efb-9de1e633ec01": {
+                                        "ID": "3473144c-e8be-4221-8efb-9de1e633ec01",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "9eb9657e-5c48-461a-a680-7fae151f6800": {
+                                "ID": "9eb9657e-5c48-461a-a680-7fae151f6800",
+                                "SCENARIO_NAME": "Scenario 102 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "57c67ee4-05da-410a-9731-05f918508f3b": {
+                                        "ID": "57c67ee4-05da-410a-9731-05f918508f3b",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "785d649e-3e42-4062-9322-f39d3a45bf96": {
+                                        "ID": "785d649e-3e42-4062-9322-f39d3a45bf96",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "e9e53f2a-a16e-496b-bb03-e3247dd9bc15": {
+                                        "ID": "e9e53f2a-a16e-496b-bb03-e3247dd9bc15",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "1667a5c9-ae17-4628-ba55-74e34cb04332": {
+                                "ID": "1667a5c9-ae17-4628-ba55-74e34cb04332",
+                                "SCENARIO_NAME": "Scenario 105 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "68036d0c-5a9d-4926-b1ab-d0187c15de3d": {
+                                        "ID": "68036d0c-5a9d-4926-b1ab-d0187c15de3d",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "6f73ba0b-bd94-487b-bae5-6c3ed8137e51": {
+                                        "ID": "6f73ba0b-bd94-487b-bae5-6c3ed8137e51",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "ae8b41a6-688f-493b-b210-cd0c4a9c3ee4": {
+                                        "ID": "ae8b41a6-688f-493b-b210-cd0c4a9c3ee4",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "2bb4384c-1119-4756-a2ad-fc2e5c00f952": {
+                                "ID": "2bb4384c-1119-4756-a2ad-fc2e5c00f952",
+                                "SCENARIO_NAME": "Scenario 108 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "55a7f2ec-26c2-45c7-b4e8-3281d96760a2": {
+                                        "ID": "55a7f2ec-26c2-45c7-b4e8-3281d96760a2",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "fd715cf1-7eaf-4ab4-836f-88eb40aec65e": {
+                                        "ID": "fd715cf1-7eaf-4ab4-836f-88eb40aec65e",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "df059fe2-1eeb-47dc-89d0-ebb3956d1181": {
+                                        "ID": "df059fe2-1eeb-47dc-89d0-ebb3956d1181",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "c6ea3dff-9cda-471d-bf8b-a576b17036bb": {
+                                "ID": "c6ea3dff-9cda-471d-bf8b-a576b17036bb",
+                                "SCENARIO_NAME": "Scenario 111 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "7de0b245-5758-44cd-bb3a-d9cac10e9fc9": {
+                                        "ID": "7de0b245-5758-44cd-bb3a-d9cac10e9fc9",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "75d4d814-bb97-4199-bbea-8a357df03943": {
+                                        "ID": "75d4d814-bb97-4199-bbea-8a357df03943",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "425195cb-def7-45ae-bc7a-c8a121c2c81d": {
+                                        "ID": "425195cb-def7-45ae-bc7a-c8a121c2c81d",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "03ffcc01-b691-406f-ac53-5d13e9328175": {
+                                "ID": "03ffcc01-b691-406f-ac53-5d13e9328175",
+                                "SCENARIO_NAME": "Scenario 114 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "02f8cb17-6c90-45e5-ada8-a7524a3072ba": {
+                                        "ID": "02f8cb17-6c90-45e5-ada8-a7524a3072ba",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "487ada78-314a-4c72-97dd-0938c76f614f": {
+                                        "ID": "487ada78-314a-4c72-97dd-0938c76f614f",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "a86b3daa-c98e-4548-b34e-afaa1186586a": {
+                                        "ID": "a86b3daa-c98e-4548-b34e-afaa1186586a",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "119b0c6b-4ce6-4a7f-b49b-ec904577a182": {
+                                "ID": "119b0c6b-4ce6-4a7f-b49b-ec904577a182",
+                                "SCENARIO_NAME": "Scenario 117 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "f9e4fe9d-f949-4113-b88e-95a96982cde3": {
+                                        "ID": "f9e4fe9d-f949-4113-b88e-95a96982cde3",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "e3f0c5b2-3ab0-4019-9d86-46146a9e1dfb": {
+                                        "ID": "e3f0c5b2-3ab0-4019-9d86-46146a9e1dfb",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "4875a018-a113-45b1-bde5-2138fa5a6210": {
+                                        "ID": "4875a018-a113-45b1-bde5-2138fa5a6210",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "f3ee3bb9-3328-450a-98fb-63692042134f": {
+                                "ID": "f3ee3bb9-3328-450a-98fb-63692042134f",
+                                "SCENARIO_NAME": "Scenario 120 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "5e2ef191-a641-43fd-a906-6e720463724e": {
+                                        "ID": "5e2ef191-a641-43fd-a906-6e720463724e",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "4abc5c50-2585-4104-b9aa-d6cc790b66c1": {
+                                        "ID": "4abc5c50-2585-4104-b9aa-d6cc790b66c1",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "a498630e-7ac9-4736-a3f0-8bc14858fde4": {
+                                        "ID": "a498630e-7ac9-4736-a3f0-8bc14858fde4",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "6c90d7a4-980f-4e13-856c-13117e2edf82": {
+                                "ID": "6c90d7a4-980f-4e13-856c-13117e2edf82",
+                                "SCENARIO_NAME": "Scenario 123 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "32cc3073-b1ce-4e6f-a7ff-57bc131efeaa": {
+                                        "ID": "32cc3073-b1ce-4e6f-a7ff-57bc131efeaa",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "4ce40626-c4cc-4b9d-af61-df6a33e09ef2": {
+                                        "ID": "4ce40626-c4cc-4b9d-af61-df6a33e09ef2",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "b57aee4b-3727-46c7-a8bf-ca9dbace0edb": {
+                                        "ID": "b57aee4b-3727-46c7-a8bf-ca9dbace0edb",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "f7509133-3083-4454-a963-95302eb66764": {
+                                "ID": "f7509133-3083-4454-a963-95302eb66764",
+                                "SCENARIO_NAME": "Scenario 126 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "e1c22dab-1348-4453-ba2e-3b882b0367e1": {
+                                        "ID": "e1c22dab-1348-4453-ba2e-3b882b0367e1",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "04e04a6e-b5b3-448d-9f38-a74e5d3183d7": {
+                                        "ID": "04e04a6e-b5b3-448d-9f38-a74e5d3183d7",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "9ad33abf-9fc4-47a8-8fc7-9230d84b96d4": {
+                                        "ID": "9ad33abf-9fc4-47a8-8fc7-9230d84b96d4",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "bf4447a8-9e3e-4b8c-b9ea-4bc5bb009977": {
+                                "ID": "bf4447a8-9e3e-4b8c-b9ea-4bc5bb009977",
+                                "SCENARIO_NAME": "Scenario 129 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "b28fa0a5-97a8-43b7-a070-1ae7b1e1533c": {
+                                        "ID": "b28fa0a5-97a8-43b7-a070-1ae7b1e1533c",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "50c436b7-46c5-4a9f-ad28-54f52d9cb836": {
+                                        "ID": "50c436b7-46c5-4a9f-ad28-54f52d9cb836",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "4246ec72-1d39-4506-bc90-26acfc69534c": {
+                                        "ID": "4246ec72-1d39-4506-bc90-26acfc69534c",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "d271e605-1b68-4609-884c-0e6b2417980a": {
+                                "ID": "d271e605-1b68-4609-884c-0e6b2417980a",
+                                "SCENARIO_NAME": "Scenario 132 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "b62bc276-3370-4e7a-969f-664227ec33ac": {
+                                        "ID": "b62bc276-3370-4e7a-969f-664227ec33ac",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "c2b5d659-b5ce-4ef0-a767-0e0fd84b0db4": {
+                                        "ID": "c2b5d659-b5ce-4ef0-a767-0e0fd84b0db4",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "2805b2a8-981c-47c9-9ce1-c7dae25170c0": {
+                                        "ID": "2805b2a8-981c-47c9-9ce1-c7dae25170c0",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "7dd80b01-99c3-4a89-9b4b-f4c878a6d996": {
+                                "ID": "7dd80b01-99c3-4a89-9b4b-f4c878a6d996",
+                                "SCENARIO_NAME": "Scenario 135 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "e1b91510-220a-4325-be57-64c7a8b62949": {
+                                        "ID": "e1b91510-220a-4325-be57-64c7a8b62949",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "c3731994-f22d-46ea-bfb4-2f35fe09cee9": {
+                                        "ID": "c3731994-f22d-46ea-bfb4-2f35fe09cee9",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "78109485-56b9-4623-8597-e374e17cd442": {
+                                        "ID": "78109485-56b9-4623-8597-e374e17cd442",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "f9b8c0b3-0968-4324-9b92-35063c49def2": {
+                                "ID": "f9b8c0b3-0968-4324-9b92-35063c49def2",
+                                "SCENARIO_NAME": "Scenario 138 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "f7b2d47d-3cd4-4ac1-91e6-8db3805f1b06": {
+                                        "ID": "f7b2d47d-3cd4-4ac1-91e6-8db3805f1b06",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "8de28fea-b3cc-419d-b27d-386b9ca3ded6": {
+                                        "ID": "8de28fea-b3cc-419d-b27d-386b9ca3ded6",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "1e701e19-906b-4db3-89cc-3f882f371dd5": {
+                                        "ID": "1e701e19-906b-4db3-89cc-3f882f371dd5",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "84db3ada-efe4-4cf7-bf05-3f14bbe2c668": {
+                                "ID": "84db3ada-efe4-4cf7-bf05-3f14bbe2c668",
+                                "SCENARIO_NAME": "Scenario 141 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "3b5f9094-dc19-45d6-b0a9-8aa931a9920c": {
+                                        "ID": "3b5f9094-dc19-45d6-b0a9-8aa931a9920c",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "df6ab54d-c75f-4756-bb6f-8f8a753f17e8": {
+                                        "ID": "df6ab54d-c75f-4756-bb6f-8f8a753f17e8",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "eb99d16d-dece-4fd4-a34d-59a060473baa": {
+                                        "ID": "eb99d16d-dece-4fd4-a34d-59a060473baa",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "05eeb2ea-67fe-405e-b630-43f382dbf246": {
+                                "ID": "05eeb2ea-67fe-405e-b630-43f382dbf246",
+                                "SCENARIO_NAME": "Scenario 144 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "ff9e7aa2-9283-44e7-9b15-5790e17b3297": {
+                                        "ID": "ff9e7aa2-9283-44e7-9b15-5790e17b3297",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "4b114e32-9173-470d-9361-b962bf9e9ead": {
+                                        "ID": "4b114e32-9173-470d-9361-b962bf9e9ead",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "a59c9318-7b19-4bc0-a365-4f2b1213e9f6": {
+                                        "ID": "a59c9318-7b19-4bc0-a365-4f2b1213e9f6",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
+                                    }
+                                }
+                            },
+                            "90071fa0-a560-4c6e-b2ff-fd59588fbdb7": {
+                                "ID": "90071fa0-a560-4c6e-b2ff-fd59588fbdb7",
+                                "SCENARIO_NAME": "Scenario 147 - The Delay Reduction Efficiency KPI quantifies the effectiveness of the AI-driven re-scheduling system in reducing overall train delays. By comparing delays before and after AI intervention, this metric provides insight into the system's capability to optimize train schedules and minimize disruptions. ",
+                                "SCENARIO_DESCRIPTION": "This KPI contributes to evaluating Effectiveness of the AI-based assistant, as part of Task 4.1 evaluation objectives, and O2 main project objective:\n- To assess the impact of AI-based re-scheduling on reducing delays in railway operations.\n- To ensure that AI interventions lead to measurable improvements in punctuality.\n- To provide a performance benchmark for AI-driven traffic management solutions in railway networks. ",
+                                "SCENARIO_FIELDS": {
+                                    "c8341a11-6497-446b-b936-72ee5f9ed565": {
+                                        "ID": "c8341a11-6497-446b-b936-72ee5f9ed565",
+                                        "SCENARIO_FIELD_NAME": "primary",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Primary scenario score (raw values): delay_reduction_efficiency"
+                                    },
+                                    "5e85cebc-b3b3-43a3-8d4b-ea31f641df9c": {
+                                        "ID": "5e85cebc-b3b3-43a3-8d4b-ea31f641df9c",
+                                        "SCENARIO_FIELD_NAME": "delay_1",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay dla baseline"
+                                    },
+                                    "1ff4be89-4b08-44a4-b52a-5860d59fc7a3": {
+                                        "ID": "1ff4be89-4b08-44a4-b52a-5860d59fc7a3",
+                                        "SCENARIO_FIELD_NAME": "delay_2",
+                                        "SCENARIO_FIELD_DESCRIPTION": "Secondary scenario score (raw values): delay submission"
                                     }
                                 }
                             }
