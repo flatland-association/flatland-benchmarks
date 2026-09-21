@@ -11,6 +11,24 @@ from orchestrator import TaskExecutionError, K8sFlatlandBenchmarksOrchestrator
 from orchestrator_common import Status
 
 
+def _make_orchestrator(supported_client_version_range=None):
+  return K8sFlatlandBenchmarksOrchestrator(
+    submission_id="1234",
+    batch_api=None,
+    core_api=None,
+    aws_endpoint_url=None,
+    aws_access_key_id='ignore-me',
+    aws_secret_access_key='ignore-me',
+    s3_bucket=None,
+    kubernetes_namespace="fab-int",
+    active_deadline_seconds=7200,
+    submissions_pvc="fab-int-submissions",
+    environments_pvc="fab-int-data",
+    environments_zip="flatland3/environments.zip",
+    supported_client_version_range=supported_client_version_range,
+  )
+
+
 def test_tasks_successful():
   core_api: CoreV1Api = mock()
   batch_api: BatchV1Api = mock()
@@ -235,3 +253,26 @@ def test_submission_status_success_reported():
                                                                                                                       message='Run submission env_path=None test fc8f5fb1-4525-4b4f-a022-d3d7800097dc - scenario 289394a5-aa51-446c-9b62-c25101643790'))
   verify(fab, times=1).submissions_submission_ids_statuses_post(["1234"],
                                                                 SubmissionsSubmissionIdsStatusesPostRequest(status=Status.success.value, message=None))
+
+
+def test_verify_flatland_version_in_range_does_not_raise():
+  orchestrator = _make_orchestrator(supported_client_version_range=">=4.2.0,<5.0.0")
+  orchestrator._verify_flatland_version("4.5.0")
+
+
+def test_verify_flatland_version_out_of_range_raises():
+  orchestrator = _make_orchestrator(supported_client_version_range=">=4.2.0,<5.0.0")
+  with pytest.raises(TaskExecutionError) as exc_info:
+    orchestrator._verify_flatland_version("3.0.0")
+  assert "3.0.0" in exc_info.value.message
+  assert ">=4.2.0,<5.0.0" in exc_info.value.message
+
+
+def test_verify_flatland_version_not_configured_does_not_raise():
+  orchestrator = _make_orchestrator(supported_client_version_range=None)
+  orchestrator._verify_flatland_version("0.0.1")
+
+
+def test_verify_flatland_version_unparsable_does_not_raise():
+  orchestrator = _make_orchestrator(supported_client_version_range=">=4.2.0,<5.0.0")
+  orchestrator._verify_flatland_version("not-a-version")

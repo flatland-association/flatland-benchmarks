@@ -35,6 +35,9 @@ app = Celery(
 DOCKERCOMPOSE_HOST_DIRECTORY = os.environ.get("DOCKERCOMPOSE_HOST_DIRECTORY", "/tmp/codabench/")
 
 BENCHMARKING_NETWORK = os.environ.get("BENCHMARKING_NETWORK", None)
+# PEP 440 specifier for the submission's own flatland-rl version, checked in
+# FlatlandBenchmarksOrchestrator._verify_flatland_version. Combine a lower and upper bound with a comma,
+# e.g. ">=4.2.0,<5.0.0"; either bound can be omitted to leave that side open.
 SUPPORTED_CLIENT_VERSION_RANGE = os.environ.get("SUPPORTED_CLIENT_VERSION_RANGE", ">=4.2.0")
 
 FAB_API_URL = os.environ.get("FAB_API_URL")
@@ -220,6 +223,7 @@ def orchestrator(self,
     token_url=TOKEN_URL,
     percentage_complete_threshold=float(PERCENTAGE_COMPLETE_THRESHOLD) if PERCENTAGE_COMPLETE_THRESHOLD is not None else None,
     running_time_limit=float(RUNNING_TIME_LIMIT) if RUNNING_TIME_LIMIT is not None else None,
+    supported_client_version_range=SUPPORTED_CLIENT_VERSION_RANGE,
   ).orchestrator(
     submission_data_url=submission_data_url,
     tests=tests,
