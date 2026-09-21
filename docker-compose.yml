@@ -129,7 +129,7 @@ services:
   minio:
     hostname: minio
     # Binaries are no longer available from dl.min.io (410 Gone)
-    image: "quay.io/minio/minio:RELEASE.2025-09-07T16-13-09Z"
+    image: "quay.io/minio/minio:RELEASE.2024-11-07T00-52-20Z"
     restart: on-failure
     ports:
       - "${MINIO_PORT}:${MINIO_PORT}"
@@ -152,7 +152,7 @@ services:
 
   minio_setup:
     # Binaries are no longer available from dl.min.io (410 Gone)
-    image: "quay.io/minio/mc:RELEASE.2025-08-13T08-35-41Z"
+    image: "quay.io/minio/mc:RELEASE.2024-11-05T11-29-45Z"
     depends_on:
       minio:
         condition: service_healthy
@@ -173,7 +173,7 @@ services:
   minio_trace:
     profiles: [ debug ]
     # Binaries are no longer available from dl.min.io (410 Gone)
-    image: "quay.io/minio/mc:RELEASE.2025-08-13T08-35-41Z"
+    image: "quay.io/minio/mc:RELEASE.2024-11-05T11-29-45Z"
     depends_on:
       minio:
         condition: service_healthy
