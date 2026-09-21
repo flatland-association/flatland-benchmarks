@@ -151,7 +151,8 @@ services:
       - flatland-benchmarks
 
   minio_setup:
-    image: minio/mc:RELEASE.2024-11-05T11-29-45Z
+    # Binaries are no longer available from dl.min.io (410 Gone)
+    image: "quay.io/minio/mc:RELEASE.2025-08-13T08-35-41Z"
     depends_on:
       minio:
         condition: service_healthy
@@ -171,7 +172,8 @@ services:
 
   minio_trace:
     profiles: [ debug ]
-    image: minio/mc:RELEASE.2024-11-05T11-29-45Z
+    # Binaries are no longer available from dl.min.io (410 Gone)
+    image: "quay.io/minio/mc:RELEASE.2025-08-13T08-35-41Z"
     depends_on:
       minio:
         condition: service_healthy
