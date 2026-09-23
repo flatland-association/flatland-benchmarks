@@ -1423,7 +1423,7 @@ INSERT INTO tests
     (id, name, description, field_ids, scenario_ids, loop, queue)
 VALUES ('e075d4a7-5cda-4d3c-83ac-69a0db1d74dd', 'KPI-NF-045: Network Impact Propagation (Railway)',
         'The Network Impact Propagation KPI measures how disruptions in one part of the railway network affect the overall system, including delay propagation and congestion spillover. This KPI helps evaluate the cascading effects of local disturbances and the efficiency of AI-assisted re-scheduling in mitigating these effects. ',
-        array['0cc2a210-4be2-42b6-ba21-885193fdbdbc']::uuid[], array['f84dcf0c-4bde-460b-9139-ea76e3694267', '30286226-29a3-4aa6-8243-562b88967d76']::uuid[],
+        array['0cc2a210-4be2-42b6-ba21-885193fdbdbc']::uuid[], array['f84dcf0c-4bde-460b-9139-ea76e3694267', 'e28dc7e5-03ae-4687-ba37-c7ed5914c901']::uuid[],
         'CLOSED', 'Railway')
     ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, field_ids=EXCLUDED.field_ids, scenario_ids=EXCLUDED.scenario_ids, loop=EXCLUDED.loop, queue=EXCLUDED.queue;
 
