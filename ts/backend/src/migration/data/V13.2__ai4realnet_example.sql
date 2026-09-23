@@ -1472,7 +1472,7 @@ VALUES ('e28dc7e5-03ae-4687-ba37-c7ed5914c901',
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
-VALUES ('2eb7921a-d394-4ddd-8485-ea6f3f9dba55, 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
+VALUES ('2eb7921a-d394-4ddd-8485-ea6f3f9dba55', 'network_impact_propagation', 'Primary scenario score (raw values): network_impact_propagation', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO fields
@@ -1494,7 +1494,7 @@ VALUES ('10cb0940-06d8-4d95-b29f-46f4335cea88', 'success_rate_2', 'Secondary sce
 
 INSERT INTO fields
         (id, key, description, agg_func, agg_weights)
-VALUES ('0f0389f1-e9bf-4f9f-831b-0881705fdacd, 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
+VALUES ('0f0389f1-e9bf-4f9f-831b-0881705fdacd', 'punctuality_2', 'Secondary scenario score (raw values): punctuality scenario without malfunction', NULL, NULL)
         ON CONFLICT(id) DO UPDATE SET key=EXCLUDED.key, description=EXCLUDED.description, agg_func=EXCLUDED.agg_func, agg_weights=EXCLUDED.agg_weights;
 
 INSERT INTO tests
