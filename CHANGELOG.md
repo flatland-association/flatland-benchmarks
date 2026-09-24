@@ -3,6 +3,14 @@
 All notable changes will be documented in this file, updated by [release-please](https://github.com/googleapis/release-please) based on [Conventional Commit messages](https://www.conventionalcommits.org/en/v1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.20.0](https://github.com/flatland-association/flatland-benchmarks/compare/v0.19.2...v0.20.0) (2026-09-24)
+
+
+### Features
+
+* add scenarios for new kpi ([#699](https://github.com/flatland-association/flatland-benchmarks/issues/699)) ([0ffb3fe](https://github.com/flatland-association/flatland-benchmarks/commit/0ffb3fe55ed8ba5b5a937f3b277a9f7575409080))
+* reduce number of scenarios (50-&gt;25) in KPI-DF-016: Delay reduction efficiency (Railway). ([#715](https://github.com/flatland-association/flatland-benchmarks/issues/715)) ([e755895](https://github.com/flatland-association/flatland-benchmarks/commit/e755895e7c056c8c4ccfd343daffba9d3bda9205))
+
 ## [0.19.2](https://github.com/flatland-association/flatland-benchmarks/compare/v0.19.1...v0.19.2) (2026-06-09)
 
 
