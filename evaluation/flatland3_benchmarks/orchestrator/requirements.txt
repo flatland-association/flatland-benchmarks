@@ -8,4 +8,4 @@ fab-clientlib==0.19.2
 #git+https://github.com/flatland-association/flatland-benchmarks.git@main#subdirectory=fab-clientlib
 # DEPENDENCY SWITCH:
 #flatland-rl @ git+https://github.com/flatland-association/flatland-rl.git@main
-flatland-rl==4.3.1
+flatland-rl==4.3.0
