@@ -18,5 +18,5 @@ USER runner
 RUN sudo ls /tmp
 
 # DEPENDENCY SWITCH
-RUN python -m pip install git+https://github.com/flatland-association/flatland-rl.git@main
-#RUN python -m pip install flatland-rl==4.2.5
+#RUN #python -m pip install git+https://github.com/flatland-association/flatland-rl.git@main
+RUN python -m pip install flatland-rl==4.3.0
