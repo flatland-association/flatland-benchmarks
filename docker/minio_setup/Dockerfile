@@ -1,5 +1,5 @@
 # The MinIO images are no longer publicly pullable from quay.io or Docker Hub, see
-# https://github.com/shift7-ch/katta-compose/issues/22, and the binaries are no longer available from
+# https://bex.co/de/blog/2026/09/25/minio-docker-hub-removal-quay-repoint, and the binaries are no longer available from
 # dl.min.io (410 Gone). The release assets of mc on GitHub are still published.
 FROM ubuntu:24.04
 ARG MC_VERSION=RELEASE.2025-08-13T08-35-41Z
