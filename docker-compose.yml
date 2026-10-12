@@ -163,10 +163,10 @@ services:
       - |
         set -euxo pipefail
 
-        /usr/bin/mc config host add myminio http://minio:${MINIO_PORT} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
+        /mc alias set myminio http://minio:${MINIO_PORT} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
 
         # do not fail if bucket already exists:
-        /usr/bin/mc mb myminio/${S3_BUCKET} || true
+        /mc mb myminio/${S3_BUCKET} || true
 
         echo "createbuckets successful"
     networks:
@@ -183,8 +183,8 @@ services:
     command:
       - |
         set -euxo pipefail
-        /usr/bin/mc config host add myminio http://minio:${MINIO_PORT} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
-        /usr/bin/mc admin trace -v myminio
+        /mc alias set myminio http://minio:${MINIO_PORT} ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD}
+        /mc admin trace -v myminio
     logging:
       options:
         max-size: "20m"
