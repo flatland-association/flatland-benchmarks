@@ -188,6 +188,10 @@ def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
   WAIT_FOR_POD_TO_START_LIMIT = _require_config("WAIT_FOR_POD_TO_START_LIMIT", None, True)
   if WAIT_FOR_POD_TO_START_LIMIT is not None:
     WAIT_FOR_POD_TO_START_LIMIT = int(WAIT_FOR_POD_TO_START_LIMIT)
+  # PEP 440 specifier for the submission's own flatland-rl version, checked in
+  # FlatlandBenchmarksOrchestrator._verify_flatland_version. Combine a lower and upper bound with a comma,
+  # e.g. ">=4.2.0,<5.0.0"; either bound can be omitted to leave that side open.
+  SUPPORTED_CLIENT_VERSION_RANGE = _require_config("SUPPORTED_CLIENT_VERSION_RANGE", ">=4.2.0")
 
   orch_config = dict(
     # args for orchestration job (passed on from queue consumer):
@@ -198,6 +202,7 @@ def _load_orchestration_config(_ENV_VARS: Dict[str, str] = None) -> dict:
     total_running_time_limit=TOTAL_RUNNING_TIME_LIMIT,
     wait_for_pod_to_start_limit=WAIT_FOR_POD_TO_START_LIMIT,
     wait_for_pod_to_run_limit=WAIT_FOR_POD_TO_RUN_LIMIT,
+    supported_client_version_range=SUPPORTED_CLIENT_VERSION_RANGE,
     submission_data_url=submission_data_url,
     tests=tests,
     orchestrator_image=_require_config("ORCHESTRATOR_IMAGE"),
