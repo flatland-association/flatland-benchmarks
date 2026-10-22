@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@angular/build": "^21.2.19",
-    "@angular/cli": "^21.2.26",
+    "@angular/cli": "^22.2.3",
     "@angular/compiler-cli": "^21.2.18",
     "@cypress/schematic": "^4.2.0",
     "@types/amqplib": "^0.8.2",
@@ -68,7 +68,7 @@
     "@types/supertest": "^6.0.3",
     "@types/swagger-ui-express": "^4.1.8",
     "@vitest/coverage-v8": "^4.1.10",
-    "angular-eslint": "21.4.0",
+    "angular-eslint": "22.6.0",
     "autoprefixer": "^10.4.22",
     "concurrently": "^10.0.6",
     "cypress": "15.16.0",
