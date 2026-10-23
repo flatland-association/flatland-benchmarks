@@ -450,7 +450,7 @@ erDiagram
     text description
     agg_func agg_func
     json agg_fields
-    double agg_weights
+    double[] agg_weights
     boolean agg_lateral
   }
 
@@ -458,7 +458,7 @@ erDiagram
     uuid scenario_id PK, FK
     uuid test_id PK, FK "*"
     uuid submission_id PK, FK
-    character key FK
+    character key PK, FK
     double value
   }
 
@@ -470,7 +470,7 @@ erDiagram
     text description
     character submission_data_url
     character code_repository
-    timestamp submitted_at
+    timestamptz submitted_at
     uuid submitted_by FK
     character submitted_by_username
     boolean published
@@ -479,7 +479,7 @@ erDiagram
 
   submission_statuses {
     uuid submission_id PK, FK
-    timestamp timestamp PK
+    timestamptz timestamp PK
     submission_status status
     character message
   }
