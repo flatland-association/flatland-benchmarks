@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # Security updates only: version updates stay disabled, as before this file existed.
+    open-pull-requests-limit: 0
+    ignore:
+      # Angular majors are upgraded deliberately (see #736: @angular/build 22 was pulled in
+      # by an undici security fix while the app was still on Angular 21).
+      # Patch transitive deps via package.json "overrides" instead.
+      - dependency-name: "@angular/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@angular-devkit/*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@schematics/angular"
+        update-types: ["version-update:semver-major"]
