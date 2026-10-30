@@ -19,6 +19,8 @@ from flatland.evaluators.trajectory_evaluator import TrajectoryEvaluator
 from flatland.trajectories.trajectories import Trajectory
 from flatland.utils.cli_utils import resolve_type
 from oauthlib.oauth2 import BackendApplicationClient
+from packaging.specifiers import SpecifierSet, InvalidSpecifier
+from packaging.version import Version, InvalidVersion
 from requests_oauthlib import OAuth2Session
 
 from fab_clientlib import DefaultApi, ApiClient, Configuration, ResultsSubmissionsSubmissionIdTestsTestIdsPostRequest, \
@@ -58,6 +60,11 @@ class FlatlandBenchmarksOrchestrator:
                total_running_time_limit: float = None,
                # summed time limit for the submission container/pod running a scenario (excluding pulling/initialization).
                additional_submission_args: str = None,
+               supported_client_version_range: str = None,
+               # PEP 440 specifier checked against the submission's own flatland-rl version once detected
+               # (see _verify_flatland_version). Lower and upper bounds are combined with a comma, e.g.
+               # ">=4.2.0,<5.0.0" accepts 4.2.0 up to (but excluding) 5.0.0; either side can be omitted to
+               # leave that bound open (e.g. ">=4.2.0" alone has no upper bound). None disables the check.
                **kwargs):
     self.submission_id = submission_id
     self.aws_endpoint_url = aws_endpoint_url
@@ -76,6 +83,7 @@ class FlatlandBenchmarksOrchestrator:
     self.running_time_limit = running_time_limit
     self.total_running_time_limit = total_running_time_limit
     self.additional_submission_args = additional_submission_args
+    self.supported_client_version_range = supported_client_version_range
 
   def orchestrator(self,
                    submission_data_url: str,
@@ -338,8 +346,31 @@ class FlatlandBenchmarksOrchestrator:
       test_results[scenario_id] = scenario_results
       if first_test and i == 0:
         self._post_started(fab, scenario_id, submission_data_url, submission_id, test_id, f"Found Flatland version={flatland_version}. ")
+        self._verify_flatland_version(flatland_version)
 
     return test_results, success_rate_of_test, summed_scenario_running_time, termination_cause
+
+  def _verify_flatland_version(self, flatland_version: Optional[str]) -> None:
+    """
+    Raise TaskExecutionError if flatland_version is outside self.supported_client_version_range.
+
+    self.supported_client_version_range is a PEP 440 specifier set, e.g. ">=4.2.0,<5.0.0" - the lower
+    bound (>=4.2.0) and upper bound (<5.0.0) are combined with a comma; either can be dropped to leave
+    that side unbounded (e.g. ">=4.2.0" only enforces a minimum).
+    """
+    if self.supported_client_version_range is None or flatland_version is None:
+      return
+    flatland_version = flatland_version.strip()
+    try:
+      version = Version(flatland_version)
+      in_range = version in SpecifierSet(self.supported_client_version_range)
+    except (InvalidVersion, InvalidSpecifier) as e:
+      logger.warning(
+        f"Could not verify flatland version '{flatland_version}' against range '{self.supported_client_version_range}'.", exc_info=e)
+      return
+    if not in_range:
+      raise TaskExecutionError(
+        f"Submission flatland-rl version {flatland_version} is not in the supported range {self.supported_client_version_range}.")
 
   def _post_started(self, fab: DefaultApi, scenario_id, submission_data_url: str, submission_id: str, test_id: str, prefix=""):
     try:
